@@ -18,7 +18,7 @@ class BandwidthMessage(object):
         owner (string): TODO: type description here.
         application_id (string): TODO: type description here.
         time (string): TODO: type description here.
-        segment_count (string): TODO: type description here.
+        segment_count (int): TODO: type description here.
         direction (string): TODO: type description here.
         to (list of string): TODO: type description here.
         mfrom (string): TODO: type description here.

@@ -12,7 +12,7 @@ else:
 
 setup(
     name='bandwidth-sdk',
-    version='5.1.0',
+    version='5.1.1',
     description='Bandwidth\'s set of APIs',
     long_description=long_description,
     long_description_content_type="text/markdown",
