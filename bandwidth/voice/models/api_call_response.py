@@ -15,6 +15,7 @@ class ApiCallResponse(object):
     TODO: type model description here.
 
     Attributes:
+        account_id (string): TODO: type description here.
         call_id (string): TODO: type description here.
         application_id (string): TODO: type description here.
         to (string): TODO: type description here.
@@ -35,6 +36,7 @@ class ApiCallResponse(object):
 
     # Create a mapping from Model property names to API property names
     _names = {
+        "account_id": 'accountId',
         "call_id": 'callId',
         "application_id": 'applicationId',
         "to": 'to',
@@ -52,6 +54,7 @@ class ApiCallResponse(object):
     }
 
     def __init__(self,
+                 account_id=None,
                  call_id=None,
                  application_id=None,
                  to=None,
@@ -69,6 +72,7 @@ class ApiCallResponse(object):
         """Constructor for the ApiCallResponse class"""
 
         # Initialize members of the class
+        self.account_id = account_id
         self.call_id = call_id
         self.application_id = application_id
         self.to = to
@@ -102,6 +106,7 @@ class ApiCallResponse(object):
             return None
 
         # Extract variables from the dictionary
+        account_id = dictionary.get('accountId')
         call_id = dictionary.get('callId')
         application_id = dictionary.get('applicationId')
         to = dictionary.get('to')
@@ -118,7 +123,8 @@ class ApiCallResponse(object):
         tag = dictionary.get('tag')
 
         # Return an object of this model
-        return cls(call_id,
+        return cls(account_id,
+                   call_id,
                    application_id,
                    to,
                    mfrom,

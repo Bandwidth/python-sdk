@@ -1,3 +1,3 @@
 __all__ = [
-    'error_response_exception',
+    'api_error_response_exception',
 ]

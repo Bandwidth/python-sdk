@@ -16,7 +16,8 @@ RECORD_TAG = "Record"
 class Record(AbstractBxmlVerb):
 
     def __init__(self, tag=None, username=None, password=None, record_complete_url=None, record_complete_method=None,
-        recording_available_url=None, recording_available_method=None, terminating_digits=None, max_duration=None, file_format=None):
+        recording_available_url=None, recording_available_method=None, terminating_digits=None, max_duration=None,
+        file_format=None, transcribe=None, transcription_available_url=None, transcription_available_method=None):
         """
         Initializes the Record class with the following parameters
 
@@ -30,6 +31,9 @@ class Record(AbstractBxmlVerb):
         :param str terminating_digits: Digits to terminate the recording
         :param int max_duration: Max duration to record in seconds
         :param str file_format: The file format to save the recording in
+        :param bool transcribe: True to transcribe the recording on completion, False otherwise
+        :param str transcription_available_url: URL to send the transcriptionAvailable event to.
+        :param str transcription_available_method: The HTTP method to use for the request to transcriptionAvailableUrl. GET or POST
         """
         self.tag = tag
         self.username = username
@@ -41,6 +45,9 @@ class Record(AbstractBxmlVerb):
         self.terminating_digits = terminating_digits
         self.max_duration = max_duration
         self.file_format = file_format
+        self.transcribe = transcribe
+        self.transcription_available_url = transcription_available_url
+        self.transcription_available_method = transcription_available_method
 
     def to_bxml(self):
         root = etree.Element(RECORD_TAG)
@@ -64,4 +71,12 @@ class Record(AbstractBxmlVerb):
             root.set("maxDuration", str(self.max_duration))
         if self.file_format is not None:
             root.set("fileFormat", self.file_format)
+        if self.transcribe is not None:
+            #Convert True to "true", or False to "false"
+            strn = "true" if self.transcribe else "false"
+            root.set("transcribe", strn)
+        if self.transcription_available_url is not None:
+            root.set("transcriptionAvailableUrl", self.transcription_available_url)
+        if self.transcription_available_method is not None:
+            root.set("transcriptionAvailableMethod", self.transcription_available_method)
         return etree.tostring(root).decode()

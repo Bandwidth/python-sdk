@@ -16,7 +16,7 @@ START_RECORDING_TAG = "StartRecording"
 class StartRecording(AbstractBxmlVerb):
 
     def __init__(self, tag=None, username=None, password=None, recording_available_url=None, recording_available_method=None,
-        file_format=None, multi_channel=None):
+        file_format=None, multi_channel=None, transcribe=None, transcription_available_url=None, transcription_available_method=None):
         """
         Initializes the Record class with the following parameters
 
@@ -27,6 +27,9 @@ class StartRecording(AbstractBxmlVerb):
         :param str recording_available_method: HTTP method for record available callback
         :param str file_format: The file format to save the recording in
         :param bool multi_channel: Whether or not to record the channels separately (default is false, 1 recording)
+        :param bool transcribe: True to transcribe the recording on completion, False otherwise
+        :param str transcription_available_url: URL to send the transcriptionAvailable event to.
+        :param str transcription_available_method: The HTTP method to use for the request to transcriptionAvailableUrl. GET or POST
         """
         self.tag = tag
         self.username = username
@@ -35,6 +38,9 @@ class StartRecording(AbstractBxmlVerb):
         self.recording_available_method = recording_available_method
         self.file_format = file_format
         self.multi_channel = multi_channel
+        self.transcribe = transcribe
+        self.transcription_available_url = transcription_available_url
+        self.transcription_available_method = transcription_available_method
 
     def to_bxml(self):
         root = etree.Element(START_RECORDING_TAG)
@@ -54,4 +60,12 @@ class StartRecording(AbstractBxmlVerb):
             #Convert True to "true", or False to "false"
             strn = "true" if self.multi_channel else "false"
             root.set("multiChannel", strn)
+        if self.transcribe is not None:
+            #Convert True to "true", or False to "false"
+            strn = "true" if self.transcribe else "false"
+            root.set("transcribe", strn)
+        if self.transcription_available_url is not None:
+            root.set("transcriptionAvailableUrl", self.transcription_available_url)
+        if self.transcription_available_method is not None:
+            root.set("transcriptionAvailableMethod", self.transcription_available_method)
         return etree.tostring(root).decode()

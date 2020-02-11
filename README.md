@@ -8,7 +8,7 @@ The package is compatible with Python versions ```2 >=2.7.9``` and ```3 >=3.4```
 Install the package from PyPi using the following pip command:
 
 ```python
-pip install bandwidth-sdk==5.1.1
+pip install bandwidth-sdk==5.2.0
 ```
 
 You can also view the package at:
