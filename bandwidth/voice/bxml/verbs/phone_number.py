@@ -15,13 +15,15 @@ PHONE_NUMBER_TAG = "PhoneNumber"
 
 class PhoneNumber(AbstractBxmlVerb):
 
-    def __init__(self, number=None, transfer_answer_url=None, transfer_answer_method=None, username=None, password=None, tag=None):
+    def __init__(self, number=None, transfer_answer_url=None, transfer_answer_method=None, username=None, password=None, tag=None, transfer_disconnect_url=None, transfer_disconnect_method=None):
         """
         Initializes the PhoneNumber class with the following parameters
 
         :param str number: The phone number
         :param str transfer_answer_url: The url to send the transfer event to
         :param str transfer_answer_method: The http method of the transfer event request
+        :param str transfer_disconnect_url: The url to send the transfer disconnect event to
+        :param str transfer_disconnect_method: The http method of the transfer disconnect event request
         :param str username: The username to authenticate on the transfer event url
         :param str password: The password to authenticate on the transfer event url
         :param str tag: Custom string sent in the callback
@@ -32,6 +34,8 @@ class PhoneNumber(AbstractBxmlVerb):
         self.username = username
         self.password = password
         self.tag = tag
+        self.transfer_disconnect_method = transfer_disconnect_method
+        self.transfer_disconnect_url = transfer_disconnect_url
 
     def to_etree_element(self):
         """
@@ -52,6 +56,10 @@ class PhoneNumber(AbstractBxmlVerb):
             root.set("password", self.password)
         if self.tag is not None:
             root.set("tag", self.tag)
+        if self.transfer_disconnect_method is not None:
+            root.set("transferDisconnectMethod", self.transfer_disconnect_method)
+        if self.transfer_disconnect_url is not None:
+            root.set("transferDisconnectUrl", self.transfer_disconnect_url)
         return root
 
     def to_bxml(self):
