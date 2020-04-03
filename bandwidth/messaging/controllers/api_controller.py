@@ -14,8 +14,7 @@ from bandwidth.messaging.controllers.base_controller import BaseController
 from bandwidth.http.auth.messaging_basic_auth import MessagingBasicAuth
 from bandwidth.messaging.models.media import Media
 from bandwidth.messaging.models.bandwidth_message import BandwidthMessage
-from bandwidth.messaging.exceptions.generic_client_exception import GenericClientException
-from bandwidth.messaging.exceptions.path_client_exception import PathClientException
+from bandwidth.messaging.exceptions.messaging_exception import MessagingException
 
 
 class APIController(BaseController):
@@ -25,50 +24,6 @@ class APIController(BaseController):
     def __init__(self, config, call_back=None):
         super(APIController, self).__init__(config, call_back)
 
-    def get_message(self):
-        """Does a GET request to /ping.
-
-        getMessage
-
-        Returns:
-            void: Response from the API.
-
-        Raises:
-            APIException: When an error occurs while fetching the data from
-                the remote API. This exception includes the HTTP Response
-                code, an error message, and the HTTP body that was received in
-                the request.
-
-        """
-
-        # Prepare query URL
-        _url_path = '/ping'
-        _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
-        _query_builder += _url_path
-        _query_url = APIHelper.clean_url(_query_builder)
-
-        # Prepare and execute request
-        _request = self.config.http_client.get(_query_url)
-        MessagingBasicAuth.apply(self.config, _request)
-        _response = self.execute_request(_request)
-
-        # Endpoint and global error handling using HTTP status codes.
-        if _response.status_code == 400:
-            raise GenericClientException('400 Request is malformed or invalid', _response)
-        elif _response.status_code == 401:
-            raise PathClientException('401 The specified user does not have access to the account', _response)
-        elif _response.status_code == 403:
-            raise PathClientException('403 The user does not have access to this API', _response)
-        elif _response.status_code == 404:
-            raise PathClientException('404 Path not found', _response)
-        elif _response.status_code == 415:
-            raise GenericClientException('415 The content-type of the request is incorrect', _response)
-        elif _response.status_code == 429:
-            raise GenericClientException('429 The rate limit has been reached', _response)
-        self.validate_response(_response)
-
-        # Return appropriate type
-        ApiResponse(_response)
     def list_media(self,
                    user_id,
                    continuation_token=None):
@@ -114,17 +69,17 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise GenericClientException('400 Request is malformed or invalid', _response)
+            raise MessagingException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise PathClientException('401 The specified user does not have access to the account', _response)
+            raise MessagingException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise PathClientException('403 The user does not have access to this API', _response)
+            raise MessagingException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise PathClientException('404 Path not found', _response)
+            raise MessagingException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise GenericClientException('415 The content-type of the request is incorrect', _response)
+            raise MessagingException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise GenericClientException('429 The rate limit has been reached', _response)
+            raise MessagingException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Media.from_dictionary)
@@ -170,17 +125,17 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise GenericClientException('400 Request is malformed or invalid', _response)
+            raise MessagingException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise PathClientException('401 The specified user does not have access to the account', _response)
+            raise MessagingException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise PathClientException('403 The user does not have access to this API', _response)
+            raise MessagingException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise PathClientException('404 Path not found', _response)
+            raise MessagingException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise GenericClientException('415 The content-type of the request is incorrect', _response)
+            raise MessagingException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise GenericClientException('429 The rate limit has been reached', _response)
+            raise MessagingException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         decoded = _response.text
@@ -249,17 +204,17 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise GenericClientException('400 Request is malformed or invalid', _response)
+            raise MessagingException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise PathClientException('401 The specified user does not have access to the account', _response)
+            raise MessagingException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise PathClientException('403 The user does not have access to this API', _response)
+            raise MessagingException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise PathClientException('404 Path not found', _response)
+            raise MessagingException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise GenericClientException('415 The content-type of the request is incorrect', _response)
+            raise MessagingException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise GenericClientException('429 The rate limit has been reached', _response)
+            raise MessagingException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -303,17 +258,17 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise GenericClientException('400 Request is malformed or invalid', _response)
+            raise MessagingException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise PathClientException('401 The specified user does not have access to the account', _response)
+            raise MessagingException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise PathClientException('403 The user does not have access to this API', _response)
+            raise MessagingException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise PathClientException('404 Path not found', _response)
+            raise MessagingException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise GenericClientException('415 The content-type of the request is incorrect', _response)
+            raise MessagingException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise GenericClientException('429 The rate limit has been reached', _response)
+            raise MessagingException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -362,17 +317,17 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise GenericClientException('400 Request is malformed or invalid', _response)
+            raise MessagingException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise PathClientException('401 The specified user does not have access to the account', _response)
+            raise MessagingException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise PathClientException('403 The user does not have access to this API', _response)
+            raise MessagingException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise PathClientException('404 Path not found', _response)
+            raise MessagingException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise GenericClientException('415 The content-type of the request is incorrect', _response)
+            raise MessagingException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise GenericClientException('429 The rate limit has been reached', _response)
+            raise MessagingException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, BandwidthMessage.from_dictionary)

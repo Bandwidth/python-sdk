@@ -10,9 +10,9 @@ from bandwidth.api_helper import APIHelper
 import bandwidth.exceptions.api_exception
 
 
-class PathClientException(bandwidth.exceptions.api_exception.APIException):
+class MessagingException(bandwidth.exceptions.api_exception.APIException):
     def __init__(self, reason, response):
-        """Constructor for the PathClientException class
+        """Constructor for the MessagingException class
 
         Args:
             reason (string): The reason (or error message) for the Exception
@@ -20,7 +20,7 @@ class PathClientException(bandwidth.exceptions.api_exception.APIException):
             response (HttpResponse): The HttpResponse of the API call.
 
         """
-        super(PathClientException, self).__init__(reason, response)
+        super(MessagingException, self).__init__(reason, response)
         dictionary = APIHelper.json_deserialize(self.response.text)
         if isinstance(dictionary, dict):
             self.unbox(dictionary)
@@ -34,8 +34,5 @@ class PathClientException(bandwidth.exceptions.api_exception.APIException):
             MUST match property names in the API description.
 
         """
-        self.timestamp = dictionary.get('timestamp')
-        self.status = dictionary.get('status')
-        self.error = dictionary.get('error')
-        self.message = dictionary.get('message')
-        self.path = dictionary.get('path')
+        self.mtype = dictionary.get('type')
+        self.description = dictionary.get('description')

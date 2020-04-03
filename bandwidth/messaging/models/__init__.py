@@ -1,5 +1,4 @@
 __all__ = [
-    'field_error',
     'media',
     'tag',
     'deferred_result',
