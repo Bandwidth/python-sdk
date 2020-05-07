@@ -19,7 +19,7 @@ class Pause(AbstractBxmlVerb):
         """
         Initializes the Pause class with the duration parameter
 
-        :param int duration: The number of seconds to pause
+        :param float duration: The time in seconds to pause
         """
         self.duration = duration
 

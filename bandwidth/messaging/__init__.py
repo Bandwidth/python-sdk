@@ -1,5 +1,6 @@
 __all__ = [
-    'models',
     'controllers',
+    'exceptions',
     'messaging_client',
+    'models',
 ]

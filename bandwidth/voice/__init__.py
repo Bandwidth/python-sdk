@@ -1,6 +1,7 @@
 __all__ = [
     'bxml',
-    'models',
     'controllers',
+    'exceptions',
+    'models',
     'voice_client',
 ]

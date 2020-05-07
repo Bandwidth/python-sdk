@@ -39,7 +39,9 @@ class APIController(BaseController):
                 here.
 
         Returns:
-            ApiCallResponse: Response from the API. successful operation
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -102,7 +104,9 @@ class APIController(BaseController):
             call_id (string): TODO: type description here.
 
         Returns:
-            ApiCallStateResponse: Response from the API. successful operation
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -168,7 +172,8 @@ class APIController(BaseController):
                 here.
 
         Returns:
-            void: Response from the API.
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -216,7 +221,8 @@ class APIController(BaseController):
         self.validate_response(_response)
 
         # Return appropriate type
-        ApiResponse(_response)
+        return ApiResponse(_response)
+
     def modify_call_recording_state(self,
                                     account_id,
                                     call_id,
@@ -232,7 +238,8 @@ class APIController(BaseController):
                 here.
 
         Returns:
-            void: Response from the API.
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -280,7 +287,8 @@ class APIController(BaseController):
         self.validate_response(_response)
 
         # Return appropriate type
-        ApiResponse(_response)
+        return ApiResponse(_response)
+
     def get_query_metadata_for_account_and_call(self,
                                                 account_id,
                                                 call_id,
@@ -302,7 +310,8 @@ class APIController(BaseController):
             max_start_time (string, optional): TODO: type description here.
 
         Returns:
-            list of RecordingMetadataResponse: Response from the API.
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
                 successful operation
 
         Raises:
@@ -378,8 +387,9 @@ class APIController(BaseController):
             recording_id (string): TODO: type description here.
 
         Returns:
-            RecordingMetadataResponse: Response from the API. successful
-                operation
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -445,7 +455,8 @@ class APIController(BaseController):
             recording_id (string): TODO: type description here.
 
         Returns:
-            void: Response from the API.
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -489,7 +500,8 @@ class APIController(BaseController):
         self.validate_response(_response)
 
         # Return appropriate type
-        ApiResponse(_response)
+        return ApiResponse(_response)
+
     def get_stream_recording_media(self,
                                    account_id,
                                    call_id,
@@ -504,7 +516,9 @@ class APIController(BaseController):
             recording_id (string): TODO: type description here.
 
         Returns:
-            binary: Response from the API. successful operation
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -565,7 +579,8 @@ class APIController(BaseController):
             recording_id (string): TODO: type description here.
 
         Returns:
-            void: Response from the API.
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -609,7 +624,8 @@ class APIController(BaseController):
         self.validate_response(_response)
 
         # Return appropriate type
-        ApiResponse(_response)
+        return ApiResponse(_response)
+
     def get_recording_transcription(self,
                                     account_id,
                                     call_id,
@@ -624,8 +640,9 @@ class APIController(BaseController):
             recording_id (string): TODO: type description here.
 
         Returns:
-            TranscriptionResponse: Response from the API. successful
-                operation
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -694,7 +711,8 @@ class APIController(BaseController):
                 description here.
 
         Returns:
-            void: Response from the API.
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -745,7 +763,8 @@ class APIController(BaseController):
         self.validate_response(_response)
 
         # Return appropriate type
-        ApiResponse(_response)
+        return ApiResponse(_response)
+
     def delete_recording_transcription(self,
                                        account_id,
                                        call_id,
@@ -760,7 +779,8 @@ class APIController(BaseController):
             recording_id (string): TODO: type description here.
 
         Returns:
-            void: Response from the API.
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -804,7 +824,8 @@ class APIController(BaseController):
         self.validate_response(_response)
 
         # Return appropriate type
-        ApiResponse(_response)
+        return ApiResponse(_response)
+
     def get_query_metadata_for_account(self,
                                        account_id,
                                        mfrom=None,
@@ -827,7 +848,8 @@ class APIController(BaseController):
             max_start_time (string, optional): TODO: type description here.
 
         Returns:
-            list of RecordingMetadataResponse: Response from the API.
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
                 successful operation
 
         Raises:

@@ -37,7 +37,9 @@ class APIController(BaseController):
                 here.
 
         Returns:
-            list of Media: Response from the API. successful operation
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -98,7 +100,9 @@ class APIController(BaseController):
             media_id (string): TODO: type description here.
 
         Returns:
-            binary: Response from the API. successful operation
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -163,7 +167,8 @@ class APIController(BaseController):
             cache_control (string, optional): TODO: type description here.
 
         Returns:
-            void: Response from the API.
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -218,7 +223,8 @@ class APIController(BaseController):
         self.validate_response(_response)
 
         # Return appropriate type
-        ApiResponse(_response)
+        return ApiResponse(_response)
+
     def delete_media(self,
                      user_id,
                      media_id):
@@ -231,7 +237,8 @@ class APIController(BaseController):
             media_id (string): TODO: type description here.
 
         Returns:
-            void: Response from the API.
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -272,7 +279,8 @@ class APIController(BaseController):
         self.validate_response(_response)
 
         # Return appropriate type
-        ApiResponse(_response)
+        return ApiResponse(_response)
+
     def create_message(self,
                        user_id,
                        body=None):
@@ -285,7 +293,9 @@ class APIController(BaseController):
             body (MessageRequest, optional): TODO: type description here.
 
         Returns:
-            BandwidthMessage: Response from the API. successful operation
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
