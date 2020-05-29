@@ -27,7 +27,7 @@ class BaseController(object):
     """
 
     global_headers = {
-        'user-agent': 'python-sdk-refs/tags/python6.1.0'
+        'user-agent': 'python-sdk-refs/tags/python6.2.0'
     }
 
     def __init__(self, config, call_back=None):

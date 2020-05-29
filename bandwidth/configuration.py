@@ -19,7 +19,8 @@ class Server(Enum):
     """An enum for API servers"""
     DEFAULT = 0
     MESSAGINGDEFAULT = 1
-    VOICEDEFAULT = 2
+    TWOFACTORAUTHDEFAULT = 2
+    VOICEDEFAULT = 3
 
 
 class Configuration(object):
@@ -55,6 +56,14 @@ class Configuration(object):
         return self._messaging_basic_auth_password
 
     @property
+    def two_factor_auth_basic_auth_user_name(self):
+        return self._two_factor_auth_basic_auth_user_name
+
+    @property
+    def two_factor_auth_basic_auth_password(self):
+        return self._two_factor_auth_basic_auth_password
+
+    @property
     def voice_basic_auth_user_name(self):
         return self._voice_basic_auth_user_name
 
@@ -66,6 +75,8 @@ class Configuration(object):
                  environment=Environment.PRODUCTION,
                  messaging_basic_auth_user_name='TODO: Replace',
                  messaging_basic_auth_password='TODO: Replace',
+                 two_factor_auth_basic_auth_user_name='TODO: Replace',
+                 two_factor_auth_basic_auth_password='TODO: Replace',
                  voice_basic_auth_user_name='TODO: Replace',
                  voice_basic_auth_password='TODO: Replace'):
         # The value to use for connection timeout
@@ -89,6 +100,12 @@ class Configuration(object):
         self._messaging_basic_auth_password = messaging_basic_auth_password
 
         # The username to use with basic authentication
+        self._two_factor_auth_basic_auth_user_name = two_factor_auth_basic_auth_user_name
+
+        # The password to use with basic authentication
+        self._two_factor_auth_basic_auth_password = two_factor_auth_basic_auth_password
+
+        # The username to use with basic authentication
         self._voice_basic_auth_user_name = voice_basic_auth_user_name
 
         # The password to use with basic authentication
@@ -100,6 +117,8 @@ class Configuration(object):
     def clone_with(self, timeout=None, max_retries=None, backoff_factor=None,
                    environment=None, messaging_basic_auth_user_name=None,
                    messaging_basic_auth_password=None,
+                   two_factor_auth_basic_auth_user_name=None,
+                   two_factor_auth_basic_auth_password=None,
                    voice_basic_auth_user_name=None,
                    voice_basic_auth_password=None):
         timeout = timeout or self.timeout
@@ -108,6 +127,8 @@ class Configuration(object):
         environment = environment or self.environment
         messaging_basic_auth_user_name = messaging_basic_auth_user_name or self.messaging_basic_auth_user_name
         messaging_basic_auth_password = messaging_basic_auth_password or self.messaging_basic_auth_password
+        two_factor_auth_basic_auth_user_name = two_factor_auth_basic_auth_user_name or self.two_factor_auth_basic_auth_user_name
+        two_factor_auth_basic_auth_password = two_factor_auth_basic_auth_password or self.two_factor_auth_basic_auth_password
         voice_basic_auth_user_name = voice_basic_auth_user_name or self.voice_basic_auth_user_name
         voice_basic_auth_password = voice_basic_auth_password or self.voice_basic_auth_password
 
@@ -116,6 +137,8 @@ class Configuration(object):
             backoff_factor=backoff_factor, environment=environment,
             messaging_basic_auth_user_name=messaging_basic_auth_user_name,
             messaging_basic_auth_password=messaging_basic_auth_password,
+            two_factor_auth_basic_auth_user_name=two_factor_auth_basic_auth_user_name,
+            two_factor_auth_basic_auth_password=two_factor_auth_basic_auth_password,
             voice_basic_auth_user_name=voice_basic_auth_user_name,
             voice_basic_auth_password=voice_basic_auth_password
         )
@@ -130,6 +153,7 @@ class Configuration(object):
         Environment.PRODUCTION: {
             Server.DEFAULT: 'api.bandwidth.com',
             Server.MESSAGINGDEFAULT: 'https://messaging.bandwidth.com/api/v2',
+            Server.TWOFACTORAUTHDEFAULT: 'https://mfa.bandwidth.com/api/v1/',
             Server.VOICEDEFAULT: 'https://voice.bandwidth.com'
         }
     }
