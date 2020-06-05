@@ -17,7 +17,7 @@ class Gather(AbstractBxmlVerb):
 
     def __init__(self, gather_url=None, gather_method=None, terminating_digits=None, tag=None, max_digits=None,
                 inter_digit_timeout=None, username=None, password=None, first_digit_timeout=None,
-                play_audio=None, speak_sentence=None, repeat_count=None):
+                play_audio=None, speak_sentence=None, repeat_count=None, nested_verbs=None):
         """
         Initializes the Gather class with the following parameters
         
@@ -33,6 +33,7 @@ class Gather(AbstractBxmlVerb):
         :param PlayAudio play_audio: The PlayAudio tag to include in the gather
         :param SpeakSentence speak_sentence: The SpeakSentence tag to include in the gather
         :param int repeat_count: The number of times to repeat the audio prompt
+        :param list<PlayAudio|SpeakSentence> nested_verbs: The list of verbs to nest in the gather
         """
 
         self.gather_url = gather_url
@@ -47,6 +48,7 @@ class Gather(AbstractBxmlVerb):
         self.play_audio = play_audio
         self.speak_sentence = speak_sentence
         self.repeat_count = repeat_count
+        self.nested_verbs = nested_verbs
 
     def to_bxml(self):
         root = etree.Element(GATHER_TAG)
@@ -74,4 +76,7 @@ class Gather(AbstractBxmlVerb):
             root.append(self.play_audio.to_etree_element())
         if self.speak_sentence is not None:
             root.append(self.speak_sentence.to_etree_element())
+        if self.nested_verbs is not None:
+            for verb in self.nested_verbs:
+                root.append(verb.to_etree_element())
         return etree.tostring(root).decode()
