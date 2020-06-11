@@ -12,6 +12,7 @@ from bandwidth.configuration import Environment
 from bandwidth.messaging.messaging_client import MessagingClient
 from bandwidth.twofactorauth.two_factor_auth_client import TwoFactorAuthClient
 from bandwidth.voice.voice_client import VoiceClient
+from bandwidth.webrtc.web_rtc_client import WebRtcClient
 
 
 class BandwidthClient(object):
@@ -28,24 +29,34 @@ class BandwidthClient(object):
     def voice_client(self):
         return VoiceClient(config=self.config)
 
+    @lazy_property
+    def web_rtc_client(self):
+        return WebRtcClient(config=self.config)
+
     def __init__(self, timeout=60, max_retries=3, backoff_factor=0,
                  environment=Environment.PRODUCTION,
+                 web_rtc_server='https://api.webrtc.bandwidth.com',
                  messaging_basic_auth_user_name='TODO: Replace',
                  messaging_basic_auth_password='TODO: Replace',
                  two_factor_auth_basic_auth_user_name='TODO: Replace',
                  two_factor_auth_basic_auth_password='TODO: Replace',
                  voice_basic_auth_user_name='TODO: Replace',
-                 voice_basic_auth_password='TODO: Replace', config=None):
+                 voice_basic_auth_password='TODO: Replace',
+                 web_rtc_basic_auth_user_name='TODO: Replace',
+                 web_rtc_basic_auth_password='TODO: Replace', config=None):
         if config is None:
             self.config = Configuration(timeout=timeout,
                                         max_retries=max_retries,
                                         backoff_factor=backoff_factor,
                                         environment=environment,
+                                        web_rtc_server=web_rtc_server,
                                         messaging_basic_auth_user_name=messaging_basic_auth_user_name,
                                         messaging_basic_auth_password=messaging_basic_auth_password,
                                         two_factor_auth_basic_auth_user_name=two_factor_auth_basic_auth_user_name,
                                         two_factor_auth_basic_auth_password=two_factor_auth_basic_auth_password,
                                         voice_basic_auth_user_name=voice_basic_auth_user_name,
-                                        voice_basic_auth_password=voice_basic_auth_password)
+                                        voice_basic_auth_password=voice_basic_auth_password,
+                                        web_rtc_basic_auth_user_name=web_rtc_basic_auth_user_name,
+                                        web_rtc_basic_auth_password=web_rtc_basic_auth_password)
         else:
             self.config = config

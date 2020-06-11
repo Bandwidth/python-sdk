@@ -26,6 +26,8 @@ class ApiCreateCallRequest(object):
             here.
         tag (string): TODO: type description here.
         application_id (string): TODO: type description here.
+        obfuscated_to (string): TODO: type description here.
+        obfuscated_from (string): TODO: type description here.
 
     """
 
@@ -41,7 +43,9 @@ class ApiCreateCallRequest(object):
         "answer_method": 'answerMethod',
         "disconnect_url": 'disconnectUrl',
         "disconnect_method": 'disconnectMethod',
-        "tag": 'tag'
+        "tag": 'tag',
+        "obfuscated_to": 'obfuscatedTo',
+        "obfuscated_from": 'obfuscatedFrom'
     }
 
     def __init__(self,
@@ -55,7 +59,9 @@ class ApiCreateCallRequest(object):
                  answer_method=None,
                  disconnect_url=None,
                  disconnect_method=None,
-                 tag=None):
+                 tag=None,
+                 obfuscated_to=None,
+                 obfuscated_from=None):
         """Constructor for the ApiCreateCallRequest class"""
 
         # Initialize members of the class
@@ -70,6 +76,8 @@ class ApiCreateCallRequest(object):
         self.disconnect_method = disconnect_method
         self.tag = tag
         self.application_id = application_id
+        self.obfuscated_to = obfuscated_to
+        self.obfuscated_from = obfuscated_from
 
     @classmethod
     def from_dictionary(cls,
@@ -100,6 +108,8 @@ class ApiCreateCallRequest(object):
         disconnect_url = dictionary.get('disconnectUrl')
         disconnect_method = dictionary.get('disconnectMethod')
         tag = dictionary.get('tag')
+        obfuscated_to = dictionary.get('obfuscatedTo')
+        obfuscated_from = dictionary.get('obfuscatedFrom')
 
         # Return an object of this model
         return cls(mfrom,
@@ -112,4 +122,6 @@ class ApiCreateCallRequest(object):
                    answer_method,
                    disconnect_url,
                    disconnect_method,
-                   tag)
+                   tag,
+                   obfuscated_to,
+                   obfuscated_from)

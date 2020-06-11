@@ -27,7 +27,7 @@ class RecordingMetadataResponse(object):
         start_time (long|int): TODO: type description here.
         end_time (long|int): TODO: type description here.
         file_format (FileFormatEnum): TODO: type description here.
-        status (StatusEnum): TODO: type description here.
+        status (Status1Enum): TODO: type description here.
         media_url (string): TODO: type description here.
         transcription (Transcription): TODO: type description here.
 

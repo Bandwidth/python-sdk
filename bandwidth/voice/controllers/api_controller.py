@@ -73,11 +73,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -138,11 +138,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -205,11 +205,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -271,11 +271,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -354,11 +354,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -422,11 +422,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -484,11 +484,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -546,11 +546,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -608,11 +608,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -675,11 +675,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -745,11 +745,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 410:
@@ -808,11 +808,77 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
+
+        # Return appropriate type
+        return ApiResponse(_response)
+
+    def modify_conference(self,
+                          account_id,
+                          conference_id,
+                          body=None):
+        """Does a POST request to /api/v2/accounts/{accountId}/conferences/{conferenceId}.
+
+        Modify the conference state
+
+        Args:
+            account_id (string): TODO: type description here.
+            conference_id (string): TODO: type description here.
+            body (CallEngineModifyConferenceRequest, optional): TODO: type
+                description here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': account_id,
+            'conferenceId': conference_id
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare headers
+        _headers = {
+            'content-type': 'application/json; charset=utf-8'
+        }
+
+        # Prepare and execute request
+        _request = self.config.http_client.post(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
@@ -891,11 +957,11 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseException('Something\'s not quite right... Either your request is invalid or you\'re requesting it at a bad time. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
-            raise APIException('Please authenticate yourself.', _response)
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseException('Your credentials are invalid. Please use your API credentials for the Bandwidth Dashboard.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
             raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:

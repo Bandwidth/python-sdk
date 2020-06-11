@@ -25,6 +25,7 @@ class DisconnectCauseEnum(object):
         ACCOUNTLIMIT: TODO: type description here.
         NODECAPACITYEXCEEDED: TODO: type description here.
         UNKNOWN: TODO: type description here.
+        APPLICATIONERROR: TODO: type description here.
 
     """
 
@@ -49,3 +50,5 @@ class DisconnectCauseEnum(object):
     NODECAPACITYEXCEEDED = 'node-capacity-exceeded'
 
     UNKNOWN = 'unknown'
+
+    APPLICATIONERROR = 'application-error'

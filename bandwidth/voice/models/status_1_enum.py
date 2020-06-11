@@ -14,26 +14,20 @@ class Status1Enum(object):
     TODO: type enum description here.
 
     Attributes:
-        REQUESTED: TODO: type description here.
-        NONE: TODO: type description here.
         PROCESSING: TODO: type description here.
-        AVAILABLE: TODO: type description here.
+        PARTIAL: TODO: type description here.
+        COMPLETE: TODO: type description here.
+        DELETED: TODO: type description here.
         ERROR: TODO: type description here.
-        TIMEOUT: TODO: type description here.
-        FILESIZETOOBIG: TODO: type description here.
 
     """
 
-    REQUESTED = 'requested'
-
-    NONE = 'none'
-
     PROCESSING = 'processing'
 
-    AVAILABLE = 'available'
+    PARTIAL = 'partial'
+
+    COMPLETE = 'complete'
+
+    DELETED = 'deleted'
 
     ERROR = 'error'
-
-    TIMEOUT = 'timeout'
-
-    FILESIZETOOBIG = 'file-size-too-big'

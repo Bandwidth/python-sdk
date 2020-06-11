@@ -14,20 +14,11 @@ class StatusEnum(object):
     TODO: type enum description here.
 
     Attributes:
-        PROCESSING: TODO: type description here.
-        PARTIAL: TODO: type description here.
-        COMPLETE: TODO: type description here.
-        DELETED: TODO: type description here.
-        ERROR: TODO: type description here.
+        ACTIVE: TODO: type description here.
+        COMPLETED: TODO: type description here.
 
     """
 
-    PROCESSING = 'processing'
+    ACTIVE = 'active'
 
-    PARTIAL = 'partial'
-
-    COMPLETE = 'complete'
-
-    DELETED = 'deleted'
-
-    ERROR = 'error'
+    COMPLETED = 'completed'

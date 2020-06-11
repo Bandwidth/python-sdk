@@ -4,6 +4,7 @@ __all__ = [
     'api_create_call_request',
     'api_modify_call_request',
     'api_transcribe_recording_request',
+    'call_engine_modify_conference_request',
     'modify_call_recording_state',
     'recording_metadata_response',
     'transcript',
@@ -21,4 +22,5 @@ __all__ = [
     'state_2_enum',
     'status_enum',
     'status_1_enum',
+    'status_2_enum',
 ]
