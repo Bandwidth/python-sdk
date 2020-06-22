@@ -14,6 +14,7 @@ from bandwidth.http.auth.two_factor_auth_basic_auth import TwoFactorAuthBasicAut
 from bandwidth.twofactorauth.models.two_factor_voice_response import TwoFactorVoiceResponse
 from bandwidth.twofactorauth.models.two_factor_messaging_response import TwoFactorMessagingResponse
 from bandwidth.twofactorauth.models.two_factor_verify_code_response import TwoFactorVerifyCodeResponse
+from bandwidth.twofactorauth.exceptions.invalid_request_exception import InvalidRequestException
 
 
 class APIController(BaseController):
@@ -67,6 +68,10 @@ class APIController(BaseController):
         _request = self.config.http_client.post(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
         TwoFactorAuthBasicAuth.apply(self.config, _request)
         _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise InvalidRequestException('client request error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, TwoFactorVoiceResponse.from_dictionary)
@@ -117,6 +122,10 @@ class APIController(BaseController):
         _request = self.config.http_client.post(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
         TwoFactorAuthBasicAuth.apply(self.config, _request)
         _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise InvalidRequestException('client request error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, TwoFactorMessagingResponse.from_dictionary)
@@ -166,6 +175,10 @@ class APIController(BaseController):
         _request = self.config.http_client.post(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
         TwoFactorAuthBasicAuth.apply(self.config, _request)
         _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise InvalidRequestException('client request error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, TwoFactorVerifyCodeResponse.from_dictionary)

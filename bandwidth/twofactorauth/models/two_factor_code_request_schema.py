@@ -14,10 +14,23 @@ class TwoFactorCodeRequestSchema(object):
     TODO: type model description here.
 
     Attributes:
-        to (string): TODO: type description here.
-        mfrom (string): TODO: type description here.
-        application_id (string): TODO: type description here.
-        scope (string): TODO: type description here.
+        to (string): The phone number to send the 2fa code to.
+        mfrom (string): The application phone number, the sender of the 2fa
+            code.
+        application_id (string): The application unique ID, obtained from
+            Bandwidth.
+        scope (string): An optional field to denote what scope or action the
+            2fa code is addressing.  If not supplied, defaults to "2FA".
+        message (string): The message format of the 2fa code.  There are three
+            values that the system will replace "{CODE}", "{NAME}", "{SCOPE}".
+            The "{SCOPE}" and "{NAME} value template are optional, while
+            "{CODE}" must be supplied.  As the name would suggest, code will
+            be replace with the actual 2fa code.  Name is replaced with the
+            application name, configured during provisioning of 2fa.  The
+            scope value is the same value sent during the call and partitioned
+            by the server.
+        digits (float): The number of digits for your 2fa code.  The valid
+            number ranges from 2 to 8, inclusively.
 
     """
 
@@ -26,6 +39,8 @@ class TwoFactorCodeRequestSchema(object):
         "to": 'to',
         "mfrom": 'from',
         "application_id": 'applicationId',
+        "message": 'message',
+        "digits": 'digits',
         "scope": 'scope'
     }
 
@@ -33,6 +48,8 @@ class TwoFactorCodeRequestSchema(object):
                  to=None,
                  mfrom=None,
                  application_id=None,
+                 message=None,
+                 digits=None,
                  scope=None):
         """Constructor for the TwoFactorCodeRequestSchema class"""
 
@@ -41,6 +58,8 @@ class TwoFactorCodeRequestSchema(object):
         self.mfrom = mfrom
         self.application_id = application_id
         self.scope = scope
+        self.message = message
+        self.digits = digits
 
     @classmethod
     def from_dictionary(cls,
@@ -63,10 +82,14 @@ class TwoFactorCodeRequestSchema(object):
         to = dictionary.get('to')
         mfrom = dictionary.get('from')
         application_id = dictionary.get('applicationId')
+        message = dictionary.get('message')
+        digits = dictionary.get('digits')
         scope = dictionary.get('scope')
 
         # Return an object of this model
         return cls(to,
                    mfrom,
                    application_id,
+                   message,
+                   digits,
                    scope)
