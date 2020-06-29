@@ -15,10 +15,10 @@ class Subscriptions(object):
     TODO: type model description here.
 
     Attributes:
-        session_id (string): Session the subscriptions are associated with. 
-            If this is the only field, the subscriber will be subscribed to
-            all participants in the session (including any participants that
-            are later added to the session)
+        session_id (string): Session the subscriptions are associated with  If
+            this is the only field, the subscriber will be subscribed to all
+            participants in the session (including any participants that are
+            later added to the session)
         participants (list of ParticipantSubscription): Subset of participants
             to subscribe to in the session. Optional.
 

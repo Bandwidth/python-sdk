@@ -12,14 +12,14 @@ class Participant(object):
 
     """Implementation of the 'Participant' model.
 
-    TODO: type model description here.
+    A participant object
 
     Attributes:
-        id (string): TODO: type description here.
+        id (string): Unique id of the participant
         callback_url (string): Full callback url to use for notifications
             about this participant
-        publish_permissions (list of PublishPermissionEnum): TODO: type
-            description here.
+        publish_permissions (list of PublishPermissionEnum): Defines if this
+            participant can publish audio or video
         sessions (list of string): List of session ids this participant is
             associated with  Capped to one
         subscriptions (Subscriptions): TODO: type description here.

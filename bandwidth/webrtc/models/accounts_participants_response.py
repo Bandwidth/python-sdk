@@ -15,7 +15,7 @@ class AccountsParticipantsResponse(object):
     TODO: type model description here.
 
     Attributes:
-        participant (Participant): TODO: type description here.
+        participant (Participant): A participant object
         token (string): Auth token for the returned participant  This should
             be passed to the participant so that they can connect to the
             platform

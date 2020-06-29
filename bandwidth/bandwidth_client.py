@@ -35,7 +35,6 @@ class BandwidthClient(object):
 
     def __init__(self, timeout=60, max_retries=3, backoff_factor=0,
                  environment=Environment.PRODUCTION,
-                 web_rtc_server='https://api.webrtc.bandwidth.com',
                  messaging_basic_auth_user_name='TODO: Replace',
                  messaging_basic_auth_password='TODO: Replace',
                  two_factor_auth_basic_auth_user_name='TODO: Replace',
@@ -49,7 +48,6 @@ class BandwidthClient(object):
                                         max_retries=max_retries,
                                         backoff_factor=backoff_factor,
                                         environment=environment,
-                                        web_rtc_server=web_rtc_server,
                                         messaging_basic_auth_user_name=messaging_basic_auth_user_name,
                                         messaging_basic_auth_password=messaging_basic_auth_password,
                                         two_factor_auth_basic_auth_user_name=two_factor_auth_basic_auth_user_name,
