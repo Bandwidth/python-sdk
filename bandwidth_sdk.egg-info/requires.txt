@@ -1,0 +1,6 @@
+requests<3.0,>=2.9.1
+jsonpickle<1.0,>=0.7.1
+cachecontrol<1.0,>=0.11.7
+python-dateutil<3.0,>=2.5.3
+enum34>=1.1.6
+lxml>=4.3.4

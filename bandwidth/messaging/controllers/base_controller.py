@@ -26,9 +26,10 @@ class BaseController(object):
 
     """
 
-    global_headers = {
-        'user-agent': 'python-sdk-refs/tags/python6.8.0'
-    }
+    def global_headers(self):
+        return {
+            'user-agent': 'python-sdk-refs/tags/python6.9.0'
+        }
 
     def __init__(self, config, call_back=None):
         self._config = config
@@ -70,7 +71,7 @@ class BaseController(object):
             self.http_call_back.on_before_request(request)
 
         # Add global headers to request
-        request.headers = APIHelper.merge_dicts(self.global_headers, request.headers)
+        request.headers = APIHelper.merge_dicts(self.global_headers(), request.headers)
 
         # Invoke the API call to fetch the response.
         func = self.config.http_client.execute_as_binary if binary else self.config.http_client.execute_as_string
