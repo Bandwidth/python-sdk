@@ -94,6 +94,7 @@ bandwidth/voice/models/callback_method_enum.py
 bandwidth/voice/models/conference_detail.py
 bandwidth/voice/models/conference_event_method_enum.py
 bandwidth/voice/models/conference_member_detail.py
+bandwidth/voice/models/conference_recording_metadata_response.py
 bandwidth/voice/models/direction_enum.py
 bandwidth/voice/models/disconnect_cause_enum.py
 bandwidth/voice/models/disconnect_method_enum.py
@@ -105,7 +106,7 @@ bandwidth/voice/models/state_1_enum.py
 bandwidth/voice/models/state_2_enum.py
 bandwidth/voice/models/state_enum.py
 bandwidth/voice/models/status_1_enum.py
-bandwidth/voice/models/status_2_enum.py
+bandwidth/voice/models/status_3_enum.py
 bandwidth/voice/models/status_enum.py
 bandwidth/voice/models/transcript.py
 bandwidth/voice/models/transcription.py

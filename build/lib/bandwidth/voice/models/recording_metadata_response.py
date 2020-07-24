@@ -18,9 +18,12 @@ class RecordingMetadataResponse(object):
         application_id (string): TODO: type description here.
         account_id (string): TODO: type description here.
         call_id (string): TODO: type description here.
+        parent_call_id (string): TODO: type description here.
         recording_id (string): TODO: type description here.
         to (string): TODO: type description here.
         mfrom (string): TODO: type description here.
+        transfer_caller_id (string): TODO: type description here.
+        transfer_to (string): TODO: type description here.
         duration (string): Format is ISO-8601
         direction (DirectionEnum): TODO: type description here.
         channels (int): TODO: type description here.
@@ -38,9 +41,12 @@ class RecordingMetadataResponse(object):
         "application_id": 'applicationId',
         "account_id": 'accountId',
         "call_id": 'callId',
+        "parent_call_id": 'parentCallId',
         "recording_id": 'recordingId',
         "to": 'to',
         "mfrom": 'from',
+        "transfer_caller_id": 'transferCallerId',
+        "transfer_to": 'transferTo',
         "duration": 'duration',
         "direction": 'direction',
         "channels": 'channels',
@@ -56,9 +62,12 @@ class RecordingMetadataResponse(object):
                  application_id=None,
                  account_id=None,
                  call_id=None,
+                 parent_call_id=None,
                  recording_id=None,
                  to=None,
                  mfrom=None,
+                 transfer_caller_id=None,
+                 transfer_to=None,
                  duration=None,
                  direction=None,
                  channels=None,
@@ -74,9 +83,12 @@ class RecordingMetadataResponse(object):
         self.application_id = application_id
         self.account_id = account_id
         self.call_id = call_id
+        self.parent_call_id = parent_call_id
         self.recording_id = recording_id
         self.to = to
         self.mfrom = mfrom
+        self.transfer_caller_id = transfer_caller_id
+        self.transfer_to = transfer_to
         self.duration = duration
         self.direction = direction
         self.channels = channels
@@ -108,9 +120,12 @@ class RecordingMetadataResponse(object):
         application_id = dictionary.get('applicationId')
         account_id = dictionary.get('accountId')
         call_id = dictionary.get('callId')
+        parent_call_id = dictionary.get('parentCallId')
         recording_id = dictionary.get('recordingId')
         to = dictionary.get('to')
         mfrom = dictionary.get('from')
+        transfer_caller_id = dictionary.get('transferCallerId')
+        transfer_to = dictionary.get('transferTo')
         duration = dictionary.get('duration')
         direction = dictionary.get('direction')
         channels = dictionary.get('channels')
@@ -125,9 +140,12 @@ class RecordingMetadataResponse(object):
         return cls(application_id,
                    account_id,
                    call_id,
+                   parent_call_id,
                    recording_id,
                    to,
                    mfrom,
+                   transfer_caller_id,
+                   transfer_to,
                    duration,
                    direction,
                    channels,

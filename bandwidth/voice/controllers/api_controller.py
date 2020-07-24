@@ -17,6 +17,7 @@ from bandwidth.voice.models.recording_metadata_response import RecordingMetadata
 from bandwidth.voice.models.transcription_response import TranscriptionResponse
 from bandwidth.voice.models.conference_detail import ConferenceDetail
 from bandwidth.voice.models.conference_member_detail import ConferenceMemberDetail
+from bandwidth.voice.models.conference_recording_metadata_response import ConferenceRecordingMetadataResponse
 from bandwidth.voice.exceptions.api_error_response_exception import ApiErrorResponseException
 from bandwidth.exceptions.api_exception import APIException
 
@@ -293,11 +294,7 @@ class APIController(BaseController):
 
     def get_query_metadata_for_account_and_call(self,
                                                 account_id,
-                                                call_id,
-                                                mfrom=None,
-                                                to=None,
-                                                min_start_time=None,
-                                                max_start_time=None):
+                                                call_id):
         """Does a GET request to /api/v2/accounts/{accountId}/calls/{callId}/recordings.
 
         Returns a (potentially empty) list of metadata for the recordings that
@@ -306,10 +303,6 @@ class APIController(BaseController):
         Args:
             account_id (string): TODO: type description here.
             call_id (string): TODO: type description here.
-            mfrom (string, optional): TODO: type description here.
-            to (string, optional): TODO: type description here.
-            min_start_time (string, optional): TODO: type description here.
-            max_start_time (string, optional): TODO: type description here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
@@ -332,16 +325,6 @@ class APIController(BaseController):
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
-        _query_parameters = {
-            'from': mfrom,
-            'to': to,
-            'minStartTime': min_start_time,
-            'maxStartTime': max_start_time
-        }
-        _query_builder = APIHelper.append_url_with_query_parameters(
-            _query_builder,
-            _query_parameters
-        )
         _query_url = APIHelper.clean_url(_query_builder)
 
         # Prepare headers
@@ -828,6 +811,90 @@ class APIController(BaseController):
         # Return appropriate type
         return ApiResponse(_response)
 
+    def get_conferences_by_account(self,
+                                   account_id,
+                                   page_size=1000,
+                                   page_token=None,
+                                   name=None,
+                                   min_created_time=None,
+                                   max_created_time=None):
+        """Does a GET request to /api/v2/accounts/{accountId}/conferences.
+
+        Returns information about the conferences in the account
+
+        Args:
+            account_id (string): TODO: type description here.
+            page_size (int, optional): TODO: type description here. Example:
+                1000
+            page_token (string, optional): TODO: type description here.
+            name (string, optional): TODO: type description here.
+            min_created_time (string, optional): TODO: type description here.
+            max_created_time (string, optional): TODO: type description here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/conferences'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': True}
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_parameters = {
+            'pageSize': page_size,
+            'pageToken': page_token,
+            'name': name,
+            'minCreatedTime': min_created_time,
+            'maxCreatedTime': max_created_time
+        }
+        _query_builder = APIHelper.append_url_with_query_parameters(
+            _query_builder,
+            _query_parameters
+        )
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json'
+        }
+
+        # Prepare and execute request
+        _request = self.config.http_client.get(_query_url, headers=_headers)
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
+
+        decoded = APIHelper.json_deserialize(_response.text, ConferenceDetail.from_dictionary)
+        _result = ApiResponse(_response, body=decoded)
+        return _result
+
     def get_conference_by_id(self,
                              account_id,
                              conference_id):
@@ -959,6 +1026,75 @@ class APIController(BaseController):
         # Return appropriate type
         return ApiResponse(_response)
 
+    def modify_conference_member(self,
+                                 account_id,
+                                 conference_id,
+                                 call_id,
+                                 body=None):
+        """Does a PUT request to /api/v2/accounts/{accountId}/conferences/{conferenceId}/members/{callId}.
+
+        Updates settings for a particular conference member
+
+        Args:
+            account_id (string): TODO: type description here.
+            conference_id (string): TODO: type description here.
+            call_id (string): TODO: type description here.
+            body (ConferenceMemberDetail, optional): TODO: type description
+                here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}/members/{callId}'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': True},
+            'conferenceId': {'value': conference_id, 'encode': True},
+            'callId': {'value': call_id, 'encode': True}
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare headers
+        _headers = {
+            'content-type': 'application/json; charset=utf-8'
+        }
+
+        # Prepare and execute request
+        _request = self.config.http_client.put(_query_url, headers=_headers, parameters=APIHelper.json_serialize(body))
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
+
+        # Return appropriate type
+        return ApiResponse(_response)
+
     def get_conference_member(self,
                               account_id,
                               conference_id,
@@ -1024,6 +1160,203 @@ class APIController(BaseController):
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, ConferenceMemberDetail.from_dictionary)
+        _result = ApiResponse(_response, body=decoded)
+        return _result
+
+    def get_query_metadata_for_account_and_conference(self,
+                                                      account_id,
+                                                      conference_id):
+        """Does a GET request to /api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings.
+
+        Returns a (potentially empty) list of metadata for the recordings that
+        took place during the specified conference
+
+        Args:
+            account_id (string): TODO: type description here.
+            conference_id (string): TODO: type description here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': True},
+            'conferenceId': {'value': conference_id, 'encode': True}
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json'
+        }
+
+        # Prepare and execute request
+        _request = self.config.http_client.get(_query_url, headers=_headers)
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
+
+        decoded = APIHelper.json_deserialize(_response.text, ConferenceRecordingMetadataResponse.from_dictionary)
+        _result = ApiResponse(_response, body=decoded)
+        return _result
+
+    def get_metadata_for_conference_recording(self,
+                                              account_id,
+                                              conference_id,
+                                              recording_id):
+        """Does a GET request to /api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings/{recordingId}.
+
+        Returns metadata for the specified recording
+
+        Args:
+            account_id (string): TODO: type description here.
+            conference_id (string): TODO: type description here.
+            recording_id (string): TODO: type description here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings/{recordingId}'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': True},
+            'conferenceId': {'value': conference_id, 'encode': True},
+            'recordingId': {'value': recording_id, 'encode': True}
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json'
+        }
+
+        # Prepare and execute request
+        _request = self.config.http_client.get(_query_url, headers=_headers)
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
+
+        decoded = APIHelper.json_deserialize(_response.text, RecordingMetadataResponse.from_dictionary)
+        _result = ApiResponse(_response, body=decoded)
+        return _result
+
+    def get_stream_conference_recording_media(self,
+                                              account_id,
+                                              conference_id,
+                                              recording_id):
+        """Does a GET request to /api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings/{recordingId}/media.
+
+        Downloads the specified recording
+
+        Args:
+            account_id (string): TODO: type description here.
+            conference_id (string): TODO: type description here.
+            recording_id (string): TODO: type description here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings/{recordingId}/media'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': True},
+            'conferenceId': {'value': conference_id, 'encode': True},
+            'recordingId': {'value': recording_id, 'encode': True}
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare and execute request
+        _request = self.config.http_client.get(_query_url)
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request, binary=True)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
+
+        decoded = _response.text
         _result = ApiResponse(_response, body=decoded)
         return _result
 

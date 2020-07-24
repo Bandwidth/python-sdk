@@ -15,7 +15,7 @@ class Transcription(object):
 
     Attributes:
         id (string): TODO: type description here.
-        status (Status2Enum): TODO: type description here.
+        status (Status3Enum): TODO: type description here.
         completed_time (string): TODO: type description here.
         url (string): TODO: type description here.
 

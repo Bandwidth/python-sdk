@@ -19,6 +19,7 @@ class Status1Enum(object):
         COMPLETE: TODO: type description here.
         DELETED: TODO: type description here.
         ERROR: TODO: type description here.
+        ALREADYINPROGRESS: TODO: type description here.
 
     """
 
@@ -31,3 +32,5 @@ class Status1Enum(object):
     DELETED = 'deleted'
 
     ERROR = 'error'
+
+    ALREADYINPROGRESS = 'already-in-progress'
