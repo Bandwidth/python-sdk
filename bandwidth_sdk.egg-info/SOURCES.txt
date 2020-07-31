@@ -125,6 +125,8 @@ bandwidth/webrtc/models/participant_subscription.py
 bandwidth/webrtc/models/publish_permission_enum.py
 bandwidth/webrtc/models/session.py
 bandwidth/webrtc/models/subscriptions.py
+bandwidth/webrtc/utils/__init__.py
+bandwidth/webrtc/utils/transfer_util.py
 bandwidth_sdk.egg-info/PKG-INFO
 bandwidth_sdk.egg-info/SOURCES.txt
 bandwidth_sdk.egg-info/dependency_links.txt
