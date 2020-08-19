@@ -15,7 +15,10 @@ PHONE_NUMBER_TAG = "PhoneNumber"
 
 class PhoneNumber(AbstractBxmlVerb):
 
-    def __init__(self, number=None, transfer_answer_url=None, transfer_answer_method=None, username=None, password=None, tag=None, transfer_disconnect_url=None, transfer_disconnect_method=None):
+    def __init__(self, number=None, transfer_answer_url=None, transfer_answer_method=None,
+                username=None, password=None, tag=None, transfer_disconnect_url=None, transfer_disconnect_method=None,
+                transfer_answer_fallback_url=None, transfer_answer_fallback_method=None,
+                fallback_username=None, fallback_password=None):
         """
         Initializes the PhoneNumber class with the following parameters
 
@@ -27,6 +30,10 @@ class PhoneNumber(AbstractBxmlVerb):
         :param str username: The username to authenticate on the transfer event url
         :param str password: The password to authenticate on the transfer event url
         :param str tag: Custom string sent in the callback
+        :param str transfer_answer_fallback_url: URL for fallback events
+        :param str transfer_answer_fallback_method: HTTP method for fallback events
+        :param str fallback_username: Basic auth username for fallback events
+        :param str fallback_password: Basic auth password for fallback events
         """
         self.number = number
         self.transfer_answer_url = transfer_answer_url
@@ -36,6 +43,10 @@ class PhoneNumber(AbstractBxmlVerb):
         self.tag = tag
         self.transfer_disconnect_method = transfer_disconnect_method
         self.transfer_disconnect_url = transfer_disconnect_url
+        self.transfer_answer_fallback_url = transfer_answer_fallback_url
+        self.transfer_answer_fallback_method = transfer_answer_fallback_method
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
 
     def to_etree_element(self):
         """
@@ -60,6 +71,14 @@ class PhoneNumber(AbstractBxmlVerb):
             root.set("transferDisconnectMethod", self.transfer_disconnect_method)
         if self.transfer_disconnect_url is not None:
             root.set("transferDisconnectUrl", self.transfer_disconnect_url)
+        if self.transfer_answer_fallback_url is not None:
+            root.set("transferAnswerFallbackUrl", self.transfer_answer_fallback_url)
+        if self.transfer_answer_fallback_method is not None:
+            root.set("transferAnswerFallbackMethod", self.transfer_answer_fallback_method)
+        if self.fallback_username is not None:
+            root.set("fallbackUsername", self.fallback_username)
+        if self.fallback_password is not None:
+            root.set("fallbackPassword", self.fallback_password)
         return root
 
     def to_bxml(self):

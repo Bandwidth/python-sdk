@@ -72,6 +72,7 @@ bandwidth/voice/bxml/verbs/play_audio.py
 bandwidth/voice/bxml/verbs/record.py
 bandwidth/voice/bxml/verbs/redirect.py
 bandwidth/voice/bxml/verbs/resume_recording.py
+bandwidth/voice/bxml/verbs/ring.py
 bandwidth/voice/bxml/verbs/send_dtmf.py
 bandwidth/voice/bxml/verbs/speak_sentence.py
 bandwidth/voice/bxml/verbs/start_recording.py
@@ -83,6 +84,7 @@ bandwidth/voice/controllers/base_controller.py
 bandwidth/voice/exceptions/__init__.py
 bandwidth/voice/exceptions/api_error_response_exception.py
 bandwidth/voice/models/__init__.py
+bandwidth/voice/models/answer_fallback_method_enum.py
 bandwidth/voice/models/answer_method_enum.py
 bandwidth/voice/models/api_call_response.py
 bandwidth/voice/models/api_call_state_response.py
@@ -101,6 +103,7 @@ bandwidth/voice/models/disconnect_method_enum.py
 bandwidth/voice/models/file_format_enum.py
 bandwidth/voice/models/modify_call_recording_state.py
 bandwidth/voice/models/recording_metadata_response.py
+bandwidth/voice/models/redirect_fallback_method_enum.py
 bandwidth/voice/models/redirect_method_enum.py
 bandwidth/voice/models/state_1_enum.py
 bandwidth/voice/models/state_2_enum.py

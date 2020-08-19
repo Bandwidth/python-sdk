@@ -20,8 +20,8 @@ class StateEnum(object):
 
     """
 
-    DISCONNECTED = 'DISCONNECTED'
+    DISCONNECTED = 'disconnected'
 
-    ANSWERED = 'ANSWERED'
+    ANSWERED = 'answered'
 
-    INITIATED = 'INITIATED'
+    INITIATED = 'initiated'

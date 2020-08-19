@@ -18,7 +18,8 @@ class Record(AbstractBxmlVerb):
     def __init__(self, tag=None, username=None, password=None, record_complete_url=None, record_complete_method=None,
         recording_available_url=None, recording_available_method=None, terminating_digits=None, max_duration=None,
         file_format=None, transcribe=None, transcription_available_url=None, transcription_available_method=None,
-        silence_timeout=None):
+        silence_timeout=None, record_complete_fallback_url=None, record_complete_fallback_method=None,
+        fallback_username=None, fallback_password=None):
         """
         Initializes the Record class with the following parameters
 
@@ -36,6 +37,10 @@ class Record(AbstractBxmlVerb):
         :param str transcription_available_url: URL to send the transcriptionAvailable event to.
         :param str transcription_available_method: The HTTP method to use for the request to transcriptionAvailableUrl. GET or POST
         :param int silence_timeout: Number of seconds of silence that ends the recording
+        :param str record_complete_fallback_url: URL for fallback events
+        :param str record_complete_fallback_method: HTTP method for fallback events
+        :param str fallback_username: Basic auth username for fallback events
+        :param str fallback_password: Basic auth password for fallback events
         """
         self.tag = tag
         self.username = username
@@ -51,6 +56,10 @@ class Record(AbstractBxmlVerb):
         self.transcription_available_url = transcription_available_url
         self.transcription_available_method = transcription_available_method
         self.silence_timeout = silence_timeout
+        self.record_complete_fallback_url = record_complete_fallback_url
+        self.record_complete_fallback_method = record_complete_fallback_method
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
 
     def to_bxml(self):
         root = etree.Element(RECORD_TAG)
@@ -84,4 +93,12 @@ class Record(AbstractBxmlVerb):
             root.set("transcriptionAvailableMethod", self.transcription_available_method)
         if self.silence_timeout is not None:
             root.set("silenceTimeout", str(self.silence_timeout))
+        if self.record_complete_fallback_url is not None:
+            root.set("recordCompleteFallbackUrl", self.record_complete_fallback_url)
+        if self.record_complete_fallback_method is not None:
+            root.set("recordCompleteFallbackMethod", self.record_complete_fallback_method)
+        if self.fallback_username is not None:
+            root.set("fallbackUsername", self.fallback_username)
+        if self.fallback_password is not None:
+            root.set("fallbackPassword", self.fallback_password)
         return etree.tostring(root).decode()

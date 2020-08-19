@@ -17,7 +17,9 @@ class Transfer(AbstractBxmlVerb):
 
     def __init__(self, transfer_caller_id=None, call_timeout=None, tag=None, transfer_complete_url=None,
                 transfer_complete_method=None, username=None, password=None, diversion_treatment=None,
-                diversion_reason=None, phone_numbers=None):
+                diversion_reason=None, phone_numbers=None,
+                transfer_complete_fallback_url=None, transfer_complete_fallback_method=None,
+                fallback_username=None, fallback_password=None):
         """
         Initializes the Transfer class with the following parameters
         
@@ -31,6 +33,10 @@ class Transfer(AbstractBxmlVerb):
         :param str diversion_treatment: The diversion treatment for the call
         :param str diversion_reason: The diversion reason for the call
         :param list<PhoneNumber> phone_numbers: The numbers to receive the transferred call
+        :param str transfer_complete_fallback_url: URL for fallback events
+        :param str transfer_complete_fallback_method: HTTP method for fallback events
+        :param str fallback_username: Basic auth username for fallback events
+        :param str fallback_password: Basic auth password for fallback events
         """
         self.transfer_caller_id = transfer_caller_id
         self.call_timeout = call_timeout
@@ -42,6 +48,10 @@ class Transfer(AbstractBxmlVerb):
         self.diversion_treatment = diversion_treatment
         self.diversion_reason = diversion_reason
         self.phone_numbers = phone_numbers
+        self.transfer_complete_fallback_url = transfer_complete_fallback_url
+        self.transfer_complete_fallback_method = transfer_complete_fallback_method
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
 
     def to_bxml(self):
         root = etree.Element(TRANSFER_TAG)
@@ -63,6 +73,14 @@ class Transfer(AbstractBxmlVerb):
             root.set("diversionTreatment", self.diversion_treatment)
         if self.diversion_reason is not None:
             root.set("diversionReason", self.diversion_reason)
+        if self.transfer_complete_fallback_url is not None:
+            root.set("transferCompleteFallbackUrl", self.transfer_complete_fallback_url)
+        if self.transfer_complete_fallback_method is not None:
+            root.set("transferCompleteFallbackMethod", self.transfer_complete_fallback_method)
+        if self.fallback_username is not None:
+            root.set("fallbackUsername", self.fallback_username)
+        if self.fallback_password is not None:
+            root.set("fallbackPassword", self.fallback_password)
         if self.phone_numbers is not None:
             for phone_number in self.phone_numbers:
                 root.append(phone_number.to_etree_element())

@@ -17,7 +17,9 @@ class Conference(AbstractBxmlVerb):
 
     def __init__(self, conference_name, mute=None, hold=None, call_ids_to_coach=None,
                 conference_event_url=None, conference_event_method=None,
-                username=None, password=None, tag=None):
+                username=None, password=None, tag=None, conference_event_fallback_url=None,
+                conference_event_fallback_method=None, fallback_username=None,
+                fallback_password=None):
         """
         Init for Conference
 
@@ -30,6 +32,10 @@ class Conference(AbstractBxmlVerb):
         :param string username: Basic auth username for events
         :param string password: Basic auth password for events
         :param string tag: Custom tag to be included in events
+        :param string conference_event_fallback_url: Fallback URL for conference events
+        :param string conference_event_fallback_method: HTTP method for fallback URL requests
+        :param string fallback_username: Basic auth username for fallback requests
+        :param string fallback_password: Basic auth password for fallback requests
         """
         self.conference_name = conference_name
         self.mute = mute
@@ -40,6 +46,10 @@ class Conference(AbstractBxmlVerb):
         self.username = username
         self.password = password
         self.tag = tag
+        self.conference_event_fallback_url = conference_event_fallback_url
+        self.conference_event_fallback_method = conference_event_fallback_method
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
 
     def to_bxml(self):
         root = etree.Element(CONFERENCE_TAG)
@@ -68,5 +78,13 @@ class Conference(AbstractBxmlVerb):
             root.set("username", self.username)
         if self.password is not None:
             root.set("password", self.password)
+        if self.conference_event_fallback_url is not None:
+            root.set("conferenceEventFallbackUrl", self.conference_event_fallback_url)
+        if self.conference_event_fallback_method is not None:
+            root.set("conferenceEventFallbackMethod", self.conference_event_fallback_method)
+        if self.fallback_username is not None:
+            root.set("fallbackUsername", self.fallback_username)
+        if self.fallback_password is not None:
+            root.set("fallbackPassword", self.fallback_password)
 
         return etree.tostring(root).decode()

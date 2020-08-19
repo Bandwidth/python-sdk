@@ -16,9 +16,14 @@ class CallEngineModifyConferenceRequest(object):
     Attributes:
         status (StatusEnum): TODO: type description here.
         redirect_url (string): TODO: type description here.
+        redirect_fallback_url (string): TODO: type description here.
         redirect_method (RedirectMethodEnum): TODO: type description here.
+        redirect_fallback_method (RedirectFallbackMethodEnum): TODO: type
+            description here.
         username (string): TODO: type description here.
         password (string): TODO: type description here.
+        fallback_username (string): TODO: type description here.
+        fallback_password (string): TODO: type description here.
 
     """
 
@@ -26,25 +31,37 @@ class CallEngineModifyConferenceRequest(object):
     _names = {
         "redirect_url": 'redirectUrl',
         "status": 'status',
+        "redirect_fallback_url": 'redirectFallbackUrl',
         "redirect_method": 'redirectMethod',
+        "redirect_fallback_method": 'redirectFallbackMethod',
         "username": 'username',
-        "password": 'password'
+        "password": 'password',
+        "fallback_username": 'fallbackUsername',
+        "fallback_password": 'fallbackPassword'
     }
 
     def __init__(self,
                  redirect_url=None,
                  status=None,
+                 redirect_fallback_url=None,
                  redirect_method=None,
+                 redirect_fallback_method=None,
                  username=None,
-                 password=None):
+                 password=None,
+                 fallback_username=None,
+                 fallback_password=None):
         """Constructor for the CallEngineModifyConferenceRequest class"""
 
         # Initialize members of the class
         self.status = status
         self.redirect_url = redirect_url
+        self.redirect_fallback_url = redirect_fallback_url
         self.redirect_method = redirect_method
+        self.redirect_fallback_method = redirect_fallback_method
         self.username = username
         self.password = password
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
 
     @classmethod
     def from_dictionary(cls,
@@ -66,13 +83,21 @@ class CallEngineModifyConferenceRequest(object):
         # Extract variables from the dictionary
         redirect_url = dictionary.get('redirectUrl')
         status = dictionary.get('status')
+        redirect_fallback_url = dictionary.get('redirectFallbackUrl')
         redirect_method = dictionary.get('redirectMethod')
+        redirect_fallback_method = dictionary.get('redirectFallbackMethod')
         username = dictionary.get('username')
         password = dictionary.get('password')
+        fallback_username = dictionary.get('fallbackUsername')
+        fallback_password = dictionary.get('fallbackPassword')
 
         # Return an object of this model
         return cls(redirect_url,
                    status,
+                   redirect_fallback_url,
                    redirect_method,
+                   redirect_fallback_method,
                    username,
-                   password)
+                   password,
+                   fallback_username,
+                   fallback_password)

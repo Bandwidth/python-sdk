@@ -20,6 +20,7 @@ class TwoFactorAuthClient(object):
 
     def __init__(self, timeout=60, max_retries=3, backoff_factor=0,
                  environment=Environment.PRODUCTION,
+                 base_url='https://www.example.com',
                  messaging_basic_auth_user_name='TODO: Replace',
                  messaging_basic_auth_password='TODO: Replace',
                  two_factor_auth_basic_auth_user_name='TODO: Replace',
@@ -33,6 +34,7 @@ class TwoFactorAuthClient(object):
                                         max_retries=max_retries,
                                         backoff_factor=backoff_factor,
                                         environment=environment,
+                                        base_url=base_url,
                                         messaging_basic_auth_user_name=messaging_basic_auth_user_name,
                                         messaging_basic_auth_password=messaging_basic_auth_password,
                                         two_factor_auth_basic_auth_user_name=two_factor_auth_basic_auth_user_name,

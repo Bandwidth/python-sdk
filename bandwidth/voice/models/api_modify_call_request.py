@@ -16,9 +16,14 @@ class ApiModifyCallRequest(object):
     Attributes:
         state (State1Enum): TODO: type description here.
         redirect_url (string): TODO: type description here.
+        redirect_fallback_url (string): TODO: type description here.
         redirect_method (RedirectMethodEnum): TODO: type description here.
+        redirect_fallback_method (RedirectFallbackMethodEnum): TODO: type
+            description here.
         username (string): TODO: type description here.
         password (string): TODO: type description here.
+        fallback_username (string): TODO: type description here.
+        fallback_password (string): TODO: type description here.
         tag (string): TODO: type description here.
 
     """
@@ -27,27 +32,39 @@ class ApiModifyCallRequest(object):
     _names = {
         "redirect_url": 'redirectUrl',
         "state": 'state',
+        "redirect_fallback_url": 'redirectFallbackUrl',
         "redirect_method": 'redirectMethod',
+        "redirect_fallback_method": 'redirectFallbackMethod',
         "username": 'username',
         "password": 'password',
+        "fallback_username": 'fallbackUsername',
+        "fallback_password": 'fallbackPassword',
         "tag": 'tag'
     }
 
     def __init__(self,
                  redirect_url=None,
                  state=None,
+                 redirect_fallback_url=None,
                  redirect_method=None,
+                 redirect_fallback_method=None,
                  username=None,
                  password=None,
+                 fallback_username=None,
+                 fallback_password=None,
                  tag=None):
         """Constructor for the ApiModifyCallRequest class"""
 
         # Initialize members of the class
         self.state = state
         self.redirect_url = redirect_url
+        self.redirect_fallback_url = redirect_fallback_url
         self.redirect_method = redirect_method
+        self.redirect_fallback_method = redirect_fallback_method
         self.username = username
         self.password = password
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
         self.tag = tag
 
     @classmethod
@@ -70,15 +87,23 @@ class ApiModifyCallRequest(object):
         # Extract variables from the dictionary
         redirect_url = dictionary.get('redirectUrl')
         state = dictionary.get('state')
+        redirect_fallback_url = dictionary.get('redirectFallbackUrl')
         redirect_method = dictionary.get('redirectMethod')
+        redirect_fallback_method = dictionary.get('redirectFallbackMethod')
         username = dictionary.get('username')
         password = dictionary.get('password')
+        fallback_username = dictionary.get('fallbackUsername')
+        fallback_password = dictionary.get('fallbackPassword')
         tag = dictionary.get('tag')
 
         # Return an object of this model
         return cls(redirect_url,
                    state,
+                   redirect_fallback_url,
                    redirect_method,
+                   redirect_fallback_method,
                    username,
                    password,
+                   fallback_username,
+                   fallback_password,
                    tag)

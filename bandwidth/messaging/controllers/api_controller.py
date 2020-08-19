@@ -161,7 +161,7 @@ class APIController(BaseController):
             user_id (string): TODO: type description here.
             media_id (string): TODO: type description here.
             content_length (long|int): TODO: type description here.
-            body (string): TODO: type description here.
+            body (typing.BinaryIO): TODO: type description here.
             content_type (string, optional): TODO: type description here.
                 Example: application/octet-stream
             cache_control (string, optional): TODO: type description here.

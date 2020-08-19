@@ -15,3 +15,4 @@ from .stop_recording import StopRecording
 from .start_recording import StartRecording
 from .conference import Conference
 from .bridge import Bridge
+from .ring import Ring

@@ -17,7 +17,9 @@ class Gather(AbstractBxmlVerb):
 
     def __init__(self, gather_url=None, gather_method=None, terminating_digits=None, tag=None, max_digits=None,
                 inter_digit_timeout=None, username=None, password=None, first_digit_timeout=None,
-                play_audio=None, speak_sentence=None, repeat_count=None, nested_verbs=None):
+                play_audio=None, speak_sentence=None, repeat_count=None, nested_verbs=None,
+                gather_fallback_url=None, gather_fallback_method=None, fallback_username=None,
+                fallback_password=None):
         """
         Initializes the Gather class with the following parameters
         
@@ -34,6 +36,10 @@ class Gather(AbstractBxmlVerb):
         :param SpeakSentence speak_sentence: The SpeakSentence tag to include in the gather
         :param int repeat_count: The number of times to repeat the audio prompt
         :param list<PlayAudio|SpeakSentence> nested_verbs: The list of verbs to nest in the gather
+        :param str gather_fallback_url: Fallback url for gather events
+        :param str gather_fallback_method: HTTP method for fallback requests
+        :param str fallback_username: Basic auth username for fallback requests
+        :param str fallback_password: Basic auth password for fallback requests
         """
 
         self.gather_url = gather_url
@@ -49,6 +55,10 @@ class Gather(AbstractBxmlVerb):
         self.speak_sentence = speak_sentence
         self.repeat_count = repeat_count
         self.nested_verbs = nested_verbs
+        self.gather_fallback_url = gather_fallback_url
+        self.gather_fallback_method = gather_fallback_method
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
 
     def to_bxml(self):
         root = etree.Element(GATHER_TAG)
@@ -72,6 +82,14 @@ class Gather(AbstractBxmlVerb):
             root.set("firstDigitTimeout", str(self.first_digit_timeout))
         if self.repeat_count is not None:
             root.set("repeatCount", str(self.repeat_count))
+        if self.gather_fallback_url is not None:
+            root.set("gatherFallbackUrl", self.gather_fallback_url)
+        if self.gather_fallback_method is not None:
+            root.set("gatherFallbackMethod", self.gather_fallback_method)
+        if self.fallback_username is not None:
+            root.set("fallbackUsername", self.fallback_username)
+        if self.fallback_password is not None:
+            root.set("fallbackPassword", self.fallback_password)
         if self.play_audio is not None:
             root.append(self.play_audio.to_etree_element())
         if self.speak_sentence is not None:

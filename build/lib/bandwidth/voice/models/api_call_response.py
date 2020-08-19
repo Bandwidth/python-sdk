@@ -23,13 +23,19 @@ class ApiCallResponse(object):
         start_time (datetime): TODO: type description here.
         call_url (string): TODO: type description here.
         call_timeout (float): TODO: type description here.
+        callback_timeout (float): TODO: type description here.
         answer_url (string): TODO: type description here.
         answer_method (AnswerMethodEnum): TODO: type description here.
+        answer_fallback_url (string): TODO: type description here.
+        answer_fallback_method (AnswerFallbackMethodEnum): TODO: type
+            description here.
         disconnect_url (string): TODO: type description here.
         disconnect_method (DisconnectMethodEnum): TODO: type description
             here.
         username (string): TODO: type description here.
         password (string): TODO: type description here.
+        fallback_username (string): TODO: type description here.
+        fallback_password (string): TODO: type description here.
         tag (string): TODO: type description here.
 
     """
@@ -47,9 +53,14 @@ class ApiCallResponse(object):
         "disconnect_method": 'disconnectMethod',
         "start_time": 'startTime',
         "call_timeout": 'callTimeout',
+        "callback_timeout": 'callbackTimeout',
+        "answer_fallback_url": 'answerFallbackUrl',
+        "answer_fallback_method": 'answerFallbackMethod',
         "disconnect_url": 'disconnectUrl',
         "username": 'username',
         "password": 'password',
+        "fallback_username": 'fallbackUsername',
+        "fallback_password": 'fallbackPassword',
         "tag": 'tag'
     }
 
@@ -65,9 +76,14 @@ class ApiCallResponse(object):
                  disconnect_method=None,
                  start_time=None,
                  call_timeout=None,
+                 callback_timeout=None,
+                 answer_fallback_url=None,
+                 answer_fallback_method=None,
                  disconnect_url=None,
                  username=None,
                  password=None,
+                 fallback_username=None,
+                 fallback_password=None,
                  tag=None):
         """Constructor for the ApiCallResponse class"""
 
@@ -80,12 +96,17 @@ class ApiCallResponse(object):
         self.start_time = APIHelper.RFC3339DateTime(start_time) if start_time else None
         self.call_url = call_url
         self.call_timeout = call_timeout
+        self.callback_timeout = callback_timeout
         self.answer_url = answer_url
         self.answer_method = answer_method
+        self.answer_fallback_url = answer_fallback_url
+        self.answer_fallback_method = answer_fallback_method
         self.disconnect_url = disconnect_url
         self.disconnect_method = disconnect_method
         self.username = username
         self.password = password
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
         self.tag = tag
 
     @classmethod
@@ -117,9 +138,14 @@ class ApiCallResponse(object):
         disconnect_method = dictionary.get('disconnectMethod')
         start_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("startTime")).datetime if dictionary.get("startTime") else None
         call_timeout = dictionary.get('callTimeout')
+        callback_timeout = dictionary.get('callbackTimeout')
+        answer_fallback_url = dictionary.get('answerFallbackUrl')
+        answer_fallback_method = dictionary.get('answerFallbackMethod')
         disconnect_url = dictionary.get('disconnectUrl')
         username = dictionary.get('username')
         password = dictionary.get('password')
+        fallback_username = dictionary.get('fallbackUsername')
+        fallback_password = dictionary.get('fallbackPassword')
         tag = dictionary.get('tag')
 
         # Return an object of this model
@@ -134,7 +160,12 @@ class ApiCallResponse(object):
                    disconnect_method,
                    start_time,
                    call_timeout,
+                   callback_timeout,
+                   answer_fallback_url,
+                   answer_fallback_method,
                    disconnect_url,
                    username,
                    password,
+                   fallback_username,
+                   fallback_password,
                    tag)

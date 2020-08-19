@@ -19,6 +19,7 @@ class ApiTranscribeRecordingRequest(object):
         username (string): TODO: type description here.
         password (string): TODO: type description here.
         tag (string): TODO: type description here.
+        callback_timeout (float): TODO: type description here.
 
     """
 
@@ -28,7 +29,8 @@ class ApiTranscribeRecordingRequest(object):
         "callback_method": 'callbackMethod',
         "username": 'username',
         "password": 'password',
-        "tag": 'tag'
+        "tag": 'tag',
+        "callback_timeout": 'callbackTimeout'
     }
 
     def __init__(self,
@@ -36,7 +38,8 @@ class ApiTranscribeRecordingRequest(object):
                  callback_method=None,
                  username=None,
                  password=None,
-                 tag=None):
+                 tag=None,
+                 callback_timeout=None):
         """Constructor for the ApiTranscribeRecordingRequest class"""
 
         # Initialize members of the class
@@ -45,6 +48,7 @@ class ApiTranscribeRecordingRequest(object):
         self.username = username
         self.password = password
         self.tag = tag
+        self.callback_timeout = callback_timeout
 
     @classmethod
     def from_dictionary(cls,
@@ -69,10 +73,12 @@ class ApiTranscribeRecordingRequest(object):
         username = dictionary.get('username')
         password = dictionary.get('password')
         tag = dictionary.get('tag')
+        callback_timeout = dictionary.get('callbackTimeout')
 
         # Return an object of this model
         return cls(callback_url,
                    callback_method,
                    username,
                    password,
-                   tag)
+                   tag,
+                   callback_timeout)
