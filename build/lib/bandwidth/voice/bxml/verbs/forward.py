@@ -27,7 +27,7 @@ class Forward(AbstractBxmlVerb):
         """
         self.to = to
         self.from_ = from_
-        self.call_timeout = str(call_timeout)
+        self.call_timeout = call_timeout
         self.diversion_treatment = diversion_treatment
         self.diversion_reason = diversion_reason
 
@@ -36,7 +36,7 @@ class Forward(AbstractBxmlVerb):
         if self.to is not None:
             root.set("to", self.to)
         if self.call_timeout is not None:
-            root.set("callTimeout", self.call_timeout)
+            root.set("callTimeout", str(self.call_timeout))
         if self.from_ is not None:
             root.set("from", self.from_)
         if self.diversion_treatment is not None:
