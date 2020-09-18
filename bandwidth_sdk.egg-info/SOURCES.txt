@@ -75,7 +75,9 @@ bandwidth/voice/bxml/verbs/resume_recording.py
 bandwidth/voice/bxml/verbs/ring.py
 bandwidth/voice/bxml/verbs/send_dtmf.py
 bandwidth/voice/bxml/verbs/speak_sentence.py
+bandwidth/voice/bxml/verbs/start_gather.py
 bandwidth/voice/bxml/verbs/start_recording.py
+bandwidth/voice/bxml/verbs/stop_gather.py
 bandwidth/voice/bxml/verbs/stop_recording.py
 bandwidth/voice/bxml/verbs/transfer.py
 bandwidth/voice/controllers/__init__.py

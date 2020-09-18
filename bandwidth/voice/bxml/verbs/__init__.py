@@ -16,3 +16,5 @@ from .start_recording import StartRecording
 from .conference import Conference
 from .bridge import Bridge
 from .ring import Ring
+from .stop_gather import StopGather
+from .start_gather import StartGather
