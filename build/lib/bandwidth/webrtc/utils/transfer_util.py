@@ -12,6 +12,8 @@ def generate_transfer_bxml(deviceToken, sip_uri='sip:sipx.webrtc.bandwidth.com:5
     """
     return f'''
 <?xml version="1.0" encoding="UTF-8" ?>
+<Response>
 <Transfer>
     <SipUri uui="{deviceToken};encoding=jwt">{sip_uri}</SipUri>
-</Transfer>'''
+</Transfer>
+</Response>'''
