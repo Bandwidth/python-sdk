@@ -1,0 +1,6 @@
+# action.yml
+name: 'Validate'
+description: 'Validates the package'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
