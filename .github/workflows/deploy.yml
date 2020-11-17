@@ -1,13 +1,13 @@
 name: Deploy SDK
 
 on:
-  push:
-    branches:
-      - 'master'
-
+  release:
+    types:
+      - published
 jobs:
   deploy:
     name: Deploy to PYPI
+    if: ${{ !github.event.release.prerelease && github.event.release.target_commitish == 'main' }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
