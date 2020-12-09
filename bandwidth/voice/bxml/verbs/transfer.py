@@ -17,7 +17,7 @@ class Transfer(AbstractBxmlVerb):
 
     def __init__(self, transfer_caller_id=None, call_timeout=None, tag=None, transfer_complete_url=None,
                 transfer_complete_method=None, username=None, password=None, diversion_treatment=None,
-                diversion_reason=None, phone_numbers=None,
+                diversion_reason=None, phone_numbers=None, sip_uris=None,
                 transfer_complete_fallback_url=None, transfer_complete_fallback_method=None,
                 fallback_username=None, fallback_password=None):
         """
@@ -33,6 +33,7 @@ class Transfer(AbstractBxmlVerb):
         :param str diversion_treatment: The diversion treatment for the call
         :param str diversion_reason: The diversion reason for the call
         :param list<PhoneNumber> phone_numbers: The numbers to receive the transferred call
+        :param list<SipUri> sip_uris: The sip uris to receive the transferred call
         :param str transfer_complete_fallback_url: URL for fallback events
         :param str transfer_complete_fallback_method: HTTP method for fallback events
         :param str fallback_username: Basic auth username for fallback events
@@ -48,6 +49,7 @@ class Transfer(AbstractBxmlVerb):
         self.diversion_treatment = diversion_treatment
         self.diversion_reason = diversion_reason
         self.phone_numbers = phone_numbers
+        self.sip_uris = sip_uris
         self.transfer_complete_fallback_url = transfer_complete_fallback_url
         self.transfer_complete_fallback_method = transfer_complete_fallback_method
         self.fallback_username = fallback_username
@@ -84,4 +86,7 @@ class Transfer(AbstractBxmlVerb):
         if self.phone_numbers is not None:
             for phone_number in self.phone_numbers:
                 root.append(phone_number.to_etree_element())
+        if self.sip_uris is not None:
+            for sip_uri in self.sip_uris:
+                root.append(sip_uri.to_etree_element())
         return etree.tostring(root).decode()
