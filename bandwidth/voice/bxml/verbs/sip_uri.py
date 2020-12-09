@@ -1,7 +1,7 @@
 """
-phone_number.py
+sip_uri.py
 
-Representation of Bandwidth's phone number BXML verb
+Representation of Bandwidth's sip uri BXML verb
 
 @copyright Bandwidth INC
 """
@@ -10,19 +10,20 @@ from lxml import etree
 
 from .base_verb import AbstractBxmlVerb
 
-PHONE_NUMBER_TAG = "PhoneNumber"
+SIP_URI_TAG = "SipUri"
 
 
-class PhoneNumber(AbstractBxmlVerb):
+class SipUri(AbstractBxmlVerb):
 
-    def __init__(self, number=None, transfer_answer_url=None, transfer_answer_method=None,
-                username=None, password=None, tag=None, transfer_disconnect_url=None, transfer_disconnect_method=None,
+    def __init__(self, uri=None, transfer_answer_url=None, transfer_answer_method=None,
+                username=None, password=None, tag=None, uui=None,
+                transfer_disconnect_url=None, transfer_disconnect_method=None,
                 transfer_answer_fallback_url=None, transfer_answer_fallback_method=None,
                 fallback_username=None, fallback_password=None):
         """
-        Initializes the PhoneNumber class with the following parameters
+        Initializes the SipUri class with the following parameters
 
-        :param str number: The phone number
+        :param str uri: The sip uri 
         :param str transfer_answer_url: The url to send the transfer event to
         :param str transfer_answer_method: The http method of the transfer event request
         :param str transfer_disconnect_url: The url to send the transfer disconnect event to
@@ -30,17 +31,19 @@ class PhoneNumber(AbstractBxmlVerb):
         :param str username: The username to authenticate on the transfer event url
         :param str password: The password to authenticate on the transfer event url
         :param str tag: Custom string sent in the callback
+        :param str uui: The value of the `User-To-User` header to send within the initial `INVITE` 
         :param str transfer_answer_fallback_url: URL for fallback events
         :param str transfer_answer_fallback_method: HTTP method for fallback events
         :param str fallback_username: Basic auth username for fallback events
         :param str fallback_password: Basic auth password for fallback events
         """
-        self.number = number
+        self.uri = uri
         self.transfer_answer_url = transfer_answer_url
         self.transfer_answer_method = transfer_answer_method
         self.username = username
         self.password = password
         self.tag = tag
+        self.uui = uui
         self.transfer_disconnect_method = transfer_disconnect_method
         self.transfer_disconnect_url = transfer_disconnect_url
         self.transfer_answer_fallback_url = transfer_answer_fallback_url
@@ -54,9 +57,9 @@ class PhoneNumber(AbstractBxmlVerb):
 
         :return etree.Element: The etree Element representing this class
         """
-        root = etree.Element(PHONE_NUMBER_TAG)
-        if self.number is not None:
-            root.text = self.number
+        root = etree.Element(SIP_URI_TAG)
+        if self.uri is not None:
+            root.text = self.uri
         if self.transfer_answer_url is not None:
             root.set("transferAnswerUrl", self.transfer_answer_url)
         if self.transfer_answer_method is not None:
@@ -67,6 +70,8 @@ class PhoneNumber(AbstractBxmlVerb):
             root.set("password", self.password)
         if self.tag is not None:
             root.set("tag", self.tag)
+        if self.uui is not None:
+            root.set("uui", self.uui)
         if self.transfer_disconnect_method is not None:
             root.set("transferDisconnectMethod", self.transfer_disconnect_method)
         if self.transfer_disconnect_url is not None:

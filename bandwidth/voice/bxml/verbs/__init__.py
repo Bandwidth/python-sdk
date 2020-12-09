@@ -18,3 +18,5 @@ from .bridge import Bridge
 from .ring import Ring
 from .stop_gather import StopGather
 from .start_gather import StartGather
+from .tag import Tag
+from .sip_uri import SipUri
