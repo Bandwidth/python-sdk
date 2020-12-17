@@ -15,7 +15,12 @@ class ApiCreateCallRequest(object):
 
     Attributes:
         mfrom (string): Format is E164
-        to (string): Format is E164
+        to (string): Format is E164 or SIP URI
+        uui (string): When calling a SIP URI, this will be sent as the
+            'User-To-User' header within the initial INVITE. An 'encoding'
+            parameter must be specified as described in
+            https://tools.ietf.org/html/rfc7433. This header cannot exceed 256
+            characters, including the encoding parameter.
         call_timeout (float): TODO: type description here.
         callback_timeout (float): TODO: type description here.
         answer_url (string): TODO: type description here.
@@ -43,6 +48,7 @@ class ApiCreateCallRequest(object):
         "to": 'to',
         "answer_url": 'answerUrl',
         "application_id": 'applicationId',
+        "uui": 'uui',
         "call_timeout": 'callTimeout',
         "callback_timeout": 'callbackTimeout',
         "answer_fallback_url": 'answerFallbackUrl',
@@ -64,6 +70,7 @@ class ApiCreateCallRequest(object):
                  to=None,
                  answer_url=None,
                  application_id=None,
+                 uui=None,
                  call_timeout=None,
                  callback_timeout=None,
                  answer_fallback_url=None,
@@ -83,6 +90,7 @@ class ApiCreateCallRequest(object):
         # Initialize members of the class
         self.mfrom = mfrom
         self.to = to
+        self.uui = uui
         self.call_timeout = call_timeout
         self.callback_timeout = callback_timeout
         self.answer_url = answer_url
@@ -122,6 +130,7 @@ class ApiCreateCallRequest(object):
         to = dictionary.get('to')
         answer_url = dictionary.get('answerUrl')
         application_id = dictionary.get('applicationId')
+        uui = dictionary.get('uui')
         call_timeout = dictionary.get('callTimeout')
         callback_timeout = dictionary.get('callbackTimeout')
         answer_fallback_url = dictionary.get('answerFallbackUrl')
@@ -142,6 +151,7 @@ class ApiCreateCallRequest(object):
                    to,
                    answer_url,
                    application_id,
+                   uui,
                    call_timeout,
                    callback_timeout,
                    answer_fallback_url,

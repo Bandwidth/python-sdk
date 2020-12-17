@@ -16,7 +16,7 @@ from bandwidth.webrtc.models.participant import Participant
 from bandwidth.webrtc.models.session import Session
 from bandwidth.webrtc.models.subscriptions import Subscriptions
 from bandwidth.exceptions.api_exception import APIException
-from bandwidth.webrtc.exceptions.error_exception import ErrorException
+from bandwidth.webrtc.exceptions.error_enum import ErrorEnum
 
 
 class APIController(BaseController):
@@ -54,7 +54,7 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/participants'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -79,7 +79,7 @@ class APIController(BaseController):
         elif _response.status_code == 403:
             raise APIException('Access Denied', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, AccountsParticipantsResponse.from_dictionary)
@@ -112,8 +112,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/participants/{participantId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -137,7 +137,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Participant.from_dictionary)
@@ -171,8 +171,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/participants/{participantId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -191,7 +191,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -225,7 +225,7 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -250,7 +250,7 @@ class APIController(BaseController):
         elif _response.status_code == 403:
             raise APIException('Access Denied', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Session.from_dictionary)
@@ -283,8 +283,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -308,7 +308,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Session.from_dictionary)
@@ -342,8 +342,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -362,7 +362,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -394,8 +394,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}/participants'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -419,7 +419,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Participant.from_dictionary)
@@ -459,9 +459,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}/participants/{participantId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -485,7 +485,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -522,9 +522,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}/participants/{participantId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -543,7 +543,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -577,9 +577,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}/participants/{participantId}/subscriptions'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -603,7 +603,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Subscriptions.from_dictionary)
@@ -645,9 +645,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}/participants/{participantId}/subscriptions'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -673,7 +673,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorEnum('Unexpected Error', _response)
         self.validate_response(_response)
 
         # Return appropriate type
