@@ -9,6 +9,9 @@ Representation of Bandwidth's gather BXML verb
 from lxml import etree
 
 from .base_verb import AbstractBxmlVerb
+from .speak_sentence import SSML_REGEX
+
+import re
 
 GATHER_TAG = "Gather"
 
@@ -97,4 +100,4 @@ class Gather(AbstractBxmlVerb):
         if self.nested_verbs is not None:
             for verb in self.nested_verbs:
                 root.append(verb.to_etree_element())
-        return etree.tostring(root).decode()
+        return re.sub(SSML_REGEX, r"<\1>", etree.tostring(root).decode())
