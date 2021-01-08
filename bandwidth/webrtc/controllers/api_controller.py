@@ -54,7 +54,7 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/participants'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -112,8 +112,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/participants/{participantId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -171,8 +171,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/participants/{participantId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -225,7 +225,7 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -283,8 +283,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -342,8 +342,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -394,8 +394,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}/participants'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -459,9 +459,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}/participants/{participantId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -522,9 +522,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}/participants/{participantId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -577,9 +577,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}/participants/{participantId}/subscriptions'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
@@ -645,9 +645,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/sessions/{sessionId}/participants/{participantId}/subscriptions'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'participantId': {'value': participant_id, 'encode': True},
-            'sessionId': {'value': session_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'participantId': {'value': participant_id, 'encode': False},
+            'sessionId': {'value': session_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.WEBRTCDEFAULT)
         _query_builder += _url_path
