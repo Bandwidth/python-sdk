@@ -116,7 +116,7 @@ class APIController(BaseController):
         _url_path = '/users/{userId}/media/{mediaId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
             'userId': {'value': user_id, 'encode': True},
-            'mediaId': {'value': media_id, 'encode': True}
+            'mediaId': {'value': media_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
         _query_builder += _url_path
