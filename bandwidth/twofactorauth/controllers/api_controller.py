@@ -52,7 +52,7 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/code/voice'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.TWOFACTORAUTHDEFAULT)
         _query_builder += _url_path
@@ -106,7 +106,7 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/code/messaging'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.TWOFACTORAUTHDEFAULT)
         _query_builder += _url_path
@@ -159,7 +159,7 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/accounts/{accountId}/code/verify'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.TWOFACTORAUTHDEFAULT)
         _query_builder += _url_path

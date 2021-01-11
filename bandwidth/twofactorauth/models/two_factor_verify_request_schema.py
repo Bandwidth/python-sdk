@@ -15,14 +15,10 @@ class TwoFactorVerifyRequestSchema(object):
 
     Attributes:
         to (string): The phone number to send the 2fa code to.
-        mfrom (string): The application phone number, the sender of the 2fa
-            code.
         application_id (string): The application unique ID, obtained from
             Bandwidth.
         scope (string): An optional field to denote what scope or action the
             2fa code is addressing.  If not supplied, defaults to "2FA".
-        digits (float): The number of digits for your 2fa code.  The valid
-            number ranges from 2 to 8, inclusively.
         expiration_time_in_minutes (float): The time period, in minutes, to
             validate the 2fa code.  By setting this to 3 minutes, it will mean
             any code generated within the last 3 minutes are still valid.  The
@@ -35,9 +31,7 @@ class TwoFactorVerifyRequestSchema(object):
     # Create a mapping from Model property names to API property names
     _names = {
         "to": 'to',
-        "mfrom": 'from',
         "application_id": 'applicationId',
-        "digits": 'digits',
         "expiration_time_in_minutes": 'expirationTimeInMinutes',
         "code": 'code',
         "scope": 'scope'
@@ -45,9 +39,7 @@ class TwoFactorVerifyRequestSchema(object):
 
     def __init__(self,
                  to=None,
-                 mfrom=None,
                  application_id=None,
-                 digits=None,
                  expiration_time_in_minutes=None,
                  code=None,
                  scope=None):
@@ -55,10 +47,8 @@ class TwoFactorVerifyRequestSchema(object):
 
         # Initialize members of the class
         self.to = to
-        self.mfrom = mfrom
         self.application_id = application_id
         self.scope = scope
-        self.digits = digits
         self.expiration_time_in_minutes = expiration_time_in_minutes
         self.code = code
 
@@ -81,18 +71,14 @@ class TwoFactorVerifyRequestSchema(object):
 
         # Extract variables from the dictionary
         to = dictionary.get('to')
-        mfrom = dictionary.get('from')
         application_id = dictionary.get('applicationId')
-        digits = dictionary.get('digits')
         expiration_time_in_minutes = dictionary.get('expirationTimeInMinutes')
         code = dictionary.get('code')
         scope = dictionary.get('scope')
 
         # Return an object of this model
         return cls(to,
-                   mfrom,
                    application_id,
-                   digits,
                    expiration_time_in_minutes,
                    code,
                    scope)

@@ -57,7 +57,7 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -122,8 +122,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -189,8 +189,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -255,8 +255,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recording'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -320,8 +320,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -387,9 +387,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True},
-            'recordingId': {'value': recording_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -454,9 +454,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True},
-            'recordingId': {'value': recording_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -516,9 +516,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True},
-            'recordingId': {'value': recording_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -578,9 +578,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True},
-            'recordingId': {'value': recording_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -640,9 +640,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True},
-            'recordingId': {'value': recording_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -710,9 +710,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True},
-            'recordingId': {'value': recording_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -778,9 +778,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True},
-            'recordingId': {'value': recording_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -847,7 +847,7 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/conferences'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -922,8 +922,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'conferenceId': {'value': conference_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'conferenceId': {'value': conference_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -971,7 +971,7 @@ class APIController(BaseController):
         Args:
             account_id (string): TODO: type description here.
             conference_id (string): TODO: type description here.
-            body (CallEngineModifyConferenceRequest, optional): TODO: type
+            body (ApiModifyConferenceRequest, optional): TODO: type
                 description here.
 
         Returns:
@@ -989,8 +989,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'conferenceId': {'value': conference_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'conferenceId': {'value': conference_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -1057,9 +1057,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}/members/{callId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'conferenceId': {'value': conference_id, 'encode': True},
-            'callId': {'value': call_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'conferenceId': {'value': conference_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -1124,9 +1124,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}/members/{memberId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'conferenceId': {'value': conference_id, 'encode': True},
-            'memberId': {'value': member_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'conferenceId': {'value': conference_id, 'encode': False},
+            'memberId': {'value': member_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -1191,8 +1191,8 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'conferenceId': {'value': conference_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'conferenceId': {'value': conference_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -1258,9 +1258,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings/{recordingId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'conferenceId': {'value': conference_id, 'encode': True},
-            'recordingId': {'value': recording_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'conferenceId': {'value': conference_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -1326,9 +1326,9 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings/{recordingId}/media'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True},
-            'conferenceId': {'value': conference_id, 'encode': True},
-            'recordingId': {'value': recording_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False},
+            'conferenceId': {'value': conference_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
@@ -1397,7 +1397,7 @@ class APIController(BaseController):
         # Prepare query URL
         _url_path = '/api/v2/accounts/{accountId}/recordings'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': True}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
