@@ -11,7 +11,7 @@ from bandwidth.configuration import Server
 from bandwidth.http.api_response import ApiResponse
 from bandwidth.voice.controllers.base_controller import BaseController
 from bandwidth.http.auth.voice_basic_auth import VoiceBasicAuth
-from bandwidth.voice.models.api_call_response import ApiCallResponse
+from bandwidth.voice.models.api_call_response_name_change_test import ApiCallResponseNameChangeTest
 from bandwidth.voice.models.api_call_state_response import ApiCallStateResponse
 from bandwidth.voice.models.recording_metadata_response import RecordingMetadataResponse
 from bandwidth.voice.models.transcription_response import TranscriptionResponse
@@ -91,7 +91,7 @@ class APIController(BaseController):
             raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, ApiCallResponse.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, ApiCallResponseNameChangeTest.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 

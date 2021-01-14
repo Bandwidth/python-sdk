@@ -1,5 +1,5 @@
 __all__ = [
-    'api_call_response',
+    'api_call_response_name_change_test',
     'api_call_state_response',
     'api_create_call_request',
     'api_modify_call_request',
