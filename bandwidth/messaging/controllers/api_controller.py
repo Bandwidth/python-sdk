@@ -13,6 +13,7 @@ from bandwidth.utilities.file_wrapper import FileWrapper
 from bandwidth.messaging.controllers.base_controller import BaseController
 from bandwidth.http.auth.messaging_basic_auth import MessagingBasicAuth
 from bandwidth.messaging.models.media import Media
+from bandwidth.messaging.models.bandwidth_messages_list import BandwidthMessagesList
 from bandwidth.messaging.models.bandwidth_message import BandwidthMessage
 from bandwidth.messaging.exceptions.messaging_exception import MessagingException
 
@@ -280,6 +281,102 @@ class APIController(BaseController):
 
         # Return appropriate type
         return ApiResponse(_response)
+
+    def get_messages(self,
+                     account_id,
+                     user_id,
+                     message_id=None,
+                     source_tn=None,
+                     destination_tn=None,
+                     message_status=None,
+                     error_code=None,
+                     from_date_time=None,
+                     to_date_time=None,
+                     page_token=None,
+                     limit=None):
+        """Does a GET request to /users/{userId}/messages.
+
+        getMessages
+
+        Args:
+            account_id (string): TODO: type description here.
+            user_id (string): TODO: type description here.
+            message_id (string, optional): TODO: type description here.
+            source_tn (string, optional): TODO: type description here.
+            destination_tn (string, optional): TODO: type description here.
+            message_status (string, optional): TODO: type description here.
+            error_code (int, optional): TODO: type description here.
+            from_date_time (string, optional): TODO: type description here.
+            to_date_time (string, optional): TODO: type description here.
+            page_token (string, optional): TODO: type description here.
+            limit (int, optional): TODO: type description here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/users/{userId}/messages'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': False},
+            'userId': {'value': user_id, 'encode': False}
+        })
+        _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
+        _query_builder += _url_path
+        _query_parameters = {
+            'messageId': message_id,
+            'sourceTn': source_tn,
+            'destinationTn': destination_tn,
+            'messageStatus': message_status,
+            'errorCode': error_code,
+            'fromDateTime': from_date_time,
+            'toDateTime': to_date_time,
+            'pageToken': page_token,
+            'limit': limit
+        }
+        _query_builder = APIHelper.append_url_with_query_parameters(
+            _query_builder,
+            _query_parameters
+        )
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json'
+        }
+
+        # Prepare and execute request
+        _request = self.config.http_client.get(_query_url, headers=_headers)
+        MessagingBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise MessagingException('400 Request is malformed or invalid', _response)
+        elif _response.status_code == 401:
+            raise MessagingException('401 The specified user does not have access to the account', _response)
+        elif _response.status_code == 403:
+            raise MessagingException('403 The user does not have access to this API', _response)
+        elif _response.status_code == 404:
+            raise MessagingException('404 Path not found', _response)
+        elif _response.status_code == 415:
+            raise MessagingException('415 The content-type of the request is incorrect', _response)
+        elif _response.status_code == 429:
+            raise MessagingException('429 The rate limit has been reached', _response)
+        self.validate_response(_response)
+
+        decoded = APIHelper.json_deserialize(_response.text, BandwidthMessagesList.from_dictionary)
+        _result = ApiResponse(_response, body=decoded)
+        return _result
 
     def create_message(self,
                        user_id,
