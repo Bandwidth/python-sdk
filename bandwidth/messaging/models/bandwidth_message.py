@@ -14,17 +14,21 @@ class BandwidthMessage(object):
     TODO: type model description here.
 
     Attributes:
-        id (string): TODO: type description here.
-        owner (string): TODO: type description here.
-        application_id (string): TODO: type description here.
-        time (string): TODO: type description here.
-        segment_count (int): TODO: type description here.
-        direction (string): TODO: type description here.
-        to (list of string): TODO: type description here.
-        mfrom (string): TODO: type description here.
-        media (list of string): TODO: type description here.
-        text (string): TODO: type description here.
-        tag (string): TODO: type description here.
+        id (string): The id of the message
+        owner (string): The Bandwidth phone number associated with the
+            message
+        application_id (string): The application ID associated with the
+            message
+        time (string): The datetime stamp of the message in ISO 8601
+        segment_count (int): The number of segments the original message from
+            the user is broken into before sending over to carrier networks
+        direction (string): The direction of the message relative to
+            Bandwidth. Can be in or out
+        to (list of string): The phone number recipients of the message
+        mfrom (string): The phone number the message was sent from
+        media (list of string): The list of media URLs sent in the message
+        text (string): The contents of the message
+        tag (string): The custom string set by the user
 
     """
 

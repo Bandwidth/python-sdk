@@ -21,7 +21,7 @@ class Media(object):
         content_length (string): TODO: type description here.
         content_type (string): TODO: type description here.
         tags (list of Tag): TODO: type description here.
-        user_id (string): TODO: type description here.
+        user_id (string): User's account ID
         media_name (string): TODO: type description here.
         media_id (string): TODO: type description here.
         cache_control (string): TODO: type description here.
