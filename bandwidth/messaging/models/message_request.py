@@ -14,12 +14,18 @@ class MessageRequest(object):
     TODO: type model description here.
 
     Attributes:
-        application_id (string): TODO: type description here.
-        to (list of string): TODO: type description here.
-        mfrom (string): TODO: type description here.
-        text (string): TODO: type description here.
-        media (list of string): TODO: type description here.
-        tag (string): TODO: type description here.
+        application_id (string): The ID of the Application your from number is
+            associated with in the Bandwidth Phone Number Dashboard.
+        to (list of string): The phone number(s) the message should be sent to
+            in E164 format
+        mfrom (string): One of your telephone numbers the message should come
+            from in E164 format
+        text (string): The contents of the text message. Must be 2048
+            characters or less.
+        media (list of string): A list of URLs to include as media attachments
+            as part of the message.
+        tag (string): A custom string that will be included in callback events
+            of the message. Max 1024 characters
 
     """
 
