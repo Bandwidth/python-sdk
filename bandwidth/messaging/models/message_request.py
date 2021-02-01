@@ -26,6 +26,9 @@ class MessageRequest(object):
             as part of the message.
         tag (string): A custom string that will be included in callback events
             of the message. Max 1024 characters
+        priority (PriorityEnum): The message's priority, currently for
+            toll-free or short code SMS only. Messages with a priority value
+            of `"high"` are given preference over your other traffic.
 
     """
 
@@ -36,7 +39,8 @@ class MessageRequest(object):
         "mfrom": 'from',
         "text": 'text',
         "media": 'media',
-        "tag": 'tag'
+        "tag": 'tag',
+        "priority": 'priority'
     }
 
     def __init__(self,
@@ -45,7 +49,8 @@ class MessageRequest(object):
                  mfrom=None,
                  text=None,
                  media=None,
-                 tag=None):
+                 tag=None,
+                 priority=None):
         """Constructor for the MessageRequest class"""
 
         # Initialize members of the class
@@ -55,6 +60,7 @@ class MessageRequest(object):
         self.text = text
         self.media = media
         self.tag = tag
+        self.priority = priority
 
     @classmethod
     def from_dictionary(cls,
@@ -80,6 +86,7 @@ class MessageRequest(object):
         text = dictionary.get('text')
         media = dictionary.get('media')
         tag = dictionary.get('tag')
+        priority = dictionary.get('priority')
 
         # Return an object of this model
         return cls(application_id,
@@ -87,4 +94,5 @@ class MessageRequest(object):
                    mfrom,
                    text,
                    media,
-                   tag)
+                   tag,
+                   priority)
