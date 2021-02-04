@@ -1,4 +1,5 @@
 __all__ = [
+    'bxml',
     'controllers',
     'exceptions',
     'models',
