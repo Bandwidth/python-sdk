@@ -8,4 +8,5 @@ __all__ = [
     'bandwidth_callback_message',
     'bandwidth_message',
     'message_request',
+    'priority_enum',
 ]
