@@ -1,3 +1,5 @@
 __all__ = [
-    'invalid_request_exception',
+    'error_with_request_exception',
+    'unauthorized_request_exception',
+    'forbidden_request_exception',
 ]

@@ -29,6 +29,7 @@ class BandwidthMessage(object):
         media (list of string): The list of media URLs sent in the message
         text (string): The contents of the message
         tag (string): The custom string set by the user
+        priority (string): The priority specified by the user
 
     """
 
@@ -44,7 +45,8 @@ class BandwidthMessage(object):
         "mfrom": 'from',
         "media": 'media',
         "text": 'text',
-        "tag": 'tag'
+        "tag": 'tag',
+        "priority": 'priority'
     }
 
     def __init__(self,
@@ -58,7 +60,8 @@ class BandwidthMessage(object):
                  mfrom=None,
                  media=None,
                  text=None,
-                 tag=None):
+                 tag=None,
+                 priority=None):
         """Constructor for the BandwidthMessage class"""
 
         # Initialize members of the class
@@ -73,6 +76,7 @@ class BandwidthMessage(object):
         self.media = media
         self.text = text
         self.tag = tag
+        self.priority = priority
 
     @classmethod
     def from_dictionary(cls,
@@ -103,6 +107,7 @@ class BandwidthMessage(object):
         media = dictionary.get('media')
         text = dictionary.get('text')
         tag = dictionary.get('tag')
+        priority = dictionary.get('priority')
 
         # Return an object of this model
         return cls(id,
@@ -115,4 +120,5 @@ class BandwidthMessage(object):
                    mfrom,
                    media,
                    text,
-                   tag)
+                   tag,
+                   priority)

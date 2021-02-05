@@ -14,22 +14,24 @@ from bandwidth.http.auth.two_factor_auth_basic_auth import TwoFactorAuthBasicAut
 from bandwidth.twofactorauth.models.two_factor_voice_response import TwoFactorVoiceResponse
 from bandwidth.twofactorauth.models.two_factor_messaging_response import TwoFactorMessagingResponse
 from bandwidth.twofactorauth.models.two_factor_verify_code_response import TwoFactorVerifyCodeResponse
-from bandwidth.twofactorauth.exceptions.invalid_request_exception import InvalidRequestException
+from bandwidth.twofactorauth.exceptions.error_with_request_exception import ErrorWithRequestException
+from bandwidth.twofactorauth.exceptions.unauthorized_request_exception import UnauthorizedRequestException
+from bandwidth.twofactorauth.exceptions.forbidden_request_exception import ForbiddenRequestException
 
 
-class APIController(BaseController):
+class MFAController(BaseController):
 
     """A Controller to access Endpoints in the bandwidth API."""
 
     def __init__(self, config, call_back=None):
-        super(APIController, self).__init__(config, call_back)
+        super(MFAController, self).__init__(config, call_back)
 
     def create_voice_two_factor(self,
                                 account_id,
                                 body):
         """Does a POST request to /accounts/{accountId}/code/voice.
 
-        Two-Factor authentication with Bandwidth Voice services
+        Allows a user to send a MFA code through a phone call
 
         Args:
             account_id (string): Bandwidth Account ID with Voice service
@@ -71,7 +73,13 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise InvalidRequestException('client request error', _response)
+            raise ErrorWithRequestException('If there is any issue with values passed in by the user', _response)
+        elif _response.status_code == 401:
+            raise UnauthorizedRequestException('Authentication is either incorrect or not present', _response)
+        elif _response.status_code == 403:
+            raise ForbiddenRequestException('The user is not authorized to access this resource', _response)
+        elif _response.status_code == 500:
+            raise ErrorWithRequestException('An internal server error occurred', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, TwoFactorVoiceResponse.from_dictionary)
@@ -83,7 +91,7 @@ class APIController(BaseController):
                                     body):
         """Does a POST request to /accounts/{accountId}/code/messaging.
 
-        Two-Factor authentication with Bandwidth messaging services
+        Allows a user to send a MFA code through a text message (SMS)
 
         Args:
             account_id (string): Bandwidth Account ID with Messaging service
@@ -125,7 +133,13 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise InvalidRequestException('client request error', _response)
+            raise ErrorWithRequestException('If there is any issue with values passed in by the user', _response)
+        elif _response.status_code == 401:
+            raise UnauthorizedRequestException('Authentication is either incorrect or not present', _response)
+        elif _response.status_code == 403:
+            raise ForbiddenRequestException('The user is not authorized to access this resource', _response)
+        elif _response.status_code == 500:
+            raise ErrorWithRequestException('An internal server error occurred', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, TwoFactorMessagingResponse.from_dictionary)
@@ -137,7 +151,7 @@ class APIController(BaseController):
                                  body):
         """Does a POST request to /accounts/{accountId}/code/verify.
 
-        Verify a previously sent two-factor authentication code
+        Allows a user to verify an MFA code
 
         Args:
             account_id (string): Bandwidth Account ID with Two-Factor enabled
@@ -178,7 +192,15 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise InvalidRequestException('client request error', _response)
+            raise ErrorWithRequestException('If there is any issue with values passed in by the user', _response)
+        elif _response.status_code == 401:
+            raise UnauthorizedRequestException('Authentication is either incorrect or not present', _response)
+        elif _response.status_code == 403:
+            raise ForbiddenRequestException('The user is not authorized to access this resource', _response)
+        elif _response.status_code == 429:
+            raise ErrorWithRequestException('The user has made too many bad requests and is temporarily locked out', _response)
+        elif _response.status_code == 500:
+            raise ErrorWithRequestException('An internal server error occurred', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, TwoFactorVerifyCodeResponse.from_dictionary)

@@ -188,7 +188,7 @@ class Configuration(object):
         Environment.PRODUCTION: {
             Server.DEFAULT: 'api.bandwidth.com',
             Server.MESSAGINGDEFAULT: 'https://messaging.bandwidth.com/api/v2',
-            Server.TWOFACTORAUTHDEFAULT: 'https://mfa.bandwidth.com/api/v1/',
+            Server.TWOFACTORAUTHDEFAULT: 'https://mfa.bandwidth.com/api/v1',
             Server.VOICEDEFAULT: 'https://voice.bandwidth.com',
             Server.WEBRTCDEFAULT: 'https://api.webrtc.bandwidth.com/v1'
         },
