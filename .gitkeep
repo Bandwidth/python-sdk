@@ -1,3 +1,4 @@
 README.md
 bandwidth/voice/bxml/*
 bandwidth/webrtc/utils/*
+tests/integration/*

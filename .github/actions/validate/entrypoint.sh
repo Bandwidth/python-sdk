@@ -1,5 +1,5 @@
 #!/bin/sh
 
-pip install -e .
-python /bxml_tests.py
-python /api_tests.py
+pip install -r requirements.txt
+python -m unittest tests.integration.bxml_tests
+python -m unittest tests.integration.api_tests
