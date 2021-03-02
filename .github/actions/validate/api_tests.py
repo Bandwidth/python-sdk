@@ -51,7 +51,7 @@ class MonitorTest(unittest.TestCase):
         )
         self.voice_client = self.bandwidth_client.voice_client.client
         self.messaging_client = self.bandwidth_client.messaging_client.client
-        self.auth_client = self.bandwidth_client.two_factor_auth_client.client
+        self.auth_client = self.bandwidth_client.two_factor_auth_client.mfa
 
     def test_create_message(self):
         body = MessageRequest()
@@ -59,7 +59,7 @@ class MonitorTest(unittest.TestCase):
         body.to = [PHONE_NUMBER_INBOUND]
         body.mfrom = PHONE_NUMBER_OUTBOUND
         body.text = "Python Monitoring"
-        response = self.messaging_client.create_message(ACCOUNT_ID, body=body)
+        response = self.messaging_client.create_message(ACCOUNT_ID, body)
         self.assertTrue(len(response.body.id) > 0) #validate that _some_ id was returned
 
     def test_create_message_invalid_phone_number(self):
@@ -69,7 +69,7 @@ class MonitorTest(unittest.TestCase):
         body.mfrom = PHONE_NUMBER_OUTBOUND
         body.text = "Python Monitoring"
         try:
-            self.messaging_client.create_message(ACCOUNT_ID, body=body)
+            self.messaging_client.create_message(ACCOUNT_ID, body)
             self.assertTrue(False)
         except MessagingException as e:
             self.assertTrue(len(e.description) > 0)
@@ -96,7 +96,7 @@ class MonitorTest(unittest.TestCase):
         body.to = PHONE_NUMBER_INBOUND
         body.application_id = VOICE_APPLICATION_ID
         body.answer_url = CALLBACK_URL
-        response = self.voice_client.create_call(ACCOUNT_ID, body=body)
+        response = self.voice_client.create_call(ACCOUNT_ID, body)
         self.assertTrue(len(response.body.call_id) > 1)
 
         #get phone call information
@@ -110,7 +110,7 @@ class MonitorTest(unittest.TestCase):
         body.application_id = VOICE_APPLICATION_ID
         body.answer_url = CALLBACK_URL
         try:
-            self.voice_client.create_call(ACCOUNT_ID, body=body)
+            self.voice_client.create_call(ACCOUNT_ID, body)
             self.assertTrue(False)
         except ApiErrorResponseException as e:
             self.assertTrue(len(e.description) > 0)
