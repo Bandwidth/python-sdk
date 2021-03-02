@@ -4,6 +4,7 @@ FROM python:3
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
 COPY bxml_tests.py /bxml_tests.py
+COPY api_tests.py /api_tests.py
 
 #Make entrypoint.sh exacutable
 RUN chmod +x /entrypoint.sh
