@@ -147,7 +147,6 @@ class MonitorTest(unittest.TestCase):
             application_id = MFA_VOICE_APPLICATION_ID,
             scope = "scope",
             code = "123456",
-            digits = 6,
             expiration_time_in_minutes = 3
         )
         response = self.auth_client.create_verify_two_factor(ACCOUNT_ID, body)
