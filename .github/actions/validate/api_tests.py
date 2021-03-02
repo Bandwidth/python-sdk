@@ -143,7 +143,6 @@ class MonitorTest(unittest.TestCase):
 
     def test_mfa_verify(self):
         body = TwoFactorVerifyRequestSchema(
-            mfrom = PHONE_NUMBER_MFA,
             to = PHONE_NUMBER_INBOUND,
             application_id = MFA_VOICE_APPLICATION_ID,
             scope = "scope",
