@@ -100,6 +100,8 @@ class MonitorTest(unittest.TestCase):
         self.assertTrue(len(response.body.call_id) > 1)
 
         #get phone call information
+        import time
+        time.sleep(1) #No guarantee that the info will be immediately available
         response = self.voice_client.get_call_state(ACCOUNT_ID, response.body.call_id)
         self.assertTrue(len(response.body.state) > 1)
 
