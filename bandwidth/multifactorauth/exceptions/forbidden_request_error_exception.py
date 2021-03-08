@@ -10,9 +10,9 @@ from bandwidth.api_helper import APIHelper
 import bandwidth.exceptions.api_exception
 
 
-class ForbiddenRequestException(bandwidth.exceptions.api_exception.APIException):
+class ForbiddenRequestErrorException(bandwidth.exceptions.api_exception.APIException):
     def __init__(self, reason, response):
-        """Constructor for the ForbiddenRequestException class
+        """Constructor for the ForbiddenRequestErrorException class
 
         Args:
             reason (string): The reason (or error message) for the Exception
@@ -20,7 +20,7 @@ class ForbiddenRequestException(bandwidth.exceptions.api_exception.APIException)
             response (HttpResponse): The HttpResponse of the API call.
 
         """
-        super(ForbiddenRequestException, self).__init__(reason, response)
+        super(ForbiddenRequestErrorException, self).__init__(reason, response)
         dictionary = APIHelper.json_deserialize(self.response.text)
         if isinstance(dictionary, dict):
             self.unbox(dictionary)

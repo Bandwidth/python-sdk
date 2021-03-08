@@ -16,7 +16,7 @@ from bandwidth.webrtc.models.participant import Participant
 from bandwidth.webrtc.models.session import Session
 from bandwidth.webrtc.models.subscriptions import Subscriptions
 from bandwidth.exceptions.api_exception import APIException
-from bandwidth.webrtc.exceptions.error_exception import ErrorException
+from bandwidth.webrtc.exceptions.error_error_exception import ErrorErrorException
 
 
 class APIController(BaseController):
@@ -79,7 +79,7 @@ class APIController(BaseController):
         elif _response.status_code == 403:
             raise APIException('Access Denied', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, AccountsParticipantsResponse.from_dictionary)
@@ -137,7 +137,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Participant.from_dictionary)
@@ -191,7 +191,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -250,7 +250,7 @@ class APIController(BaseController):
         elif _response.status_code == 403:
             raise APIException('Access Denied', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Session.from_dictionary)
@@ -308,7 +308,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Session.from_dictionary)
@@ -362,7 +362,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -419,7 +419,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Participant.from_dictionary)
@@ -485,7 +485,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -543,7 +543,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -603,7 +603,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Subscriptions.from_dictionary)
@@ -673,7 +673,7 @@ class APIController(BaseController):
         elif _response.status_code == 404:
             raise APIException('Not Found', _response)
         elif (_response.status_code < 200) or (_response.status_code > 208):
-            raise ErrorException('Unexpected Error', _response)
+            raise ErrorErrorException('Unexpected Error', _response)
         self.validate_response(_response)
 
         # Return appropriate type

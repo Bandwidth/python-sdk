@@ -24,6 +24,8 @@ class Participant(object):
             associated with  Capped to one
         subscriptions (Subscriptions): TODO: type description here.
         tag (string): User defined tag to associate with the participant
+        device_api_version (DeviceApiVersionEnum): Optional field to define
+            the device api version of this participant
 
     """
 
@@ -34,7 +36,8 @@ class Participant(object):
         "publish_permissions": 'publishPermissions',
         "sessions": 'sessions',
         "subscriptions": 'subscriptions',
-        "tag": 'tag'
+        "tag": 'tag',
+        "device_api_version": 'deviceApiVersion'
     }
 
     def __init__(self,
@@ -43,7 +46,8 @@ class Participant(object):
                  publish_permissions=None,
                  sessions=None,
                  subscriptions=None,
-                 tag=None):
+                 tag=None,
+                 device_api_version='v2'):
         """Constructor for the Participant class"""
 
         # Initialize members of the class
@@ -53,6 +57,7 @@ class Participant(object):
         self.sessions = sessions
         self.subscriptions = subscriptions
         self.tag = tag
+        self.device_api_version = device_api_version
 
     @classmethod
     def from_dictionary(cls,
@@ -78,6 +83,7 @@ class Participant(object):
         sessions = dictionary.get('sessions')
         subscriptions = Subscriptions.from_dictionary(dictionary.get('subscriptions')) if dictionary.get('subscriptions') else None
         tag = dictionary.get('tag')
+        device_api_version = dictionary.get("deviceApiVersion") if dictionary.get("deviceApiVersion") else 'v2'
 
         # Return an object of this model
         return cls(id,
@@ -85,4 +91,5 @@ class Participant(object):
                    publish_permissions,
                    sessions,
                    subscriptions,
-                   tag)
+                   tag,
+                   device_api_version)

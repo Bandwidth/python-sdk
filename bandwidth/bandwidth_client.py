@@ -10,7 +10,7 @@ from bandwidth.decorators import lazy_property
 from bandwidth.configuration import Configuration
 from bandwidth.configuration import Environment
 from bandwidth.messaging.messaging_client import MessagingClient
-from bandwidth.twofactorauth.two_factor_auth_client import TwoFactorAuthClient
+from bandwidth.multifactorauth.multi_factor_auth_client import MultiFactorAuthClient
 from bandwidth.voice.voice_client import VoiceClient
 from bandwidth.webrtc.web_rtc_client import WebRtcClient
 
@@ -22,8 +22,8 @@ class BandwidthClient(object):
         return MessagingClient(config=self.config)
 
     @lazy_property
-    def two_factor_auth_client(self):
-        return TwoFactorAuthClient(config=self.config)
+    def multi_factor_auth_client(self):
+        return MultiFactorAuthClient(config=self.config)
 
     @lazy_property
     def voice_client(self):
@@ -38,8 +38,8 @@ class BandwidthClient(object):
                  base_url='https://www.example.com',
                  messaging_basic_auth_user_name='TODO: Replace',
                  messaging_basic_auth_password='TODO: Replace',
-                 two_factor_auth_basic_auth_user_name='TODO: Replace',
-                 two_factor_auth_basic_auth_password='TODO: Replace',
+                 multi_factor_auth_basic_auth_user_name='TODO: Replace',
+                 multi_factor_auth_basic_auth_password='TODO: Replace',
                  voice_basic_auth_user_name='TODO: Replace',
                  voice_basic_auth_password='TODO: Replace',
                  web_rtc_basic_auth_user_name='TODO: Replace',
@@ -52,8 +52,8 @@ class BandwidthClient(object):
                                         base_url=base_url,
                                         messaging_basic_auth_user_name=messaging_basic_auth_user_name,
                                         messaging_basic_auth_password=messaging_basic_auth_password,
-                                        two_factor_auth_basic_auth_user_name=two_factor_auth_basic_auth_user_name,
-                                        two_factor_auth_basic_auth_password=two_factor_auth_basic_auth_password,
+                                        multi_factor_auth_basic_auth_user_name=multi_factor_auth_basic_auth_user_name,
+                                        multi_factor_auth_basic_auth_password=multi_factor_auth_basic_auth_password,
                                         voice_basic_auth_user_name=voice_basic_auth_user_name,
                                         voice_basic_auth_password=voice_basic_auth_password,
                                         web_rtc_basic_auth_user_name=web_rtc_basic_auth_user_name,

@@ -1,3 +1,3 @@
 __all__ = [
-    'error_exception',
+    'error_error_exception',
 ]

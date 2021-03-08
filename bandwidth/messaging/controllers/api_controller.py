@@ -15,7 +15,7 @@ from bandwidth.http.auth.messaging_basic_auth import MessagingBasicAuth
 from bandwidth.messaging.models.media import Media
 from bandwidth.messaging.models.bandwidth_messages_list import BandwidthMessagesList
 from bandwidth.messaging.models.bandwidth_message import BandwidthMessage
-from bandwidth.messaging.exceptions.messaging_exception import MessagingException
+from bandwidth.messaging.exceptions.messaging_exception_error_exception import MessagingExceptionErrorException
 
 
 class APIController(BaseController):
@@ -26,14 +26,14 @@ class APIController(BaseController):
         super(APIController, self).__init__(config, call_back)
 
     def list_media(self,
-                   user_id,
+                   account_id,
                    continuation_token=None):
-        """Does a GET request to /users/{userId}/media.
+        """Does a GET request to /users/{accountId}/media.
 
         listMedia
 
         Args:
-            user_id (string): User's account ID
+            account_id (string): User's account ID
             continuation_token (string, optional): Continuation token used to
                 retrieve subsequent media.
 
@@ -51,9 +51,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{userId}/media'
+        _url_path = '/users/{accountId}/media'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'userId': {'value': user_id, 'encode': False}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
         _query_builder += _url_path
@@ -72,17 +72,17 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise MessagingException('400 Request is malformed or invalid', _response)
+            raise MessagingExceptionErrorException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise MessagingException('401 The specified user does not have access to the account', _response)
+            raise MessagingExceptionErrorException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise MessagingException('403 The user does not have access to this API', _response)
+            raise MessagingExceptionErrorException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise MessagingException('404 Path not found', _response)
+            raise MessagingExceptionErrorException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise MessagingException('415 The content-type of the request is incorrect', _response)
+            raise MessagingExceptionErrorException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise MessagingException('429 The rate limit has been reached', _response)
+            raise MessagingExceptionErrorException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, Media.from_dictionary)
@@ -90,14 +90,14 @@ class APIController(BaseController):
         return _result
 
     def get_media(self,
-                  user_id,
+                  account_id,
                   media_id):
-        """Does a GET request to /users/{userId}/media/{mediaId}.
+        """Does a GET request to /users/{accountId}/media/{mediaId}.
 
         getMedia
 
         Args:
-            user_id (string): User's account ID
+            account_id (string): User's account ID
             media_id (string): Media ID to retrieve
 
         Returns:
@@ -114,9 +114,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{userId}/media/{mediaId}'
+        _url_path = '/users/{accountId}/media/{mediaId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'userId': {'value': user_id, 'encode': False},
+            'accountId': {'value': account_id, 'encode': False},
             'mediaId': {'value': media_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
@@ -130,17 +130,17 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise MessagingException('400 Request is malformed or invalid', _response)
+            raise MessagingExceptionErrorException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise MessagingException('401 The specified user does not have access to the account', _response)
+            raise MessagingExceptionErrorException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise MessagingException('403 The user does not have access to this API', _response)
+            raise MessagingExceptionErrorException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise MessagingException('404 Path not found', _response)
+            raise MessagingExceptionErrorException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise MessagingException('415 The content-type of the request is incorrect', _response)
+            raise MessagingExceptionErrorException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise MessagingException('429 The rate limit has been reached', _response)
+            raise MessagingExceptionErrorException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         decoded = _response.text
@@ -148,20 +148,18 @@ class APIController(BaseController):
         return _result
 
     def upload_media(self,
-                     user_id,
+                     account_id,
                      media_id,
-                     content_length,
                      body,
                      content_type='application/octet-stream',
                      cache_control=None):
-        """Does a PUT request to /users/{userId}/media/{mediaId}.
+        """Does a PUT request to /users/{accountId}/media/{mediaId}.
 
         uploadMedia
 
         Args:
-            user_id (string): User's account ID
+            account_id (string): User's account ID
             media_id (string): The user supplied custom media ID
-            content_length (long|int): The size of the entity-body
             body (typing.BinaryIO): TODO: type description here.
             content_type (string, optional): The media type of the
                 entity-body
@@ -182,9 +180,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{userId}/media/{mediaId}'
+        _url_path = '/users/{accountId}/media/{mediaId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'userId': {'value': user_id, 'encode': False},
+            'accountId': {'value': account_id, 'encode': False},
             'mediaId': {'value': media_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
@@ -201,7 +199,6 @@ class APIController(BaseController):
         # Prepare headers
         _headers = {
             'content-type': body_content_type,
-            'Content-Length': content_length,
             'Cache-Control': cache_control
         }
 
@@ -212,31 +209,31 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise MessagingException('400 Request is malformed or invalid', _response)
+            raise MessagingExceptionErrorException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise MessagingException('401 The specified user does not have access to the account', _response)
+            raise MessagingExceptionErrorException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise MessagingException('403 The user does not have access to this API', _response)
+            raise MessagingExceptionErrorException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise MessagingException('404 Path not found', _response)
+            raise MessagingExceptionErrorException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise MessagingException('415 The content-type of the request is incorrect', _response)
+            raise MessagingExceptionErrorException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise MessagingException('429 The rate limit has been reached', _response)
+            raise MessagingExceptionErrorException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         # Return appropriate type
         return ApiResponse(_response)
 
     def delete_media(self,
-                     user_id,
+                     account_id,
                      media_id):
-        """Does a DELETE request to /users/{userId}/media/{mediaId}.
+        """Does a DELETE request to /users/{accountId}/media/{mediaId}.
 
         deleteMedia
 
         Args:
-            user_id (string): User's account ID
+            account_id (string): User's account ID
             media_id (string): The media ID to delete
 
         Returns:
@@ -252,9 +249,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{userId}/media/{mediaId}'
+        _url_path = '/users/{accountId}/media/{mediaId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'userId': {'value': user_id, 'encode': False},
+            'accountId': {'value': account_id, 'encode': False},
             'mediaId': {'value': media_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
@@ -268,24 +265,24 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise MessagingException('400 Request is malformed or invalid', _response)
+            raise MessagingExceptionErrorException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise MessagingException('401 The specified user does not have access to the account', _response)
+            raise MessagingExceptionErrorException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise MessagingException('403 The user does not have access to this API', _response)
+            raise MessagingExceptionErrorException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise MessagingException('404 Path not found', _response)
+            raise MessagingExceptionErrorException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise MessagingException('415 The content-type of the request is incorrect', _response)
+            raise MessagingExceptionErrorException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise MessagingException('429 The rate limit has been reached', _response)
+            raise MessagingExceptionErrorException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         # Return appropriate type
         return ApiResponse(_response)
 
     def get_messages(self,
-                     user_id,
+                     account_id,
                      message_id=None,
                      source_tn=None,
                      destination_tn=None,
@@ -295,12 +292,12 @@ class APIController(BaseController):
                      to_date_time=None,
                      page_token=None,
                      limit=None):
-        """Does a GET request to /users/{userId}/messages.
+        """Does a GET request to /users/{accountId}/messages.
 
         getMessages
 
         Args:
-            user_id (string): User's account ID
+            account_id (string): User's account ID
             message_id (string, optional): The ID of the message to search
                 for. Special characters need to be encoded using URL encoding
             source_tn (string, optional): The phone number that sent the
@@ -309,7 +306,7 @@ class APIController(BaseController):
                 the message
             message_status (string, optional): The status of the message. One
                 of RECEIVED, QUEUED, SENDING, SENT, FAILED, DELIVERED,
-                DLR_EXPIRED
+                ACCEPTED, UNDELIVERED
             error_code (int, optional): The error code of the message
             from_date_time (string, optional): The start of the date range to
                 search in ISO 8601 format. Uses the message receive time. The
@@ -337,9 +334,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{userId}/messages'
+        _url_path = '/users/{accountId}/messages'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'userId': {'value': user_id, 'encode': False}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
         _query_builder += _url_path
@@ -372,17 +369,17 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise MessagingException('400 Request is malformed or invalid', _response)
+            raise MessagingExceptionErrorException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise MessagingException('401 The specified user does not have access to the account', _response)
+            raise MessagingExceptionErrorException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise MessagingException('403 The user does not have access to this API', _response)
+            raise MessagingExceptionErrorException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise MessagingException('404 Path not found', _response)
+            raise MessagingExceptionErrorException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise MessagingException('415 The content-type of the request is incorrect', _response)
+            raise MessagingExceptionErrorException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise MessagingException('429 The rate limit has been reached', _response)
+            raise MessagingExceptionErrorException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, BandwidthMessagesList.from_dictionary)
@@ -390,14 +387,14 @@ class APIController(BaseController):
         return _result
 
     def create_message(self,
-                       user_id,
+                       account_id,
                        body):
-        """Does a POST request to /users/{userId}/messages.
+        """Does a POST request to /users/{accountId}/messages.
 
         createMessage
 
         Args:
-            user_id (string): User's account ID
+            account_id (string): User's account ID
             body (MessageRequest): TODO: type description here.
 
         Returns:
@@ -414,9 +411,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{userId}/messages'
+        _url_path = '/users/{accountId}/messages'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'userId': {'value': user_id, 'encode': False}
+            'accountId': {'value': account_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
         _query_builder += _url_path
@@ -435,17 +432,17 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise MessagingException('400 Request is malformed or invalid', _response)
+            raise MessagingExceptionErrorException('400 Request is malformed or invalid', _response)
         elif _response.status_code == 401:
-            raise MessagingException('401 The specified user does not have access to the account', _response)
+            raise MessagingExceptionErrorException('401 The specified user does not have access to the account', _response)
         elif _response.status_code == 403:
-            raise MessagingException('403 The user does not have access to this API', _response)
+            raise MessagingExceptionErrorException('403 The user does not have access to this API', _response)
         elif _response.status_code == 404:
-            raise MessagingException('404 Path not found', _response)
+            raise MessagingExceptionErrorException('404 Path not found', _response)
         elif _response.status_code == 415:
-            raise MessagingException('415 The content-type of the request is incorrect', _response)
+            raise MessagingExceptionErrorException('415 The content-type of the request is incorrect', _response)
         elif _response.status_code == 429:
-            raise MessagingException('429 The rate limit has been reached', _response)
+            raise MessagingExceptionErrorException('429 The rate limit has been reached', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, BandwidthMessage.from_dictionary)

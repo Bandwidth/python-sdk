@@ -1,5 +1,8 @@
 __all__ = [
     'two_factor_code_request_schema',
+    'error_with_request',
+    'unauthorized_request',
+    'forbidden_request',
     'two_factor_voice_response',
     'two_factor_messaging_response',
     'two_factor_verify_request_schema',
