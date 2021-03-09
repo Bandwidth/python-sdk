@@ -2,7 +2,6 @@ __all__ = [
     'api_call_response',
     'api_call_state_response',
     'api_create_call_request',
-    'api_error_response',
     'api_modify_call_request',
     'api_modify_conference_request',
     'api_transcribe_recording_request',

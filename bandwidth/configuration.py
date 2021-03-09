@@ -21,7 +21,7 @@ class Server(Enum):
     """An enum for API servers"""
     DEFAULT = 0
     MESSAGINGDEFAULT = 1
-    MULTIFACTORAUTHDEFAULT = 2
+    TWOFACTORAUTHDEFAULT = 2
     VOICEDEFAULT = 3
     WEBRTCDEFAULT = 4
 
@@ -63,12 +63,12 @@ class Configuration(object):
         return self._messaging_basic_auth_password
 
     @property
-    def multi_factor_auth_basic_auth_user_name(self):
-        return self._multi_factor_auth_basic_auth_user_name
+    def two_factor_auth_basic_auth_user_name(self):
+        return self._two_factor_auth_basic_auth_user_name
 
     @property
-    def multi_factor_auth_basic_auth_password(self):
-        return self._multi_factor_auth_basic_auth_password
+    def two_factor_auth_basic_auth_password(self):
+        return self._two_factor_auth_basic_auth_password
 
     @property
     def voice_basic_auth_user_name(self):
@@ -91,8 +91,8 @@ class Configuration(object):
                  base_url='https://www.example.com',
                  messaging_basic_auth_user_name='TODO: Replace',
                  messaging_basic_auth_password='TODO: Replace',
-                 multi_factor_auth_basic_auth_user_name='TODO: Replace',
-                 multi_factor_auth_basic_auth_password='TODO: Replace',
+                 two_factor_auth_basic_auth_user_name='TODO: Replace',
+                 two_factor_auth_basic_auth_password='TODO: Replace',
                  voice_basic_auth_user_name='TODO: Replace',
                  voice_basic_auth_password='TODO: Replace',
                  web_rtc_basic_auth_user_name='TODO: Replace',
@@ -121,10 +121,10 @@ class Configuration(object):
         self._messaging_basic_auth_password = messaging_basic_auth_password
 
         # The username to use with basic authentication
-        self._multi_factor_auth_basic_auth_user_name = multi_factor_auth_basic_auth_user_name
+        self._two_factor_auth_basic_auth_user_name = two_factor_auth_basic_auth_user_name
 
         # The password to use with basic authentication
-        self._multi_factor_auth_basic_auth_password = multi_factor_auth_basic_auth_password
+        self._two_factor_auth_basic_auth_password = two_factor_auth_basic_auth_password
 
         # The username to use with basic authentication
         self._voice_basic_auth_user_name = voice_basic_auth_user_name
@@ -145,8 +145,8 @@ class Configuration(object):
                    environment=None, base_url=None,
                    messaging_basic_auth_user_name=None,
                    messaging_basic_auth_password=None,
-                   multi_factor_auth_basic_auth_user_name=None,
-                   multi_factor_auth_basic_auth_password=None,
+                   two_factor_auth_basic_auth_user_name=None,
+                   two_factor_auth_basic_auth_password=None,
                    voice_basic_auth_user_name=None,
                    voice_basic_auth_password=None,
                    web_rtc_basic_auth_user_name=None,
@@ -158,8 +158,8 @@ class Configuration(object):
         base_url = base_url or self.base_url
         messaging_basic_auth_user_name = messaging_basic_auth_user_name or self.messaging_basic_auth_user_name
         messaging_basic_auth_password = messaging_basic_auth_password or self.messaging_basic_auth_password
-        multi_factor_auth_basic_auth_user_name = multi_factor_auth_basic_auth_user_name or self.multi_factor_auth_basic_auth_user_name
-        multi_factor_auth_basic_auth_password = multi_factor_auth_basic_auth_password or self.multi_factor_auth_basic_auth_password
+        two_factor_auth_basic_auth_user_name = two_factor_auth_basic_auth_user_name or self.two_factor_auth_basic_auth_user_name
+        two_factor_auth_basic_auth_password = two_factor_auth_basic_auth_password or self.two_factor_auth_basic_auth_password
         voice_basic_auth_user_name = voice_basic_auth_user_name or self.voice_basic_auth_user_name
         voice_basic_auth_password = voice_basic_auth_password or self.voice_basic_auth_password
         web_rtc_basic_auth_user_name = web_rtc_basic_auth_user_name or self.web_rtc_basic_auth_user_name
@@ -170,8 +170,8 @@ class Configuration(object):
             backoff_factor=backoff_factor, environment=environment, base_url=base_url,
             messaging_basic_auth_user_name=messaging_basic_auth_user_name,
             messaging_basic_auth_password=messaging_basic_auth_password,
-            multi_factor_auth_basic_auth_user_name=multi_factor_auth_basic_auth_user_name,
-            multi_factor_auth_basic_auth_password=multi_factor_auth_basic_auth_password,
+            two_factor_auth_basic_auth_user_name=two_factor_auth_basic_auth_user_name,
+            two_factor_auth_basic_auth_password=two_factor_auth_basic_auth_password,
             voice_basic_auth_user_name=voice_basic_auth_user_name,
             voice_basic_auth_password=voice_basic_auth_password,
             web_rtc_basic_auth_user_name=web_rtc_basic_auth_user_name,
@@ -188,14 +188,14 @@ class Configuration(object):
         Environment.PRODUCTION: {
             Server.DEFAULT: 'api.bandwidth.com',
             Server.MESSAGINGDEFAULT: 'https://messaging.bandwidth.com/api/v2',
-            Server.MULTIFACTORAUTHDEFAULT: 'https://mfa.bandwidth.com/api/v1',
+            Server.TWOFACTORAUTHDEFAULT: 'https://mfa.bandwidth.com/api/v1',
             Server.VOICEDEFAULT: 'https://voice.bandwidth.com',
             Server.WEBRTCDEFAULT: 'https://api.webrtc.bandwidth.com/v1'
         },
         Environment.CUSTOM: {
             Server.DEFAULT: '{base_url}',
             Server.MESSAGINGDEFAULT: '{base_url}',
-            Server.MULTIFACTORAUTHDEFAULT: '{base_url}',
+            Server.TWOFACTORAUTHDEFAULT: '{base_url}',
             Server.VOICEDEFAULT: '{base_url}',
             Server.WEBRTCDEFAULT: '{base_url}'
         }

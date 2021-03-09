@@ -18,7 +18,7 @@ from bandwidth.voice.models.transcription_response import TranscriptionResponse
 from bandwidth.voice.models.conference_detail import ConferenceDetail
 from bandwidth.voice.models.conference_member_detail import ConferenceMemberDetail
 from bandwidth.voice.models.conference_recording_metadata_response import ConferenceRecordingMetadataResponse
-from bandwidth.voice.exceptions.api_error_response_error_exception import ApiErrorResponseErrorException
+from bandwidth.voice.exceptions.api_error_response_exception import ApiErrorResponseException
 from bandwidth.exceptions.api_exception import APIException
 
 
@@ -76,19 +76,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, ApiCallResponse.from_dictionary)
@@ -141,19 +141,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, ApiCallStateResponse.from_dictionary)
@@ -208,19 +208,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -274,19 +274,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -339,19 +339,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, RecordingMetadataResponse.from_dictionary)
@@ -407,19 +407,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, RecordingMetadataResponse.from_dictionary)
@@ -469,19 +469,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -531,19 +531,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = _response.text
@@ -593,19 +593,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -660,19 +660,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, TranscriptionResponse.from_dictionary)
@@ -730,21 +730,21 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 410:
-            raise ApiErrorResponseErrorException('The media for this recording has been deleted, so we can\'t transcribe it', _response)
+            raise ApiErrorResponseException('The media for this recording has been deleted, so we can\'t transcribe it', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -793,19 +793,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -876,19 +876,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, ConferenceDetail.from_dictionary)
@@ -941,19 +941,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, ConferenceDetail.from_dictionary)
@@ -1008,19 +1008,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -1077,19 +1077,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -1144,19 +1144,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, ConferenceMemberDetail.from_dictionary)
@@ -1210,19 +1210,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, ConferenceRecordingMetadataResponse.from_dictionary)
@@ -1278,19 +1278,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, RecordingMetadataResponse.from_dictionary)
@@ -1341,19 +1341,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = _response.text
@@ -1425,19 +1425,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorResponseErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorResponseErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorResponseErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorResponseErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorResponseErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorResponseErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, RecordingMetadataResponse.from_dictionary)

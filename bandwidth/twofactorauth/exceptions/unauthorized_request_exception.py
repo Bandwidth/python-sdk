@@ -10,9 +10,9 @@ from bandwidth.api_helper import APIHelper
 import bandwidth.exceptions.api_exception
 
 
-class UnauthorizedRequestErrorException(bandwidth.exceptions.api_exception.APIException):
+class UnauthorizedRequestException(bandwidth.exceptions.api_exception.APIException):
     def __init__(self, reason, response):
-        """Constructor for the UnauthorizedRequestErrorException class
+        """Constructor for the UnauthorizedRequestException class
 
         Args:
             reason (string): The reason (or error message) for the Exception
@@ -20,7 +20,7 @@ class UnauthorizedRequestErrorException(bandwidth.exceptions.api_exception.APIEx
             response (HttpResponse): The HttpResponse of the API call.
 
         """
-        super(UnauthorizedRequestErrorException, self).__init__(reason, response)
+        super(UnauthorizedRequestException, self).__init__(reason, response)
         dictionary = APIHelper.json_deserialize(self.response.text)
         if isinstance(dictionary, dict):
             self.unbox(dictionary)

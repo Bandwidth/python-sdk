@@ -23,8 +23,6 @@ class ApiCallStateResponse(object):
         mfrom (string): TODO: type description here.
         direction (string): TODO: type description here.
         state (StateEnum): TODO: type description here.
-        identity (string): TODO: type description here.
-        pai (dict): TODO: type description here.
         start_time (datetime): TODO: type description here.
         answer_time (datetime): TODO: type description here.
         end_time (datetime): TODO: type description here.
@@ -45,8 +43,6 @@ class ApiCallStateResponse(object):
         "mfrom": 'from',
         "direction": 'direction',
         "state": 'state',
-        "identity": 'identity',
-        "pai": 'pai',
         "start_time": 'startTime',
         "answer_time": 'answerTime',
         "end_time": 'endTime',
@@ -65,8 +61,6 @@ class ApiCallStateResponse(object):
                  mfrom=None,
                  direction=None,
                  state=None,
-                 identity=None,
-                 pai=None,
                  start_time=None,
                  answer_time=None,
                  end_time=None,
@@ -85,8 +79,6 @@ class ApiCallStateResponse(object):
         self.mfrom = mfrom
         self.direction = direction
         self.state = state
-        self.identity = identity
-        self.pai = pai
         self.start_time = APIHelper.RFC3339DateTime(start_time) if start_time else None
         self.answer_time = APIHelper.RFC3339DateTime(answer_time) if answer_time else None
         self.end_time = APIHelper.RFC3339DateTime(end_time) if end_time else None
@@ -121,8 +113,6 @@ class ApiCallStateResponse(object):
         mfrom = dictionary.get('from')
         direction = dictionary.get('direction')
         state = dictionary.get('state')
-        identity = dictionary.get('identity')
-        pai = dictionary.get('pai')
         start_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("startTime")).datetime if dictionary.get("startTime") else None
         answer_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("answerTime")).datetime if dictionary.get("answerTime") else None
         end_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("endTime")).datetime if dictionary.get("endTime") else None
@@ -140,8 +130,6 @@ class ApiCallStateResponse(object):
                    mfrom,
                    direction,
                    state,
-                   identity,
-                   pai,
                    start_time,
                    answer_time,
                    end_time,

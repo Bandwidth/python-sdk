@@ -2,5 +2,5 @@ __all__ = [
     'controllers',
     'exceptions',
     'models',
-    'multi_factor_auth_client',
+    'two_factor_auth_client',
 ]
