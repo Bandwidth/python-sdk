@@ -14,11 +14,14 @@ class StateEnum(object):
     TODO: type enum description here.
 
     Attributes:
-        ACTIVE: TODO: type description here.
-        COMPLETED: TODO: type description here.
+        DISCONNECTED: TODO: type description here.
+        ANSWERED: TODO: type description here.
+        INITIATED: TODO: type description here.
 
     """
 
-    ACTIVE = 'active'
+    DISCONNECTED = 'DISCONNECTED'
 
-    COMPLETED = 'completed'
+    ANSWERED = 'ANSWERED'
+
+    INITIATED = 'INITIATED'

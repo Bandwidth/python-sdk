@@ -11,14 +11,14 @@ from bandwidth.configuration import Server
 from bandwidth.http.api_response import ApiResponse
 from bandwidth.voice.controllers.base_controller import BaseController
 from bandwidth.http.auth.voice_basic_auth import VoiceBasicAuth
-from bandwidth.voice.models.create_call_response import CreateCallResponse
-from bandwidth.voice.models.call_state import CallState
-from bandwidth.voice.models.call_recording_metadata import CallRecordingMetadata
+from bandwidth.voice.models.api_call_response import ApiCallResponse
+from bandwidth.voice.models.api_call_state_response import ApiCallStateResponse
+from bandwidth.voice.models.recording_metadata_response import RecordingMetadataResponse
 from bandwidth.voice.models.transcription_response import TranscriptionResponse
-from bandwidth.voice.models.conference_state import ConferenceState
-from bandwidth.voice.models.conference_member_state import ConferenceMemberState
-from bandwidth.voice.models.conference_recording_metadata import ConferenceRecordingMetadata
-from bandwidth.voice.exceptions.api_error_exception import ApiErrorException
+from bandwidth.voice.models.conference_detail import ConferenceDetail
+from bandwidth.voice.models.conference_member_detail import ConferenceMemberDetail
+from bandwidth.voice.models.conference_recording_metadata_response import ConferenceRecordingMetadataResponse
+from bandwidth.voice.exceptions.api_error_response_exception import ApiErrorResponseException
 from bandwidth.exceptions.api_exception import APIException
 
 
@@ -31,19 +31,20 @@ class APIController(BaseController):
 
     def create_call(self,
                     account_id,
-                    body):
+                    body=None):
         """Does a POST request to /api/v2/accounts/{accountId}/calls.
 
-        Creates an outbound call.
+        Creates an outbound call
 
         Args:
             account_id (string): TODO: type description here.
-            body (CreateCallRequest): TODO: type description here.
+            body (ApiCreateCallRequest, optional): TODO: type description
+                here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. Call
-                successfully created
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -75,31 +76,31 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, CreateCallResponse.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, ApiCallResponse.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 
-    def get_call(self,
-                 account_id,
-                 call_id):
+    def get_call_state(self,
+                       account_id,
+                       call_id):
         """Does a GET request to /api/v2/accounts/{accountId}/calls/{callId}.
 
-        Returns near-realtime metadata about the specified call.
+        Returns near-realtime metadata about the specified call
 
         Args:
             account_id (string): TODO: type description here.
@@ -107,8 +108,8 @@ class APIController(BaseController):
 
         Returns:
             ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. Call
-                found
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -140,42 +141,42 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, CallState.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, ApiCallStateResponse.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 
     def modify_call(self,
                     account_id,
                     call_id,
-                    body):
+                    body=None):
         """Does a POST request to /api/v2/accounts/{accountId}/calls/{callId}.
 
-        Interrupts and replaces an active call's BXML document.
+        Interrupts and replaces an active call's BXML document
 
         Args:
             account_id (string): TODO: type description here.
             call_id (string): TODO: type description here.
-            body (ModifyCallRequest): TODO: type description here.
+            body (ApiModifyCallRequest, optional): TODO: type description
+                here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. Call
-                successfully modified
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -207,19 +208,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -228,20 +229,20 @@ class APIController(BaseController):
     def modify_call_recording_state(self,
                                     account_id,
                                     call_id,
-                                    body):
+                                    body=None):
         """Does a PUT request to /api/v2/accounts/{accountId}/calls/{callId}/recording.
 
-        Pauses or resumes a recording.
+        Pauses or resumes a recording
 
         Args:
             account_id (string): TODO: type description here.
             call_id (string): TODO: type description here.
-            body (ModifyCallRecordingRequest): TODO: type description here.
+            body (ModifyCallRecordingState, optional): TODO: type description
+                here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. Recording
-                state successfully modified
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -273,27 +274,27 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
         return ApiResponse(_response)
 
-    def get_call_recordings(self,
-                            account_id,
-                            call_id):
+    def get_query_metadata_for_account_and_call(self,
+                                                account_id,
+                                                call_id):
         """Does a GET request to /api/v2/accounts/{accountId}/calls/{callId}/recordings.
 
         Returns a (potentially empty) list of metadata for the recordings that
@@ -306,7 +307,7 @@ class APIController(BaseController):
         Returns:
             ApiResponse: An object with the response value as well as other
                 useful information such as status codes and headers.
-                Recordings retrieved successfully
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -338,292 +339,32 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, CallRecordingMetadata.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, RecordingMetadataResponse.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 
-    def get_call_recording(self,
-                           account_id,
-                           call_id,
-                           recording_id):
+    def get_metadata_for_recording(self,
+                                   account_id,
+                                   call_id,
+                                   recording_id):
         """Does a GET request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}.
 
-        Returns metadata for the specified recording.
-
-        Args:
-            account_id (string): TODO: type description here.
-            call_id (string): TODO: type description here.
-            recording_id (string): TODO: type description here.
-
-        Returns:
-            ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. Recording
-                found
-
-        Raises:
-            APIException: When an error occurs while fetching the data from
-                the remote API. This exception includes the HTTP Response
-                code, an error message, and the HTTP body that was received in
-                the request.
-
-        """
-
-        # Prepare query URL
-        _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}'
-        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': False},
-            'callId': {'value': call_id, 'encode': False},
-            'recordingId': {'value': recording_id, 'encode': False}
-        })
-        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
-        _query_builder += _url_path
-        _query_url = APIHelper.clean_url(_query_builder)
-
-        # Prepare headers
-        _headers = {
-            'accept': 'application/json'
-        }
-
-        # Prepare and execute request
-        _request = self.config.http_client.get(_query_url, headers=_headers)
-        VoiceBasicAuth.apply(self.config, _request)
-        _response = self.execute_request(_request)
-
-        # Endpoint and global error handling using HTTP status codes.
-        if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
-        elif _response.status_code == 401:
-            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
-        elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
-        elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
-        elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
-        elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
-        elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
-        self.validate_response(_response)
-
-        decoded = APIHelper.json_deserialize(_response.text, CallRecordingMetadata.from_dictionary)
-        _result = ApiResponse(_response, body=decoded)
-        return _result
-
-    def delete_recording(self,
-                         account_id,
-                         call_id,
-                         recording_id):
-        """Does a DELETE request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}.
-
-        Deletes the specified recording.
-
-        Args:
-            account_id (string): TODO: type description here.
-            call_id (string): TODO: type description here.
-            recording_id (string): TODO: type description here.
-
-        Returns:
-            ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. The
-                recording was successfully deleted
-
-        Raises:
-            APIException: When an error occurs while fetching the data from
-                the remote API. This exception includes the HTTP Response
-                code, an error message, and the HTTP body that was received in
-                the request.
-
-        """
-
-        # Prepare query URL
-        _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}'
-        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': False},
-            'callId': {'value': call_id, 'encode': False},
-            'recordingId': {'value': recording_id, 'encode': False}
-        })
-        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
-        _query_builder += _url_path
-        _query_url = APIHelper.clean_url(_query_builder)
-
-        # Prepare and execute request
-        _request = self.config.http_client.delete(_query_url)
-        VoiceBasicAuth.apply(self.config, _request)
-        _response = self.execute_request(_request)
-
-        # Endpoint and global error handling using HTTP status codes.
-        if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
-        elif _response.status_code == 401:
-            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
-        elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
-        elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
-        elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
-        elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
-        elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
-        self.validate_response(_response)
-
-        # Return appropriate type
-        return ApiResponse(_response)
-
-    def get_download_call_recording(self,
-                                    account_id,
-                                    call_id,
-                                    recording_id):
-        """Does a GET request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media.
-
-        Downloads the specified recording.
-
-        Args:
-            account_id (string): TODO: type description here.
-            call_id (string): TODO: type description here.
-            recording_id (string): TODO: type description here.
-
-        Returns:
-            ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. Media
-                found
-
-        Raises:
-            APIException: When an error occurs while fetching the data from
-                the remote API. This exception includes the HTTP Response
-                code, an error message, and the HTTP body that was received in
-                the request.
-
-        """
-
-        # Prepare query URL
-        _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media'
-        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': False},
-            'callId': {'value': call_id, 'encode': False},
-            'recordingId': {'value': recording_id, 'encode': False}
-        })
-        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
-        _query_builder += _url_path
-        _query_url = APIHelper.clean_url(_query_builder)
-
-        # Prepare headers
-        _headers = {
-            'accept': 'application/json'
-        }
-
-        # Prepare and execute request
-        _request = self.config.http_client.get(_query_url, headers=_headers)
-        VoiceBasicAuth.apply(self.config, _request)
-        _response = self.execute_request(_request)
-
-        # Endpoint and global error handling using HTTP status codes.
-        if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
-        elif _response.status_code == 401:
-            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
-        elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
-        elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
-        elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
-        elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
-        elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
-        self.validate_response(_response)
-        if (_response.text is not None) or (not str(_response.text)):
-            decoded = APIHelper.json_deserialize(_response.text)
-        _result = ApiResponse(_response, body=decoded)
-        return _result
-
-    def delete_recording_media(self,
-                               account_id,
-                               call_id,
-                               recording_id):
-        """Does a DELETE request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media.
-
-        Deletes the specified recording's media.
-
-        Args:
-            account_id (string): TODO: type description here.
-            call_id (string): TODO: type description here.
-            recording_id (string): TODO: type description here.
-
-        Returns:
-            ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. The
-                recording media was successfully deleted
-
-        Raises:
-            APIException: When an error occurs while fetching the data from
-                the remote API. This exception includes the HTTP Response
-                code, an error message, and the HTTP body that was received in
-                the request.
-
-        """
-
-        # Prepare query URL
-        _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media'
-        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': False},
-            'callId': {'value': call_id, 'encode': False},
-            'recordingId': {'value': recording_id, 'encode': False}
-        })
-        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
-        _query_builder += _url_path
-        _query_url = APIHelper.clean_url(_query_builder)
-
-        # Prepare and execute request
-        _request = self.config.http_client.delete(_query_url)
-        VoiceBasicAuth.apply(self.config, _request)
-        _response = self.execute_request(_request)
-
-        # Endpoint and global error handling using HTTP status codes.
-        if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
-        elif _response.status_code == 401:
-            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
-        elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
-        elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
-        elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
-        elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
-        elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
-        self.validate_response(_response)
-
-        # Return appropriate type
-        return ApiResponse(_response)
-
-    def get_call_transcription(self,
-                               account_id,
-                               call_id,
-                               recording_id):
-        """Does a GET request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription.
-
-        Downloads the specified transcription.
+        Returns metadata for the specified recording
 
         Args:
             account_id (string): TODO: type description here.
@@ -633,7 +374,260 @@ class APIController(BaseController):
         Returns:
             ApiResponse: An object with the response value as well as other
                 useful information such as status codes and headers.
-                Transcription found
+                successful operation
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare headers
+        _headers = {
+            'accept': 'application/json'
+        }
+
+        # Prepare and execute request
+        _request = self.config.http_client.get(_query_url, headers=_headers)
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
+
+        decoded = APIHelper.json_deserialize(_response.text, RecordingMetadataResponse.from_dictionary)
+        _result = ApiResponse(_response, body=decoded)
+        return _result
+
+    def delete_recording(self,
+                         account_id,
+                         call_id,
+                         recording_id):
+        """Does a DELETE request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}.
+
+        Deletes the specified recording
+
+        Args:
+            account_id (string): TODO: type description here.
+            call_id (string): TODO: type description here.
+            recording_id (string): TODO: type description here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare and execute request
+        _request = self.config.http_client.delete(_query_url)
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
+
+        # Return appropriate type
+        return ApiResponse(_response)
+
+    def get_stream_recording_media(self,
+                                   account_id,
+                                   call_id,
+                                   recording_id):
+        """Does a GET request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media.
+
+        Downloads the specified recording
+
+        Args:
+            account_id (string): TODO: type description here.
+            call_id (string): TODO: type description here.
+            recording_id (string): TODO: type description here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare and execute request
+        _request = self.config.http_client.get(_query_url)
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request, binary=True)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
+
+        decoded = _response.text
+        _result = ApiResponse(_response, body=decoded)
+        return _result
+
+    def delete_recording_media(self,
+                               account_id,
+                               call_id,
+                               recording_id):
+        """Does a DELETE request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media.
+
+        Deletes the specified recording's media
+
+        Args:
+            account_id (string): TODO: type description here.
+            call_id (string): TODO: type description here.
+            recording_id (string): TODO: type description here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+
+        Raises:
+            APIException: When an error occurs while fetching the data from
+                the remote API. This exception includes the HTTP Response
+                code, an error message, and the HTTP body that was received in
+                the request.
+
+        """
+
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False},
+            'recordingId': {'value': recording_id, 'encode': False}
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare and execute request
+        _request = self.config.http_client.delete(_query_url)
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
+
+        # Return appropriate type
+        return ApiResponse(_response)
+
+    def get_recording_transcription(self,
+                                    account_id,
+                                    call_id,
+                                    recording_id):
+        """Does a GET request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription.
+
+        Downloads the specified transcription
+
+        Args:
+            account_id (string): TODO: type description here.
+            call_id (string): TODO: type description here.
+            recording_id (string): TODO: type description here.
+
+        Returns:
+            ApiResponse: An object with the response value as well as other
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -666,44 +660,44 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         decoded = APIHelper.json_deserialize(_response.text, TranscriptionResponse.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 
-    def create_transcribe_call_recording(self,
-                                         account_id,
-                                         call_id,
-                                         recording_id,
-                                         body):
+    def create_transcribe_recording(self,
+                                    account_id,
+                                    call_id,
+                                    recording_id,
+                                    body=None):
         """Does a POST request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription.
 
-        Requests that the specified recording be transcribed.
+        Requests that the specified recording be transcribed
 
         Args:
             account_id (string): TODO: type description here.
             call_id (string): TODO: type description here.
             recording_id (string): TODO: type description here.
-            body (TranscribeRecordingRequest): TODO: type description here.
+            body (ApiTranscribeRecordingRequest, optional): TODO: type
+                description here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
                 useful information such as status codes and headers.
-                Transcription successfully requested
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -736,33 +730,33 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 410:
-            raise ApiErrorException('The media for this recording has been deleted, so we can\'t transcribe it', _response)
+            raise ApiErrorResponseException('The media for this recording has been deleted, so we can\'t transcribe it', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
         return ApiResponse(_response)
 
-    def delete_call_transcription(self,
-                                  account_id,
-                                  call_id,
-                                  recording_id):
+    def delete_recording_transcription(self,
+                                       account_id,
+                                       call_id,
+                                       recording_id):
         """Does a DELETE request to /api/v2/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription.
 
-        Deletes the specified recording's transcription.
+        Deletes the specified recording's transcription
 
         Args:
             account_id (string): TODO: type description here.
@@ -771,8 +765,7 @@ class APIController(BaseController):
 
         Returns:
             ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. The
-                transcription was successfully deleted
+                useful information such as status codes and headers.
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -800,48 +793,48 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
         return ApiResponse(_response)
 
-    def get_conferences(self,
-                        account_id,
-                        name=None,
-                        min_created_time=None,
-                        max_created_time=None,
-                        page_size=1000,
-                        page_token=None):
+    def get_conferences_by_account(self,
+                                   account_id,
+                                   page_size=1000,
+                                   page_token=None,
+                                   name=None,
+                                   min_created_time=None,
+                                   max_created_time=None):
         """Does a GET request to /api/v2/accounts/{accountId}/conferences.
 
-        Returns information about the conferences in the account.
+        Returns information about the conferences in the account
 
         Args:
             account_id (string): TODO: type description here.
-            name (string, optional): TODO: type description here.
-            min_created_time (string, optional): TODO: type description here.
-            max_created_time (string, optional): TODO: type description here.
             page_size (int, optional): TODO: type description here. Example:
                 1000
             page_token (string, optional): TODO: type description here.
+            name (string, optional): TODO: type description here.
+            min_created_time (string, optional): TODO: type description here.
+            max_created_time (string, optional): TODO: type description here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
                 useful information such as status codes and headers.
-                Conferences retrieved successfully
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -859,11 +852,11 @@ class APIController(BaseController):
         _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
         _query_builder += _url_path
         _query_parameters = {
+            'pageSize': page_size,
+            'pageToken': page_token,
             'name': name,
             'minCreatedTime': min_created_time,
-            'maxCreatedTime': max_created_time,
-            'pageSize': page_size,
-            'pageToken': page_token
+            'maxCreatedTime': max_created_time
         }
         _query_builder = APIHelper.append_url_with_query_parameters(
             _query_builder,
@@ -883,31 +876,31 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, ConferenceState.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, ConferenceDetail.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 
-    def get_conference(self,
-                       account_id,
-                       conference_id):
+    def get_conference_by_id(self,
+                             account_id,
+                             conference_id):
         """Does a GET request to /api/v2/accounts/{accountId}/conferences/{conferenceId}.
 
-        Returns information about the specified conference.
+        Returns information about the specified conference
 
         Args:
             account_id (string): TODO: type description here.
@@ -916,7 +909,7 @@ class APIController(BaseController):
         Returns:
             ApiResponse: An object with the response value as well as other
                 useful information such as status codes and headers.
-                Conference found
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -948,42 +941,42 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, ConferenceState.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, ConferenceDetail.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 
     def modify_conference(self,
                           account_id,
                           conference_id,
-                          body):
+                          body=None):
         """Does a POST request to /api/v2/accounts/{accountId}/conferences/{conferenceId}.
 
-        Modify the conference state.
+        Modify the conference state
 
         Args:
             account_id (string): TODO: type description here.
             conference_id (string): TODO: type description here.
-            body (ModifyConferenceRequest): TODO: type description here.
+            body (ApiModifyConferenceRequest, optional): TODO: type
+                description here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
                 useful information such as status codes and headers.
-                Conference successfully modified
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -1015,19 +1008,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -1037,21 +1030,21 @@ class APIController(BaseController):
                                  account_id,
                                  conference_id,
                                  call_id,
-                                 body):
+                                 body=None):
         """Does a PUT request to /api/v2/accounts/{accountId}/conferences/{conferenceId}/members/{callId}.
 
-        Updates settings for a particular conference member.
+        Updates settings for a particular conference member
 
         Args:
             account_id (string): TODO: type description here.
             conference_id (string): TODO: type description here.
             call_id (string): TODO: type description here.
-            body (ConferenceMemberState): TODO: type description here.
+            body (ConferenceMemberDetail, optional): TODO: type description
+                here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
                 useful information such as status codes and headers.
-                Conference member successfully modified
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -1084,19 +1077,19 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
         # Return appropriate type
@@ -1108,7 +1101,7 @@ class APIController(BaseController):
                               member_id):
         """Does a GET request to /api/v2/accounts/{accountId}/conferences/{conferenceId}/members/{memberId}.
 
-        Returns information about the specified conference member.
+        Returns information about the specified conference member
 
         Args:
             account_id (string): TODO: type description here.
@@ -1118,7 +1111,7 @@ class APIController(BaseController):
         Returns:
             ApiResponse: An object with the response value as well as other
                 useful information such as status codes and headers.
-                Conference member found
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -1151,28 +1144,28 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, ConferenceMemberState.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, ConferenceMemberDetail.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 
-    def get_conference_recordings(self,
-                                  account_id,
-                                  conference_id):
+    def get_query_metadata_for_account_and_conference(self,
+                                                      account_id,
+                                                      conference_id):
         """Does a GET request to /api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings.
 
         Returns a (potentially empty) list of metadata for the recordings that
@@ -1185,7 +1178,7 @@ class APIController(BaseController):
         Returns:
             ApiResponse: An object with the response value as well as other
                 useful information such as status codes and headers.
-                Recordings retrieved successfully
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -1217,32 +1210,32 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, ConferenceRecordingMetadata.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, ConferenceRecordingMetadataResponse.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 
-    def get_conference_recording(self,
-                                 account_id,
-                                 conference_id,
-                                 recording_id):
+    def get_metadata_for_conference_recording(self,
+                                              account_id,
+                                              conference_id,
+                                              recording_id):
         """Does a GET request to /api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings/{recordingId}.
 
-        Returns metadata for the specified recording.
+        Returns metadata for the specified recording
 
         Args:
             account_id (string): TODO: type description here.
@@ -1251,8 +1244,8 @@ class APIController(BaseController):
 
         Returns:
             ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. Recording
-                found
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -1285,32 +1278,32 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, CallRecordingMetadata.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, RecordingMetadataResponse.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 
-    def get_download_conference_recording(self,
-                                          account_id,
-                                          conference_id,
-                                          recording_id):
+    def get_stream_conference_recording_media(self,
+                                              account_id,
+                                              conference_id,
+                                              recording_id):
         """Does a GET request to /api/v2/accounts/{accountId}/conferences/{conferenceId}/recordings/{recordingId}/media.
 
-        Downloads the specified recording.
+        Downloads the specified recording
 
         Args:
             account_id (string): TODO: type description here.
@@ -1319,8 +1312,8 @@ class APIController(BaseController):
 
         Returns:
             ApiResponse: An object with the response value as well as other
-                useful information such as status codes and headers. Media
-                found
+                useful information such as status codes and headers.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -1341,43 +1334,38 @@ class APIController(BaseController):
         _query_builder += _url_path
         _query_url = APIHelper.clean_url(_query_builder)
 
-        # Prepare headers
-        _headers = {
-            'accept': 'application/json'
-        }
-
         # Prepare and execute request
-        _request = self.config.http_client.get(_query_url, headers=_headers)
+        _request = self.config.http_client.get(_query_url)
         VoiceBasicAuth.apply(self.config, _request)
-        _response = self.execute_request(_request)
+        _response = self.execute_request(_request, binary=True)
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
-        if (_response.text is not None) or (not str(_response.text)):
-            decoded = APIHelper.json_deserialize(_response.text)
+
+        decoded = _response.text
         _result = ApiResponse(_response, body=decoded)
         return _result
 
-    def get_query_call_recordings(self,
-                                  account_id,
-                                  mfrom=None,
-                                  to=None,
-                                  min_start_time=None,
-                                  max_start_time=None):
+    def get_query_metadata_for_account(self,
+                                       account_id,
+                                       mfrom=None,
+                                       to=None,
+                                       min_start_time=None,
+                                       max_start_time=None):
         """Does a GET request to /api/v2/accounts/{accountId}/recordings.
 
         Returns a list of metadata for the recordings associated with the
@@ -1396,7 +1384,7 @@ class APIController(BaseController):
         Returns:
             ApiResponse: An object with the response value as well as other
                 useful information such as status codes and headers.
-                Recordings retrieved successfully.
+                successful operation
 
         Raises:
             APIException: When an error occurs while fetching the data from
@@ -1437,21 +1425,21 @@ class APIController(BaseController):
 
         # Endpoint and global error handling using HTTP status codes.
         if _response.status_code == 400:
-            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+            raise ApiErrorResponseException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
         elif _response.status_code == 401:
             raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
         elif _response.status_code == 403:
-            raise ApiErrorException('User unauthorized to perform this action.', _response)
+            raise ApiErrorResponseException('User unauthorized to perform this action.', _response)
         elif _response.status_code == 404:
-            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+            raise ApiErrorResponseException('The resource specified cannot be found or does not belong to you.', _response)
         elif _response.status_code == 415:
-            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+            raise ApiErrorResponseException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
         elif _response.status_code == 429:
-            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+            raise ApiErrorResponseException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
         elif _response.status_code == 500:
-            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+            raise ApiErrorResponseException('Something unexpected happened. Please try again.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, CallRecordingMetadata.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, RecordingMetadataResponse.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result

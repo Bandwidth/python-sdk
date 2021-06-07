@@ -14,11 +14,29 @@ class ConferenceEventMethodEnum(object):
     TODO: type enum description here.
 
     Attributes:
-        POST: TODO: type description here.
         GET: TODO: type description here.
+        HEAD: TODO: type description here.
+        POST: TODO: type description here.
+        PUT: TODO: type description here.
+        PATCH: TODO: type description here.
+        DELETE: TODO: type description here.
+        OPTIONS: TODO: type description here.
+        TRACE: TODO: type description here.
 
     """
 
+    GET = 'GET'
+
+    HEAD = 'HEAD'
+
     POST = 'POST'
 
-    GET = 'GET'
+    PUT = 'PUT'
+
+    PATCH = 'PATCH'
+
+    DELETE = 'DELETE'
+
+    OPTIONS = 'OPTIONS'
+
+    TRACE = 'TRACE'
