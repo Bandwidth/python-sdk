@@ -26,14 +26,14 @@ class APIController(BaseController):
         super(APIController, self).__init__(config, call_back)
 
     def list_media(self,
-                   account_id,
+                   user_id,
                    continuation_token=None):
-        """Does a GET request to /users/{accountId}/media.
+        """Does a GET request to /users/{userId}/media.
 
         listMedia
 
         Args:
-            account_id (string): User's account ID
+            user_id (string): User's account ID
             continuation_token (string, optional): Continuation token used to
                 retrieve subsequent media.
 
@@ -51,9 +51,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{accountId}/media'
+        _url_path = '/users/{userId}/media'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': False}
+            'userId': {'value': user_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
         _query_builder += _url_path
@@ -90,14 +90,14 @@ class APIController(BaseController):
         return _result
 
     def get_media(self,
-                  account_id,
+                  user_id,
                   media_id):
-        """Does a GET request to /users/{accountId}/media/{mediaId}.
+        """Does a GET request to /users/{userId}/media/{mediaId}.
 
         getMedia
 
         Args:
-            account_id (string): User's account ID
+            user_id (string): User's account ID
             media_id (string): Media ID to retrieve
 
         Returns:
@@ -114,9 +114,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{accountId}/media/{mediaId}'
+        _url_path = '/users/{userId}/media/{mediaId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': False},
+            'userId': {'value': user_id, 'encode': False},
             'mediaId': {'value': media_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
@@ -148,18 +148,20 @@ class APIController(BaseController):
         return _result
 
     def upload_media(self,
-                     account_id,
+                     user_id,
                      media_id,
+                     content_length,
                      body,
                      content_type='application/octet-stream',
                      cache_control=None):
-        """Does a PUT request to /users/{accountId}/media/{mediaId}.
+        """Does a PUT request to /users/{userId}/media/{mediaId}.
 
         uploadMedia
 
         Args:
-            account_id (string): User's account ID
+            user_id (string): User's account ID
             media_id (string): The user supplied custom media ID
+            content_length (long|int): The size of the entity-body
             body (typing.BinaryIO): TODO: type description here.
             content_type (string, optional): The media type of the
                 entity-body
@@ -180,9 +182,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{accountId}/media/{mediaId}'
+        _url_path = '/users/{userId}/media/{mediaId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': False},
+            'userId': {'value': user_id, 'encode': False},
             'mediaId': {'value': media_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
@@ -199,6 +201,7 @@ class APIController(BaseController):
         # Prepare headers
         _headers = {
             'content-type': body_content_type,
+            'Content-Length': content_length,
             'Cache-Control': cache_control
         }
 
@@ -226,14 +229,14 @@ class APIController(BaseController):
         return ApiResponse(_response)
 
     def delete_media(self,
-                     account_id,
+                     user_id,
                      media_id):
-        """Does a DELETE request to /users/{accountId}/media/{mediaId}.
+        """Does a DELETE request to /users/{userId}/media/{mediaId}.
 
         deleteMedia
 
         Args:
-            account_id (string): User's account ID
+            user_id (string): User's account ID
             media_id (string): The media ID to delete
 
         Returns:
@@ -249,9 +252,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{accountId}/media/{mediaId}'
+        _url_path = '/users/{userId}/media/{mediaId}'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': False},
+            'userId': {'value': user_id, 'encode': False},
             'mediaId': {'value': media_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
@@ -282,7 +285,7 @@ class APIController(BaseController):
         return ApiResponse(_response)
 
     def get_messages(self,
-                     account_id,
+                     user_id,
                      message_id=None,
                      source_tn=None,
                      destination_tn=None,
@@ -292,12 +295,12 @@ class APIController(BaseController):
                      to_date_time=None,
                      page_token=None,
                      limit=None):
-        """Does a GET request to /users/{accountId}/messages.
+        """Does a GET request to /users/{userId}/messages.
 
         getMessages
 
         Args:
-            account_id (string): User's account ID
+            user_id (string): User's account ID
             message_id (string, optional): The ID of the message to search
                 for. Special characters need to be encoded using URL encoding
             source_tn (string, optional): The phone number that sent the
@@ -306,7 +309,7 @@ class APIController(BaseController):
                 the message
             message_status (string, optional): The status of the message. One
                 of RECEIVED, QUEUED, SENDING, SENT, FAILED, DELIVERED,
-                ACCEPTED, UNDELIVERED
+                DLR_EXPIRED
             error_code (int, optional): The error code of the message
             from_date_time (string, optional): The start of the date range to
                 search in ISO 8601 format. Uses the message receive time. The
@@ -334,9 +337,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{accountId}/messages'
+        _url_path = '/users/{userId}/messages'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': False}
+            'userId': {'value': user_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
         _query_builder += _url_path
@@ -387,14 +390,14 @@ class APIController(BaseController):
         return _result
 
     def create_message(self,
-                       account_id,
+                       user_id,
                        body):
-        """Does a POST request to /users/{accountId}/messages.
+        """Does a POST request to /users/{userId}/messages.
 
         createMessage
 
         Args:
-            account_id (string): User's account ID
+            user_id (string): User's account ID
             body (MessageRequest): TODO: type description here.
 
         Returns:
@@ -411,9 +414,9 @@ class APIController(BaseController):
         """
 
         # Prepare query URL
-        _url_path = '/users/{accountId}/messages'
+        _url_path = '/users/{userId}/messages'
         _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
-            'accountId': {'value': account_id, 'encode': False}
+            'userId': {'value': user_id, 'encode': False}
         })
         _query_builder = self.config.get_base_uri(Server.MESSAGINGDEFAULT)
         _query_builder += _url_path
