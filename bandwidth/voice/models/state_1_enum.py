@@ -14,11 +14,14 @@ class State1Enum(object):
     TODO: type enum description here.
 
     Attributes:
-        ACTIVE: TODO: type description here.
-        COMPLETED: TODO: type description here.
+        NOT_RECORDING: TODO: type description here.
+        PAUSED: TODO: type description here.
+        RECORDING: TODO: type description here.
 
     """
 
-    ACTIVE = 'active'
+    NOT_RECORDING = 'NOT_RECORDING'
 
-    COMPLETED = 'completed'
+    PAUSED = 'PAUSED'
+
+    RECORDING = 'RECORDING'

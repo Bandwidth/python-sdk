@@ -11,6 +11,7 @@ from bandwidth.configuration import Configuration
 from bandwidth.configuration import Environment
 from bandwidth.messaging.messaging_client import MessagingClient
 from bandwidth.twofactorauth.two_factor_auth_client import TwoFactorAuthClient
+from bandwidth.phonenumberlookup.phone_number_lookup_client import PhoneNumberLookupClient
 from bandwidth.voice.voice_client import VoiceClient
 from bandwidth.webrtc.web_rtc_client import WebRtcClient
 
@@ -26,6 +27,10 @@ class BandwidthClient(object):
         return TwoFactorAuthClient(config=self.config)
 
     @lazy_property
+    def phone_number_lookup_client(self):
+        return PhoneNumberLookupClient(config=self.config)
+
+    @lazy_property
     def voice_client(self):
         return VoiceClient(config=self.config)
 
@@ -33,7 +38,9 @@ class BandwidthClient(object):
     def web_rtc_client(self):
         return WebRtcClient(config=self.config)
 
-    def __init__(self, timeout=60, max_retries=3, backoff_factor=0,
+    def __init__(self, timeout=60, max_retries=0, backoff_factor=2,
+                 retry_statuses=[408, 413, 429, 500, 502, 503, 504, 521, 522, 524, 408, 413, 429, 500, 502, 503, 504, 521, 522, 524],
+                 retry_methods=['GET', 'PUT', 'GET', 'PUT'],
                  environment=Environment.PRODUCTION,
                  base_url='https://www.example.com',
                  messaging_basic_auth_user_name='TODO: Replace',
@@ -48,6 +55,8 @@ class BandwidthClient(object):
             self.config = Configuration(timeout=timeout,
                                         max_retries=max_retries,
                                         backoff_factor=backoff_factor,
+                                        retry_statuses=retry_statuses,
+                                        retry_methods=retry_methods,
                                         environment=environment,
                                         base_url=base_url,
                                         messaging_basic_auth_user_name=messaging_basic_auth_user_name,
