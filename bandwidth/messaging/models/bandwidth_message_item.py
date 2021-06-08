@@ -27,13 +27,6 @@ class BandwidthMessageItem(object):
         receive_time (string): The ISO 8601 datetime of the message
         carrier_name (string): The name of the carrier. Not currently
             supported for MMS, coming soon
-        message_size (int): The size of the message including message content
-            and headers
-        message_length (int): The length of the message content
-        attachment_count (int): The number of attachments the message has
-        recipient_count (int): The number of recipients the message has
-        campaign_class (string): The campaign class of the message, if it has
-            one
 
     """
 
@@ -49,12 +42,7 @@ class BandwidthMessageItem(object):
         "segment_count": 'segmentCount',
         "error_code": 'errorCode',
         "receive_time": 'receiveTime',
-        "carrier_name": 'carrierName',
-        "message_size": 'messageSize',
-        "message_length": 'messageLength',
-        "attachment_count": 'attachmentCount',
-        "recipient_count": 'recipientCount',
-        "campaign_class": 'campaignClass'
+        "carrier_name": 'carrierName'
     }
 
     def __init__(self,
@@ -68,12 +56,7 @@ class BandwidthMessageItem(object):
                  segment_count=None,
                  error_code=None,
                  receive_time=None,
-                 carrier_name=None,
-                 message_size=None,
-                 message_length=None,
-                 attachment_count=None,
-                 recipient_count=None,
-                 campaign_class=None):
+                 carrier_name=None):
         """Constructor for the BandwidthMessageItem class"""
 
         # Initialize members of the class
@@ -88,11 +71,6 @@ class BandwidthMessageItem(object):
         self.error_code = error_code
         self.receive_time = receive_time
         self.carrier_name = carrier_name
-        self.message_size = message_size
-        self.message_length = message_length
-        self.attachment_count = attachment_count
-        self.recipient_count = recipient_count
-        self.campaign_class = campaign_class
 
     @classmethod
     def from_dictionary(cls,
@@ -123,11 +101,6 @@ class BandwidthMessageItem(object):
         error_code = dictionary.get('errorCode')
         receive_time = dictionary.get('receiveTime')
         carrier_name = dictionary.get('carrierName')
-        message_size = dictionary.get('messageSize')
-        message_length = dictionary.get('messageLength')
-        attachment_count = dictionary.get('attachmentCount')
-        recipient_count = dictionary.get('recipientCount')
-        campaign_class = dictionary.get('campaignClass')
 
         # Return an object of this model
         return cls(message_id,
@@ -140,9 +113,4 @@ class BandwidthMessageItem(object):
                    segment_count,
                    error_code,
                    receive_time,
-                   carrier_name,
-                   message_size,
-                   message_length,
-                   attachment_count,
-                   recipient_count,
-                   campaign_class)
+                   carrier_name)
