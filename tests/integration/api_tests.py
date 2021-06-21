@@ -162,8 +162,8 @@ class MonitorTest(unittest.TestCase):
     def test_tn_lookup(self):
         body = AccountsTnlookupRequest()
         body.tns = [PHONE_NUMBER_OUTBOUND]
-        result = self.tn_lookup_client.create_tn_lookup_request(ACCOUNT_ID, body)
-        self.assertTrue(result.status_code == 202)
+        response = self.tn_lookup_client.create_tn_lookup_request(ACCOUNT_ID, body)
+        self.assertTrue(response.status_code == 202)
 
 if __name__ == '__main__':
     unittest.main()

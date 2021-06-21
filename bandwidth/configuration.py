@@ -23,8 +23,8 @@ class Server(Enum):
     MESSAGINGDEFAULT = 1
     TWOFACTORAUTHDEFAULT = 2
     PHONENUMBERLOOKUPDEFAULT = 3
-    VOICEDEFAULT = 3
-    WEBRTCDEFAULT = 4
+    VOICEDEFAULT = 4
+    WEBRTCDEFAULT = 5
 
 
 class Configuration(object):
