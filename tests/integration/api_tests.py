@@ -165,5 +165,10 @@ class MonitorTest(unittest.TestCase):
         response = self.tn_lookup_client.create_tn_lookup_request(ACCOUNT_ID, body)
         self.assertTrue(response.status_code == 202)
 
+        # test get method with the returned request_id
+        request_id = response.body.request_id
+        get_response = tnLookup_controller.get_tn_lookup_result(ACCOUNT_ID, requestId)
+        self.assertTrue(get_response.status_code == 200)
+
 if __name__ == '__main__':
     unittest.main()
