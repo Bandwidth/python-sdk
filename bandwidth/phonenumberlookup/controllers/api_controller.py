@@ -11,8 +11,8 @@ from bandwidth.configuration import Server
 from bandwidth.http.api_response import ApiResponse
 from bandwidth.phonenumberlookup.controllers.base_controller import BaseController
 from bandwidth.http.auth.phone_number_lookup_basic_auth import PhoneNumberLookupBasicAuth
-from bandwidth.phonenumberlookup.models.accounts_tnlookup_response import AccountsTnlookupResponse
-from bandwidth.phonenumberlookup.models.accounts_tnlookup_response_1 import AccountsTnlookupResponse1
+from bandwidth.phonenumberlookup.models.order_response import OrderResponse
+from bandwidth.phonenumberlookup.models.order_status import OrderStatus
 from bandwidth.phonenumberlookup.exceptions.accounts_tnlookup_400_error_exception import AccountsTnlookup400ErrorException
 from bandwidth.exceptions.api_exception import APIException
 
@@ -24,17 +24,17 @@ class APIController(BaseController):
     def __init__(self, config, call_back=None):
         super(APIController, self).__init__(config, call_back)
 
-    def create_tn_lookup_request(self,
-                                 account_id,
-                                 body):
+    def create_lookup_request(self,
+                              account_id,
+                              body):
         """Does a POST request to /accounts/{accountId}/tnlookup.
 
-        Creates a request for a given TN, or batch of TNs.
+        Create a TN Lookup Order
 
         Args:
             account_id (string): The ID of the Bandwidth account that the user
                 belongs to.
-            body (AccountsTnlookupRequest): TODO: type description here.
+            body (OrderRequest): TODO: type description here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
@@ -282,21 +282,21 @@ class APIController(BaseController):
             raise APIException('Unexpected error. Please contact Bandwidth Support if your requests are receiving this status code for an extended period of time.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, AccountsTnlookupResponse.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, OrderResponse.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
 
-    def get_tn_lookup_result(self,
-                             account_id,
-                             request_id):
+    def get_lookup_request_status(self,
+                                  account_id,
+                                  request_id):
         """Does a GET request to /accounts/{accountId}/tnlookup/{requestId}.
 
-        Returns the result of a request by id.
+        Query an existing TN Lookup Order
 
         Args:
             account_id (string): The ID of the Bandwidth account that the user
                 belongs to.
-            request_id (uuid|string): TODO: type description here.
+            request_id (string): TODO: type description here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
@@ -547,6 +547,6 @@ class APIController(BaseController):
             raise APIException('Unexpected error. Please contact Bandwidth Support if your requests are receiving this status code for an extended period of time.', _response)
         self.validate_response(_response)
 
-        decoded = APIHelper.json_deserialize(_response.text, AccountsTnlookupResponse1.from_dictionary)
+        decoded = APIHelper.json_deserialize(_response.text, OrderStatus.from_dictionary)
         _result = ApiResponse(_response, body=decoded)
         return _result
