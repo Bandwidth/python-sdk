@@ -27,6 +27,10 @@ class BandwidthClient(object):
         return TwoFactorAuthClient(config=self.config)
 
     @lazy_property
+    def phone_number_lookup_client(self):
+        return PhoneNumberLookupClient(config=self.config)
+
+    @lazy_property
     def voice_client(self):
         return VoiceClient(config=self.config)
 
