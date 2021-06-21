@@ -19,6 +19,6 @@ class DeviceApiVersionEnum(object):
 
     """
 
-    V3 = 'V3'
+    V3 = 'v3'
 
-    V2 = 'V2'
+    V2 = 'v2'

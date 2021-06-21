@@ -47,7 +47,7 @@ class Participant(object):
                  sessions=None,
                  subscriptions=None,
                  tag=None,
-                 device_api_version='V2'):
+                 device_api_version='v2'):
         """Constructor for the Participant class"""
 
         # Initialize members of the class
@@ -83,7 +83,7 @@ class Participant(object):
         sessions = dictionary.get('sessions')
         subscriptions = Subscriptions.from_dictionary(dictionary.get('subscriptions')) if dictionary.get('subscriptions') else None
         tag = dictionary.get('tag')
-        device_api_version = dictionary.get("deviceApiVersion") if dictionary.get("deviceApiVersion") else 'V2'
+        device_api_version = dictionary.get("deviceApiVersion") if dictionary.get("deviceApiVersion") else 'v2'
 
         # Return an object of this model
         return cls(id,
