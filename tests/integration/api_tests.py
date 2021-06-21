@@ -49,7 +49,9 @@ class MonitorTest(unittest.TestCase):
             messaging_basic_auth_user_name=USERNAME,
             messaging_basic_auth_password=PASSWORD,
             two_factor_auth_basic_auth_user_name=USERNAME,
-            two_factor_auth_basic_auth_password=PASSWORD
+            two_factor_auth_basic_auth_password=PASSWORD,
+            phone_number_lookup_basic_auth_user_name=USERNAME,
+            phone_number_lookup_basic_auth_password=PASSWORD,
         )
         self.voice_client = self.bandwidth_client.voice_client.client
         self.messaging_client = self.bandwidth_client.messaging_client.client
