@@ -56,6 +56,7 @@ class MonitorTest(unittest.TestCase):
         self.voice_client = self.bandwidth_client.voice_client.client
         self.messaging_client = self.bandwidth_client.messaging_client.client
         self.auth_client = self.bandwidth_client.two_factor_auth_client.mfa
+        self.tn_lookup_client = self.bandwidth_client.phone_number_lookup_client.client
 
     def test_create_message(self):
         body = MessageRequest()
