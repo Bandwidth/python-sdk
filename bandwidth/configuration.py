@@ -21,9 +21,10 @@ class Server(Enum):
     """An enum for API servers"""
     DEFAULT = 0
     MESSAGINGDEFAULT = 1
-    TWOFACTORAUTHDEFAULT = 2
-    VOICEDEFAULT = 3
-    WEBRTCDEFAULT = 4
+    MULTIFACTORAUTHDEFAULT = 2
+    PHONENUMBERLOOKUPDEFAULT = 3
+    VOICEDEFAULT = 4
+    WEBRTCDEFAULT = 5
 
 
 class Configuration(object):
@@ -47,6 +48,14 @@ class Configuration(object):
         return self._backoff_factor
 
     @property
+    def retry_statuses(self):
+        return self._retry_statuses
+
+    @property
+    def retry_methods(self):
+        return self._retry_methods
+
+    @property
     def environment(self):
         return self._environment
 
@@ -63,12 +72,20 @@ class Configuration(object):
         return self._messaging_basic_auth_password
 
     @property
-    def two_factor_auth_basic_auth_user_name(self):
-        return self._two_factor_auth_basic_auth_user_name
+    def multi_factor_auth_basic_auth_user_name(self):
+        return self._multi_factor_auth_basic_auth_user_name
 
     @property
-    def two_factor_auth_basic_auth_password(self):
-        return self._two_factor_auth_basic_auth_password
+    def multi_factor_auth_basic_auth_password(self):
+        return self._multi_factor_auth_basic_auth_password
+
+    @property
+    def phone_number_lookup_basic_auth_user_name(self):
+        return self._phone_number_lookup_basic_auth_user_name
+
+    @property
+    def phone_number_lookup_basic_auth_password(self):
+        return self._phone_number_lookup_basic_auth_password
 
     @property
     def voice_basic_auth_user_name(self):
@@ -86,17 +103,16 @@ class Configuration(object):
     def web_rtc_basic_auth_password(self):
         return self._web_rtc_basic_auth_password
 
-    def __init__(self, timeout=60, max_retries=3, backoff_factor=0,
-                 environment=Environment.PRODUCTION,
-                 base_url='https://www.example.com',
-                 messaging_basic_auth_user_name='TODO: Replace',
-                 messaging_basic_auth_password='TODO: Replace',
-                 two_factor_auth_basic_auth_user_name='TODO: Replace',
-                 two_factor_auth_basic_auth_password='TODO: Replace',
-                 voice_basic_auth_user_name='TODO: Replace',
-                 voice_basic_auth_password='TODO: Replace',
-                 web_rtc_basic_auth_user_name='TODO: Replace',
-                 web_rtc_basic_auth_password='TODO: Replace'):
+    def __init__(
+        self, timeout=60, max_retries=0, backoff_factor=2,
+        retry_statuses=[408, 413, 429, 500, 502, 503, 504, 521, 522, 524, 408, 413, 429, 500, 502, 503, 504, 521, 522, 524],
+        retry_methods=['GET', 'PUT', 'GET', 'PUT'], environment=Environment.PRODUCTION, base_url='https://www.example.com',
+        messaging_basic_auth_user_name='TODO: Replace', messaging_basic_auth_password='TODO: Replace',
+        multi_factor_auth_basic_auth_user_name='TODO: Replace', multi_factor_auth_basic_auth_password='TODO: Replace',
+        phone_number_lookup_basic_auth_user_name='TODO: Replace', phone_number_lookup_basic_auth_password='TODO: Replace',
+        voice_basic_auth_user_name='TODO: Replace', voice_basic_auth_password='TODO: Replace',
+        web_rtc_basic_auth_user_name='TODO: Replace', web_rtc_basic_auth_password='TODO: Replace'
+    ):
         # The value to use for connection timeout
         self._timeout = timeout
 
@@ -107,6 +123,12 @@ class Configuration(object):
         # urllib3 will sleep for:
         # `{backoff factor} * (2 ** ({number of total retries} - 1))`
         self._backoff_factor = backoff_factor
+
+        # The http statuses on which retry is to be done
+        self._retry_statuses = retry_statuses
+
+        # The http methods on which retry is to be done
+        self._retry_methods = retry_methods
 
         # Current API environment
         self._environment = environment
@@ -121,10 +143,16 @@ class Configuration(object):
         self._messaging_basic_auth_password = messaging_basic_auth_password
 
         # The username to use with basic authentication
-        self._two_factor_auth_basic_auth_user_name = two_factor_auth_basic_auth_user_name
+        self._multi_factor_auth_basic_auth_user_name = multi_factor_auth_basic_auth_user_name
 
         # The password to use with basic authentication
-        self._two_factor_auth_basic_auth_password = two_factor_auth_basic_auth_password
+        self._multi_factor_auth_basic_auth_password = multi_factor_auth_basic_auth_password
+
+        # The username to use with basic authentication
+        self._phone_number_lookup_basic_auth_user_name = phone_number_lookup_basic_auth_user_name
+
+        # The password to use with basic authentication
+        self._phone_number_lookup_basic_auth_password = phone_number_lookup_basic_auth_password
 
         # The username to use with basic authentication
         self._voice_basic_auth_user_name = voice_basic_auth_user_name
@@ -142,11 +170,13 @@ class Configuration(object):
         self._http_client = self.create_http_client()
 
     def clone_with(self, timeout=None, max_retries=None, backoff_factor=None,
-                   environment=None, base_url=None,
-                   messaging_basic_auth_user_name=None,
+                   retry_statuses=None, retry_methods=None, environment=None,
+                   base_url=None, messaging_basic_auth_user_name=None,
                    messaging_basic_auth_password=None,
-                   two_factor_auth_basic_auth_user_name=None,
-                   two_factor_auth_basic_auth_password=None,
+                   multi_factor_auth_basic_auth_user_name=None,
+                   multi_factor_auth_basic_auth_password=None,
+                   phone_number_lookup_basic_auth_user_name=None,
+                   phone_number_lookup_basic_auth_password=None,
                    voice_basic_auth_user_name=None,
                    voice_basic_auth_password=None,
                    web_rtc_basic_auth_user_name=None,
@@ -154,12 +184,16 @@ class Configuration(object):
         timeout = timeout or self.timeout
         max_retries = max_retries or self.max_retries
         backoff_factor = backoff_factor or self.backoff_factor
+        retry_statuses = retry_statuses or self.retry_statuses
+        retry_methods = retry_methods or self.retry_methods
         environment = environment or self.environment
         base_url = base_url or self.base_url
         messaging_basic_auth_user_name = messaging_basic_auth_user_name or self.messaging_basic_auth_user_name
         messaging_basic_auth_password = messaging_basic_auth_password or self.messaging_basic_auth_password
-        two_factor_auth_basic_auth_user_name = two_factor_auth_basic_auth_user_name or self.two_factor_auth_basic_auth_user_name
-        two_factor_auth_basic_auth_password = two_factor_auth_basic_auth_password or self.two_factor_auth_basic_auth_password
+        multi_factor_auth_basic_auth_user_name = multi_factor_auth_basic_auth_user_name or self.multi_factor_auth_basic_auth_user_name
+        multi_factor_auth_basic_auth_password = multi_factor_auth_basic_auth_password or self.multi_factor_auth_basic_auth_password
+        phone_number_lookup_basic_auth_user_name = phone_number_lookup_basic_auth_user_name or self.phone_number_lookup_basic_auth_user_name
+        phone_number_lookup_basic_auth_password = phone_number_lookup_basic_auth_password or self.phone_number_lookup_basic_auth_password
         voice_basic_auth_user_name = voice_basic_auth_user_name or self.voice_basic_auth_user_name
         voice_basic_auth_password = voice_basic_auth_password or self.voice_basic_auth_password
         web_rtc_basic_auth_user_name = web_rtc_basic_auth_user_name or self.web_rtc_basic_auth_user_name
@@ -167,11 +201,14 @@ class Configuration(object):
 
         return Configuration(
             timeout=timeout, max_retries=max_retries,
-            backoff_factor=backoff_factor, environment=environment, base_url=base_url,
+            backoff_factor=backoff_factor, retry_statuses=retry_statuses,
+            retry_methods=retry_methods, environment=environment, base_url=base_url,
             messaging_basic_auth_user_name=messaging_basic_auth_user_name,
             messaging_basic_auth_password=messaging_basic_auth_password,
-            two_factor_auth_basic_auth_user_name=two_factor_auth_basic_auth_user_name,
-            two_factor_auth_basic_auth_password=two_factor_auth_basic_auth_password,
+            multi_factor_auth_basic_auth_user_name=multi_factor_auth_basic_auth_user_name,
+            multi_factor_auth_basic_auth_password=multi_factor_auth_basic_auth_password,
+            phone_number_lookup_basic_auth_user_name=phone_number_lookup_basic_auth_user_name,
+            phone_number_lookup_basic_auth_password=phone_number_lookup_basic_auth_password,
             voice_basic_auth_user_name=voice_basic_auth_user_name,
             voice_basic_auth_password=voice_basic_auth_password,
             web_rtc_basic_auth_user_name=web_rtc_basic_auth_user_name,
@@ -181,21 +218,25 @@ class Configuration(object):
     def create_http_client(self):
         return RequestsClient(timeout=self.timeout,
                               max_retries=self.max_retries,
-                              backoff_factor=self.backoff_factor)
+                              backoff_factor=self.backoff_factor,
+                              retry_statuses=self.retry_statuses,
+                              retry_methods=self.retry_methods)
 
     # All the environments the SDK can run in
     environments = {
         Environment.PRODUCTION: {
             Server.DEFAULT: 'api.bandwidth.com',
             Server.MESSAGINGDEFAULT: 'https://messaging.bandwidth.com/api/v2',
-            Server.TWOFACTORAUTHDEFAULT: 'https://mfa.bandwidth.com/api/v1',
+            Server.MULTIFACTORAUTHDEFAULT: 'https://mfa.bandwidth.com/api/v1',
+            Server.PHONENUMBERLOOKUPDEFAULT: 'https://numbers.bandwidth.com/api/v1',
             Server.VOICEDEFAULT: 'https://voice.bandwidth.com',
             Server.WEBRTCDEFAULT: 'https://api.webrtc.bandwidth.com/v1'
         },
         Environment.CUSTOM: {
             Server.DEFAULT: '{base_url}',
             Server.MESSAGINGDEFAULT: '{base_url}',
-            Server.TWOFACTORAUTHDEFAULT: '{base_url}',
+            Server.MULTIFACTORAUTHDEFAULT: '{base_url}',
+            Server.PHONENUMBERLOOKUPDEFAULT: '{base_url}',
             Server.VOICEDEFAULT: '{base_url}',
             Server.WEBRTCDEFAULT: '{base_url}'
         }

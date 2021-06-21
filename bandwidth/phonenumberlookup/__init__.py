@@ -2,5 +2,5 @@ __all__ = [
     'controllers',
     'exceptions',
     'models',
-    'voice_client',
+    'phone_number_lookup_client',
 ]
