@@ -167,7 +167,7 @@ class MonitorTest(unittest.TestCase):
 
         # test get method with the returned request_id
         request_id = response.body.request_id
-        get_response = self.tn_lookup_client.get_tn_lookup_result(ACCOUNT_ID, requestId)
+        get_response = self.tn_lookup_client.get_tn_lookup_result(ACCOUNT_ID, request_id)
         self.assertTrue(get_response.status_code == 200)
 
 if __name__ == '__main__':
