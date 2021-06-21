@@ -10,7 +10,7 @@ pip install bandwidth-sdk
 
 ### Initialize
 
-```
+```python
 from bandwidth.bandwidth_client import BandwidthClient
 
 from bandwidth.messaging.models.message_request import MessageRequest
@@ -21,6 +21,9 @@ from bandwidth.voice.bxml.verbs import *
 
 from bandwidth.twofactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
 from bandwidth.twofactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
+
+from bandwidth.phonenumberlookup.controllers.api_controller import APIController, ApiResponse, APIException
+from bandwidth.phonenumberlookup.models.accounts_tnlookup_request import AccountsTnlookupRequest
 
 from bandwidth.webrtc.models.session import Session
 from bandwidth.webrtc.models.participant import Participant
@@ -33,6 +36,8 @@ bandwidth_client = BandwidthClient(
     messaging_basic_auth_password='password',
     two_factor_auth_basic_auth_user_name='username',
     two_factor_auth_basic_auth_password='password',
+    phone_number_lookup_basic_auth_user_name='username',
+    phone_number_lookup_basic_auth_password='password',
     web_rtc_basic_auth_user_name='username',
     web_rtc_basic_auth_password='password'
 )
@@ -41,7 +46,7 @@ account_id = "12345"
 
 ### Create A Phone Call
 
-```
+```python
 voice_client = bandwidth_client.voice_client.client
 
 ##Create phone call
@@ -62,7 +67,7 @@ except ApiErrorResponseException as e:
 
 ### Send A Text Message
 
-```
+```python
 messaging_client = bandwidth_client.messaging_client.client
 
 body = MessageRequest()
@@ -82,7 +87,7 @@ except MessagingException as e:
 
 ### Create BXML
 
-```
+```python
 response = Response()
 speak_sentence = SpeakSentence(
     sentence="Test",
@@ -97,7 +102,7 @@ print(response.to_bxml())
 
 ### Create A MFA Request
 
-```
+```python
 auth_client = bandwidth_client.two_factor_auth_client.client
 
 from_phone = "+18888888888"
@@ -131,9 +136,33 @@ response = auth_client.create_verify_two_factor(account_id, body)
 print("Auth status: " + str(response.body.valid))
 ```
 
+### Perform a TN Lookup Request
+
+```python
+tnLookup_controller = bandwidth_client.phone_number_lookup_client.client
+body = AccountsTnlookupRequest()
+body.tns = ['+19195551234']
+
+try:
+    response = tnLookup_controller.create_tn_lookup_request(account_id, body)
+    print(response.status_code)
+
+except APIException as e:
+    print("Error:", e.response_code)
+
+requestId = response.body.request_id    # "1234-abcd-5678-efgh"
+
+try:
+    response = tnLookup_controller.get_tn_lookup_result(account_id, requestId)
+    print(response)
+
+except APIException as e:
+    print("Error:", e.response_code)
+```
+
 ### WebRtc Participant & Session Management
 
-```
+```python
 web_rtc_client = bandwidth_client.web_rtc_client.client
 
 create_session_body = Session()
@@ -157,7 +186,7 @@ web_rtc_client.add_participant_to_session(account_id, session_id, participant_id
 
 ## Supported Python Versions
 
-This package can be used with Python >= 3.0 
+This package can be used with Python >= 3.0
 
 ## Documentation
 
