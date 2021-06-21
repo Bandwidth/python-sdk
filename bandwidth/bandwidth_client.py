@@ -11,6 +11,7 @@ from bandwidth.configuration import Configuration
 from bandwidth.configuration import Environment
 from bandwidth.messaging.messaging_client import MessagingClient
 from bandwidth.twofactorauth.two_factor_auth_client import TwoFactorAuthClient
+from bandwidth.phonenumberlookup.phone_number_lookup_client import PhoneNumberLookupClient
 from bandwidth.voice.voice_client import VoiceClient
 from bandwidth.webrtc.web_rtc_client import WebRtcClient
 
@@ -40,6 +41,8 @@ class BandwidthClient(object):
                  messaging_basic_auth_password='TODO: Replace',
                  two_factor_auth_basic_auth_user_name='TODO: Replace',
                  two_factor_auth_basic_auth_password='TODO: Replace',
+                 phone_number_lookup_basic_auth_user_name='TODO: Replace',
+                 phone_number_lookup_basic_auth_password='TODO: Replace',
                  voice_basic_auth_user_name='TODO: Replace',
                  voice_basic_auth_password='TODO: Replace',
                  web_rtc_basic_auth_user_name='TODO: Replace',
@@ -54,6 +57,8 @@ class BandwidthClient(object):
                                         messaging_basic_auth_password=messaging_basic_auth_password,
                                         two_factor_auth_basic_auth_user_name=two_factor_auth_basic_auth_user_name,
                                         two_factor_auth_basic_auth_password=two_factor_auth_basic_auth_password,
+                                        phone_number_lookup_basic_auth_user_name=phone_number_lookup_basic_auth_user_name,
+                                        phone_number_lookup_basic_auth_password=phone_number_lookup_basic_auth_password,
                                         voice_basic_auth_user_name=voice_basic_auth_user_name,
                                         voice_basic_auth_password=voice_basic_auth_password,
                                         web_rtc_basic_auth_user_name=web_rtc_basic_auth_user_name,
