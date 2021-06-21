@@ -162,14 +162,8 @@ class MonitorTest(unittest.TestCase):
     def test_tn_lookup(self):
         body = AccountsTnlookupRequest()
         body.tns = [PHONE_NUMBER_OUTBOUND]
-        try:
-            response = self.tn_lookup_client.create_tn_lookup_request(ACCOUNT_ID, body)
-            self.assertTrue(response.status_code == 202)
-        except APIException as e:
-            print(e.response_code)
-            print(e.response.request.query_url)
-            print(PHONE_NUMBER_OUTBOUND)
-            exit(1)
+        response = self.tn_lookup_client.create_tn_lookup_request(ACCOUNT_ID, body)
+        self.assertTrue(response.status_code == 202)
 
 if __name__ == '__main__':
     unittest.main()
