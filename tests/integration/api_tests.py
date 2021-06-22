@@ -161,12 +161,12 @@ class MonitorTest(unittest.TestCase):
     def test_tn_lookup(self):
         body = OrderRequest()
         body.tns = [PHONE_NUMBER_OUTBOUND]
-        response = self.tn_lookup_client.create_tn_lookup_request(ACCOUNT_ID, body)
+        response = self.tn_lookup_client.create_lookup_request(ACCOUNT_ID, body)
         self.assertTrue(response.status_code == 202)
 
         # test get method with the returned request_id
         request_id = response.body.request_id
-        get_response = self.tn_lookup_client.get_tn_lookup_result(ACCOUNT_ID, request_id)
+        get_response = self.tn_lookup_client.get_lookup_request_status(ACCOUNT_ID, request_id)
         self.assertTrue(get_response.status_code == 200)
 
 if __name__ == '__main__':
