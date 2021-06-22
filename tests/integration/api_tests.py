@@ -12,8 +12,7 @@ from bandwidth.messaging.models.message_request import MessageRequest
 from bandwidth.voice.models.api_create_call_request import ApiCreateCallRequest
 from bandwidth.twofactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
 from bandwidth.twofactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
-from bandwidth.phonenumberlookup.controllers.api_controller import APIController, ApiResponse
-from bandwidth.phonenumberlookup.models.accounts_tnlookup_request import AccountsTnlookupRequest
+from bandwidth.phonenumberlookup.models.order_request import OrderRequest
 
 import unittest
 
@@ -160,7 +159,7 @@ class MonitorTest(unittest.TestCase):
         self.assertTrue(isinstance(response.body.valid, bool))
 
     def test_tn_lookup(self):
-        body = AccountsTnlookupRequest()
+        body = OrderRequest()
         body.tns = [PHONE_NUMBER_OUTBOUND]
         response = self.tn_lookup_client.create_tn_lookup_request(ACCOUNT_ID, body)
         self.assertTrue(response.status_code == 202)
