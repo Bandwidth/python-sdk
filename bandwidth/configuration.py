@@ -22,8 +22,9 @@ class Server(Enum):
     DEFAULT = 0
     MESSAGINGDEFAULT = 1
     TWOFACTORAUTHDEFAULT = 2
-    VOICEDEFAULT = 3
-    WEBRTCDEFAULT = 4
+    PHONENUMBERLOOKUPDEFAULT = 3
+    VOICEDEFAULT = 4
+    WEBRTCDEFAULT = 5
 
 
 class Configuration(object):
@@ -71,6 +72,14 @@ class Configuration(object):
         return self._two_factor_auth_basic_auth_password
 
     @property
+    def phone_number_lookup_basic_auth_user_name(self):
+        return self._phone_number_lookup_basic_auth_user_name
+
+    @property
+    def phone_number_lookup_basic_auth_password(self):
+        return self._phone_number_lookup_basic_auth_password
+
+    @property
     def voice_basic_auth_user_name(self):
         return self._voice_basic_auth_user_name
 
@@ -93,6 +102,8 @@ class Configuration(object):
                  messaging_basic_auth_password='TODO: Replace',
                  two_factor_auth_basic_auth_user_name='TODO: Replace',
                  two_factor_auth_basic_auth_password='TODO: Replace',
+                 phone_number_lookup_basic_auth_user_name='TODO: Replace',
+                 phone_number_lookup_basic_auth_password='TODO: Replace',
                  voice_basic_auth_user_name='TODO: Replace',
                  voice_basic_auth_password='TODO: Replace',
                  web_rtc_basic_auth_user_name='TODO: Replace',
@@ -127,6 +138,12 @@ class Configuration(object):
         self._two_factor_auth_basic_auth_password = two_factor_auth_basic_auth_password
 
         # The username to use with basic authentication
+        self._phone_number_lookup_basic_auth_user_name = phone_number_lookup_basic_auth_user_name
+
+        # The password to use with basic authentication
+        self._phone_number_lookup_basic_auth_password = phone_number_lookup_basic_auth_password
+
+        # The username to use with basic authentication
         self._voice_basic_auth_user_name = voice_basic_auth_user_name
 
         # The password to use with basic authentication
@@ -147,6 +164,8 @@ class Configuration(object):
                    messaging_basic_auth_password=None,
                    two_factor_auth_basic_auth_user_name=None,
                    two_factor_auth_basic_auth_password=None,
+                   phone_number_lookup_basic_auth_user_name=None,
+                   phone_number_lookup_basic_auth_password=None,
                    voice_basic_auth_user_name=None,
                    voice_basic_auth_password=None,
                    web_rtc_basic_auth_user_name=None,
@@ -160,6 +179,8 @@ class Configuration(object):
         messaging_basic_auth_password = messaging_basic_auth_password or self.messaging_basic_auth_password
         two_factor_auth_basic_auth_user_name = two_factor_auth_basic_auth_user_name or self.two_factor_auth_basic_auth_user_name
         two_factor_auth_basic_auth_password = two_factor_auth_basic_auth_password or self.two_factor_auth_basic_auth_password
+        phone_number_lookup_basic_auth_user_name = phone_number_lookup_basic_auth_user_name or self.phone_number_lookup_basic_auth_user_name
+        phone_number_lookup_basic_auth_password = phone_number_lookup_basic_auth_password or self.phone_number_lookup_basic_auth_password
         voice_basic_auth_user_name = voice_basic_auth_user_name or self.voice_basic_auth_user_name
         voice_basic_auth_password = voice_basic_auth_password or self.voice_basic_auth_password
         web_rtc_basic_auth_user_name = web_rtc_basic_auth_user_name or self.web_rtc_basic_auth_user_name
@@ -172,6 +193,8 @@ class Configuration(object):
             messaging_basic_auth_password=messaging_basic_auth_password,
             two_factor_auth_basic_auth_user_name=two_factor_auth_basic_auth_user_name,
             two_factor_auth_basic_auth_password=two_factor_auth_basic_auth_password,
+            phone_number_lookup_basic_auth_user_name=phone_number_lookup_basic_auth_user_name,
+            phone_number_lookup_basic_auth_password=phone_number_lookup_basic_auth_password,
             voice_basic_auth_user_name=voice_basic_auth_user_name,
             voice_basic_auth_password=voice_basic_auth_password,
             web_rtc_basic_auth_user_name=web_rtc_basic_auth_user_name,
@@ -189,6 +212,7 @@ class Configuration(object):
             Server.DEFAULT: 'api.bandwidth.com',
             Server.MESSAGINGDEFAULT: 'https://messaging.bandwidth.com/api/v2',
             Server.TWOFACTORAUTHDEFAULT: 'https://mfa.bandwidth.com/api/v1',
+            Server.PHONENUMBERLOOKUPDEFAULT: 'https://numbers.bandwidth.com/api/v1',
             Server.VOICEDEFAULT: 'https://voice.bandwidth.com',
             Server.WEBRTCDEFAULT: 'https://api.webrtc.bandwidth.com/v1'
         },
@@ -196,6 +220,7 @@ class Configuration(object):
             Server.DEFAULT: '{base_url}',
             Server.MESSAGINGDEFAULT: '{base_url}',
             Server.TWOFACTORAUTHDEFAULT: '{base_url}',
+            Server.PHONENUMBERLOOKUPDEFAULT: '{base_url}',
             Server.VOICEDEFAULT: '{base_url}',
             Server.WEBRTCDEFAULT: '{base_url}'
         }
