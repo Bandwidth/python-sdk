@@ -7,11 +7,11 @@ Integration tests for API requests
 """
 from bandwidth.bandwidth_client import BandwidthClient
 from bandwidth.messaging.exceptions.messaging_exception import MessagingException
-from bandwidth.voice.exceptions.api_error_response_exception import ApiErrorResponseException
+from bandwidth.voice.exceptions.api_response_exception import ApiErrorException
 from bandwidth.messaging.models.message_request import MessageRequest
-from bandwidth.voice.models.api_create_call_request import ApiCreateCallRequest
-from bandwidth.twofactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
-from bandwidth.twofactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
+from bandwidth.voice.models.create_call_request import CreateCallRequest
+from bandwidth.multifactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
+from bandwidth.multifactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
 from bandwidth.phonenumberlookup.models.order_request import OrderRequest
 
 import unittest
@@ -47,14 +47,14 @@ class MonitorTest(unittest.TestCase):
             voice_basic_auth_password=PASSWORD,
             messaging_basic_auth_user_name=USERNAME,
             messaging_basic_auth_password=PASSWORD,
-            two_factor_auth_basic_auth_user_name=USERNAME,
-            two_factor_auth_basic_auth_password=PASSWORD,
+            multi_factor_auth_basic_auth_user_name=USERNAME,
+            multi_factor_auth_basic_auth_password=PASSWORD,
             phone_number_lookup_basic_auth_user_name=USERNAME,
             phone_number_lookup_basic_auth_password=PASSWORD,
         )
         self.voice_client = self.bandwidth_client.voice_client.client
         self.messaging_client = self.bandwidth_client.messaging_client.client
-        self.auth_client = self.bandwidth_client.two_factor_auth_client.mfa
+        self.auth_client = self.bandwidth_client.multi_factor_auth_client.mfa
         self.tn_lookup_client = self.bandwidth_client.phone_number_lookup_client.client
 
     def test_create_message(self):
@@ -95,7 +95,7 @@ class MonitorTest(unittest.TestCase):
         self.assertEqual(media_file, downloaded_media_file)
 
     def test_create_call_and_get_call_state(self):
-        body = ApiCreateCallRequest()
+        body = CreateCallRequest()
         body.mfrom = PHONE_NUMBER_OUTBOUND
         body.to = PHONE_NUMBER_INBOUND
         body.application_id = VOICE_APPLICATION_ID
@@ -110,7 +110,7 @@ class MonitorTest(unittest.TestCase):
         self.assertTrue(len(response.body.state) > 1)
 
     def test_create_call_invalid_phone_number(self):
-        body = ApiCreateCallRequest()
+        body = CreateCallRequest()
         body.mfrom = PHONE_NUMBER_OUTBOUND
         body.to = "+1invalid"
         body.application_id = VOICE_APPLICATION_ID
@@ -118,7 +118,7 @@ class MonitorTest(unittest.TestCase):
         try:
             self.voice_client.create_call(ACCOUNT_ID, body)
             self.assertTrue(False)
-        except ApiErrorResponseException as e:
+        except ApiErrorException as e:
             self.assertTrue(len(e.description) > 0)
         except:
             self.assertTrue(False);
