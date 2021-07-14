@@ -86,7 +86,7 @@ class MonitorTest(unittest.TestCase):
         media_file = b'12345'
 
         #media upload
-        self.messaging_client.upload_media(ACCOUNT_ID, media_file_name, str(len(media_file)), body=media_file)
+        self.messaging_client.upload_media(ACCOUNT_ID, media_file_name, media_file)
 
         #media download
         downloaded_media_file = self.messaging_client.get_media(ACCOUNT_ID, media_file_name).body
@@ -94,7 +94,7 @@ class MonitorTest(unittest.TestCase):
         #validate that the response is the same as the upload
         self.assertEqual(media_file, downloaded_media_file)
 
-    def test_create_call_and_get_call_state(self):
+    def test_create_call_and_get_call(self):
         body = CreateCallRequest()
         body.mfrom = PHONE_NUMBER_OUTBOUND
         body.to = PHONE_NUMBER_INBOUND
@@ -106,7 +106,7 @@ class MonitorTest(unittest.TestCase):
         #get phone call information
         import time
         time.sleep(1) #No guarantee that the info will be immediately available
-        response = self.voice_client.get_call_state(ACCOUNT_ID, response.body.call_id)
+        response = self.voice_client.get_call(ACCOUNT_ID, response.body.call_id)
         self.assertTrue(len(response.body.state) > 1)
 
     def test_create_call_invalid_phone_number(self):
