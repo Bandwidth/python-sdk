@@ -7,7 +7,7 @@ Integration tests for API requests
 """
 from bandwidth.bandwidth_client import BandwidthClient
 from bandwidth.messaging.exceptions.messaging_exception import MessagingException
-from bandwidth.voice.exceptions.api_response_exception import ApiErrorException
+from bandwidth.voice.exceptions.api_error_exception import ApiErrorException
 from bandwidth.messaging.models.message_request import MessageRequest
 from bandwidth.voice.models.create_call_request import CreateCallRequest
 from bandwidth.multifactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
