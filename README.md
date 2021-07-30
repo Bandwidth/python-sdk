@@ -15,12 +15,12 @@ from bandwidth.bandwidth_client import BandwidthClient
 
 from bandwidth.messaging.models.message_request import MessageRequest
 
-from bandwidth.voice.models.api_create_call_request import ApiCreateCallRequest
+from bandwidth.voice.models.create_call_request import CreateCallRequest
 from bandwidth.voice.bxml.response import Response
 from bandwidth.voice.bxml.verbs import *
 
-from bandwidth.twofactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
-from bandwidth.twofactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
+from bandwidth.multifactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
+from bandwidth.multifactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
 
 from bandwidth.phonenumberlookup.controllers.api_controller import APIController, ApiResponse, APIException
 from bandwidth.phonenumberlookup.models.accounts_tnlookup_request import AccountsTnlookupRequest
@@ -34,8 +34,8 @@ bandwidth_client = BandwidthClient(
     voice_basic_auth_password='password',
     messaging_basic_auth_user_name='username',
     messaging_basic_auth_password='password',
-    two_factor_auth_basic_auth_user_name='username',
-    two_factor_auth_basic_auth_password='password',
+    multi_factor_auth_basic_auth_user_name='username',
+    multi_factor_auth_basic_auth_password='password',
     phone_number_lookup_basic_auth_user_name='username',
     phone_number_lookup_basic_auth_password='password',
     web_rtc_basic_auth_user_name='username',
@@ -50,7 +50,7 @@ account_id = "12345"
 voice_client = bandwidth_client.voice_client.client
 
 ##Create phone call
-body = ApiCreateCallRequest()
+body = CreateCallRequest()
 body.mfrom = "+17777777777"
 body.to = "+16666666666"
 body.application_id = "3-d-4-b-5"
@@ -103,7 +103,7 @@ print(response.to_bxml())
 ### Create A MFA Request
 
 ```python
-auth_client = bandwidth_client.two_factor_auth_client.client
+auth_client = bandwidth_client.multi_factor_auth_client.client
 
 from_phone = "+18888888888"
 to_phone = "+17777777777"
@@ -124,12 +124,10 @@ auth_client.create_messaging_two_factor(account_id, body)
 code = "123456" #This is the user input to validate
 
 body = TwoFactorVerifyRequestSchema(
-    mfrom = from_phone,
     to = to_phone,
     application_id = application_id,
     scope = scope,
     code = code,
-    digits = digits,
     expiration_time_in_minutes = 3
 )
 response = auth_client.create_verify_two_factor(account_id, body)
