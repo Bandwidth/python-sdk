@@ -32,7 +32,8 @@ class MFAController(BaseController):
                                 body):
         """Does a POST request to /accounts/{accountId}/code/voice.
 
-        Allows a user to send a MFA code through a phone call
+        Multi-Factor authentication with Bandwidth Voice services. Allows for
+        a user to send an MFA code via a phone call.
 
         Args:
             account_id (string): Bandwidth Account ID with Voice service
@@ -92,7 +93,8 @@ class MFAController(BaseController):
                                     body):
         """Does a POST request to /accounts/{accountId}/code/messaging.
 
-        Allows a user to send a MFA code through a text message (SMS)
+        Multi-Factor authentication with Bandwidth Messaging services. Allows
+        a user to send an MFA code via a text message (SMS).
 
         Args:
             account_id (string): Bandwidth Account ID with Messaging service
@@ -152,7 +154,7 @@ class MFAController(BaseController):
                                  body):
         """Does a POST request to /accounts/{accountId}/code/verify.
 
-        Allows a user to verify an MFA code
+        Allows a user to verify an MFA code.
 
         Args:
             account_id (string): Bandwidth Account ID with Two-Factor enabled

@@ -31,7 +31,7 @@ class APIController(BaseController):
                    continuation_token=None):
         """Does a GET request to /users/{accountId}/media.
 
-        listMedia
+        Gets a list of your media files. No query parameters are supported.
 
         Args:
             account_id (string): User's account ID
@@ -95,7 +95,7 @@ class APIController(BaseController):
                   media_id):
         """Does a GET request to /users/{accountId}/media/{mediaId}.
 
-        getMedia
+        Downloads a media file you previously uploaded.
 
         Args:
             account_id (string): User's account ID
@@ -156,7 +156,8 @@ class APIController(BaseController):
                      cache_control=None):
         """Does a PUT request to /users/{accountId}/media/{mediaId}.
 
-        uploadMedia
+        Uploads a file the normal HTTP way. You may add headers to the request
+        in order to provide some control to your media-file.
 
         Args:
             account_id (string): User's account ID
@@ -231,7 +232,10 @@ class APIController(BaseController):
                      media_id):
         """Does a DELETE request to /users/{accountId}/media/{mediaId}.
 
-        deleteMedia
+        Deletes a media file from Bandwidth API server. Make sure you don't
+        have any application scripts still using the media before you delete.
+        If you accidentally delete a media file, you can immediately upload a
+        new file with the same name.
 
         Args:
             account_id (string): User's account ID
@@ -295,7 +299,7 @@ class APIController(BaseController):
                      limit=None):
         """Does a GET request to /users/{accountId}/messages.
 
-        getMessages
+        Gets a list of messages based on query parameters.
 
         Args:
             account_id (string): User's account ID
@@ -392,7 +396,8 @@ class APIController(BaseController):
                        body):
         """Does a POST request to /users/{accountId}/messages.
 
-        createMessage
+        Endpoint for sending text messages and picture messages using V2
+        messaging.
 
         Args:
             account_id (string): User's account ID

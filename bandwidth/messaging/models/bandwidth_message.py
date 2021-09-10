@@ -27,7 +27,11 @@ class BandwidthMessage(object):
             Bandwidth. Can be in or out
         to (list of string): The phone number recipients of the message
         mfrom (string): The phone number the message was sent from
-        media (list of string): The list of media URLs sent in the message
+        media (list of string): The list of media URLs sent in the message.
+            Including a `filename` field in the `Content-Disposition` header
+            of the media linked with a URL will set the displayed file name.
+            This is a best practice to ensure that your media has a readable
+            file name.
         text (string): The contents of the message
         tag (string): The custom string set by the user
         priority (string): The priority specified by the user
