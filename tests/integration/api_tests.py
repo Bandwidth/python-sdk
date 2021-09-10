@@ -123,6 +123,32 @@ class MonitorTest(unittest.TestCase):
         except:
             self.assertTrue(False);
 
+    def create_call_amd_and_get_call(self):
+        machine_detection_parameters = new MachineDetectionRequest()
+        machine_detection_parameters.mode = "async"
+        machine_detection_parameters.callback_url = CALLBACK_URL
+        machine_detection_parameters.callback_method = "POST"
+        machine_detection_parameters.detection_timeout = 5.0
+        machine_detection_parameters.silence_timeout = 5.0
+        machine_detection_parameters.speech_threshold = 5.0
+        machine_detection_parameters.speech_end_threshold = 5.0
+        machine_detection_parameters.delay_result = 5.0
+
+        body = CreateCallRequest()
+        body.mfrom = PHONE_NUMBER_OUTBOUND
+        body.to = PHONE_NUMBER_INBOUND
+        body.application_id = VOICE_APPLICATION_ID
+        body.answer_url = CALLBACK_URL
+        body.machine_detection = machine_detection_parameters
+        response = self.voice_client.create_call(ACCOUNT_ID, body)
+        self.assertTrue(len(response.body.call_id) > 1)
+
+        #get phone call information
+        import time
+        time.sleep(1) #No guarantee that the info will be immediately available
+        response = self.voice_client.get_call(ACCOUNT_ID, response.body.call_id)
+        self.assertTrue(len(response.body.state) > 1)
+
     def test_mfa_messaging(self):
         body = TwoFactorCodeRequestSchema(
             mfrom = PHONE_NUMBER_MFA,
