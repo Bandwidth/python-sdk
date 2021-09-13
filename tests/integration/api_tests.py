@@ -33,6 +33,7 @@ try:
 except:
     raise Exception("Environmental variables not found")
 
+
 class MonitorTest(unittest.TestCase):
     """
     Class that holds basic monitoring tests for the Python SDK. Makes requests to cover JSON call and response,
@@ -57,6 +58,7 @@ class MonitorTest(unittest.TestCase):
         self.auth_client = self.bandwidth_client.multi_factor_auth_client.mfa
         self.tn_lookup_client = self.bandwidth_client.phone_number_lookup_client.client
 
+
     def test_create_message(self):
         body = MessageRequest()
         body.application_id = MESSAGING_APPLICATION_ID
@@ -65,6 +67,7 @@ class MonitorTest(unittest.TestCase):
         body.text = "Python Monitoring"
         response = self.messaging_client.create_message(ACCOUNT_ID, body)
         self.assertTrue(len(response.body.id) > 0) #validate that _some_ id was returned
+
 
     def test_create_message_invalid_phone_number(self):
         body = MessageRequest()
@@ -80,6 +83,7 @@ class MonitorTest(unittest.TestCase):
         except:
             self.assertTrue(False)
 
+
     def test_upload_download_media(self):
         #define constants for upload media and download media
         media_file_name = 'python_monitoring' #future update to add special symbols
@@ -94,6 +98,7 @@ class MonitorTest(unittest.TestCase):
         #validate that the response is the same as the upload
         self.assertEqual(media_file, downloaded_media_file)
 
+
     def test_create_call_and_get_call(self):
         body = CreateCallRequest()
         body.mfrom = PHONE_NUMBER_OUTBOUND
@@ -106,6 +111,7 @@ class MonitorTest(unittest.TestCase):
         #get phone call information
         response = self.voice_client.get_call(ACCOUNT_ID, response.body.call_id)
         self.assertTrue(len(response.body.state) > 1)
+
 
     def test_create_call_invalid_phone_number(self):
         body = CreateCallRequest()
@@ -120,6 +126,7 @@ class MonitorTest(unittest.TestCase):
             self.assertTrue(len(e.description) > 0)
         except:
             self.assertTrue(False);
+
 
     def create_call_amd_and_get_call(self):
         machine_detection_parameters = new MachineDetectionRequest()
@@ -138,12 +145,14 @@ class MonitorTest(unittest.TestCase):
         body.application_id = VOICE_APPLICATION_ID
         body.answer_url = CALLBACK_URL
         body.machine_detection = machine_detection_parameters
-        response = self.voice_client.create_call(ACCOUNT_ID, body)
-        self.assertTrue(len(response.body.call_id) > 1)
+        create_response = self.voice_client.create_call(ACCOUNT_ID, body)
+        self.assertTrue(len(create_response.body.call_id) > 1)
 
         #get phone call information
-        response = self.voice_client.get_call(ACCOUNT_ID, response.body.call_id)
-        self.assertTrue(len(response.body.state) > 1)
+        get_response = self.voice_client.get_call(ACCOUNT_ID, create_response.body.call_id)
+        self.assertTrue(len(get_response.body.state) > 1)
+        self.assertEqual(get_response.body.callId, create_response.body.call_id)
+
 
     def test_mfa_messaging(self):
         body = TwoFactorCodeRequestSchema(
@@ -157,6 +166,7 @@ class MonitorTest(unittest.TestCase):
         response = self.auth_client.create_messaging_two_factor(ACCOUNT_ID, body)
         self.assertTrue(len(response.body.message_id) > 0)
 
+
     def test_mfa_voice(self):
         body = TwoFactorCodeRequestSchema(
             mfrom = PHONE_NUMBER_MFA,
@@ -169,6 +179,7 @@ class MonitorTest(unittest.TestCase):
         response = self.auth_client.create_voice_two_factor(ACCOUNT_ID, body)
         self.assertTrue(len(response.body.call_id) > 0)
 
+
     def test_mfa_verify(self):
         body = TwoFactorVerifyRequestSchema(
             to = PHONE_NUMBER_INBOUND,
@@ -180,6 +191,7 @@ class MonitorTest(unittest.TestCase):
         response = self.auth_client.create_verify_two_factor(ACCOUNT_ID, body)
         self.assertTrue(isinstance(response.body.valid, bool))
 
+
     def test_tn_lookup(self):
         body = OrderRequest()
         body.tns = [PHONE_NUMBER_OUTBOUND]
@@ -190,6 +202,7 @@ class MonitorTest(unittest.TestCase):
         request_id = response.body.request_id
         get_response = self.tn_lookup_client.get_lookup_request_status(ACCOUNT_ID, request_id)
         self.assertTrue(get_response.status_code == 200)
+
 
 if __name__ == '__main__':
     unittest.main()
