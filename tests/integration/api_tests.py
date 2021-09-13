@@ -122,11 +122,10 @@ class MonitorTest(unittest.TestCase):
         body.answer_url = CALLBACK_URL
         try:
             self.voice_client.create_call(ACCOUNT_ID, body)
-        except ApiErrorException as e:
+        except APIException as e:
             self.assertTrue(len(e.description) > 0)
         except:
             self.assertTrue(False);
-            exit(1)
 
 
     def create_call_amd_and_get_call(self):
