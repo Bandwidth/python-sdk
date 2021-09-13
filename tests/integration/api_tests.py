@@ -157,7 +157,7 @@ class MonitorTest(unittest.TestCase):
         self.assertIs(get_response.body.application_id, str)
         self.assertIs(get_response.body.account_id, str)
         self.assertIs(get_response.body.to, str)
-        self.assertIs(get_response.body.from, str)
+        self.assertIs(get_response.body.mfrom, str)
         self.assertIs(get_response.body.direction, str)
         self.assertIs(get_response.body.state, str)
         self.assertIs(get_response.body.start_time, str)
