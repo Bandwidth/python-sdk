@@ -10,6 +10,7 @@ from bandwidth.messaging.exceptions.messaging_exception import MessagingExceptio
 from bandwidth.voice.exceptions.api_error_exception import ApiErrorException
 from bandwidth.messaging.models.message_request import MessageRequest
 from bandwidth.voice.models.create_call_request import CreateCallRequest
+from bandwidth.voice.models.machine_detection_request import MachineDetectionRequest
 from bandwidth.multifactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
 from bandwidth.multifactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
 from bandwidth.phonenumberlookup.models.order_request import OrderRequest
