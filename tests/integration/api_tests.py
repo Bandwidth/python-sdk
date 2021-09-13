@@ -153,6 +153,22 @@ class MonitorTest(unittest.TestCase):
         get_response = self.voice_client.get_call(ACCOUNT_ID, create_response.body.call_id)
         self.assertTrue(len(get_response.body.state) > 1)
         self.assertEqual(get_response.body.callId, create_response.body.call_id)
+        self.assertIs(get_response.body.call_id, str)
+        self.assertIs(get_response.body.application_id, str)
+        self.assertIs(get_response.body.account_id, str)
+        self.assertIs(get_response.body.to, str)
+        self.assertIs(get_response.body.from, str)
+        self.assertIs(get_response.body.direction, str)
+        self.assertIs(get_response.body.state, str)
+        self.assertIs(get_response.body.start_time, str)
+        self.assertIs(get_response.body.last_update, str)
+
+        if get_response.body.disconnect_cause:
+            self.assertIs(get_response.body.disconnect_cause, str)
+        if get_response.body.error_message:
+            self.assertIs(get_response.body.error_message, str)
+        if get_response.body.error_id:
+            self.assertIs(get_response.body.error_id, str)
 
 
     def test_mfa_messaging(self):
