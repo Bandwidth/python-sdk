@@ -122,7 +122,6 @@ class MonitorTest(unittest.TestCase):
         body.answer_url = CALLBACK_URL
         try:
             self.voice_client.create_call(ACCOUNT_ID, body)
-            self.assertTrue(False)
         except ApiErrorException as e:
             self.assertTrue(len(e.description) > 0)
         except:
