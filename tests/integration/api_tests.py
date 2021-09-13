@@ -130,7 +130,7 @@ class MonitorTest(unittest.TestCase):
 
 
     def create_call_amd_and_get_call(self):
-        machine_detection_parameters = new MachineDetectionRequest()
+        machine_detection_parameters = MachineDetectionRequest()
         machine_detection_parameters.mode = "async"
         machine_detection_parameters.callback_url = CALLBACK_URL
         machine_detection_parameters.callback_method = "POST"
