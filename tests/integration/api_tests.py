@@ -137,7 +137,7 @@ class MonitorTest(unittest.TestCase):
         machine_detection_parameters.silence_timeout = 5.0
         machine_detection_parameters.speech_threshold = 5.0
         machine_detection_parameters.speech_end_threshold = 5.0
-        machine_detection_parameters.delay_result = 5.0
+        machine_detection_parameters.delay_result = True
 
         body = CreateCallRequest()
         body.mfrom = PHONE_NUMBER_OUTBOUND
