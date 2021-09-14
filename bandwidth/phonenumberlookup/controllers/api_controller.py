@@ -30,7 +30,7 @@ class APIController(BaseController):
                               body):
         """Does a POST request to /accounts/{accountId}/tnlookup.
 
-        Create a TN Lookup Order
+        Create a TN Lookup Order.
 
         Args:
             account_id (string): The ID of the Bandwidth account that the user
@@ -292,7 +292,7 @@ class APIController(BaseController):
                                   request_id):
         """Does a GET request to /accounts/{accountId}/tnlookup/{requestId}.
 
-        Query an existing TN Lookup Order
+        Query an existing TN Lookup Order.
 
         Args:
             account_id (string): The ID of the Bandwidth account that the user

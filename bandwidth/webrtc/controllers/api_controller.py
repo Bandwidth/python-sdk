@@ -32,9 +32,9 @@ class APIController(BaseController):
                            body=None):
         """Does a POST request to /accounts/{accountId}/participants.
 
-        Create a new participant under this account
+        Create a new participant under this account.
         Participants are idempotent, so relevant parameters must be set in
-        this function if desired
+        this function if desired.
 
         Args:
             account_id (string): Account ID
@@ -92,7 +92,7 @@ class APIController(BaseController):
                         participant_id):
         """Does a GET request to /accounts/{accountId}/participants/{participantId}.
 
-        Get participant by ID
+        Get participant by ID.
 
         Args:
             account_id (string): Account ID
@@ -150,7 +150,7 @@ class APIController(BaseController):
                            participant_id):
         """Does a DELETE request to /accounts/{accountId}/participants/{participantId}.
 
-        Delete participant by ID
+        Delete participant by ID.
 
         Args:
             account_id (string): Account ID
@@ -203,9 +203,9 @@ class APIController(BaseController):
                        body=None):
         """Does a POST request to /accounts/{accountId}/sessions.
 
-        Create a new session
+        Create a new session.
         Sessions are idempotent, so relevant parameters must be set in this
-        function if desired
+        function if desired.
 
         Args:
             account_id (string): Account ID
@@ -263,7 +263,7 @@ class APIController(BaseController):
                     session_id):
         """Does a GET request to /accounts/{accountId}/sessions/{sessionId}.
 
-        Get session by ID
+        Get session by ID.
 
         Args:
             account_id (string): Account ID
@@ -321,7 +321,7 @@ class APIController(BaseController):
                        session_id):
         """Does a DELETE request to /accounts/{accountId}/sessions/{sessionId}.
 
-        Delete session by ID
+        Delete session by ID.
 
         Args:
             account_id (string): Account ID
@@ -374,7 +374,7 @@ class APIController(BaseController):
                                   session_id):
         """Does a GET request to /accounts/{accountId}/sessions/{sessionId}/participants.
 
-        List participants in a session
+        List participants in a session.
 
         Args:
             account_id (string): Account ID
@@ -434,8 +434,8 @@ class APIController(BaseController):
                                    body=None):
         """Does a PUT request to /accounts/{accountId}/sessions/{sessionId}/participants/{participantId}.
 
-        Add a participant to a session
-        Subscriptions can optionally be provided as part of this call
+        Add a participant to a session.
+        Subscriptions can optionally be provided as part of this call.
 
         Args:
             account_id (string): Account ID
@@ -498,9 +498,9 @@ class APIController(BaseController):
                                         participant_id):
         """Does a DELETE request to /accounts/{accountId}/sessions/{sessionId}/participants/{participantId}.
 
-        Remove a participant from a session
+        Remove a participant from a session.
         This will automatically remove any subscriptions the participant has
-        associated with this session
+        associated with this session.
 
         Args:
             account_id (string): Account ID
@@ -556,7 +556,7 @@ class APIController(BaseController):
                                       participant_id):
         """Does a GET request to /accounts/{accountId}/sessions/{sessionId}/participants/{participantId}/subscriptions.
 
-        Get a participant's subscriptions
+        Get a participant's subscriptions.
 
         Args:
             account_id (string): Account ID
@@ -618,11 +618,11 @@ class APIController(BaseController):
                                          body=None):
         """Does a PUT request to /accounts/{accountId}/sessions/{sessionId}/participants/{participantId}/subscriptions.
 
-        Update a participant's subscriptions
+        Update a participant's subscriptions.
         This is a full update that will replace the participant's
         subscriptions. First call `getParticipantSubscriptions` if you need
         the current subscriptions. Call this function with no `Subscriptions`
-        object to remove all subscriptions
+        object to remove all subscriptions.
 
         Args:
             account_id (string): Account ID

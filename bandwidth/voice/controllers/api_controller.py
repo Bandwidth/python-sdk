@@ -35,7 +35,7 @@ class APIController(BaseController):
                     body):
         """Does a POST request to /api/v2/accounts/{accountId}/calls.
 
-        Creates an outbound call.
+        Creates an outbound phone call.
 
         Args:
             account_id (string): TODO: type description here.
@@ -298,7 +298,7 @@ class APIController(BaseController):
         """Does a GET request to /api/v2/accounts/{accountId}/calls/{callId}/recordings.
 
         Returns a (potentially empty) list of metadata for the recordings that
-        took place during the specified call
+        took place during the specified call.
 
         Args:
             account_id (string): TODO: type description here.

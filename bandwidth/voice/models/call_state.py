@@ -28,7 +28,7 @@ class CallState(object):
             may be added in the future, so your application must be tolerant
             of unknown values.
         identity (string): TODO: type description here.
-        pai (dict): TODO: type description here.
+        stir_shaken (dict): TODO: type description here.
         start_time (datetime): TODO: type description here.
         answer_time (datetime): TODO: type description here.
         end_time (datetime): TODO: type description here.
@@ -56,7 +56,7 @@ class CallState(object):
         "direction": 'direction',
         "state": 'state',
         "identity": 'identity',
-        "pai": 'pai',
+        "stir_shaken": 'stirShaken',
         "start_time": 'startTime',
         "answer_time": 'answerTime',
         "end_time": 'endTime',
@@ -76,7 +76,7 @@ class CallState(object):
                  direction=None,
                  state=None,
                  identity=None,
-                 pai=None,
+                 stir_shaken=None,
                  start_time=None,
                  answer_time=None,
                  end_time=None,
@@ -96,7 +96,7 @@ class CallState(object):
         self.direction = direction
         self.state = state
         self.identity = identity
-        self.pai = pai
+        self.stir_shaken = stir_shaken
         self.start_time = APIHelper.RFC3339DateTime(start_time) if start_time else None
         self.answer_time = APIHelper.RFC3339DateTime(answer_time) if answer_time else None
         self.end_time = APIHelper.RFC3339DateTime(end_time) if end_time else None
@@ -132,7 +132,7 @@ class CallState(object):
         direction = dictionary.get('direction')
         state = dictionary.get('state')
         identity = dictionary.get('identity')
-        pai = dictionary.get('pai')
+        stir_shaken = dictionary.get('stirShaken')
         start_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("startTime")).datetime if dictionary.get("startTime") else None
         answer_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("answerTime")).datetime if dictionary.get("answerTime") else None
         end_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("endTime")).datetime if dictionary.get("endTime") else None
@@ -151,7 +151,7 @@ class CallState(object):
                    direction,
                    state,
                    identity,
-                   pai,
+                   stir_shaken,
                    start_time,
                    answer_time,
                    end_time,
