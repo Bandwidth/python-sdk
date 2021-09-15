@@ -7,7 +7,7 @@ Integration tests for API requests
 """
 from bandwidth.bandwidth_client import BandwidthClient
 from bandwidth.messaging.exceptions.messaging_exception import MessagingException
-from bandwidth.voice.exceptions.api_exception import APIException
+from bandwidth.exceptions.api_exception import APIException
 from bandwidth.messaging.models.message_request import MessageRequest
 from bandwidth.voice.models.create_call_request import CreateCallRequest
 from bandwidth.voice.models.machine_detection_request import MachineDetectionRequest
@@ -20,17 +20,14 @@ import unittest
 import os
 
 try:
-    USERNAME = os.environ["USERNAME"]
-    PASSWORD = os.environ["PASSWORD"]
-    ACCOUNT_ID = os.environ["ACCOUNT_ID"]
-    VOICE_APPLICATION_ID = os.environ["VOICE_APPLICATION_ID"]
-    MESSAGING_APPLICATION_ID = os.environ["MESSAGING_APPLICATION_ID"]
-    CALLBACK_URL = os.environ["CALLBACK_URL"]
-    PHONE_NUMBER_OUTBOUND = os.environ["PHONE_NUMBER_OUTBOUND"]
-    PHONE_NUMBER_INBOUND = os.environ["PHONE_NUMBER_INBOUND"]
-    MFA_MESSAGING_APPLICATION_ID = os.environ["MFA_MESSAGING_APPLICATION_ID"]
-    MFA_VOICE_APPLICATION_ID = os.environ["MFA_VOICE_APPLICATION_ID"]
-    PHONE_NUMBER_MFA = os.environ["PHONE_NUMBER_MFA"]
+    BW_USERNAME = os.environ["BW_USERNAME"]
+    BW_PASSWORD = os.environ["BW_PASSWORD"]
+    BW_ACCOUNT_ID = os.environ["BW_ACCOUNT_ID"]
+    BW_VOICE_APPLICATION_ID = os.environ["BW_VOICE_APPLICATION_ID"]
+    BW_MESSAGING_APPLICATION_ID = os.environ["BW_MESSAGING_APPLICATION_ID"]
+    BASE_CALLBACK_URL = os.environ["BASE_CALLBACK_URL"]
+    BW_NUMBER = os.environ["BW_NUMBER"]
+    USER_NUMBER = os.environ["USER_NUMBER"]
 except:
     raise Exception("Environmental variables not found")
 
@@ -45,14 +42,14 @@ class MonitorTest(unittest.TestCase):
         Creates the client object
         """
         self.bandwidth_client = BandwidthClient(
-            voice_basic_auth_user_name=USERNAME,
-            voice_basic_auth_password=PASSWORD,
-            messaging_basic_auth_user_name=USERNAME,
-            messaging_basic_auth_password=PASSWORD,
-            multi_factor_auth_basic_auth_user_name=USERNAME,
-            multi_factor_auth_basic_auth_password=PASSWORD,
-            phone_number_lookup_basic_auth_user_name=USERNAME,
-            phone_number_lookup_basic_auth_password=PASSWORD,
+            voice_basic_auth_user_name=BW_USERNAME,
+            voice_basic_auth_password=BW_PASSWORD,
+            messaging_basic_auth_user_name=BW_USERNAME,
+            messaging_basic_auth_password=BW_PASSWORD,
+            multi_factor_auth_basic_auth_user_name=BW_USERNAME,
+            multi_factor_auth_basic_auth_password=BW_PASSWORD,
+            phone_number_lookup_basic_auth_user_name=BW_USERNAME,
+            phone_number_lookup_basic_auth_password=BW_PASSWORD,
         )
         self.voice_client = self.bandwidth_client.voice_client.client
         self.messaging_client = self.bandwidth_client.messaging_client.client
@@ -62,22 +59,22 @@ class MonitorTest(unittest.TestCase):
 
     def test_create_message(self):
         body = MessageRequest()
-        body.application_id = MESSAGING_APPLICATION_ID
-        body.to = [PHONE_NUMBER_INBOUND]
-        body.mfrom = PHONE_NUMBER_OUTBOUND
+        body.application_id = BW_MESSAGING_APPLICATION_ID
+        body.to = [USER_NUMBER]
+        body.mfrom = BW_NUMBER
         body.text = "Python Monitoring"
-        response = self.messaging_client.create_message(ACCOUNT_ID, body)
+        response = self.messaging_client.create_message(BW_ACCOUNT_ID, body)
         self.assertTrue(len(response.body.id) > 0) #validate that _some_ id was returned
 
 
     def test_create_message_invalid_phone_number(self):
         body = MessageRequest()
-        body.application_id = MESSAGING_APPLICATION_ID
+        body.application_id = BW_MESSAGING_APPLICATION_ID
         body.to = ["+1invalid"]
-        body.mfrom = PHONE_NUMBER_OUTBOUND
+        body.mfrom = BW_NUMBER
         body.text = "Python Monitoring"
         try:
-            self.messaging_client.create_message(ACCOUNT_ID, body)
+            self.messaging_client.create_message(BW_ACCOUNT_ID, body)
             self.assertTrue(False)
         except MessagingException as e:
             self.assertTrue(len(e.description) > 0)
@@ -91,10 +88,10 @@ class MonitorTest(unittest.TestCase):
         media_file = b'12345'
 
         #media upload
-        self.messaging_client.upload_media(ACCOUNT_ID, media_file_name, media_file)
+        self.messaging_client.upload_media(BW_ACCOUNT_ID, media_file_name, media_file)
 
         #media download
-        downloaded_media_file = self.messaging_client.get_media(ACCOUNT_ID, media_file_name).body
+        downloaded_media_file = self.messaging_client.get_media(BW_ACCOUNT_ID, media_file_name).body
 
         #validate that the response is the same as the upload
         self.assertEqual(media_file, downloaded_media_file)
@@ -102,26 +99,26 @@ class MonitorTest(unittest.TestCase):
 
     def test_create_call_and_get_call(self):
         body = CreateCallRequest()
-        body.mfrom = PHONE_NUMBER_OUTBOUND
-        body.to = PHONE_NUMBER_INBOUND
-        body.application_id = VOICE_APPLICATION_ID
-        body.answer_url = CALLBACK_URL
-        response = self.voice_client.create_call(ACCOUNT_ID, body)
+        body.mfrom = BW_NUMBER
+        body.to = USER_NUMBER
+        body.application_id = BW_VOICE_APPLICATION_ID
+        body.answer_url = BASE_CALLBACK_URL
+        response = self.voice_client.create_call(BW_ACCOUNT_ID, body)
         self.assertTrue(len(response.body.call_id) > 1)
 
         #get phone call information
-        response = self.voice_client.get_call(ACCOUNT_ID, response.body.call_id)
+        response = self.voice_client.get_call(BW_ACCOUNT_ID, response.body.call_id)
         self.assertTrue(len(response.body.state) > 1)
 
 
     def test_create_call_invalid_phone_number(self):
         body = CreateCallRequest()
-        body.mfrom = PHONE_NUMBER_OUTBOUND
+        body.mfrom = BW_NUMBER
         body.to = "+1invalid"
-        body.application_id = VOICE_APPLICATION_ID
-        body.answer_url = CALLBACK_URL
+        body.application_id = BW_VOICE_APPLICATION_ID
+        body.answer_url = BASE_CALLBACK_URL
         try:
-            self.voice_client.create_call(ACCOUNT_ID, body)
+            self.voice_client.create_call(BW_ACCOUNT_ID, body)
         except APIException as e:
             self.assertTrue(len(e.description) > 0)
         except:
@@ -131,7 +128,7 @@ class MonitorTest(unittest.TestCase):
     def create_call_amd_and_get_call(self):
         machine_detection_parameters = MachineDetectionRequest()
         machine_detection_parameters.mode = "async"
-        machine_detection_parameters.callback_url = CALLBACK_URL
+        machine_detection_parameters.callback_url = BASE_CALLBACK_URL
         machine_detection_parameters.callback_method = "POST"
         machine_detection_parameters.detection_timeout = 5.0
         machine_detection_parameters.silence_timeout = 5.0
@@ -140,16 +137,16 @@ class MonitorTest(unittest.TestCase):
         machine_detection_parameters.delay_result = True
 
         body = CreateCallRequest()
-        body.mfrom = PHONE_NUMBER_OUTBOUND
-        body.to = PHONE_NUMBER_INBOUND
-        body.application_id = VOICE_APPLICATION_ID
-        body.answer_url = CALLBACK_URL
+        body.mfrom = BW_NUMBER
+        body.to = USER_NUMBER
+        body.application_id = BW_VOICE_APPLICATION_ID
+        body.answer_url = BASE_CALLBACK_URL
         body.machine_detection = machine_detection_parameters
-        create_response = self.voice_client.create_call(ACCOUNT_ID, body)
+        create_response = self.voice_client.create_call(BW_ACCOUNT_ID, body)
         self.assertTrue(len(create_response.body.call_id) > 1)
 
         #get phone call information
-        get_response = self.voice_client.get_call(ACCOUNT_ID, create_response.body.call_id)
+        get_response = self.voice_client.get_call(BW_ACCOUNT_ID, create_response.body.call_id)
         self.assertTrue(len(get_response.body.state) > 1)
         self.assertEqual(get_response.body.callId, create_response.body.call_id)
         self.assertIs(get_response.body.call_id, str)
@@ -172,51 +169,51 @@ class MonitorTest(unittest.TestCase):
 
     def test_mfa_messaging(self):
         body = TwoFactorCodeRequestSchema(
-            mfrom = PHONE_NUMBER_MFA,
-            to = PHONE_NUMBER_INBOUND,
-            application_id = MFA_MESSAGING_APPLICATION_ID,
+            mfrom = BW_NUMBER,
+            to = USER_NUMBER,
+            application_id = BW_MESSAGING_APPLICATION_ID,
             scope = "scope",
             digits = 6,
             message = "Your temporary {NAME} {SCOPE} code is {CODE}"
         )
-        response = self.auth_client.create_messaging_two_factor(ACCOUNT_ID, body)
+        response = self.auth_client.create_messaging_two_factor(BW_ACCOUNT_ID, body)
         self.assertTrue(len(response.body.message_id) > 0)
 
 
     def test_mfa_voice(self):
         body = TwoFactorCodeRequestSchema(
-            mfrom = PHONE_NUMBER_MFA,
-            to = PHONE_NUMBER_INBOUND,
-            application_id = MFA_VOICE_APPLICATION_ID,
+            mfrom = BW_NUMBER,
+            to = USER_NUMBER,
+            application_id = BW_VOICE_APPLICATION_ID,
             scope = "scope",
             digits = 6,
             message = "Your temporary {NAME} {SCOPE} code is {CODE}"
         )
-        response = self.auth_client.create_voice_two_factor(ACCOUNT_ID, body)
+        response = self.auth_client.create_voice_two_factor(BW_ACCOUNT_ID, body)
         self.assertTrue(len(response.body.call_id) > 0)
 
 
     def test_mfa_verify(self):
         body = TwoFactorVerifyRequestSchema(
-            to = PHONE_NUMBER_INBOUND,
-            application_id = MFA_VOICE_APPLICATION_ID,
+            to = USER_NUMBER,
+            application_id = BW_VOICE_APPLICATION_ID,
             scope = "scope",
             code = "123456",
             expiration_time_in_minutes = 3
         )
-        response = self.auth_client.create_verify_two_factor(ACCOUNT_ID, body)
+        response = self.auth_client.create_verify_two_factor(BW_ACCOUNT_ID, body)
         self.assertTrue(isinstance(response.body.valid, bool))
 
 
     def test_tn_lookup(self):
         body = OrderRequest()
-        body.tns = [PHONE_NUMBER_OUTBOUND]
-        response = self.tn_lookup_client.create_lookup_request(ACCOUNT_ID, body)
+        body.tns = [BW_NUMBER]
+        response = self.tn_lookup_client.create_lookup_request(BW_ACCOUNT_ID, body)
         self.assertTrue(response.status_code == 202)
 
         # test get method with the returned request_id
         request_id = response.body.request_id
-        get_response = self.tn_lookup_client.get_lookup_request_status(ACCOUNT_ID, request_id)
+        get_response = self.tn_lookup_client.get_lookup_request_status(BW_ACCOUNT_ID, request_id)
         self.assertTrue(get_response.status_code == 200)
 
 
