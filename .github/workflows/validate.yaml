@@ -15,14 +15,18 @@ jobs:
     - name: Validate
       uses: ./.github/actions/validate
       env:
-        USERNAME: ${{ secrets.USERNAME }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }}
-        VOICE_APPLICATION_ID: ${{ secrets.VOICE_APPLICATION_ID }}
-        MESSAGING_APPLICATION_ID: ${{ secrets.MESSAGING_APPLICATION_ID }}
-        CALLBACK_URL: ${{ secrets.CALLBACK_URL }}
-        PHONE_NUMBER_OUTBOUND: ${{ secrets.PHONE_NUMBER_OUTBOUND }}
-        PHONE_NUMBER_INBOUND: ${{ secrets.PHONE_NUMBER_INBOUND }}
-        MFA_MESSAGING_APPLICATION_ID: ${{ secrets.MFA_MESSAGING_APPLICATION_ID }}
-        MFA_VOICE_APPLICATION_ID: ${{ secrets.MFA_VOICE_APPLICATION_ID }}
-        PHONE_NUMBER_MFA: ${{ secrets.PHONE_NUMBER_MFA }}
+        BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
+        BW_USERNAME: ${{ secrets.BW_USERNAME }}
+        BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
+        BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
+        BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
+        BW_NUMBER: ${{ secrets.BW_NUMBER }}
+        USER_NUMBER: ${{ secrets.USER_NUMBER }}
+        BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
+    - uses: Bandwidth/build-notify-slack-action@v1.0.0
+      if: always()
+      with:
+        job-status: ${{ job.status }}
+        slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+        slack-channel: ${{ secrets.SLACK_CHANNEL }}
+
