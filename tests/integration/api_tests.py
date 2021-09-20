@@ -19,6 +19,7 @@ from bandwidth.configuration import Environment
 import unittest
 
 import os
+import sys
 
 try:
     BW_USERNAME = os.environ["BW_USERNAME"]
@@ -232,5 +233,9 @@ class MonitorTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    # unittest.main()
+    test_suite = unittest.defaultTestLoader.discover('.', '*_test.py')
+    test_runner = unittest.TextTestRunner(resultclass=unittest.TextTestResult)
+    result = test_runner.run(test_suite)
+    sys.exit(not result.wasSuccessful())
 
