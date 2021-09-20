@@ -14,6 +14,7 @@ from bandwidth.voice.models.machine_detection_request import MachineDetectionReq
 from bandwidth.multifactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
 from bandwidth.multifactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
 from bandwidth.phonenumberlookup.models.order_request import OrderRequest
+from bandwidth.configuration import Environment
 
 import unittest
 
@@ -55,6 +56,19 @@ class MonitorTest(unittest.TestCase):
         self.messaging_client = self.bandwidth_client.messaging_client.client
         self.auth_client = self.bandwidth_client.multi_factor_auth_client.mfa
         self.tn_lookup_client = self.bandwidth_client.phone_number_lookup_client.client
+
+        self.bandwidth_client_with_environment = BandwidthClient(
+            voice_basic_auth_user_name=BW_USERNAME,
+            voice_basic_auth_password=BW_PASSWORD,
+            messaging_basic_auth_user_name=BW_USERNAME,
+            messaging_basic_auth_password=BW_PASSWORD,
+            multi_factor_auth_basic_auth_user_name=BW_USERNAME,
+            multi_factor_auth_basic_auth_password=BW_PASSWORD,
+            phone_number_lookup_basic_auth_user_name=BW_USERNAME,
+            phone_number_lookup_basic_auth_password=BW_PASSWORD,
+            environment=Environment.CUSTOM,
+            base_url="https://test.com"
+        )
 
 
     def test_create_message(self):
@@ -219,3 +233,4 @@ class MonitorTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
