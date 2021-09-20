@@ -82,5 +82,5 @@ class TestApi:
         body.to = [USER_NUMBER]
         body.mfrom = BW_NUMBER
         body.text = "Python Monitoring"
-        response = messaging_client.create_message("BW_ACCOUNT_ID", body)
+        response = messaging_client.create_message(BW_ACCOUNT_ID, body)
         assert(len(response.body.id) > 0)    # validate that _some_ id was returned
