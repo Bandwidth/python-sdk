@@ -77,7 +77,7 @@ class MonitorTest(unittest.TestCase):
         body.to = [USER_NUMBER]
         body.mfrom = BW_NUMBER
         body.text = "Python Monitoring"
-        response = self.messaging_client.create_message(BW_ACCOUNT_ID, body)
+        response = self.messaging_client.create_message("BW_ACCOUNT_ID", body)
         self.assertTrue(len(response.body.id) > 0) #validate that _some_ id was returned
 
 
