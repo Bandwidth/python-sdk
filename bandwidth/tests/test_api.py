@@ -7,6 +7,7 @@ Integration tests for API requests
 """
 import os
 import pytest
+from datetime import datetime
 from bandwidth.bandwidth_client import BandwidthClient
 from bandwidth.messaging.exceptions.messaging_exception import MessagingException
 from bandwidth.exceptions.api_exception import APIException
@@ -27,7 +28,7 @@ try:
     BASE_CALLBACK_URL = os.environ["BASE_CALLBACK_URL"]
     BW_NUMBER = os.environ["BW_NUMBER"]
     USER_NUMBER = os.environ["USER_NUMBER"]
-except:
+except KeyError as e:
     raise Exception("Environmental variables not found")
 
 
@@ -76,11 +77,53 @@ class TestApi:
     Class that holds basic monitoring tests for the Python SDK. Makes requests to cover JSON call and response,
     error handling, and binary string uploads and downloads
     """
-    def test_create_message(self, messaging_client):
-        body = MessageRequest()
-        body.application_id = BW_MESSAGING_APPLICATION_ID
-        body.to = [USER_NUMBER]
-        body.mfrom = BW_NUMBER
-        body.text = "Python Monitoring"
-        response = messaging_client.create_message(BW_ACCOUNT_ID, body)
-        assert(len(response.body.id) > 0)    # validate that _some_ id was returned
+    def test_create_successful_message(self, messaging_client):
+        """Create valid request to send an SMS using the Messaging API.
+
+        Args:
+            messaging_client: Contains the basic auth credentials needed to authenticate
+
+        Returns:
+            A confirmation that the message request was received and correctly formatted
+
+        """
+        message_body = MessageRequest()
+        message_body.application_id = BW_MESSAGING_APPLICATION_ID
+        message_body.to = [USER_NUMBER]
+        message_body.mfrom = BW_NUMBER
+        message_body.text = "Python Monitoring"
+        response = messaging_client.create_message(BW_ACCOUNT_ID, message_body)
+        body = response.body
+        assert (response.status_code == 202)
+        assert len(body.id) == 29    # asserts `messageId` returned and matches expected length (29)
+        assert body.owner == body.mfrom == BW_NUMBER    # asserts `owner` matches `mfrom` number and `BW_NUMBER`
+        assert body.application_id == BW_MESSAGING_APPLICATION_ID
+        assert datetime.fromisoformat(body.time.replace('Z', '+00:00'))    # asserts the date string is valid ISO
+        assert type(body.segment_count) is int    # assert that `segment_count` is an int
+        assert body.to == [USER_NUMBER]    # asserts the `to` arrays are identical
+        assert body.media == message_body.media    # assert media arrays match
+        assert body.text == message_body.text    # assert message text matches
+        assert body.tag == message_body.tag    # assert tag matches
+        assert body.priority == message_body.priority    # assert priority matches
+
+    def test_create_failed_message(self, messaging_client):
+        """Create invalid request to send an SMS using the Messaging API.
+
+        Args:
+            messaging_client: Contains the basic auth credentials needed to authenticate
+
+        Returns:
+            A 400 response from the API
+
+        """
+        with pytest.raises(MessagingException):    # asserts that a messaging exception is raised
+            message_body = MessageRequest()
+            message_body.application_id = BW_MESSAGING_APPLICATION_ID
+            message_body.to = ["+1invalid"]
+            message_body.mfrom = BW_NUMBER
+            message_body.text = "Python Monitoring"
+            response = messaging_client.create_message(BW_ACCOUNT_ID, message_body)
+            body = response.body
+            assert response.status_code == 400
+            assert type(body.type) == "request-validation"
+            assert type(body.description) is str
