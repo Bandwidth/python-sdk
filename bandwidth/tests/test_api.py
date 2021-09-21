@@ -81,10 +81,7 @@ class TestApi:
         """Create valid request to send an SMS using the Messaging API.
 
         Args:
-            messaging_client: Contains the basic auth credentials needed to authenticate
-
-        Returns:
-            A confirmation that the message request was received and correctly formatted
+            messaging_client: Contains the basic auth credentials needed to authenticate.
 
         """
         message_body = MessageRequest()
@@ -99,21 +96,18 @@ class TestApi:
         assert body.owner == body.mfrom == BW_NUMBER    # asserts `owner` matches `mfrom` number and `BW_NUMBER`
         assert body.application_id == BW_MESSAGING_APPLICATION_ID
         assert datetime.fromisoformat(body.time.replace('Z', '+00:00'))    # asserts the date string is valid ISO
-        assert type(body.segment_count) is int    # assert that `segment_count` is an int
-        assert body.to == [USER_NUMBER]    # asserts the `to` arrays are identical
-        assert body.media == message_body.media    # assert media arrays match
-        assert body.text == message_body.text    # assert message text matches
-        assert body.tag == message_body.tag    # assert tag matches
-        assert body.priority == message_body.priority    # assert priority matches
+        assert type(body.segment_count) is int
+        assert body.to == [USER_NUMBER]
+        assert body.media == message_body.media
+        assert body.text == message_body.text
+        assert body.tag == message_body.tag
+        assert body.priority == message_body.priority
 
     def test_create_failed_message(self, messaging_client):
         """Create invalid request to send an SMS using the Messaging API.
 
         Args:
-            messaging_client: Contains the basic auth credentials needed to authenticate
-
-        Returns:
-            A 400 response from the API
+            messaging_client: Contains the basic auth credentials needed to authenticate.
 
         """
         with pytest.raises(MessagingException):    # asserts that a messaging exception is raised
@@ -126,4 +120,34 @@ class TestApi:
             body = response.body
             assert response.status_code == 400
             assert type(body.type) == "request-validation"
+            assert type(body.description) is str
+
+    def test_media_successful_upload_download(self, messaging_client):
+        """Upload a binary string and then download it and confirm both files match
+
+        Args:
+            messaging_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        media_file_name = 'python_monitoring'
+        media_file = b'12345'
+        messaging_client.upload_media(BW_ACCOUNT_ID, media_file_name, media_file)
+        response = messaging_client.get_media(BW_ACCOUNT_ID, media_file_name)
+        downloaded_media = response.body
+        assert response.status_code == 200    # assert successful status
+        assert downloaded_media == media_file    # assert the binary strings match
+
+    def test_media_failed_download(self, messaging_client):
+        """Attempt to download media that doesnt exist and validate a 404 is reutrned from the API
+
+        Args:
+            messaging_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        with pytest.raises(MessagingException):  # asserts that a messaging exception is raised
+            media_file_name = 'invalid_python_monitoring'
+            response = messaging_client.get_media(BW_ACCOUNT_ID, media_file_name)
+            body = response.body
+            assert response.status_code == 404    # assert status code
+            assert body.type == "object-not-found"
             assert type(body.description) is str
