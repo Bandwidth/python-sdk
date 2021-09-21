@@ -6,6 +6,7 @@ Integration tests for API requests
 @copyright Bandwidth INC
 """
 import os
+import time
 import pytest
 from datetime import datetime
 from bandwidth.bandwidth_client import BandwidthClient
@@ -14,10 +15,15 @@ from bandwidth.exceptions.api_exception import APIException
 from bandwidth.messaging.models.message_request import MessageRequest
 from bandwidth.voice.models.create_call_request import CreateCallRequest
 from bandwidth.voice.models.machine_detection_request import MachineDetectionRequest
+from bandwidth.voice.models.callback_method_enum import CallbackMethodEnum
+from bandwidth.voice.models.mode_enum import ModeEnum
 from bandwidth.multifactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
 from bandwidth.multifactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
 from bandwidth.phonenumberlookup.models.order_request import OrderRequest
 from bandwidth.configuration import Environment
+
+[pytest]
+log_cli = True
 
 try:
     BW_USERNAME = os.environ["BW_USERNAME"]
@@ -123,7 +129,7 @@ class TestApi:
             assert type(body.description) is str
 
     def test_media_successful_upload_download(self, messaging_client):
-        """Upload a binary string and then download it and confirm both files match
+        """Upload a binary string and then download it and confirm both files match.
 
         Args:
             messaging_client: Contains the basic auth credentials needed to authenticate.
@@ -138,7 +144,7 @@ class TestApi:
         assert downloaded_media == media_file    # assert the binary strings match
 
     def test_media_failed_download(self, messaging_client):
-        """Attempt to download media that doesnt exist and validate a 404 is reutrned from the API
+        """Attempt to download media that doesnt exist and validate a 404 is returned from the API.
 
         Args:
             messaging_client: Contains the basic auth credentials needed to authenticate.
@@ -151,3 +157,100 @@ class TestApi:
             assert response.status_code == 404    # assert status code
             assert body.type == "object-not-found"
             assert type(body.description) is str
+
+    def test_create_and_get_call(self, voice_client):
+        """Create a successful call and get status of the same call.
+
+        Args:
+            voice_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        machine_detection_parameters = MachineDetectionRequest()
+        machine_detection_parameters.mode = ModeEnum.ASYNC
+        machine_detection_parameters.callback_url = BASE_CALLBACK_URL + "/callbacks/machineDetection"
+        machine_detection_parameters.callback_method = CallbackMethodEnum.POST
+        machine_detection_parameters.detection_timeout = 5.0
+        machine_detection_parameters.silence_timeout = 5.0
+        machine_detection_parameters.speech_threshold = 5.0
+        machine_detection_parameters.speech_end_threshold = 5.0
+        machine_detection_parameters.delay_result = True
+
+        call_body = CreateCallRequest()
+        call_body.mfrom = BW_NUMBER
+        call_body.to = USER_NUMBER
+        call_body.application_id = BW_VOICE_APPLICATION_ID
+        call_body.answer_url = BASE_CALLBACK_URL + '/callbacks/answer'
+        call_body.answer_method = CallbackMethodEnum.POST
+        call_body.disconnect_url = BASE_CALLBACK_URL + '/callbacks/disconnect'
+        call_body.disconnect_method = CallbackMethodEnum.GET
+        call_body.machine_detection = machine_detection_parameters
+
+        # create call
+        create_response = voice_client.create_call(BW_ACCOUNT_ID, call_body)
+        create_response_body = create_response.body
+
+        # check create call response
+        assert create_response.status_code == 201
+        assert len(create_response_body.call_id) == 47    # assert request created and id matches expected length (47)
+        assert create_response_body.account_id == BW_ACCOUNT_ID
+        assert create_response_body.application_id == BW_VOICE_APPLICATION_ID
+        assert create_response_body.to == USER_NUMBER
+        assert create_response_body.mfrom == BW_NUMBER
+        assert create_response_body.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
+               BW_ACCOUNT_ID + "/calls/" + create_response_body.call_id
+        assert datetime.fromisoformat(str(create_response_body.start_time))    # assert that str(start_time) is datetime
+        assert type(create_response_body.call_timeout) is float
+        assert type(create_response_body.callback_timeout) is float
+        assert create_response_body.answer_method == "POST"
+        assert create_response_body.disconnect_method == "GET"
+
+        time.sleep(3)
+        # get call
+        get_response = voice_client.get_call(BW_ACCOUNT_ID, create_response.body.call_id)
+        get_response_body = get_response.body
+
+        print(vars(get_response_body))
+
+        # check get call response
+        assert get_response.status_code == 200
+        assert get_response_body.call_id == create_response_body.call_id
+        assert get_response_body.application_id == BW_VOICE_APPLICATION_ID
+        assert get_response_body.account_id == BW_ACCOUNT_ID
+        assert datetime.fromisoformat(str(get_response_body.start_time))
+        assert datetime.fromisoformat(str(get_response_body.last_update))
+        if get_response_body.answer_time:    # may be null dependent on timing
+            assert datetime.fromisoformat(str(get_response_body.answer_time))
+        if get_response_body.end_time:    # may be null dependent on timing
+            assert datetime.fromisoformat(str(get_response_body.end_time))
+        if get_response_body.disconnect_cause == "error":
+            assert type(get_response_body.error_message) is str
+            assert len(get_response_body.error_id) == 36
+
+    def test_failed_create_and_failed_get_call(self, voice_client):
+        """Create a successful call and get status of the same call.
+
+        Args:
+            voice_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        call_body = CreateCallRequest()
+        call_body.mfrom = BW_NUMBER
+        call_body.to = "+12345"
+        call_body.application_id = BW_VOICE_APPLICATION_ID
+        call_body.answer_url = BASE_CALLBACK_URL + '/callbacks/answer'
+
+        # create invalid call
+        with pytest.raises(APIException):
+            create_response = voice_client.create_call(BW_ACCOUNT_ID, call_body)
+            create_response_body = create_response.body
+
+            assert create_response.status_code == 400
+            assert type(create_response_body.type) is str
+            assert type(create_response_body.description) is str
+
+        # get invalid call
+        with pytest.raises(APIException):
+            get_response = voice_client.get_call(BW_ACCOUNT_ID, "c-fake-call-id")
+            get_response_body = get_response.body
+
+            assert get_response.status_code == 404
