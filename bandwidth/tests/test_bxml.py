@@ -14,6 +14,7 @@ class TestBxml:
     """
     Class for the BXML tests
     """
+
     def test_forward_xml_with_optional_fields(self):
         response = Response()
         forward = Forward(
@@ -70,7 +71,7 @@ class TestBxml:
             repeat_count=3,
             speak_sentence=speak_sentence
         )
-        expected_bxml = expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Gather gatherUrl="https://gather.url/nextBXML" gatherMethod="POST" terminatingDigits="#" tag="tag" maxDigits="20" interDigitTimeout="50" username="user" password="password" firstDigitTimeout="10" repeatCount="3"><SpeakSentence voice="kate" locale="en_US" gender="female">Phrase.</SpeakSentence></Gather></Response>'
+        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Gather gatherUrl="https://gather.url/nextBXML" gatherMethod="POST" terminatingDigits="#" tag="tag" maxDigits="20" interDigitTimeout="50" username="user" password="password" firstDigitTimeout="10" repeatCount="3"><SpeakSentence voice="kate" locale="en_US" gender="female">Phrase.</SpeakSentence></Gather></Response>'
         response.add_verb(gather)
         assert response.to_bxml() == expected_bxml
 
@@ -129,9 +130,9 @@ class TestBxml:
     def test_record(self):
         response = Response()
         record = Record(
-            tag = "tag",
-            username = "user",
-            password = "pass",
+            tag="tag",
+            username="user",
+            password="pass",
             record_complete_url="https://record.url.server/record",
             record_complete_method="POST",
             recording_available_url="https://record.url.server/available",
@@ -174,14 +175,14 @@ class TestBxml:
         resume_recording = ResumeRecording()
         response.add_verb(resume_recording)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><ResumeRecording/></Response>'
-        assert (response.to_bxml() ==expected_bxml)
+        assert (response.to_bxml() == expected_bxml)
 
     def test_dtmf(self):
         response = Response()
-        send_dtmf  = SendDtmf(
-            dtmf = "1234",
-            tone_duration = 200,
-            tone_interval = 450
+        send_dtmf = SendDtmf(
+            dtmf="1234",
+            tone_duration=200,
+            tone_interval=450
         )
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><SendDtmf toneDuration="200" toneInterval="450">1234</SendDtmf></Response>'
         response.add_verb(send_dtmf)
@@ -214,9 +215,9 @@ class TestBxml:
     def test_start_recording(self):
         response = Response()
         record = StartRecording(
-            tag = "tag",
-            username = "user",
-            password = "pass",
+            tag="tag",
+            username="user",
+            password="pass",
             recording_available_url="https://record.url.server/available",
             recording_available_method="GET",
             file_format="mp3",
@@ -276,10 +277,21 @@ class TestBxml:
         assert response.to_bxml() == expected_bxml
 
     def test_conference(self):
-        conference = Conference("my-conference", mute=False, hold=True, call_ids_to_coach="c-123,c-345",
-            conference_event_url="https://test.com", conference_event_method="GET", username="user",
-            password="pass", tag="tag", conference_event_fallback_url="https://test2.com",
-            conference_event_fallback_method="POST", fallback_username="fuser", fallback_password="fpass")
+        conference = Conference(
+            "my-conference",
+            mute=False,
+            hold=True,
+            call_ids_to_coach="c-123,c-345",
+            conference_event_url="https://test.com",
+            conference_event_method="GET",
+            username="user",
+            password="pass",
+            tag="tag",
+            conference_event_fallback_url="https://test2.com",
+            conference_event_fallback_method="POST",
+            fallback_username="fuser",
+            fallback_password="fpass"
+        )
 
         response = Response()
         response.add_verb(conference)
@@ -288,7 +300,6 @@ class TestBxml:
 
     def test_conference_coach_array(self):
         conference = Conference("my-conference", call_ids_to_coach=["c-123", "c-456"])
-
         response = Response()
         response.add_verb(conference)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Conference callIdsToCoach="c-123,c-456">my-conference</Conference></Response>'
@@ -296,20 +307,20 @@ class TestBxml:
 
     def test_bridge(self):
         bridge = Bridge("c-95ac8d6e-1a31c52e-b38f-4198-93c1-51633ec68f8d",
-            bridge_complete_url="https://test.com",
-            bridge_complete_method="GET",
-            bridge_target_complete_url="https://test2.com",
-            bridge_target_complete_method="POST",
-            username="user",
-            password="pass",
-            tag="custom tag",
-            bridge_complete_fallback_url="https://test3.com",
-            bridge_complete_fallback_method="GET",
-            bridge_target_complete_fallback_url="https://test4.com",
-            bridge_target_complete_fallback_method="POST",
-            fallback_username="fuser",
-            fallback_password="fpass"
-        )
+                        bridge_complete_url="https://test.com",
+                        bridge_complete_method="GET",
+                        bridge_target_complete_url="https://test2.com",
+                        bridge_target_complete_method="POST",
+                        username="user",
+                        password="pass",
+                        tag="custom tag",
+                        bridge_complete_fallback_url="https://test3.com",
+                        bridge_complete_fallback_method="GET",
+                        bridge_target_complete_fallback_url="https://test4.com",
+                        bridge_target_complete_fallback_method="POST",
+                        fallback_username="fuser",
+                        fallback_password="fpass"
+                        )
 
         response = Response()
         response.add_verb(bridge)
@@ -324,15 +335,15 @@ class TestBxml:
         response = Response()
         response.add_verb(ring)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Ring duration="5"/></Response>'
-        assert (response.to_bxml() ==expected_bxml)
+        assert (response.to_bxml() == expected_bxml)
 
     def test_start_gather(self):
         startGather = StartGather(
-            dtmfUrl= "https://test.com",
-            dtmfMethod = "POST",
-            username = "user",
-            password = "pass",
-            tag = "custom tag"
+            dtmfUrl="https://test.com",
+            dtmfMethod="POST",
+            username="user",
+            password="pass",
+            tag="custom tag"
         )
 
         response = Response()
