@@ -24,9 +24,9 @@ from bandwidth.webrtc.models.participant import Participant
 from bandwidth.phonenumberlookup.models.order_request import OrderRequest
 from bandwidth.configuration import Environment
 
+# prints the print statements to console if test fails
 [pytest]
 log_cli = True
-# TODO: Add print statements for each request/response body so that we can see them if errors are thrown in the logs
 
 try:
     BW_USERNAME = os.environ["BW_USERNAME"]
@@ -108,19 +108,24 @@ class TestApi:
         message_body.to = [USER_NUMBER]
         message_body.mfrom = BW_NUMBER
         message_body.text = "Python Monitoring"
-        response = messaging_client.create_message(BW_ACCOUNT_ID, message_body)
-        body = response.body
-        assert (response.status_code == 202)
-        assert len(body.id) == 29    # asserts `messageId` returned and matches expected length (29)
-        assert body.owner == body.mfrom == BW_NUMBER    # asserts `owner` matches `mfrom` number and `BW_NUMBER`
-        assert body.application_id == BW_MESSAGING_APPLICATION_ID
-        assert datetime.fromisoformat(body.time.replace('Z', '+00:00'))    # asserts the date string is valid ISO
-        assert type(body.segment_count) is int
-        assert body.to == [USER_NUMBER]
-        assert body.media == message_body.media
-        assert body.text == message_body.text
-        assert body.tag == message_body.tag
-        assert body.priority == message_body.priority
+        create_response = messaging_client.create_message(BW_ACCOUNT_ID, message_body)
+        create_response_body = create_response.body
+        assert (create_response.status_code == 202)
+        assert len(create_response_body.id) == 29    # asserts `messageId` returned and matches expected length (29)
+        # asserts `owner` matches `mfrom` number and `BW_NUMBER`
+        assert create_response_body.owner == create_response_body.mfrom == BW_NUMBER
+        assert create_response_body.application_id == BW_MESSAGING_APPLICATION_ID
+
+        # asserts the date string is valid ISO
+        assert datetime.fromisoformat(create_response_body.time.replace('Z', '+00:00'))
+        assert type(create_response_body.segment_count) is int
+        assert create_response_body.to == [USER_NUMBER]
+        assert create_response_body.media == message_body.media
+        assert create_response_body.text == message_body.text
+        assert create_response_body.tag == message_body.tag
+        assert create_response_body.priority == message_body.priority
+
+        print(vars(create_response))
 
     def test_failed_create_message(self, messaging_client):
         """Create invalid request to send an SMS using the Messaging API.
@@ -135,11 +140,13 @@ class TestApi:
             message_body.to = ["+1invalid"]
             message_body.mfrom = BW_NUMBER
             message_body.text = "Python Monitoring"
-            response = messaging_client.create_message(BW_ACCOUNT_ID, message_body)
-            body = response.body
-            assert response.status_code == 400
-            assert type(body.type) == "request-validation"
-            assert type(body.description) is str
+            create_response = messaging_client.create_message(BW_ACCOUNT_ID, message_body)
+            create_response_body = create_response.body
+            assert create_response.status_code == 400
+            assert type(create_response_body.type) == "request-validation"
+            assert type(create_response_body.description) is str
+
+            print(vars(create_response))
 
     def test_successful_media_upload_download(self, messaging_client):
         """Upload a binary string and then download it and confirm both files match.
@@ -151,10 +158,12 @@ class TestApi:
         media_file_name = 'python_monitoring'
         media_file = b'12345'
         messaging_client.upload_media(BW_ACCOUNT_ID, media_file_name, media_file)
-        response = messaging_client.get_media(BW_ACCOUNT_ID, media_file_name)
-        downloaded_media = response.body
-        assert response.status_code == 200    # assert successful status
+        upload_response = messaging_client.get_media(BW_ACCOUNT_ID, media_file_name)
+        downloaded_media = upload_response.body
+        assert upload_response.status_code == 200    # assert successful status
         assert downloaded_media == media_file    # assert the binary strings match
+
+        print(vars(upload_response))
 
     def test_failed_media_download(self, messaging_client):
         """Attempt to download media that doesnt exist and validate a 404 is returned from the API.
@@ -165,11 +174,13 @@ class TestApi:
         """
         with pytest.raises(MessagingException):  # asserts that a messaging exception is raised
             media_file_name = 'invalid_python_monitoring'
-            response = messaging_client.get_media(BW_ACCOUNT_ID, media_file_name)
-            body = response.body
-            assert response.status_code == 404    # assert status code
-            assert body.type == "object-not-found"
-            assert type(body.description) is str
+            get_response = messaging_client.get_media(BW_ACCOUNT_ID, media_file_name)
+            get_response_body = get_response.body
+            assert get_response.status_code == 404    # assert status code
+            assert get_response_body.type == "object-not-found"
+            assert type(get_response_body.description) is str
+
+            print(vars(get_response))
 
     def test_successful_create_and_get_call(self, voice_client):
         """Create a successful call and get status of the same call.
@@ -198,11 +209,9 @@ class TestApi:
         call_body.disconnect_method = CallbackMethodEnum.GET
         call_body.machine_detection = machine_detection_parameters
 
-        # create call
         create_response = voice_client.create_call(BW_ACCOUNT_ID, call_body)
         create_response_body = create_response.body
 
-        # check create call response
         assert create_response.status_code == 201
         assert len(create_response_body.call_id) == 47    # assert request created and id matches expected length (47)
         assert create_response_body.account_id == BW_ACCOUNT_ID
@@ -218,13 +227,9 @@ class TestApi:
         assert create_response_body.disconnect_method == "GET"
 
         time.sleep(3)
-        # get call
         get_response = voice_client.get_call(BW_ACCOUNT_ID, create_response.body.call_id)
         get_response_body = get_response.body
 
-        print(vars(get_response_body))
-
-        # check get call response
         assert get_response.status_code == 200
         assert get_response_body.call_id == create_response_body.call_id
         assert get_response_body.application_id == BW_VOICE_APPLICATION_ID
@@ -239,6 +244,9 @@ class TestApi:
             assert type(get_response_body.error_message) is str
             assert len(get_response_body.error_id) == 36
 
+        print(vars(create_response))
+        print(vars(get_response))
+
     def test_failed_create_and_failed_get_call(self, voice_client):
         """Create a failed call and get status of a call that doesnt exist.
 
@@ -252,7 +260,6 @@ class TestApi:
         call_body.application_id = BW_VOICE_APPLICATION_ID
         call_body.answer_url = BASE_CALLBACK_URL + '/callbacks/answer'
 
-        # create invalid call
         with pytest.raises(APIException):
             create_response = voice_client.create_call(BW_ACCOUNT_ID, call_body)
             create_response_body = create_response.body
@@ -261,8 +268,6 @@ class TestApi:
             assert type(create_response_body.type) is str
             assert type(create_response_body.description) is str
 
-        # get invalid call
-        with pytest.raises(APIException):
             get_response = voice_client.get_call(BW_ACCOUNT_ID, "c-fake-call-id")
             get_response_body = get_response.body
 
@@ -271,6 +276,9 @@ class TestApi:
             assert type(get_response_body.description) is str
             if get_response_body.id:
                 assert type(get_response_body.id) is str
+
+            print(vars(create_response))
+            print(vars(get_response))
 
     def test_successful_mfa_messaging(self, mfa_client):
         """Create a successful messaging MFA request.
@@ -287,11 +295,13 @@ class TestApi:
             digits=6,
             message="Your temporary {NAME} {SCOPE} code is {CODE}"
         )
-        response = mfa_client.create_messaging_two_factor(BW_ACCOUNT_ID, body)
-        response_body = response.body
+        create_response = mfa_client.create_messaging_two_factor(BW_ACCOUNT_ID, body)
+        create_response_body = create_response.body
 
-        assert response.status_code == 200
-        assert len(response_body.message_id) == 29
+        assert create_response.status_code == 200
+        assert len(create_response_body.message_id) == 29
+
+        print(vars(create_response))
 
     @pytest.mark.skip(reason="API accepts invalid numbers for to/from field")
     def test_failed_mfa_messaging(self, mfa_client):
@@ -311,12 +321,14 @@ class TestApi:
         )
 
         with pytest.raises(APIException):
-            response = mfa_client.create_messaging_two_factor(BW_ACCOUNT_ID, body)
-            response_body = response.body
+            create_response = mfa_client.create_messaging_two_factor(BW_ACCOUNT_ID, body)
+            create_response_body = create_response.body
 
-            assert response.status_code == 400
-            assert type(response_body.error) is str
-            assert type(response_body.request_id) is str
+            assert create_response.status_code == 400
+            assert type(create_response_body.error) is str
+            assert type(create_response_body.request_id) is str
+
+            print(vars(create_response))
 
     def test_successful_mfa_voice(self, mfa_client):
         """Create a successful voice MFA request.
@@ -333,11 +345,13 @@ class TestApi:
             digits=6,
             message="Your temporary {NAME} {SCOPE} code is {CODE}"
         )
-        response = mfa_client.create_voice_two_factor(BW_ACCOUNT_ID, body)
-        response_body = response.body
+        create_response = mfa_client.create_voice_two_factor(BW_ACCOUNT_ID, body)
+        create_response_body = create_response.body
 
-        assert response.status_code == 200
-        assert len(response_body.call_id) == 47
+        assert create_response.status_code == 200
+        assert len(create_response_body.call_id) == 47
+
+        print(vars(create_response))
 
     def test_failed_mfa_voice(self, mfa_client):
         """Create a failed voice MFA request.
@@ -356,12 +370,14 @@ class TestApi:
         )
 
         with pytest.raises(APIException):
-            response = mfa_client.create_voice_two_factor(BW_ACCOUNT_ID, body)
-            response_body = response.body
+            create_response = mfa_client.create_voice_two_factor(BW_ACCOUNT_ID, body)
+            create_response_body = create_response.body
 
-            assert response.status_code == 400
-            assert type(response_body.error) is str
-            assert type(response_body.request_id) is str
+            assert create_response.status_code == 400
+            assert type(create_response_body.error) is str
+            assert type(create_response_body.request_id) is str
+
+            print(vars(create_response))
 
     @pytest.mark.skip(reason="No way to currently test a successful code unless we ingest callbacks")
     def test_successful_mfa_verify(self, mfa_client):
@@ -378,11 +394,13 @@ class TestApi:
             code="123456",
             expiration_time_in_minutes=3
         )
-        response = mfa_client.create_verify_two_factor(BW_ACCOUNT_ID, body)
-        response_body = response.body
-        assert response.status_code == 200
-        assert (isinstance(response.body.valid, bool))
-        assert response_body.valid is True
+        verify_response = mfa_client.create_verify_two_factor(BW_ACCOUNT_ID, body)
+        verify_response_body = verify_response.body
+        assert verify_response.status_code == 200
+        assert (isinstance(verify_response_body.valid, bool))
+        assert verify_response_body.valid is True
+
+        print(vars(verify_response))
 
     def test_failed_mfa_verify(self, mfa_client):
         """Test an invalid MFA code.
@@ -398,14 +416,14 @@ class TestApi:
             code="123456",
             expiration_time_in_minutes=3
         )
-        response = mfa_client.create_verify_two_factor(BW_ACCOUNT_ID, body)
-        response_body = response.body
-        assert response.status_code == 200
-        assert (isinstance(response.body.valid, bool))
-        assert response_body.valid is False
+        verify_response = mfa_client.create_verify_two_factor(BW_ACCOUNT_ID, body)
+        verify_response_body = verify_response.body
+        assert verify_response.status_code == 200
+        assert isinstance(verify_response_body.valid, bool)
+        assert verify_response_body.valid is False
 
-    def test_successful_web_rtc_create_and_get_session(self, web_rtc_client):
-        """
+    def test_successful_web_rtc_create_get_and_delete_session(self, web_rtc_client):
+        """Successfully create, get, and delete a WebRTC session.
 
         Args:
             web_rtc_client: Contains the basic auth credentials needed to authenticate.
@@ -420,6 +438,8 @@ class TestApi:
         get_response = web_rtc_client.get_session(BW_ACCOUNT_ID, create_response_body.id)
         get_response_body = get_response.body
 
+        delete_response = web_rtc_client.delete_session(BW_ACCOUNT_ID, create_response_body.id)
+
         assert create_response.status_code == 200
         assert type(create_response_body.id) is str
         assert type(create_response_body.tag) is str and create_response_body.tag == "DevX Integration Testing"
@@ -428,9 +448,15 @@ class TestApi:
         assert get_response_body.id == create_response_body.id
         assert type(get_response_body.tag) is str and create_response_body.tag == "DevX Integration Testing"
 
+        assert delete_response.status_code == 204
+
+        print(vars(create_response))
+        print(vars(get_response))
+        print(vars(delete_response))
+
     @pytest.mark.skip(reason="No way to force a 400 here as the sdk normalizes any tag value to a string and the body \
     is optional")
-    def test_failed_web_rtc_create_and_get_session(self, web_rtc_client):
+    def test_failed_web_rtc_create_get_and_delete_session(self, web_rtc_client):
         """
 
         Args:
@@ -445,8 +471,10 @@ class TestApi:
             create_response = web_rtc_client.create_session(BW_ACCOUNT_ID, body)
             create_response_body = create_response.body
 
-            get_response = web_rtc_client.get_session(BW_ACCOUNT_ID, create_response_body.id)
+            get_response = web_rtc_client.get_session(BW_ACCOUNT_ID, "Some-ID-That-Doesnt-Exist")
             get_response_body = get_response.body
+
+            delete_response = web_rtc_client.delete_session(BW_ACCOUNT_ID, "Some-ID-That-Doesnt-Exist")
 
             assert create_response.status_code == 200
             assert type(create_response_body.id) is str
@@ -456,8 +484,14 @@ class TestApi:
             assert type(get_response_body.code) is int
             assert type(get_response_body.message) is str
 
-    def test_successful_web_rtc_create_participant(self, web_rtc_client):
-        """
+            assert delete_response.status_code == 404
+
+            print(vars(create_response))
+            print(vars(get_response))
+            print(vars(delete_response))
+
+    def test_successful_web_rtc_create_get_and_delete_participant(self, web_rtc_client):
+        """Successfully create, get, and delete a WebRTC participant.
 
         Args:
             web_rtc_client: Contains the basic auth credentials needed to authenticate.
@@ -467,16 +501,33 @@ class TestApi:
         body.publish_permissions = ["AUDIO", "VIDEO"]
         body.device_api_version = "V3"
 
-        response = web_rtc_client.create_participant(BW_ACCOUNT_ID, body)
-        response_body = response.body
+        create_response = web_rtc_client.create_participant(BW_ACCOUNT_ID, body)
+        create_response_body = create_response.body
 
-        assert response.status_code == 200
-        assert type(response_body.participant.id) is str
-        assert len(response_body.participant.id) is 36
-        assert set(response_body.participant.publish_permissions) == set(body.publish_permissions)
-        assert response_body.participant.device_api_version == body.device_api_version
+        get_response = web_rtc_client.get_participant(BW_ACCOUNT_ID, create_response_body.participant.id)
+        get_response_body = get_response.body
 
-    def test_failed_web_rtc_create_participant(self, web_rtc_client):
+        delete_response = web_rtc_client.delete_participant(BW_ACCOUNT_ID, create_response_body.participant.id)
+
+        assert create_response.status_code == 200
+        assert type(create_response_body.participant.id) is str
+        assert len(create_response_body.participant.id) is 36
+        assert set(create_response_body.participant.publish_permissions) == set(body.publish_permissions)
+        assert create_response_body.participant.device_api_version == body.device_api_version
+
+        assert get_response.status_code == 200
+        assert type(get_response_body.id) is str
+        assert len(get_response_body.id) is 36
+        assert set(get_response_body.publish_permissions) == set(body.publish_permissions)
+        assert get_response_body.device_api_version == body.device_api_version
+
+        assert delete_response.status_code == 204
+
+        print(vars(create_response))
+        print(vars(get_response))
+        print(vars(delete_response))
+
+    def test_failed_web_rtc_create_get_and_delete_participant(self, web_rtc_client):
         """
 
         Args:
@@ -488,9 +539,75 @@ class TestApi:
         body.device_api_version = "V3"
 
         with pytest.raises(APIException):
-            response = web_rtc_client.create_participant(BW_ACCOUNT_ID, body)
-            response_body = response.body
+            create_response = web_rtc_client.create_participant(BW_ACCOUNT_ID, body)
+            create_response_body = create_response.body
 
-            assert response.status_code == 400
-            assert type(response_body.code) is int
-            assert type(response_body.message) is str
+            get_response = web_rtc_client.get_participant(BW_ACCOUNT_ID, "Some-ID-That-Doesnt-Exist")
+            get_response_body = get_response.body
+
+            delete_response = web_rtc_client.delete_participant(BW_ACCOUNT_ID, "Some-ID-That-Doesnt-Exist")
+
+            assert create_response.status_code == 400
+            assert type(create_response_body.code) is int
+            assert type(create_response_body.message) is str
+
+            assert get_response.status_code == 404
+            assert type(get_response_body.code) is int
+            assert type(get_response_body.message) is str
+
+            assert delete_response.status_code == 404
+
+            print(vars(create_response))
+            print(vars(get_response))
+            print(vars(delete_response))
+
+    def test_successful_create_and_get_tn_lookup(self, tn_lookup_client):
+        """
+
+        Args:
+            tn_lookup_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = OrderRequest()
+        body.tns = [BW_NUMBER]
+        create_response = tn_lookup_client.create_lookup_request(BW_ACCOUNT_ID, body)
+        create_response_body = create_response.body
+
+        get_response = tn_lookup_client.get_lookup_request_status(BW_ACCOUNT_ID, create_response_body.request_id)
+        get_response_body = get_response.body
+
+        assert create_response.status_code == 202
+        assert len(create_response_body.request_id) is 36
+        assert type(create_response_body.request_id) is str
+        assert type(create_response_body.status) is str
+
+        assert get_response.status_code == 200
+        assert get_response_body.request_id == create_response_body.request_id
+        assert type(get_response_body.status) is str
+        if get_response_body.result:
+            result = get_response_body.result[0]
+            assert type(result.response_code) is int
+
+        print(vars(create_response))
+        print(vars(get_response))
+
+    def test_failed_create_and_get_tn_lookup(self, tn_lookup_client):
+        """
+
+        Args:
+            tn_lookup_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = OrderRequest()
+        body.tns = ["+12345"]
+
+        with pytest.raises(APIException):
+            create_response = tn_lookup_client.create_lookup_request(BW_ACCOUNT_ID, body)
+
+            get_response = tn_lookup_client.get_lookup_request_status(BW_ACCOUNT_ID, "Some-ID-That-Doesnt-Exist")
+
+            assert create_response.status_code == 400
+            assert get_response.status_code == 404
+
+            print(vars(create_response))
+            print(vars(get_response))
