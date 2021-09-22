@@ -83,7 +83,7 @@ class TestApi:
     Class that holds basic monitoring tests for the Python SDK. Makes requests to cover JSON call and response,
     error handling, and binary string uploads and downloads
     """
-    def test_create_successful_message(self, messaging_client):
+    def test_successful_create_message(self, messaging_client):
         """Create valid request to send an SMS using the Messaging API.
 
         Args:
@@ -109,7 +109,7 @@ class TestApi:
         assert body.tag == message_body.tag
         assert body.priority == message_body.priority
 
-    def test_create_failed_message(self, messaging_client):
+    def test_failed_create_message(self, messaging_client):
         """Create invalid request to send an SMS using the Messaging API.
 
         Args:
@@ -128,7 +128,7 @@ class TestApi:
             assert type(body.type) == "request-validation"
             assert type(body.description) is str
 
-    def test_media_successful_upload_download(self, messaging_client):
+    def test_successful_media_upload_download(self, messaging_client):
         """Upload a binary string and then download it and confirm both files match.
 
         Args:
@@ -143,7 +143,7 @@ class TestApi:
         assert response.status_code == 200    # assert successful status
         assert downloaded_media == media_file    # assert the binary strings match
 
-    def test_media_failed_download(self, messaging_client):
+    def test_failed_media_download(self, messaging_client):
         """Attempt to download media that doesnt exist and validate a 404 is returned from the API.
 
         Args:
@@ -158,7 +158,7 @@ class TestApi:
             assert body.type == "object-not-found"
             assert type(body.description) is str
 
-    def test_create_and_get_call(self, voice_client):
+    def test_successful_create_and_get_call(self, voice_client):
         """Create a successful call and get status of the same call.
 
         Args:
@@ -254,3 +254,5 @@ class TestApi:
             get_response_body = get_response.body
 
             assert get_response.status_code == 404
+
+    def test_
