@@ -19,11 +19,14 @@ from bandwidth.voice.models.callback_method_enum import CallbackMethodEnum
 from bandwidth.voice.models.mode_enum import ModeEnum
 from bandwidth.multifactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
 from bandwidth.multifactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
+from bandwidth.webrtc.models.session import Session
+from bandwidth.webrtc.models.participant import Participant
 from bandwidth.phonenumberlookup.models.order_request import OrderRequest
 from bandwidth.configuration import Environment
 
 [pytest]
 log_cli = True
+# TODO: Add print statements for each request/response body so that we can see them if errors are thrown in the logs
 
 try:
     BW_USERNAME = os.environ["BW_USERNAME"]
@@ -66,6 +69,16 @@ def mfa_client():
     )
     mfa_client = bandwidth_client.multi_factor_auth_client.mfa
     return mfa_client
+
+
+@pytest.fixture()
+def web_rtc_client():
+    bandwidth_client = BandwidthClient(
+        web_rtc_basic_auth_user_name=BW_USERNAME,
+        web_rtc_basic_auth_password=BW_PASSWORD,
+    )
+    web_rtc_client = bandwidth_client.web_rtc_client.client
+    return web_rtc_client
 
 
 @pytest.fixture()
@@ -227,7 +240,7 @@ class TestApi:
             assert len(get_response_body.error_id) == 36
 
     def test_failed_create_and_failed_get_call(self, voice_client):
-        """Create a successful call and get status of the same call.
+        """Create a failed call and get status of a call that doesnt exist.
 
         Args:
             voice_client: Contains the basic auth credentials needed to authenticate.
@@ -254,5 +267,230 @@ class TestApi:
             get_response_body = get_response.body
 
             assert get_response.status_code == 404
+            assert type(get_response_body.type) is str
+            assert type(get_response_body.description) is str
+            if get_response_body.id:
+                assert type(get_response_body.id) is str
 
-    def test_
+    def test_successful_mfa_messaging(self, mfa_client):
+        """Create a successful messaging MFA request.
+
+        Args:
+            mfa_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = TwoFactorCodeRequestSchema(
+            mfrom=BW_NUMBER,
+            to=USER_NUMBER,
+            application_id=BW_MESSAGING_APPLICATION_ID,
+            scope="scope",
+            digits=6,
+            message="Your temporary {NAME} {SCOPE} code is {CODE}"
+        )
+        response = mfa_client.create_messaging_two_factor(BW_ACCOUNT_ID, body)
+        response_body = response.body
+
+        assert response.status_code == 200
+        assert len(response_body.message_id) == 29
+
+    @pytest.mark.skip(reason="API accepts invalid numbers for to/from field")
+    def test_failed_mfa_messaging(self, mfa_client):
+        """Create a failed messaging MFA request.
+
+        Args:
+            mfa_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = TwoFactorCodeRequestSchema(
+            mfrom=BW_NUMBER,
+            to="+12345",
+            application_id=BW_MESSAGING_APPLICATION_ID,
+            scope="scope",
+            digits=6,
+            message="Your temporary {NAME} {SCOPE} code is {CODE}"
+        )
+
+        with pytest.raises(APIException):
+            response = mfa_client.create_messaging_two_factor(BW_ACCOUNT_ID, body)
+            response_body = response.body
+
+            assert response.status_code == 400
+            assert type(response_body.error) is str
+            assert type(response_body.request_id) is str
+
+    def test_successful_mfa_voice(self, mfa_client):
+        """Create a successful voice MFA request.
+
+        Args:
+            mfa_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = TwoFactorCodeRequestSchema(
+            mfrom=BW_NUMBER,
+            to=USER_NUMBER,
+            application_id=BW_VOICE_APPLICATION_ID,
+            scope="scope",
+            digits=6,
+            message="Your temporary {NAME} {SCOPE} code is {CODE}"
+        )
+        response = mfa_client.create_voice_two_factor(BW_ACCOUNT_ID, body)
+        response_body = response.body
+
+        assert response.status_code == 200
+        assert len(response_body.call_id) == 47
+
+    def test_failed_mfa_voice(self, mfa_client):
+        """Create a failed voice MFA request.
+
+        Args:
+            mfa_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = TwoFactorCodeRequestSchema(
+            mfrom=BW_NUMBER,
+            to="+12345",
+            application_id=BW_MESSAGING_APPLICATION_ID,
+            scope="scope",
+            digits=6,
+            message="Your temporary {NAME} {SCOPE} code is {CODE}"
+        )
+
+        with pytest.raises(APIException):
+            response = mfa_client.create_voice_two_factor(BW_ACCOUNT_ID, body)
+            response_body = response.body
+
+            assert response.status_code == 400
+            assert type(response_body.error) is str
+            assert type(response_body.request_id) is str
+
+    @pytest.mark.skip(reason="No way to currently test a successful code unless we ingest callbacks")
+    def test_successful_mfa_verify(self, mfa_client):
+        """
+
+        Args:
+            mfa_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = TwoFactorVerifyRequestSchema(
+            to=USER_NUMBER,
+            application_id=BW_VOICE_APPLICATION_ID,
+            scope="scope",
+            code="123456",
+            expiration_time_in_minutes=3
+        )
+        response = mfa_client.create_verify_two_factor(BW_ACCOUNT_ID, body)
+        response_body = response.body
+        assert response.status_code == 200
+        assert (isinstance(response.body.valid, bool))
+        assert response_body.valid is True
+
+    def test_failed_mfa_verify(self, mfa_client):
+        """Test an invalid MFA code.
+
+        Args:
+            mfa_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = TwoFactorVerifyRequestSchema(
+            to=USER_NUMBER,
+            application_id=BW_VOICE_APPLICATION_ID,
+            scope="scope",
+            code="123456",
+            expiration_time_in_minutes=3
+        )
+        response = mfa_client.create_verify_two_factor(BW_ACCOUNT_ID, body)
+        response_body = response.body
+        assert response.status_code == 200
+        assert (isinstance(response.body.valid, bool))
+        assert response_body.valid is False
+
+    def test_successful_web_rtc_create_and_get_session(self, web_rtc_client):
+        """
+
+        Args:
+            web_rtc_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = Session(
+            tag="DevX Integration Testing"
+        )
+        create_response = web_rtc_client.create_session(BW_ACCOUNT_ID, body)
+        create_response_body = create_response.body
+
+        get_response = web_rtc_client.get_session(BW_ACCOUNT_ID, create_response_body.id)
+        get_response_body = get_response.body
+
+        assert create_response.status_code == 200
+        assert type(create_response_body.id) is str
+        assert type(create_response_body.tag) is str and create_response_body.tag == "DevX Integration Testing"
+
+        assert get_response.status_code == 200
+        assert get_response_body.id == create_response_body.id
+        assert type(get_response_body.tag) is str and create_response_body.tag == "DevX Integration Testing"
+
+    @pytest.mark.skip(reason="No way to force a 400 here as the sdk normalizes any tag value to a string and the body \
+    is optional")
+    def test_failed_web_rtc_create_and_get_session(self, web_rtc_client):
+        """
+
+        Args:
+            web_rtc_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = Session(
+            tag="DevX Integration Testing",
+        )
+
+        with pytest.raises(APIException):
+            create_response = web_rtc_client.create_session(BW_ACCOUNT_ID, body)
+            create_response_body = create_response.body
+
+            get_response = web_rtc_client.get_session(BW_ACCOUNT_ID, create_response_body.id)
+            get_response_body = get_response.body
+
+            assert create_response.status_code == 200
+            assert type(create_response_body.id) is str
+            assert type(create_response_body.tag) is str and create_response_body.tag == "DevX Integration Testing"
+
+            assert get_response.status_code == 404
+            assert type(get_response_body.code) is int
+            assert type(get_response_body.message) is str
+
+    def test_successful_web_rtc_create_participant(self, web_rtc_client):
+        """
+
+        Args:
+            web_rtc_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = Participant()
+        body.publish_permissions = ["AUDIO", "VIDEO"]
+        body.device_api_version = "V3"
+
+        response = web_rtc_client.create_participant(BW_ACCOUNT_ID, body)
+        response_body = response.body
+
+        assert response.status_code == 200
+        assert type(response_body.participant.id) is str
+        assert len(response_body.participant.id) is 36
+        assert set(response_body.participant.publish_permissions) == set(body.publish_permissions)
+        assert response_body.participant.device_api_version == body.device_api_version
+
+    def test_failed_web_rtc_create_participant(self, web_rtc_client):
+        """
+
+        Args:
+            web_rtc_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        body = Participant()
+        body.publish_permissions = ["AUDIO", "VIDEO", "SOME OTHER INVALID PERMISSION"]
+        body.device_api_version = "V3"
+
+        with pytest.raises(APIException):
+            response = web_rtc_client.create_participant(BW_ACCOUNT_ID, body)
+            response_body = response.body
+
+            assert response.status_code == 400
+            assert type(response_body.code) is int
+            assert type(response_body.message) is str
