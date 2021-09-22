@@ -3,7 +3,7 @@ test_bxml.py
 
 Unit tests for BXML
 
-@copyright Bandwidth INC
+@copyright Bandwidth Inc.
 """
 from bandwidth.voice.bxml.response import Response
 from bandwidth.voice.bxml.verbs import *
