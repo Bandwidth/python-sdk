@@ -8,7 +8,11 @@ on:
 jobs:
   deploy:
     name: Validate
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: [ 3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9 ]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -23,7 +27,9 @@ jobs:
         BW_NUMBER: ${{ secrets.BW_NUMBER }}
         USER_NUMBER: ${{ secrets.USER_NUMBER }}
         BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
-    - uses: Bandwidth/build-notify-slack-action@v1.0.0
+
+    - name: Notify Slack of Failures
+      uses: Bandwidth/build-notify-slack-action@v1.0.0
       if: failure() && !github.event.pull_request.draft
       with:
         job-status: ${{ job.status }}
