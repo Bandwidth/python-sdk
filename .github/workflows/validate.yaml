@@ -11,14 +11,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2016, windows-2019, ubuntu-18.04, ubuntu-20.04]
+        # os: [windows-2016, windows-2019, ubuntu-18.04, ubuntu-20.04]
+        os: [ubuntu-20.04]
         python: [ 3.6, 3.7, 3.8, 3.9 ]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
     - name: Install Packages
-      run: pip install -r test-requirements.txt
+      run: pip install -r requirements.txt
 
     - name: Test
       env:
