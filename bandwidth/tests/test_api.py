@@ -9,6 +9,8 @@ import os
 import time
 import pytest
 from datetime import datetime
+from random import seed
+from random import randint
 from bandwidth.bandwidth_client import BandwidthClient
 from bandwidth.messaging.exceptions.messaging_exception import MessagingException
 from bandwidth.exceptions.api_exception import APIException
@@ -26,6 +28,9 @@ from bandwidth.phonenumberlookup.models.order_request import OrderRequest
 # prints the print statements to console if test fails
 [pytest]
 log_cli = True
+
+# seed the random number generator
+seed(1)
 
 try:
     BW_USERNAME = os.environ["BW_USERNAME"]
@@ -390,7 +395,7 @@ class TestApi:
         """
         # TODO: Set the to number to a randomly generated number to avoid rate limiting
         body = TwoFactorVerifyRequestSchema(
-            to=USER_NUMBER,
+            to="+1" + str(randint(1111111111, 9999999999)),
             application_id=BW_VOICE_APPLICATION_ID,
             scope="scope",
             code="123456",
@@ -414,7 +419,7 @@ class TestApi:
         """
         # TODO: Set the to number to a randomly generated number to avoid rate limiting
         body = TwoFactorVerifyRequestSchema(
-            to=USER_NUMBER,
+            to="+1" + str(randint(1111111111, 9999999999)),
             application_id=BW_VOICE_APPLICATION_ID,
             scope="scope",
             code="123456",
