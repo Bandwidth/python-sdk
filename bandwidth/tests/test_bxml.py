@@ -274,6 +274,10 @@ class TestBxml:
         )
         response.add_verb(transfer)
         expected_bxml = f'<?xml version="1.0" encoding="UTF-8"?><Response><Transfer transferCallerId="+15555555555" callTimeout="50" tag="tag" transferCompleteUrl="https://transcribe.url.server/complete" transferCompleteMethod="POST" username="user" password="pass" diversionTreatment="propagate" diversionReason="away" transferCompleteFallbackUrl="https://test.com" transferCompleteFallbackMethod="GET" fallbackUsername="fusern" fallbackPassword="fpassw">{phone1_bxml}{phone2_bxml}</Transfer></Response>'
+
+        print(response.to_bxml())
+        print(expected_bxml)
+
         assert response.to_bxml() == expected_bxml
 
     def test_conference(self):
