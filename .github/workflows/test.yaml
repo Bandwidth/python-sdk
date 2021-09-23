@@ -1,4 +1,4 @@
-name: Validate SDK
+name: Test SDK
 
 on:
   schedule:
@@ -6,10 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
-
 jobs:
   deploy:
-    name: Validate
+    name: Test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
