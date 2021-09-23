@@ -8,7 +8,7 @@ Integration tests for API requests
 import os
 import time
 import pytest
-from datetime import datetime
+import dateutil.parser
 from random import seed
 from random import randint
 from bandwidth.bandwidth_client import BandwidthClient
@@ -124,7 +124,7 @@ class TestApi:
         assert create_response_body.application_id == BW_MESSAGING_APPLICATION_ID
 
         # asserts the date string is valid ISO
-        assert datetime.fromisoformat(create_response_body.time.replace('Z', '+00:00'))
+        assert dateutil.parser.isoparse(create_response_body.time)
         assert type(create_response_body.segment_count) is int
         assert create_response_body.to == [USER_NUMBER]
         assert create_response_body.media == message_body.media
@@ -235,7 +235,7 @@ class TestApi:
         assert create_response_body.mfrom == BW_NUMBER
         assert create_response_body.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
                BW_ACCOUNT_ID + "/calls/" + create_response_body.call_id
-        assert datetime.fromisoformat(str(create_response_body.start_time))    # assert that str(start_time) is datetime
+        assert dateutil.parser.isoparse(create_response_body.start_time)    # assert that str(start_time) is datetime
         assert type(create_response_body.call_timeout) is float
         assert type(create_response_body.callback_timeout) is float
         assert create_response_body.answer_method == "POST"
@@ -244,12 +244,12 @@ class TestApi:
         assert get_response_body.call_id == create_response_body.call_id
         assert get_response_body.application_id == BW_VOICE_APPLICATION_ID
         assert get_response_body.account_id == BW_ACCOUNT_ID
-        assert datetime.fromisoformat(str(get_response_body.start_time))
-        assert datetime.fromisoformat(str(get_response_body.last_update))
+        assert dateutil.parser.isoparse(str(get_response_body.start_time))
+        assert dateutil.parser.isoparse(str(get_response_body.last_update))
         if get_response_body.answer_time:    # may be null dependent on timing
-            assert datetime.fromisoformat(str(get_response_body.answer_time))
+            assert dateutil.parser.isoparse(str(get_response_body.answer_time))
         if get_response_body.end_time:    # may be null dependent on timing
-            assert datetime.fromisoformat(str(get_response_body.end_time))
+            assert dateutil.parser.isoparse(str(get_response_body.end_time))
         if get_response_body.disconnect_cause == "error":
             assert type(get_response_body.error_message) is str
             assert len(get_response_body.error_id) == 36
