@@ -1,19 +1,32 @@
-name: Validate SDK
+name: Test SDK
 
 on:
   schedule:
     - cron: "0 4 * * *"
   pull_request:
+  workflow_dispatch:
 
 jobs:
   deploy:
-    name: Validate
-    runs-on: ubuntu-latest
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-2016, windows-2019, ubuntu-18.04, ubuntu-20.04]
+        python-version: [3.6, 3.7, 3.8, 3.9]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Validate
-      uses: ./.github/actions/validate
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Packages
+      run: pip install -r requirements.txt
+
+    - name: Test
       env:
         BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
         BW_USERNAME: ${{ secrets.BW_USERNAME }}
@@ -23,7 +36,10 @@ jobs:
         BW_NUMBER: ${{ secrets.BW_NUMBER }}
         USER_NUMBER: ${{ secrets.USER_NUMBER }}
         BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
-    - uses: Bandwidth/build-notify-slack-action@v1.0.0
+      run: python -m pytest --pyargs bandwidth
+
+    - name: Notify Slack of Failures
+      uses: Bandwidth/build-notify-slack-action@v1.0.0
       if: failure() && !github.event.pull_request.draft
       with:
         job-status: ${{ job.status }}
