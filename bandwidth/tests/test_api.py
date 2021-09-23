@@ -3,7 +3,7 @@ test_api.py
 
 Integration tests for API requests
 
-@copyright Bandwidth INC
+@copyright Bandwidth Inc.
 """
 import os
 import time
