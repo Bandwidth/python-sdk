@@ -1,20 +1,20 @@
 """
-bxml_tests.py
+test_bxml.py
 
 Unit tests for BXML
 
-@copyright Bandwidth INC
+@copyright Bandwidth Inc.
 """
 from bandwidth.voice.bxml.response import Response
 from bandwidth.voice.bxml.verbs import *
+from bandwidth.webrtc.utils import *
 
-import unittest
 
-
-class BxmlTests(unittest.TestCase):
+class TestBxml:
     """
     Class for the BXML tests
     """
+
     def test_forward_xml_with_optional_fields(self):
         response = Response()
         forward = Forward(
@@ -26,7 +26,7 @@ class BxmlTests(unittest.TestCase):
         )
         response.add_verb(forward)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Forward to="+10987654321" callTimeout="100" from="+11234567890" diversionTreatment="propagate" diversionReason="away"/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_gather_no_nested(self):
         response = Response()
@@ -48,7 +48,7 @@ class BxmlTests(unittest.TestCase):
         )
         response.add_verb(gather)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Gather gatherUrl="https://gather.url/nextBXML" gatherMethod="POST" terminatingDigits="#" tag="tag" maxDigits="20" interDigitTimeout="50" username="user" password="password" firstDigitTimeout="10" repeatCount="3" gatherFallbackUrl="https://test.com" gatherFallbackMethod="GET" fallbackUsername="fuser" fallbackPassword="fpass"/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_gather_with_speak_sentence(self):
         response = Response()
@@ -71,9 +71,9 @@ class BxmlTests(unittest.TestCase):
             repeat_count=3,
             speak_sentence=speak_sentence
         )
-        expected_bxml = expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Gather gatherUrl="https://gather.url/nextBXML" gatherMethod="POST" terminatingDigits="#" tag="tag" maxDigits="20" interDigitTimeout="50" username="user" password="password" firstDigitTimeout="10" repeatCount="3"><SpeakSentence voice="kate" locale="en_US" gender="female">Phrase.</SpeakSentence></Gather></Response>'
+        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Gather gatherUrl="https://gather.url/nextBXML" gatherMethod="POST" terminatingDigits="#" tag="tag" maxDigits="20" interDigitTimeout="50" username="user" password="password" firstDigitTimeout="10" repeatCount="3"><SpeakSentence voice="kate" locale="en_US" gender="female">Phrase.</SpeakSentence></Gather></Response>'
         response.add_verb(gather)
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_gather_play_audio(self):
         response = Response()
@@ -93,28 +93,28 @@ class BxmlTests(unittest.TestCase):
         )
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Gather gatherUrl="https://gather.url/nextBXML" gatherMethod="POST" terminatingDigits="#" tag="tag" maxDigits="20" interDigitTimeout="50" username="user" password="password" firstDigitTimeout="10" repeatCount="3"><PlayAudio>https://audio.url/audio1.wav</PlayAudio></Gather></Response>'
         response.add_verb(gather)
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_hangup(self):
         response = Response()
         hang_up = Hangup()
         response.add_verb(hang_up)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Hangup/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_pause(self):
         response = Response()
         pause = Pause(duration=400)
         response.add_verb(pause)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Pause duration="400"/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_pause_recording(self):
         response = Response()
         pause_recording = PauseRecording()
         response.add_verb(pause_recording)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><PauseRecording/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_play_audio(self):
         response = Response()
@@ -125,14 +125,14 @@ class BxmlTests(unittest.TestCase):
         )
         response.add_verb(play_audio_1)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_record(self):
         response = Response()
         record = Record(
-            tag = "tag",
-            username = "user",
-            password = "pass",
+            tag="tag",
+            username="user",
+            password="pass",
             record_complete_url="https://record.url.server/record",
             record_complete_method="POST",
             recording_available_url="https://record.url.server/available",
@@ -151,7 +151,7 @@ class BxmlTests(unittest.TestCase):
         )
         response.add_verb(record)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Record tag="tag" username="user" password="pass" recordCompleteUrl="https://record.url.server/record" recordCompleteMethod="POST" recordingAvailableUrl="https://record.url.server/available" recordingAvailableMethod="GET" terminatingDigits="#" maxDuration="90" fileFormat="mp3" transcribe="false" transcriptionAvailableUrl="https://transcribe.url.server/available" transcriptionAvailableMethod="POST" silenceTimeout="90" recordCompleteFallbackUrl="https://test.com" recordCompleteFallbackMethod="GET" fallbackUsername="fuser" fallbackPassword="fpass"/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_redirect(self):
         response = Response()
@@ -168,25 +168,25 @@ class BxmlTests(unittest.TestCase):
         )
         response.add_verb(redirect)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Redirect redirectUrl="http://flow.url/newFlow" redirectMethod="POST" tag="tag" username="user" password="pass" redirectFallbackUrl="https://test.com" redirectFallbackMethod="GET" fallbackUsername="fuser" fallbackPassword="fpass"/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_resume_recording(self):
         response = Response()
         resume_recording = ResumeRecording()
         response.add_verb(resume_recording)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><ResumeRecording/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert (response.to_bxml() == expected_bxml)
 
     def test_dtmf(self):
         response = Response()
-        send_dtmf  = SendDtmf(
-            dtmf = "1234",
-            tone_duration = 200,
-            tone_interval = 450
+        send_dtmf = SendDtmf(
+            dtmf="1234",
+            tone_duration=200,
+            tone_interval=450
         )
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><SendDtmf toneDuration="200" toneInterval="450">1234</SendDtmf></Response>'
         response.add_verb(send_dtmf)
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_speak_sentence(self):
         response = Response()
@@ -198,7 +198,7 @@ class BxmlTests(unittest.TestCase):
         )
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><SpeakSentence voice="kate" locale="en_US" gender="female">Phrase.</SpeakSentence></Response>'
         response.add_verb(speak_sentence)
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_speak_sentence_SSML(self):
         response = Response()
@@ -210,14 +210,14 @@ class BxmlTests(unittest.TestCase):
         )
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><SpeakSentence voice="kate" locale="en_US" gender="female"><lang xml:lang="es-MX">Hydrogen</lang> is the most abundant element in the universe.</SpeakSentence></Response>'
         response.add_verb(speak_sentence)
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_start_recording(self):
         response = Response()
         record = StartRecording(
-            tag = "tag",
-            username = "user",
-            password = "pass",
+            tag="tag",
+            username="user",
+            password="pass",
             recording_available_url="https://record.url.server/available",
             recording_available_method="GET",
             file_format="mp3",
@@ -228,14 +228,14 @@ class BxmlTests(unittest.TestCase):
         )
         response.add_verb(record)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><StartRecording tag="tag" username="user" password="pass" recordingAvailableUrl="https://record.url.server/available" recordingAvailableMethod="GET" fileFormat="mp3" multiChannel="true" transcribe="false" transcriptionAvailableUrl="https://transcribe.url.server/available" transcriptionAvailableMethod="POST"/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_stop_recording(self):
         response = Response()
         stop_recording = StopRecording()
         response.add_verb(stop_recording)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><StopRecording/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_transfer(self):
         response = Response()
@@ -274,48 +274,59 @@ class BxmlTests(unittest.TestCase):
         )
         response.add_verb(transfer)
         expected_bxml = f'<?xml version="1.0" encoding="UTF-8"?><Response><Transfer transferCallerId="+15555555555" callTimeout="50" tag="tag" transferCompleteUrl="https://transcribe.url.server/complete" transferCompleteMethod="POST" username="user" password="pass" diversionTreatment="propagate" diversionReason="away" transferCompleteFallbackUrl="https://test.com" transferCompleteFallbackMethod="GET" fallbackUsername="fusern" fallbackPassword="fpassw">{phone1_bxml}{phone2_bxml}</Transfer></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_conference(self):
-        conference = Conference("my-conference", mute=False, hold=True, call_ids_to_coach="c-123,c-345",
-            conference_event_url="https://test.com", conference_event_method="GET", username="user",
-            password="pass", tag="tag", conference_event_fallback_url="https://test2.com",
-            conference_event_fallback_method="POST", fallback_username="fuser", fallback_password="fpass")
-
-        response = Response()
-        response.add_verb(conference)
-        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Conference mute="false" hold="true" callIdsToCoach="c-123,c-345" conferenceEventUrl="https://test.com" conferenceEventMethod="GET" tag="tag" username="user" password="pass" conferenceEventFallbackUrl="https://test2.com" conferenceEventFallbackMethod="POST" fallbackUsername="fuser" fallbackPassword="fpass">my-conference</Conference></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
-
-    def test_conference_coach_array(self):
-        conference = Conference("my-conference", call_ids_to_coach=["c-123", "c-456"])
-
-        response = Response()
-        response.add_verb(conference)
-        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Conference callIdsToCoach="c-123,c-456">my-conference</Conference></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
-
-    def test_bridge(self):
-        bridge = Bridge("c-95ac8d6e-1a31c52e-b38f-4198-93c1-51633ec68f8d",
-            bridge_complete_url="https://test.com",
-            bridge_complete_method="GET",
-            bridge_target_complete_url="https://test2.com",
-            bridge_target_complete_method="POST",
+        conference = Conference(
+            "my-conference",
+            mute=False,
+            hold=True,
+            call_ids_to_coach="c-123,c-345",
+            conference_event_url="https://test.com",
+            conference_event_method="GET",
             username="user",
             password="pass",
-            tag="custom tag",
-            bridge_complete_fallback_url="https://test3.com",
-            bridge_complete_fallback_method="GET",
-            bridge_target_complete_fallback_url="https://test4.com",
-            bridge_target_complete_fallback_method="POST",
+            tag="tag",
+            conference_event_fallback_url="https://test2.com",
+            conference_event_fallback_method="POST",
             fallback_username="fuser",
             fallback_password="fpass"
         )
 
         response = Response()
+        response.add_verb(conference)
+        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Conference mute="false" hold="true" callIdsToCoach="c-123,c-345" conferenceEventUrl="https://test.com" conferenceEventMethod="GET" tag="tag" username="user" password="pass" conferenceEventFallbackUrl="https://test2.com" conferenceEventFallbackMethod="POST" fallbackUsername="fuser" fallbackPassword="fpass">my-conference</Conference></Response>'
+        assert response.to_bxml() == expected_bxml
+
+    def test_conference_coach_array(self):
+        conference = Conference(
+            "my-conference", call_ids_to_coach=["c-123", "c-456"])
+        response = Response()
+        response.add_verb(conference)
+        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Conference callIdsToCoach="c-123,c-456">my-conference</Conference></Response>'
+        assert response.to_bxml() == expected_bxml
+
+    def test_bridge(self):
+        bridge = Bridge("c-95ac8d6e-1a31c52e-b38f-4198-93c1-51633ec68f8d",
+                        bridge_complete_url="https://test.com",
+                        bridge_complete_method="GET",
+                        bridge_target_complete_url="https://test2.com",
+                        bridge_target_complete_method="POST",
+                        username="user",
+                        password="pass",
+                        tag="custom tag",
+                        bridge_complete_fallback_url="https://test3.com",
+                        bridge_complete_fallback_method="GET",
+                        bridge_target_complete_fallback_url="https://test4.com",
+                        bridge_target_complete_fallback_method="POST",
+                        fallback_username="fuser",
+                        fallback_password="fpass"
+                        )
+
+        response = Response()
         response.add_verb(bridge)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Bridge bridgeCompleteUrl="https://test.com" bridgeCompleteMethod="GET" bridgeTargetCompleteUrl="https://test2.com" bridgeTargetCompleteMethod="POST" username="user" password="pass" tag="custom tag" bridgeCompleteFallbackUrl="https://test3.com" bridgeCompleteFallbackMethod="GET" bridgeTargetCompleteFallbackUrl="https://test4.com" bridgeTargetCompleteFallbackMethod="POST" fallbackUsername="fuser" fallbackPassword="fpass">c-95ac8d6e-1a31c52e-b38f-4198-93c1-51633ec68f8d</Bridge></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_ring(self):
         ring = Ring(
@@ -325,21 +336,21 @@ class BxmlTests(unittest.TestCase):
         response = Response()
         response.add_verb(ring)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Ring duration="5"/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert (response.to_bxml() == expected_bxml)
 
     def test_start_gather(self):
         startGather = StartGather(
-            dtmfUrl= "https://test.com",
-            dtmfMethod = "POST",
-            username = "user",
-            password = "pass",
-            tag = "custom tag"
+            dtmfUrl="https://test.com",
+            dtmfMethod="POST",
+            username="user",
+            password="pass",
+            tag="custom tag"
         )
 
         response = Response()
         response.add_verb(startGather)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><StartGather dtmfUrl="https://test.com" dtmfMethod="POST" username="user" password="pass" tag="custom tag"/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_stop_gather(self):
         stopGather = StopGather()
@@ -347,7 +358,7 @@ class BxmlTests(unittest.TestCase):
         response = Response()
         response.add_verb(stopGather)
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><StopGather/></Response>'
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
     def test_gather_speak_sentence_ssml(self):
         response = Response()
@@ -359,8 +370,16 @@ class BxmlTests(unittest.TestCase):
         )
         expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Gather><SpeakSentence>Hello. Your number is <say-as interpret-as="telephone">asdf</say-as>, lets play a game. What is 10 + 3. Press the pound key when finished.</SpeakSentence></Gather></Response>'
         response.add_verb(gather)
-        self.assertEqual(response.to_bxml(), expected_bxml)
+        assert response.to_bxml() == expected_bxml
 
+    def test_generate_transfer_bxml(self):
+        expected = '<?xml version="1.0" encoding="UTF-8"?><Response><Transfer><SipUri uui="93d6f3c0be5845960b744fa28015d8ede84bd1a4;encoding=base64,asdf;encoding=jwt">sip:sipx.webrtc.bandwidth.com:5060</SipUri></Transfer></Response>'
+        actual = generate_transfer_bxml(
+            'asdf', 'c-93d6f3c0-be584596-0b74-4fa2-8015-d8ede84bd1a4')
+        assert actual == expected
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_generate_transfer_bxml_verb(self):
+        expected = '<Transfer><SipUri uui="93d6f3c0be5845960b744fa28015d8ede84bd1a4;encoding=base64,asdf;encoding=jwt">sip:sipx.webrtc.bandwidth.com:5060</SipUri></Transfer>'
+        actual = generate_transfer_bxml_verb(
+            'asdf', 'c-93d6f3c0-be584596-0b74-4fa2-8015-d8ede84bd1a4')
+        assert actual == expected
