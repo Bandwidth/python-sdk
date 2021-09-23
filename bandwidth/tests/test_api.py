@@ -124,7 +124,7 @@ class TestApi:
         assert create_response_body.application_id == BW_MESSAGING_APPLICATION_ID
 
         # asserts the date string is valid ISO
-        assert dateutil.parser.isoparse(create_response_body.time)
+        assert dateutil.parser.isoparse(str(create_response_body.time))
         assert type(create_response_body.segment_count) is int
         assert create_response_body.to == [USER_NUMBER]
         assert create_response_body.media == message_body.media
@@ -235,7 +235,7 @@ class TestApi:
         assert create_response_body.mfrom == BW_NUMBER
         assert create_response_body.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
                BW_ACCOUNT_ID + "/calls/" + create_response_body.call_id
-        assert dateutil.parser.isoparse(create_response_body.start_time)    # assert that str(start_time) is datetime
+        assert dateutil.parser.isoparse(str(create_response_body.start_time))    # assert that str(start_time) is datetime
         assert type(create_response_body.call_timeout) is float
         assert type(create_response_body.callback_timeout) is float
         assert create_response_body.answer_method == "POST"
