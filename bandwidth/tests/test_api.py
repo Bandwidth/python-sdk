@@ -425,6 +425,9 @@ class TestApi:
             code="123456",
             expiration_time_in_minutes=3
         )
+
+        print(body.to)
+
         verify_response = mfa_client.create_verify_two_factor(BW_ACCOUNT_ID, body)
         verify_response_body = verify_response.body
 
