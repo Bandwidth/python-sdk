@@ -1,9 +1,8 @@
-requests~=2.24
+requests>=2.25
 jsonpickle~=1.4, >= 1.4.1
 cachecontrol~=0.12.6
 python-dateutil~=2.8.1
 enum34~=1.1, >=1.1.10
 lxml>==4.6.3
 pytest>==6.2.5
-requests>=2.25
 urllib3>=1.26
