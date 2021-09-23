@@ -30,7 +30,7 @@ from bandwidth.phonenumberlookup.models.order_request import OrderRequest
 log_cli = True
 
 # seed the random number generator
-seed(1)
+seed(randint(10, 500))
 
 try:
     BW_USERNAME = os.environ["BW_USERNAME"]
