@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    name: Test Python ${{ matrix.python-version }} on ${{ matrix.os }}
+    name: Test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
