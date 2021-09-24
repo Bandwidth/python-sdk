@@ -1,6 +1,6 @@
 # Bandwidth Python SDK
 
-[![Test](https://github.com/Bandwidth/python-sdk/actions/workflows/test.yaml/badge.svg)](https://github.com/Bandwidth/csharp-sdk/actions/workflows/test.yml)
+[![Test](https://github.com/Bandwidth/python-sdk/actions/workflows/test.yaml/badge.svg)](https://github.com/Bandwidth/python-sdk/actions/workflows/test.yaml)
 
 | **OS** | **Python** |
 |:---:|:---:|
