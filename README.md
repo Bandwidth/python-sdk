@@ -1,5 +1,15 @@
 # Bandwidth Python SDK
 
+[![Test](https://github.com/Bandwidth/python-sdk/actions/workflows/test.yaml/badge.svg)](https://github.com/Bandwidth/python-sdk/actions/workflows/test.yaml)
+
+| **OS** | **Python** |
+|:---:|:---:|
+| Windows 2016 | 3.6, 3.7, 3.8, 3.9 |
+| Windows 2019 | 3.6, 3.7, 3.8, 3.9 |
+| Ubuntu 18.04 | 3.6, 3.7, 3.8, 3.9 |
+| Ubuntu 20.04 | 3.6, 3.7, 3.8, 3.9 |
+
+
 ## Getting Started
 
 ### Installation
