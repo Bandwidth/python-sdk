@@ -1,4 +1,4 @@
-name: Test SDK
+name: Test
 
 on:
   schedule:
