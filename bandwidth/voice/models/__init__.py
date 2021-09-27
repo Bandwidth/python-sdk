@@ -9,7 +9,7 @@ __all__ = [
     'conference_state',
     'conference_member_state',
     'conference_recording_metadata',
-    'machine_detection_request',
+    'machine_detection_configuration',
     'transcribe_recording_request',
     'transcription_response',
     'transcription_metadata',

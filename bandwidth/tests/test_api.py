@@ -16,7 +16,7 @@ from bandwidth.messaging.exceptions.messaging_exception import MessagingExceptio
 from bandwidth.exceptions.api_exception import APIException
 from bandwidth.messaging.models.message_request import MessageRequest
 from bandwidth.voice.models.create_call_request import CreateCallRequest
-from bandwidth.voice.models.machine_detection_request import MachineDetectionRequest
+from bandwidth.voice.models.machine_detection_configuration import MachineDetectionConfiguration
 from bandwidth.voice.models.callback_method_enum import CallbackMethodEnum
 from bandwidth.voice.models.mode_enum import ModeEnum
 from bandwidth.multifactorauth.models.two_factor_code_request_schema import TwoFactorCodeRequestSchema
@@ -198,7 +198,7 @@ class TestApi:
             voice_client: Contains the basic auth credentials needed to authenticate.
 
         """
-        machine_detection_parameters = MachineDetectionRequest()
+        machine_detection_parameters = MachineDetectionConfiguration()
         machine_detection_parameters.mode = ModeEnum.ASYNC
         machine_detection_parameters.callback_url = BASE_CALLBACK_URL + "/callbacks/machineDetection"
         machine_detection_parameters.callback_method = CallbackMethodEnum.POST
