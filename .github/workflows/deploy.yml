@@ -12,8 +12,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Validate
-      uses: ./.github/actions/validate
+
+    - name: Install Packages
+      run: pip install -r requirements.txt
+
+    - name: Test
       env:
         BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
         BW_USERNAME: ${{ secrets.BW_USERNAME }}
@@ -23,6 +26,8 @@ jobs:
         BW_NUMBER: ${{ secrets.BW_NUMBER }}
         USER_NUMBER: ${{ secrets.USER_NUMBER }}
         BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
+      run: python -m pytest --pyargs bandwidth
+
     - name: Deploy to PYPI
       uses: ./.github/actions/deploy
       env:
