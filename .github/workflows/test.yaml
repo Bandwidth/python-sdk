@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-2016, windows-2019, ubuntu-18.04, ubuntu-20.04]
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.6, 3.7, 3.8, 3.9, 3.10]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -45,4 +45,3 @@ jobs:
         job-status: ${{ job.status }}
         slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
         slack-channel: ${{ secrets.SLACK_CHANNEL }}
-
