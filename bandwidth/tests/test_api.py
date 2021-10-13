@@ -163,7 +163,7 @@ class TestApi:
             messaging_client: Contains the basic auth credentials needed to authenticate.
 
         """
-        media_file_name = 'text-media-id-{0}'.format(uuid.uuid4())
+        media_file_name = f'text-media-id-{uuid.uuid4()}'
         media_file = b'12345'
         messaging_client.upload_media(BW_ACCOUNT_ID, media_file_name, media_file)
         upload_response = messaging_client.get_media(BW_ACCOUNT_ID, media_file_name)
