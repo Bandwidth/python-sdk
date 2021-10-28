@@ -39,6 +39,8 @@ from bandwidth.webrtc.models.session import Session
 from bandwidth.webrtc.models.participant import Participant
 from bandwidth.webrtc.models.publish_permission_enum import PublishPermissionEnum
 
+from bandwidth.messaging.exceptions.messaging_exception import MessagingException
+
 bandwidth_client = BandwidthClient(
     voice_basic_auth_user_name='username',
     voice_basic_auth_password='password',
