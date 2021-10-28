@@ -20,6 +20,7 @@ class Ring(AbstractBxmlVerb):
         Initializes the Ring class with the duration parameter
 
         :param float duration: The time in seconds to ring
+        :param boolean answer_call: Whether or not to accept the incoming call while playing the ring
         """
         self.duration = duration
         self.answer_call = answer_call
