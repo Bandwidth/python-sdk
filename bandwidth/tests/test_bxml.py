@@ -334,12 +334,13 @@ class TestBxml:
 
     def test_ring(self):
         ring = Ring(
-            duration=5
+            duration=5,
+            answer_call=False
         )
 
         response = Response()
         response.add_verb(ring)
-        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Ring duration="5"/></Response>'
+        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Ring duration="5" answerCall="False"/></Response>'
         assert (response.to_bxml() == expected_bxml)
 
     def test_start_gather(self):
