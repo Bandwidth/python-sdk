@@ -6,7 +6,7 @@ enum34==1.1.10
 idna==3.2
 iniconfig==1.1.1
 jsonpickle==0.9.6
-lxml==4.6.3
+lxml==4.6.5
 msgpack==1.0.2
 packaging==21.0
 pluggy==1.0.0
