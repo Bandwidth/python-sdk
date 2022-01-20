@@ -175,6 +175,10 @@ except APIException as e:
 ```python
 web_rtc_client = bandwidth_client.web_rtc_client.client
 
+participant1 = {'participantId': '456'}
+participant2 = {'participantId': '789', 'streamAliases': ['alias1', 'alias2']}
+subscriptions = {'sessionId': session_id_arg, 'participants': [participant1, participant2]}
+
 create_session_body = Session()
 create_session_body.tag = 'new-session'
 
@@ -191,7 +195,7 @@ create_participant_body.callback_url = "https://sample.com"
 create_participant_response = web_rtc_client.create_participant(account_id, create_participant_body)
 participant_id = create_participant_response.body.participant.id
 
-web_rtc_client.add_participant_to_session(account_id, session_id, participant_id)
+web_rtc_client.add_participant_to_session(account_id, session_id, participant_id, subscriptions)
 ```
 
 ## Supported Python Versions
