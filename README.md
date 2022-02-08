@@ -35,7 +35,7 @@ from bandwidth.multifactorauth.models.two_factor_code_request_schema import TwoF
 from bandwidth.multifactorauth.models.two_factor_verify_request_schema import TwoFactorVerifyRequestSchema
 
 from bandwidth.phonenumberlookup.controllers.api_controller import APIController, ApiResponse, APIException
-from bandwidth.phonenumberlookup.models.accounts_tnlookup_request import AccountsTnlookupRequest
+from bandwidth.phonenumberlookup.models.order_request import OrderRequest
 
 from bandwidth.webrtc.models.session import Session
 from bandwidth.webrtc.models.participant import Participant
