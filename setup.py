@@ -10,6 +10,9 @@ else:
     with open('README.md', 'r', encoding='utf-8') as fh:
         long_description = fh.read()
 
+with open("requirements.txt", "r") as fp:
+    requirements = fp.readlines()
+
 setup(
     name='bandwidth-sdk',
     version='13.1.1',
@@ -20,12 +23,5 @@ setup(
     author_email='support@apimatic.io',
     url='https://apimatic.io',
     packages=find_packages(),
-    install_requires=[
-        'requests>=2.9.1, <3.0',
-        'jsonpickle>=0.7.1, <1.0',
-        'cachecontrol>=0.11.7, <1.0',
-        'python-dateutil>=2.5.3, <3.0',
-        'enum34>=1.1.6',
-        'lxml>=4.3.4'
-    ]
+    install_requires=requirements
 )
