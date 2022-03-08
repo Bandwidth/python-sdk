@@ -15,7 +15,7 @@ with open("requirements.txt", "r") as fp:
 
 setup(
     name='bandwidth-sdk',
-    version='13.1.1',
+    version='13.1.2',
     description='Bandwidth\'s set of APIs',
     long_description=long_description,
     long_description_content_type="text/markdown",
