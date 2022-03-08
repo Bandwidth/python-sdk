@@ -1,0 +1,40 @@
+# Ingest repository_dispatch events and trigger appropriate actions 
+name: Listener
+
+on:
+  repository_dispatch:
+    types: [Build]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch Name'     
+        required: true
+        default: 'build-sdk-workflow-test'
+
+jobs:
+  build: 
+    if: ${{ github.event.action == 'Build' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 
+
+      - name: Echo Event
+        run: | 
+          echo "${{ toJson(github) }}"
+
+      - name: Build SDK and Open PR 
+        uses: Bandwidth/generate-sdk-action@DX-2454
+        with: 
+          branch-name: ${{ github.event.client_payload.branchName }}
+          username: ${{ secreats.DX_GITHUB_USERNAME }}
+          token: ${{ secreats.DX_GITHUB_TOKEN }}
+          language: python 
+          config: ./openapi-config.yml
+     
+      - uses: ./.github/actions/add_pr_comment
+        with: 
+          username: ${{ secrets.DX_GITHUB_USERNAME }}
+          token: ${{ secrets.DX_GITHUB_TOKEN }}
+          repo-name: api-specs
+          pr-number: ${{ github.event.client_payload.prNumber }}
+          message: 'Python SDK Built'
