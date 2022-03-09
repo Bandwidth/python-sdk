@@ -1,0 +1,4 @@
+projectName: bandwidth-sdk
+packageName: bandwidth
+packageVersion: 14.0.0
+packageUrl: 'https://dev.bandwidth.com/sdks/python'
