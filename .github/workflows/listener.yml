@@ -17,8 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with: 
-          token: ${{ secrets.DX_GITHUB_TOKEN }}
 
       - name: Echo Event
         run: | 
@@ -32,6 +30,8 @@ jobs:
           token: ${{ secrets.DX_GITHUB_TOKEN }}
           language: python 
           config: ./openapi-config.yml
+        env: 
+          GITHUB_TOKEN: ${{ secrets.DX_GITHUB_TOKEN }}
      
       - uses: ./.github/actions/add_pr_comment
         with: 
