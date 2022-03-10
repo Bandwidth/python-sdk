@@ -26,8 +26,8 @@ jobs:
         uses: Bandwidth/generate-sdk-action@DX-2454
         with: 
           branch-name: ${{ github.event.client_payload.branchName }}
-          username: ${{ secreats.DX_GITHUB_USERNAME }}
-          token: ${{ secreats.DX_GITHUB_TOKEN }}
+          username: ${{ secrets.DX_GITHUB_USERNAME }}
+          token: ${{ secrets.DX_GITHUB_TOKEN }}
           language: python 
           config: ./openapi-config.yml
      
