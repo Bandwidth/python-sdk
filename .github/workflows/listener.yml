@@ -23,7 +23,7 @@ jobs:
           echo "${{ toJson(github) }}"
 
       - name: Build SDK and Open PR 
-        uses: Bandwidth/generate-sdk-action@DX-2454
+        uses: Bandwidth/generate-sdk-action@dx-2454
         with: 
           branch-name: ${{ github.event.client_payload.branchName }}
           username: ${{ secrets.DX_GITHUB_USERNAME }}
