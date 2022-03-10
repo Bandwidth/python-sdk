@@ -16,7 +16,9 @@ jobs:
     if: ${{ github.event.action == 'Build' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@v2
+        with: 
+          token: ${{ secrets.DX_GITHUB_TOKEN }}
 
       - name: Echo Event
         run: | 
