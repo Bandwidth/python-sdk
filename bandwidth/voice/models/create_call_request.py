@@ -42,6 +42,8 @@ class CreateCallRequest(object):
         application_id (string): TODO: type description here.
         machine_detection (MachineDetectionConfiguration): TODO: type description
             here.
+        priority (int): 1-5. The priority of this call over other calls from 
+            your account when outbound call queueing is enabled. 
 
     """
 
@@ -64,7 +66,8 @@ class CreateCallRequest(object):
         "disconnect_url": 'disconnectUrl',
         "disconnect_method": 'disconnectMethod',
         "tag": 'tag',
-        "machine_detection": 'machineDetection'
+        "machine_detection": 'machineDetection',
+        "priority": "priority"
     }
 
     def __init__(self,
@@ -85,7 +88,8 @@ class CreateCallRequest(object):
                  disconnect_url=None,
                  disconnect_method=None,
                  tag=None,
-                 machine_detection=None):
+                 machine_detection=None,
+                 priority=None):
         """Constructor for the CreateCallRequest class"""
 
         # Initialize members of the class
@@ -107,6 +111,7 @@ class CreateCallRequest(object):
         self.tag = tag
         self.application_id = application_id
         self.machine_detection = machine_detection
+        self.priority=priority
 
     @classmethod
     def from_dictionary(cls,
@@ -144,6 +149,7 @@ class CreateCallRequest(object):
         disconnect_method = dictionary.get('disconnectMethod')
         tag = dictionary.get('tag')
         machine_detection = MachineDetectionConfiguration.from_dictionary(dictionary.get('machineDetection')) if dictionary.get('machineDetection') else None
+        priority = dictionary.get('priority')
 
         # Return an object of this model
         return cls(mfrom,
@@ -163,4 +169,5 @@ class CreateCallRequest(object):
                    disconnect_url,
                    disconnect_method,
                    tag,
-                   machine_detection)
+                   machine_detection,
+                   priority)
