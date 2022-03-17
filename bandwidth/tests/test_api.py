@@ -287,6 +287,45 @@ class TestApi:
             if get_response_body.id:
                 assert type(get_response_body.id) is str
 
+
+    def test_createCall_with_priority(self, voice_client):
+        """Create a successful voice api call with priority set
+
+        Args: 
+            voice_client: Contains the basic auth credentials needed to authenticate.
+
+        """
+        call_body = CreateCallRequest()
+        call_body.mfrom = BW_NUMBER
+        call_body.to = USER_NUMBER
+        call_body.application_id = BW_VOICE_APPLICATION_ID
+        call_body.answer_url = BASE_CALLBACK_URL + '/callbacks/answer'
+        call_body.answer_method = CallbackMethodEnum.POST
+        call_body.disconnect_url = BASE_CALLBACK_URL + '/callbacks/disconnect'
+        call_body.disconnect_method = CallbackMethodEnum.GET
+        call_body.priority = 1
+
+        create_response = voice_client.create_call(BW_ACCOUNT_ID, call_body)
+        create_response_body = create_response.body
+
+        print(vars(create_response))
+
+        assert create_response.status_code == 201
+        assert len(create_response_body.call_id) == 47    # assert request created and id matches expected length (47)
+        assert create_response_body.account_id == BW_ACCOUNT_ID
+        assert create_response_body.application_id == BW_VOICE_APPLICATION_ID
+        assert create_response_body.to == USER_NUMBER
+        assert create_response_body.mfrom == BW_NUMBER
+        assert create_response_body.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
+               BW_ACCOUNT_ID + "/calls/" + create_response_body.call_id
+        assert dateutil.parser.isoparse(str(create_response_body.start_time))    # assert that str(start_time) is datetime
+        assert type(create_response_body.call_timeout) is float
+        assert type(create_response_body.callback_timeout) is float
+        assert create_response_body.answer_method == "POST"
+        assert create_response_body.disconnect_method == "GET"
+        assert create_response_body.priority == 1
+
+
     def test_successful_mfa_messaging(self, mfa_client):
         """Create a successful messaging MFA request.
 
