@@ -39,8 +39,6 @@ class CreateCallResponse(object):
         fallback_username (string): TODO: type description here.
         fallback_password (string): TODO: type description here.
         tag (string): TODO: type description here.
-        machine_detection (MachineDetectionConfiguration): TODO: type description
-            here.
         priority (int): TODO: type description here.
 
     """
@@ -92,7 +90,6 @@ class CreateCallResponse(object):
                  fallback_username=None,
                  fallback_password=None,
                  tag=None,
-                 machine_detection=None,
                  priority=None):
         """Constructor for the CreateCallResponse class"""
 
@@ -117,7 +114,6 @@ class CreateCallResponse(object):
         self.fallback_username = fallback_username
         self.fallback_password = fallback_password
         self.tag = tag
-        self.machine_detection = machine_detection
         self.priority = priority
 
     @classmethod
@@ -158,7 +154,6 @@ class CreateCallResponse(object):
         fallback_username = dictionary.get('fallbackUsername')
         fallback_password = dictionary.get('fallbackPassword')
         tag = dictionary.get('tag')
-        machine_detection = MachineDetectionConfiguration.from_dictionary(dictionary.get('machineDetection')) if dictionary.get('machineDetection') else None
         priority = dictionary.get('priority')
 
         # Return an object of this model
@@ -182,5 +177,4 @@ class CreateCallResponse(object):
                    fallback_username,
                    fallback_password,
                    tag,
-                   machine_detection,
                    priority)
