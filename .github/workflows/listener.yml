@@ -58,4 +58,4 @@ jobs:
           token: ${{ secrets.DX_GITHUB_TOKEN }}
           repo-name: api-specs
           pr-number: ${{ github.event.client_payload.prNumber }}
-          message: 'Python SDK built successfully\n\nSee the corresponding PR opened on the docsite SDK (no action required):\nhttps://github.com/Bandwidth/api-docs/pull/${{ steps.output-pr-number.outputs.pr-number }}''
+          message: 'Python SDK built successfully\n\nSee the corresponding PR opened on the docsite SDK (no action required):\nhttps://github.com/Bandwidth/api-docs/pull/${{ steps.output-pr-number.outputs.pr-number }}'
