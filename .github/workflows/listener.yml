@@ -18,9 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Echo Event
-        run: | 
-          echo "${{ toJson(github) }}"
+      # - name: Echo Event
+      #   run: | 
+      #     echo "${{ toJson(github) }}"
 
       - name: Build SDK and Open PR 
         uses: Bandwidth/generate-sdk-action@DX-2454
