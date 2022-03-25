@@ -1,0 +1,8 @@
+---
+inputs:
+- inputFile: "../remote/external/messaging.json"
+- inputFile: "../remote/external/voice.json"
+- inputFile: "../remote/external/multiFactorAuth.json"
+- inputFile: "../remote/external/phoneNumberLookup.json"
+- inputFile: "../remote/external/webRtc.json"
+output: "./bandwidth.json"
