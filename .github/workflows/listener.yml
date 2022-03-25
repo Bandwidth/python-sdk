@@ -33,11 +33,29 @@ jobs:
           config: ./openapi-config.yml
         env: 
           GITHUB_TOKEN: ${{ secrets.DX_GITHUB_TOKEN }}
+      
+      - name: Open Pull Request
+        run: |
+          exists=$(hub pr list -h {{ inputs.branch-name }})
+          if [ -z "$exists" ]
+          then
+            hub pull-request --base Bandwidth:main -m '${{ github.event.client_payload.branchName }}' -m 'Generate SDK with Upstream API Spec Changes\n\nOpened By: ${{ github.event.client_payload.author }}'
+          else
+            echo "PR already exists for this branch"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ inputs.token }}
      
+      - name: Output PR Number 
+        id: output-pr-number
+        run: echo "::set-output name=pr-number::$(hub pr list -h ${{ inputs.branch-name }} -f %I)"
+        env:
+          GITHUB_TOKEN: ${{ inputs.token }}
+
       - uses: ./.github/actions/add_pr_comment
         with: 
           username: ${{ secrets.DX_GITHUB_USERNAME }}
           token: ${{ secrets.DX_GITHUB_TOKEN }}
           repo-name: api-specs
           pr-number: ${{ github.event.client_payload.prNumber }}
-          message: 'Python SDK Built'
+          message: 'Python SDK built successfully\n\nSee the corresponding PR opened on the docsite SDK (no action required):\nhttps://github.com/Bandwidth/api-docs/pull/${{ steps.output-pr-number.outputs.pr-number }}''
