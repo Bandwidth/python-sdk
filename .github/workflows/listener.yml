@@ -35,7 +35,7 @@ jobs:
           exists=$(hub pr list -h {{ inputs.branch-name }})
           if [ -z "$exists" ]
           then
-            hub pull-request --base Bandwidth:main -m '${{ github.event.client_payload.branchName }}' -m 'Generate SDK with Upstream API Spec Changes\n\nOpened By: ${{ github.event.client_payload.author }}'
+            hub pull-request --base Bandwidth:main -m '${{ github.event.client_payload.branchName }}' -m 'Generate SDK with Upstream API Spec Changes. Opened By: @${{ github.event.client_payload.author }}'
           else
             echo "PR already exists for this branch"
           fi
