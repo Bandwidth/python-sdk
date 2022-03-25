@@ -40,13 +40,13 @@ jobs:
             echo "PR already exists for this branch"
           fi
         env:
-          GITHUB_TOKEN: ${{ inputs.token }}
+          GITHUB_TOKEN:  ${{ secrets.DX_GITHUB_TOKEN }}
      
       - name: Output PR Number 
         id: output-pr-number
         run: echo "::set-output name=pr-number::$(hub pr list -h ${{ inputs.branch-name }} -f %I)"
         env:
-          GITHUB_TOKEN: ${{ inputs.token }}
+          GITHUB_TOKEN:  ${{ secrets.DX_GITHUB_TOKEN }}
 
       - uses: ./.github/actions/add_pr_comment
         with: 
