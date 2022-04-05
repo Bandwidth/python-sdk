@@ -4,12 +4,6 @@ name: Listener
 on:
   repository_dispatch:
     types: [Build]
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch Name'     
-        required: true
-        default: 'build-sdk-workflow-test'
 
 jobs:
   build: 
