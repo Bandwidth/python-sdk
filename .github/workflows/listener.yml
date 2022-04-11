@@ -4,12 +4,6 @@ name: Listener
 on:
   repository_dispatch:
     types: [Build]
-  workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch Name'     
-        required: true
-        default: 'build-sdk-workflow-test'
 
 jobs:
   build: 
@@ -19,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build SDK and Open PR 
-        uses: Bandwidth/generate-sdk-action@DX-2454
+        uses: Bandwidth/generate-sdk-action@v1.0.0
         with: 
           branch-name: ${{ github.event.client_payload.branchName }}
           username: ${{ secrets.DX_GITHUB_USERNAME }}
@@ -44,7 +38,7 @@ jobs:
      
       - name: Output PR Number 
         id: output-pr-number
-        run: echo "::set-output name=pr-number::$(hub pr list -h ${{ inputs.branch-name }} -f %I)"
+        run: echo "PR_NUMBER=$(hub pr list -h ${{ inputs.branch-name }} -f %I)" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN:  ${{ secrets.DX_GITHUB_TOKEN }}
 
@@ -54,4 +48,4 @@ jobs:
           token: ${{ secrets.DX_GITHUB_TOKEN }}
           repo-name: api-specs
           pr-number: ${{ github.event.client_payload.prNumber }}
-          message: 'Python SDK built successfully\n\nSee the corresponding PR opened on the docsite SDK (no action required):\nhttps://github.com/Bandwidth/api-docs/pull/${{ steps.output-pr-number.outputs.pr-number }}'
+          message: 'Python SDK built successfully\n\nSee the corresponding PR opened on the SDK repository (no action required):\nhttps://github.com/Bandwidth/api-docs/pull/${{ env.PR_NUMBER }}'
