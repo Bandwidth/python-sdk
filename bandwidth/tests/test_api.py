@@ -207,6 +207,7 @@ class TestApi:
         machine_detection_parameters.silence_timeout = 5.0
         machine_detection_parameters.speech_threshold = 5.0
         machine_detection_parameters.speech_end_threshold = 5.0
+        machine_detection_parameters.machine_speech_end_threshold = 3.2
         machine_detection_parameters.delay_result = True
 
         call_body = CreateCallRequest()
