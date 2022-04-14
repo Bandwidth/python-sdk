@@ -33,6 +33,9 @@ class MachineDetectionConfiguration(object):
             result will be 'human'. Default is 10 seconds.
         speech_end_threshold (float): Amount of silence (in seconds) before
             assuming the callee has finished speaking.
+        machine_speech_end_threshold (float): When an answering machine is 
+            detected, the amount of silence (in seconds) before assuming the 
+            message has finished playing.
         delay_result (bool): If set to 'true' and if an answering machine is
             detected, the 'answering-machine' callback will be delayed until
             the machine is done speaking or until the 'detectionTimeout' is
@@ -57,6 +60,7 @@ class MachineDetectionConfiguration(object):
         "silence_timeout": 'silenceTimeout',
         "speech_threshold": 'speechThreshold',
         "speech_end_threshold": 'speechEndThreshold',
+        "machine_speech_end_threshold": "machineSpeechEndThreshold",
         "delay_result": 'delayResult',
         "callback_url": 'callbackUrl',
         "callback_method": 'callbackMethod',
@@ -74,6 +78,7 @@ class MachineDetectionConfiguration(object):
                  silence_timeout=None,
                  speech_threshold=None,
                  speech_end_threshold=None,
+                 machine_speech_end_threshold = None,
                  delay_result=None,
                  callback_url=None,
                  callback_method=None,
@@ -91,6 +96,7 @@ class MachineDetectionConfiguration(object):
         self.silence_timeout = silence_timeout
         self.speech_threshold = speech_threshold
         self.speech_end_threshold = speech_end_threshold
+        self.machine_speech_end_threshold = machine_speech_end_threshold
         self.delay_result = delay_result
         self.callback_url = callback_url
         self.callback_method = callback_method
@@ -124,6 +130,7 @@ class MachineDetectionConfiguration(object):
         silence_timeout = dictionary.get('silenceTimeout')
         speech_threshold = dictionary.get('speechThreshold')
         speech_end_threshold = dictionary.get('speechEndThreshold')
+        machine_speech_end_threshold = dictionary.get('machineSpeechEndThreshold')
         delay_result = dictionary.get('delayResult')
         callback_url = dictionary.get('callbackUrl')
         callback_method = dictionary.get('callbackMethod')
@@ -140,6 +147,7 @@ class MachineDetectionConfiguration(object):
                    silence_timeout,
                    speech_threshold,
                    speech_end_threshold,
+                   machine_speech_end_threshold,
                    delay_result,
                    callback_url,
                    callback_method,
