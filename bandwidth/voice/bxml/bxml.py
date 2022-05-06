@@ -29,7 +29,7 @@ class Bxml:
 
     def to_bxml(self):
         """
-        Converts the Response class to its XML representation
+        Converts the Bxml class to its XML representation
 
         :rtype str: The XML representation of the Response class
         """
