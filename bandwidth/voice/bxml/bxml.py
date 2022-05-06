@@ -15,7 +15,7 @@ class Bxml:
 
     def __init__(self):
         """
-        Creates the Response class 
+        Creates the Bxml class 
         """
         self.verbs = []
 
