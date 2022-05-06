@@ -31,7 +31,7 @@ class Bxml:
         """
         Converts the Bxml class to its XML representation
 
-        :rtype str: The XML representation of the Response class
+        :rtype str: The XML representation of the Bxml class
         """
         xml_string = XML_HEADER
         xml_string += '<' + BXML_TAG + '>'
