@@ -225,6 +225,54 @@ class APIController(BaseController):
 
         # Return appropriate type
         return ApiResponse(_response)
+    
+    def modify_call_bxml(self, account_id, call_id, body):
+        """Does a PUT request to /api/v2/accounts/{accountId}/calls/{callId}/bxml.
+        
+        Interrupts and replaces an active call's BXML document, sending the new BXML.
+
+        Args: 
+            account_id (string): Bandwidth Account ID. Ex: "99001234"
+            call_id (string): ID of the call for which you wish to replace the active BXML instructions. 
+            body (string): XML string in valid BXML format
+        """
+        
+        # Prepare query URL
+        _url_path = '/api/v2/accounts/{accountId}/calls/{callId}/bxml'
+        _url_path = APIHelper.append_url_with_template_parameters(_url_path, {
+            'accountId': {'value': account_id, 'encode': False},
+            'callId': {'value': call_id, 'encode': False}
+        })
+        _query_builder = self.config.get_base_uri(Server.VOICEDEFAULT)
+        _query_builder += _url_path
+        _query_url = APIHelper.clean_url(_query_builder)
+
+        # Prepare headers
+        _headers = {
+            'content-type': 'application/xml; charset=utf-8'
+        }
+
+                # Prepare and execute request
+        _request = self.config.http_client.put(_query_url, headers=_headers, parameters=body)
+        VoiceBasicAuth.apply(self.config, _request)
+        _response = self.execute_request(_request)
+
+        # Endpoint and global error handling using HTTP status codes.
+        if _response.status_code == 400:
+            raise ApiErrorException('Something\'s not quite right... Your request is invalid. Please fix it before trying again.', _response)
+        elif _response.status_code == 401:
+            raise APIException('Your credentials are invalid. Please use your Bandwidth dashboard credentials to authenticate to the API.', _response)
+        elif _response.status_code == 403:
+            raise ApiErrorException('User unauthorized to perform this action.', _response)
+        elif _response.status_code == 404:
+            raise ApiErrorException('The resource specified cannot be found or does not belong to you.', _response)
+        elif _response.status_code == 415:
+            raise ApiErrorException('We don\'t support that media type. If a request body is required, please send it to us as `application/json`.', _response)
+        elif _response.status_code == 429:
+            raise ApiErrorException('You\'re sending requests to this endpoint too frequently. Please slow your request rate down and try again.', _response)
+        elif _response.status_code == 500:
+            raise ApiErrorException('Something unexpected happened. Please try again.', _response)
+        self.validate_response(_response)
 
     def modify_call_recording_state(self,
                                     account_id,
@@ -237,7 +285,7 @@ class APIController(BaseController):
         Args:
             account_id (string): TODO: type description here.
             call_id (string): TODO: type description here.
-            body (ModifyCallRecordingRequest): TODO: type description here.
+            body (BXML): TODO: type description here.
 
         Returns:
             ApiResponse: An object with the response value as well as other

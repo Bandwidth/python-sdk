@@ -3,3 +3,8 @@
 .idea/
 *.pyc
 .pytest_cache/
+
+# Build files
+build/
+bandwidth_sdk.egg-info
+pyproject.toml
