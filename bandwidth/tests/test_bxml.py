@@ -6,6 +6,7 @@ Unit tests for BXML
 @copyright Bandwidth Inc.
 """
 from bandwidth.voice.bxml.response import Response
+from bandwidth.voice.bxml.bxml import Bxml
 from bandwidth.voice.bxml.verbs import *
 from bandwidth.webrtc.utils import *
 
@@ -377,6 +378,24 @@ class TestBxml:
         response.add_verb(gather)
         assert response.to_bxml() == expected_bxml
 
+    def test_empty_bxml_verb(self):
+        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml></Bxml>'
+
+        bxml = Bxml()
+        assert bxml.to_bxml() == expected_bxml
+
+    def test_bxml_speak_sentence_pause(self):
+        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence voice="Julie">Wee Woo</SpeakSentence><Pause duration="10"/></Bxml>'
+        bxml = Bxml()
+        speak_sentence = SpeakSentence(
+            voice="Julie",
+            sentence="Wee Woo"
+        )
+        pause = Pause(10)
+        bxml.add_verb(speak_sentence)
+        bxml.add_verb(pause)
+        assert bxml.to_bxml() == expected_bxml
+
     def test_generate_transfer_bxml(self):
         expected = '<?xml version="1.0" encoding="UTF-8"?><Response><Transfer><SipUri uui="93d6f3c0be5845960b744fa28015d8ede84bd1a4;encoding=base64,asdf;encoding=jwt">sip:sipx.webrtc.bandwidth.com:5060</SipUri></Transfer></Response>'
         actual = generate_transfer_bxml(
@@ -388,3 +407,5 @@ class TestBxml:
         actual = generate_transfer_bxml_verb(
             'asdf', 'c-93d6f3c0-be584596-0b74-4fa2-8015-d8ede84bd1a4')
         assert actual == expected
+    
+    
