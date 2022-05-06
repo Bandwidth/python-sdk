@@ -285,7 +285,7 @@ class APIController(BaseController):
         Args:
             account_id (string): TODO: type description here.
             call_id (string): TODO: type description here.
-            body (BXML): TODO: type description here.
+            body (ModifyCallRecordingRequest): TODO: type description here.
 
         Returns:
             ApiResponse: An object with the response value as well as other
