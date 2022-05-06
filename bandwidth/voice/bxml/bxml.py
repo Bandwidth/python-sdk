@@ -15,7 +15,7 @@ class Bxml:
 
     def __init__(self):
         """
-        Creates the Response class 
+        Creates the Bxml class 
         """
         self.verbs = []
 
@@ -29,9 +29,9 @@ class Bxml:
 
     def to_bxml(self):
         """
-        Converts the Response class to its XML representation
+        Converts the Bxml class to its XML representation
 
-        :rtype str: The XML representation of the Response class
+        :rtype str: The XML representation of the Bxml class
         """
         xml_string = XML_HEADER
         xml_string += '<' + BXML_TAG + '>'
