@@ -58,6 +58,7 @@ class CallState(object):
         "identity": 'identity',
         "stir_shaken": 'stirShaken',
         "start_time": 'startTime',
+        "enqueued_time": 'enqueuedTime',
         "answer_time": 'answerTime',
         "end_time": 'endTime',
         "disconnect_cause": 'disconnectCause',
@@ -78,6 +79,7 @@ class CallState(object):
                  identity=None,
                  stir_shaken=None,
                  start_time=None,
+                 enqueued_time=None,
                  answer_time=None,
                  end_time=None,
                  disconnect_cause=None,
@@ -98,6 +100,7 @@ class CallState(object):
         self.identity = identity
         self.stir_shaken = stir_shaken
         self.start_time = APIHelper.RFC3339DateTime(start_time) if start_time else None
+        self.enqueued_time = APIHelper.RFC3339DateTime(enqueued_time) if enqueued_time else None
         self.answer_time = APIHelper.RFC3339DateTime(answer_time) if answer_time else None
         self.end_time = APIHelper.RFC3339DateTime(end_time) if end_time else None
         self.disconnect_cause = disconnect_cause
@@ -134,6 +137,7 @@ class CallState(object):
         identity = dictionary.get('identity')
         stir_shaken = dictionary.get('stirShaken')
         start_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("startTime")).datetime if dictionary.get("startTime") else None
+        enqueued_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("enqueuedTime")).datetime if dictionary.get("enqueuedTime") else None
         answer_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("answerTime")).datetime if dictionary.get("answerTime") else None
         end_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("endTime")).datetime if dictionary.get("endTime") else None
         disconnect_cause = dictionary.get('disconnectCause')
@@ -153,6 +157,7 @@ class CallState(object):
                    identity,
                    stir_shaken,
                    start_time,
+                   enqueued_time,
                    answer_time,
                    end_time,
                    disconnect_cause,

@@ -23,6 +23,7 @@ class CreateCallResponse(object):
         to (string): TODO: type description here.
         mfrom (string): TODO: type description here.
         start_time (datetime): TODO: type description here.
+        enqueued_time (datetime): TODO
         call_url (string): TODO: type description here.
         call_timeout (float): TODO: type description here.
         callback_timeout (float): TODO: type description here.
@@ -55,6 +56,7 @@ class CreateCallResponse(object):
         "answer_method": 'answerMethod',
         "disconnect_method": 'disconnectMethod',
         "start_time": 'startTime',
+        "enqueued_time": 'enqueuedTime',
         "call_timeout": 'callTimeout',
         "callback_timeout": 'callbackTimeout',
         "answer_fallback_url": 'answerFallbackUrl',
@@ -80,6 +82,7 @@ class CreateCallResponse(object):
                  answer_method=None,
                  disconnect_method=None,
                  start_time=None,
+                 enqueued_time=None,
                  call_timeout=None,
                  callback_timeout=None,
                  answer_fallback_url=None,
@@ -100,6 +103,8 @@ class CreateCallResponse(object):
         self.to = to
         self.mfrom = mfrom
         self.start_time = APIHelper.RFC3339DateTime(start_time) if start_time else None
+        self.enqueued_time = APIHelper.RFC3339DateTime(enqueued_time) if enqueued_time else None,
+        self.enqueued_time = enqueued_time
         self.call_url = call_url
         self.call_timeout = call_timeout
         self.callback_timeout = callback_timeout
@@ -144,6 +149,7 @@ class CreateCallResponse(object):
         answer_method = dictionary.get('answerMethod')
         disconnect_method = dictionary.get('disconnectMethod')
         start_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("startTime")).datetime if dictionary.get("startTime") else None
+        enqueued_time = APIHelper.RFC3339DateTime.from_value(dictionary.get("enqueuedTime")).datetime if dictionary.get("enqueuedTime") else None
         call_timeout = dictionary.get('callTimeout')
         callback_timeout = dictionary.get('callbackTimeout')
         answer_fallback_url = dictionary.get('answerFallbackUrl')
@@ -167,6 +173,7 @@ class CreateCallResponse(object):
                    answer_method,
                    disconnect_method,
                    start_time,
+                   enqueued_time,
                    call_timeout,
                    callback_timeout,
                    answer_fallback_url,

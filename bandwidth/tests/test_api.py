@@ -237,7 +237,7 @@ class TestApi:
         assert create_response_body.mfrom == BW_NUMBER
         assert create_response_body.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
                BW_ACCOUNT_ID + "/calls/" + create_response_body.call_id
-        assert dateutil.parser.isoparse(str(create_response_body.start_time))    # assert that str(start_time) is datetime
+        assert dateutil.parser.isoparse(str(create_response_body.enqueued_time))    # assert that str(enqueued_time) is datetime
         assert type(create_response_body.call_timeout) is float
         assert type(create_response_body.callback_timeout) is float
         assert create_response_body.answer_method == "POST"
@@ -246,7 +246,9 @@ class TestApi:
         assert get_response_body.call_id == create_response_body.call_id
         assert get_response_body.application_id == BW_VOICE_APPLICATION_ID
         assert get_response_body.account_id == BW_ACCOUNT_ID
-        assert dateutil.parser.isoparse(str(get_response_body.start_time))
+        if get_response_body.start_time: 
+            assert dateutil.parser.isoparse(str(get_response_body.start_time))
+        assert dateutil.parser.isoparse(str(get_response_body.enqueued_time))
         assert dateutil.parser.isoparse(str(get_response_body.last_update))
         if get_response_body.answer_time:    # may be null dependent on timing
             assert dateutil.parser.isoparse(str(get_response_body.answer_time))
@@ -319,7 +321,7 @@ class TestApi:
         assert create_response_body.mfrom == BW_NUMBER
         assert create_response_body.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
                BW_ACCOUNT_ID + "/calls/" + create_response_body.call_id
-        assert dateutil.parser.isoparse(str(create_response_body.start_time))    # assert that str(start_time) is datetime
+        assert dateutil.parser.isoparse(str(create_response_body.enqueued_time))    # assert that str(enqueued_time) is datetime
         assert type(create_response_body.call_timeout) is float
         assert type(create_response_body.callback_timeout) is float
         assert create_response_body.answer_method == "POST"
