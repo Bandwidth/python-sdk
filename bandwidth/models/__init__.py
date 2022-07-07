@@ -35,9 +35,9 @@ from bandwidth.model.forbidden_request import ForbiddenRequest
 from bandwidth.model.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.model.list_message_item import ListMessageItem
 from bandwidth.model.lookup_request import LookupRequest
+from bandwidth.model.lookup_result import LookupResult
 from bandwidth.model.lookup_status import LookupStatus
 from bandwidth.model.lookup_status_enum import LookupStatusEnum
-from bandwidth.model.lookup_status_result_inner import LookupStatusResultInner
 from bandwidth.model.machine_detection_configuration import MachineDetectionConfiguration
 from bandwidth.model.machine_detection_mode_enum import MachineDetectionModeEnum
 from bandwidth.model.media import Media

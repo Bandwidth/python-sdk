@@ -1,6 +1,5 @@
 .gitignore
 .gitlab-ci.yml
-.openapi-generator-ignore
 .travis.yml
 README.md
 bandwidth/__init__.py
@@ -46,9 +45,9 @@ bandwidth/model/forbidden_request.py
 bandwidth/model/list_message_direction_enum.py
 bandwidth/model/list_message_item.py
 bandwidth/model/lookup_request.py
+bandwidth/model/lookup_result.py
 bandwidth/model/lookup_status.py
 bandwidth/model/lookup_status_enum.py
-bandwidth/model/lookup_status_result_inner.py
 bandwidth/model/machine_detection_configuration.py
 bandwidth/model/machine_detection_mode_enum.py
 bandwidth/model/media.py
@@ -119,9 +118,9 @@ docs/ForbiddenRequest.md
 docs/ListMessageDirectionEnum.md
 docs/ListMessageItem.md
 docs/LookupRequest.md
+docs/LookupResult.md
 docs/LookupStatus.md
 docs/LookupStatusEnum.md
-docs/LookupStatusResultInner.md
 docs/MFAApi.md
 docs/MachineDetectionConfiguration.md
 docs/MachineDetectionModeEnum.md
@@ -203,9 +202,9 @@ test/test_forbidden_request.py
 test/test_list_message_direction_enum.py
 test/test_list_message_item.py
 test/test_lookup_request.py
+test/test_lookup_result.py
 test/test_lookup_status.py
 test/test_lookup_status_enum.py
-test/test_lookup_status_result_inner.py
 test/test_machine_detection_configuration.py
 test/test_machine_detection_mode_enum.py
 test/test_media.py

@@ -4160,6 +4160,57 @@
                     }
                 }
             },
+            "lookupResult": {
+                "type": "object", 
+                "description": "Carrier information results for the specified telephone number.",
+                "properties": {
+                    "Response Code": {
+                        "type": "integer",
+                        "description": "Our vendor's response code.",
+                        "example": 0
+                    },
+                    "Message": {
+                        "type": "string",
+                        "description": "Message associated with the response code.",
+                        "example": "NOERROR"
+                    },
+                    "E.164 Format": {
+                        "type": "string",
+                        "description": "The telephone number in E.164 format.",
+                        "example": "+19195551234"
+                    },
+                    "Formatted": {
+                        "type": "string",
+                        "description": "The formatted version of the telephone number.",
+                        "example": "(919) 555-1234"
+                    },
+                    "Country": {
+                        "type": "string",
+                        "description": "The country of the telephone number.",
+                        "example": "US"
+                    },
+                    "Line Type": {
+                        "type": "string",
+                        "description": "The line type of the telephone number.",
+                        "example": "Mobile"
+                    },
+                    "Line Provider": {
+                        "type": "string",
+                        "description": "The messaging service provider of the telephone number.",
+                        "example": "Verizon Wireless"
+                    },
+                    "Mobile Country Code": {
+                        "type": "string",
+                        "description": "The first half of the Home Network Identity (HNI).",
+                        "example": "310"
+                    },
+                    "Mobile Network Code": {
+                        "type": "string",
+                        "description": "The second half of the HNI.",
+                        "example": "010"
+                    }
+                }
+            },
             "lookupStatus": {
                 "type": "object",
                 "description": "If requestId exists, the result for that request is returned. See the Examples for details on the various responses that you can receive. Generally, if you see a Response Code of 0 in a result for a TN, information will be available for it.  Any other Response Code will indicate no information was available for the TN.",
@@ -4176,54 +4227,7 @@
                         "type": "array",
                         "description": "The carrier information results for the specified telephone number.",
                         "items": {
-                            "type": "object",
-                            "properties": {
-                                "Response Code": {
-                                    "type": "integer",
-                                    "description": "Our vendor's response code.",
-                                    "example": 0
-                                },
-                                "Message": {
-                                    "type": "string",
-                                    "description": "Message associated with the response code.",
-                                    "example": "NOERROR"
-                                },
-                                "E.164 Format": {
-                                    "type": "string",
-                                    "description": "The telephone number in E.164 format.",
-                                    "example": "+19195551234"
-                                },
-                                "Formatted": {
-                                    "type": "string",
-                                    "description": "The formatted version of the telephone number.",
-                                    "example": "(919) 555-1234"
-                                },
-                                "Country": {
-                                    "type": "string",
-                                    "description": "The country of the telephone number.",
-                                    "example": "US"
-                                },
-                                "Line Type": {
-                                    "type": "string",
-                                    "description": "The line type of the telephone number.",
-                                    "example": "Mobile"
-                                },
-                                "Line Provider": {
-                                    "type": "string",
-                                    "description": "The messaging service provider of the telephone number.",
-                                    "example": "Verizon Wireless"
-                                },
-                                "Mobile Country Code": {
-                                    "type": "string",
-                                    "description": "The first half of the Home Network Identity (HNI).",
-                                    "example": "310"
-                                },
-                                "Mobile Network Code": {
-                                    "type": "string",
-                                    "description": "The second half of the HNI.",
-                                    "example": "010"
-                                }
-                            }
+                            "$ref": "#/components/schemas/lookupResult"
                         }
                     },
                     "failedTelephoneNumbers": {
