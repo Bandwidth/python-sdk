@@ -36,7 +36,7 @@ jobs:
         BW_NUMBER: ${{ secrets.BW_NUMBER }}
         USER_NUMBER: ${{ secrets.USER_NUMBER }}
         BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
-      run: python -m pytest --pyargs bandwidth
+      run: pytest
 
     - name: Notify Slack of Failures
       uses: Bandwidth/build-notify-slack-action@v1.0.0
