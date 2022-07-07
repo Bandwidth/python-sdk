@@ -2552,6 +2552,7 @@
                     "messageSize": {
                         "type": "integer",
                         "description": "The size of the message including message content and headers.",
+                        "nullable": true,
                         "example": 27
                     },
                     "messageLength": {
@@ -5334,7 +5335,7 @@
                 "required": false,
                 "description": "The direction of the message. One of INBOUND OUTBOUND.",
                 "schema": {
-                    "$ref": "#/components/schemas/messageDirectionEnum"
+                    "$ref": "#/components/schemas/listMessageDirectionEnum"
                 }
             },
             "carrierName": {

@@ -56,7 +56,7 @@ with bandwidth.ApiClient(configuration) as api_client:
         text="Hello world",
         media=["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
         tag="custom string",
-        priority=PriorityEnum("DEFAULT"),
+        priority=PriorityEnum("default"),
         expiration="2021-02-01T11:29:18-05:00",
     ) # MessageRequest | 
 
@@ -123,8 +123,8 @@ import bandwidth
 from bandwidth.api import messages_api
 from bandwidth.model.message_status_enum import MessageStatusEnum
 from bandwidth.model.messaging_request_error import MessagingRequestError
+from bandwidth.model.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.model.messages_list import MessagesList
-from bandwidth.model.message_direction_enum import MessageDirectionEnum
 from bandwidth.model.message_type_enum import MessageTypeEnum
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
@@ -153,7 +153,7 @@ with bandwidth.ApiClient(configuration) as api_client:
     source_tn = "%2B15554443333" # str | The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). (optional)
     destination_tn = "%2B15554443333" # str | The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). (optional)
     message_status = MessageStatusEnum("RECEIVED") # MessageStatusEnum | The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED. (optional)
-    message_direction = MessageDirectionEnum("in") # MessageDirectionEnum | The direction of the message. One of INBOUND OUTBOUND. (optional)
+    message_direction = ListMessageDirectionEnum("INBOUND") # ListMessageDirectionEnum | The direction of the message. One of INBOUND OUTBOUND. (optional)
     carrier_name = "Verizon" # str | The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T). (optional)
     message_type = MessageTypeEnum("sms") # MessageTypeEnum | The type of message. Either sms or mms. (optional)
     error_code = 9902 # int | The error code of the message. (optional)
@@ -191,7 +191,7 @@ Name | Type | Description  | Notes
  **source_tn** | **str**| The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. &#39;%2B1919&#39;). | [optional]
  **destination_tn** | **str**| The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. &#39;%2B1919&#39;). | [optional]
  **message_status** | **MessageStatusEnum**| The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED. | [optional]
- **message_direction** | **MessageDirectionEnum**| The direction of the message. One of INBOUND OUTBOUND. | [optional]
+ **message_direction** | **ListMessageDirectionEnum**| The direction of the message. One of INBOUND OUTBOUND. | [optional]
  **carrier_name** | **str**| The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&amp;T should be passed as AT%26T). | [optional]
  **message_type** | **MessageTypeEnum**| The type of message. Either sms or mms. | [optional]
  **error_code** | **int**| The error code of the message. | [optional]

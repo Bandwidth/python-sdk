@@ -53,8 +53,8 @@ class PriorityEnum(ModelSimple):
 
     allowed_values = {
         ('value',): {
-            'DEFAULT': "DEFAULT",
-            'HIGH': "HIGH",
+            'DEFAULT': "default",
+            'HIGH': "high",
         },
     }
 
@@ -106,10 +106,10 @@ class PriorityEnum(ModelSimple):
         Note that value can be passed either in args or in kwargs, but not in both.
 
         Args:
-            args[0] (str): The priority specified by the user.., must be one of ["DEFAULT", "HIGH", ]  # noqa: E501
+            args[0] (str): The priority specified by the user.., must be one of ["default", "high", ]  # noqa: E501
 
         Keyword Args:
-            value (str): The priority specified by the user.., must be one of ["DEFAULT", "HIGH", ]  # noqa: E501
+            value (str): The priority specified by the user.., must be one of ["default", "high", ]  # noqa: E501
             _check_type (bool): if True, values for parameters in openapi_types
                                 will be type checked and a TypeError will be
                                 raised if the wrong type is input.
@@ -200,10 +200,10 @@ class PriorityEnum(ModelSimple):
         Note that value can be passed either in args or in kwargs, but not in both.
 
         Args:
-            args[0] (str): The priority specified by the user.., must be one of ["DEFAULT", "HIGH", ]  # noqa: E501
+            args[0] (str): The priority specified by the user.., must be one of ["default", "high", ]  # noqa: E501
 
         Keyword Args:
-            value (str): The priority specified by the user.., must be one of ["DEFAULT", "HIGH", ]  # noqa: E501
+            value (str): The priority specified by the user.., must be one of ["default", "high", ]  # noqa: E501
             _check_type (bool): if True, values for parameters in openapi_types
                                 will be type checked and a TypeError will be
                                 raised if the wrong type is input.
