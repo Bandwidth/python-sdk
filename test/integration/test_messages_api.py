@@ -14,8 +14,10 @@ import os
 import unittest
 
 import bandwidth
+from bandwidth.api import messages_api
 from bandwidth.api.messages_api import MessagesApi
 from bandwidth.model.list_message_direction_enum import ListMessageDirectionEnum
+from bandwidth.model.list_message_item import ListMessageItem
 from bandwidth.model.message_request import MessageRequest
 from bandwidth.model.message_status_enum import MessageStatusEnum
 from bandwidth.model.message_type_enum import MessageTypeEnum
@@ -24,95 +26,88 @@ from bandwidth.model.priority_enum import PriorityEnum
 from bandwidth.model.message import Message
 from bandwidth.model.messaging_request_error import MessagingRequestError
 
-configuration = None
 
 class TestMessagesApi(unittest.TestCase):
     """MessagesApi unit test stubs"""
 
     def setUp(self):
-        self.api = MessagesApi()  # noqa: E501
-        global configuration
         configuration = bandwidth.Configuration(
             username = os.environ.get('BW_USERNAME'),
             password = os.environ.get('BW_PASSWORD')
         )
+        api_client = bandwidth.ApiClient(configuration)
+        self.api_instance = messages_api.MessagesApi(api_client)
+        self.account_id = os.environ.get('BW_ACCOUNT_ID')
 
     def tearDown(self):
         pass
 
     def test_create_message(self):
-        with bandwidth.ApiClient(configuration) as api_client:
+        account_id = os.environ.get('BW_ACCOUNT_ID')
+        message_request = MessageRequest(
+            application_id=os.environ.get('BW_MESSAGING_APPLICATION_ID'),
+            to=[os.environ.get('USER_NUMBER')],
+            _from=os.environ.get('BW_NUMBER'),
+            text="python integration",
+            media=["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
+            tag="python integration tag",
+            priority=PriorityEnum("default"), #need to fix this enum
+        )
+        
+        try:
+            api_response: Message = self.api_instance.create_message(account_id, message_request)
+        except bandwidth.ApiException as e:
+            print("Exception when calling MessagesApi->create_message: %s\n" % e)
             
-            api_instance = MessagesApi(api_client)
-            account_id = os.environ.get('BW_ACCOUNT_ID')
-            message_request = MessageRequest(
-                application_id=os.environ.get('BW_MESSAGING_APPLICATION_ID'),
-                to=[os.environ.get('USER_NUMBER')],
-                _from=os.environ.get('BW_NUMBER'),
-                text="python integration",
-                media=["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
-                tag="python integration tag",
-                priority=PriorityEnum("default"), #need to fix this enum
-            )
-            
-            try:
-                api_response: Message = api_instance.create_message(account_id, message_request)
-            except bandwidth.ApiException as e:
-                print("Exception when calling MessagesApi->create_message: %s\n" % e)
-                
-            assert isinstance(api_response, Message)
-            assert api_response.application_id == message_request.application_id
-            assert api_response.to == message_request.to
-            assert api_response._from == message_request._from
-            assert api_response.text == message_request.text
-            assert api_response.media == message_request.media
-            assert api_response.tag == message_request.tag
-            assert api_response.priority == message_request.priority
-
-            pass
-
-    def test_list_messages_default(self):
-        with bandwidth.ApiClient(configuration) as api_client:
-            api_instance = MessagesApi(api_client)
-            account_id = os.environ.get('BW_ACCOUNT_ID')
-            message_direction = ListMessageDirectionEnum("OUTBOUND")
-            
-            try:
-                api_response: MessagesList = api_instance.list_messages(account_id, message_direction=message_direction)
-                print(api_response)
-            except bandwidth.ApiException as e:
-                print("Exception when calling MessagesApi->list_messages: %s\n" % e)
-
-        assert isinstance(api_response, MessagesList)
-        assert 0 == 1
+        assert isinstance(api_response, Message)
+        assert api_response.application_id == message_request.application_id
+        assert api_response.to == message_request.to
+        assert api_response._from == message_request._from
+        assert api_response.text == message_request.text
+        assert api_response.media == message_request.media
+        assert api_response.tag == message_request.tag
+        assert api_response.priority == message_request.priority
 
         pass
 
-    # def test_list_messages_parameters(self):
-    #     with bandwidth.ApiClient(configuration) as api_client:
-    #         api_instance = MessagesApi(api_client)
-    #         account_id = os.environ.get('BW_ACCOUNT_ID')
-    #         message_id = "9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6"
-    #         source_tn = "%2B15554443333" 
-    #         destination_tn = "%2B15554443333"
-    #         message_status = MessageStatusEnum("RECEIVED")
-    #         message_direction = MessageDirectionEnum("OUTBOUND")
-    #         carrier_name = "Verizon"
-    #         message_type = MessageTypeEnum("sms")
-    #         error_code = 9902
-    #         from_date_time = "2016-09-14T18:20:16.000Z"
-    #         to_date_time = "2016-09-14T18:20:16.000Z"
-    #         sort = "sourceTn:desc"
-    #         page_token = "gdEewhcJLQRB5"
-    #         limit = 50
-
-    #         try:
-    #             # List Messages
-    #             api_response = api_instance.list_messages(account_id, message_id=message_id, source_tn=source_tn, destination_tn=destination_tn, message_status=message_status, message_direction=message_direction, carrier_name=carrier_name, message_type=message_type, error_code=error_code, from_date_time=from_date_time, to_date_time=to_date_time, sort=sort, page_token=page_token, limit=limit)
-    #             print(api_response)
-    #         except bandwidth.ApiException as e:
-    #             print("Exception when calling MessagesApi->list_messages: %s\n" % e)
+    def test_list_messages_default(self):
+        account_id = os.environ.get('BW_ACCOUNT_ID')
+        message_direction = ListMessageDirectionEnum("OUTBOUND")
         
+        try:
+            api_response: MessagesList = self.api_instance.list_messages(account_id, message_direction=message_direction)
+        except bandwidth.ApiException as e:
+            print("Exception when calling MessagesApi->list_messages: %s\n" % e)
+
+        assert isinstance(api_response, MessagesList)
+        assert isinstance(api_response.messages[0], ListMessageItem)
+        assert api_response.total_count > 0
+
+        pass
+
+    # May or may not want to do this if we can test message attributes well
+    # def test_list_messages_parameters(self):
+    #     account_id = os.environ.get('BW_ACCOUNT_ID')
+    #     source_tn = "%2B15554443333" 
+    #     destination_tn = "%2B15554443333"
+    #     message_status = MessageStatusEnum("RECEIVED")
+    #     message_direction = ListMessageDirectionEnum("OUTBOUND")
+    #     carrier_name = "Verizon"
+    #     message_type = MessageTypeEnum("sms")
+    #     error_code = 9902
+    #     from_date_time = "2016-09-14T18:20:16.000Z"
+    #     to_date_time = "2016-09-14T18:20:16.000Z"
+    #     sort = "sourceTn:desc"
+    #     page_token = "gdEewhcJLQRB5"
+    #     limit = 50
+
+    #     try:
+    #         # List Messages
+    #         api_response = self.api_instance.list_messages(account_id, source_tn=source_tn, destination_tn=destination_tn, message_status=message_status, message_direction=message_direction, carrier_name=carrier_name, message_type=message_type, error_code=error_code, from_date_time=from_date_time, to_date_time=to_date_time, sort=sort, page_token=page_token, limit=limit)
+    #         print(api_response)
+    #     except bandwidth.ApiException as e:
+    #         print("Exception when calling MessagesApi->list_messages: %s\n" % e)
+    
     #     pass
 
 if __name__ == '__main__':

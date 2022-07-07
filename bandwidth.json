@@ -2431,10 +2431,10 @@
                 "type": "string",
                 "description": "The priority specified by the user.",
                 "enum": [
-                    "DEFAULT",
-                    "HIGH"
+                    "default",
+                    "high"
                 ],
-                "example": "DEFAULT"
+                "example": "default"
             },
             "messageStatusEnum": {
                 "type": "string",
@@ -2563,16 +2563,19 @@
                     "attachmentCount": {
                         "type": "integer",
                         "description": "The number of attachments the message has.",
+                        "nullable": true,
                         "example": 1
                     },
                     "recipientCount": {
                         "type": "integer",
                         "description": "The number of recipients the message has.",
+                        "nullable": true,
                         "example": 1
                     },
                     "campaignClass": {
                         "type": "string",
                         "description": "The campaign class of the message if it has one.",
+                        "nullable": true,
                         "example": "T"
                     }
                 }
