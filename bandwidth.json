@@ -4156,7 +4156,7 @@
                         "type": "string"
                     },
                     "status": {
-                        "type": "string"
+                        "$ref": "#/components/schemas/lookupStatusEnum"
                     }
                 }
             },
