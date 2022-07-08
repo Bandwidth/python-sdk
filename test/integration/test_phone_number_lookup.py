@@ -99,7 +99,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         att_lookup_result = get_lookup_status_response.result[2]
         self.assertEqual(att_lookup_result.response_code, 0)
         self.assertIs(type(att_lookup_result.message), str)
-        self.assertEqual(att_lookup_result.e_164_format, os.environ['VZW_NUMBER'])
+        self.assertEqual(att_lookup_result.e_164_format, os.environ['ATT_NUMBER'])
         self.assertIs(type(att_lookup_result.formatted), str)
         self.assertTrue(att_lookup_result.country == "US" or att_lookup_result.country == "Canada")
         self.assertTrue(att_lookup_result.line_type == "Mobile" or att_lookup_result.line_type == "Fixed")
@@ -111,7 +111,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         t_mobile_lookup_result = get_lookup_status_response.result[3]
         self.assertEqual(t_mobile_lookup_result.response_code, 0)
         self.assertIs(type(t_mobile_lookup_result.message), str)
-        self.assertEqual(t_mobile_lookup_result.e_164_format, os.environ['VZW_NUMBER'])
+        self.assertEqual(t_mobile_lookup_result.e_164_format, os.environ['T_MOBILE_NUMBER'])
         self.assertIs(type(t_mobile_lookup_result.formatted), str)
         self.assertTrue(t_mobile_lookup_result.country == "US" or t_mobile_lookup_result.country == "Canada")
         self.assertTrue(t_mobile_lookup_result.line_type == "Mobile" or t_mobile_lookup_result.line_type == "Fixed")
