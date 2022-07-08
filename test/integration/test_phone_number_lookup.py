@@ -15,7 +15,7 @@ from bandwidth.model.lookup_status import LookupStatus
 from bandwidth.model.lookup_result import LookupResult
 from bandwidth.model.lookup_status_enum import LookupStatusEnum
 from bandwidth.model.tn_lookup_request_error import TnLookupRequestError
-from bandwidth.exceptions import UnauthorizedException, ForbiddenException
+from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
 
 
 class TestPhoneNumberLookupIntegration(unittest.TestCase):
@@ -78,6 +78,13 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
             get_lookup_status_response_attempts += 1
         
         return get_lookup_status_response
+    
+    
+    def validateAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):        
+        self.assertIs(type(context.exception), expectedException)
+        self.assertIs(type(context.exception.status), int)
+        self.assertEqual(context.exception.status, expected_status_code)
+        self.assertIs(type(context.exception.body), str)
     
     
     def testSuccessfulPhoneNumberLookup(self):
@@ -181,11 +188,8 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         with self.assertRaises(UnauthorizedException) as context:
             unauthorized_api_instance.create_lookup(self.account_id, lookup_request)
         
-        self.assertIs(type(context.exception), UnauthorizedException)
-        self.assertIs(type(context.exception.status), int)
-        self.assertEqual(context.exception.status, 401)
-        self.assertIs(type(context.exception.body), str)
-    
+        self.validateAuthException(context, UnauthorizedException, 401)
+        
     def testForbiddenRequest(self):
         configuration = bandwidth.Configuration(
             username = os.environ['BW_USERNAME_FORBIDDEN'],
@@ -204,12 +208,8 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         with self.assertRaises(UnauthorizedException) as context:
             forbidden_api_instance.create_lookup(self.account_id, lookup_request)
         
-        # self.assertIs(type(context.exception), ForbiddenException)
-        # self.assertEqual(context.exception.status, 403)
-        self.assertIs(type(context.exception), UnauthorizedException)
-        self.assertIs(type(context.exception.status), int)
-        self.assertEqual(context.exception.status, 401)
-        self.assertIs(type(context.exception.body), str)
+        # self.validateAuthException(context, ForbiddenException, 403)
+        self.validateAuthException(context, UnauthorizedException, 401)
 
 
 if __name__ == '__main__':
