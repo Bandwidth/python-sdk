@@ -53,6 +53,32 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
             self.assertIs(type(result.mobile_country_code), str)
             self.assertIs(type(result.mobile_network_code), str)
     
+
+    def pollLookupStatus(self, request_id: str) -> LookupStatus:
+        """Poll LookupRequest for 'COMPLETE' status
+
+        Args:
+            request_id (str): LookupResult.request_id value to query
+
+        Raises:
+            Exception: Tries 5 times and raises a general exception if the query takes more than 5 attempts to minimize run time.
+
+        Returns:
+            LookupStatus: LookupStatus in 'COMPLETE' state
+        """
+        get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(self.account_id, request_id)
+        get_lookup_status_response_attempts = 1
+        while get_lookup_status_response.status != LookupStatusEnum('COMPLETE'): 
+            # Raise an error if it takes more than 5 requests to get COMPLETE status
+            if get_lookup_status_response_attempts == 5:
+                raise Exception(f'Took too long to get phone number lookup \'COMPLETE\' status. Aborting test after {get_lookup_status_response_attempts} attempts.')
+            time.sleep(2)
+
+            get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(self.account_id, request_id)
+            get_lookup_status_response_attempts += 1
+        
+        return get_lookup_status_response
+    
     
     def testSuccessfulPhoneNumberLookup(self):
         """Test Phone Number Lookup API"""
@@ -66,6 +92,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
             ],
         ) 
 
+        # Create the lookup request and validate the response
         create_lookup_response: CreateLookupResponse = self.api_instance.create_lookup(self.account_id, lookup_request, _return_http_data_only=False)
         self.assertEqual(create_lookup_response[1], 202)
         self.assertIs(type(create_lookup_response[0].status), LookupStatusEnum)
@@ -73,20 +100,12 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.assertIs(type(create_lookup_response[0].request_id), str)
         self.assertRegex(create_lookup_response[0].request_id, r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')
         
+        # Check the status code for the GET LookupStatus response
         get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(self.account_id, create_lookup_response[0].request_id, _return_http_data_only=False)
         self.assertEqual(get_lookup_status_response[1], 200)
 
         # make the request again without _return_http_data_only=False to just get the LookupStatus model
-        get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(self.account_id, create_lookup_response[0].request_id)
-        get_lookup_status_response_attempts = 1
-        while get_lookup_status_response.status != LookupStatusEnum('COMPLETE'): 
-            # Raise an error if it takes more than 5 requests to get COMPLETE status
-            if get_lookup_status_response_attempts == 5:
-                raise Exception(f'Took too long to get phone number lookup \'COMPLETE\' status. Aborting test after {get_lookup_status_response_attempts} attempts.')
-            time.sleep(2)
-
-            get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(self.account_id, create_lookup_response[0].request_id)
-            get_lookup_status_response_attempts += 1
+        get_lookup_status_response: LookupStatus = self.pollLookupStatus(create_lookup_response[0].request_id)
 
         self.assertEqual(get_lookup_status_response.request_id, create_lookup_response[0].request_id)
         self.assertIs(type(get_lookup_status_response), LookupStatus)
