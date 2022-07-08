@@ -145,7 +145,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
     
     def testFailedPhoneNumberLookup(self):
         """Test Phone Number Lookup API with bad data to force an error"""
-        with self.assertRaises(bandwidth.ApiException) as context:
+        with self.assertRaises(ApiException) as context:
             lookup_request = LookupRequest(
                 tns=[
                     'not a number',
@@ -162,7 +162,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
     
     def testDuplicatePhoneNumberLookup(self):
-        with self.assertRaises(bandwidth.ApiException) as context:
+        with self.assertRaises(ApiException) as context:
             lookup_request = LookupRequest(
                 tns=[
                     os.environ['BW_NUMBER'],
@@ -170,6 +170,10 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
                 ],
             )
             self.api_instance.create_lookup(self.account_id, lookup_request)
+        
+        self.assertIs(type(context.exception.status), int)
+        self.assertEqual(context.exception.status, 400)
+        self.assertIs(type(context.exception.body), str)
     
 
     def testUnauthorizedRequest(self):
