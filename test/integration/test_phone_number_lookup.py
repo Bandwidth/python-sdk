@@ -32,6 +32,28 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.account_id = os.environ['BW_ACCOUNT_ID']
 
     
+    def validateResult(self, result: LookupResult, e_164_format: str, line_provider: str):
+        """Verify a successful phone number lookup LookupResult object
+
+        Args:
+            result (LookupResult): Result derived from LookupStatus result list
+            e_164_format (str): Phone number in e164 format ex: +19195551234
+            line_provider (str): Line service provider ex: Verizon
+        """
+        self.assertEqual(result.response_code, 0)
+        self.assertIs(type(result.message), str)
+        self.assertEqual(result.e_164_format, e_164_format)
+        self.assertIs(type(result.formatted), str)
+        self.assertTrue(result.country == "US" or result.country == "Canada")
+        self.assertTrue(result.line_type == "Mobile" or result.line_type == "Fixed")
+        self.assertIn(line_provider, result.line_provider)
+        
+        # if result has 1 of these attributes it should have the other
+        if result.get('mobile_country_code') or result.get('mobile_network_code'):    
+            self.assertIs(type(result.mobile_country_code), str)
+            self.assertIs(type(result.mobile_network_code), str)
+    
+    
     def testSuccessfulPhoneNumberLookup(self):
         """Test Phone Number Lookup API"""
         lookup_request = LookupRequest(
@@ -75,49 +97,19 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         # Check the information for a Bandwidth TN
         bw_lookup_result: LookupResult = get_lookup_status_response.result[0]
-        self.assertEqual(bw_lookup_result.response_code, 0)
-        self.assertIs(type(bw_lookup_result.message), str)
-        self.assertEqual(bw_lookup_result.e_164_format, os.environ['BW_NUMBER'])
-        self.assertIs(type(bw_lookup_result.formatted), str)
-        self.assertTrue(bw_lookup_result.country == "US" or bw_lookup_result.country == "Canada")
-        self.assertTrue(bw_lookup_result.line_type == "Mobile" or bw_lookup_result.line_type == "Fixed")
-        self.assertIn("Bandwidth", bw_lookup_result.line_provider)
+        self.validateResult(bw_lookup_result, os.environ['BW_NUMBER'], "Bandwidth")
 
         # Check the information for a Verizon TN
         vzw_lookup_result = get_lookup_status_response.result[1]
-        self.assertEqual(vzw_lookup_result.response_code, 0)
-        self.assertIs(type(vzw_lookup_result.message), str)
-        self.assertEqual(vzw_lookup_result.e_164_format, os.environ['VZW_NUMBER'])
-        self.assertIs(type(vzw_lookup_result.formatted), str)
-        self.assertTrue(vzw_lookup_result.country == "US" or vzw_lookup_result.country == "Canada")
-        self.assertTrue(vzw_lookup_result.line_type == "Mobile" or vzw_lookup_result.line_type == "Fixed")
-        self.assertIn("Verizon", vzw_lookup_result.line_provider)
-        self.assertIs(type(vzw_lookup_result.mobile_country_code), str)
-        self.assertIs(type(vzw_lookup_result.mobile_network_code), str)
+        self.validateResult(vzw_lookup_result, os.environ['VZW_NUMBER'], "Verizon")
 
         # Check the information for an AT&T TN
         att_lookup_result = get_lookup_status_response.result[2]
-        self.assertEqual(att_lookup_result.response_code, 0)
-        self.assertIs(type(att_lookup_result.message), str)
-        self.assertEqual(att_lookup_result.e_164_format, os.environ['ATT_NUMBER'])
-        self.assertIs(type(att_lookup_result.formatted), str)
-        self.assertTrue(att_lookup_result.country == "US" or att_lookup_result.country == "Canada")
-        self.assertTrue(att_lookup_result.line_type == "Mobile" or att_lookup_result.line_type == "Fixed")
-        self.assertIn("AT&T", att_lookup_result.line_provider)
-        self.assertIs(type(att_lookup_result.mobile_country_code), str)
-        self.assertIs(type(att_lookup_result.mobile_network_code), str)
+        self.validateResult(att_lookup_result, os.environ['ATT_NUMBER'], "AT&T")
 
         # Check the information for a T-Mobile TN
         t_mobile_lookup_result = get_lookup_status_response.result[3]
-        self.assertEqual(t_mobile_lookup_result.response_code, 0)
-        self.assertIs(type(t_mobile_lookup_result.message), str)
-        self.assertEqual(t_mobile_lookup_result.e_164_format, os.environ['T_MOBILE_NUMBER'])
-        self.assertIs(type(t_mobile_lookup_result.formatted), str)
-        self.assertTrue(t_mobile_lookup_result.country == "US" or t_mobile_lookup_result.country == "Canada")
-        self.assertTrue(t_mobile_lookup_result.line_type == "Mobile" or t_mobile_lookup_result.line_type == "Fixed")
-        self.assertIn("T-Mobile", t_mobile_lookup_result.line_provider)
-        self.assertIs(type(t_mobile_lookup_result.mobile_country_code), str)
-        self.assertIs(type(t_mobile_lookup_result.mobile_network_code), str)
+        self.validateResult(t_mobile_lookup_result, os.environ['T_MOBILE_NUMBER'], "T-Mobile")
 
         # The only way to get a failed number is if the api call to the downstream service fails - so there is no way to force this in our testing currently
         # check the failed_telephone_number list 
