@@ -21,17 +21,15 @@ from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenE
 class TestPhoneNumberLookupIntegration(unittest.TestCase):
     """Phone Number Lookup API integration test"""
 
-    
     def setUp(self):
         configuration = bandwidth.Configuration(
-            username = os.environ['BW_USERNAME'],
-            password = os.environ['BW_PASSWORD']
+            username=os.environ['BW_USERNAME'],
+            password=os.environ['BW_PASSWORD']
         )
         api_client = bandwidth.ApiClient(configuration)
         self.api_instance = phone_number_lookup_api.PhoneNumberLookupApi(api_client)
         self.account_id = os.environ['BW_ACCOUNT_ID']
 
-    
     def validateResult(self, result: LookupResult, e_164_format: str, line_provider: str):
         """Verify a successful phone number lookup LookupResult object
 
@@ -47,12 +45,11 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.assertTrue(result.country == "US" or result.country == "Canada")
         self.assertTrue(result.line_type == "Mobile" or result.line_type == "Fixed")
         self.assertIn(line_provider, result.line_provider)
-        
+
         # if result has 1 of these attributes it should have the other
-        if result.get('mobile_country_code') or result.get('mobile_network_code'):    
+        if result.get('mobile_country_code') or result.get('mobile_network_code'):
             self.assertIs(type(result.mobile_country_code), str)
             self.assertIs(type(result.mobile_network_code), str)
-    
 
     def pollLookupStatus(self, request_id: str) -> LookupStatus:
         """Poll LookupRequest for 'COMPLETE' status
@@ -66,27 +63,28 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         Returns:
             LookupStatus: LookupStatus in 'COMPLETE' state
         """
-        get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(self.account_id, request_id)
+        get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(
+            self.account_id, request_id)
         get_lookup_status_response_attempts = 1
-        while get_lookup_status_response.status != LookupStatusEnum('COMPLETE'): 
+        while get_lookup_status_response.status != LookupStatusEnum('COMPLETE'):
             # Raise an error if it takes more than 5 requests to get COMPLETE status
             if get_lookup_status_response_attempts == 5:
-                raise Exception(f'Took too long to get phone number lookup \'COMPLETE\' status. Aborting test after {get_lookup_status_response_attempts} attempts.')
+                raise Exception(
+                    f'Took too long to get phone number lookup \'COMPLETE\' status. Aborting test after {get_lookup_status_response_attempts} attempts.')
             time.sleep(2)
 
-            get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(self.account_id, request_id)
+            get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(
+                self.account_id, request_id)
             get_lookup_status_response_attempts += 1
-        
+
         return get_lookup_status_response
-    
-    
-    def validateAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):        
+
+    def validateAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
         self.assertIs(type(context.exception), expectedException)
         self.assertIs(type(context.exception.status), int)
         self.assertEqual(context.exception.status, expected_status_code)
         self.assertIs(type(context.exception.body), str)
-    
-    
+
     def testSuccessfulPhoneNumberLookup(self):
         """Test Phone Number Lookup API"""
         lookup_request = LookupRequest(
@@ -97,26 +95,31 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
                 os.environ['T_MOBILE_NUMBER'],
                 # os.environ['BW_INVALID_TN_LOOKUP_NUMBER']
             ],
-        ) 
+        )
 
         # Create the lookup request and validate the response
-        create_lookup_response: CreateLookupResponse = self.api_instance.create_lookup(self.account_id, lookup_request, _return_http_data_only=False)
+        create_lookup_response: CreateLookupResponse = self.api_instance.create_lookup(
+            self.account_id, lookup_request, _return_http_data_only=False)
         self.assertEqual(create_lookup_response[1], 202)
         self.assertIs(type(create_lookup_response[0].status), LookupStatusEnum)
         self.assertEqual(create_lookup_response[0].status, LookupStatusEnum("IN_PROGRESS"))
         self.assertIs(type(create_lookup_response[0].request_id), str)
-        self.assertRegex(create_lookup_response[0].request_id, r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')
-        
+        self.assertRegex(create_lookup_response[0].request_id,
+                         r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')
+
         # Check the status code for the GET LookupStatus response
-        get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(self.account_id, create_lookup_response[0].request_id, _return_http_data_only=False)
+        get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(
+            self.account_id, create_lookup_response[0].request_id, _return_http_data_only=False)
         self.assertEqual(get_lookup_status_response[1], 200)
 
         # make the request again without _return_http_data_only=False to just get the LookupStatus model
-        get_lookup_status_response: LookupStatus = self.pollLookupStatus(create_lookup_response[0].request_id)
+        get_lookup_status_response: LookupStatus = self.pollLookupStatus(
+            create_lookup_response[0].request_id)
 
-        self.assertEqual(get_lookup_status_response.request_id, create_lookup_response[0].request_id)
+        self.assertEqual(get_lookup_status_response.request_id,
+                         create_lookup_response[0].request_id)
         self.assertIs(type(get_lookup_status_response), LookupStatus)
-        
+
         # Assert that each result is of type LookupResult
         for i in range(len(get_lookup_status_response.result)):
             self.assertIs(type(get_lookup_status_response.result[i]), LookupResult)
@@ -138,11 +141,10 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.validateResult(t_mobile_lookup_result, os.environ['T_MOBILE_NUMBER'], "T-Mobile")
 
         # The only way to get a failed number is if the api call to the downstream service fails - so there is no way to force this in our testing currently
-        # check the failed_telephone_number list 
+        # check the failed_telephone_number list
         # self.assertIs(type(get_lookup_status_response.failed_telephone_numbers), list)
         # self.assertIn(os.environ['BW_INVALID_TN_LOOKUP_NUMBER'], get_lookup_status_response.failed_telephone_numbers)
 
-    
     def testFailedPhoneNumberLookup(self):
         """Test Phone Number Lookup API with bad data to force an error"""
         with self.assertRaises(ApiException) as context:
@@ -152,15 +154,14 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
                 ],
             )
             self.api_instance.create_lookup(self.account_id, lookup_request)
-        
+
         self.assertIs(type(context.exception.status), int)
         self.assertIs(type(context.exception.body), str)
 
-        # initialize TnLookupRequestError model 
+        # initialize TnLookupRequestError model
         error = TnLookupRequestError(message=(json.loads(context.exception.body))['message'])
         self.assertIs(type(error), TnLookupRequestError)
 
-    
     def testDuplicatePhoneNumberLookup(self):
         with self.assertRaises(ApiException) as context:
             lookup_request = LookupRequest(
@@ -170,19 +171,19 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
                 ],
             )
             self.api_instance.create_lookup(self.account_id, lookup_request)
-        
+
         self.assertIs(type(context.exception.status), int)
         self.assertEqual(context.exception.status, 400)
         self.assertIs(type(context.exception.body), str)
-    
 
     def testUnauthorizedRequest(self):
         configuration = bandwidth.Configuration(
-            username = 'bad_username',
-            password = 'bad_password'
+            username='bad_username',
+            password='bad_password'
         )
         unauthorized_api_client = bandwidth.ApiClient(configuration)
-        unauthorized_api_instance = phone_number_lookup_api.PhoneNumberLookupApi(unauthorized_api_client)
+        unauthorized_api_instance = phone_number_lookup_api.PhoneNumberLookupApi(
+            unauthorized_api_client)
         lookup_request = LookupRequest(
             tns=[
                 os.environ['BW_NUMBER']
@@ -191,13 +192,13 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         with self.assertRaises(UnauthorizedException) as context:
             unauthorized_api_instance.create_lookup(self.account_id, lookup_request)
-        
+
         self.validateAuthException(context, UnauthorizedException, 401)
-        
+
     def testForbiddenRequest(self):
         configuration = bandwidth.Configuration(
-            username = os.environ['BW_USERNAME_FORBIDDEN'],
-            password = os.environ['BW_PASSWORD_FORBIDDEN']
+            username=os.environ['BW_USERNAME_FORBIDDEN'],
+            password=os.environ['BW_PASSWORD_FORBIDDEN']
         )
         forbidden_api_client = bandwidth.ApiClient(configuration)
         forbidden_api_instance = phone_number_lookup_api.PhoneNumberLookupApi(forbidden_api_client)
@@ -211,7 +212,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         # with self.assertRaises(ForbiddenException) as context:
         with self.assertRaises(UnauthorizedException) as context:
             forbidden_api_instance.create_lookup(self.account_id, lookup_request)
-        
+
         # self.validateAuthException(context, ForbiddenException, 403)
         self.validateAuthException(context, UnauthorizedException, 401)
 
