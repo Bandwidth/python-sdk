@@ -19,7 +19,8 @@ from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenE
 
 
 class TestPhoneNumberLookupIntegration(unittest.TestCase):
-    """Phone Number Lookup API integration test"""
+    """Phone Number Lookup API integration test
+    """
 
     def setUp(self):
         configuration = bandwidth.Configuration(
@@ -80,13 +81,21 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         return get_lookup_status_response
 
     def validateAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
+        """Validates that an auth exception (401 or 403) is properly formatted
+
+        Args:
+            context (ApiException): Exception to validate
+            expectedException (ApiException): Expected exception type
+            expected_status_code (int): Expected status code
+        """
         self.assertIs(type(context.exception), expectedException)
         self.assertIs(type(context.exception.status), int)
         self.assertEqual(context.exception.status, expected_status_code)
         self.assertIs(type(context.exception.body), str)
 
     def testSuccessfulPhoneNumberLookup(self):
-        """Test Phone Number Lookup API"""
+        """Test Phone Number Lookup API
+        """
         lookup_request = LookupRequest(
             tns=[
                 os.environ['BW_NUMBER'],
@@ -146,7 +155,8 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         # self.assertIn(os.environ['BW_INVALID_TN_LOOKUP_NUMBER'], get_lookup_status_response.failed_telephone_numbers)
 
     def testFailedPhoneNumberLookup(self):
-        """Test Phone Number Lookup API with bad data to force an error"""
+        """Test Phone Number Lookup API with bad data to force an error
+        """
         with self.assertRaises(ApiException) as context:
             lookup_request = LookupRequest(
                 tns=[
@@ -163,6 +173,8 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.assertIs(type(error), TnLookupRequestError)
 
     def testDuplicatePhoneNumberLookup(self):
+        """Test a request with a duplicate number. Should throw a 400 Bad Request error.
+        """
         with self.assertRaises(ApiException) as context:
             lookup_request = LookupRequest(
                 tns=[
@@ -177,6 +189,8 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.assertIs(type(context.exception.body), str)
 
     def testUnauthorizedRequest(self):
+        """Validate an unauthorized (401) request
+        """
         configuration = bandwidth.Configuration(
             username='bad_username',
             password='bad_password'
@@ -196,6 +210,8 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.validateAuthException(context, UnauthorizedException, 401)
 
     def testForbiddenRequest(self):
+        """Validate a forbidden (403) request
+        """
         configuration = bandwidth.Configuration(
             username=os.environ['BW_USERNAME_FORBIDDEN'],
             password=os.environ['BW_PASSWORD_FORBIDDEN']
