@@ -3,8 +3,6 @@ Integration test for Bandwidth's Multi-Factor Authentication API
 """
 
 import os
-import json
-import time
 import unittest
 
 import bandwidth
