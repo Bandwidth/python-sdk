@@ -24,7 +24,7 @@ seed(randint(10, 500))
 
 
 class TestMultiFactorAuthentication(unittest.TestCase):
-    """Multi-Factor Authentication API integration test
+    """Multi-Factor Authentication API integration Test
     """
 
     def setUp(self):
