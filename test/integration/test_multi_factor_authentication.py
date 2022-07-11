@@ -21,7 +21,7 @@ from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenE
 
 
 class TestMultiFactorAuthentication(unittest.TestCase):
-    """Phone Number Lookup API integration test
+    """Multi-Factor Authentication API integration test
     """
 
     def setUp(self):
@@ -73,6 +73,8 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertIs(type(context.exception.body), str)
 
     def testSuccessfulMfaGenerateMessagingCodeRequest(self):
+        """Test a successful MFA messaging code request 
+        """
         api_response_with_http_info = self.api_instance.generate_messaging_code(
             self.account_id, self.messaging_code_request, _return_http_data_only=False)
         self.assertEqual(api_response_with_http_info[1], 200)
@@ -82,6 +84,8 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertIs(type(api_response.message_id), str)
 
     def testSuccessfulMfaGenerateVoiceCodeRequest(self):
+        """Test a successful MFA voice code request
+        """
         api_response_with_http_info = self.api_instance.generate_voice_code(
             self.account_id, self.voice_code_request, _return_http_data_only=False)
         self.assertEqual(api_response_with_http_info[1], 200)
@@ -92,21 +96,27 @@ class TestMultiFactorAuthentication(unittest.TestCase):
 
     # Will always have to test against False codes unless we incorporate the Manteca project into MFA
     def testSuccessfulMfaGVerifyCodeRequest(self):
+        """Test a successful MFA verify code request
+        """
         verify_code_request = VerifyCodeRequest(
             to=os.environ['USER_NUMBER'],
             scope="2FA",
             expiration_time_in_minutes=3.0,
             code="123456",
         )
-        api_response_with_http_info = self.api_instance.verify_code(self.account_id, verify_code_request, _return_http_data_only=False)
+        api_response_with_http_info = self.api_instance.verify_code(
+            self.account_id, verify_code_request, _return_http_data_only=False)
         self.assertEqual(api_response_with_http_info[1], 200)
 
-        api_response: VerifyCodeResponse = self.api_instance.verify_code(self.account_id, verify_code_request)
+        api_response: VerifyCodeResponse = self.api_instance.verify_code(
+            self.account_id, verify_code_request)
         self.assertEqual(type(api_response), VerifyCodeResponse)
         self.assertEqual(type(api_response.valid), bool)
         self.assertIs(api_response.valid, False)
 
     def testBadRequest(self):
+        """Validates a bad (400) request
+        """
         with self.assertRaises(ApiException) as context:
             self.api_instance.generate_messaging_code(self.account_id, self.bad_code_request)
 
@@ -134,6 +144,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         """
         configuration = bandwidth.Configuration(
             username=os.environ['BW_USERNAME_FORBIDDEN'],
+            # password=os.environ['BW_PASSWORD_FORBIDDEN'],
             password='bad_password'
         )
         forbidden_api_client = bandwidth.ApiClient(configuration)
