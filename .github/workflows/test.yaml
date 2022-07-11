@@ -17,14 +17,18 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
         python-version: ${{ matrix.python-version }}
 
     - name: Install Packages
       run: |
         pip install -r requirements.txt
         pip install -r test-requirements.txt
-   
-   - name: Test
+
+    - name: Test
       env:
         BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
         BW_USERNAME: ${{ secrets.BW_USERNAME }}
@@ -48,3 +52,4 @@ jobs:
         job-status: ${{ job.status }}
         slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
         slack-channel: ${{ secrets.SLACK_CHANNEL }}
+
