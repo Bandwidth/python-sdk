@@ -120,15 +120,10 @@ class TestMultiFactorAuthentication(unittest.TestCase):
 
         self.assertAuthException(context, ApiException, 400)
 
-    @unittest.skip('Skip while we determine how to force this API to return a 401')
     def testUnauthorizedRequest(self):
         """Validate an unauthorized (401) request
         """
-        configuration = bandwidth.Configuration(
-            username='bad_username',
-            password='bad_password'
-        )
-        unauthorized_api_client = bandwidth.ApiClient(configuration)
+        unauthorized_api_client = bandwidth.ApiClient()
         unauthorized_api_instance = mfa_api.MFAApi(unauthorized_api_client)
 
         with self.assertRaises(UnauthorizedException) as context:
