@@ -80,7 +80,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         return get_lookup_status_response
 
-    def validateAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
+    def assertAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
         """Validates that an auth exception (401 or 403) is properly formatted
 
         Args:
@@ -207,7 +207,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         with self.assertRaises(UnauthorizedException) as context:
             unauthorized_api_instance.create_lookup(self.account_id, lookup_request)
 
-        self.validateAuthException(context, UnauthorizedException, 401)
+        self.assertAuthException(context, UnauthorizedException, 401)
 
     def testForbiddenRequest(self):
         """Validate a forbidden (403) request
@@ -230,7 +230,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
             forbidden_api_instance.create_lookup(self.account_id, lookup_request)
 
         # self.validateAuthException(context, ForbiddenException, 403)
-        self.validateAuthException(context, UnauthorizedException, 401)
+        self.assertAuthException(context, UnauthorizedException, 401)
 
 
 if __name__ == '__main__':
