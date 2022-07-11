@@ -58,7 +58,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             digits=6,
         )
 
-    def validateAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
+    def assertAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
         """Validates that an auth exception (401 or 403) is properly formatted
         Args:
             context (ApiException): Exception to validate
@@ -118,7 +118,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         with self.assertRaises(ApiException) as context:
             self.api_instance.generate_messaging_code(self.account_id, self.bad_code_request)
 
-        self.validateAuthException(context, ApiException, 400)
+        self.assertAuthException(context, ApiException, 400)
 
     @unittest.skip('Skip while we determine how to force this API to return a 401')
     def testUnauthorizedRequest(self):
@@ -135,7 +135,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             unauthorized_api_instance.generate_messaging_code(
                 self.account_id, self.messaging_code_request)
 
-        self.validateAuthException(context, UnauthorizedException, 401)
+        self.assertAuthException(context, UnauthorizedException, 401)
 
     def testForbiddenRequest(self):
         """Validate a forbidden (403) request
@@ -152,4 +152,4 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             forbidden_api_instance.generate_messaging_code(
                 self.account_id, self.messaging_code_request)
 
-        self.validateAuthException(context, ForbiddenException, 403)
+        self.assertAuthException(context, ForbiddenException, 403)
