@@ -21,7 +21,6 @@ from bandwidth.model.call_recording_metadata import CallRecordingMetadata
 from bandwidth.model.callback_method_enum import CallbackMethodEnum
 from bandwidth.api.calls_api import CallsApi
 from bandwidth.model.create_call_response import CreateCallResponse
-globals()['CallbackMethodEnum'] = CallbackMethodEnum
 from bandwidth.model.create_call import CreateCall
 from bandwidth.rest import RESTClientObject
 
@@ -126,9 +125,8 @@ class TestRecordings(unittest.TestCase):
 
 
         # Download recording media
-        # thread = self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, recording_id, async_req=True)
-        # call_recording_media = thread.get()
-        # print(call_recording_media)
+        call_recording_media = self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, recording_id)
+        # print(call_recording_media.data)
         # print(vars(call_recording_media))
 
 
