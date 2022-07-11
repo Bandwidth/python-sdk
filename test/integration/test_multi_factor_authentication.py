@@ -19,15 +19,15 @@ from bandwidth.model.mfa_forbidden_request_error import MfaForbiddenRequestError
 from bandwidth.model.voice_code_response import VoiceCodeResponse
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
 
+# seed the random number generator for the verify request
+seed(randint(10, 500))
+
 
 class TestMultiFactorAuthentication(unittest.TestCase):
     """Multi-Factor Authentication API integration test
     """
 
     def setUp(self):
-        # seed the random number generator for the verify request
-        seed(randint(10, 500))
-
         configuration = bandwidth.Configuration(
             username=os.environ['BW_USERNAME'],
             password=os.environ['BW_PASSWORD']
