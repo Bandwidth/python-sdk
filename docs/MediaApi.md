@@ -97,7 +97,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media**
-> str get_media(account_id, media_id)
+> file_type get_media(account_id, media_id)
 
 Get Media
 
@@ -156,7 +156,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**str**
+**file_type**
 
 ### Authorization
 
@@ -320,7 +320,7 @@ with bandwidth.ApiClient(configuration) as api_client:
     api_instance = media_api.MediaApi(api_client)
     account_id = "9900000" # str | Your Bandwidth Account ID.
     media_id = "14762070468292kw2fuqty55yp2b2/0/bw.png" # str | Media ID to retrieve.
-    body = 'YQ==' # str | 
+    body = open('/path/to/file', 'rb') # file_type | 
     content_type = "audio/wav" # str | The media type of the entity-body. (optional)
     cache_control = "no-cache" # str | General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. (optional)
 
@@ -347,7 +347,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. |
  **media_id** | **str**| Media ID to retrieve. |
- **body** | **str**|  |
+ **body** | **file_type**|  |
  **content_type** | **str**| The media type of the entity-body. | [optional]
  **cache_control** | **str**| General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. | [optional]
 
