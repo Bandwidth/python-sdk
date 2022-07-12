@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 
 # **download_conference_recording**
-> str download_conference_recording(account_id, conference_id, recording_id)
+> file_type download_conference_recording(account_id, conference_id, recording_id)
 
 Download Conference Recording
 
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**str**
+**file_type**
 
 ### Authorization
 

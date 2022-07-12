@@ -4501,7 +4501,7 @@
                         "schema": {
                             "type": "string",
                             "description": "Successful Operation",
-                            "format": "byte"
+                            "format": "binary"
                         }
                     }
                 }
@@ -4669,13 +4669,13 @@
                     "audio/vnd.wave": {
                         "schema": {
                             "type": "string",
-                            "format": "byte"
+                            "format": "binary"
                         }
                     },
                     "audio/mpeg": {
                         "schema": {
                             "type": "string",
-                            "format": "byte"
+                            "format": "binary"
                         }
                     }
                 }
@@ -5636,7 +5636,7 @@
                     "application/octet-stream": {
                         "schema": {
                             "type": "string",
-                            "format": "byte"
+                            "format": "binary"
                         }
                     }
                 },

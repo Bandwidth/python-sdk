@@ -246,7 +246,7 @@ class RecordingsApi(object):
         )
         self.download_call_recording_endpoint = _Endpoint(
             settings={
-                'response_type': (str,),
+                'response_type': (file_type,),
                 'auth': [
                     'Basic'
                 ],
@@ -1060,7 +1060,7 @@ class RecordingsApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            str
+            file_type
                 If the method is called asynchronously, returns the request
                 thread.
         """
