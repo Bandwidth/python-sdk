@@ -43,7 +43,7 @@ class ConferencesApi(object):
         self.api_client = api_client
         self.download_conference_recording_endpoint = _Endpoint(
             settings={
-                'response_type': (str,),
+                'response_type': (file_type,),
                 'auth': [
                     'Basic'
                 ],
@@ -726,7 +726,7 @@ class ConferencesApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            str
+            file_type
                 If the method is called asynchronously, returns the request
                 thread.
         """

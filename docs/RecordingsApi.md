@@ -284,7 +284,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **download_call_recording**
-> str download_call_recording(account_id, call_id, recording_id)
+> file_type download_call_recording(account_id, call_id, recording_id)
 
 Download Recording
 
@@ -345,7 +345,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**str**
+**file_type**
 
 ### Authorization
 
