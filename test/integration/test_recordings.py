@@ -17,11 +17,14 @@ import json
 import bandwidth
 from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.configuration import Configuration
+from bandwidth.exceptions import NotFoundException
 from bandwidth.model.call_recording_metadata import CallRecordingMetadata
 from bandwidth.model.callback_method_enum import CallbackMethodEnum
 from bandwidth.api.calls_api import CallsApi
 from bandwidth.model.create_call_response import CreateCallResponse
 from bandwidth.model.create_call import CreateCall
+from bandwidth.model.transcribe_recording import TranscribeRecording
+from bandwidth.model.transcription import Transcription
 from bandwidth.rest import RESTClientObject
 
 
@@ -95,7 +98,6 @@ class TestRecordings(unittest.TestCase):
         # Wait (TEMP)
         time.sleep(60)
 
-
         # List Call Recordings Endpoint
         call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, create_call_response.call_id)
         
@@ -110,7 +112,6 @@ class TestRecordings(unittest.TestCase):
         assert first_recording.status == 'complete'
         # assert first_recording.file_format == 'wav'
 
-
         # Get Single Recording Endpoint
         recording_id = first_recording.recording_id
 
@@ -123,11 +124,50 @@ class TestRecordings(unittest.TestCase):
         assert recording.status == 'complete'
         # assert recording.file_format == 'wav'
 
-
         # Download recording media
-        call_recording_media = self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, recording_id)
-        # print(call_recording_media.data)
-        # print(vars(call_recording_media))
+        recording_response = self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, recording_id, _preload_content=False)
+        call_recording_media = recording_response.data
+        
+        '''
+        Do a verification test on the actual recording data?
+        '''
+        # print(call_recording_media)
+        # with open("zzzz.wav", "wb") as fp:
+        #     fp.write(call_recording_media)
+
+        # Create Transcription Request
+        transcription_url = MANTECA_BASE_CALLBACK_URL + "/transcriptions"
+        transcribe_recording_request = TranscribeRecording(callback_url=transcription_url)
+        self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording_request)
+
+        # Wait
+        time.sleep(60)
+
+        # Get the transcription
+        transcription_list = self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
+        assert len(transcription_list.transcripts) == 1
+        transcription = transcription_list.transcripts[0]
+        assert isinstance(transcription, Transcription)
+        assert isinstance(transcription.text, str)
+        assert isinstance(transcription.confidence, float)
+
+        # Delete the transcription
+        self.recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
+
+        self.assertRaises(
+            NotFoundException,
+            self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
+        )
+
+        # Delete Recording media
+        # self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, recording_id)
+        # call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, create_call_response.call_id)
+
+        # Delete Recording
+        self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, recording_id)
+        call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, create_call_response.call_id)
+        assert len(call_recordings) == 0
+
 
 
 if __name__ == '__main__':
