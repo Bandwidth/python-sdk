@@ -33,13 +33,12 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         media_id = self.media_id
         content_type = "image/jpeg"
         cache_control = "no-cache"
-        with open(self.media_path + self.media_id, "rb") as image_file:
-            body = image_file.read()
-            
+        image_file = open(self.media_path + self.media_id, "rb")
+        
         api_response = self.api_instance.upload_media(
             account_id=self.account_id,
             media_id=media_id,
-            body=body,
+            body=image_file,
             content_type=content_type,
             cache_control=cache_control
         )
