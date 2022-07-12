@@ -3,12 +3,7 @@ Integration test for Bandwidth's Multi-Factor Authentication API
 """
 
 import os
-from io import BytesIO
-import base64
 import unittest
-from bandwidth import api
-
-from rich import inspect
 
 import bandwidth
 from bandwidth.api import media_api
@@ -46,9 +41,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     def testDownloadMedia(self):
         api_response = self.api_instance.get_media(
             self.account_id, self.media_id, _preload_content=False)
+        
         downloadFile = open(self.media_path + "new_file_download.jpeg", "wb")
-
         downloadFile.write(api_response.data)
         downloadFile.close()
-
-        inspect(api_response)
