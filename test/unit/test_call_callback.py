@@ -21,7 +21,7 @@ from bandwidth.model.call_callback import CallCallback
 
 
 class TestCallCallback(unittest.TestCase):
-    """CallCallback unit test stubs"""
+    """Call Callback unit test stubs"""
 
     def setUp(self):
         pass
@@ -30,7 +30,7 @@ class TestCallCallback(unittest.TestCase):
         pass
 
     def testCallCallback(self):
-        """Test CallCallback"""
+        """Test Call Callback"""
         # FIXME: construct object with mandatory attributes with example values
         # model = CallCallback()  # noqa: E501
         pass

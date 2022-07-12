@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-2022, windows-2019, ubuntu-18.04, ubuntu-20.04]
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.6, 3.7, 3.8, 3.9, 3.10]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -24,17 +24,24 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install Packages
-      run: pip install -r requirements_dev.txt
+      run: |
+        pip install -r requirements.txt
+        pip install -r test-requirements.txt
 
     - name: Test
       env:
         BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
         BW_USERNAME: ${{ secrets.BW_USERNAME }}
         BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
+        BW_USERNAME_FORBIDDEN: ${{ secrets.BW_USERNAME_FORBIDDEN }}
+        BW_PASSWORD_FORBIDDEN: ${{ secrets.BW_PASSWORD_FORBIDDEN }}        
         BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
         BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
         BW_NUMBER: ${{ secrets.BW_NUMBER }}
         USER_NUMBER: ${{ secrets.USER_NUMBER }}
+        VZW_NUMBER: ${{ secrets.VZW_NUMBER }}
+        ATT_NUMBER: ${{ secrets.ATT_NUMBER }}
+        T_MOBILE_NUMBER: ${{ secrets.T_MOBILE_NUMBER }}        
         BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
       run: pytest
 
