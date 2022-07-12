@@ -34,7 +34,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         content_type = "image/jpeg"
         cache_control = "no-cache"
         image_file = open(self.media_path + self.media_id, "rb")
-        
+
         api_response = self.api_instance.upload_media(
             account_id=self.account_id,
             media_id=media_id,
@@ -43,10 +43,9 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             cache_control=cache_control
         )
 
-    
-    # @unittest.skip('DONE')
     def testDownloadMedia(self):
-        api_response = self.api_instance.get_media(self.account_id, self.media_id,  _preload_content=False)
+        api_response = self.api_instance.get_media(
+            self.account_id, self.media_id, _preload_content=False)
         downloadFile = open(self.media_path + "new_file_download.jpeg", "wb")
 
         downloadFile.write(api_response.data)
