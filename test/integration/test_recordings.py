@@ -151,17 +151,17 @@ class TestRecordings(unittest.TestCase):
         assert isinstance(transcription.text, str)
         assert isinstance(transcription.confidence, float)
 
+        time.sleep(10)
+
         # Delete the transcription
         self.recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
-
-        self.assertRaises(
-            NotFoundException,
+        with self.assertRaises(NotFoundException):
             self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
-        )
 
         # Delete Recording media
-        # self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, recording_id)
-        # call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, create_call_response.call_id)
+        delete_recording_response = self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
+        # Validate the 204 response
+        assert delete_recording_response[1] == 204 # 
 
         # Delete Recording
         self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, recording_id)
