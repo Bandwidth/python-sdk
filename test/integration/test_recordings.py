@@ -9,6 +9,7 @@
 """
 
 
+from ast import List
 import os
 import unittest
 import time
@@ -19,12 +20,17 @@ from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.configuration import Configuration
 from bandwidth.exceptions import NotFoundException
 from bandwidth.model.call_recording_metadata import CallRecordingMetadata
+from bandwidth.model.call_state_enum import CallStateEnum
 from bandwidth.model.callback_method_enum import CallbackMethodEnum
 from bandwidth.api.calls_api import CallsApi
 from bandwidth.model.create_call_response import CreateCallResponse
 from bandwidth.model.create_call import CreateCall
+from bandwidth.model.file_format_enum import FileFormatEnum
+from bandwidth.model.recording_state_enum import RecordingStateEnum
 from bandwidth.model.transcribe_recording import TranscribeRecording
 from bandwidth.model.transcription import Transcription
+from bandwidth.model.update_call import UpdateCall
+from bandwidth.model.update_call_recording import UpdateCallRecording
 from bandwidth.rest import RESTClientObject
 
 
@@ -44,6 +50,10 @@ class TestRecordings(unittest.TestCase):
     """CreateCall unit test stubs"""
 
     def setUp(self):
+        """
+        Set up for our tests by creating the CallsApi and RecordingsApi instances
+        for testing.
+        """
         configuration = bandwidth.Configuration(
             username = BW_USERNAME,
             password = BW_PASSWORD
@@ -56,11 +66,7 @@ class TestRecordings(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_successful_get_call_recording(self):
-        """
-        Create a call and retrieve the recording.
-        """
-
+    def create_and_validate_call(self, answer_url):
         # Initialize the call with Manteca
         rest_client = RESTClientObject(Configuration.get_default_copy())
         response = rest_client.request(
@@ -77,9 +83,7 @@ class TestRecordings(unittest.TestCase):
         test_id = json.loads(response.data)
 
         # Make a CreateCall body and assign the appropriate params
-        answer_url = MANTECA_BASE_CALLBACK_URL + 'bxml/startRecording'
         call_body = CreateCall(to=USER_NUMBER, _from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=answer_url, tag=test_id)
-
 
         # Make the call
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, call_body)
@@ -93,41 +97,56 @@ class TestRecordings(unittest.TestCase):
         assert create_call_response.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
             BW_ACCOUNT_ID + "/calls/" + create_call_response.call_id
 
-        call_id = create_call_response.call_id
+        # Return our test id and call id
+        return (test_id, create_call_response.call_id)
+
+
+    def validate_recording(self, recording: CallRecordingMetadata, call_id: str):
+        assert recording.account_id == BW_ACCOUNT_ID
+        assert recording.call_id == call_id
+        assert recording.application_id == BW_VOICE_APPLICATION_ID
+        assert recording.status == 'complete'
+        assert recording.file_format == FileFormatEnum('wav')
+
+    def test_successful_call_recording(self):
+        """
+        Tests a successful flow of creating a call with a recording.
+        The following endpoints are tested in this flow:
+            - list_call_recordings
+            - get_call_recording
+            - download_call_recording
+            - transcribe_call_recording
+            - get_call_transcription
+            - delete_call_transcription
+            - delete_recording_media
+            - delete_recording
+        """
+
+        answer_url = MANTECA_BASE_CALLBACK_URL + '/bxml/startRecording'
+        (test_id, call_id) = self.create_and_validate_call(answer_url)
 
         # Wait (TEMP)
         time.sleep(60)
 
         # List Call Recordings Endpoint
-        call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, create_call_response.call_id)
+        call_recordings: List[CallRecordingMetadata] = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
         
         # We should get back 1 recording
         assert len(call_recordings) == 1
         
         # Checks on the first recording
-        first_recording = call_recordings[0]
-        assert first_recording.account_id == BW_ACCOUNT_ID
-        assert first_recording.call_id == call_id
-        assert first_recording.application_id == BW_VOICE_APPLICATION_ID
-        assert first_recording.status == 'complete'
-        # assert first_recording.file_format == 'wav'
-
-        # Get Single Recording Endpoint
+        first_recording: CallRecordingMetadata = call_recordings[0]
+        self.validate_recording(first_recording, call_id)
         recording_id = first_recording.recording_id
 
+        # Get Single Recording Endpoint
         recording: CallRecordingMetadata = self.recordings_api_instance.get_call_recording(BW_ACCOUNT_ID, call_id, recording_id)
-        
         assert recording.recording_id == recording_id
-        assert recording.account_id == BW_ACCOUNT_ID
-        assert recording.call_id == call_id
-        assert recording.application_id == BW_VOICE_APPLICATION_ID
-        assert recording.status == 'complete'
-        # assert recording.file_format == 'wav'
+        self.validate_recording(recording, call_id)
 
         # Download recording media
         recording_response = self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, recording_id, _preload_content=False)
         call_recording_media = recording_response.data
-        
         '''
         Do a verification test on the actual recording data?
         '''
@@ -140,7 +159,7 @@ class TestRecordings(unittest.TestCase):
         transcribe_recording_request = TranscribeRecording(callback_url=transcription_url)
         self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording_request)
 
-        # Wait
+        # Wait (TEMP)
         time.sleep(60)
 
         # Get the transcription
@@ -151,6 +170,7 @@ class TestRecordings(unittest.TestCase):
         assert isinstance(transcription.text, str)
         assert isinstance(transcription.confidence, float)
 
+        # Wait (TEMP)
         time.sleep(10)
 
         # Delete the transcription
@@ -161,12 +181,36 @@ class TestRecordings(unittest.TestCase):
         # Delete Recording media
         delete_recording_response = self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
         # Validate the 204 response
-        assert delete_recording_response[1] == 204 # 
+        assert delete_recording_response[1] == 204 
 
         # Delete Recording
         self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, recording_id)
-        call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, create_call_response.call_id)
+        call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
         assert len(call_recordings) == 0
+
+    def test_successful_update_active_recording(self):
+        """
+        Tests updating the recording for a call that is currently active.
+        """
+        # Create the call
+        answer_url = MANTECA_BASE_CALLBACK_URL + "/bxml/startRecordingLoop"
+        (test_id, call_id) = self.create_and_validate_call(answer_url)
+
+        # Update the call to pause the recording
+        update_call_recording = UpdateCallRecording(RecordingStateEnum('paused'))
+        update_response = self.recordings_api_instance.update_call_recording_state(BW_ACCOUNT_ID, call_id, update_call_recording, _return_http_data_only=False)
+        print(update_response)
+        assert update_response[1] == 204
+
+        # Update the call to resume the recording
+        update_call_recording = UpdateCallRecording(RecordingStateEnum('recording'))
+        update_response = self.recordings_api_instance.update_call_recording_state(BW_ACCOUNT_ID, call_id, update_call_recording, _return_http_data_only=False)
+        print(update_response)
+        assert update_response[1] == 204
+
+        # Kill the call
+        update_call = UpdateCall(state=CallStateEnum('completed'))
+        self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, update_call)
 
 
 
