@@ -173,7 +173,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
                 )
             except ApiException as e:
                 if e.status == 429:
-                    time.sleep(30)
+                    time.sleep(35)
                     api_response_with_http_info = self.api_instance.verify_code(
                         self.account_id, verify_code_request,
                         _return_http_data_only=False
@@ -181,4 +181,4 @@ class TestMultiFactorAuthentication(unittest.TestCase):
                     self.assertEqual(api_response_with_http_info[1], 200)
                     break
                 else:
-                    raise ApiException
+                    raise e
