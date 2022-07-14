@@ -29,6 +29,7 @@ from bandwidth.model.priority_enum import PriorityEnum
 from bandwidth.model.message import Message
 from bandwidth.model.messaging_request_error import MessagingRequestError
 from bandwidth.model.create_message_request_error import CreateMessageRequestError
+from bandwidth.model.field_error import FieldError
 
 
 class TestMessagesApi(unittest.TestCase):
@@ -88,13 +89,16 @@ class TestMessagesApi(unittest.TestCase):
             
         self.assertEqual(context.exception.status, 400)
 
-        e = CreateMessageRequestError(**json.loads(context.exception.body))
-        print(context.exception.body)
-        print(e)
+        e = CreateMessageRequestError(field_errors=(json.loads(context.exception.body))['fieldErrors'], **json.loads(context.exception.body))
         self.assertIsInstance(e, CreateMessageRequestError)
         self.assertEqual(e.type, 'request-validation')
         self.assertIsInstance(e.description, str)
-        self.assertEqual(type(e.field_errors), list) # needs to be updated in spec
+        self.assertIsInstance(e.field_errors, list)
+
+        error = e.field_errors[0]
+        self.assertIsInstance(error, FieldError)
+        self.assertIsInstance(error.fieldName, str)
+        self.assertIsInstance(error.description, str)
     
 
     def test_create_message_unauthorized(self):
