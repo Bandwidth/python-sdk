@@ -17,15 +17,15 @@ from bandwidth.model.verify_code_response import VerifyCodeResponse
 from bandwidth.model.voice_code_response import VoiceCodeResponse
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
 
-# seed the random number generator for the verify request
-
 
 class TestMultiFactorAuthentication(unittest.TestCase):
     """Multi-Factor Authentication API integration Test
     """
 
     def setUp(self):
+        # seed the random number generator for the verify request
         seed(randint(10, 500))
+
         configuration = bandwidth.Configuration(
             username=os.environ['BW_USERNAME'],
             password=os.environ['BW_PASSWORD']
@@ -33,7 +33,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         api_client = bandwidth.ApiClient(configuration)
         self.api_instance = mfa_api.MFAApi(api_client)
         self.account_id = os.environ['BW_ACCOUNT_ID']
-
         self.messaging_code_request = CodeRequest(
             to=os.environ['USER_NUMBER'],
             _from=os.environ['BW_NUMBER'],
@@ -42,7 +41,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             message="Your temporary {NAME} {SCOPE} code is {CODE}",
             digits=6,
         )
-
         self.voice_code_request = CodeRequest(
             to=os.environ['USER_NUMBER'],
             _from=os.environ['BW_NUMBER'],
@@ -51,7 +49,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             message="Your temporary {NAME} {SCOPE} code is {CODE}",
             digits=6,
         )
-
         self.bad_code_request = CodeRequest(
             to=os.environ['USER_NUMBER'],
             _from=os.environ['BW_NUMBER'],
@@ -73,7 +70,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertEqual(context.exception.status, expected_status_code)
         self.assertIs(type(context.exception.body), str)
 
-    @unittest.skip("skippy skip")
     def testSuccessfulMfaGenerateMessagingCodeRequest(self):
         """Test a successful MFA messaging code request 
         """
@@ -87,7 +83,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             self.account_id, self.messaging_code_request)
         self.assertIs(type(api_response.message_id), str)
 
-    @unittest.skip("skippy skip")
     def testSuccessfulMfaGenerateVoiceCodeRequest(self):
         """Test a successful MFA voice code request
         """
@@ -102,7 +97,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertIs(type(api_response.call_id), str)
 
     # Will always have to test against False codes unless we incorporate the Manteca project into MFA
-    @unittest.skip("skippy skip")
     def testSuccessfulMfaGVerifyCodeRequest(self):
         """Test a successful MFA verify code request
         """
@@ -124,7 +118,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertEqual(type(api_response.valid), bool)
         self.assertIs(api_response.valid, False)
 
-    @unittest.skip("skippy skip")
     def testBadRequest(self):
         """Validates a bad (400) request
         """
@@ -133,7 +126,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
 
         self.assertAuthException(context, ApiException, 400)
 
-    @unittest.skip("skippy skip")
     def testUnauthorizedRequest(self):
         """Validate an unauthorized (401) request
         """
@@ -147,7 +139,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
 
         self.assertAuthException(context, UnauthorizedException, 401)
 
-    @unittest.skip("skippy skip")
     def testForbiddenRequest(self):
         """Validate a forbidden (403) request
         """
