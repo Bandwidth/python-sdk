@@ -24,7 +24,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
 
     def setUp(self):
         # seed the random number generator for the verify request
-        seed(randint(10, 500))
+        # seed(randint(10, 500))
 
         configuration = bandwidth.Configuration(
             username=os.environ['BW_USERNAME'],
