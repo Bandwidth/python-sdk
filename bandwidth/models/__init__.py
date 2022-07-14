@@ -25,11 +25,13 @@ from bandwidth.model.conference_state_enum import ConferenceStateEnum
 from bandwidth.model.create_call import CreateCall
 from bandwidth.model.create_call_response import CreateCallResponse
 from bandwidth.model.create_lookup_response import CreateLookupResponse
+from bandwidth.model.create_message_request_error import CreateMessageRequestError
 from bandwidth.model.create_participant_request import CreateParticipantRequest
 from bandwidth.model.create_participant_response import CreateParticipantResponse
 from bandwidth.model.deferred_result import DeferredResult
 from bandwidth.model.device_api_version_enum import DeviceApiVersionEnum
 from bandwidth.model.diversion import Diversion
+from bandwidth.model.field_error import FieldError
 from bandwidth.model.file_format_enum import FileFormatEnum
 from bandwidth.model.forbidden_request import ForbiddenRequest
 from bandwidth.model.list_message_direction_enum import ListMessageDirectionEnum

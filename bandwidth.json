@@ -2476,6 +2476,21 @@
                 ],
                 "example": "sms"
             },
+            "fieldError": {
+                "type": "object",
+                "properties": {
+                    "fieldName": {
+                        "type": "string",
+                        "description": "The name of the field that contains the error",
+                        "example": "from"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The error associated with the field",
+                        "example": "'+invalid' must be replaced with a valid E164 formatted telephone number"
+                    }
+                }
+            },
             "messagesList": {
                 "title": "MessagesList",
                 "type": "object",
@@ -2547,6 +2562,7 @@
                     "carrierName": {
                         "type": "string",
                         "description": "The name of the carrier. Not currently supported for MMS coming soon.",
+                        "nullable": true,
                         "example": "other"
                     },
                     "messageSize": {
@@ -2621,6 +2637,29 @@
                     "type",
                     "description"
                 ]
+            },
+            "createMessageRequestError": {
+                "title": "CreateMessageRequestError",
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "fieldErrors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/fieldError"
+                        }
+                    }
+                },
+                "required": [
+                    "type",
+                    "description"
+                ],
+                "additionalProperties": true
             },
             "media": {
                 "title": "Media",
@@ -4537,6 +4576,16 @@
                     "application/json": {
                         "schema": {
                             "$ref": "#/components/schemas/messagingRequestError"
+                        }
+                    }
+                }
+            },
+            "createMessageBadRequestError": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/createMessageRequestError"
                         }
                     }
                 }
