@@ -5,7 +5,6 @@ Integration test for Bandwidth's Multi-Factor Authentication API
 import os
 import time
 import unittest
-from random import seed
 from random import randint
 
 import bandwidth
@@ -23,9 +22,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     """
 
     def setUp(self):
-        # seed the random number generator for the verify request
-        # seed(randint(10, 500))
-
         configuration = bandwidth.Configuration(
             username=os.environ['BW_USERNAME'],
             password=os.environ['BW_PASSWORD']
