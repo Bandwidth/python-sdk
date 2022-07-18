@@ -18,7 +18,7 @@ from datetime import datetime
 
 import bandwidth
 from bandwidth.api import messages_api
-from bandwidth.exceptions import ApiException
+from bandwidth.exceptions import ApiException, UnauthorizedException
 from bandwidth.model.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.model.list_message_item import ListMessageItem
 from bandwidth.model.message_request import MessageRequest
@@ -112,7 +112,7 @@ class TestMessagesApi(unittest.TestCase):
             text='',
         )
         
-        with self.assertRaises(ApiException) as context:
+        with self.assertRaises(UnauthorizedException) as context:
             api_instance.create_message(account_id, message_request)
              
         self.assertEqual(context.exception.status, 401)
@@ -172,7 +172,7 @@ class TestMessagesApi(unittest.TestCase):
         api_instance = messages_api.MessagesApi(api_client)
         account_id = os.environ.get('BW_ACCOUNT_ID')
         
-        with self.assertRaises(ApiException) as context:
+        with self.assertRaises(UnauthorizedException) as context:
             api_instance.list_messages(account_id)
              
         self.assertEqual(context.exception.status, 401)
