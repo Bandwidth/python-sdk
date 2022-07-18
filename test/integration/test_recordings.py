@@ -18,7 +18,7 @@ import json
 import bandwidth
 from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.configuration import Configuration
-from bandwidth.exceptions import NotFoundException
+from bandwidth.exceptions import ApiException, ForbiddenException, NotFoundException, UnauthorizedException
 from bandwidth.model.call_recording_metadata import CallRecordingMetadata
 from bandwidth.model.call_state_enum import CallStateEnum
 from bandwidth.model.callback_method_enum import CallbackMethodEnum
@@ -62,9 +62,14 @@ class TestRecordings(unittest.TestCase):
         )
         api_client = bandwidth.ApiClient(configuration)
 
-        # Two API Clients
+        # Two Valid API Clients
         self.calls_api_instance = CallsApi(api_client)
         self.recordings_api_instance = RecordingsApi(api_client)
+
+        # Unauthorized Recordings API Client
+        self.unauthorized_recordings_api_instance = RecordingsApi(
+            api_client=bandwidth.ApiClient(Configuration.get_default_copy())
+        )
 
         # Rest client for interacting with Manteca
         self.rest_client = RESTClientObject(Configuration.get_default_copy())
@@ -305,6 +310,38 @@ class TestRecordings(unittest.TestCase):
 
         # If we failed to get a recorded call, fail due to polling timeout
         assert call_status['callRecorded'] == True
+
+        # Use the unauthorized client to try to list recordings
+        with self.assertRaises(UnauthorizedException):
+            self.unauthorized_recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
+
+    def test_list_call_recordings_invalid(self):
+        # Create a call
+        answer_url = MANTECA_BASE_CALLBACK_URL + '/bxml/startRecording'
+        (test_id, call_id) = self.create_and_validate_call(answer_url)
+
+        # Poll Manteca to make sure our call is recorded
+        call_status = self.get_test_status(test_id)
+        retries = 0
+        while call_status['callRecorded'] == False and retries < MAX_RETRIES:
+            time.sleep(3)
+            call_status = self.get_test_status(test_id)
+            # print('Recording poll attempt ' + str(retries))
+            # print(json.dumps(call_status, indent=4))
+            retries += 1
+
+        # If we failed to get a recorded call, fail due to polling timeout
+        assert call_status['callRecorded'] == True
+        
+        # Invalid call id
+        assert self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, 'not a call id') == []
+
+        # Invalid account id
+        with self.assertRaises(ForbiddenException):
+            self.recordings_api_instance.list_call_recordings("not an account id", call_id)
+
+        with self.assertRaises(ApiException):
+            self.recordings_api_instance.list_call_recordings(1, 2)       
 
 
 if __name__ == '__main__':
