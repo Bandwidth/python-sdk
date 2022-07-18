@@ -26,7 +26,7 @@ class TestMedia(unittest.TestCase):
         self.account_id = os.environ['BW_ACCOUNT_ID']
         self.media_path = "./test/fixtures/"
         self.media_file = "python_cat.jpeg"
-        self.media_id = os.environ['GITHUB_RUN_ID'] + "_" + self.media_file
+        self.media_id = os.environ['PYTHON_VERSION'] + "_" + os.environ['RUNNER_ID'] + "_" + os.environ['GITHUB_RUN_ID'] + "_" + self.media_file
         self.download_file_path = "cat_download.jpeg"
 
         self.original_file = open(self.media_path + self.media_file, "rb")

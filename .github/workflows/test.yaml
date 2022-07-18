@@ -43,6 +43,7 @@ jobs:
         ATT_NUMBER: ${{ secrets.ATT_NUMBER }}
         T_MOBILE_NUMBER: ${{ secrets.T_MOBILE_NUMBER }}
         BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
+        PYTHON_VERSION: ${{ matrix.python-version }}
       run: pytest
 
     - name: Notify Slack of Failures
