@@ -21,7 +21,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     """Multi-Factor Authentication API integration Test
     """
 
-    def setUp(self):
+    def setUp(self) -> None:
         configuration = bandwidth.Configuration(
             username=os.environ['BW_USERNAME'],
             password=os.environ['BW_PASSWORD']
@@ -54,7 +54,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             digits=6,
         )
 
-    def assertAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
+    def assertAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int) -> None:
         """Validates that an auth exception (401 or 403) is properly formatted
         Args:
             context (ApiException): Exception to validate
@@ -66,7 +66,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertEqual(context.exception.status, expected_status_code)
         self.assertIs(type(context.exception.body), str)
 
-    def testSuccessfulMfaGenerateMessagingCodeRequest(self):
+    def testSuccessfulMfaGenerateMessagingCodeRequest(self) -> None:
         """Test a successful MFA messaging code request 
         """
         api_response_with_http_info = self.api_instance.generate_messaging_code(
@@ -79,7 +79,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             self.account_id, self.messaging_code_request)
         self.assertIs(type(api_response.message_id), str)
 
-    def testSuccessfulMfaGenerateVoiceCodeRequest(self):
+    def testSuccessfulMfaGenerateVoiceCodeRequest(self) -> None:
         """Test a successful MFA voice code request
         """
         api_response_with_http_info = self.api_instance.generate_voice_code(
@@ -93,7 +93,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertIs(type(api_response.call_id), str)
 
     # Will always have to test against False codes unless we incorporate the Manteca project into MFA
-    def testSuccessfulMfaGVerifyCodeRequest(self):
+    def testSuccessfulMfaGVerifyCodeRequest(self) -> None:
         """Test a successful MFA verify code request
         """
         verify_code_request = VerifyCodeRequest(
@@ -114,7 +114,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertEqual(type(api_response.valid), bool)
         self.assertIs(api_response.valid, False)
 
-    def testBadRequest(self):
+    def testBadRequest(self) -> None:
         """Validates a bad (400) request
         """
         with self.assertRaises(ApiException) as context:
@@ -122,7 +122,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
 
         self.assertAuthException(context, ApiException, 400)
 
-    def testUnauthorizedRequest(self):
+    def testUnauthorizedRequest(self) -> None:
         """Validate an unauthorized (401) request
         """
         unauthorized_api_client = bandwidth.ApiClient()
@@ -135,7 +135,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
 
         self.assertAuthException(context, UnauthorizedException, 401)
 
-    def testForbiddenRequest(self):
+    def testForbiddenRequest(self) -> None:
         """Validate a forbidden (403) request
         """
         configuration = bandwidth.Configuration(
@@ -153,7 +153,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
 
         self.assertAuthException(context, ForbiddenException, 403)
 
-    def testRateLimit(self):
+    def testRateLimit(self) -> None:
         """Validate that the API reutrns a 429 error, and that the 429 clears after 30 seconds
         """
         verify_code_request = VerifyCodeRequest(
