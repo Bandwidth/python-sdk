@@ -22,7 +22,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
     """Phone Number Lookup API integration test
     """
 
-    def setUp(self):
+    def setUp(self) -> None:
         configuration = bandwidth.Configuration(
             username=os.environ['BW_USERNAME'],
             password=os.environ['BW_PASSWORD']
@@ -31,7 +31,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.api_instance = phone_number_lookup_api.PhoneNumberLookupApi(api_client)
         self.account_id = os.environ['BW_ACCOUNT_ID']
 
-    def validateResult(self, result: LookupResult, e_164_format: str, line_provider: str):
+    def validateResult(self, result: LookupResult, e_164_format: str, line_provider: str) -> None:
         """Verify a successful phone number lookup LookupResult object
 
         Args:
@@ -80,7 +80,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         return get_lookup_status_response
 
-    def assertAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
+    def assertAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int) -> None:
         """Validates that an auth exception (401 or 403) is properly formatted
 
         Args:
@@ -93,7 +93,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.assertEqual(context.exception.status, expected_status_code)
         self.assertIs(type(context.exception.body), str)
 
-    def testSuccessfulPhoneNumberLookup(self):
+    def testSuccessfulPhoneNumberLookup(self) -> None:
         """Test Phone Number Lookup API
         """
         lookup_request = LookupRequest(
@@ -154,7 +154,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         # self.assertIs(type(get_lookup_status_response.failed_telephone_numbers), list)
         # self.assertIn(os.environ['BW_INVALID_TN_LOOKUP_NUMBER'], get_lookup_status_response.failed_telephone_numbers)
 
-    def testFailedPhoneNumberLookup(self):
+    def testFailedPhoneNumberLookup(self) -> None:
         """Test Phone Number Lookup API with bad data to force an error
         """
         with self.assertRaises(ApiException) as context:
@@ -172,7 +172,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         error = TnLookupRequestError(message=(json.loads(context.exception.body))['message'])
         self.assertIs(type(error), TnLookupRequestError)
 
-    def testDuplicatePhoneNumberLookup(self):
+    def testDuplicatePhoneNumberLookup(self) -> None:
         """Test a request with a duplicate number. Should throw a 400 Bad Request error.
         """
         with self.assertRaises(ApiException) as context:
@@ -188,7 +188,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.assertEqual(context.exception.status, 400)
         self.assertIs(type(context.exception.body), str)
 
-    def testUnauthorizedRequest(self):
+    def testUnauthorizedRequest(self) -> None:
         """Validate an unauthorized (401) request
         """
         configuration = bandwidth.Configuration(
@@ -209,7 +209,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         self.assertAuthException(context, UnauthorizedException, 401)
 
-    def testForbiddenRequest(self):
+    def testForbiddenRequest(self) -> None:
         """Validate a forbidden (403) request
         """
         configuration = bandwidth.Configuration(
