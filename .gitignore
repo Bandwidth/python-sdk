@@ -66,3 +66,5 @@ target/
 .ipynb_checkpoints
 
 .DS_Store
+test/fixtures/cat_download.jpeg
+test/fixtures/new_file_download.jpeg
