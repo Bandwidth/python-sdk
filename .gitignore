@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# MacOS Files 
+.DS_Store
+
 # Distribution / packaging
 .Python
 env/
@@ -65,6 +68,8 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 
-.DS_Store
-test/fixtures/cat_download.jpeg
-test/fixtures/new_file_download.jpeg
+# VS Code
+.vscode
+
+# Test Fixtures
+test/fixtures/

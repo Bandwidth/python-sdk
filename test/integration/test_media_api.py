@@ -31,7 +31,7 @@ class TestMedia(unittest.TestCase):
 
         self.original_file = open(self.media_path + self.media_file, "rb")
 
-    def step1(self) -> None:
+    def uploadMedia(self) -> None:
         """Test uploading media
         """
         media_id = self.media_id
@@ -63,7 +63,7 @@ class TestMedia(unittest.TestCase):
             _return_http_data_only=False
         )
 
-    def step2(self) -> None:
+    def listMedia(self) -> None:
         """Test listing all media on the account
         """
         api_response_with_http_info = self.api_instance.list_media(
@@ -76,7 +76,7 @@ class TestMedia(unittest.TestCase):
         self.assertIs(type(api_response[0]), Media)
         pass
 
-    def step3(self) -> None:
+    def getMedia(self) -> None:
         """Test downloading the media we uploaded in step 1
         """
         api_response_with_http_info = self.api_instance.get_media(
@@ -87,14 +87,14 @@ class TestMedia(unittest.TestCase):
         api_response = self.api_instance.get_media(
             self.account_id, self.media_id, _preload_content=False)
 
-        download_file = open(self.media_path + self.download_file_path, "wb")
-        download_file.write(api_response.data)
+        with open(self.media_path + self.download_file_path, "wb") as download_file:
+            download_file.write(api_response.data)
 
         self.assertTrue(filecmp.cmp(self.media_path + self.media_file,
                         self.media_path + self.download_file_path))
         download_file.close()
 
-    def step4(self) -> None:
+    def deleteMedia(self) -> None:
         """Test deleting the media that was uploaded in step 1
         """
         api_response_with_http_info = self.api_instance.delete_media(
@@ -104,14 +104,14 @@ class TestMedia(unittest.TestCase):
 
         # returns void
         self.api_instance.delete_media(self.account_id, self.media_id)
-
+    
     def _steps(self) -> None:
-        for name in dir(self):  # dir() result is implicitly sorted
-            if name.startswith("step"):
-                yield name, getattr(self, name)
+        call_order = ['uploadMedia', 'listMedia', 'getMedia', 'deleteMedia']
+        for name in call_order: 
+            yield name, getattr(self, name)
 
     def test_steps(self) -> None:
-        """Test each step{x} function in numerical order
+        """Test each function from _steps.call_order in specified order
         """
         for name, step in self._steps():
             try:
