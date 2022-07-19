@@ -131,6 +131,24 @@ class TestRecordings(unittest.TestCase):
         # Return our test id and call id
         return (test_id, create_call_response.call_id)
 
+    def complete_recorded_call(self):
+        # Create a call
+        answer_url = MANTECA_BASE_URL + '/bxml/startRecording'
+        (test_id, call_id) = self.create_and_validate_call(answer_url)
+
+        # Poll Manteca to make sure our call is recorded
+        call_status = self.get_test_status(test_id)
+        retries = 0
+        while call_status['callRecorded'] == False and retries < MAX_RETRIES:
+            time.sleep(3)
+            call_status = self.get_test_status(test_id)
+            retries += 1
+
+        # If we failed to get a recorded call, fail due to polling timeout
+        assert call_status['callRecorded'] == True
+
+        # Return our test_id and call_id
+        return (test_id, call_id)
 
     def validate_recording(self, recording: CallRecordingMetadata, call_id: str):
         assert recording.account_id == BW_ACCOUNT_ID
@@ -268,8 +286,6 @@ class TestRecordings(unittest.TestCase):
         while call_status['status'] == 'DEAD' and retries < 10:
             time.sleep(3)
             call_status = self.get_test_status(test_id)
-            # print('Call status poll attempt ' + str(retries))
-            # print(json.dumps(call_status, indent=4))
             retries += 1
 
         # Make sure the call is alive
@@ -293,22 +309,8 @@ class TestRecordings(unittest.TestCase):
         """
         Tests invalid flows for list_call_recordings
         """
-        # Create a call
-        answer_url = MANTECA_BASE_URL + '/bxml/startRecording'
-        (test_id, call_id) = self.create_and_validate_call(answer_url)
-
-        # Poll Manteca to make sure our call is recorded
-        call_status = self.get_test_status(test_id)
-        retries = 0
-        while call_status['callRecorded'] == False and retries < MAX_RETRIES:
-            time.sleep(3)
-            call_status = self.get_test_status(test_id)
-            # print('Recording poll attempt ' + str(retries))
-            # print(json.dumps(call_status, indent=4))
-            retries += 1
-
-        # If we failed to get a recorded call, fail due to polling timeout
-        assert call_status['callRecorded'] == True
+        # Have a recorded call
+        (test_id, call_id) = self.complete_recorded_call()
 
         # Use the unauthorized client to try to list recordings (401)
         with self.assertRaises(UnauthorizedException):
@@ -320,13 +322,47 @@ class TestRecordings(unittest.TestCase):
         
         # Non-existent call id
         # This should probably be a 404, but actually returns an empty list
-        assert self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, 'not a call id') == []
+        assert self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, "not a call id") == []
 
     def test_invalid_get_call_recording(self):
-        pass
+        # Have a recorded call
+        (test_id, call_id) = self.complete_recorded_call()
+
+        # Get our recording id
+        recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
+        recording_id = recordings[0].recording_id
+
+        # Use the unauthorized client to try to get a recording (401)
+        with self.assertRaises(UnauthorizedException):
+            self.unauthorized_recordings_api_instance.get_call_recording(BW_ACCOUNT_ID, call_id, recording_id)
+        
+        # Non-existent account id (403)
+        with self.assertRaises(ForbiddenException):
+            self.recordings_api_instance.get_call_recording("not an account id", call_id, recording_id)
+
+        # Non-existent recording id (404)
+        with self.assertRaises(NotFoundException):
+            self.recordings_api_instance.get_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
 
     def test_invalid_download_call_recording(self):
-        pass
+        # Have a recorded call
+        (test_id, call_id) = self.complete_recorded_call()
+
+        # Get our recording id
+        recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
+        recording_id = recordings[0].recording_id
+
+        # Use the unauthorized client to try to download a recording (401)
+        with self.assertRaises(UnauthorizedException):
+            self.unauthorized_recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, recording_id)
+        
+        # Non-existent account id (403)
+        with self.assertRaises(ForbiddenException):
+            self.recordings_api_instance.download_call_recording("not an account id", call_id, recording_id)
+
+        # Non-existent recording id (404)
+        with self.assertRaises(NotFoundException):
+            self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
 
     def test_invalid_transcribe_call_recording(self):
         pass
