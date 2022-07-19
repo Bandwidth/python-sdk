@@ -322,7 +322,30 @@ class TestRecordings(unittest.TestCase):
         # This should probably be a 404, but actually returns an empty list
         assert self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, 'not a call id') == []
 
-    # def 
+    def test_invalid_get_call_recording(self):
+        pass
+
+    def test_invalid_download_call_recording(self):
+        pass
+
+    def test_invalid_transcribe_call_recording(self):
+        pass
+
+    def test_invalid_get_call_transcription(self):
+        pass
+
+    def test_invalid_delete_call_transcription(self):
+        pass
+
+    def test_invalid_delete_recording_media(self):
+        pass
+
+    def test_invalid_delete_recording(self):
+        pass
+
+    def test_invalid_update_call_recording_state(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()
