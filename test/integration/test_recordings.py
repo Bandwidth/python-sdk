@@ -35,14 +35,23 @@ from bandwidth.rest import RESTClientObject, RESTResponse
 
 
 try:
+    # BW Credentials
     BW_USERNAME = os.environ["BW_USERNAME"]
     BW_PASSWORD = os.environ["BW_PASSWORD"]
     BW_ACCOUNT_ID = os.environ["BW_ACCOUNT_ID"]
-    BW_VOICE_APPLICATION_ID = os.environ["BW_VOICE_APPLICATION_ID"]
-    MANTECA_BASE_CALLBACK_URL = os.environ["MANTECA_BASE_CALLBACK_URL"]
-    MANTECA_STATUS_URL = MANTECA_BASE_CALLBACK_URL + "tests/"
-    BW_NUMBER = os.environ["BW_NUMBER"]
-    USER_NUMBER = os.environ["USER_NUMBER"]
+
+    # BW Numbers
+    BW_ACTIVE_NUMBER = os.environ["BW_ACTIVE_NUMBER"]
+    BW_IDLE_NUMBER = os.environ["BW_IDLE_NUMBER"]
+
+    # Manteca
+    MANTECA_BASE_URL = os.environ["MANTECA_BASE_URL"]
+    MANTECA_STATUS_URL = MANTECA_BASE_URL + "tests/"
+    MANTECA_APPLICATION_ID = os.environ["MANTECA_APPLICATION_ID"]
+
+    # Test Environment
+    PYTHON_VERSION = os.environ["PYTHON_VERSION"]
+    OPERATING_SYSTEM = os.environ["OPERATING_SYSTEM"]
 except KeyError as e:
     raise Exception("Environmental variables not found")
 
@@ -93,31 +102,29 @@ class TestRecordings(unittest.TestCase):
         # Initialize the call with Manteca
         response = self.rest_client.request(
             method='POST',
-            url=MANTECA_BASE_CALLBACK_URL + 'tests',
+            url=MANTECA_BASE_URL + 'tests',
             body={
-                'os': 'macos',
-                'language': 'python3.9',
+                'os': OPERATING_SYSTEM,
+                'language': 'python' + PYTHON_VERSION,
                 'type': 'CALL'
             }
         )
 
         # Get the test id from the response
         test_id = json.loads(response.data)
-        # print("Test created in Manteca.")
 
         # Make a CreateCall body and assign the appropriate params
-        call_body = CreateCall(to=USER_NUMBER, _from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=answer_url, tag=test_id)
+        call_body = CreateCall(to=BW_IDLE_NUMBER, _from=BW_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url, tag=test_id)
 
         # Make the call
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, call_body)
 
         # Verify info about the call
-        # print("Call was created.")
         assert len(create_call_response.call_id) == 47    # assert request created and id matches expected length (47)
         assert create_call_response.account_id == BW_ACCOUNT_ID
-        assert create_call_response.application_id == BW_VOICE_APPLICATION_ID
-        assert create_call_response.to == USER_NUMBER
-        assert create_call_response._from == BW_NUMBER
+        assert create_call_response.application_id == MANTECA_APPLICATION_ID
+        assert create_call_response.to == BW_IDLE_NUMBER
+        assert create_call_response._from == BW_ACTIVE_NUMBER
         assert create_call_response.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
             BW_ACCOUNT_ID + "/calls/" + create_call_response.call_id
 
@@ -128,10 +135,9 @@ class TestRecordings(unittest.TestCase):
     def validate_recording(self, recording: CallRecordingMetadata, call_id: str):
         assert recording.account_id == BW_ACCOUNT_ID
         assert recording.call_id == call_id
-        assert recording.application_id == BW_VOICE_APPLICATION_ID
+        assert recording.application_id == MANTECA_APPLICATION_ID
         assert recording.status == 'complete'
         assert recording.file_format == FileFormatEnum('wav')
-        # print("Recording Validated.")
 
     def get_test_status(self, test_id: str) -> Dict:
         """
@@ -165,7 +171,7 @@ class TestRecordings(unittest.TestCase):
         """
 
         # Create a call
-        answer_url = MANTECA_BASE_CALLBACK_URL + '/bxml/startRecording'
+        answer_url = MANTECA_BASE_URL + '/bxml/startRecording'
         (test_id, call_id) = self.create_and_validate_call(answer_url)
 
         # Poll Manteca to make sure our call is recorded
@@ -174,8 +180,6 @@ class TestRecordings(unittest.TestCase):
         while call_status['callRecorded'] == False and retries < MAX_RETRIES:
             time.sleep(3)
             call_status = self.get_test_status(test_id)
-            # print('Recording poll attempt ' + str(retries))
-            # print(json.dumps(call_status, indent=4))
             retries += 1
 
         # If we failed to get a recorded call, fail due to polling timeout
@@ -208,19 +212,16 @@ class TestRecordings(unittest.TestCase):
         #     fp.write(call_recording_media)
 
         # Create Transcription Request
-        transcription_url = MANTECA_BASE_CALLBACK_URL + "/transcriptions"
+        transcription_url = MANTECA_BASE_URL + "/transcriptions"
         transcribe_recording_request = TranscribeRecording(callback_url=transcription_url,tag=test_id)
         self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording_request)
 
-        # print("Transcription request sent.")
         # Poll Manteca to make sure our call is transcribed
         call_status = self.get_test_status(test_id)
         retries = 0
         while call_status['callTranscribed'] == False and retries < MAX_RETRIES:
             time.sleep(3)
             call_status = self.get_test_status(test_id)
-            # print('Transcribe poll attempt ' + str(retries))
-            # print(json.dumps(call_status, indent=4))
             retries += 1
 
         # If we failed to get a transcribed call, fail due to polling timeout (TEMP COMMENTED)
@@ -234,9 +235,6 @@ class TestRecordings(unittest.TestCase):
         assert isinstance(transcription.text, str)
         assert isinstance(transcription.confidence, float)
 
-        # # Wait (TEMP)
-        # time.sleep(10)
-
         # Delete the transcription
         self.recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
         with self.assertRaises(NotFoundException):
@@ -246,14 +244,12 @@ class TestRecordings(unittest.TestCase):
         # Delete Recording media
         delete_recording_response = self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
         # Validate the 204 response
-        assert delete_recording_response[1] == 204 
-        # print("Deleted Recording Media.")
+        assert delete_recording_response[1] == 204
 
         # Delete Recording
         self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, recording_id)
         call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
         assert len(call_recordings) == 0
-        # print("Deleted recording")
 
     def test_successful_update_active_recording(self):
         """
@@ -263,7 +259,7 @@ class TestRecordings(unittest.TestCase):
         """
         
         # Create the call
-        answer_url = MANTECA_BASE_CALLBACK_URL + "/bxml/startRecordingLoop"
+        answer_url = MANTECA_BASE_URL + "/bxml/startRecordingLoop"
         (test_id, call_id) = self.create_and_validate_call(answer_url)
 
         # Poll Manteca to make sure our call is alive
@@ -293,9 +289,12 @@ class TestRecordings(unittest.TestCase):
         update_call = UpdateCall(state=CallStateEnum('completed'))
         self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, update_call)
 
-    def test_list_call_recordings_unauthorized(self):
+    def test_list_call_recordings_invalid(self):
+        """
+        Tests invalid flows for list_call_recordings
+        """
         # Create a call
-        answer_url = MANTECA_BASE_CALLBACK_URL + '/bxml/startRecording'
+        answer_url = MANTECA_BASE_URL + '/bxml/startRecording'
         (test_id, call_id) = self.create_and_validate_call(answer_url)
 
         # Poll Manteca to make sure our call is recorded
@@ -311,38 +310,19 @@ class TestRecordings(unittest.TestCase):
         # If we failed to get a recorded call, fail due to polling timeout
         assert call_status['callRecorded'] == True
 
-        # Use the unauthorized client to try to list recordings
+        # Use the unauthorized client to try to list recordings (401)
         with self.assertRaises(UnauthorizedException):
             self.unauthorized_recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
 
-    def test_list_call_recordings_invalid(self):
-        # Create a call
-        answer_url = MANTECA_BASE_CALLBACK_URL + '/bxml/startRecording'
-        (test_id, call_id) = self.create_and_validate_call(answer_url)
-
-        # Poll Manteca to make sure our call is recorded
-        call_status = self.get_test_status(test_id)
-        retries = 0
-        while call_status['callRecorded'] == False and retries < MAX_RETRIES:
-            time.sleep(3)
-            call_status = self.get_test_status(test_id)
-            # print('Recording poll attempt ' + str(retries))
-            # print(json.dumps(call_status, indent=4))
-            retries += 1
-
-        # If we failed to get a recorded call, fail due to polling timeout
-        assert call_status['callRecorded'] == True
+        # Invalid account id (403)
+        with self.assertRaises(ForbiddenException):
+            self.recordings_api_instance.list_call_recordings("not an account id", call_id)    
         
-        # Invalid call id
+        # Non-existent call id
+        # This should probably be a 404, but actually returns an empty list
         assert self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, 'not a call id') == []
 
-        # Invalid account id
-        with self.assertRaises(ForbiddenException):
-            self.recordings_api_instance.list_call_recordings("not an account id", call_id)
-
-        with self.assertRaises(ApiException):
-            self.recordings_api_instance.list_call_recordings(1, 2)       
-
+    # def 
 
 if __name__ == '__main__':
     unittest.main()
