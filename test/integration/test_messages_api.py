@@ -46,7 +46,6 @@ class TestMessagesApi(unittest.TestCase):
 
 
     def test_create_message(self):
-        account_id = os.environ.get('BW_ACCOUNT_ID')
         message_request = MessageRequest(
             application_id=os.environ.get('BW_MESSAGING_APPLICATION_ID'),
             to=[os.environ.get('USER_NUMBER')],
@@ -58,7 +57,7 @@ class TestMessagesApi(unittest.TestCase):
         )
         
         try:
-            api_response: Message = self.api_instance.create_message(account_id, message_request)
+            api_response: Message = self.api_instance.create_message(self.account_id, message_request)
         except bandwidth.ApiException as e:
             print("Exception when calling MessagesApi->create_message: %s\n" % e)
             
@@ -76,7 +75,6 @@ class TestMessagesApi(unittest.TestCase):
 
 
     def test_create_message_bad_request(self):
-        account_id = os.environ.get('BW_ACCOUNT_ID')
         message_request = MessageRequest(
             application_id=os.environ.get('BW_MESSAGING_APPLICATION_ID'),
             to=['+invalid'],
@@ -85,7 +83,7 @@ class TestMessagesApi(unittest.TestCase):
         )
         
         with self.assertRaises(ApiException) as context:
-            self.api_instance.create_message(account_id, message_request)
+            self.api_instance.create_message(self.account_id, message_request)
             
         self.assertEqual(context.exception.status, 400)
 
@@ -104,7 +102,6 @@ class TestMessagesApi(unittest.TestCase):
     def test_create_message_unauthorized(self):
         api_client = bandwidth.ApiClient()
         api_instance = messages_api.MessagesApi(api_client)
-        account_id = os.environ.get('BW_ACCOUNT_ID')
         message_request = MessageRequest(
             application_id=os.environ.get('BW_MESSAGING_APPLICATION_ID'),
             to=['+invalid'],
@@ -113,7 +110,7 @@ class TestMessagesApi(unittest.TestCase):
         )
         
         with self.assertRaises(UnauthorizedException) as context:
-            api_instance.create_message(account_id, message_request)
+            api_instance.create_message(self.account_id, message_request)
              
         self.assertEqual(context.exception.status, 401)
 
@@ -122,16 +119,12 @@ class TestMessagesApi(unittest.TestCase):
         self.assertEqual(e.type, 'unauthorized')
         self.assertEqual(e.description, 'Authentication Failed')
 
-    # The SDK catches incorrect content-type before making the request and attempts to create an ApiException,
-    # but the creation of the exception fails since there is no response body. This should probably create some
-    # kind of Client Exception instead, since this isn't an actual API Exception.
 
     def test_list_messages(self):
-        account_id = os.environ.get('BW_ACCOUNT_ID')
         message_direction = ListMessageDirectionEnum("OUTBOUND")
         
         try:
-            api_response = self.api_instance.list_messages(account_id, message_direction=message_direction)
+            api_response = self.api_instance.list_messages(self.account_id, message_direction=message_direction)
         except bandwidth.ApiException as e:
             print("Exception when calling MessagesApi->list_messages: %s\n" % e)
 
@@ -154,10 +147,9 @@ class TestMessagesApi(unittest.TestCase):
 
     
     def test_list_messages_bad_request(self):
-        account_id = os.environ.get('BW_ACCOUNT_ID')
         
         with self.assertRaises(ApiException) as context:
-            self.api_instance.list_messages(account_id)
+            self.api_instance.list_messages(self.account_id)
         
         self.assertEqual(context.exception.status, 400)
 
@@ -170,10 +162,9 @@ class TestMessagesApi(unittest.TestCase):
     def test_list_messages_unauthorized(self):
         api_client = bandwidth.ApiClient()
         api_instance = messages_api.MessagesApi(api_client)
-        account_id = os.environ.get('BW_ACCOUNT_ID')
         
         with self.assertRaises(UnauthorizedException) as context:
-            api_instance.list_messages(account_id)
+            api_instance.list_messages(self.account_id)
              
         self.assertEqual(context.exception.status, 401)
 
