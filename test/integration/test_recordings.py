@@ -206,20 +206,8 @@ class TestRecordings(unittest.TestCase):
             - delete_recording
         """
 
-        # Create a call
-        answer_url = MANTECA_BASE_URL + '/bxml/startRecording'
-        (test_id, call_id) = self.create_and_validate_call(answer_url)
-
-        # Poll Manteca to make sure our call is recorded
-        call_status = self.get_test_status(test_id)
-        retries = 0
-        while call_status['callRecorded'] == False and retries < MAX_RETRIES:
-            time.sleep(3)
-            call_status = self.get_test_status(test_id)
-            retries += 1
-
-        # If we failed to get a recorded call, fail due to polling timeout
-        assert call_status['callRecorded'] == True
+        # Have a recorded call
+        (test_id, call_id) = self.complete_recorded_call()
             
         # List Call Recordings Endpoint
         call_recordings: List[CallRecordingMetadata] = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
