@@ -83,7 +83,6 @@ class TestMessagesApi(unittest.TestCase):
         self.assertEqual(response[1], 202)
 
         api_response = response[0]
-        print(api_response.time)
         self.assertIsInstance(api_response, Message)
         self.assertEqual(api_response.application_id,self.application_id)
         self.assertEqual(api_response.to, self.to_number)
@@ -149,7 +148,6 @@ class TestMessagesApi(unittest.TestCase):
         self.assertTrue(api_response.messages[0], ListMessageItem)
         
         message = api_response.messages[0]
-        print(message.receive_time)
         self.assertEqual(message.account_id, self.account_id)
         self.assertRegex(message.destination_tn, '^\\+[1-9]\\d{1,14}$')
         self.assertFalse(message.error_code)
