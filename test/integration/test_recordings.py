@@ -10,6 +10,7 @@
 
 
 import os
+from signal import pause
 from typing import Dict, List, Tuple
 import unittest
 import time
@@ -305,7 +306,7 @@ class TestRecordings(unittest.TestCase):
         update_call = UpdateCall(state=CallStateEnum('completed'))
         self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, update_call)
 
-    def test_list_call_recordings_invalid(self):
+    def test_invalid_list_call_recordings(self):
         """
         Tests invalid flows for list_call_recordings
         """
@@ -365,22 +366,178 @@ class TestRecordings(unittest.TestCase):
             self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
 
     def test_invalid_transcribe_call_recording(self):
-        pass
+        # Have a recorded call
+        (test_id, call_id) = self.complete_recorded_call()
+
+        # Get our recording id
+        recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
+        recording_id = recordings[0].recording_id
+
+        # Create a standard TranscribeRecording instance to use
+        transcription_url = MANTECA_BASE_URL + "transcriptions"
+        transcribe_recording = TranscribeRecording(callback_url=transcription_url, tag=test_id)
+
+        # Use the unauthorized client to request a transcription (401)
+        with self.assertRaises(UnauthorizedException):
+            self.unauthorized_recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording)
+
+        # Non existent account id (403)
+        with self.assertRaises(ForbiddenException):
+            self.recordings_api_instance.transcribe_call_recording("not an account id", call_id, recording_id, transcribe_recording)
+
+        # Non-existent recording id (404)
+        # TODO: This does not work right now as the API is unexpectedly returning a 502 Bad Gateway for this request.
+        # with self.assertRaises(NotFoundException):
+        #     self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id", transcribe_recording)        
+
 
     def test_invalid_get_call_transcription(self):
-        pass
+        # Have a recorded call
+        (test_id, call_id) = self.complete_recorded_call()
+
+        # Get our recording id
+        recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
+        recording_id = recordings[0].recording_id
+
+        # Create a transcription
+        transcription_url = MANTECA_BASE_URL + "transcriptions"
+        transcribe_recording = TranscribeRecording(callback_url=transcription_url, tag=test_id)
+        self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording)
+
+        # Poll Manteca to make sure our call is transcribed
+        call_status = self.get_test_status(test_id)
+        retries = 0
+        while call_status['callTranscribed'] == False and retries < MAX_RETRIES:
+            time.sleep(3)
+            call_status = self.get_test_status(test_id)
+            retries += 1
+
+        # If we failed to get a transcribed call, fail due to polling timeout (TEMP COMMENTED)
+        assert call_status['callTranscribed'] == True
+
+        # Use the unauthorized client to get transcripion (401)
+        with self.assertRaises(UnauthorizedException):
+            self.unauthorized_recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
+
+        # Non-existent account id (403)
+        with self.assertRaises(ForbiddenException):
+            self.recordings_api_instance.get_call_transcription("not an account id", call_id, recording_id)
+
+        # Non-existent recording id (404)
+        with self.assertRaises(NotFoundException):
+            self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, "not a recording id")
 
     def test_invalid_delete_call_transcription(self):
-        pass
+        # Have a recorded call
+        (test_id, call_id) = self.complete_recorded_call()
+
+        # Get our recording id
+        recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
+        recording_id = recordings[0].recording_id
+
+        # Create a transcription
+        transcription_url = MANTECA_BASE_URL + "transcriptions"
+        transcribe_recording = TranscribeRecording(callback_url=transcription_url, tag=test_id)
+        self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording)
+
+        # Poll Manteca to make sure our call is transcribed
+        call_status = self.get_test_status(test_id)
+        retries = 0
+        while call_status['callTranscribed'] == False and retries < MAX_RETRIES:
+            time.sleep(3)
+            call_status = self.get_test_status(test_id)
+            retries += 1
+
+        # If we failed to get a transcribed call, fail due to polling timeout (TEMP COMMENTED)
+        assert call_status['callTranscribed'] == True
+
+        # Use the unauthorized client to delete transcripion (401)
+        with self.assertRaises(UnauthorizedException):
+            self.unauthorized_recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
+
+        # Non-existent account id (403)
+        with self.assertRaises(ForbiddenException):
+            self.recordings_api_instance.delete_call_transcription("not an account id", call_id, recording_id)
+
+        # Non-existent recording id (404)
+        with self.assertRaises(NotFoundException):
+            self.recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, "not a recording id")
 
     def test_invalid_delete_recording_media(self):
-        pass
+        # Have a recorded call
+        (test_id, call_id) = self.complete_recorded_call()
+
+        # Get our recording id
+        recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
+        recording_id = recordings[0].recording_id
+
+        # Use the unauthorized client to try to delete a recording (401)
+        with self.assertRaises(UnauthorizedException):
+            self.unauthorized_recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, recording_id)
+        
+        # Non-existent account id (403)
+        with self.assertRaises(ForbiddenException):
+            self.recordings_api_instance.delete_recording_media("not an account id", call_id, recording_id)
+
+        # Non-existent recording id (404)
+        with self.assertRaises(NotFoundException):
+            self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, "not a recording id")
 
     def test_invalid_delete_recording(self):
-        pass
+        # Have a recorded call
+        (test_id, call_id) = self.complete_recorded_call()
+
+        # Get our recording id
+        recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
+        recording_id = recordings[0].recording_id
+
+        # Use the unauthorized client to try to delete a recording (401)
+        with self.assertRaises(UnauthorizedException):
+            self.unauthorized_recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, recording_id)
+        
+        # Non-existent account id (403)
+        with self.assertRaises(ForbiddenException):
+            self.recordings_api_instance.delete_recording("not an account id", call_id, recording_id)
+
+        # Non-existent recording id (404)
+        with self.assertRaises(NotFoundException):
+            self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
 
     def test_invalid_update_call_recording_state(self):
-        pass
+        # Create the call
+        answer_url = MANTECA_BASE_URL + "/bxml/startRecordingLoop"
+        (test_id, call_id) = self.create_and_validate_call(answer_url)
+
+        # Poll Manteca to make sure our call is alive
+        call_status = self.get_test_status(test_id)
+        retries = 0
+        while call_status['status'] == 'DEAD' and retries < 10:
+            time.sleep(3)
+            call_status = self.get_test_status(test_id)
+            retries += 1
+
+        # Make sure the call is alive
+        assert call_status['status'] == 'ALIVE'
+
+        # Common models
+        pause_recording = UpdateCallRecording(RecordingStateEnum('paused'))
+        resume_recording = UpdateCallRecording(RecordingStateEnum('recording'))
+
+        # Use the unauthorized client to try to update (401)
+        with self.assertRaises(UnauthorizedException):
+            self.unauthorized_recordings_api_instance.update_call_recording_state(BW_ACCOUNT_ID, call_id, pause_recording)
+
+        # Non-existent account id (403)
+        with self.assertRaises(ForbiddenException):
+            self.recordings_api_instance.update_call_recording_state("not an account id", call_id, pause_recording)
+
+        # Non-existent call id (404)
+        with self.assertRaises(NotFoundException):
+            self.recordings_api_instance.update_call_recording_state(BW_ACCOUNT_ID, "not a call id", pause_recording)        
+
+        # Kill the call
+        update_call = UpdateCall(state=CallStateEnum('completed'))
+        self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, update_call)
 
 
 if __name__ == '__main__':
