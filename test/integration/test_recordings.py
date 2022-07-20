@@ -10,7 +10,6 @@
 
 
 import os
-from signal import pause
 from typing import Dict, List, Tuple
 import unittest
 import time
@@ -19,10 +18,9 @@ import json
 import bandwidth
 from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.configuration import Configuration
-from bandwidth.exceptions import ApiException, ForbiddenException, NotFoundException, UnauthorizedException
+from bandwidth.exceptions import ForbiddenException, NotFoundException, UnauthorizedException
 from bandwidth.model.call_recording_metadata import CallRecordingMetadata
 from bandwidth.model.call_state_enum import CallStateEnum
-from bandwidth.model.callback_method_enum import CallbackMethodEnum
 from bandwidth.api.calls_api import CallsApi
 from bandwidth.model.create_call_response import CreateCallResponse
 from bandwidth.model.create_call import CreateCall
@@ -59,9 +57,11 @@ except KeyError as e:
 MAX_RETRIES = 30
 
 class TestRecordings(unittest.TestCase):
-    """CreateCall unit test stubs"""
+    """
+    Integration tests for the Recordings API.
+    """
 
-    def setUp(self):
+    def setUp(self) -> None:
         """
         Set up for our tests by creating the CallsApi and RecordingsApi instances
         for testing.
@@ -84,7 +84,10 @@ class TestRecordings(unittest.TestCase):
         # Rest client for interacting with Manteca
         self.rest_client = RESTClientObject(Configuration.get_default_copy())
 
-    def tearDown(self):
+    def tearDown(self) -> None:
+        """
+        Post-test operations.
+        """
         pass
 
     def create_and_validate_call(self, answer_url: str) -> Tuple[str, str]:
@@ -132,7 +135,14 @@ class TestRecordings(unittest.TestCase):
         # Return our test id and call id
         return (test_id, create_call_response.call_id)
 
-    def complete_recorded_call(self):
+    def complete_recorded_call(self) -> Tuple[str, str]:
+        """
+        Creates and completes an entire recorded call lifecycle.  A call should be completed and fully recorded.
+
+        Return:
+            (str, str): A tuple containing the test id to track this call in the Manteca system and the call id
+                        associated with the call in Bandwidth services.
+        """
         # Create a call
         answer_url = MANTECA_BASE_URL + '/bxml/startRecording'
         (test_id, call_id) = self.create_and_validate_call(answer_url)
@@ -151,7 +161,14 @@ class TestRecordings(unittest.TestCase):
         # Return our test_id and call_id
         return (test_id, call_id)
 
-    def validate_recording(self, recording: CallRecordingMetadata, call_id: str):
+    def validate_recording(self, recording: CallRecordingMetadata, call_id: str) -> None:
+        """
+        Validate the given recording metadata.
+
+        Args:
+            recording (CallRecordingMetadata): The recording metadata to validate.
+            call_id (str): The call id associated with the given recording.
+        """
         assert recording.account_id == BW_ACCOUNT_ID
         assert recording.call_id == call_id
         assert recording.application_id == MANTECA_APPLICATION_ID
@@ -175,7 +192,7 @@ class TestRecordings(unittest.TestCase):
         )
         return json.loads(response.data)
 
-    def test_successful_call_recording(self):
+    def test_successful_call_recording(self) -> None:
         """
         Tests a successful flow of creating a call with a recording.
         The following endpoints are tested in this flow:
@@ -270,7 +287,7 @@ class TestRecordings(unittest.TestCase):
         call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
         assert len(call_recordings) == 0
 
-    def test_successful_update_active_recording(self):
+    def test_successful_update_active_recording(self) -> None:
         """
         Tests updating the recording for a call that is currently active.
         Tests the following endpoints:
@@ -306,10 +323,11 @@ class TestRecordings(unittest.TestCase):
         update_call = UpdateCall(state=CallStateEnum('completed'))
         self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, update_call)
 
-    def test_invalid_list_call_recordings(self):
+    def test_invalid_list_call_recordings(self) -> None:
         """
         Tests invalid flows for list_call_recordings
         """
+
         # Have a recorded call
         (test_id, call_id) = self.complete_recorded_call()
 
@@ -325,7 +343,11 @@ class TestRecordings(unittest.TestCase):
         # This should probably be a 404, but actually returns an empty list
         assert self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, "not a call id") == []
 
-    def test_invalid_get_call_recording(self):
+    def test_invalid_get_call_recording(self) -> None:
+        """
+        Tests invalid flows for get_call_recording
+        """
+
         # Have a recorded call
         (test_id, call_id) = self.complete_recorded_call()
 
@@ -345,7 +367,11 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.get_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    def test_invalid_download_call_recording(self):
+    def test_invalid_download_call_recording(self) -> None:
+        """
+        Tests invalid flows for download_call_recording
+        """
+
         # Have a recorded call
         (test_id, call_id) = self.complete_recorded_call()
 
@@ -365,7 +391,11 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    def test_invalid_transcribe_call_recording(self):
+    def test_invalid_transcribe_call_recording(self) -> None:
+        """
+        Tests invalid flows for transcribe_call_recording
+        """
+
         # Have a recorded call
         (test_id, call_id) = self.complete_recorded_call()
 
@@ -391,7 +421,11 @@ class TestRecordings(unittest.TestCase):
         #     self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id", transcribe_recording)        
 
 
-    def test_invalid_get_call_transcription(self):
+    def test_invalid_get_call_transcription(self) -> None:
+        """
+        Tests invalid flows for get_call_transcription
+        """
+
         # Have a recorded call
         (test_id, call_id) = self.complete_recorded_call()
 
@@ -427,7 +461,11 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    def test_invalid_delete_call_transcription(self):
+    def test_invalid_delete_call_transcription(self) -> None:
+        """
+        Tests invalid flows for delete_call_transcription
+        """
+
         # Have a recorded call
         (test_id, call_id) = self.complete_recorded_call()
 
@@ -463,7 +501,11 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    def test_invalid_delete_recording_media(self):
+    def test_invalid_delete_recording_media(self) -> None:
+        """
+        Tests invalid flows for delete_recording_media
+        """
+
         # Have a recorded call
         (test_id, call_id) = self.complete_recorded_call()
 
@@ -483,7 +525,11 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    def test_invalid_delete_recording(self):
+    def test_invalid_delete_recording(self) -> None:
+        """
+        Tests invalid flows for delete_recording
+        """
+
         # Have a recorded call
         (test_id, call_id) = self.complete_recorded_call()
 
@@ -503,7 +549,11 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    def test_invalid_update_call_recording_state(self):
+    def test_invalid_update_call_recording_state(self) -> None:
+        """
+        Tests invalid flows for update_call_recording_state
+        """
+
         # Create the call
         answer_url = MANTECA_BASE_URL + "/bxml/startRecordingLoop"
         (test_id, call_id) = self.create_and_validate_call(answer_url)
