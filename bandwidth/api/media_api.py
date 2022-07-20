@@ -101,7 +101,7 @@ class MediaApi(object):
         )
         self.get_media_endpoint = _Endpoint(
             settings={
-                'response_type': (str,),
+                'response_type': (file_type,),
                 'auth': [
                     'Basic'
                 ],
@@ -270,7 +270,7 @@ class MediaApi(object):
                     'media_id':
                         (str,),
                     'body':
-                        (str,),
+                        (file_type,),
                     'content_type':
                         (str,),
                     'cache_control':
@@ -442,7 +442,7 @@ class MediaApi(object):
             async_req (bool): execute request asynchronously
 
         Returns:
-            str
+            file_type
                 If the method is called asynchronously, returns the request
                 thread.
         """
@@ -580,7 +580,7 @@ class MediaApi(object):
         Args:
             account_id (str): Your Bandwidth Account ID.
             media_id (str): Media ID to retrieve.
-            body (str):
+            body (file_type):
 
         Keyword Args:
             content_type (str): The media type of the entity-body.. [optional]

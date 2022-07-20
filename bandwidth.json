@@ -4199,7 +4199,58 @@
                         "type": "string"
                     },
                     "status": {
-                        "type": "string"
+                        "$ref": "#/components/schemas/lookupStatusEnum"
+                    }
+                }
+            },
+            "lookupResult": {
+                "type": "object", 
+                "description": "Carrier information results for the specified telephone number.",
+                "properties": {
+                    "Response Code": {
+                        "type": "integer",
+                        "description": "Our vendor's response code.",
+                        "example": 0
+                    },
+                    "Message": {
+                        "type": "string",
+                        "description": "Message associated with the response code.",
+                        "example": "NOERROR"
+                    },
+                    "E.164 Format": {
+                        "type": "string",
+                        "description": "The telephone number in E.164 format.",
+                        "example": "+19195551234"
+                    },
+                    "Formatted": {
+                        "type": "string",
+                        "description": "The formatted version of the telephone number.",
+                        "example": "(919) 555-1234"
+                    },
+                    "Country": {
+                        "type": "string",
+                        "description": "The country of the telephone number.",
+                        "example": "US"
+                    },
+                    "Line Type": {
+                        "type": "string",
+                        "description": "The line type of the telephone number.",
+                        "example": "Mobile"
+                    },
+                    "Line Provider": {
+                        "type": "string",
+                        "description": "The messaging service provider of the telephone number.",
+                        "example": "Verizon Wireless"
+                    },
+                    "Mobile Country Code": {
+                        "type": "string",
+                        "description": "The first half of the Home Network Identity (HNI).",
+                        "example": "310"
+                    },
+                    "Mobile Network Code": {
+                        "type": "string",
+                        "description": "The second half of the HNI.",
+                        "example": "010"
                     }
                 }
             },
@@ -4219,54 +4270,7 @@
                         "type": "array",
                         "description": "The carrier information results for the specified telephone number.",
                         "items": {
-                            "type": "object",
-                            "properties": {
-                                "Response Code": {
-                                    "type": "integer",
-                                    "description": "Our vendor's response code.",
-                                    "example": 0
-                                },
-                                "Message": {
-                                    "type": "string",
-                                    "description": "Message associated with the response code.",
-                                    "example": "NOERROR"
-                                },
-                                "E.164 Format": {
-                                    "type": "string",
-                                    "description": "The telephone number in E.164 format.",
-                                    "example": "+19195551234"
-                                },
-                                "Formatted": {
-                                    "type": "string",
-                                    "description": "The formatted version of the telephone number.",
-                                    "example": "(919) 555-1234"
-                                },
-                                "Country": {
-                                    "type": "string",
-                                    "description": "The country of the telephone number.",
-                                    "example": "US"
-                                },
-                                "Line Type": {
-                                    "type": "string",
-                                    "description": "The line type of the telephone number.",
-                                    "example": "Mobile"
-                                },
-                                "Line Provider": {
-                                    "type": "string",
-                                    "description": "The messaging service provider of the telephone number.",
-                                    "example": "Verizon Wireless"
-                                },
-                                "Mobile Country Code": {
-                                    "type": "string",
-                                    "description": "The first half of the Home Network Identity (HNI).",
-                                    "example": "310"
-                                },
-                                "Mobile Network Code": {
-                                    "type": "string",
-                                    "description": "The second half of the HNI.",
-                                    "example": "010"
-                                }
-                            }
+                            "$ref": "#/components/schemas/lookupResult"
                         }
                     },
                     "failedTelephoneNumbers": {
@@ -4544,7 +4548,7 @@
                         "schema": {
                             "type": "string",
                             "description": "Successful Operation",
-                            "format": "byte"
+                            "format": "binary"
                         }
                     }
                 }
@@ -4722,13 +4726,13 @@
                     "audio/vnd.wave": {
                         "schema": {
                             "type": "string",
-                            "format": "byte"
+                            "format": "binary"
                         }
                     },
                     "audio/mpeg": {
                         "schema": {
                             "type": "string",
-                            "format": "byte"
+                            "format": "binary"
                         }
                     }
                 }
@@ -5689,7 +5693,7 @@
                     "application/octet-stream": {
                         "schema": {
                             "type": "string",
-                            "format": "byte"
+                            "format": "binary"
                         }
                     }
                 },
