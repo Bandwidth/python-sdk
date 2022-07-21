@@ -54,7 +54,8 @@ try:
 except KeyError as e:
     raise Exception("Environmental variables not found")
 
-MAX_RETRIES = 30
+MAX_RETRIES = 40
+TEST_SLEEP = 3
 
 class TestRecordings(unittest.TestCase):
     """
@@ -151,7 +152,7 @@ class TestRecordings(unittest.TestCase):
         call_status = self.get_test_status(test_id)
         retries = 0
         while call_status['callRecorded'] == False and retries < MAX_RETRIES:
-            time.sleep(3)
+            time.sleep(TEST_SLEEP)
             call_status = self.get_test_status(test_id)
             retries += 1
 
@@ -251,7 +252,7 @@ class TestRecordings(unittest.TestCase):
         call_status = self.get_test_status(test_id)
         retries = 0
         while call_status['callTranscribed'] == False and retries < MAX_RETRIES:
-            time.sleep(3)
+            time.sleep(TEST_SLEEP)
             call_status = self.get_test_status(test_id)
             retries += 1
 
@@ -300,8 +301,8 @@ class TestRecordings(unittest.TestCase):
         # Poll Manteca to make sure our call is alive
         call_status = self.get_test_status(test_id)
         retries = 0
-        while call_status['status'] == 'DEAD' and retries < 10:
-            time.sleep(3)
+        while call_status['status'] == 'DEAD' and retries < MAX_RETRIES:
+            time.sleep(TEST_SLEEP)
             call_status = self.get_test_status(test_id)
             retries += 1
 
@@ -441,7 +442,7 @@ class TestRecordings(unittest.TestCase):
         call_status = self.get_test_status(test_id)
         retries = 0
         while call_status['callTranscribed'] == False and retries < MAX_RETRIES:
-            time.sleep(3)
+            time.sleep(TEST_SLEEP)
             call_status = self.get_test_status(test_id)
             retries += 1
 
@@ -481,7 +482,7 @@ class TestRecordings(unittest.TestCase):
         call_status = self.get_test_status(test_id)
         retries = 0
         while call_status['callTranscribed'] == False and retries < MAX_RETRIES:
-            time.sleep(3)
+            time.sleep(TEST_SLEEP)
             call_status = self.get_test_status(test_id)
             retries += 1
 
@@ -560,8 +561,8 @@ class TestRecordings(unittest.TestCase):
         # Poll Manteca to make sure our call is alive
         call_status = self.get_test_status(test_id)
         retries = 0
-        while call_status['status'] == 'DEAD' and retries < 10:
-            time.sleep(3)
+        while call_status['status'] == 'DEAD' and retries < MAX_RETRIES:
+            time.sleep(TEST_SLEEP)
             call_status = self.get_test_status(test_id)
             retries += 1
 
