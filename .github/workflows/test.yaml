@@ -45,6 +45,10 @@ jobs:
           BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
           PYTHON_VERSION: ${{ matrix.python-version }}
           OPERATING_SYSTEM: ${{ matrix.os }}
+          MANTECA_ACTIVE_NUMBER: ${{ secrets.MANTECA_ACTIVE_NUMBER }}
+          MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_IDLE_NUMBER }}
+          MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
+          MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
         run: pytest
 
       - name: Notify Slack of Failures

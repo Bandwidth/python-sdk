@@ -39,9 +39,9 @@ try:
     BW_PASSWORD = os.environ["BW_PASSWORD"]
     BW_ACCOUNT_ID = os.environ["BW_ACCOUNT_ID"]
 
-    # BW Numbers
-    BW_ACTIVE_NUMBER = os.environ["BW_ACTIVE_NUMBER"]
-    BW_IDLE_NUMBER = os.environ["BW_IDLE_NUMBER"]
+    # Manteca Numbers
+    MANTECA_ACTIVE_NUMBER = os.environ["MANTECA_ACTIVE_NUMBER"]
+    MANTECA_IDLE_NUMBER = os.environ["MANTECA_IDLE_NUMBER"]
 
     # Manteca
     MANTECA_BASE_URL = os.environ["MANTECA_BASE_URL"]
@@ -118,7 +118,7 @@ class TestRecordings(unittest.TestCase):
         test_id = json.loads(response.data)
 
         # Make a CreateCall body and assign the appropriate params
-        call_body = CreateCall(to=BW_IDLE_NUMBER, _from=BW_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url, tag=test_id)
+        call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url, tag=test_id)
 
         # Make the call
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, call_body)
@@ -127,8 +127,8 @@ class TestRecordings(unittest.TestCase):
         assert len(create_call_response.call_id) == 47    # assert request created and id matches expected length (47)
         assert create_call_response.account_id == BW_ACCOUNT_ID
         assert create_call_response.application_id == MANTECA_APPLICATION_ID
-        assert create_call_response.to == BW_IDLE_NUMBER
-        assert create_call_response._from == BW_ACTIVE_NUMBER
+        assert create_call_response.to == MANTECA_IDLE_NUMBER
+        assert create_call_response._from == MANTECA_ACTIVE_NUMBER
         assert create_call_response.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
             BW_ACCOUNT_ID + "/calls/" + create_call_response.call_id
 
@@ -233,7 +233,7 @@ class TestRecordings(unittest.TestCase):
         # Download recording media
         recording_media_response = self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, recording_id, _preload_content=False)
         call_recording_media = recording_media_response.data
-        
+
         '''
         Do a verification test on the actual recording data?
         '''
