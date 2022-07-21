@@ -210,9 +210,11 @@ class TestRecordings(unittest.TestCase):
         (test_id, call_id) = self.complete_recorded_call()
             
         # List Call Recordings Endpoint
-        call_recordings: List[CallRecordingMetadata] = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
+        response: List[CallRecordingMetadata] = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id, _return_http_data_only=False)
+        assert response[1] == 200 # Check response code
         
         # We should get back 1 recording
+        call_recordings = response[0]
         assert len(call_recordings) == 1
         
         # Checks on the first recording
@@ -221,13 +223,17 @@ class TestRecordings(unittest.TestCase):
         recording_id = first_recording.recording_id
 
         # Get Single Recording Endpoint
-        recording: CallRecordingMetadata = self.recordings_api_instance.get_call_recording(BW_ACCOUNT_ID, call_id, recording_id)
+        recording_response: CallRecordingMetadata = self.recordings_api_instance.get_call_recording(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
+        assert recording_response[1] == 200
+
+        recording = recording_response[0]
         assert recording.recording_id == recording_id
         self.validate_recording(recording, call_id)
 
         # Download recording media
-        recording_response = self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, recording_id, _preload_content=False)
-        call_recording_media = recording_response.data
+        recording_media_response = self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, recording_id, _preload_content=False)
+        call_recording_media = recording_media_response.data
+        
         '''
         Do a verification test on the actual recording data?
         '''
@@ -238,7 +244,8 @@ class TestRecordings(unittest.TestCase):
         # Create Transcription Request
         transcription_url = MANTECA_BASE_URL + "/transcriptions"
         transcribe_recording_request = TranscribeRecording(callback_url=transcription_url,tag=test_id)
-        self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording_request)
+        transcription_response = self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording_request, _return_http_data_only=False)
+        assert transcription_response[1] == 204
 
         # Poll Manteca to make sure our call is transcribed
         call_status = self.get_test_status(test_id)
@@ -252,7 +259,10 @@ class TestRecordings(unittest.TestCase):
         assert call_status['callTranscribed'] == True
 
         # Get the transcription
-        transcription_list = self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
+        transcription_response = self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
+        assert transcription_response[1] == 200
+
+        transcription_list = transcription_response[0]
         assert len(transcription_list.transcripts) == 1
         transcription = transcription_list.transcripts[0]
         assert isinstance(transcription, Transcription)
@@ -260,18 +270,19 @@ class TestRecordings(unittest.TestCase):
         assert isinstance(transcription.confidence, float)
 
         # Delete the transcription
-        self.recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
+        delete_transcription_response = self.recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
+        assert delete_transcription_response[1] == 204
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
-        # print("Delete transcription.")
 
         # Delete Recording media
-        delete_recording_response = self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
+        delete_recording_media_response = self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
         # Validate the 204 response
-        assert delete_recording_response[1] == 204
+        assert delete_recording_media_response[1] == 204
 
         # Delete Recording
-        self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, recording_id)
+        delete_recording_response = self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
+        assert delete_recording_response[1] == 204
         call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
         assert len(call_recordings) == 0
 
