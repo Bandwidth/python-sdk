@@ -31,10 +31,10 @@ from bandwidth.exceptions import ApiAttributeError
 
 
 def lazy_import():
+    from bandwidth.model.lookup_result import LookupResult
     from bandwidth.model.lookup_status_enum import LookupStatusEnum
-    from bandwidth.model.lookup_status_result_inner import LookupStatusResultInner
+    globals()['LookupResult'] = LookupResult
     globals()['LookupStatusEnum'] = LookupStatusEnum
-    globals()['LookupStatusResultInner'] = LookupStatusResultInner
 
 
 class LookupStatus(ModelNormal):
@@ -92,7 +92,7 @@ class LookupStatus(ModelNormal):
         return {
             'request_id': (str,),  # noqa: E501
             'status': (LookupStatusEnum,),  # noqa: E501
-            'result': ([LookupStatusResultInner],),  # noqa: E501
+            'result': ([LookupResult],),  # noqa: E501
             'failed_telephone_numbers': ([str],),  # noqa: E501
         }
 
@@ -151,7 +151,7 @@ class LookupStatus(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             request_id (str): The requestId.. [optional]  # noqa: E501
             status (LookupStatusEnum): [optional]  # noqa: E501
-            result ([LookupStatusResultInner]): The carrier information results for the specified telephone number.. [optional]  # noqa: E501
+            result ([LookupResult]): The carrier information results for the specified telephone number.. [optional]  # noqa: E501
             failed_telephone_numbers ([str]): The telephone numbers whose lookup failed.. [optional]  # noqa: E501
         """
 
@@ -240,7 +240,7 @@ class LookupStatus(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             request_id (str): The requestId.. [optional]  # noqa: E501
             status (LookupStatusEnum): [optional]  # noqa: E501
-            result ([LookupStatusResultInner]): The carrier information results for the specified telephone number.. [optional]  # noqa: E501
+            result ([LookupResult]): The carrier information results for the specified telephone number.. [optional]  # noqa: E501
             failed_telephone_numbers ([str]): The telephone numbers whose lookup failed.. [optional]  # noqa: E501
         """
 
