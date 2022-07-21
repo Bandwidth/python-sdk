@@ -6,7 +6,7 @@ __pycache__/
 # C extensions
 *.so
 
-# MACOS Files
+# MacOS Files 
 .DS_Store
 
 # Distribution / packaging
@@ -67,3 +67,9 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# VS Code
+.vscode
+
+# Test Fixtures
+test/fixtures/
