@@ -103,16 +103,14 @@ class TestMessagesApi(unittest.TestCase):
             
         self.assertEqual(context.exception.status, 400)
 
-        e = CreateMessageRequestError(field_errors=(json.loads(context.exception.body))['fieldErrors'], **json.loads(context.exception.body))
-        self.assertIsInstance(e, CreateMessageRequestError)
-        self.assertEqual(e.type, 'request-validation')
-        self.assertIsInstance(e.description, str)
-        self.assertIsInstance(e.field_errors, list)
+        e = json.loads(context.exception.body)
+        self.assertEqual(e['type'], 'request-validation')
+        self.assertIsInstance(e['description'], str)
+        self.assertIsInstance(e['fieldErrors'], list)
 
-        error = e.field_errors[0]
-        self.assertIsInstance(error, FieldError)
-        self.assertIsInstance(error.fieldName, str)
-        self.assertIsInstance(error.description, str)
+        field_error = e['fieldErrors'][0]
+        self.assertIsInstance(field_error['fieldName'], str)
+        self.assertIsInstance(field_error['description'], str)
     
 
     def test_create_message_unauthorized(self):
@@ -121,10 +119,9 @@ class TestMessagesApi(unittest.TestCase):
              
         self.assertEqual(context.exception.status, 401)
 
-        e = MessagingRequestError(**json.loads(context.exception.body))
-        self.assertIsInstance(e, MessagingRequestError)
-        self.assertEqual(e.type, 'unauthorized')
-        self.assertEqual(e.description, 'Authentication Failed')
+        e = json.loads(context.exception.body)
+        self.assertEqual(e['type'], 'unauthorized')
+        self.assertEqual(e['description'], 'Authentication Failed')
 
     
     @unittest.skip('The SDK catches incorrect content-type before making the request and attempts to create an ApiException,\
@@ -150,7 +147,6 @@ class TestMessagesApi(unittest.TestCase):
         message = api_response.messages[0]
         self.assertEqual(message.account_id, self.account_id)
         self.assertRegex(message.destination_tn, '^\\+[1-9]\\d{1,14}$')
-        self.assertFalse(message.error_code)
         self.assertIsInstance(message.message_direction, ListMessageDirectionEnum)
         self.assertTrue(message.message_id)
         self.assertIsInstance(message.message_status, MessageStatusEnum)
@@ -167,10 +163,9 @@ class TestMessagesApi(unittest.TestCase):
         
         self.assertEqual(context.exception.status, 400)
 
-        e = MessagingRequestError(**json.loads(context.exception.body))
-        self.assertIsInstance(e, MessagingRequestError)
-        self.assertEqual(e.type, 'bad-request')
-        self.assertIsInstance(e.description, str)
+        e = json.loads(context.exception.body)
+        self.assertEqual(e['type'], 'bad-request')
+        self.assertIsInstance(e['description'], str)
 
     
     def test_list_messages_unauthorized(self):
@@ -180,10 +175,9 @@ class TestMessagesApi(unittest.TestCase):
              
         self.assertEqual(context.exception.status, 401)
 
-        e = MessagingRequestError(**json.loads(context.exception.body))
-        self.assertIsInstance(e, MessagingRequestError)
-        self.assertEqual(e.type, 'unauthorized')
-        self.assertEqual(e.description, 'Your request could not be authenticated')
+        e = json.loads(context.exception.body)
+        self.assertEqual(e['type'], 'unauthorized')
+        self.assertEqual(e['description'], 'Your request could not be authenticated')
         
 
 if __name__ == '__main__':
