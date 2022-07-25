@@ -262,20 +262,25 @@ class CallsIntegration(unittest.TestCase):
             fallback_password="mySecretPassword1!",
             tag="My Custom Tag",
         )
+        body2 = UpdateCall(state=CallStateEnum("completed"));
 
         time.sleep(2)
         update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
         
         self.assertEqual(update_call_response[1], 200)
 
+        # hanging-up the call
+        update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body2, _return_http_data_only=False)
+        self.assertEqual(update_call_response[1], 200)
+    
     def test_update_call_bad_request(self):
         """Validate a bad (400) update call request
         """
-        answer_url = MANTECA_BASE_URL + "/bxml/loop"
+        answer_url = MANTECA_BASE_URL + "/bxml/idle"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
-        body = UpdateCall(state=CallStateEnum("active"))
+        body = UpdateCall(state=CallStateEnum("completed"))
 
         with self.assertRaises(ApiException) as context:
             self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
@@ -293,7 +298,7 @@ class CallsIntegration(unittest.TestCase):
         unauthorized_api_instance = calls_api.CallsApi(
             unauthorized_api_client)
         call_id = "invalidCallId"
-        body = UpdateCall(state=CallStateEnum("active"))
+        body = UpdateCall(state=CallStateEnum("completed"))
 
         with self.assertRaises(UnauthorizedException) as context:
             unauthorized_api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
@@ -312,11 +317,11 @@ class CallsIntegration(unittest.TestCase):
         forbidden_api_client = bandwidth.ApiClient(configuration)
         forbidden_api_instance = calls_api.CallsApi(
             forbidden_api_client)
-        answer_url = MANTECA_BASE_URL + "/bxml/loop"
+        answer_url = MANTECA_BASE_URL + "/bxml/idle"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
-        body = UpdateCall(state=CallStateEnum("active"))
+        body = UpdateCall(state=CallStateEnum("completed"))
 
 
         with self.assertRaises(ForbiddenException) as context:
@@ -351,10 +356,15 @@ class CallsIntegration(unittest.TestCase):
         
         self.assertEqual(update_call_bxml_response[1], 204)
 
+        # hanging-up the call
+        body2 = UpdateCall(state=CallStateEnum("completed"))
+        update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body2, _return_http_data_only=False)
+        self.assertEqual(update_call_response[1], 200)
+
     def test_update_call_bxml_bad_request(self):    
         """Validate a bad (400) update call bxml request
         """
-        answer_url = MANTECA_BASE_URL + "/bxml/loop"
+        answer_url = MANTECA_BASE_URL + "/bxml/idle"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
@@ -396,7 +406,7 @@ class CallsIntegration(unittest.TestCase):
         forbidden_api_client = bandwidth.ApiClient(configuration)
         forbidden_api_instance = calls_api.CallsApi(
             forbidden_api_client)
-        answer_url = MANTECA_BASE_URL + "/bxml/loop"
+        answer_url = MANTECA_BASE_URL + "/bxml/idle"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
