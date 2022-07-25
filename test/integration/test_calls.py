@@ -248,7 +248,7 @@ class CallsIntegration(unittest.TestCase):
         """    
         answer_url = MANTECA_BASE_URL + "/bxml/loop"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
-        create_call_response: CreateCallResponse = self.api_instance.create_call("9901159", call_body, _return_http_data_only=False)
+        create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
         body = UpdateCall(
             state=CallStateEnum("active"),
@@ -264,7 +264,7 @@ class CallsIntegration(unittest.TestCase):
         )
 
         time.sleep(2)
-        update_call_response: UpdateCall = self.api_instance.update_call("9901159", call_id, body, _return_http_data_only=False)
+        update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
         
         self.assertEqual(update_call_response[1], 200)
 
@@ -273,12 +273,12 @@ class CallsIntegration(unittest.TestCase):
         """
         answer_url = MANTECA_BASE_URL + "/bxml/loop"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
-        create_call_response: CreateCallResponse = self.api_instance.create_call("9901159", call_body, _return_http_data_only=False)
+        create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
         body = UpdateCall(state=CallStateEnum("active"))
 
         with self.assertRaises(ApiException) as context:
-            self.api_instance.update_call("9901159", call_id, body, _return_http_data_only=False)
+            self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
             
         self.assertEqual(context.exception.status, 400)           
 
@@ -314,13 +314,13 @@ class CallsIntegration(unittest.TestCase):
             forbidden_api_client)
         answer_url = MANTECA_BASE_URL + "/bxml/loop"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
-        create_call_response: CreateCallResponse = self.api_instance.create_call("9901159", call_body, _return_http_data_only=False)
+        create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
         body = UpdateCall(state=CallStateEnum("active"))
 
 
         with self.assertRaises(ForbiddenException) as context:
-            forbidden_api_instance.update_call("9901159", call_id, body, _return_http_data_only=False)
+            forbidden_api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
 
         self.assertApiException(context, ForbiddenException, 403)
 
@@ -342,12 +342,12 @@ class CallsIntegration(unittest.TestCase):
         """            
         answer_url = MANTECA_BASE_URL + "/bxml/loop"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
-        create_call_response: CreateCallResponse = self.api_instance.create_call("9901159", call_body, _return_http_data_only=False)
+        create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
         body = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence><Pause duration="3"/></Bxml>'
 
         time.sleep(2)
-        update_call_bxml_response: UpdateCall = self.api_instance.update_call_bxml("9901159", call_id, body, _return_http_data_only=False)
+        update_call_bxml_response: UpdateCall = self.api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
         
         self.assertEqual(update_call_bxml_response[1], 204)
 
@@ -356,12 +356,12 @@ class CallsIntegration(unittest.TestCase):
         """
         answer_url = MANTECA_BASE_URL + "/bxml/loop"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
-        create_call_response: CreateCallResponse = self.api_instance.create_call("9901159", call_body, _return_http_data_only=False)
+        create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
         body = "invalidBXML"
 
         with self.assertRaises(ApiException) as context:
-            self.api_instance.update_call_bxml("9901159", call_id, body, _return_http_data_only=False)
+            self.api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
             
         self.assertEqual(context.exception.status, 400)
 
@@ -398,13 +398,13 @@ class CallsIntegration(unittest.TestCase):
             forbidden_api_client)
         answer_url = MANTECA_BASE_URL + "/bxml/loop"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
-        create_call_response: CreateCallResponse = self.api_instance.create_call("9901159", call_body, _return_http_data_only=False)
+        create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
         body = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence><Pause duration="3"/></Bxml>'
 
 
         with self.assertRaises(ForbiddenException) as context:
-            forbidden_api_instance.update_call_bxml("9901159", call_id, body, _return_http_data_only=False)
+            forbidden_api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
 
         self.assertApiException(context, ForbiddenException, 403)
 
