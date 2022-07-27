@@ -73,7 +73,7 @@ class CallsIntegration(unittest.TestCase):
     def test_create_call(self):
         """Validate a Create Call request with all optional parameters
         """
-        time.sleep(2)        
+        time.sleep(3)        
         answer_url = BASE_CALLBACK_URL
         call_body = CreateCall(
             to=USER_NUMBER, 
@@ -174,11 +174,11 @@ class CallsIntegration(unittest.TestCase):
     def test_get_call_state(self):
         """Validate an Get Call State Request
         """
-        time.sleep(2)
         answer_url = BASE_CALLBACK_URL
         call_body = CreateCall(to=USER_NUMBER, _from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
+        time.sleep(3)
 
         get_call_response: CallState = self.api_instance.get_call_state(BW_ACCOUNT_ID, call_id, _return_http_data_only=False)
         
@@ -237,7 +237,7 @@ class CallsIntegration(unittest.TestCase):
     def test_update_call(self):
         """Validate an UpdateCall Request
         """
-        time.sleep(2)            
+        time.sleep(3)            
         answer_url = MANTECA_BASE_URL + "/bxml/loop"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
@@ -256,11 +256,12 @@ class CallsIntegration(unittest.TestCase):
         )
         body2 = UpdateCall(state=CallStateEnum("completed"));
 
-        time.sleep(2)
+        time.sleep(3)
         update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
         
         self.assertEqual(update_call_response[1], 200)
 
+        time.sleep(2)
         # hanging-up the call
         update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body2, _return_http_data_only=False)
         self.assertEqual(update_call_response[1], 200)
@@ -338,7 +339,7 @@ class CallsIntegration(unittest.TestCase):
     def test_update_call_bxml(self):
         """Validate an UpdateCallBxml Request
         """
-        time.sleep(2)                    
+                  
         answer_url = MANTECA_BASE_URL + "/bxml/loop"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
@@ -349,7 +350,8 @@ class CallsIntegration(unittest.TestCase):
         update_call_bxml_response: UpdateCall = self.api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
         
         self.assertEqual(update_call_bxml_response[1], 204)
-
+        
+        time.sleep(2)  
         # hanging-up the call
         body2 = UpdateCall(state=CallStateEnum("completed"))
         update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body2, _return_http_data_only=False)
