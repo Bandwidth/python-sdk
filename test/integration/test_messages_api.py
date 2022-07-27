@@ -25,9 +25,6 @@ from bandwidth.model.message_type_enum import MessageTypeEnum
 from bandwidth.model.messages_list import MessagesList
 from bandwidth.model.priority_enum import PriorityEnum
 from bandwidth.model.message import Message
-from bandwidth.model.messaging_request_error import MessagingRequestError
-from bandwidth.model.create_message_request_error import CreateMessageRequestError
-from bandwidth.model.field_error import FieldError
 from bandwidth.exceptions import ApiException, UnauthorizedException
 
 
