@@ -109,8 +109,8 @@ class TestMessagesApi(unittest.TestCase):
         self.assertIsInstance(e['fieldErrors'], list)
 
         field_error = e['fieldErrors'][0]
-        self.assertIsInstance(field_error['fieldName'], str)
-        self.assertIsInstance(field_error['description'], str)
+        self.assertEqual(field_error['fieldName'], 'to')
+        self.assertEqual(field_error['description'], "'+invalid' must be replaced with a valid E164 formatted telephone number")
     
 
     def test_create_message_unauthorized(self):
@@ -147,7 +147,7 @@ class TestMessagesApi(unittest.TestCase):
         message = api_response.messages[0]
         self.assertEqual(message.account_id, self.account_id)
         self.assertRegex(message.destination_tn, '^\\+[1-9]\\d{1,14}$')
-        self.assertIsInstance(message.message_direction, ListMessageDirectionEnum)
+        self.assertEqual(message.message_direction, ListMessageDirectionEnum("OUTBOUND"))
         self.assertTrue(message.message_id)
         self.assertIsInstance(message.message_status, MessageStatusEnum)
         self.assertIsInstance(message.message_type, MessageTypeEnum)
