@@ -75,7 +75,7 @@ class TestMessagesApi(unittest.TestCase):
 
 
     def test_create_message(self):
-        response: Message = self.api_instance.create_message(self.account_id, self.message_request, _return_http_data_only=False)
+        response = self.api_instance.create_message(self.account_id, self.message_request, _return_http_data_only=False)
 
         self.assertEqual(response[1], 202)
 
