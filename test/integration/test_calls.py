@@ -2,7 +2,6 @@
 Integration test for Bandwidth's Voice Voice Calls API
 """
 
-from email.quoprimime import body_check
 import os
 import time
 import unittest
@@ -45,6 +44,8 @@ except KeyError as e:
 class CallsIntegration(unittest.TestCase):
     """Voice Calls API integration test"""
 
+    global callIdArray
+    callIdArray = []
 
     def setUp(self):
         configuration = bandwidth.Configuration(
@@ -55,8 +56,27 @@ class CallsIntegration(unittest.TestCase):
         self.api_instance = calls_api.CallsApi(api_client)
         self.account_id = BW_ACCOUNT_ID
 
+
     def tearDown(self):
-        pass
+        """
+           Whenever we create an actual call, we'll add the call_id to the callIdArray. Then when the integration test is done, as part of tearDown we'll:
+                Do a get to check is the call status is still active
+                    If so, update to completed to end the call
+                    If not, pop that callID off the array
+                Once we go through the whole array, we clear the array so it's empty for the next integration test.    
+           if the status is active, send UpdateCall to change to completed
+        """
+        
+        if len(callIdArray) > 0:       
+            for callId in callIdArray:
+                body = UpdateCall(state=CallStateEnum("completed"))
+                get_call_response: CallState = self.api_instance.get_call_state(BW_ACCOUNT_ID, callId, _return_http_data_only=False)
+                if get_call_response[0].state == 'active':
+                    self.api_instance.update_call(BW_ACCOUNT_ID, callId, body, _return_http_data_only=False)
+                elif get_call_response[0].state == 'complete':
+                    callIdArray.remove(callId)
+            callIdArray.clear()
+        pass                
 
     def assertApiException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
         """Validates that common API exceptions, (401, 403, and 404) are properly formatted
@@ -71,7 +91,8 @@ class CallsIntegration(unittest.TestCase):
         self.assertIs(type(context.exception.body), str)
 
     def test_create_call(self):
-        """Validate a Create Call request with all optional parameters
+        """
+            Validate a Create Call request with all optional parameters
         """
         time.sleep(3)        
         answer_url = BASE_CALLBACK_URL
@@ -114,6 +135,9 @@ class CallsIntegration(unittest.TestCase):
 
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
 
+        #Adding the call to the callIdArray
+        callIdArray.append(create_call_response[0].call_id)
+
         self.assertEqual(create_call_response[1], 201)
         self.assertIs(type(create_call_response[0].call_id), str)
         self.assertEqual(create_call_response[0].account_id, BW_ACCOUNT_ID)
@@ -122,6 +146,11 @@ class CallsIntegration(unittest.TestCase):
         self.assertEqual(create_call_response[0]._from, BW_NUMBER)
         self.assertEqual(create_call_response[0].call_url, ("https://voice.bandwidth.com/api/v2/accounts/" + \
             BW_ACCOUNT_ID + "/calls/" + create_call_response[0].call_id))
+
+        time.sleep(1)
+        body = UpdateCall(state=CallStateEnum("completed"))
+        self.api_instance.update_call(BW_ACCOUNT_ID, create_call_response[0].call_id, body, _return_http_data_only=False)
+    
 
     def test_create_call_bad_request(self):
         """Validate a bad (400) request
@@ -178,6 +207,10 @@ class CallsIntegration(unittest.TestCase):
         call_body = CreateCall(to=USER_NUMBER, _from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
+
+        #Adding the call to the callIdArray
+        callIdArray.append(create_call_response[0].call_id)
+
         time.sleep(3)
 
         get_call_response: CallState = self.api_instance.get_call_state(BW_ACCOUNT_ID, call_id, _return_http_data_only=False)
@@ -238,30 +271,34 @@ class CallsIntegration(unittest.TestCase):
         """Validate an UpdateCall Request
         """
         time.sleep(3)            
-        answer_url = MANTECA_BASE_URL + "/bxml/loop"
+        answer_url = MANTECA_BASE_URL + "/bxml/idle"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
+
+        #Adding the call to the callIdArray
+        callIdArray.append(create_call_response[0].call_id)
+
         body = UpdateCall(
             state=CallStateEnum("active"),
-            redirect_url=MANTECA_BASE_URL + "/bxml/loop",
+            redirect_url=MANTECA_BASE_URL + "/bxml/idle",
             redirect_method=RedirectMethodEnum("POST"),
             username="mySecretUsername",
             password="mySecretPassword1!",
-            redirect_fallback_url=MANTECA_BASE_URL + "/bxml/loop",
+            redirect_fallback_url=MANTECA_BASE_URL + "/bxml/idle",
             redirect_fallback_method=RedirectMethodEnum("POST"),
             fallback_username="mySecretUsername",
             fallback_password="mySecretPassword1!",
             tag="My Custom Tag",
         )
-        body2 = UpdateCall(state=CallStateEnum("completed"));
+        body2 = UpdateCall(state=CallStateEnum("completed"))
 
         time.sleep(3)
         update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
         
         self.assertEqual(update_call_response[1], 200)
 
-        time.sleep(2)
+        time.sleep(3)
         # hanging-up the call
         update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body2, _return_http_data_only=False)
         self.assertEqual(update_call_response[1], 200)
@@ -273,8 +310,15 @@ class CallsIntegration(unittest.TestCase):
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
+
+        #Adding the call to the callIdArray
+        callIdArray.append(create_call_response[0].call_id)
+
         body = UpdateCall(states="badReqeust")
         body2 = UpdateCall(state=CallStateEnum("completed"))
+
+        time.sleep(3)        
+
 
         with self.assertRaises(ApiException) as context:
             self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
@@ -317,13 +361,23 @@ class CallsIntegration(unittest.TestCase):
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
+
+        #Adding the call to the callIdArray
+        callIdArray.append(create_call_response[0].call_id)
+
         body = UpdateCall(state=CallStateEnum("completed"))
 
+        time.sleep(2)        
 
         with self.assertRaises(ForbiddenException) as context:
             forbidden_api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
 
-        self.assertApiException(context, ForbiddenException, 403) 
+        self.assertApiException(context, ForbiddenException, 403)
+
+        time.sleep(3)
+        # hanging-up the call
+        update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
+        self.assertEqual(update_call_response[1], 200)       
 
     def test_update_call_not_found(self):
         """Validate a not found update call request
@@ -340,10 +394,14 @@ class CallsIntegration(unittest.TestCase):
         """Validate an UpdateCallBxml Request
         """
                   
-        answer_url = MANTECA_BASE_URL + "/bxml/loop"
+        answer_url = MANTECA_BASE_URL + "/bxml/idle"
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
+
+        #Adding the call to the callIdArray
+        callIdArray.append(create_call_response[0].call_id)
+
         body = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence><Pause duration="3"/></Bxml>'
 
         time.sleep(2)
@@ -364,12 +422,25 @@ class CallsIntegration(unittest.TestCase):
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
+
+        #Adding the call to the callIdArray
+        callIdArray.append(create_call_response[0].call_id)
+
+        time.sleep(3)        
+
+
         body = "invalidBXML"
 
         with self.assertRaises(ApiException) as context:
             self.api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
             
         self.assertEqual(context.exception.status, 400)
+
+        time.sleep(2)  
+        # hanging-up the call
+        body2 = UpdateCall(state=CallStateEnum("completed"))
+        update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body2, _return_http_data_only=False)
+        self.assertEqual(update_call_response[1], 200)
 
 
     def test_update_call_bxml_unauthorized(self):
@@ -404,16 +475,27 @@ class CallsIntegration(unittest.TestCase):
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url)
         create_call_response: CreateCallResponse = self.api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
         call_id = create_call_response[0].call_id
+
+        #Adding the call to the callIdArray
+        callIdArray.append(create_call_response[0].call_id)
+
         body = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence><Pause duration="3"/></Bxml>'
 
-
+        time.sleep(2)        
         with self.assertRaises(ForbiddenException) as context:
             forbidden_api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, body, _return_http_data_only=False)
 
         self.assertApiException(context, ForbiddenException, 403)
 
+        time.sleep(2)  
+        # hanging-up the call
+        body2 = UpdateCall(state=CallStateEnum("completed"))
+        update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, body2, _return_http_data_only=False)
+        self.assertEqual(update_call_response[1], 200)
+
     def test_update_call_bxml_not_found(self):
-        """Validate a not found update call bxml request
+        """
+            Validate a not found update call bxml request
         """
         body = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence><Pause duration="3"/></Bxml>'
         call_id = "invalidCallId"
