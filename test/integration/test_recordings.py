@@ -20,6 +20,7 @@ from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.configuration import Configuration
 from bandwidth.exceptions import ForbiddenException, NotFoundException, UnauthorizedException
 from bandwidth.model.call_recording_metadata import CallRecordingMetadata
+from bandwidth.model.call_state import CallState
 from bandwidth.model.call_state_enum import CallStateEnum
 from bandwidth.api.calls_api import CallsApi
 from bandwidth.model.create_call_response import CreateCallResponse
@@ -62,6 +63,9 @@ class TestRecordings(unittest.TestCase):
     Integration tests for the Recordings API.
     """
 
+    global callIdArray
+    callIdArray = []
+
     def setUp(self) -> None:
         """
         Set up for our tests by creating the CallsApi and RecordingsApi instances
@@ -87,9 +91,24 @@ class TestRecordings(unittest.TestCase):
 
     def tearDown(self) -> None:
         """
-        Post-test operations.
+           Whenever we create an actual call, we'll add the call_id to the callIdArray. Then when the integration test is done, as part of tearDown we'll:
+                Do a get to check is the call status is still active
+                    If so, update to completed to end the call
+                    If not, pop that callID off the array
+                Once we go through the whole array, we clear the array so it's empty for the next integration test.    
+           if the status is active, send UpdateCall to change to completed
         """
-        pass
+
+        if len(callIdArray) > 0:       
+            for callId in callIdArray:
+                body = UpdateCall(state=CallStateEnum("completed"))
+                get_call_response: CallState = self.api_instance.get_call_state(BW_ACCOUNT_ID, callId, _return_http_data_only=False)
+                if get_call_response[0].state == 'active':
+                    self.api_instance.update_call(BW_ACCOUNT_ID, callId, body, _return_http_data_only=False)
+                elif get_call_response[0].state == 'complete':
+                    callIdArray.remove(callId)
+            callIdArray.clear()
+        pass   
 
     def create_and_validate_call(self, answer_url: str) -> Tuple[str, str]:
         """
@@ -132,6 +151,9 @@ class TestRecordings(unittest.TestCase):
         assert create_call_response._from == MANTECA_ACTIVE_NUMBER
         assert create_call_response.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
             BW_ACCOUNT_ID + "/calls/" + create_call_response.call_id
+
+        # Adding the call to the callIdArray
+        callIdArray.append(create_call_response.call_id)
 
         # Return our test id and call id
         return (test_id, create_call_response.call_id)
@@ -295,7 +317,7 @@ class TestRecordings(unittest.TestCase):
         """
         
         # Create the call
-        answer_url = MANTECA_BASE_URL + "/bxml/startRecordingLoop"
+        answer_url = MANTECA_BASE_URL + "/bxml/startLongRecording"
         (test_id, call_id) = self.create_and_validate_call(answer_url)
 
         # Poll Manteca to make sure our call is alive
@@ -555,7 +577,7 @@ class TestRecordings(unittest.TestCase):
         """
 
         # Create the call
-        answer_url = MANTECA_BASE_URL + "/bxml/startRecordingLoop"
+        answer_url = MANTECA_BASE_URL + "/bxml/startLongRecording"
         (test_id, call_id) = self.create_and_validate_call(answer_url)
 
         # Poll Manteca to make sure our call is alive
