@@ -102,9 +102,9 @@ class TestRecordings(unittest.TestCase):
         if len(callIdArray) > 0:       
             for callId in callIdArray:
                 body = UpdateCall(state=CallStateEnum("completed"))
-                get_call_response: CallState = self.api_instance.get_call_state(BW_ACCOUNT_ID, callId, _return_http_data_only=False)
+                get_call_response: CallState = self.calls_api_instance.get_call_state(BW_ACCOUNT_ID, callId, _return_http_data_only=False)
                 if get_call_response[0].state == 'active':
-                    self.api_instance.update_call(BW_ACCOUNT_ID, callId, body, _return_http_data_only=False)
+                    self.calls_api_instance.update_call(BW_ACCOUNT_ID, callId, body, _return_http_data_only=False)
                 elif get_call_response[0].state == 'complete':
                     callIdArray.remove(callId)
             callIdArray.clear()
