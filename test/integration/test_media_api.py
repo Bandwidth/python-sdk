@@ -5,7 +5,7 @@ Integration test for Bandwidth's Media API
 import os
 import filecmp
 import unittest
-
+import logging
 import bandwidth
 from bandwidth.api import media_api
 from bandwidth.model.media import Media
@@ -15,20 +15,28 @@ from bandwidth.exceptions import ApiException, NotFoundException
 class TestMedia(unittest.TestCase):
     """Media API integration Test
     """
+    # api_client = None
+
+    # @classmethod
+    # def setUpClass(cls) -> None:
+        # configuration = bandwidth.Configuration(
+        #     username=os.environ['BW_USERNAME'],
+        #     password=os.environ['BW_PASSWORD']
+        # )
+        # cls.api_client = bandwidth.ApiClient(configuration)
 
     def setUp(self) -> None:
         configuration = bandwidth.Configuration(
             username=os.environ['BW_USERNAME'],
             password=os.environ['BW_PASSWORD']
         )
-        api_client = bandwidth.ApiClient(configuration)
-        self.api_instance = media_api.MediaApi(api_client)
+        self.api_client = bandwidth.ApiClient(configuration)
+        self.api_instance = media_api.MediaApi(self.api_client)
         self.account_id = os.environ['BW_ACCOUNT_ID']
         self.media_path = "./test/fixtures/"
         self.media_file = "python_cat.jpeg"
         self.media_id = os.environ['PYTHON_VERSION'] + "_" + os.environ['RUNNER_OS'] + "_" + os.environ['GITHUB_RUN_ID'] + "_" + self.media_file
         self.download_file_path = "cat_download.jpeg"
-
         self.original_file = open(self.media_path + self.media_file, "rb")
 
     def uploadMedia(self) -> None:
@@ -72,6 +80,7 @@ class TestMedia(unittest.TestCase):
         self.assertEqual(api_response_with_http_info[1], 200)
 
         api_response = self.api_instance.list_media(self.account_id)
+        logging.debug("List Media" + str(api_response))
 
         self.assertIs(type(api_response[0]), Media)
         pass
@@ -113,8 +122,10 @@ class TestMedia(unittest.TestCase):
     def test_steps(self) -> None:
         """Test each function from _steps.call_order in specified order
         """
+        
         for name, step in self._steps():
             try:
+                logging.debug('Executing step: '+ name)
                 step()
             except ApiException as e:
                 self.fail("{} failed ({}: {})".format(step, type(e), e))

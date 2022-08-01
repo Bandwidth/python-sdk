@@ -2,6 +2,7 @@
 Integration test for Bandwidth's Phone Number Lookup API
 """
 
+import logging
 import os
 import json
 import time
@@ -16,6 +17,14 @@ from bandwidth.model.lookup_result import LookupResult
 from bandwidth.model.lookup_status_enum import LookupStatusEnum
 from bandwidth.model.tn_lookup_request_error import TnLookupRequestError
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
+
+import hamcrest
+from hamcrest.core import *
+from hamcrest.library import *
+from pyparsing import one_of
+
+from .bwmatchers.one_of_string import is_one_of_string
+# from .one_of_string import is_one_of_string
 
 
 class TestPhoneNumberLookupIntegration(unittest.TestCase):
@@ -51,6 +60,31 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         if result.get('mobile_country_code') or result.get('mobile_network_code'):
             self.assertIs(type(result.mobile_country_code), str)
             self.assertIs(type(result.mobile_network_code), str)
+
+        # using hamcrest assertions
+        assert_that(result, has_properties(
+            'response_code', 0,
+            'e_164_format', e_164_format,
+            'line_provider', line_provider)
+        )
+
+        assert_that(result.country, any_of(equal_to("US"), equal_to("Canada")))
+        assert_that(result.line_type, any_of(equal_to("Mobile"), equal_to("Fixed")))
+
+        # custom matcher
+        assert_that(result.country, is_one_of_string(["US", "Canada"]))
+        assert_that(result.line_type, is_one_of_string(["Mobile", "Fixed"]))
+
+
+        # this can further simplify overall assertions with single one
+        assert_that(result, has_properties(
+            'response_code', 0,
+            'e_164_format', e_164_format,
+            'line_provider', line_provider,
+            'country', is_one_of_string(["US", "Canada"]),
+            'line_type', is_one_of_string(["Mobile", "Fixed"])
+            )
+        )
 
     def pollLookupStatus(self, request_id: str) -> LookupStatus:
         """Poll LookupRequest for 'COMPLETE' status
@@ -99,9 +133,9 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         lookup_request = LookupRequest(
             tns=[
                 os.environ['BW_NUMBER'],
-                os.environ['VZW_NUMBER'],
-                os.environ['ATT_NUMBER'],
-                os.environ['T_MOBILE_NUMBER'],
+                # os.environ['VZW_NUMBER'],
+                # os.environ['ATT_NUMBER'],
+                # os.environ['T_MOBILE_NUMBER'],
                 # os.environ['BW_INVALID_TN_LOOKUP_NUMBER']
             ],
         )
@@ -109,6 +143,9 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         # Create the lookup request and validate the response
         create_lookup_response: CreateLookupResponse = self.api_instance.create_lookup(
             self.account_id, lookup_request, _return_http_data_only=False)
+        
+        logging.debug(str(create_lookup_response))
+        
         self.assertEqual(create_lookup_response[1], 202)
         self.assertIs(type(create_lookup_response[0].status), LookupStatusEnum)
         self.assertEqual(create_lookup_response[0].status, LookupStatusEnum("IN_PROGRESS"))
@@ -135,19 +172,19 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         # Check the information for a Bandwidth TN
         bw_lookup_result: LookupResult = get_lookup_status_response.result[0]
-        self.validateResult(bw_lookup_result, os.environ['BW_NUMBER'], "Bandwidth")
+        self.validateResult(bw_lookup_result, os.environ['BW_NUMBER'], os.environ['BW_NUMBER_PROVIDER'])
 
-        # Check the information for a Verizon TN
-        vzw_lookup_result = get_lookup_status_response.result[1]
-        self.validateResult(vzw_lookup_result, os.environ['VZW_NUMBER'], "Verizon")
+        # # Check the information for a Verizon TN
+        # vzw_lookup_result = get_lookup_status_response.result[1]
+        # self.validateResult(vzw_lookup_result, os.environ['VZW_NUMBER'], "Verizon")
 
-        # Check the information for an AT&T TN
-        att_lookup_result = get_lookup_status_response.result[2]
-        self.validateResult(att_lookup_result, os.environ['ATT_NUMBER'], "AT&T")
+        # # Check the information for an AT&T TN
+        # att_lookup_result = get_lookup_status_response.result[2]
+        # self.validateResult(att_lookup_result, os.environ['ATT_NUMBER'], "AT&T")
 
-        # Check the information for a T-Mobile TN
-        t_mobile_lookup_result = get_lookup_status_response.result[3]
-        self.validateResult(t_mobile_lookup_result, os.environ['T_MOBILE_NUMBER'], "T-Mobile")
+        # # Check the information for a T-Mobile TN
+        # t_mobile_lookup_result = get_lookup_status_response.result[3]
+        # self.validateResult(t_mobile_lookup_result, os.environ['T_MOBILE_NUMBER'], "T-Mobile")
 
         # The only way to get a failed number is if the api call to the downstream service fails - so there is no way to force this in our testing currently
         # check the failed_telephone_number list

@@ -2,9 +2,11 @@
 Integration test for Bandwidth's Multi-Factor Authentication API
 """
 
+from ast import Assert
 import os
 import time
 import unittest
+import logging
 from random import randint
 
 import bandwidth
@@ -16,6 +18,9 @@ from bandwidth.model.verify_code_response import VerifyCodeResponse
 from bandwidth.model.voice_code_response import VoiceCodeResponse
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
 
+import hamcrest
+from hamcrest.core import *
+from hamcrest.library import *
 
 class TestMultiFactorAuthentication(unittest.TestCase):
     """Multi-Factor Authentication API integration Test
@@ -66,6 +71,14 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertEqual(context.exception.status, expected_status_code)
         self.assertIs(type(context.exception.body), str)
 
+        # alternate option using hamcrest mathcers - reads like normal sentence, easy to read/speak & less brain overload
+        assert_that(context.exception, is_(expectedException))
+
+        assert_that(context.exception, has_properties(
+            'status', equal_to(expected_status_code),
+            'body', not_none())
+        )
+
     def testSuccessfulMfaGenerateMessagingCodeRequest(self) -> None:
         """Test a successful MFA messaging code request 
         """
@@ -113,6 +126,9 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertEqual(type(api_response), VerifyCodeResponse)
         self.assertEqual(type(api_response.valid), bool)
         self.assertIs(api_response.valid, False)
+
+        # can be simplified
+        assert_that(api_response, has_property('valid', False))
 
     def testBadRequest(self) -> None:
         """Validates a bad (400) request
@@ -162,13 +178,17 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             expiration_time_in_minutes=3.0,
             code="123456",
         )
+        call_count = 1
         while True:
             try:
+                logging.debug('Testing rate limit, attempt #'+ str(call_count))
                 api_response_with_http_info = self.api_instance.verify_code(
                     self.account_id, verify_code_request
                 )
+                call_count += 1
             except ApiException as e:
                 if e.status == 429:
+                    logging.debug('Got rate limit error')
                     time.sleep(35)
                     api_response_with_http_info = self.api_instance.verify_code(
                         self.account_id, verify_code_request,
@@ -178,3 +198,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
                     break
                 else:
                     raise e
+            except:
+                logging.error("Unexpecte error while testing rate limit!")
+                raise e  
