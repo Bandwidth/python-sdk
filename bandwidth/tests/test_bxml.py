@@ -408,7 +408,7 @@ class TestBxml:
             'asdf', 'c-93d6f3c0-be584596-0b74-4fa2-8015-d8ede84bd1a4')
         assert actual == expected
     
-    def test_start_stream_bxml_verbs(self):
+    def test_start_stream_bxml_verb(self):
         expected = '<?xml version="1.0" encoding="UTF-8"?><Response><StartStream destination="https://www.test.com/stream" name="test_stream" streamEventUrl="https://www.test.com/event" streamEventMethod="POST" username="username" password="password"/></Response>'
         response = Response()
         start_stream = StartStream(
@@ -424,7 +424,7 @@ class TestBxml:
 
         assert expected == actual
 
-    def test_stop_stream_bxml_verbs(self):
+    def test_stop_stream_bxml_verb(self):
         expected = '<?xml version="1.0" encoding="UTF-8"?><Response><StopStream name="test_stream"/></Response>'
         response = Response()
         stop_stream = StopStream(
