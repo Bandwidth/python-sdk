@@ -81,6 +81,7 @@ class TestMedia(unittest.TestCase):
     def getMedia(self) -> None:
         """Test downloading the media we previously uploaded
         """
+        print(f'Get Media ID: {self.media_id}')
         time.sleep(5)
         api_response_with_http_info = self.api_instance.get_media(
             self.account_id, self.media_id, _return_http_data_only=False)
@@ -96,7 +97,6 @@ class TestMedia(unittest.TestCase):
         self.assertTrue(filecmp.cmp(self.media_path + self.media_file,
                         self.media_path + self.download_file_path))
         download_file.close()
-        print(f'Get Media ID: {self.media_id}')
 
     def deleteMedia(self) -> None:
         """Test deleting the media that we previously uploaded
