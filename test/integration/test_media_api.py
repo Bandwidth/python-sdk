@@ -3,7 +3,7 @@ Integration test for Bandwidth's Media API
 """
 
 import os
-import time
+import uuid
 import filecmp
 import unittest
 
@@ -27,7 +27,7 @@ class TestMedia(unittest.TestCase):
         self.account_id = os.environ['BW_ACCOUNT_ID']
         self.media_path = "./test/fixtures/"
         self.media_file = "python_cat.jpeg"
-        self.media_id = os.environ['PYTHON_VERSION'] + "_" + os.environ['RUNNER_OS'] + "_" + os.environ['GITHUB_RUN_ID'] + "_" + self.media_file
+        self.media_id = os.environ['PYTHON_VERSION'] + "_" + os.environ['RUNNER_OS'] + "_" + str(uuid.uuid4()) + "_" + self.media_file
         self.download_file_path = "cat_download.jpeg"
 
         self.original_file = open(self.media_path + self.media_file, "rb")
@@ -63,7 +63,6 @@ class TestMedia(unittest.TestCase):
             cache_control=cache_control,
             _return_http_data_only=False
         )
-        print(f'Upload Media ID: {media_id}')
 
     def listMedia(self) -> None:
         """Test listing all media on the account
@@ -81,8 +80,6 @@ class TestMedia(unittest.TestCase):
     def getMedia(self) -> None:
         """Test downloading the media we previously uploaded
         """
-        print(f'Get Media ID: {self.media_id}')
-        time.sleep(5)
         api_response_with_http_info = self.api_instance.get_media(
             self.account_id, self.media_id, _return_http_data_only=False)
 
@@ -118,7 +115,6 @@ class TestMedia(unittest.TestCase):
         """Test each function from _steps.call_order in specified order
         """
         for name, step in self._steps():
-            print(name)
             step()
 
     @unittest.skip("API does not support url encoded characters in path")
