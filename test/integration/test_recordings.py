@@ -56,7 +56,7 @@ except KeyError as e:
     raise Exception("Environmental variables not found")
 
 MAX_RETRIES = 40
-TEST_SLEEP = 3
+TEST_SLEEP = 5
 
 class TestRecordings(unittest.TestCase):
     """
