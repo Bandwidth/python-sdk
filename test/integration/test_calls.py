@@ -179,7 +179,7 @@ class CallsIntegration(unittest.TestCase):
         self.assertEqual(create_call_response[0].call_url, ("https://voice.bandwidth.com/api/v2/accounts/" + \
             BW_ACCOUNT_ID + "/calls/" + create_call_response[0].call_id))
 
-        time.sleep(1)
+        time.sleep(5)
         self.api_instance.update_call(BW_ACCOUNT_ID, create_call_response[0].call_id, updateStateCompleted, _return_http_data_only=False)
     
 
