@@ -132,6 +132,7 @@ class TestApi:
         assert create_response_body.text == message_body.text
         assert create_response_body.tag == message_body.tag
         assert create_response_body.priority == message_body.priority
+        assert True == False
 
     def test_failed_create_message(self, messaging_client):
         """Create invalid request to send an SMS using the Messaging API.
