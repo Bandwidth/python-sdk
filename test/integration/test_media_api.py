@@ -63,6 +63,7 @@ class TestMedia(unittest.TestCase):
             cache_control=cache_control,
             _return_http_data_only=False
         )
+        print(f'Upload Media ID: {media_id}')
 
     def listMedia(self) -> None:
         """Test listing all media on the account
@@ -95,6 +96,7 @@ class TestMedia(unittest.TestCase):
         self.assertTrue(filecmp.cmp(self.media_path + self.media_file,
                         self.media_path + self.download_file_path))
         download_file.close()
+        print(f'Get Media ID: {self.media_id}')
 
     def deleteMedia(self) -> None:
         """Test deleting the media that we previously uploaded
