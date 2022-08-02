@@ -116,10 +116,11 @@ class TestMedia(unittest.TestCase):
         """Test each function from _steps.call_order in specified order
         """
         for name, step in self._steps():
-            try:
-                step()
-            except ApiException as e:
-                self.fail(f"{step} failed ({type(e)}: {e})")
+            step()
+            # try:
+            #     step()
+            # except ApiException as e:
+            #     self.fail(f"{step} failed ({type(e)}: {e})")
 
     @unittest.skip("API does not support url encoded characters in path")
     def testGetMediaWithBandwidthId(self) -> None:
