@@ -3,6 +3,7 @@ Integration test for Bandwidth's Media API
 """
 
 import os
+import uuid
 import filecmp
 import unittest
 
@@ -26,7 +27,7 @@ class TestMedia(unittest.TestCase):
         self.account_id = os.environ['BW_ACCOUNT_ID']
         self.media_path = "./test/fixtures/"
         self.media_file = "python_cat.jpeg"
-        self.media_id = os.environ['PYTHON_VERSION'] + "_" + os.environ['RUNNER_OS'] + "_" + os.environ['GITHUB_RUN_ID'] + "_" + self.media_file
+        self.media_id = os.environ['PYTHON_VERSION'] + "_" + os.environ['RUNNER_OS'] + "_" + str(uuid.uuid4()) + "_" + self.media_file
         self.download_file_path = "cat_download.jpeg"
 
         self.original_file = open(self.media_path + self.media_file, "rb")
@@ -77,7 +78,7 @@ class TestMedia(unittest.TestCase):
         pass
 
     def getMedia(self) -> None:
-        """Test downloading the media we uploaded in step 1
+        """Test downloading the media we previously uploaded
         """
         api_response_with_http_info = self.api_instance.get_media(
             self.account_id, self.media_id, _return_http_data_only=False)
@@ -95,7 +96,7 @@ class TestMedia(unittest.TestCase):
         download_file.close()
 
     def deleteMedia(self) -> None:
-        """Test deleting the media that was uploaded in step 1
+        """Test deleting the media that we previously uploaded
         """
         api_response_with_http_info = self.api_instance.delete_media(
             self.account_id, self.media_id, _return_http_data_only=False)
@@ -114,10 +115,7 @@ class TestMedia(unittest.TestCase):
         """Test each function from _steps.call_order in specified order
         """
         for name, step in self._steps():
-            try:
-                step()
-            except ApiException as e:
-                self.fail("{} failed ({}: {})".format(step, type(e), e))
+            step()
 
     @unittest.skip("API does not support url encoded characters in path")
     def testGetMediaWithBandwidthId(self) -> None:
