@@ -351,11 +351,11 @@ class CallsIntegration(unittest.TestCase):
         #Adding the call to the callIdArray
         callIdArray.append(create_call_response[0].call_id)
 
-        time.sleep(2)
+        time.sleep(5)
         update_call_bxml_response: UpdateCall = self.api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, testBxmlBody, _return_http_data_only=False)
         self.assertEqual(update_call_bxml_response[1], 204)
         
-        time.sleep(2)  
+        time.sleep(5)  
         # hanging-up the call
         update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, updateStateCompleted, _return_http_data_only=False)
         self.assertEqual(update_call_response[1], 200)
