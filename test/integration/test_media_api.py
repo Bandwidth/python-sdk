@@ -78,9 +78,9 @@ class TestMedia(unittest.TestCase):
         pass
 
     def getMedia(self) -> None:
-        """Test downloading the media we uploaded in step 1
+        """Test downloading the media we previously uploaded
         """
-        time.sleep(3)
+        time.sleep(5)
         api_response_with_http_info = self.api_instance.get_media(
             self.account_id, self.media_id, _return_http_data_only=False)
 
@@ -97,7 +97,7 @@ class TestMedia(unittest.TestCase):
         download_file.close()
 
     def deleteMedia(self) -> None:
-        """Test deleting the media that was uploaded in step 1
+        """Test deleting the media that we previously uploaded
         """
         api_response_with_http_info = self.api_instance.delete_media(
             self.account_id, self.media_id, _return_http_data_only=False)
@@ -119,7 +119,7 @@ class TestMedia(unittest.TestCase):
             try:
                 step()
             except ApiException as e:
-                self.fail("{} failed ({}: {})".format(step, type(e), e))
+                self.fail(f"{step} failed ({type(e)}: {e})")
 
     @unittest.skip("API does not support url encoded characters in path")
     def testGetMediaWithBandwidthId(self) -> None:
