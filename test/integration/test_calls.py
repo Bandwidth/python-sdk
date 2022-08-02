@@ -177,11 +177,7 @@ class CallsIntegration(unittest.TestCase):
         self.assertEqual(create_call_response[0].to, USER_NUMBER)
         self.assertEqual(create_call_response[0]._from, BW_NUMBER)
         self.assertEqual(create_call_response[0].call_url, ("https://voice.bandwidth.com/api/v2/accounts/" + \
-            BW_ACCOUNT_ID + "/calls/" + create_call_response[0].call_id))
-
-        time.sleep(5)
-        self.api_instance.update_call(BW_ACCOUNT_ID, create_call_response[0].call_id, updateStateCompleted, _return_http_data_only=False)
-    
+            BW_ACCOUNT_ID + "/calls/" + create_call_response[0].call_id))    
 
     def test_create_call_bad_request(self):
         """Validate a bad (400) request
