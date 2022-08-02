@@ -3,6 +3,7 @@ Integration test for Bandwidth's Media API
 """
 
 import os
+import time
 import filecmp
 import unittest
 
@@ -79,6 +80,7 @@ class TestMedia(unittest.TestCase):
     def getMedia(self) -> None:
         """Test downloading the media we uploaded in step 1
         """
+        time.sleep(3)
         api_response_with_http_info = self.api_instance.get_media(
             self.account_id, self.media_id, _return_http_data_only=False)
 
