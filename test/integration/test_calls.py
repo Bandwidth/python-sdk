@@ -301,6 +301,7 @@ class CallsIntegration(unittest.TestCase):
         self.assertEqual(context.exception.status, 400)
                 
         # hanging-up the call
+        time.sleep(3)
         update_call_response: UpdateCall = self.api_instance.update_call(BW_ACCOUNT_ID, call_id, updateStateCompleted, _return_http_data_only=False)
         self.assertEqual(update_call_response[1], 200)           
 
