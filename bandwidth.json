@@ -2431,10 +2431,10 @@
                 "type": "string",
                 "description": "The priority specified by the user.",
                 "enum": [
-                    "DEFAULT",
-                    "HIGH"
+                    "default",
+                    "high"
                 ],
-                "example": "DEFAULT"
+                "example": "default"
             },
             "messageStatusEnum": {
                 "type": "string",
@@ -2475,6 +2475,21 @@
                     "mms"
                 ],
                 "example": "sms"
+            },
+            "fieldError": {
+                "type": "object",
+                "properties": {
+                    "fieldName": {
+                        "type": "string",
+                        "description": "The name of the field that contains the error",
+                        "example": "from"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The error associated with the field",
+                        "example": "'+invalid' must be replaced with a valid E164 formatted telephone number"
+                    }
+                }
             },
             "messagesList": {
                 "title": "MessagesList",
@@ -2547,11 +2562,13 @@
                     "carrierName": {
                         "type": "string",
                         "description": "The name of the carrier. Not currently supported for MMS coming soon.",
+                        "nullable": true,
                         "example": "other"
                     },
                     "messageSize": {
                         "type": "integer",
                         "description": "The size of the message including message content and headers.",
+                        "nullable": true,
                         "example": 27
                     },
                     "messageLength": {
@@ -2562,16 +2579,19 @@
                     "attachmentCount": {
                         "type": "integer",
                         "description": "The number of attachments the message has.",
+                        "nullable": true,
                         "example": 1
                     },
                     "recipientCount": {
                         "type": "integer",
                         "description": "The number of recipients the message has.",
+                        "nullable": true,
                         "example": 1
                     },
                     "campaignClass": {
                         "type": "string",
                         "description": "The campaign class of the message if it has one.",
+                        "nullable": true,
                         "example": "T"
                     }
                 }
@@ -2617,6 +2637,29 @@
                     "type",
                     "description"
                 ]
+            },
+            "createMessageRequestError": {
+                "title": "CreateMessageRequestError",
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "fieldErrors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/fieldError"
+                        }
+                    }
+                },
+                "required": [
+                    "type",
+                    "description"
+                ],
+                "additionalProperties": true
             },
             "media": {
                 "title": "Media",
@@ -4541,6 +4584,16 @@
                     }
                 }
             },
+            "createMessageBadRequestError": {
+                "description": "Bad Request",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/createMessageRequestError"
+                        }
+                    }
+                }
+            },
             "messagingUnauthorizedError": {
                 "description": "Unauthorized",
                 "content": {
@@ -5338,7 +5391,7 @@
                 "required": false,
                 "description": "The direction of the message. One of INBOUND OUTBOUND.",
                 "schema": {
-                    "$ref": "#/components/schemas/messageDirectionEnum"
+                    "$ref": "#/components/schemas/listMessageDirectionEnum"
                 }
             },
             "carrierName": {
