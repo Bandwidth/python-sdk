@@ -1,1 +1,2 @@
 pytest-cov>=2.8.1
+PyHamcrest>=2.0.0
