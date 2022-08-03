@@ -414,7 +414,7 @@ class TestBxml:
         start_stream = StartStream(
             destination='https://www.test.com/stream',
             name='test_stream',
-            tracks='inbound'
+            tracks='inbound',
             streamEventUrl='https://www.test.com/event',
             streamEventMethod='POST',
             username='username',
