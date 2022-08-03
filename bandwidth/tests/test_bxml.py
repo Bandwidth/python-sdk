@@ -409,11 +409,12 @@ class TestBxml:
         assert actual == expected
     
     def test_start_stream_bxml_verb(self):
-        expected = '<?xml version="1.0" encoding="UTF-8"?><Response><StartStream destination="https://www.test.com/stream" name="test_stream" streamEventUrl="https://www.test.com/event" streamEventMethod="POST" username="username" password="password"/></Response>'
+        expected = '<?xml version="1.0" encoding="UTF-8"?><Response><StartStream destination="https://www.test.com/stream" name="test_stream" tracks="inbound" streamEventUrl="https://www.test.com/event" streamEventMethod="POST" username="username" password="password"/></Response>'
         response = Response()
         start_stream = StartStream(
             destination='https://www.test.com/stream',
             name='test_stream',
+            tracks='inbound'
             streamEventUrl='https://www.test.com/event',
             streamEventMethod='POST',
             username='username',
