@@ -9,6 +9,7 @@
 """
 
 
+from array import array
 import os
 import unittest
 
@@ -20,6 +21,7 @@ from bandwidth.model.create_participant_response import CreateParticipantRespons
 from bandwidth.model.publish_permissions_enum import PublishPermissionsEnum
 from bandwidth.model.device_api_version_enum import DeviceApiVersionEnum
 from bandwidth.model.participant import Participant
+from bandwidth.model.session import Session
 
 
 class TestSessionsApi(unittest.TestCase):
@@ -36,28 +38,54 @@ class TestSessionsApi(unittest.TestCase):
         self.participants_api_instance = participants_api.ParticipantsApi(api_client)
         self.account_id = os.environ.get('BW_ACCOUNT_ID')
 
-    def test_create_participant(self):
-        create_participant_request = CreateParticipantRequest(
-            callback_url="https://example.com/callback",
-            publish_permissions=[
+        # Participant Properties
+        self.callback_url = 'https://example.com/callback'
+        self.publish_permissions = [
                 PublishPermissionsEnum('AUDIO'),
                 PublishPermissionsEnum('VIDEO')
-            ],
-            tag="participant1",
-            device_api_version=DeviceApiVersionEnum("V3"),
+            ]
+        self.participant_tag = 'python integration participant tag'
+        self.device_api_version = DeviceApiVersionEnum('V3')
+        self.participant_id = ''
+
+        # Participant Request
+        self.create_participant_request = CreateParticipantRequest(
+            callback_url=self.callback_url,
+            publish_permissions=self.publish_permissions,
+            tag=self.participant_tag,
+            device_api_version=self.device_api_version
         )
-        response = self.participants_api_instance.create_participant(self.account_id, create_participant_request=create_participant_request, _return_http_data_only=False)
 
-        self.assertEqual(response[1], 200)
-        assert_that
+        # Session Properties
+        self.session_tag = 'python integration session tag'
+        self.session_id = ''
 
-        api_response = response[0]
-        self.assertIsInstance(api_response, CreateParticipantResponse)
-        self.assertIsInstance(api_response.participant, Participant)
-        print(api_response.participant['callback_url'])
-        self.assertEqual(api_response.participant.callback_url, create_participant_request.callback_url)
-        #self.assertEqual(api_response.publish_permissions, create_participant_request.publish_permissions)
+        # Session Request
+        self.session = Session(
+            tag=self.session_tag
+        )
 
+    def test_create_participant(self):
+        response = self.participants_api_instance.create_participant(self.account_id, create_participant_request=self.create_participant_request, _return_http_data_only=False)
+
+        assert_that(response[1], equal_to(200))
+
+        assert_that(response[0], instance_of(CreateParticipantResponse))
+        assert_that(response[0], has_properties(
+                'participant', instance_of(Participant),
+                'participant', has_properties(
+                    'device_api_version', self.device_api_version,
+                    'id', instance_of(str),
+                    'publish_permissions', contains_inanyorder(
+                        PublishPermissionsEnum('AUDIO'),
+                        PublishPermissionsEnum('VIDEO')),
+                    'tag', self.participant_tag
+                ),
+            'token', instance_of(str)
+        ))
+
+        self.participant_id = response[0].participant.id
+        
     def test_delete_participant(self):
         """Test case for delete_participant
 
@@ -73,18 +101,24 @@ class TestSessionsApi(unittest.TestCase):
         pass
     
     def test_add_participant_to_session(self):
-        """Test case for add_participant_to_session
+        response = self.sessions_api_instance.add_participant_to_session(self.account_id, self.session_id, self.participant_id, _return_http_data_only=False)
 
-        Add Participant to Session  # noqa: E501
-        """
-        pass
+        assert_that(response[1], 205)
 
     def test_create_session(self):
-        """Test case for create_session
+        response = self.sessions_api_instance.create_session(self.account_id, session=self.session, _return_http_data_only=False)
 
-        Create Session  # noqa: E501
-        """
-        pass
+        assert_that(response[1], equal_to(200))
+
+        assert_that(response[0], instance_of(Session))
+        assert_that(response[0], has_properties(
+            'id', instance_of(str),
+            'tag', self.session_tag,
+            'participant_ids', instance_of(array),
+            'participant_ids', empty()
+        ))
+
+        self.session_id = response[0].id
 
     def test_delete_session(self):
         """Test case for delete_session
@@ -128,6 +162,17 @@ class TestSessionsApi(unittest.TestCase):
         """
         pass
 
+
+    def _steps(self) -> None:
+            call_order = ['test_create_participant', 'test_create_session', 'test_add_participant_to_session', 'test_get_session']
+            for name in call_order: 
+                yield name, getattr(self, name)
+
+    def test_steps(self) -> None:
+        """Test each function from _steps.call_order in specified order
+        """
+        for name, step in self._steps():
+            step()
 
 if __name__ == '__main__':
     unittest.main()
