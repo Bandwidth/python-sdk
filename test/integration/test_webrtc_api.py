@@ -12,6 +12,7 @@
 from array import array
 import os
 import unittest
+from urllib import response
 
 import bandwidth
 from hamcrest import *
@@ -22,6 +23,8 @@ from bandwidth.model.publish_permissions_enum import PublishPermissionsEnum
 from bandwidth.model.device_api_version_enum import DeviceApiVersionEnum
 from bandwidth.model.participant import Participant
 from bandwidth.model.session import Session
+from bandwidth.model.subscriptions import Subscriptions
+from bandwidth.model.participant_subscription import ParticipantSubscription
 
 
 class TestSessionsApi(unittest.TestCase):
@@ -65,7 +68,9 @@ class TestSessionsApi(unittest.TestCase):
             tag=self.session_tag
         )
 
-    def test_create_participant(self):
+        self.stream_aliases = ['python integration alias']
+
+    def create_participant(self):
         response = self.participants_api_instance.create_participant(self.account_id, create_participant_request=self.create_participant_request, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(200))
@@ -86,26 +91,38 @@ class TestSessionsApi(unittest.TestCase):
 
         self.participant_id = response[0].participant.id
         
-    def test_delete_participant(self):
+    def delete_participant(self):
         """Test case for delete_participant
 
         Delete Participant  # noqa: E501
         """
         pass
 
-    def test_get_participant(self):
-        """Test case for get_participant
+    def get_participant(self):
+        response = self.participants_api_instance.get_participant(self.account_id, self.participant_id, _return_http_data_only=False)
 
-        Get Participant  # noqa: E501
-        """
-        pass
+        assert_that(response[1], equal_to(200))
+        assert_that(response[0], instance_of(Participant))
+        assert_that(response[0], has_properties(
+            'device_api_version', self.device_api_version,
+            'id', self.participant_id,
+            'publish_permissions', contains_inanyorder(
+                PublishPermissionsEnum('AUDIO'),
+                PublishPermissionsEnum('VIDEO')),
+            'sessions', [self.session_id],
+            'subscriptions', has_properties(
+                'participants', instance_of(list)
+            ),
+            'tag', self.participant_tag
+        ))
     
-    def test_add_participant_to_session(self):
+    def add_participant_to_session(self):
         response = self.sessions_api_instance.add_participant_to_session(self.account_id, self.session_id, self.participant_id, _return_http_data_only=False)
 
-        assert_that(response[1], 205)
+        assert_that(response[1], equal_to(204))
+        
 
-    def test_create_session(self):
+    def create_session(self):
         response = self.sessions_api_instance.create_session(self.account_id, session=self.session, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(200))
@@ -120,51 +137,83 @@ class TestSessionsApi(unittest.TestCase):
 
         self.session_id = response[0].id
 
-    def test_delete_session(self):
+    def delete_session(self):
         """Test case for delete_session
 
         Delete Session  # noqa: E501
         """
         pass
 
-    def test_get_participant_subscriptions(self):
-        """Test case for get_participant_subscriptions
+    def get_participant_subscriptions(self):
+        response = self.sessions_api_instance.get_participant_subscriptions(self.account_id, self.session_id, self.participant_id, _return_http_data_only=False)
 
-        Get Participant Subscriptions  # noqa: E501
-        """
-        pass
+        assert_that(response[1], equal_to(200))
 
-    def test_get_session(self):
-        """Test case for get_session
+        assert_that(response[0], has_properties(
+            'participants', instance_of(list),
+            'session_id', self.session_id
+        ))
+        assert_that(response[0].participants[0], instance_of(ParticipantSubscription))
+        assert_that(response[0].participants[0], has_properties(
+            'participant_id', self.participant_id,
+            'stream_aliases', self.stream_aliases
+        ))
 
-        Get Session  # noqa: E501
-        """
-        pass
+    def get_session(self):
+        response = self.sessions_api_instance.get_session(self.account_id, self.session_id, _return_http_data_only=False)
 
-    def test_list_session_participants(self):
-        """Test case for list_session_participants
+        assert_that(response[1], equal_to(200))
 
-        List Participants in Session  # noqa: E501
-        """
-        pass
+        assert_that(response[0], has_properties(
+            'id', self.session_id,
+            'tag', self.session_tag,
+            'participant_ids', contains_exactly(self.participant_id)
+        ))
 
-    def test_remove_participant_from_session(self):
+    def list_session_participants(self):
+        response = self.sessions_api_instance.list_session_participants(self.account_id, self.session_id, _return_http_data_only=False)
+
+        assert_that(response[1], equal_to(200))
+
+        assert_that(response[0], instance_of(list))
+        assert_that(response[0][0], instance_of(Participant))
+        assert_that(response[0][0], has_properties(
+            'device_api_version', self.device_api_version,
+            'id', self.participant_id,
+            'publish_permissions', contains_inanyorder(
+                PublishPermissionsEnum('AUDIO'),
+                PublishPermissionsEnum('VIDEO')),
+            'sessions', [self.session_id],
+            'tag', self.participant_tag
+        ))
+
+    def remove_participant_from_session(self):
         """Test case for remove_participant_from_session
 
         Remove Participant from Session  # noqa: E501
         """
         pass
 
-    def test_update_participant_subscriptions(self):
-        """Test case for update_participant_subscriptions
+    def update_participant_subscriptions(self):
+        subscriptions = Subscriptions(
+            session_id=self.session_id,
+            participants=[
+                ParticipantSubscription(
+                    participant_id=self.participant_id,
+                    stream_aliases=self.stream_aliases,
+                )
+            ],
+        )
 
-        Update Participant Subscriptions  # noqa: E501
-        """
-        pass
+        response = self.sessions_api_instance.update_participant_subscriptions(self.account_id, self.session_id, self.participant_id, subscriptions=subscriptions, _return_http_data_only=False)
 
+        assert_that(response[1], equal_to(204))
 
     def _steps(self) -> None:
-            call_order = ['test_create_participant', 'test_create_session', 'test_add_participant_to_session', 'test_get_session']
+            call_order = ['create_participant', 'create_session', 'add_participant_to_session',
+                          'get_session', 'list_session_participants', 'update_participant_subscriptions',
+                          'get_participant_subscriptions', 'get_participant', 'remove_participant_from_session',
+                          'delete_session', 'delete_participant']
             for name in call_order: 
                 yield name, getattr(self, name)
 
