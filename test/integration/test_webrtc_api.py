@@ -92,11 +92,9 @@ class TestSessionsApi(unittest.TestCase):
         self.participant_id = response[0].participant.id
         
     def delete_participant(self):
-        """Test case for delete_participant
+        response = self.participants_api_instance.delete_participant(self.account_id, self.participant_id, _return_http_data_only=False)
 
-        Delete Participant  # noqa: E501
-        """
-        pass
+        assert_that(response[1], equal_to(204))
 
     def get_participant(self):
         response = self.participants_api_instance.get_participant(self.account_id, self.participant_id, _return_http_data_only=False)
@@ -138,11 +136,9 @@ class TestSessionsApi(unittest.TestCase):
         self.session_id = response[0].id
 
     def delete_session(self):
-        """Test case for delete_session
+        response = self.sessions_api_instance.delete_session(self.account_id, self.session_id, _return_http_data_only=False)
 
-        Delete Session  # noqa: E501
-        """
-        pass
+        assert_that(response[1], equal_to(204))
 
     def get_participant_subscriptions(self):
         response = self.sessions_api_instance.get_participant_subscriptions(self.account_id, self.session_id, self.participant_id, _return_http_data_only=False)
@@ -188,11 +184,9 @@ class TestSessionsApi(unittest.TestCase):
         ))
 
     def remove_participant_from_session(self):
-        """Test case for remove_participant_from_session
+        response = self.sessions_api_instance.remove_participant_from_session(self.account_id, self.session_id, self.participant_id, _return_http_data_only=False)
 
-        Remove Participant from Session  # noqa: E501
-        """
-        pass
+        assert_that(response[1], equal_to(204))
 
     def update_participant_subscriptions(self):
         subscriptions = Subscriptions(
