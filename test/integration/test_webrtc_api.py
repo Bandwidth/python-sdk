@@ -17,6 +17,7 @@ from urllib import response
 import bandwidth
 from hamcrest import *
 from bandwidth.api import participants_api, sessions_api
+from bandwidth.exceptions import NotFoundException, UnauthorizedException
 from bandwidth.model.create_participant_request import CreateParticipantRequest
 from bandwidth.model.create_participant_response import CreateParticipantResponse
 from bandwidth.model.publish_permissions_enum import PublishPermissionsEnum
@@ -203,11 +204,22 @@ class TestSessionsApi(unittest.TestCase):
 
         assert_that(response[1], equal_to(204))
 
+    def get_participant_unauthorized(self):
+        unauthorized_api_client = bandwidth.ApiClient()
+        unauthorized_participants_api_instance = participants_api.ParticipantsApi(unauthorized_api_client)
+
+        assert_that(calling(unauthorized_participants_api_instance.get_participant).with_args(
+            self.account_id, self.participant_id, _return_http_data_only=False)), raises(UnauthorizedException)
+
+    def get_participant_not_found(self):
+        assert_that(calling(self.participants_api_instance.get_participant).with_args(
+            self.account_id, self.participant_id)), raises(NotFoundException)
+
     def _steps(self) -> None:
             call_order = ['create_participant', 'create_session', 'add_participant_to_session',
                           'get_session', 'list_session_participants', 'update_participant_subscriptions',
                           'get_participant_subscriptions', 'get_participant', 'remove_participant_from_session',
-                          'delete_session', 'delete_participant']
+                          'delete_session', 'delete_participant', 'get_participant_unauthorized', 'get_participant_not_found']
             for name in call_order: 
                 yield name, getattr(self, name)
 
