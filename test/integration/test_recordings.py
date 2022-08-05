@@ -170,6 +170,8 @@ class TestRecordings(unittest.TestCase):
         answer_url = MANTECA_BASE_URL + '/bxml/startRecording'
         (test_id, call_id) = self.create_and_validate_call(answer_url)
 
+
+        time.sleep(12)
         # Poll Manteca to make sure our call is recorded
         call_status = self.get_test_status(test_id)
         retries = 0
