@@ -15,6 +15,8 @@ try:
     MANTECA_BASE_URL = os.environ["MANTECA_BASE_URL"]
     MANTECA_STATUS_URL = MANTECA_BASE_URL + "tests/"
     MANTECA_APPLICATION_ID = os.environ["MANTECA_APPLICATION_ID"]
+    PYTHON_VERSION = os.environ["PYTHON_VERSION"]
+    OPERATING_SYSTEM = os.environ["OPERATING_SYSTEM"]
 
 except KeyError as e:
     raise Exception("Environmental variables not found")
