@@ -6,7 +6,9 @@ import json
 import time
 from typing import List, Tuple
 import unittest
+
 from hamcrest import assert_that, has_properties, not_none, instance_of, greater_than
+
 import bandwidth
 from bandwidth.api import calls_api
 from bandwidth.model.create_call import CreateCall
