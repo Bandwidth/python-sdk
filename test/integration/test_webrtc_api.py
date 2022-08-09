@@ -9,13 +9,14 @@
 """
 
 
-from array import array
 import os
 import unittest
+from array import array
 from urllib import response
 
-import bandwidth
 from hamcrest import *
+
+import bandwidth
 from bandwidth.api import participants_api, sessions_api
 from bandwidth.exceptions import NotFoundException, UnauthorizedException
 from bandwidth.model.create_participant_request import CreateParticipantRequest
