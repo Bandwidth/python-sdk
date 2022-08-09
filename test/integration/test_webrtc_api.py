@@ -72,6 +72,8 @@ class TestSessionsApi(unittest.TestCase):
         self.stream_aliases = ['python integration alias']
 
     def create_participant(self):
+        """Test creating participant
+        """
         response = self.participants_api_instance.create_participant(self.account_id, create_participant_request=self.create_participant_request, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(200))
@@ -93,11 +95,15 @@ class TestSessionsApi(unittest.TestCase):
         self.participant_id = response[0].participant.id
         
     def delete_participant(self):
+        """Test deleting participant
+        """
         response = self.participants_api_instance.delete_participant(self.account_id, self.participant_id, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(204))
 
     def get_participant(self):
+        """Test getting participant
+        """
         response = self.participants_api_instance.get_participant(self.account_id, self.participant_id, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(200))
@@ -116,12 +122,16 @@ class TestSessionsApi(unittest.TestCase):
         ))
     
     def add_participant_to_session(self):
+        """Test adding participant to session
+        """
         response = self.sessions_api_instance.add_participant_to_session(self.account_id, self.session_id, self.participant_id, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(204))
         
 
     def create_session(self):
+        """Test creating session
+        """
         response = self.sessions_api_instance.create_session(self.account_id, session=self.session, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(200))
@@ -137,11 +147,15 @@ class TestSessionsApi(unittest.TestCase):
         self.session_id = response[0].id
 
     def delete_session(self):
+        """Test deleting session
+        """
         response = self.sessions_api_instance.delete_session(self.account_id, self.session_id, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(204))
 
     def get_participant_subscriptions(self):
+        """Test getting participant subscriptions
+        """
         response = self.sessions_api_instance.get_participant_subscriptions(self.account_id, self.session_id, self.participant_id, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(200))
@@ -157,6 +171,8 @@ class TestSessionsApi(unittest.TestCase):
         ))
 
     def get_session(self):
+        """Test getting session
+        """
         response = self.sessions_api_instance.get_session(self.account_id, self.session_id, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(200))
@@ -168,6 +184,8 @@ class TestSessionsApi(unittest.TestCase):
         ))
 
     def list_session_participants(self):
+        """Test listing session participants
+        """
         response = self.sessions_api_instance.list_session_participants(self.account_id, self.session_id, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(200))
@@ -185,11 +203,15 @@ class TestSessionsApi(unittest.TestCase):
         ))
 
     def remove_participant_from_session(self):
+        """Test removing participant from session
+        """
         response = self.sessions_api_instance.remove_participant_from_session(self.account_id, self.session_id, self.participant_id, _return_http_data_only=False)
 
         assert_that(response[1], equal_to(204))
 
     def update_participant_subscriptions(self):
+        """Test updating participant subscriptions
+        """
         subscriptions = Subscriptions(
             session_id=self.session_id,
             participants=[
@@ -205,6 +227,8 @@ class TestSessionsApi(unittest.TestCase):
         assert_that(response[1], equal_to(204))
 
     def get_participant_unauthorized(self):
+        """Test getting participant with unauthorized API client 
+        """
         unauthorized_api_client = bandwidth.ApiClient()
         unauthorized_participants_api_instance = participants_api.ParticipantsApi(unauthorized_api_client)
 
@@ -212,6 +236,8 @@ class TestSessionsApi(unittest.TestCase):
             self.account_id, self.participant_id, _return_http_data_only=False)), raises(UnauthorizedException)
 
     def get_participant_not_found(self):
+        """Test getting nonexistent participant
+        """
         assert_that(calling(self.participants_api_instance.get_participant).with_args(
             self.account_id, self.participant_id)), raises(NotFoundException)
 
