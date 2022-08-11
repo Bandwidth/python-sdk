@@ -49,8 +49,8 @@ jobs:
           MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_IDLE_NUMBER }}
           MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
           MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
-        run: pytest -v
-
+        run: |
+          pytest -v
       - name: Notify Slack of Failures
         uses: Bandwidth/build-notify-slack-action@v1.0.0
         if: failure() && !github.event.pull_request.draft
