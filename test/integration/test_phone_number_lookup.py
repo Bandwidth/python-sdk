@@ -78,7 +78,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         # this can further simplify overall assertions with single one
         assert_that(result, has_properties(
-            'response_code', 0,
+            'response_code', 30,
             'e_164_format', e_164_format,
             'line_provider', line_provider,
             'country', is_one_of_string(["US", "Canada"]),
