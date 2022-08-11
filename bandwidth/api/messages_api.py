@@ -22,8 +22,8 @@ from bandwidth.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
+from bandwidth.model.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.model.message import Message
-from bandwidth.model.message_direction_enum import MessageDirectionEnum
 from bandwidth.model.message_request import MessageRequest
 from bandwidth.model.message_status_enum import MessageStatusEnum
 from bandwidth.model.message_type_enum import MessageTypeEnum
@@ -165,7 +165,7 @@ class MessagesApi(object):
                     'message_status':
                         (MessageStatusEnum,),
                     'message_direction':
-                        (MessageDirectionEnum,),
+                        (ListMessageDirectionEnum,),
                     'carrier_name':
                         (str,),
                     'message_type':
@@ -336,7 +336,7 @@ class MessagesApi(object):
             source_tn (str): The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').. [optional]
             destination_tn (str): The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').. [optional]
             message_status (MessageStatusEnum): The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED.. [optional]
-            message_direction (MessageDirectionEnum): The direction of the message. One of INBOUND OUTBOUND.. [optional]
+            message_direction (ListMessageDirectionEnum): The direction of the message. One of INBOUND OUTBOUND.. [optional]
             carrier_name (str): The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T).. [optional]
             message_type (MessageTypeEnum): The type of message. Either sms or mms.. [optional]
             error_code (int): The error code of the message.. [optional]
