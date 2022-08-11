@@ -199,5 +199,5 @@ class TestMultiFactorAuthentication(unittest.TestCase):
                 else:
                     raise e
             except:
-                logging.error("Unexpecte error while testing rate limit!")
+                logging.error("Unexpected error while testing rate limit!")
                 raise e  

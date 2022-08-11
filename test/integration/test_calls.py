@@ -7,6 +7,8 @@ from test.utils.call_cleanup import callCleanup
 import time
 import unittest
 import datetime
+import logging
+
 from hamcrest import assert_that, has_properties, not_none, instance_of
 
 import bandwidth
