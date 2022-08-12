@@ -2,7 +2,6 @@
 Integration test for Bandwidth's Phone Number Lookup API
 """
 
-import logging
 import os
 import json
 import time
@@ -143,9 +142,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         # Create the lookup request and validate the response
         create_lookup_response: CreateLookupResponse = self.api_instance.create_lookup(
             self.account_id, lookup_request, _return_http_data_only=False)
-        
-        logging.debug(str(create_lookup_response))
-        
+                
         self.assertEqual(create_lookup_response[1], 202)
         self.assertIs(type(create_lookup_response[0].status), LookupStatusEnum)
         self.assertEqual(create_lookup_response[0].status, LookupStatusEnum("IN_PROGRESS"))

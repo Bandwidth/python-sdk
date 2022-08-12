@@ -5,7 +5,6 @@ Integration test for Bandwidth's Media API
 import uuid
 import filecmp
 import unittest
-import logging
 
 import bandwidth
 from bandwidth.api import media_api
@@ -57,7 +56,6 @@ class TestMedia(unittest.TestCase):
             _return_http_data_only=False
         )
 
-        logging.debug(api_response_with_http_info)
         self.assertEqual(api_response_with_http_info[1], 204)
 
         # reopen the media file
@@ -83,7 +81,6 @@ class TestMedia(unittest.TestCase):
         self.assertEqual(api_response_with_http_info[1], 200)
 
         api_response = self.api_instance.list_media(self.account_id)
-        logging.debug("List Media" + str(api_response))
 
         self.assertIs(type(api_response[0]), Media)
         pass
@@ -94,7 +91,6 @@ class TestMedia(unittest.TestCase):
         api_response_with_http_info = self.api_instance.get_media(
             self.account_id, self.media_id, _return_http_data_only=False)
 
-        logging.debug(api_response_with_http_info)
         self.assertEqual(api_response_with_http_info[1], 200)
 
         api_response = self.api_instance.get_media(
@@ -113,7 +109,6 @@ class TestMedia(unittest.TestCase):
         api_response_with_http_info = self.api_instance.delete_media(
             self.account_id, self.media_id, _return_http_data_only=False)
         
-        logging.debug(api_response_with_http_info)
         self.assertEqual(api_response_with_http_info[1], 204)
 
         # returns void
