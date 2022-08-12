@@ -10,9 +10,7 @@
 
 
 from array import array
-import os
 import unittest
-from urllib import response
 
 import bandwidth
 from hamcrest import *
@@ -26,6 +24,7 @@ from bandwidth.model.participant import Participant
 from bandwidth.model.session import Session
 from bandwidth.model.subscriptions import Subscriptions
 from bandwidth.model.participant_subscription import ParticipantSubscription
+from test.utils.env_variables import *
 
 
 class TestSessionsApi(unittest.TestCase):
@@ -34,13 +33,13 @@ class TestSessionsApi(unittest.TestCase):
     def setUp(self):
         # API Client
         configuration = bandwidth.Configuration(
-            username = os.environ.get('BW_USERNAME'),
-            password = os.environ.get('BW_PASSWORD')
+            username = BW_USERNAME,
+            password = BW_PASSWORD
         )
         api_client = bandwidth.ApiClient(configuration)
         self.sessions_api_instance = sessions_api.SessionsApi(api_client)
         self.participants_api_instance = participants_api.ParticipantsApi(api_client)
-        self.account_id = os.environ.get('BW_ACCOUNT_ID')
+        self.account_id = BW_ACCOUNT_ID
 
         # Participant Properties
         self.callback_url = 'https://example.com/callback'
