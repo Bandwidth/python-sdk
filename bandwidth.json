@@ -4429,9 +4429,6 @@
             "subscriptions": {
                 "type": "object",
                 "readOnly": true,
-                "required": [
-                    "sessionId"
-                ],
                 "properties": {
                     "sessionId": {
                         "type": "string",
