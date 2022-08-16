@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Log level'
-        required: true
-        default: 'WARNING'
+        description: Log level
+        required: false
+        default: WARNING
         type: choice
         options:
         - WARNING
@@ -44,7 +44,7 @@ jobs:
       MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
       MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
       BW_NUMBER_PROVIDER: ${{ secrets.BW_NUMBER_PROVIDER }}
-      LEVEL: ${{ inputs.logLevel }}    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -60,13 +60,13 @@ jobs:
           pip install -r test-requirements.txt
 
       - name: Test at Debug Level
-        if: ${{ inputs.logLevel }} == 'DEBUG'
+        if: ${{ inputs.logLevel == 'DEBUG' }}
         run: |
           echo "Log level: ${{ inputs.logLevel }}"
-          pytest -v --log-cli-level=DEBUG
+          pytest -v --log-cli-level=${{inputs.logLevel}}
 
       - name: Test at Warning Level
-        if: (${{ inputs.logLevel }} == null) || (${{ inputs.logLevel }} == 'WARNING')
+        if: ${{( inputs.logLevel == null) || ( inputs.logLevel  == 'WARNING') }}
         run: |
           echo "Log level: $LEVEL"
           pytest -v --log-cli-level=WARNING
