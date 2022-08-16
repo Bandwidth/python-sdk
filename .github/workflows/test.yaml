@@ -5,6 +5,15 @@ on:
     - cron: "0 4 * * *"
   pull_request:
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'WARNING'
+        type: choice
+        options:
+        - WARNING
+        - DEBUG  
 
 jobs:
   deploy:
@@ -50,9 +59,16 @@ jobs:
           MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
           MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
           BW_NUMBER_PROVIDER: ${{ secrets.BW_NUMBER_PROVIDER }}
+          LEVEL: ${{ inputs.logLevel }}
 
         run: |
-          pytest -v
+          echo "Log level: $LEVEL"
+          if [$LEVEL -eq DEBUG ]
+          then
+            pytest -v --log-cli-level=DEBUG
+          else
+            pytest -v --log-cli-level=WARNING
+          fi
       - name: Notify Slack of Failures
         uses: Bandwidth/build-notify-slack-action@v1.0.0
         if: failure() && !github.event.pull_request.draft
