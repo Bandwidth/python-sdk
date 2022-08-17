@@ -135,7 +135,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
                 os.environ['VZW_NUMBER'],
                 os.environ['ATT_NUMBER'],
                 os.environ['T_MOBILE_NUMBER'],
-                os.environ['BW_INVALID_TN_LOOKUP_NUMBER']
+                # os.environ['BW_INVALID_TN_LOOKUP_NUMBER']
             ],
         )
 
