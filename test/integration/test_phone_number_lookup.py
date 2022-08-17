@@ -19,7 +19,6 @@ from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenE
 
 from hamcrest.core import *
 from hamcrest.library import *
-from pyparsing import one_of
 
 from .bwmatchers.one_of_string import is_one_of_string
 
