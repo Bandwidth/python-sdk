@@ -17,13 +17,11 @@ from bandwidth.model.lookup_status_enum import LookupStatusEnum
 from bandwidth.model.tn_lookup_request_error import TnLookupRequestError
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
 
-import hamcrest
 from hamcrest.core import *
 from hamcrest.library import *
 from pyparsing import one_of
 
 from .bwmatchers.one_of_string import is_one_of_string
-# from .one_of_string import is_one_of_string
 
 
 class TestPhoneNumberLookupIntegration(unittest.TestCase):
@@ -53,7 +51,6 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
             self.assertIs(type(result.mobile_country_code), str)
             self.assertIs(type(result.mobile_network_code), str)
 
-        # this can further simplify overall assertions with single one
         assert_that(result, has_properties(
             'response_code', 0,
             'e_164_format', e_164_format,
