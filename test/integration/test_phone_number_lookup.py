@@ -47,13 +47,6 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
             e_164_format (str): Phone number in e164 format ex: +19195551234
             line_provider (str): Line service provider ex: Verizon
         """
-        self.assertEqual(result.response_code, 0)
-        self.assertIs(type(result.message), str)
-        self.assertEqual(result.e_164_format, e_164_format)
-        self.assertIs(type(result.formatted), str)
-        self.assertTrue(result.country == "US" or result.country == "Canada")
-        self.assertTrue(result.line_type == "Mobile" or result.line_type == "Fixed")
-        self.assertIn(line_provider, result.line_provider)
 
         # if result has 1 of these attributes it should have the other
         if result.get('mobile_country_code') or result.get('mobile_network_code'):
@@ -64,7 +57,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         assert_that(result, has_properties(
             'response_code', 0,
             'e_164_format', e_164_format,
-            'line_provider', line_provider,
+            'line_provider', contains_string(line_provider),
             'country', is_one_of_string(["US", "Canada"]),
             'line_type', is_one_of_string(["Mobile", "Fixed"])
             )
