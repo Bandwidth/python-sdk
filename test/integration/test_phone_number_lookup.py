@@ -157,16 +157,16 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.validateResult(bw_lookup_result, os.environ['BW_NUMBER'], os.environ['BW_NUMBER_PROVIDER'])
 
         # # Check the information for a Verizon TN
-        # vzw_lookup_result = get_lookup_status_response.result[1]
-        # self.validateResult(vzw_lookup_result, os.environ['VZW_NUMBER'], "Verizon")
+        vzw_lookup_result = get_lookup_status_response.result[1]
+        self.validateResult(vzw_lookup_result, os.environ['VZW_NUMBER'], "Verizon")
 
         # # Check the information for an AT&T TN
-        # att_lookup_result = get_lookup_status_response.result[2]
-        # self.validateResult(att_lookup_result, os.environ['ATT_NUMBER'], "AT&T")
+        att_lookup_result = get_lookup_status_response.result[2]
+        self.validateResult(att_lookup_result, os.environ['ATT_NUMBER'], "AT&T")
 
         # # Check the information for a T-Mobile TN
-        # t_mobile_lookup_result = get_lookup_status_response.result[3]
-        # self.validateResult(t_mobile_lookup_result, os.environ['T_MOBILE_NUMBER'], "T-Mobile")
+        t_mobile_lookup_result = get_lookup_status_response.result[3]
+        self.validateResult(t_mobile_lookup_result, os.environ['T_MOBILE_NUMBER'], "T-Mobile")
 
         # The only way to get a failed number is if the api call to the downstream service fails - so there is no way to force this in our testing currently
         # check the failed_telephone_number list
