@@ -60,21 +60,6 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
             self.assertIs(type(result.mobile_country_code), str)
             self.assertIs(type(result.mobile_network_code), str)
 
-        # using hamcrest assertions
-        assert_that(result, has_properties(
-            'response_code', 0,
-            'e_164_format', e_164_format,
-            'line_provider', line_provider)
-        )
-
-        assert_that(result.country, any_of(equal_to("US"), equal_to("Canada")))
-        assert_that(result.line_type, any_of(equal_to("Mobile"), equal_to("Fixed")))
-
-        # custom matcher
-        assert_that(result.country, is_one_of_string(["US", "Canada"]))
-        assert_that(result.line_type, is_one_of_string(["Mobile", "Fixed"]))
-
-
         # this can further simplify overall assertions with single one
         assert_that(result, has_properties(
             'response_code', 0,
