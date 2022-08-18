@@ -17,15 +17,6 @@ from test.utils.env_variables import *
 class TestMedia(unittest.TestCase):
     """Media API integration Test
     """
-    # api_client = None
-
-    # @classmethod
-    # def setUpClass(cls) -> None:
-        # configuration = bandwidth.Configuration(
-        #     username=os.environ['BW_USERNAME'],
-        #     password=os.environ['BW_PASSWORD']
-        # )
-        # cls.api_client = bandwidth.ApiClient(configuration)
 
     def setUp(self) -> None:
         configuration = bandwidth.Configuration(

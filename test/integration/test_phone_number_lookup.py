@@ -145,15 +145,15 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         bw_lookup_result: LookupResult = get_lookup_status_response.result[0]
         self.validateResult(bw_lookup_result, os.environ['BW_NUMBER'], os.environ['BW_NUMBER_PROVIDER'])
 
-        # # Check the information for a Verizon TN
+        # Check the information for a Verizon TN
         vzw_lookup_result = get_lookup_status_response.result[1]
         self.validateResult(vzw_lookup_result, os.environ['VZW_NUMBER'], "Verizon")
 
-        # # Check the information for an AT&T TN
+        # Check the information for an AT&T TN
         att_lookup_result = get_lookup_status_response.result[2]
         self.validateResult(att_lookup_result, os.environ['ATT_NUMBER'], "AT&T")
 
-        # # Check the information for a T-Mobile TN
+        # Check the information for a T-Mobile TN
         t_mobile_lookup_result = get_lookup_status_response.result[3]
         self.validateResult(t_mobile_lookup_result, os.environ['T_MOBILE_NUMBER'], "T-Mobile")
 
