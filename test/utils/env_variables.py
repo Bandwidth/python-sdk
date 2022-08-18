@@ -17,6 +17,7 @@ try:
     MANTECA_APPLICATION_ID = os.environ["MANTECA_APPLICATION_ID"]
     PYTHON_VERSION = os.environ["PYTHON_VERSION"]
     OPERATING_SYSTEM = os.environ["OPERATING_SYSTEM"]
+    RUNNER_OS = os.environ['RUNNER_OS']
 
 except KeyError as e:
     raise Exception("Environmental variables not found")

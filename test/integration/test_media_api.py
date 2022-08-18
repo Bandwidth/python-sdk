@@ -2,15 +2,16 @@
 Integration test for Bandwidth's Media API
 """
 
-import os
 import uuid
 import filecmp
 import unittest
+import logging
 
 import bandwidth
 from bandwidth.api import media_api
 from bandwidth.model.media import Media
 from bandwidth.exceptions import ApiException, NotFoundException
+from test.utils.env_variables import *
 
 
 class TestMedia(unittest.TestCase):
@@ -19,17 +20,16 @@ class TestMedia(unittest.TestCase):
 
     def setUp(self) -> None:
         configuration = bandwidth.Configuration(
-            username=os.environ['BW_USERNAME'],
-            password=os.environ['BW_PASSWORD']
+            username=BW_USERNAME,
+            password=BW_PASSWORD
         )
-        api_client = bandwidth.ApiClient(configuration)
-        self.api_instance = media_api.MediaApi(api_client)
-        self.account_id = os.environ['BW_ACCOUNT_ID']
+        self.api_client = bandwidth.ApiClient(configuration)
+        self.api_instance = media_api.MediaApi(self.api_client)
+        self.account_id = BW_ACCOUNT_ID
         self.media_path = "./test/fixtures/"
         self.media_file = "python_cat.jpeg"
-        self.media_id = os.environ['PYTHON_VERSION'] + "_" + os.environ['RUNNER_OS'] + "_" + str(uuid.uuid4()) + "_" + self.media_file
+        self.media_id = PYTHON_VERSION + "_" + RUNNER_OS + "_" + str(uuid.uuid4()) + "_" + self.media_file
         self.download_file_path = "cat_download.jpeg"
-
         self.original_file = open(self.media_path + self.media_file, "rb")
 
     def uploadMedia(self) -> None:
@@ -48,6 +48,7 @@ class TestMedia(unittest.TestCase):
             _return_http_data_only=False
         )
 
+        logging.debug(api_response_with_http_info)
         self.assertEqual(api_response_with_http_info[1], 204)
 
         # reopen the media file
@@ -73,6 +74,7 @@ class TestMedia(unittest.TestCase):
         self.assertEqual(api_response_with_http_info[1], 200)
 
         api_response = self.api_instance.list_media(self.account_id)
+        logging.debug("List Media" + str(api_response))
 
         self.assertIs(type(api_response[0]), Media)
         pass
@@ -83,6 +85,7 @@ class TestMedia(unittest.TestCase):
         api_response_with_http_info = self.api_instance.get_media(
             self.account_id, self.media_id, _return_http_data_only=False)
 
+        logging.debug(api_response_with_http_info)
         self.assertEqual(api_response_with_http_info[1], 200)
 
         api_response = self.api_instance.get_media(
@@ -100,7 +103,8 @@ class TestMedia(unittest.TestCase):
         """
         api_response_with_http_info = self.api_instance.delete_media(
             self.account_id, self.media_id, _return_http_data_only=False)
-
+        
+        logging.debug(api_response_with_http_info)
         self.assertEqual(api_response_with_http_info[1], 204)
 
         # returns void
@@ -114,6 +118,7 @@ class TestMedia(unittest.TestCase):
     def test_steps(self) -> None:
         """Test each function from _steps.call_order in specified order
         """
+        
         for name, step in self._steps():
             step()
 

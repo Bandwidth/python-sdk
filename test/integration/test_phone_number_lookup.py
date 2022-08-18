@@ -17,6 +17,11 @@ from bandwidth.model.lookup_status_enum import LookupStatusEnum
 from bandwidth.model.tn_lookup_request_error import TnLookupRequestError
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
 
+from hamcrest.core import *
+from hamcrest.library import *
+
+from .bwmatchers.one_of_string import is_one_of_string
+
 
 class TestPhoneNumberLookupIntegration(unittest.TestCase):
     """Phone Number Lookup API integration test
@@ -39,18 +44,20 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
             e_164_format (str): Phone number in e164 format ex: +19195551234
             line_provider (str): Line service provider ex: Verizon
         """
-        self.assertEqual(result.response_code, 0)
-        self.assertIs(type(result.message), str)
-        self.assertEqual(result.e_164_format, e_164_format)
-        self.assertIs(type(result.formatted), str)
-        self.assertTrue(result.country == "US" or result.country == "Canada")
-        self.assertTrue(result.line_type == "Mobile" or result.line_type == "Fixed")
-        self.assertIn(line_provider, result.line_provider)
 
         # if result has 1 of these attributes it should have the other
         if result.get('mobile_country_code') or result.get('mobile_network_code'):
             self.assertIs(type(result.mobile_country_code), str)
             self.assertIs(type(result.mobile_network_code), str)
+
+        assert_that(result, has_properties(
+            'response_code', 0,
+            'e_164_format', e_164_format,
+            'line_provider', contains_string(line_provider),
+            'country', is_one_of_string(["US", "Canada"]),
+            'line_type', is_one_of_string(["Mobile", "Fixed"])
+            )
+        )
 
     def pollLookupStatus(self, request_id: str) -> LookupStatus:
         """Poll LookupRequest for 'COMPLETE' status
@@ -109,6 +116,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         # Create the lookup request and validate the response
         create_lookup_response: CreateLookupResponse = self.api_instance.create_lookup(
             self.account_id, lookup_request, _return_http_data_only=False)
+                
         self.assertEqual(create_lookup_response[1], 202)
         self.assertIs(type(create_lookup_response[0].status), LookupStatusEnum)
         self.assertEqual(create_lookup_response[0].status, LookupStatusEnum("IN_PROGRESS"))
@@ -135,7 +143,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         # Check the information for a Bandwidth TN
         bw_lookup_result: LookupResult = get_lookup_status_response.result[0]
-        self.validateResult(bw_lookup_result, os.environ['BW_NUMBER'], "Bandwidth")
+        self.validateResult(bw_lookup_result, os.environ['BW_NUMBER'], os.environ['BW_NUMBER_PROVIDER'])
 
         # Check the information for a Verizon TN
         vzw_lookup_result = get_lookup_status_response.result[1]
