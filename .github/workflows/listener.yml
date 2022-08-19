@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build SDK and Open PR 
-        uses: Bandwidth/generate-sdk-action@v1.0.0
+        uses: Bandwidth/generate-sdk-action@v2.0.0
         with: 
           branch-name: ${{ github.event.client_payload.branchName }}
           username: ${{ secrets.DX_GITHUB_USERNAME }}
