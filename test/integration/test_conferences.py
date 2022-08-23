@@ -2,6 +2,7 @@
 Integration tests for Bandwidth's Voice Voice Conferences API
 """
 
+from cgi import test
 import json
 import time
 from typing import List, Tuple
@@ -141,19 +142,22 @@ class ConferencesIntegration(unittest.TestCase):
             '_from', MANTECA_ACTIVE_NUMBER
         ))
 
-        list_conferences_response = self.conference_api_instance.list_conferences(BW_ACCOUNT_ID, _return_http_data_only=False)
-    
+
         time.sleep(self.TEST_SLEEP)
+        list_conferences_response = self.conference_api_instance.list_conferences(BW_ACCOUNT_ID, name=test_id, _return_http_data_only=False)
+    
         assert_that(list_conferences_response[1], 200)
-        conferenceId = (list_conferences_response[0][len(list_conferences_response[0])-1].id)
 
+        # TODO: This is not deterministic; our latest conference may not always be the one we just created due to parallelism.
+        # This new solution should guarantee the right conference id is grabbed.
+        conference_id = list_conferences_response[0][0].id
 
-        get_conference_response = self.conference_api_instance.get_conference(BW_ACCOUNT_ID, conferenceId, _return_http_data_only=False)
+        get_conference_response = self.conference_api_instance.get_conference(BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
         assert_that(get_conference_response[1], 200)       
    
         self.callIdArray.append(create_call_response.call_id)
 
-        return (test_id, create_call_response.call_id)
+        return (test_id, create_call_response.call_id, conference_id)
 
     def validate_recording(self, recording: ConferenceRecordingMetadata, conference_id: str) -> None:
         assert_that(recording.status,'complete')
@@ -171,8 +175,8 @@ class ConferencesIntegration(unittest.TestCase):
             - update_conference_bxml
         """
 
-        answer_url = MANTECA_BASE_URL + "/bxml/joinConferencePause"
-        (test_id, call_id) = self.create_conference(answer_url)
+        answer_url = MANTECA_BASE_URL + "bxml/joinConferencePause"
+        (test_id, call_id, conference_id) = self.create_conference(answer_url)
 
         list_conferences_response = self.conference_api_instance.list_conferences(BW_ACCOUNT_ID, _return_http_data_only=False)
 
@@ -180,33 +184,34 @@ class ConferencesIntegration(unittest.TestCase):
         assert_that(list_conferences_response[0][0].name, instance_of(str))
         assert_that(list_conferences_response[0][0].id, instance_of(str))
 
-        conferenceId = (list_conferences_response[0][len(list_conferences_response[0])-1].id)
+        # TODO: Also non-deterministic; we could differentiate by conference name instead? The conference name is set to be the test id by Manteca
+        # conferenceId = (list_conferences_response[0][len(list_conferences_response[0])-1].id)
 
-        get_conference_response = self.conference_api_instance.get_conference(BW_ACCOUNT_ID, conferenceId, _return_http_data_only=False)
+        get_conference_response = self.conference_api_instance.get_conference(BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
         assert_that(get_conference_response[1], 200)
-        assert_that(get_conference_response[0].id, conferenceId)
+        assert_that(get_conference_response[0].id, conference_id)
         assert_that(get_conference_response[0].name, instance_of(str))
         callId = (get_conference_response[0].active_members[0].call_id)
         self.callIdArray.append(callId)
 
-        get_conference_member_response = self.conference_api_instance.get_conference_member(BW_ACCOUNT_ID, conferenceId, callId,  _return_http_data_only=False)
+        get_conference_member_response = self.conference_api_instance.get_conference_member(BW_ACCOUNT_ID, conference_id, callId,  _return_http_data_only=False)
         assert_that(get_conference_member_response[1], 200)
-        assert_that(get_conference_member_response[0].conference_id, conferenceId)
+        assert_that(get_conference_member_response[0].conference_id, conference_id)
         assert_that(get_conference_member_response[0].call_id, callId)
 
-        time.sleep(self.TEST_SLEEP)
-        update_conference_member_response = self.conference_api_instance.update_conference_member(BW_ACCOUNT_ID, conferenceId, callId, self.testUpdateMember, _return_http_data_only=False)
+        # time.sleep(self.TEST_SLEEP)
+        update_conference_member_response = self.conference_api_instance.update_conference_member(BW_ACCOUNT_ID, conference_id, callId, self.testUpdateMember, _return_http_data_only=False)
         assert_that(update_conference_member_response[1], 204)   
 
-        time.sleep(self.TEST_SLEEP)   
-        update_conference_response = self.conference_api_instance.update_conference(BW_ACCOUNT_ID, conferenceId, self.testUpdateConf, _return_http_data_only=False)
+        # time.sleep(self.TEST_SLEEP)   
+        update_conference_response = self.conference_api_instance.update_conference(BW_ACCOUNT_ID, conference_id, self.testUpdateConf, _return_http_data_only=False)
         assert_that(update_conference_response[1], 204)   
 
 
         updateBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence></Bxml>'
 
-        time.sleep(self.TEST_SLEEP)
-        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(BW_ACCOUNT_ID, conferenceId, updateBxmlBody, _return_http_data_only=False)
+        # time.sleep(self.TEST_SLEEP)
+        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(BW_ACCOUNT_ID, conference_id, updateBxmlBody, _return_http_data_only=False)
         assert_that(update_conference_bxml_response[1], 204)          
 
         update_call = UpdateCall(state=CallStateEnum('completed'))
@@ -221,39 +226,38 @@ class ConferencesIntegration(unittest.TestCase):
             - download_conference_recording
         """
 
-        answer_url = MANTECA_BASE_URL + "/bxml/joinConferencePause"
-        (test_id, call_id) = self.create_conference(answer_url)
+        answer_url = MANTECA_BASE_URL + "bxml/joinConferencePause"
+        (test_id, call_id, conference_id) = self.create_conference(answer_url)
 
         list_conferences_response = self.conference_api_instance.list_conferences(BW_ACCOUNT_ID, _return_http_data_only=False)
 
         assert_that(list_conferences_response[1], 200)
-        conferenceId = (list_conferences_response[0][len(list_conferences_response[0])-1].id)
         
         updateBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><StartRecording/><SpeakSentence locale="en_US" gender="female" voice="susan">This should be a conference recording.</SpeakSentence><StopRecording/></Bxml>'
-        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(BW_ACCOUNT_ID, conferenceId, updateBxmlBody, _return_http_data_only=False)
+        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(BW_ACCOUNT_ID, conference_id, updateBxmlBody, _return_http_data_only=False)
         assert_that(update_conference_bxml_response[1], 204)   
         
         time.sleep(self.TEST_SLEEP_LONG)
 
-        list_conference_recordings_response: List[ConferenceRecordingMetadata] = self.conference_api_instance.list_conference_recordings(BW_ACCOUNT_ID, conferenceId, _return_http_data_only=False)
+        list_conference_recordings_response: List[ConferenceRecordingMetadata] = self.conference_api_instance.list_conference_recordings(BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
         assert_that(list_conference_recordings_response[1],200)
 
         conference_recordings = list_conference_recordings_response[0]
         assert_that(len(conference_recordings), greater_than(0))
 
         first_recording: ConferenceRecordingMetadata = conference_recordings[0]
-        self.validate_recording(first_recording, conferenceId)
+        self.validate_recording(first_recording, conference_id)
         recording_id = first_recording.recording_id
 
-        recording_response: ConferenceRecordingMetadata = self.conference_api_instance.get_conference_recording(BW_ACCOUNT_ID, conferenceId, recording_id, _return_http_data_only=False)
+        recording_response: ConferenceRecordingMetadata = self.conference_api_instance.get_conference_recording(BW_ACCOUNT_ID, conference_id, recording_id, _return_http_data_only=False)
         assert_that(recording_response[1], 200)
-        assert_that(recording_response[0].conference_id, conferenceId)
+        assert_that(recording_response[0].conference_id, conference_id)
         assert_that(recording_response[0].recording_id, recording_id)
         assert_that(recording_response[0].name, instance_of(str))  
 
-        self.validate_recording(recording_response[0], conferenceId)
+        self.validate_recording(recording_response[0], conference_id)
 
-        recording_media_response = self.conference_api_instance.download_conference_recording(BW_ACCOUNT_ID, conferenceId, recording_id, _preload_content=False)
+        recording_media_response = self.conference_api_instance.download_conference_recording(BW_ACCOUNT_ID, conference_id, recording_id, _preload_content=False)
         conference_recording_media = recording_media_response.data                   
 
     def test_list_conferences_unauthorized(self) -> None:
