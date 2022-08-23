@@ -217,7 +217,6 @@ class TestRecordings(unittest.TestCase):
         )
         return json.loads(response.data)
 
-    @unittest.skip("Manteca currently broken")
     def test_successful_call_recording(self) -> None:
         """
         Tests a successful flow of creating a call with a recording.
@@ -312,7 +311,6 @@ class TestRecordings(unittest.TestCase):
         call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
         assert len(call_recordings) == 0
 
-    @unittest.skip("Manteca currently broken")
     def test_successful_update_active_recording(self) -> None:
         """
         Tests updating the recording for a call that is currently active.
@@ -349,7 +347,6 @@ class TestRecordings(unittest.TestCase):
         update_call = UpdateCall(state=CallStateEnum('completed'))
         self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, update_call)
 
-    @unittest.skip("Manteca currently broken")
     def test_invalid_list_call_recordings(self) -> None:
         """
         Tests invalid flows for list_call_recordings
@@ -370,7 +367,6 @@ class TestRecordings(unittest.TestCase):
         # This should probably be a 404, but actually returns an empty list
         assert self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, "not a call id") == []
 
-    @unittest.skip("Manteca currently broken")
     def test_invalid_get_call_recording(self) -> None:
         """
         Tests invalid flows for get_call_recording
@@ -395,7 +391,6 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.get_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    @unittest.skip("Manteca currently broken")
     def test_invalid_download_call_recording(self) -> None:
         """
         Tests invalid flows for download_call_recording
@@ -420,7 +415,6 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    @unittest.skip("Manteca currently broken")
     def test_invalid_transcribe_call_recording(self) -> None:
         """
         Tests invalid flows for transcribe_call_recording
@@ -451,7 +445,6 @@ class TestRecordings(unittest.TestCase):
         #     self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id", transcribe_recording)        
 
 
-    @unittest.skip("Manteca currently broken")
     def test_invalid_get_call_transcription(self) -> None:
         """
         Tests invalid flows for get_call_transcription
@@ -492,7 +485,6 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    @unittest.skip("Manteca currently broken")
     def test_invalid_delete_call_transcription(self) -> None:
         """
         Tests invalid flows for delete_call_transcription
@@ -533,7 +525,6 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    @unittest.skip("Manteca currently broken")
     def test_invalid_delete_recording_media(self) -> None:
         """
         Tests invalid flows for delete_recording_media
@@ -558,7 +549,6 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    @unittest.skip("Manteca currently broken")
     def test_invalid_delete_recording(self) -> None:
         """
         Tests invalid flows for delete_recording
@@ -583,7 +573,6 @@ class TestRecordings(unittest.TestCase):
         with self.assertRaises(NotFoundException):
             self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
 
-    @unittest.skip("Manteca currently broken")
     def test_invalid_update_call_recording_state(self) -> None:
         """
         Tests invalid flows for update_call_recording_state
