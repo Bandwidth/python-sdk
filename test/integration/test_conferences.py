@@ -5,7 +5,7 @@ Integration tests for Bandwidth's Voice Voice Conferences API
 from cgi import test
 import json
 import time
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 import unittest
 
 from hamcrest import assert_that, has_properties, not_none, instance_of, greater_than
@@ -90,6 +90,7 @@ class ConferencesIntegration(unittest.TestCase):
         self.testRecordId = "Recording-Id"
         self.TEST_SLEEP = 3
         self.TEST_SLEEP_LONG = 10
+        self.MAX_RETRIES = 40
         
     def tearDown(self):
         callCleanup(self)
@@ -162,6 +163,23 @@ class ConferencesIntegration(unittest.TestCase):
     def validate_recording(self, recording: ConferenceRecordingMetadata, conference_id: str) -> None:
         assert_that(recording.status,'complete')
         assert_that(recording.file_format,FileFormatEnum('wav'))
+
+    def get_test_status(self, test_id: str) -> Dict:
+        """
+        Get the status of the specified test by its id value from Manteca services.
+
+        Args:
+            test_id (str): The test id associated with the test to get the status of.
+
+        Returns:
+            Dict: The status of the test requested.
+        """
+        status_url = MANTECA_STATUS_URL + test_id
+        response: RESTResponse = self.rest_client.request(
+            method='GET',
+            url=status_url
+        )
+        return json.loads(response.data)
 
     def test_conference_and_members(self):
         """
@@ -237,7 +255,19 @@ class ConferencesIntegration(unittest.TestCase):
         update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(BW_ACCOUNT_ID, conference_id, updateBxmlBody, _return_http_data_only=False)
         assert_that(update_conference_bxml_response[1], 204)   
         
+        # Update to Manteca Polling
         time.sleep(self.TEST_SLEEP_LONG)
+
+        # Poll Manteca to ensure our conference is recorded
+        call_status = self.get_test_status(test_id)
+        retries = 0
+        while call_status['callRecorded'] == False and retries < self.MAX_RETRIES:
+            time.sleep(self.TEST_SLEEP)
+            call_status = self.get_test_status(test_id)
+            retries += 1
+
+        # If we failed to get a recorded conference, fail due to polling timeout
+        assert call_status['callRecorded'] == True
 
         list_conference_recordings_response: List[ConferenceRecordingMetadata] = self.conference_api_instance.list_conference_recordings(BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
         assert_that(list_conference_recordings_response[1],200)

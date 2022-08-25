@@ -280,7 +280,7 @@ class TestRecordings(unittest.TestCase):
             call_status = self.get_test_status(test_id)
             retries += 1
 
-        # If we failed to get a transcribed call, fail due to polling timeout (TEMP COMMENTED)
+        # If we failed to get a transcribed call, fail due to polling timeout
         assert call_status['callTranscribed'] == True
 
         # Get the transcription
