@@ -254,9 +254,6 @@ class ConferencesIntegration(unittest.TestCase):
         updateBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><StartRecording/><SpeakSentence locale="en_US" gender="female" voice="susan">This should be a conference recording.</SpeakSentence><StopRecording/></Bxml>'
         update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(BW_ACCOUNT_ID, conference_id, updateBxmlBody, _return_http_data_only=False)
         assert_that(update_conference_bxml_response[1], 204)   
-        
-        # Update to Manteca Polling
-        time.sleep(self.TEST_SLEEP_LONG)
 
         # Poll Manteca to ensure our conference is recorded
         call_status = self.get_test_status(test_id)
