@@ -374,7 +374,7 @@ class TestRecordings(unittest.TestCase):
         # Non-existent call id
         # This should probably be a 404, but actually returns an empty list
         not_found_call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, "not a call id")
-        assert_that(not_found_call_recordings, empty)
+        assert_that(not_found_call_recordings, equal_to([]))
 
     def test_invalid_get_call_recording(self) -> None:
         """
