@@ -128,11 +128,5 @@ class TestMedia(unittest.TestCase):
         # use a nonexistent mediaId - results in a 404
         media_id = "abcd1234-e5f6-1111-2222-3456ghi7890/image123456.jpg"
 
-        with self.assertRaises(NotFoundException) as context:
-            api_response = self.api_instance.get_media(
-                self.account_id,
-                media_id,
-                _preload_content=False
-            )
-
-        self.assertEqual(context.exception.status, 404)
+        assert_that(calling(self.api_instance.get_media).with_args(
+            self.account_id, media_id, _preload_content=False)), raises(NotFoundException)
