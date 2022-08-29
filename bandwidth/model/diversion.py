@@ -84,6 +84,9 @@ class Diversion(ModelNormal):
         return {
             'reason': (str,),  # noqa: E501
             'privacy': (str,),  # noqa: E501
+            'screen': (str,),  # noqa: E501
+            'counter': (str,),  # noqa: E501
+            'limit': (str,),  # noqa: E501
             'unknown': (str,),  # noqa: E501
             'orig_to': (str,),  # noqa: E501
         }
@@ -96,6 +99,9 @@ class Diversion(ModelNormal):
     attribute_map = {
         'reason': 'reason',  # noqa: E501
         'privacy': 'privacy',  # noqa: E501
+        'screen': 'screen',  # noqa: E501
+        'counter': 'counter',  # noqa: E501
+        'limit': 'limit',  # noqa: E501
         'unknown': 'unknown',  # noqa: E501
         'orig_to': 'origTo',  # noqa: E501
     }
@@ -141,10 +147,13 @@ class Diversion(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            reason (str): [optional]  # noqa: E501
-            privacy (str): [optional]  # noqa: E501
-            unknown (str): [optional]  # noqa: E501
-            orig_to (str): [optional]  # noqa: E501
+            reason (str): The reason for the diversion. Common values: unknown, user-busy, no-answer, unavailable, unconditional, time-of-day, do-not-disturb, deflection, follow-me, out-of-service, away.. [optional]  # noqa: E501
+            privacy (str): off or full. [optional]  # noqa: E501
+            screen (str): No if the number was provided by the user, yes if the number was provided by the network. [optional]  # noqa: E501
+            counter (str): The number of diversions that have occurred. [optional]  # noqa: E501
+            limit (str): The maximum number of diversions allowed for this session. [optional]  # noqa: E501
+            unknown (str): The normal list of values is not exhaustive. Your application must be tolerant of unlisted keys and unlisted values of those keys.. [optional]  # noqa: E501
+            orig_to (str): Always present. Indicates the last telephone number that the call was diverted from.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -230,10 +239,13 @@ class Diversion(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            reason (str): [optional]  # noqa: E501
-            privacy (str): [optional]  # noqa: E501
-            unknown (str): [optional]  # noqa: E501
-            orig_to (str): [optional]  # noqa: E501
+            reason (str): The reason for the diversion. Common values: unknown, user-busy, no-answer, unavailable, unconditional, time-of-day, do-not-disturb, deflection, follow-me, out-of-service, away.. [optional]  # noqa: E501
+            privacy (str): off or full. [optional]  # noqa: E501
+            screen (str): No if the number was provided by the user, yes if the number was provided by the network. [optional]  # noqa: E501
+            counter (str): The number of diversions that have occurred. [optional]  # noqa: E501
+            limit (str): The maximum number of diversions allowed for this session. [optional]  # noqa: E501
+            unknown (str): The normal list of values is not exhaustive. Your application must be tolerant of unlisted keys and unlisted values of those keys.. [optional]  # noqa: E501
+            orig_to (str): Always present. Indicates the last telephone number that the call was diverted from.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

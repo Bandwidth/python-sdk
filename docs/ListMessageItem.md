@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **segment_count** | **int** | The number of segments the message was sent as. | [optional] 
 **error_code** | **int** | The numeric error code of the message. | [optional] 
 **receive_time** | **str** | The ISO 8601 datetime of the message. | [optional] 
-**carrier_name** | **str, none_type** | The name of the carrier. Not currently supported for MMS coming soon. | [optional] 
+**carrier_name** | **str** | The name of the carrier. Not currently supported for MMS coming soon. | [optional] 
 **message_size** | **int, none_type** | The size of the message including message content and headers. | [optional] 
 **message_length** | **int** | The length of the message content. | [optional] 
 **attachment_count** | **int, none_type** | The number of attachments the message has. | [optional] 

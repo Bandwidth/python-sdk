@@ -161,16 +161,16 @@ class ConferenceRecordingMetadata(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_id (str): Your account ID. [optional]  # noqa: E501
+            account_id (str): The user account associated with the call.. [optional]  # noqa: E501
             conference_id (str): The unique, Bandwidth-generated ID of the conference that was recorded. [optional]  # noqa: E501
             name (str): The user-specified name of the conference that was recorded. [optional]  # noqa: E501
             recording_id (str): The unique ID of this recording. [optional]  # noqa: E501
             duration (str): The duration of the recording in ISO-8601 format. [optional]  # noqa: E501
             channels (int): Always `1` for conference recordings; multi-channel recordings are not supported on conferences.. [optional]  # noqa: E501
-            start_time (datetime): The time that the recording started in ISO-8601 format. [optional]  # noqa: E501
+            start_time (datetime): Time the call was started, in ISO 8601 format.. [optional]  # noqa: E501
             end_time (datetime): The time that the recording ended in ISO-8601 format. [optional]  # noqa: E501
             file_format (FileFormatEnum): [optional]  # noqa: E501
-            status (str): The current status of the recording. Current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
+            status (str): The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
             media_url (str, none_type): The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.. [optional]  # noqa: E501
         """
 
@@ -257,16 +257,16 @@ class ConferenceRecordingMetadata(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            account_id (str): Your account ID. [optional]  # noqa: E501
+            account_id (str): The user account associated with the call.. [optional]  # noqa: E501
             conference_id (str): The unique, Bandwidth-generated ID of the conference that was recorded. [optional]  # noqa: E501
             name (str): The user-specified name of the conference that was recorded. [optional]  # noqa: E501
             recording_id (str): The unique ID of this recording. [optional]  # noqa: E501
             duration (str): The duration of the recording in ISO-8601 format. [optional]  # noqa: E501
             channels (int): Always `1` for conference recordings; multi-channel recordings are not supported on conferences.. [optional]  # noqa: E501
-            start_time (datetime): The time that the recording started in ISO-8601 format. [optional]  # noqa: E501
+            start_time (datetime): Time the call was started, in ISO 8601 format.. [optional]  # noqa: E501
             end_time (datetime): The time that the recording ended in ISO-8601 format. [optional]  # noqa: E501
             file_format (FileFormatEnum): [optional]  # noqa: E501
-            status (str): The current status of the recording. Current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
+            status (str): The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
             media_url (str, none_type): The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.. [optional]  # noqa: E501
         """
 

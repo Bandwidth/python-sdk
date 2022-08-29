@@ -58,32 +58,32 @@ with bandwidth.ApiClient(configuration) as api_client:
         application_id="1234-qwer-5679-tyui",
         answer_url="https://www.myCallbackServer.com/webhooks/answer",
         answer_method=CallbackMethodEnum("POST"),
-        username="mySecretUsername",
-        password="mySecretPassword1!",
+        username=Username("mySecretUsername"),
+        password=Password("mySecretPassword1!"),
         answer_fallback_url="https://www.myFallbackServer.com/webhooks/answer",
         answer_fallback_method=CallbackMethodEnum("POST"),
-        fallback_username="mySecretUsername",
-        fallback_password="mySecretPassword1!",
-        disconnect_url="https://myServer.com/bandwidth/webhooks/disconnect",
+        fallback_username=Username("mySecretUsername"),
+        fallback_password=Password("mySecretPassword1!"),
+        disconnect_url="disconnect_url_example",
         disconnect_method=CallbackMethodEnum("POST"),
-        call_timeout=30.0,
-        callback_timeout=15.0,
+        call_timeout=30,
+        callback_timeout=15,
         machine_detection=MachineDetectionConfiguration(
             mode=MachineDetectionModeEnum("async"),
-            detection_timeout=15.0,
-            silence_timeout=10.0,
-            speech_threshold=10.0,
-            speech_end_threshold=5.0,
-            machine_speech_end_threshold=5.0,
+            detection_timeout=15,
+            silence_timeout=10,
+            speech_threshold=10,
+            speech_end_threshold=5,
+            machine_speech_end_threshold=5,
             delay_result=False,
             callback_url="https://myServer.com/bandwidth/webhooks/machineDetectionComplete",
             callback_method=CallbackMethodEnum("POST"),
-            username="mySecretUsername",
-            password="mySecretPassword1!",
+            username=Username("mySecretUsername"),
+            password=Password("mySecretPassword1!"),
             fallback_url="https://myFallbackServer.com/bandwidth/webhooks/machineDetectionComplete",
             fallback_method=CallbackMethodEnum("POST"),
-            fallback_username="mySecretUsername",
-            fallback_password="mySecretPassword1!",
+            fallback_username=Username("mySecretUsername"),
+            fallback_password=Password("mySecretPassword1!"),
         ),
         priority=5,
         tag="tag_example",
@@ -270,12 +270,12 @@ with bandwidth.ApiClient(configuration) as api_client:
         state=CallStateEnum("active"),
         redirect_url="https://myServer.com/bandwidth/webhooks/redirect",
         redirect_method=RedirectMethodEnum("POST"),
-        username="mySecretUsername",
-        password="mySecretPassword1!",
+        username=Username("mySecretUsername"),
+        password=Password("mySecretPassword1!"),
         redirect_fallback_url="https://myFallbackServer.com/bandwidth/webhooks/redirect",
         redirect_fallback_method=RedirectMethodEnum("POST"),
-        fallback_username="mySecretUsername",
-        fallback_password="mySecretPassword1!",
+        fallback_username=Username("mySecretUsername"),
+        fallback_password=Password("mySecretPassword1!"),
         tag="My Custom Tag",
     ) # UpdateCall | JSON object containing information to redirect an existing call to a new BXML document
 
@@ -320,6 +320,7 @@ void (empty response body)
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
+**409** | Conflict |  -  |
 **415** | Unsupported Media Type |  -  |
 **429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
 **500** | Internal Server Error |  -  |
@@ -412,6 +413,7 @@ void (empty response body)
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
+**409** | Conflict |  -  |
 **415** | Unsupported Media Type |  -  |
 **429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
 **500** | Internal Server Error |  -  |

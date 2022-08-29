@@ -5,7 +5,7 @@ The request has been accepted for processing but not yet finished and in a termi
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**request_id** | **str** |  | [optional] 
+**request_id** | **str** | The phone number lookup request ID from Bandwidth. | [optional] 
 **status** | [**LookupStatusEnum**](LookupStatusEnum.md) |  | [optional] 
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 

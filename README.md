@@ -86,12 +86,12 @@ with bandwidth.ApiClient(configuration) as api_client:
         application_id="1234-qwer-5679-tyui",
         answer_url="https://www.myCallbackServer.com/webhooks/answer",
         answer_method=CallbackMethodEnum("POST"),
-        username="mySecretUsername",
-        password="mySecretPassword1!",
+        username=Username("mySecretUsername"),
+        password=Password("mySecretPassword1!"),
         answer_fallback_url="https://www.myFallbackServer.com/webhooks/answer",
         answer_fallback_method=CallbackMethodEnum("POST"),
-        fallback_username="mySecretUsername",
-        fallback_password="mySecretPassword1!",
+        fallback_username=Username("mySecretUsername"),
+        fallback_password=Password("mySecretPassword1!"),
         disconnect_url="disconnect_url_example",
         disconnect_method=CallbackMethodEnum("POST"),
         call_timeout=30,
@@ -106,12 +106,12 @@ with bandwidth.ApiClient(configuration) as api_client:
             delay_result=False,
             callback_url="https://myServer.com/bandwidth/webhooks/machineDetectionComplete",
             callback_method=CallbackMethodEnum("POST"),
-            username="mySecretUsername",
-            password="mySecretPassword1!",
+            username=Username("mySecretUsername"),
+            password=Password("mySecretPassword1!"),
             fallback_url="https://myFallbackServer.com/bandwidth/webhooks/machineDetectionComplete",
             fallback_method=CallbackMethodEnum("POST"),
-            fallback_username="mySecretUsername",
-            fallback_password="mySecretPassword1!",
+            fallback_username=Username("mySecretUsername"),
+            fallback_password=Password("mySecretPassword1!"),
         ),
         priority=5,
         tag="tag_example",
@@ -182,7 +182,9 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [AccountStatistics](docs/AccountStatistics.md)
- - [CallCallback](docs/CallCallback.md)
+ - [AnswerCallback](docs/AnswerCallback.md)
+ - [BridgeCompleteCallback](docs/BridgeCompleteCallback.md)
+ - [BridgeTargetCompleteCallback](docs/BridgeTargetCompleteCallback.md)
  - [CallDirectionEnum](docs/CallDirectionEnum.md)
  - [CallRecordingMetadata](docs/CallRecordingMetadata.md)
  - [CallState](docs/CallState.md)
@@ -190,9 +192,14 @@ Class | Method | HTTP request | Description
  - [CallbackMethodEnum](docs/CallbackMethodEnum.md)
  - [CodeRequest](docs/CodeRequest.md)
  - [Conference](docs/Conference.md)
- - [ConferenceCallback](docs/ConferenceCallback.md)
+ - [ConferenceCompletedCallback](docs/ConferenceCompletedCallback.md)
+ - [ConferenceCreatedCallback](docs/ConferenceCreatedCallback.md)
  - [ConferenceMember](docs/ConferenceMember.md)
+ - [ConferenceMemberExitCallback](docs/ConferenceMemberExitCallback.md)
+ - [ConferenceMemberJoinCallback](docs/ConferenceMemberJoinCallback.md)
+ - [ConferenceRecordingAvailableCallback](docs/ConferenceRecordingAvailableCallback.md)
  - [ConferenceRecordingMetadata](docs/ConferenceRecordingMetadata.md)
+ - [ConferenceRedirectCallback](docs/ConferenceRedirectCallback.md)
  - [ConferenceStateEnum](docs/ConferenceStateEnum.md)
  - [CreateCall](docs/CreateCall.md)
  - [CreateCallResponse](docs/CreateCallResponse.md)
@@ -202,16 +209,21 @@ Class | Method | HTTP request | Description
  - [CreateParticipantResponse](docs/CreateParticipantResponse.md)
  - [DeferredResult](docs/DeferredResult.md)
  - [DeviceApiVersionEnum](docs/DeviceApiVersionEnum.md)
+ - [DisconenctCallback](docs/DisconenctCallback.md)
  - [Diversion](docs/Diversion.md)
+ - [DtmfCallback](docs/DtmfCallback.md)
  - [FieldError](docs/FieldError.md)
  - [FileFormatEnum](docs/FileFormatEnum.md)
  - [ForbiddenRequest](docs/ForbiddenRequest.md)
+ - [GatherCallback](docs/GatherCallback.md)
+ - [InitiateCallback](docs/InitiateCallback.md)
  - [ListMessageDirectionEnum](docs/ListMessageDirectionEnum.md)
  - [ListMessageItem](docs/ListMessageItem.md)
  - [LookupRequest](docs/LookupRequest.md)
  - [LookupResult](docs/LookupResult.md)
  - [LookupStatus](docs/LookupStatus.md)
  - [LookupStatusEnum](docs/LookupStatusEnum.md)
+ - [MachineDetectionCompleteCallback](docs/MachineDetectionCompleteCallback.md)
  - [MachineDetectionConfiguration](docs/MachineDetectionConfiguration.md)
  - [MachineDetectionModeEnum](docs/MachineDetectionModeEnum.md)
  - [Media](docs/Media.md)
@@ -229,24 +241,34 @@ Class | Method | HTTP request | Description
  - [PageInfo](docs/PageInfo.md)
  - [Participant](docs/Participant.md)
  - [ParticipantSubscription](docs/ParticipantSubscription.md)
+ - [Password](docs/Password.md)
  - [PriorityEnum](docs/PriorityEnum.md)
  - [PublishPermissionsEnum](docs/PublishPermissionsEnum.md)
+ - [RecordingAvailableCallback](docs/RecordingAvailableCallback.md)
+ - [RecordingCompleteCallback](docs/RecordingCompleteCallback.md)
  - [RecordingStateEnum](docs/RecordingStateEnum.md)
+ - [RedirectCallback](docs/RedirectCallback.md)
  - [RedirectMethodEnum](docs/RedirectMethodEnum.md)
  - [RequestError](docs/RequestError.md)
  - [Session](docs/Session.md)
+ - [StirShaken](docs/StirShaken.md)
  - [Subscriptions](docs/Subscriptions.md)
  - [Tag](docs/Tag.md)
  - [TnLookupRequestError](docs/TnLookupRequestError.md)
  - [TranscribeRecording](docs/TranscribeRecording.md)
  - [Transcription](docs/Transcription.md)
+ - [TranscriptionAvailableCallback](docs/TranscriptionAvailableCallback.md)
  - [TranscriptionList](docs/TranscriptionList.md)
  - [TranscriptionMetadata](docs/TranscriptionMetadata.md)
+ - [TransferAnswerCallback](docs/TransferAnswerCallback.md)
+ - [TransferCompleteCallback](docs/TransferCompleteCallback.md)
+ - [TransferDisconnectCallback](docs/TransferDisconnectCallback.md)
  - [UnauthorizedRequest](docs/UnauthorizedRequest.md)
  - [UpdateCall](docs/UpdateCall.md)
  - [UpdateCallRecording](docs/UpdateCallRecording.md)
  - [UpdateConference](docs/UpdateConference.md)
  - [UpdateConferenceMember](docs/UpdateConferenceMember.md)
+ - [Username](docs/Username.md)
  - [VerifyCodeRequest](docs/VerifyCodeRequest.md)
  - [VerifyCodeResponse](docs/VerifyCodeResponse.md)
  - [VoiceApiError](docs/VoiceApiError.md)

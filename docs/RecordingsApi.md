@@ -793,9 +793,9 @@ with bandwidth.ApiClient(configuration) as api_client:
     transcribe_recording = TranscribeRecording(
         callback_url="https://myServer.com/bandwidth/webhooks/transcriptionAvailable",
         callback_method=CallbackMethodEnum("POST"),
-        username="mySecretUsername",
-        password="mySecretPassword1!",
-        tag="my custom tag",
+        username=Username("mySecretUsername"),
+        password=Password("mySecretPassword1!"),
+        tag="exampleTag",
         callback_timeout=5.5,
     ) # TranscribeRecording | 
 

@@ -32,9 +32,13 @@ from bandwidth.exceptions import ApiAttributeError
 
 def lazy_import():
     from bandwidth.model.call_state_enum import CallStateEnum
+    from bandwidth.model.password import Password
     from bandwidth.model.redirect_method_enum import RedirectMethodEnum
+    from bandwidth.model.username import Username
     globals()['CallStateEnum'] = CallStateEnum
+    globals()['Password'] = Password
     globals()['RedirectMethodEnum'] = RedirectMethodEnum
+    globals()['Username'] = Username
 
 
 class UpdateCall(ModelNormal):
@@ -95,12 +99,12 @@ class UpdateCall(ModelNormal):
             'state': (CallStateEnum,),  # noqa: E501
             'redirect_url': (str, none_type,),  # noqa: E501
             'redirect_method': (RedirectMethodEnum,),  # noqa: E501
-            'username': (str, none_type,),  # noqa: E501
-            'password': (str, none_type,),  # noqa: E501
+            'username': (Username,),  # noqa: E501
+            'password': (Password,),  # noqa: E501
             'redirect_fallback_url': (str, none_type,),  # noqa: E501
             'redirect_fallback_method': (RedirectMethodEnum,),  # noqa: E501
-            'fallback_username': (str, none_type,),  # noqa: E501
-            'fallback_password': (str, none_type,),  # noqa: E501
+            'fallback_username': (Username,),  # noqa: E501
+            'fallback_password': (Password,),  # noqa: E501
             'tag': (str, none_type,),  # noqa: E501
         }
 
@@ -166,12 +170,12 @@ class UpdateCall(ModelNormal):
             state (CallStateEnum): [optional]  # noqa: E501
             redirect_url (str, none_type): The URL to send the [Redirect](/docs/voice/bxml/redirect) event to which will provide new BXML.  Required if `state` is `active`.  Not allowed if `state` is `completed`.. [optional]  # noqa: E501
             redirect_method (RedirectMethodEnum): [optional]  # noqa: E501
-            username (str, none_type): Basic auth username.. [optional]  # noqa: E501
-            password (str, none_type): Basic auth password.. [optional]  # noqa: E501
+            username (Username): [optional]  # noqa: E501
+            password (Password): [optional]  # noqa: E501
             redirect_fallback_url (str, none_type): A fallback url which, if provided, will be used to retry the redirect callback delivery in case `redirectUrl` fails to respond. [optional]  # noqa: E501
             redirect_fallback_method (RedirectMethodEnum): [optional]  # noqa: E501
-            fallback_username (str, none_type): Basic auth username.. [optional]  # noqa: E501
-            fallback_password (str, none_type): Basic auth password.. [optional]  # noqa: E501
+            fallback_username (Username): [optional]  # noqa: E501
+            fallback_password (Password): [optional]  # noqa: E501
             tag (str, none_type): A custom string that will be sent with this and all future callbacks unless overwritten by a future `tag` attribute or [`<Tag>`](/docs/voice/bxml/tag) verb, or cleared.  May be cleared by setting `tag=\"\"`.  Max length 256 characters.  Not allowed if `state` is `completed`.. [optional]  # noqa: E501
         """
 
@@ -261,12 +265,12 @@ class UpdateCall(ModelNormal):
             state (CallStateEnum): [optional]  # noqa: E501
             redirect_url (str, none_type): The URL to send the [Redirect](/docs/voice/bxml/redirect) event to which will provide new BXML.  Required if `state` is `active`.  Not allowed if `state` is `completed`.. [optional]  # noqa: E501
             redirect_method (RedirectMethodEnum): [optional]  # noqa: E501
-            username (str, none_type): Basic auth username.. [optional]  # noqa: E501
-            password (str, none_type): Basic auth password.. [optional]  # noqa: E501
+            username (Username): [optional]  # noqa: E501
+            password (Password): [optional]  # noqa: E501
             redirect_fallback_url (str, none_type): A fallback url which, if provided, will be used to retry the redirect callback delivery in case `redirectUrl` fails to respond. [optional]  # noqa: E501
             redirect_fallback_method (RedirectMethodEnum): [optional]  # noqa: E501
-            fallback_username (str, none_type): Basic auth username.. [optional]  # noqa: E501
-            fallback_password (str, none_type): Basic auth password.. [optional]  # noqa: E501
+            fallback_username (Username): [optional]  # noqa: E501
+            fallback_password (Password): [optional]  # noqa: E501
             tag (str, none_type): A custom string that will be sent with this and all future callbacks unless overwritten by a future `tag` attribute or [`<Tag>`](/docs/voice/bxml/tag) verb, or cleared.  May be cleared by setting `tag=\"\"`.  Max length 256 characters.  Not allowed if `state` is `completed`.. [optional]  # noqa: E501
         """
 

@@ -616,12 +616,12 @@ with bandwidth.ApiClient(configuration) as api_client:
         status=ConferenceStateEnum("active"),
         redirect_url="https://myServer.com/bandwidth/webhooks/conferenceRedirect",
         redirect_method=RedirectMethodEnum("POST"),
-        username="mySecretUsername",
-        password="mySecretPassword1!",
+        username=Username("mySecretUsername"),
+        password=Password("mySecretPassword1!"),
         redirect_fallback_url="https://myFallbackServer.com/bandwidth/webhooks/conferenceRedirect",
         redirect_fallback_method=RedirectMethodEnum("POST"),
-        fallback_username="mySecretUsername",
-        fallback_password="mySecretPassword1!",
+        fallback_username=Username("mySecretUsername"),
+        fallback_password=Password("mySecretPassword1!"),
     ) # UpdateConference | 
 
     # example passing only required values which don't have defaults set

@@ -142,7 +142,7 @@ class TranscriptionMetadata(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             id (str): The unique transcription ID. [optional]  # noqa: E501
-            status (str): The current status of the transcription. Current values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
+            status (str): The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
             completed_time (str): The time that the transcription was completed. [optional]  # noqa: E501
             url (str): The URL of the [transcription](#operation/getCallTranscription). [optional]  # noqa: E501
         """
@@ -231,7 +231,7 @@ class TranscriptionMetadata(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             id (str): The unique transcription ID. [optional]  # noqa: E501
-            status (str): The current status of the transcription. Current values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
+            status (str): The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
             completed_time (str): The time that the transcription was completed. [optional]  # noqa: E501
             url (str): The URL of the [transcription](#operation/getCallTranscription). [optional]  # noqa: E501
         """

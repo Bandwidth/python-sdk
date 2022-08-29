@@ -95,12 +95,12 @@ class CallRecordingMetadata(ModelNormal):
             'application_id': (str,),  # noqa: E501
             'account_id': (str,),  # noqa: E501
             'call_id': (str,),  # noqa: E501
-            'parent_call_id': (str, none_type,),  # noqa: E501
+            'parent_call_id': (str,),  # noqa: E501
             'recording_id': (str,),  # noqa: E501
             'to': (str,),  # noqa: E501
             '_from': (str,),  # noqa: E501
-            'transfer_caller_id': (str, none_type,),  # noqa: E501
-            'transfer_to': (str, none_type,),  # noqa: E501
+            'transfer_caller_id': (str,),  # noqa: E501
+            'transfer_to': (str,),  # noqa: E501
             'duration': (str,),  # noqa: E501
             'direction': (CallDirectionEnum,),  # noqa: E501
             'channels': (int,),  # noqa: E501
@@ -108,7 +108,7 @@ class CallRecordingMetadata(ModelNormal):
             'end_time': (datetime,),  # noqa: E501
             'file_format': (FileFormatEnum,),  # noqa: E501
             'status': (str,),  # noqa: E501
-            'media_url': (str,),  # noqa: E501
+            'media_url': (str, none_type,),  # noqa: E501
             'transcription': (TranscriptionMetadata,),  # noqa: E501
         }
 
@@ -179,23 +179,23 @@ class CallRecordingMetadata(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            application_id (str): The `applicationId` associated with the call. [optional]  # noqa: E501
-            account_id (str): The account that placed the call. [optional]  # noqa: E501
-            call_id (str): The `callId` of the call that created this recording. [optional]  # noqa: E501
-            parent_call_id (str, none_type): If the call was a transferred leg, this field contains the `callId` of the call that executed the [`<Transfer>`](/docs/voice/bxml/transfer). [optional]  # noqa: E501
-            recording_id (str): The recording's unique ID. [optional]  # noqa: E501
-            to (str): The phone number that received the call, in E.164 format (e.g. +15555555555), or if the call was to a SIP URI, the SIP URI. [optional]  # noqa: E501
-            _from (str): The phone number that made the call, in E.164 format (e.g. +15555555555).. [optional]  # noqa: E501
-            transfer_caller_id (str, none_type): If the call was a transferred leg, the `transferCallerId` field from the [`<Transfer>`](/docs/voice/bxml/transfer), if any.. [optional]  # noqa: E501
-            transfer_to (str, none_type): If the call was a transferred leg, the number that the call was transferred to. [optional]  # noqa: E501
+            application_id (str): The id of the application associated with the call.. [optional]  # noqa: E501
+            account_id (str): The user account associated with the call.. [optional]  # noqa: E501
+            call_id (str): The call id associated with the event.. [optional]  # noqa: E501
+            parent_call_id (str): (optional) If the event is related to the B leg of a <Transfer>, the call id of the original call leg that executed the <Transfer>. Otherwise, this field will not be present.. [optional]  # noqa: E501
+            recording_id (str): The unique ID of this recording. [optional]  # noqa: E501
+            to (str): The phone number that received the call, in E.164 format (e.g. +15555555555).. [optional]  # noqa: E501
+            _from (str): The provided identifier of the caller: can be a phone number in E.164 format (e.g. +15555555555) or one of Private, Restricted, Unavailable, or Anonymous.. [optional]  # noqa: E501
+            transfer_caller_id (str): The phone number used as the from field of the B-leg call, in E.164 format (e.g. +15555555555) or one of Restricted, Anonymous, Private, or Unavailable.. [optional]  # noqa: E501
+            transfer_to (str): The phone number used as the to field of the B-leg call, in E.164 format (e.g. +15555555555).. [optional]  # noqa: E501
             duration (str): The duration of the recording in ISO-8601 format. [optional]  # noqa: E501
             direction (CallDirectionEnum): [optional]  # noqa: E501
-            channels (int): The number of channels in the recording. Either `1` or `2`. [optional]  # noqa: E501
-            start_time (datetime): The time that the recording started in ISO 8601 format. [optional]  # noqa: E501
-            end_time (datetime): The time that the recording ended in ISO 8601 format. [optional]  # noqa: E501
+            channels (int): Always `1` for conference recordings; multi-channel recordings are not supported on conferences.. [optional]  # noqa: E501
+            start_time (datetime): Time the call was started, in ISO 8601 format.. [optional]  # noqa: E501
+            end_time (datetime): The time that the recording ended in ISO-8601 format. [optional]  # noqa: E501
             file_format (FileFormatEnum): [optional]  # noqa: E501
-            status (str): The current status of the recording. Current values are 'processing', 'partial', 'complete', 'deleted' and 'error'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
-            media_url (str): The URL that can be used to download the audio recording. [optional]  # noqa: E501
+            status (str): The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
+            media_url (str, none_type): The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.. [optional]  # noqa: E501
             transcription (TranscriptionMetadata): [optional]  # noqa: E501
         """
 
@@ -282,23 +282,23 @@ class CallRecordingMetadata(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            application_id (str): The `applicationId` associated with the call. [optional]  # noqa: E501
-            account_id (str): The account that placed the call. [optional]  # noqa: E501
-            call_id (str): The `callId` of the call that created this recording. [optional]  # noqa: E501
-            parent_call_id (str, none_type): If the call was a transferred leg, this field contains the `callId` of the call that executed the [`<Transfer>`](/docs/voice/bxml/transfer). [optional]  # noqa: E501
-            recording_id (str): The recording's unique ID. [optional]  # noqa: E501
-            to (str): The phone number that received the call, in E.164 format (e.g. +15555555555), or if the call was to a SIP URI, the SIP URI. [optional]  # noqa: E501
-            _from (str): The phone number that made the call, in E.164 format (e.g. +15555555555).. [optional]  # noqa: E501
-            transfer_caller_id (str, none_type): If the call was a transferred leg, the `transferCallerId` field from the [`<Transfer>`](/docs/voice/bxml/transfer), if any.. [optional]  # noqa: E501
-            transfer_to (str, none_type): If the call was a transferred leg, the number that the call was transferred to. [optional]  # noqa: E501
+            application_id (str): The id of the application associated with the call.. [optional]  # noqa: E501
+            account_id (str): The user account associated with the call.. [optional]  # noqa: E501
+            call_id (str): The call id associated with the event.. [optional]  # noqa: E501
+            parent_call_id (str): (optional) If the event is related to the B leg of a <Transfer>, the call id of the original call leg that executed the <Transfer>. Otherwise, this field will not be present.. [optional]  # noqa: E501
+            recording_id (str): The unique ID of this recording. [optional]  # noqa: E501
+            to (str): The phone number that received the call, in E.164 format (e.g. +15555555555).. [optional]  # noqa: E501
+            _from (str): The provided identifier of the caller: can be a phone number in E.164 format (e.g. +15555555555) or one of Private, Restricted, Unavailable, or Anonymous.. [optional]  # noqa: E501
+            transfer_caller_id (str): The phone number used as the from field of the B-leg call, in E.164 format (e.g. +15555555555) or one of Restricted, Anonymous, Private, or Unavailable.. [optional]  # noqa: E501
+            transfer_to (str): The phone number used as the to field of the B-leg call, in E.164 format (e.g. +15555555555).. [optional]  # noqa: E501
             duration (str): The duration of the recording in ISO-8601 format. [optional]  # noqa: E501
             direction (CallDirectionEnum): [optional]  # noqa: E501
-            channels (int): The number of channels in the recording. Either `1` or `2`. [optional]  # noqa: E501
-            start_time (datetime): The time that the recording started in ISO 8601 format. [optional]  # noqa: E501
-            end_time (datetime): The time that the recording ended in ISO 8601 format. [optional]  # noqa: E501
+            channels (int): Always `1` for conference recordings; multi-channel recordings are not supported on conferences.. [optional]  # noqa: E501
+            start_time (datetime): Time the call was started, in ISO 8601 format.. [optional]  # noqa: E501
+            end_time (datetime): The time that the recording ended in ISO-8601 format. [optional]  # noqa: E501
             file_format (FileFormatEnum): [optional]  # noqa: E501
-            status (str): The current status of the recording. Current values are 'processing', 'partial', 'complete', 'deleted' and 'error'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
-            media_url (str): The URL that can be used to download the audio recording. [optional]  # noqa: E501
+            status (str): The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.. [optional]  # noqa: E501
+            media_url (str, none_type): The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.. [optional]  # noqa: E501
             transcription (TranscriptionMetadata): [optional]  # noqa: E501
         """
 

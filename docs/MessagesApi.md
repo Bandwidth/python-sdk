@@ -24,6 +24,7 @@ import time
 import bandwidth
 from bandwidth.api import messages_api
 from bandwidth.model.messaging_request_error import MessagingRequestError
+from bandwidth.model.create_message_request_error import CreateMessageRequestError
 from bandwidth.model.message_request import MessageRequest
 from bandwidth.model.message import Message
 from pprint import pprint

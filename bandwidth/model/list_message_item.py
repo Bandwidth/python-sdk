@@ -102,7 +102,7 @@ class ListMessageItem(ModelNormal):
             'segment_count': (int,),  # noqa: E501
             'error_code': (int,),  # noqa: E501
             'receive_time': (str,),  # noqa: E501
-            'carrier_name': (str, none_type,),  # noqa: E501
+            'carrier_name': (str,),  # noqa: E501
             'message_size': (int, none_type,),  # noqa: E501
             'message_length': (int,),  # noqa: E501
             'attachment_count': (int, none_type,),  # noqa: E501
@@ -185,7 +185,7 @@ class ListMessageItem(ModelNormal):
             segment_count (int): The number of segments the message was sent as.. [optional]  # noqa: E501
             error_code (int): The numeric error code of the message.. [optional]  # noqa: E501
             receive_time (str): The ISO 8601 datetime of the message.. [optional]  # noqa: E501
-            carrier_name (str, none_type): The name of the carrier. Not currently supported for MMS coming soon.. [optional]  # noqa: E501
+            carrier_name (str): The name of the carrier. Not currently supported for MMS coming soon.. [optional]  # noqa: E501
             message_size (int, none_type): The size of the message including message content and headers.. [optional]  # noqa: E501
             message_length (int): The length of the message content.. [optional]  # noqa: E501
             attachment_count (int, none_type): The number of attachments the message has.. [optional]  # noqa: E501
@@ -286,7 +286,7 @@ class ListMessageItem(ModelNormal):
             segment_count (int): The number of segments the message was sent as.. [optional]  # noqa: E501
             error_code (int): The numeric error code of the message.. [optional]  # noqa: E501
             receive_time (str): The ISO 8601 datetime of the message.. [optional]  # noqa: E501
-            carrier_name (str, none_type): The name of the carrier. Not currently supported for MMS coming soon.. [optional]  # noqa: E501
+            carrier_name (str): The name of the carrier. Not currently supported for MMS coming soon.. [optional]  # noqa: E501
             message_size (int, none_type): The size of the message including message content and headers.. [optional]  # noqa: E501
             message_length (int): The length of the message content.. [optional]  # noqa: E501
             attachment_count (int, none_type): The number of attachments the message has.. [optional]  # noqa: E501
