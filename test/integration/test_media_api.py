@@ -44,7 +44,7 @@ class TestMedia(unittest.TestCase):
             account_id=self.account_id,
             media_id=media_id,
             body=self.original_file,
-            content_type=content_type,
+            _content_type=content_type,
             cache_control=cache_control,
             _return_http_data_only=False
         )
@@ -61,7 +61,7 @@ class TestMedia(unittest.TestCase):
             account_id=self.account_id,
             media_id=media_id,
             body=reopened_file,
-            content_type=content_type,
+            _content_type=content_type,
             cache_control=cache_control,
             _return_http_data_only=False
         )
