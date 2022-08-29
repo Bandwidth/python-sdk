@@ -16,6 +16,7 @@ import time
 import json
 
 import bandwidth
+from hamcrest import *
 from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.configuration import Configuration
 from bandwidth.exceptions import ForbiddenException, NotFoundException, UnauthorizedException
@@ -32,26 +33,27 @@ from bandwidth.model.transcription import Transcription
 from bandwidth.model.update_call import UpdateCall
 from bandwidth.model.update_call_recording import UpdateCallRecording
 from bandwidth.rest import RESTClientObject, RESTResponse
+from test.utils.env_variables import *
 
 
 try:
     # BW Credentials
-    BW_USERNAME = os.environ["BW_USERNAME"]
-    BW_PASSWORD = os.environ["BW_PASSWORD"]
-    BW_ACCOUNT_ID = os.environ["BW_ACCOUNT_ID"]
+    BW_USERNAME = BW_USERNAME
+    BW_PASSWORD = BW_PASSWORD
+    BW_ACCOUNT_ID = BW_ACCOUNT_ID
 
     # Manteca Numbers
-    MANTECA_ACTIVE_NUMBER = os.environ["MANTECA_ACTIVE_NUMBER"]
-    MANTECA_IDLE_NUMBER = os.environ["MANTECA_IDLE_NUMBER"]
+    MANTECA_ACTIVE_NUMBER = MANTECA_ACTIVE_NUMBER
+    MANTECA_IDLE_NUMBER = MANTECA_IDLE_NUMBER
 
     # Manteca
-    MANTECA_BASE_URL = os.environ["MANTECA_BASE_URL"]
+    MANTECA_BASE_URL = MANTECA_BASE_URL
     MANTECA_STATUS_URL = MANTECA_BASE_URL + "tests/"
-    MANTECA_APPLICATION_ID = os.environ["MANTECA_APPLICATION_ID"]
+    MANTECA_APPLICATION_ID = MANTECA_APPLICATION_ID
 
     # Test Environment
-    PYTHON_VERSION = os.environ["PYTHON_VERSION"]
-    OPERATING_SYSTEM = os.environ["OPERATING_SYSTEM"]
+    PYTHON_VERSION = PYTHON_VERSION
+    OPERATING_SYSTEM = OPERATING_SYSTEM
 except KeyError as e:
     raise Exception("Environmental variables not found")
 
@@ -144,13 +146,15 @@ class TestRecordings(unittest.TestCase):
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, call_body)
 
         # Verify info about the call
-        assert len(create_call_response.call_id) == 47    # assert request created and id matches expected length (47)
-        assert create_call_response.account_id == BW_ACCOUNT_ID
-        assert create_call_response.application_id == MANTECA_APPLICATION_ID
-        assert create_call_response.to == MANTECA_IDLE_NUMBER
-        assert create_call_response._from == MANTECA_ACTIVE_NUMBER
-        assert create_call_response.call_url == "https://voice.bandwidth.com/api/v2/accounts/" + \
-            BW_ACCOUNT_ID + "/calls/" + create_call_response.call_id
+        assert_that(create_call_response, has_properties(
+            'call_id', has_length(47),    # assert request created and id matches expected length (47)
+            'account_id', BW_ACCOUNT_ID,
+            'application_id', MANTECA_APPLICATION_ID,
+            'to', MANTECA_IDLE_NUMBER,
+            '_from', MANTECA_ACTIVE_NUMBER,
+            'call_url', "https://voice.bandwidth.com/api/v2/accounts/" + \
+                BW_ACCOUNT_ID + "/calls/" + create_call_response.call_id
+        ))
 
         # Adding the call to the callIdArray
         callIdArray.append(create_call_response.call_id)
@@ -181,7 +185,7 @@ class TestRecordings(unittest.TestCase):
             retries += 1
 
         # If we failed to get a recorded call, fail due to polling timeout
-        assert call_status['callRecorded'] == True
+        assert_that(call_status['callRecorded'], equal_to(True))
 
         # Return our test_id and call_id
         return (test_id, call_id)
@@ -194,11 +198,13 @@ class TestRecordings(unittest.TestCase):
             recording (CallRecordingMetadata): The recording metadata to validate.
             call_id (str): The call id associated with the given recording.
         """
-        assert recording.account_id == BW_ACCOUNT_ID
-        assert recording.call_id == call_id
-        assert recording.application_id == MANTECA_APPLICATION_ID
-        assert recording.status == 'complete'
-        assert recording.file_format == FileFormatEnum('wav')
+        assert_that(recording, has_properties(
+            'account_id', BW_ACCOUNT_ID,
+            'call_id', call_id,
+            'application_id', MANTECA_APPLICATION_ID,
+            'status', 'complete',
+            'file_format', FileFormatEnum('wav')
+        ))
 
     def get_test_status(self, test_id: str) -> Dict:
         """
@@ -236,11 +242,11 @@ class TestRecordings(unittest.TestCase):
             
         # List Call Recordings Endpoint
         response: List[CallRecordingMetadata] = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id, _return_http_data_only=False)
-        assert response[1] == 200 # Check response code
+        assert_that(response[1], equal_to(200)) # Check response code
         
         # We should get back 1 recording
         call_recordings = response[0]
-        assert len(call_recordings) == 1
+        assert_that(call_recordings, has_length(1))
         
         # Checks on the first recording
         first_recording: CallRecordingMetadata = call_recordings[0]
@@ -249,10 +255,10 @@ class TestRecordings(unittest.TestCase):
 
         # Get Single Recording Endpoint
         recording_response: CallRecordingMetadata = self.recordings_api_instance.get_call_recording(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
-        assert recording_response[1] == 200
+        assert_that(recording_response[1], equal_to(200)) # Check response code
 
         recording = recording_response[0]
-        assert recording.recording_id == recording_id
+        assert_that(recording.recording_id, equal_to(recording_id))
         self.validate_recording(recording, call_id)
 
         # Download recording media
@@ -270,7 +276,7 @@ class TestRecordings(unittest.TestCase):
         transcription_url = MANTECA_BASE_URL + "/transcriptions"
         transcribe_recording_request = TranscribeRecording(callback_url=transcription_url,tag=test_id)
         transcription_response = self.recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording_request, _return_http_data_only=False)
-        assert transcription_response[1] == 204
+        assert_that(transcription_response[1], equal_to(204)) # Check response code
 
         # Poll Manteca to make sure our call is transcribed
         call_status = self.get_test_status(test_id)
@@ -281,35 +287,38 @@ class TestRecordings(unittest.TestCase):
             retries += 1
 
         # If we failed to get a transcribed call, fail due to polling timeout
-        assert call_status['callTranscribed'] == True
+        assert_that(call_status['callTranscribed'], equal_to(True))
 
         # Get the transcription
         transcription_response = self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
-        assert transcription_response[1] == 200
+        assert_that(transcription_response[1], equal_to(200)) # Check response code
 
         transcription_list = transcription_response[0]
-        assert len(transcription_list.transcripts) == 1
+        assert_that(transcription_list.transcripts, has_length(1))
         transcription = transcription_list.transcripts[0]
-        assert isinstance(transcription, Transcription)
-        assert isinstance(transcription.text, str)
-        assert isinstance(transcription.confidence, float)
+        assert_that(transcription, instance_of(Transcription))
+        assert_that(transcription, has_properties(
+            'text', instance_of(str),
+            'confidence', instance_of(float)
+        ))
 
         # Delete the transcription
         delete_transcription_response = self.recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
-        assert delete_transcription_response[1] == 204
-        with self.assertRaises(NotFoundException):
-            self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
+        assert_that(delete_transcription_response[1], equal_to(204)) # Check response code
+
+        assert_that(calling(self.recordings_api_instance.get_call_transcription).with_args(
+            BW_ACCOUNT_ID, call_id, recording_id), raises(NotFoundException))
 
         # Delete Recording media
         delete_recording_media_response = self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
         # Validate the 204 response
-        assert delete_recording_media_response[1] == 204
+        assert_that(delete_recording_media_response[1], equal_to(204))
 
         # Delete Recording
         delete_recording_response = self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
-        assert delete_recording_response[1] == 204
+        assert_that(delete_recording_response[1], equal_to(204))
         call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
-        assert len(call_recordings) == 0
+        assert_that(call_recordings, has_length(0))
 
     def test_successful_update_active_recording(self) -> None:
         """
@@ -331,17 +340,17 @@ class TestRecordings(unittest.TestCase):
             retries += 1
 
         # Make sure the call is alive
-        assert call_status['status'] == 'ALIVE'
+        assert_that(call_status['status'], equal_to('ALIVE'))
 
         # Update the call to pause the recording
         update_call_recording = UpdateCallRecording(RecordingStateEnum('paused'))
         update_response = self.recordings_api_instance.update_call_recording_state(BW_ACCOUNT_ID, call_id, update_call_recording, _return_http_data_only=False)
-        assert update_response[1] == 200
+        assert_that(update_response[1], equal_to(200))
 
         # Update the call to resume the recording
         update_call_recording = UpdateCallRecording(RecordingStateEnum('recording'))
         update_response = self.recordings_api_instance.update_call_recording_state(BW_ACCOUNT_ID, call_id, update_call_recording, _return_http_data_only=False)
-        assert update_response[1] == 200
+        assert_that(update_response[1], equal_to(200))
 
         # Kill the call
         update_call = UpdateCall(state=CallStateEnum('completed'))
@@ -356,16 +365,17 @@ class TestRecordings(unittest.TestCase):
         (test_id, call_id) = self.complete_recorded_call()
 
         # Use the unauthorized client to try to list recordings (401)
-        with self.assertRaises(UnauthorizedException):
-            self.unauthorized_recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
+        assert_that(calling(self.unauthorized_recordings_api_instance.list_call_recordings).with_args(
+            BW_ACCOUNT_ID, call_id), raises(UnauthorizedException))
 
         # Invalid account id (403)
-        with self.assertRaises(ForbiddenException):
-            self.recordings_api_instance.list_call_recordings("not an account id", call_id)    
+        assert_that(calling(self.recordings_api_instance.list_call_recordings).with_args(
+            "not an account id", call_id), raises(ForbiddenException))
         
         # Non-existent call id
         # This should probably be a 404, but actually returns an empty list
-        assert self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, "not a call id") == []
+        not_found_call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, "not a call id")
+        assert_that(not_found_call_recordings, equal_to([]))
 
     def test_invalid_get_call_recording(self) -> None:
         """
@@ -380,16 +390,16 @@ class TestRecordings(unittest.TestCase):
         recording_id = recordings[0].recording_id
 
         # Use the unauthorized client to try to get a recording (401)
-        with self.assertRaises(UnauthorizedException):
-            self.unauthorized_recordings_api_instance.get_call_recording(BW_ACCOUNT_ID, call_id, recording_id)
-        
+        assert_that(calling(self.unauthorized_recordings_api_instance.get_call_recording).with_args(
+            BW_ACCOUNT_ID, call_id, recording_id), raises(UnauthorizedException))
+
         # Non-existent account id (403)
-        with self.assertRaises(ForbiddenException):
-            self.recordings_api_instance.get_call_recording("not an account id", call_id, recording_id)
+        assert_that(calling(self.recordings_api_instance.get_call_recording).with_args(
+            "not an account id", call_id, recording_id), raises(ForbiddenException))
 
         # Non-existent recording id (404)
-        with self.assertRaises(NotFoundException):
-            self.recordings_api_instance.get_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
+        assert_that(calling(self.recordings_api_instance.get_call_recording).with_args(
+            BW_ACCOUNT_ID, call_id, "not a recording id"), raises(NotFoundException))
 
     def test_invalid_download_call_recording(self) -> None:
         """
@@ -404,16 +414,16 @@ class TestRecordings(unittest.TestCase):
         recording_id = recordings[0].recording_id
 
         # Use the unauthorized client to try to download a recording (401)
-        with self.assertRaises(UnauthorizedException):
-            self.unauthorized_recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, recording_id)
+        assert_that(calling(self.unauthorized_recordings_api_instance.download_call_recording).with_args(
+            BW_ACCOUNT_ID, call_id, recording_id), raises(UnauthorizedException))
         
         # Non-existent account id (403)
-        with self.assertRaises(ForbiddenException):
-            self.recordings_api_instance.download_call_recording("not an account id", call_id, recording_id)
+        assert_that(calling(self.recordings_api_instance.download_call_recording).with_args(
+            "not an account id", call_id, recording_id), raises(ForbiddenException))
 
         # Non-existent recording id (404)
-        with self.assertRaises(NotFoundException):
-            self.recordings_api_instance.download_call_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
+        assert_that(calling(self.recordings_api_instance.download_call_recording).with_args(
+            BW_ACCOUNT_ID, call_id, "not a recording id"), raises(NotFoundException))
 
     def test_invalid_transcribe_call_recording(self) -> None:
         """
@@ -432,12 +442,12 @@ class TestRecordings(unittest.TestCase):
         transcribe_recording = TranscribeRecording(callback_url=transcription_url, tag=test_id)
 
         # Use the unauthorized client to request a transcription (401)
-        with self.assertRaises(UnauthorizedException):
-            self.unauthorized_recordings_api_instance.transcribe_call_recording(BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording)
+        assert_that(calling(self.unauthorized_recordings_api_instance.transcribe_call_recording).with_args(
+            BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording), raises(UnauthorizedException))
 
         # Non existent account id (403)
-        with self.assertRaises(ForbiddenException):
-            self.recordings_api_instance.transcribe_call_recording("not an account id", call_id, recording_id, transcribe_recording)
+        assert_that(calling(self.recordings_api_instance.transcribe_call_recording).with_args(
+            "not an account id", call_id, recording_id, transcribe_recording), raises(ForbiddenException))
 
         # Non-existent recording id (404)
         # TODO: This does not work right now as the API is unexpectedly returning a 502 Bad Gateway for this request.
@@ -471,19 +481,19 @@ class TestRecordings(unittest.TestCase):
             retries += 1
 
         # If we failed to get a transcribed call, fail due to polling timeout (TEMP COMMENTED)
-        assert call_status['callTranscribed'] == True
+        assert_that(call_status['callTranscribed'], equal_to(True))
 
         # Use the unauthorized client to get transcripion (401)
-        with self.assertRaises(UnauthorizedException):
-            self.unauthorized_recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
+        assert_that(calling(self.unauthorized_recordings_api_instance.get_call_transcription).with_args(
+            BW_ACCOUNT_ID, call_id, recording_id), raises(UnauthorizedException))
 
         # Non-existent account id (403)
-        with self.assertRaises(ForbiddenException):
-            self.recordings_api_instance.get_call_transcription("not an account id", call_id, recording_id)
+        assert_that(calling(self.recordings_api_instance.get_call_transcription).with_args(
+            "not an account id", call_id, recording_id), raises(ForbiddenException))
 
         # Non-existent recording id (404)
-        with self.assertRaises(NotFoundException):
-            self.recordings_api_instance.get_call_transcription(BW_ACCOUNT_ID, call_id, "not a recording id")
+        assert_that(calling(self.recordings_api_instance.get_call_transcription).with_args(
+            BW_ACCOUNT_ID, call_id, "not a recording id"), raises(NotFoundException))
 
     def test_invalid_delete_call_transcription(self) -> None:
         """
@@ -511,19 +521,19 @@ class TestRecordings(unittest.TestCase):
             retries += 1
 
         # If we failed to get a transcribed call, fail due to polling timeout (TEMP COMMENTED)
-        assert call_status['callTranscribed'] == True
+        assert_that(call_status['callTranscribed'], equal_to(True))
 
         # Use the unauthorized client to delete transcripion (401)
-        with self.assertRaises(UnauthorizedException):
-            self.unauthorized_recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, recording_id)
+        assert_that(calling(self.unauthorized_recordings_api_instance.delete_call_transcription).with_args(
+            BW_ACCOUNT_ID, call_id, recording_id), raises(UnauthorizedException))
 
         # Non-existent account id (403)
-        with self.assertRaises(ForbiddenException):
-            self.recordings_api_instance.delete_call_transcription("not an account id", call_id, recording_id)
+        assert_that(calling(self.recordings_api_instance.delete_call_transcription).with_args(
+            "not an account id", call_id, recording_id), raises(ForbiddenException))
 
         # Non-existent recording id (404)
-        with self.assertRaises(NotFoundException):
-            self.recordings_api_instance.delete_call_transcription(BW_ACCOUNT_ID, call_id, "not a recording id")
+        assert_that(calling(self.recordings_api_instance.delete_call_transcription).with_args(
+            BW_ACCOUNT_ID, call_id, "not a recording id"), raises(NotFoundException))
 
     def test_invalid_delete_recording_media(self) -> None:
         """
@@ -538,16 +548,16 @@ class TestRecordings(unittest.TestCase):
         recording_id = recordings[0].recording_id
 
         # Use the unauthorized client to try to delete a recording (401)
-        with self.assertRaises(UnauthorizedException):
-            self.unauthorized_recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, recording_id)
+        assert_that(calling(self.unauthorized_recordings_api_instance.delete_recording_media).with_args(
+            BW_ACCOUNT_ID, call_id, recording_id), raises(UnauthorizedException))
         
         # Non-existent account id (403)
-        with self.assertRaises(ForbiddenException):
-            self.recordings_api_instance.delete_recording_media("not an account id", call_id, recording_id)
+        assert_that(calling(self.recordings_api_instance.delete_recording_media).with_args(
+            "not an account id", call_id, recording_id), raises(ForbiddenException))
 
         # Non-existent recording id (404)
-        with self.assertRaises(NotFoundException):
-            self.recordings_api_instance.delete_recording_media(BW_ACCOUNT_ID, call_id, "not a recording id")
+        assert_that(calling(self.recordings_api_instance.delete_recording_media).with_args(
+            BW_ACCOUNT_ID, call_id, "not a recording id"), raises(NotFoundException))
 
     def test_invalid_delete_recording(self) -> None:
         """
@@ -562,16 +572,16 @@ class TestRecordings(unittest.TestCase):
         recording_id = recordings[0].recording_id
 
         # Use the unauthorized client to try to delete a recording (401)
-        with self.assertRaises(UnauthorizedException):
-            self.unauthorized_recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, recording_id)
+        assert_that(calling(self.unauthorized_recordings_api_instance.delete_recording).with_args(
+            BW_ACCOUNT_ID, call_id, recording_id), raises(UnauthorizedException))
         
         # Non-existent account id (403)
-        with self.assertRaises(ForbiddenException):
-            self.recordings_api_instance.delete_recording("not an account id", call_id, recording_id)
+        assert_that(calling(self.recordings_api_instance.delete_recording).with_args(
+            "not an account id", call_id, recording_id), raises(ForbiddenException))
 
         # Non-existent recording id (404)
-        with self.assertRaises(NotFoundException):
-            self.recordings_api_instance.delete_recording(BW_ACCOUNT_ID, call_id, "not a recording id")
+        assert_that(calling(self.recordings_api_instance.delete_recording).with_args(
+            BW_ACCOUNT_ID, call_id, "not a recording id"), raises(NotFoundException))
 
     def test_invalid_update_call_recording_state(self) -> None:
         """
@@ -591,23 +601,23 @@ class TestRecordings(unittest.TestCase):
             retries += 1
 
         # Make sure the call is alive
-        assert call_status['status'] == 'ALIVE'
+        assert_that(call_status['status'], equal_to('ALIVE'))
 
         # Common models
         pause_recording = UpdateCallRecording(RecordingStateEnum('paused'))
         resume_recording = UpdateCallRecording(RecordingStateEnum('recording'))
 
         # Use the unauthorized client to try to update (401)
-        with self.assertRaises(UnauthorizedException):
-            self.unauthorized_recordings_api_instance.update_call_recording_state(BW_ACCOUNT_ID, call_id, pause_recording)
+        assert_that(calling(self.unauthorized_recordings_api_instance.update_call_recording_state).with_args(
+            BW_ACCOUNT_ID, call_id, pause_recording), raises(UnauthorizedException))
 
         # Non-existent account id (403)
-        with self.assertRaises(ForbiddenException):
-            self.recordings_api_instance.update_call_recording_state("not an account id", call_id, pause_recording)
+        assert_that(calling(self.recordings_api_instance.update_call_recording_state).with_args(
+            "not an account id", call_id, pause_recording), raises(ForbiddenException))
 
         # Non-existent call id (404)
-        with self.assertRaises(NotFoundException):
-            self.recordings_api_instance.update_call_recording_state(BW_ACCOUNT_ID, "not a call id", pause_recording)        
+        assert_that(calling(self.recordings_api_instance.update_call_recording_state).with_args(
+            BW_ACCOUNT_ID, "not a call id", pause_recording), raises(NotFoundException))        
 
         # Kill the call
         update_call = UpdateCall(state=CallStateEnum('completed'))

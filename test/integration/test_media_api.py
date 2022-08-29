@@ -8,6 +8,7 @@ import unittest
 import logging
 
 import bandwidth
+from hamcrest import *
 from bandwidth.api import media_api
 from bandwidth.model.media import Media
 from bandwidth.exceptions import ApiException, NotFoundException
@@ -43,13 +44,13 @@ class TestMedia(unittest.TestCase):
             account_id=self.account_id,
             media_id=media_id,
             body=self.original_file,
-            content_type=content_type,
+            _content_type=content_type,
             cache_control=cache_control,
             _return_http_data_only=False
         )
 
         logging.debug(api_response_with_http_info)
-        self.assertEqual(api_response_with_http_info[1], 204)
+        assert_that(api_response_with_http_info[1], equal_to(204))
 
         # reopen the media file
         # the client automatically closes any files passed into request bodies
@@ -60,7 +61,7 @@ class TestMedia(unittest.TestCase):
             account_id=self.account_id,
             media_id=media_id,
             body=reopened_file,
-            content_type=content_type,
+            _content_type=content_type,
             cache_control=cache_control,
             _return_http_data_only=False
         )
@@ -71,12 +72,12 @@ class TestMedia(unittest.TestCase):
         api_response_with_http_info = self.api_instance.list_media(
             self.account_id, _return_http_data_only=False)
 
-        self.assertEqual(api_response_with_http_info[1], 200)
+        assert_that(api_response_with_http_info[1], equal_to(200))
 
         api_response = self.api_instance.list_media(self.account_id)
         logging.debug("List Media" + str(api_response))
 
-        self.assertIs(type(api_response[0]), Media)
+        assert_that(api_response[0], instance_of(Media))
         pass
 
     def getMedia(self) -> None:
@@ -86,7 +87,7 @@ class TestMedia(unittest.TestCase):
             self.account_id, self.media_id, _return_http_data_only=False)
 
         logging.debug(api_response_with_http_info)
-        self.assertEqual(api_response_with_http_info[1], 200)
+        assert_that(api_response_with_http_info[1], equal_to(200))
 
         api_response = self.api_instance.get_media(
             self.account_id, self.media_id, _preload_content=False)
@@ -94,8 +95,8 @@ class TestMedia(unittest.TestCase):
         with open(self.media_path + self.download_file_path, "wb") as download_file:
             download_file.write(api_response.data)
 
-        self.assertTrue(filecmp.cmp(self.media_path + self.media_file,
-                        self.media_path + self.download_file_path))
+        assert_that(filecmp.cmp(self.media_path + self.media_file,
+                        self.media_path + self.download_file_path), equal_to(True))
         download_file.close()
 
     def deleteMedia(self) -> None:
@@ -105,7 +106,7 @@ class TestMedia(unittest.TestCase):
             self.account_id, self.media_id, _return_http_data_only=False)
         
         logging.debug(api_response_with_http_info)
-        self.assertEqual(api_response_with_http_info[1], 204)
+        assert_that(api_response_with_http_info[1], equal_to(204))
 
         # returns void
         self.api_instance.delete_media(self.account_id, self.media_id)
@@ -127,11 +128,5 @@ class TestMedia(unittest.TestCase):
         # use a nonexistent mediaId - results in a 404
         media_id = "abcd1234-e5f6-1111-2222-3456ghi7890/image123456.jpg"
 
-        with self.assertRaises(NotFoundException) as context:
-            api_response = self.api_instance.get_media(
-                self.account_id,
-                media_id,
-                _preload_content=False
-            )
-
-        self.assertEqual(context.exception.status, 404)
+        assert_that(calling(self.api_instance.get_media).with_args(
+            self.account_id, media_id, _preload_content=False)), raises(NotFoundException)

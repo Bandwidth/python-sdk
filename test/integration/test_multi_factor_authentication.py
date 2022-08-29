@@ -16,8 +16,8 @@ from bandwidth.model.verify_code_request import VerifyCodeRequest
 from bandwidth.model.verify_code_response import VerifyCodeResponse
 from bandwidth.model.voice_code_response import VoiceCodeResponse
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
+from test.utils.env_variables import *
 
-import hamcrest
 from hamcrest.core import *
 from hamcrest.library import *
 
@@ -27,31 +27,31 @@ class TestMultiFactorAuthentication(unittest.TestCase):
 
     def setUp(self) -> None:
         configuration = bandwidth.Configuration(
-            username=os.environ['BW_USERNAME'],
-            password=os.environ['BW_PASSWORD']
+            username=BW_USERNAME,
+            password=BW_PASSWORD
         )
         api_client = bandwidth.ApiClient(configuration)
         self.api_instance = mfa_api.MFAApi(api_client)
-        self.account_id = os.environ['BW_ACCOUNT_ID']
+        self.account_id = BW_ACCOUNT_ID
         self.messaging_code_request = CodeRequest(
-            to=os.environ['USER_NUMBER'],
-            _from=os.environ['BW_NUMBER'],
-            application_id=os.environ['BW_MESSAGING_APPLICATION_ID'],
+            to=USER_NUMBER,
+            _from=BW_NUMBER,
+            application_id=BW_MESSAGING_APPLICATION_ID,
             scope="scope",
             message="Your temporary {NAME} {SCOPE} code is {CODE}",
             digits=6,
         )
         self.voice_code_request = CodeRequest(
-            to=os.environ['USER_NUMBER'],
-            _from=os.environ['BW_NUMBER'],
-            application_id=os.environ['BW_VOICE_APPLICATION_ID'],
+            to=USER_NUMBER,
+            _from=BW_NUMBER,
+            application_id=BW_VOICE_APPLICATION_ID,
             scope="scope",
             message="Your temporary {NAME} {SCOPE} code is {CODE}",
             digits=6,
         )
         self.bad_code_request = CodeRequest(
-            to=os.environ['USER_NUMBER'],
-            _from=os.environ['BW_NUMBER'],
+            to=USER_NUMBER,
+            _from=BW_NUMBER,
             application_id='not_an_application_id',
             scope="scope",
             message="Your temporary {NAME} {SCOPE} code is {CODE}",
@@ -154,8 +154,8 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         """Validate a forbidden (403) request
         """
         configuration = bandwidth.Configuration(
-            username=os.environ['BW_USERNAME_FORBIDDEN'],
-            # password=os.environ['BW_PASSWORD_FORBIDDEN'],
+            username=FORBIDDEN_USERNAME,
+            # password=FORBIDDEN_PASSWORD,
             password='bad_password'
         )
         forbidden_api_client = bandwidth.ApiClient(configuration)
