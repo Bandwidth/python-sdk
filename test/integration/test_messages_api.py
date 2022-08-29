@@ -27,6 +27,7 @@ from bandwidth.model.messages_list import MessagesList
 from bandwidth.model.priority_enum import PriorityEnum
 from bandwidth.model.message import Message
 from bandwidth.exceptions import ApiException, UnauthorizedException
+from test.utils.env_variables import *
 
 
 class TestMessagesApi(unittest.TestCase):
@@ -35,21 +36,21 @@ class TestMessagesApi(unittest.TestCase):
     def setUp(self):
         # API Client
         configuration = bandwidth.Configuration(
-            username = os.environ.get('BW_USERNAME'),
-            password = os.environ.get('BW_PASSWORD')
+            username = BW_USERNAME,
+            password = BW_PASSWORD
         )
         api_client = bandwidth.ApiClient(configuration)
         self.api_instance = messages_api.MessagesApi(api_client)
-        self.account_id = os.environ.get('BW_ACCOUNT_ID')
+        self.account_id = BW_ACCOUNT_ID
 
         # Unauthorized API Client
         self.unauthorized_api_client = bandwidth.ApiClient()
         self.unauthorized_api_instance = messages_api.MessagesApi(self.unauthorized_api_client)
 
         # Message Properties
-        self.application_id = os.environ.get('BW_MESSAGING_APPLICATION_ID')
-        self.to_number = [os.environ.get('USER_NUMBER')]
-        self.from_number = os.environ.get('BW_NUMBER')
+        self.application_id = BW_MESSAGING_APPLICATION_ID
+        self.to_number = [USER_NUMBER]
+        self.from_number = BW_NUMBER
         self.text = 'python integration'
         self.media = ['https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg']
         self.tag = 'python integration tag'

@@ -16,6 +16,7 @@ from bandwidth.model.lookup_result import LookupResult
 from bandwidth.model.lookup_status_enum import LookupStatusEnum
 from bandwidth.model.tn_lookup_request_error import TnLookupRequestError
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
+from test.utils.env_variables import *
 
 from hamcrest.core import *
 from hamcrest.library import *
@@ -29,12 +30,12 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
     def setUp(self) -> None:
         configuration = bandwidth.Configuration(
-            username=os.environ['BW_USERNAME'],
-            password=os.environ['BW_PASSWORD']
+            username=BW_USERNAME,
+            password=BW_PASSWORD
         )
         api_client = bandwidth.ApiClient(configuration)
         self.api_instance = phone_number_lookup_api.PhoneNumberLookupApi(api_client)
-        self.account_id = os.environ['BW_ACCOUNT_ID']
+        self.account_id = BW_ACCOUNT_ID
 
     def validateResult(self, result: LookupResult, e_164_format: str, line_provider: str) -> None:
         """Verify a successful phone number lookup LookupResult object
@@ -105,11 +106,11 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         """
         lookup_request = LookupRequest(
             tns=[
-                os.environ['BW_NUMBER'],
-                os.environ['VZW_NUMBER'],
-                os.environ['ATT_NUMBER'],
-                os.environ['T_MOBILE_NUMBER'],
-                # os.environ['BW_INVALID_TN_LOOKUP_NUMBER']
+                BW_NUMBER,
+                VZW_NUMBER,
+                ATT_NUMBER,
+                T_MOBILE_NUMBER,
+                # BW_INVALID_TN_LOOKUP_NUMBER
             ],
         )
 
@@ -143,24 +144,24 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         # Check the information for a Bandwidth TN
         bw_lookup_result: LookupResult = get_lookup_status_response.result[0]
-        self.validateResult(bw_lookup_result, os.environ['BW_NUMBER'], os.environ['BW_NUMBER_PROVIDER'])
+        self.validateResult(bw_lookup_result, BW_NUMBER, BW_NUMBER_PROVIDER)
 
         # Check the information for a Verizon TN
         vzw_lookup_result = get_lookup_status_response.result[1]
-        self.validateResult(vzw_lookup_result, os.environ['VZW_NUMBER'], "Verizon")
+        self.validateResult(vzw_lookup_result, VZW_NUMBER, "Verizon")
 
         # Check the information for an AT&T TN
         att_lookup_result = get_lookup_status_response.result[2]
-        self.validateResult(att_lookup_result, os.environ['ATT_NUMBER'], "AT&T")
+        self.validateResult(att_lookup_result, ATT_NUMBER, "AT&T")
 
         # Check the information for a T-Mobile TN
         t_mobile_lookup_result = get_lookup_status_response.result[3]
-        self.validateResult(t_mobile_lookup_result, os.environ['T_MOBILE_NUMBER'], "T-Mobile")
+        self.validateResult(t_mobile_lookup_result, T_MOBILE_NUMBER, "T-Mobile")
 
         # The only way to get a failed number is if the api call to the downstream service fails - so there is no way to force this in our testing currently
         # check the failed_telephone_number list
         # self.assertIs(type(get_lookup_status_response.failed_telephone_numbers), list)
-        # self.assertIn(os.environ['BW_INVALID_TN_LOOKUP_NUMBER'], get_lookup_status_response.failed_telephone_numbers)
+        # self.assertIn(BW_INVALID_TN_LOOKUP_NUMBER, get_lookup_status_response.failed_telephone_numbers)
 
     def testFailedPhoneNumberLookup(self) -> None:
         """Test Phone Number Lookup API with bad data to force an error
@@ -186,8 +187,8 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         with self.assertRaises(ApiException) as context:
             lookup_request = LookupRequest(
                 tns=[
-                    os.environ['BW_NUMBER'],
-                    os.environ['BW_NUMBER']
+                    BW_NUMBER,
+                    BW_NUMBER
                 ],
             )
             self.api_instance.create_lookup(self.account_id, lookup_request)
@@ -208,7 +209,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
             unauthorized_api_client)
         lookup_request = LookupRequest(
             tns=[
-                os.environ['BW_NUMBER']
+                BW_NUMBER
             ],
         )
 
@@ -221,14 +222,14 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         """Validate a forbidden (403) request
         """
         configuration = bandwidth.Configuration(
-            username=os.environ['BW_USERNAME_FORBIDDEN'],
-            password=os.environ['BW_PASSWORD_FORBIDDEN']
+            username=FORBIDDEN_USERNAME,
+            password=FORBIDDEN_PASSWORD
         )
         forbidden_api_client = bandwidth.ApiClient(configuration)
         forbidden_api_instance = phone_number_lookup_api.PhoneNumberLookupApi(forbidden_api_client)
         lookup_request = LookupRequest(
             tns=[
-                os.environ['BW_NUMBER']
+                BW_NUMBER
             ],
         )
 

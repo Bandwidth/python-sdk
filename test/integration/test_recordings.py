@@ -33,26 +33,27 @@ from bandwidth.model.transcription import Transcription
 from bandwidth.model.update_call import UpdateCall
 from bandwidth.model.update_call_recording import UpdateCallRecording
 from bandwidth.rest import RESTClientObject, RESTResponse
+from test.utils.env_variables import *
 
 
 try:
     # BW Credentials
-    BW_USERNAME = os.environ["BW_USERNAME"]
-    BW_PASSWORD = os.environ["BW_PASSWORD"]
-    BW_ACCOUNT_ID = os.environ["BW_ACCOUNT_ID"]
+    BW_USERNAME = BW_USERNAME
+    BW_PASSWORD = BW_PASSWORD
+    BW_ACCOUNT_ID = BW_ACCOUNT_ID
 
     # Manteca Numbers
-    MANTECA_ACTIVE_NUMBER = os.environ["MANTECA_ACTIVE_NUMBER"]
-    MANTECA_IDLE_NUMBER = os.environ["MANTECA_IDLE_NUMBER"]
+    MANTECA_ACTIVE_NUMBER = MANTECA_ACTIVE_NUMBER
+    MANTECA_IDLE_NUMBER = MANTECA_IDLE_NUMBER
 
     # Manteca
-    MANTECA_BASE_URL = os.environ["MANTECA_BASE_URL"]
+    MANTECA_BASE_URL = MANTECA_BASE_URL
     MANTECA_STATUS_URL = MANTECA_BASE_URL + "tests/"
-    MANTECA_APPLICATION_ID = os.environ["MANTECA_APPLICATION_ID"]
+    MANTECA_APPLICATION_ID = MANTECA_APPLICATION_ID
 
     # Test Environment
-    PYTHON_VERSION = os.environ["PYTHON_VERSION"]
-    OPERATING_SYSTEM = os.environ["OPERATING_SYSTEM"]
+    PYTHON_VERSION = PYTHON_VERSION
+    OPERATING_SYSTEM = OPERATING_SYSTEM
 except KeyError as e:
     raise Exception("Environmental variables not found")
 
