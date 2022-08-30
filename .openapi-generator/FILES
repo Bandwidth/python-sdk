@@ -78,7 +78,6 @@ bandwidth/model/mfa_unauthorized_request_error.py
 bandwidth/model/page_info.py
 bandwidth/model/participant.py
 bandwidth/model/participant_subscription.py
-bandwidth/model/password.py
 bandwidth/model/priority_enum.py
 bandwidth/model/publish_permissions_enum.py
 bandwidth/model/recording_available_callback.py
@@ -105,7 +104,6 @@ bandwidth/model/update_call.py
 bandwidth/model/update_call_recording.py
 bandwidth/model/update_conference.py
 bandwidth/model/update_conference_member.py
-bandwidth/model/username.py
 bandwidth/model/verify_code_request.py
 bandwidth/model/verify_code_response.py
 bandwidth/model/voice_api_error.py
@@ -179,7 +177,6 @@ docs/PageInfo.md
 docs/Participant.md
 docs/ParticipantSubscription.md
 docs/ParticipantsApi.md
-docs/Password.md
 docs/PhoneNumberLookupApi.md
 docs/PriorityEnum.md
 docs/PublishPermissionsEnum.md
@@ -210,7 +207,6 @@ docs/UpdateCall.md
 docs/UpdateCallRecording.md
 docs/UpdateConference.md
 docs/UpdateConferenceMember.md
-docs/Username.md
 docs/VerifyCodeRequest.md
 docs/VerifyCodeResponse.md
 docs/VoiceApiError.md
@@ -283,7 +279,6 @@ test/test_page_info.py
 test/test_participant.py
 test/test_participant_subscription.py
 test/test_participants_api.py
-test/test_password.py
 test/test_phone_number_lookup_api.py
 test/test_priority_enum.py
 test/test_publish_permissions_enum.py
@@ -314,7 +309,6 @@ test/test_update_call.py
 test/test_update_call_recording.py
 test/test_update_conference.py
 test/test_update_conference_member.py
-test/test_username.py
 test/test_verify_code_request.py
 test/test_verify_code_response.py
 test/test_voice_api_error.py

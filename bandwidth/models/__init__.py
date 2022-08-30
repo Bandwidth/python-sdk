@@ -69,7 +69,6 @@ from bandwidth.model.mfa_unauthorized_request_error import MfaUnauthorizedReques
 from bandwidth.model.page_info import PageInfo
 from bandwidth.model.participant import Participant
 from bandwidth.model.participant_subscription import ParticipantSubscription
-from bandwidth.model.password import Password
 from bandwidth.model.priority_enum import PriorityEnum
 from bandwidth.model.publish_permissions_enum import PublishPermissionsEnum
 from bandwidth.model.recording_available_callback import RecordingAvailableCallback
@@ -96,7 +95,6 @@ from bandwidth.model.update_call import UpdateCall
 from bandwidth.model.update_call_recording import UpdateCallRecording
 from bandwidth.model.update_conference import UpdateConference
 from bandwidth.model.update_conference_member import UpdateConferenceMember
-from bandwidth.model.username import Username
 from bandwidth.model.verify_code_request import VerifyCodeRequest
 from bandwidth.model.verify_code_response import VerifyCodeResponse
 from bandwidth.model.voice_api_error import VoiceApiError

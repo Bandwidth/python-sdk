@@ -32,11 +32,7 @@ from bandwidth.exceptions import ApiAttributeError
 
 def lazy_import():
     from bandwidth.model.callback_method_enum import CallbackMethodEnum
-    from bandwidth.model.password import Password
-    from bandwidth.model.username import Username
     globals()['CallbackMethodEnum'] = CallbackMethodEnum
-    globals()['Password'] = Password
-    globals()['Username'] = Username
 
 
 class TranscribeRecording(ModelNormal):
@@ -67,6 +63,12 @@ class TranscribeRecording(ModelNormal):
     }
 
     validations = {
+        ('username',): {
+            'max_length': 1024,
+        },
+        ('password',): {
+            'max_length': 1024,
+        },
         ('callback_timeout',): {
             'inclusive_maximum': 25,
             'inclusive_minimum': 1,
@@ -98,8 +100,8 @@ class TranscribeRecording(ModelNormal):
         return {
             'callback_url': (str,),  # noqa: E501
             'callback_method': (CallbackMethodEnum,),  # noqa: E501
-            'username': (Username,),  # noqa: E501
-            'password': (Password,),  # noqa: E501
+            'username': (str, none_type,),  # noqa: E501
+            'password': (str, none_type,),  # noqa: E501
             'tag': (str, none_type,),  # noqa: E501
             'callback_timeout': (float, none_type,),  # noqa: E501
         }
@@ -161,8 +163,8 @@ class TranscribeRecording(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             callback_url (str): The URL to send the [TranscriptionAvailable](/docs/voice/webhooks/transcriptionAvailable) event to. You should not include sensitive or personally-identifiable information in the callbackUrl field! Always use the proper username and password fields for authorization.. [optional]  # noqa: E501
             callback_method (CallbackMethodEnum): [optional]  # noqa: E501
-            username (Username): [optional]  # noqa: E501
-            password (Password): [optional]  # noqa: E501
+            username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            password (str, none_type): Basic auth password.. [optional]  # noqa: E501
             tag (str, none_type): (optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.. [optional]  # noqa: E501
             callback_timeout (float, none_type): This is the timeout (in seconds) to use when delivering the webhook to `callbackUrl`. Can be any numeric value (including decimals) between 1 and 25.. [optional] if omitted the server will use the default value of 15  # noqa: E501
         """
@@ -252,8 +254,8 @@ class TranscribeRecording(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             callback_url (str): The URL to send the [TranscriptionAvailable](/docs/voice/webhooks/transcriptionAvailable) event to. You should not include sensitive or personally-identifiable information in the callbackUrl field! Always use the proper username and password fields for authorization.. [optional]  # noqa: E501
             callback_method (CallbackMethodEnum): [optional]  # noqa: E501
-            username (Username): [optional]  # noqa: E501
-            password (Password): [optional]  # noqa: E501
+            username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            password (str, none_type): Basic auth password.. [optional]  # noqa: E501
             tag (str, none_type): (optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.. [optional]  # noqa: E501
             callback_timeout (float, none_type): This is the timeout (in seconds) to use when delivering the webhook to `callbackUrl`. Can be any numeric value (including decimals) between 1 and 25.. [optional] if omitted the server will use the default value of 15  # noqa: E501
         """

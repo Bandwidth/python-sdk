@@ -2843,20 +2843,6 @@
                 ],
                 "description": "The machine detection mode. If set to 'async', the detection\nresult will be sent in a 'machineDetectionComplete' callback. If set to\n'sync', the 'answer' callback will wait for the machine detection to complete\nand will include its result."
             },
-            "username": {
-                "type": "string",
-                "nullable": true,
-                "description": "Basic auth username.",
-                "maxLength": 1024,
-                "example": "mySecretUsername"
-            },
-            "password": {
-                "type": "string",
-                "nullable": true,
-                "description": "Basic auth password.",
-                "maxLength": 1024,
-                "example": "mySecretPassword1!"
-            },
             "createCall": {
                 "type": "object",
                 "required": [
@@ -2898,10 +2884,18 @@
                         "$ref": "#/components/schemas/callbackMethodEnum"
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "answerFallbackUrl": {
                         "nullable": true,
@@ -2915,10 +2909,18 @@
                         "$ref": "#/components/schemas/callbackMethodEnum"
                     },
                     "fallbackUsername": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "fallbackPassword": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "disconnectUrl": {
                         "nullable": true,
@@ -3067,16 +3069,32 @@
                         "description": "URL to deliver the `disconnect` event webhook."
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "fallbackUsername": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "fallbackPassword": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "priority": {
                         "nullable": true,
@@ -3218,10 +3236,18 @@
                         "$ref": "#/components/schemas/redirectMethodEnum"
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "redirectFallbackUrl": {
                         "nullable": true,
@@ -3234,10 +3260,18 @@
                         "$ref": "#/components/schemas/redirectMethodEnum"
                     },
                     "fallbackUsername": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "fallbackPassword": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "tag": {
                         "nullable": true,
@@ -3402,10 +3436,18 @@
                         "$ref": "#/components/schemas/redirectMethodEnum"
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "redirectFallbackUrl": {
                         "nullable": true,
@@ -3418,10 +3460,18 @@
                         "$ref": "#/components/schemas/redirectMethodEnum"
                     },
                     "fallbackUsername": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "fallbackPassword": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     }
                 }
             },
@@ -3591,10 +3641,18 @@
                         "$ref": "#/components/schemas/callbackMethodEnum"
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "fallbackUrl": {
                         "nullable": true,
@@ -3608,10 +3666,18 @@
                         "$ref": "#/components/schemas/callbackMethodEnum"
                     },
                     "fallbackUsername": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "fallbackPassword": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     }
                 }
             },
@@ -3628,10 +3694,18 @@
                         "$ref": "#/components/schemas/callbackMethodEnum"
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "tag": {
                         "$ref": "#/components/schemas/tag1"

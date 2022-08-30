@@ -33,12 +33,8 @@ from bandwidth.exceptions import ApiAttributeError
 def lazy_import():
     from bandwidth.model.callback_method_enum import CallbackMethodEnum
     from bandwidth.model.machine_detection_configuration import MachineDetectionConfiguration
-    from bandwidth.model.password import Password
-    from bandwidth.model.username import Username
     globals()['CallbackMethodEnum'] = CallbackMethodEnum
     globals()['MachineDetectionConfiguration'] = MachineDetectionConfiguration
-    globals()['Password'] = Password
-    globals()['Username'] = Username
 
 
 class CreateCall(ModelNormal):
@@ -72,8 +68,20 @@ class CreateCall(ModelNormal):
         ('answer_url',): {
             'max_length': 2048,
         },
+        ('username',): {
+            'max_length': 1024,
+        },
+        ('password',): {
+            'max_length': 1024,
+        },
         ('answer_fallback_url',): {
             'max_length': 2048,
+        },
+        ('fallback_username',): {
+            'max_length': 1024,
+        },
+        ('fallback_password',): {
+            'max_length': 1024,
         },
         ('disconnect_url',): {
             'max_length': 2048,
@@ -123,12 +131,12 @@ class CreateCall(ModelNormal):
             'answer_url': (str,),  # noqa: E501
             'uui': (str, none_type,),  # noqa: E501
             'answer_method': (CallbackMethodEnum,),  # noqa: E501
-            'username': (Username,),  # noqa: E501
-            'password': (Password,),  # noqa: E501
+            'username': (str, none_type,),  # noqa: E501
+            'password': (str, none_type,),  # noqa: E501
             'answer_fallback_url': (str, none_type,),  # noqa: E501
             'answer_fallback_method': (CallbackMethodEnum,),  # noqa: E501
-            'fallback_username': (Username,),  # noqa: E501
-            'fallback_password': (Password,),  # noqa: E501
+            'fallback_username': (str, none_type,),  # noqa: E501
+            'fallback_password': (str, none_type,),  # noqa: E501
             'disconnect_url': (str, none_type,),  # noqa: E501
             'disconnect_method': (CallbackMethodEnum,),  # noqa: E501
             'call_timeout': (float, none_type,),  # noqa: E501
@@ -214,12 +222,12 @@ class CreateCall(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             uui (str, none_type): A comma-separated list of 'User-To-User' headers to be sent in the INVITE when calling a SIP URI. Each value must end with an 'encoding' parameter as described in <a href='https://tools.ietf.org/html/rfc7433'>RFC 7433</a>. Only 'jwt' and 'base64' encodings are allowed. The entire value cannot exceed 350 characters, including parameters and separators.. [optional]  # noqa: E501
             answer_method (CallbackMethodEnum): [optional]  # noqa: E501
-            username (Username): [optional]  # noqa: E501
-            password (Password): [optional]  # noqa: E501
+            username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            password (str, none_type): Basic auth password.. [optional]  # noqa: E501
             answer_fallback_url (str, none_type): A fallback url which, if provided, will be used to retry the `answer` webhook delivery in case `answerUrl` fails to respond  Must use `https` if specifying `fallbackUsername` and `fallbackPassword`. [optional]  # noqa: E501
             answer_fallback_method (CallbackMethodEnum): [optional]  # noqa: E501
-            fallback_username (Username): [optional]  # noqa: E501
-            fallback_password (Password): [optional]  # noqa: E501
+            fallback_username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            fallback_password (str, none_type): Basic auth password.. [optional]  # noqa: E501
             disconnect_url (str, none_type): The URL to send the <a href='/docs/voice/webhooks/disconnect'>Disconnect</a> event to when the call ends. This event does not expect a BXML response.. [optional]  # noqa: E501
             disconnect_method (CallbackMethodEnum): [optional]  # noqa: E501
             call_timeout (float, none_type): The timeout (in seconds) for the callee to answer the call after it starts ringing. If the call does not start ringing within 30s, the call will be cancelled regardless of this value.  Can be any numeric value (including decimals) between 1 and 300.. [optional] if omitted the server will use the default value of 30  # noqa: E501
@@ -324,12 +332,12 @@ class CreateCall(ModelNormal):
                                 _visited_composed_classes = (Animal,)
             uui (str, none_type): A comma-separated list of 'User-To-User' headers to be sent in the INVITE when calling a SIP URI. Each value must end with an 'encoding' parameter as described in <a href='https://tools.ietf.org/html/rfc7433'>RFC 7433</a>. Only 'jwt' and 'base64' encodings are allowed. The entire value cannot exceed 350 characters, including parameters and separators.. [optional]  # noqa: E501
             answer_method (CallbackMethodEnum): [optional]  # noqa: E501
-            username (Username): [optional]  # noqa: E501
-            password (Password): [optional]  # noqa: E501
+            username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            password (str, none_type): Basic auth password.. [optional]  # noqa: E501
             answer_fallback_url (str, none_type): A fallback url which, if provided, will be used to retry the `answer` webhook delivery in case `answerUrl` fails to respond  Must use `https` if specifying `fallbackUsername` and `fallbackPassword`. [optional]  # noqa: E501
             answer_fallback_method (CallbackMethodEnum): [optional]  # noqa: E501
-            fallback_username (Username): [optional]  # noqa: E501
-            fallback_password (Password): [optional]  # noqa: E501
+            fallback_username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            fallback_password (str, none_type): Basic auth password.. [optional]  # noqa: E501
             disconnect_url (str, none_type): The URL to send the <a href='/docs/voice/webhooks/disconnect'>Disconnect</a> event to when the call ends. This event does not expect a BXML response.. [optional]  # noqa: E501
             disconnect_method (CallbackMethodEnum): [optional]  # noqa: E501
             call_timeout (float, none_type): The timeout (in seconds) for the callee to answer the call after it starts ringing. If the call does not start ringing within 30s, the call will be cancelled regardless of this value.  Can be any numeric value (including decimals) between 1 and 300.. [optional] if omitted the server will use the default value of 30  # noqa: E501

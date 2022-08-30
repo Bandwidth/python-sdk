@@ -10,12 +10,12 @@ Name | Type | Description | Notes
 **answer_url** | **str** | The full URL to send the &lt;a href&#x3D;&#39;/docs/voice/webhooks/answer&#39;&gt;Answer&lt;/a&gt; event to when the called party answers. This endpoint should return the first &lt;a href&#x3D;&#39;/docs/voice/bxml&#39;&gt;BXML document&lt;/a&gt; to be executed in the call.  Must use &#x60;https&#x60; if specifying &#x60;username&#x60; and &#x60;password&#x60; | 
 **uui** | **str, none_type** | A comma-separated list of &#39;User-To-User&#39; headers to be sent in the INVITE when calling a SIP URI. Each value must end with an &#39;encoding&#39; parameter as described in &lt;a href&#x3D;&#39;https://tools.ietf.org/html/rfc7433&#39;&gt;RFC 7433&lt;/a&gt;. Only &#39;jwt&#39; and &#39;base64&#39; encodings are allowed. The entire value cannot exceed 350 characters, including parameters and separators. | [optional] 
 **answer_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | [optional] 
-**username** | [**Username**](Username.md) |  | [optional] 
-**password** | [**Password**](Password.md) |  | [optional] 
+**username** | **str, none_type** | Basic auth username. | [optional] 
+**password** | **str, none_type** | Basic auth password. | [optional] 
 **answer_fallback_url** | **str, none_type** | A fallback url which, if provided, will be used to retry the &#x60;answer&#x60; webhook delivery in case &#x60;answerUrl&#x60; fails to respond  Must use &#x60;https&#x60; if specifying &#x60;fallbackUsername&#x60; and &#x60;fallbackPassword&#x60; | [optional] 
 **answer_fallback_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | [optional] 
-**fallback_username** | [**Username**](Username.md) |  | [optional] 
-**fallback_password** | [**Password**](Password.md) |  | [optional] 
+**fallback_username** | **str, none_type** | Basic auth username. | [optional] 
+**fallback_password** | **str, none_type** | Basic auth password. | [optional] 
 **disconnect_url** | **str, none_type** | The URL to send the &lt;a href&#x3D;&#39;/docs/voice/webhooks/disconnect&#39;&gt;Disconnect&lt;/a&gt; event to when the call ends. This event does not expect a BXML response. | [optional] 
 **disconnect_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | [optional] 
 **call_timeout** | **float, none_type** | The timeout (in seconds) for the callee to answer the call after it starts ringing. If the call does not start ringing within 30s, the call will be cancelled regardless of this value.  Can be any numeric value (including decimals) between 1 and 300. | [optional]  if omitted the server will use the default value of 30

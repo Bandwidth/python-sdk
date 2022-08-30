@@ -33,12 +33,8 @@ from bandwidth.exceptions import ApiAttributeError
 def lazy_import():
     from bandwidth.model.callback_method_enum import CallbackMethodEnum
     from bandwidth.model.machine_detection_mode_enum import MachineDetectionModeEnum
-    from bandwidth.model.password import Password
-    from bandwidth.model.username import Username
     globals()['CallbackMethodEnum'] = CallbackMethodEnum
     globals()['MachineDetectionModeEnum'] = MachineDetectionModeEnum
-    globals()['Password'] = Password
-    globals()['Username'] = Username
 
 
 class MachineDetectionConfiguration(ModelNormal):
@@ -72,8 +68,20 @@ class MachineDetectionConfiguration(ModelNormal):
         ('callback_url',): {
             'max_length': 2048,
         },
+        ('username',): {
+            'max_length': 1024,
+        },
+        ('password',): {
+            'max_length': 1024,
+        },
         ('fallback_url',): {
             'max_length': 2048,
+        },
+        ('fallback_username',): {
+            'max_length': 1024,
+        },
+        ('fallback_password',): {
+            'max_length': 1024,
         },
     }
 
@@ -109,12 +117,12 @@ class MachineDetectionConfiguration(ModelNormal):
             'delay_result': (bool, none_type,),  # noqa: E501
             'callback_url': (str, none_type,),  # noqa: E501
             'callback_method': (CallbackMethodEnum,),  # noqa: E501
-            'username': (Username,),  # noqa: E501
-            'password': (Password,),  # noqa: E501
+            'username': (str, none_type,),  # noqa: E501
+            'password': (str, none_type,),  # noqa: E501
             'fallback_url': (str, none_type,),  # noqa: E501
             'fallback_method': (CallbackMethodEnum,),  # noqa: E501
-            'fallback_username': (Username,),  # noqa: E501
-            'fallback_password': (Password,),  # noqa: E501
+            'fallback_username': (str, none_type,),  # noqa: E501
+            'fallback_password': (str, none_type,),  # noqa: E501
         }
 
     @cached_property
@@ -190,12 +198,12 @@ class MachineDetectionConfiguration(ModelNormal):
             delay_result (bool, none_type): If set to 'true' and if an answering machine is detected, the 'answering-machine' callback will be delayed until the machine is done speaking, or an end of message tone is detected, or until the 'detectionTimeout' is exceeded. If false, the 'answering-machine' result is sent immediately.. [optional] if omitted the server will use the default value of False  # noqa: E501
             callback_url (str, none_type): The URL to send the 'machineDetectionComplete' webhook when the detection is completed. Only for 'async' mode.. [optional]  # noqa: E501
             callback_method (CallbackMethodEnum): [optional]  # noqa: E501
-            username (Username): [optional]  # noqa: E501
-            password (Password): [optional]  # noqa: E501
+            username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            password (str, none_type): Basic auth password.. [optional]  # noqa: E501
             fallback_url (str, none_type): A fallback URL which, if provided, will be used to retry the machine detection complete webhook delivery in case `callbackUrl` fails to respond. [optional]  # noqa: E501
             fallback_method (CallbackMethodEnum): [optional]  # noqa: E501
-            fallback_username (Username): [optional]  # noqa: E501
-            fallback_password (Password): [optional]  # noqa: E501
+            fallback_username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            fallback_password (str, none_type): Basic auth password.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -290,12 +298,12 @@ class MachineDetectionConfiguration(ModelNormal):
             delay_result (bool, none_type): If set to 'true' and if an answering machine is detected, the 'answering-machine' callback will be delayed until the machine is done speaking, or an end of message tone is detected, or until the 'detectionTimeout' is exceeded. If false, the 'answering-machine' result is sent immediately.. [optional] if omitted the server will use the default value of False  # noqa: E501
             callback_url (str, none_type): The URL to send the 'machineDetectionComplete' webhook when the detection is completed. Only for 'async' mode.. [optional]  # noqa: E501
             callback_method (CallbackMethodEnum): [optional]  # noqa: E501
-            username (Username): [optional]  # noqa: E501
-            password (Password): [optional]  # noqa: E501
+            username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            password (str, none_type): Basic auth password.. [optional]  # noqa: E501
             fallback_url (str, none_type): A fallback URL which, if provided, will be used to retry the machine detection complete webhook delivery in case `callbackUrl` fails to respond. [optional]  # noqa: E501
             fallback_method (CallbackMethodEnum): [optional]  # noqa: E501
-            fallback_username (Username): [optional]  # noqa: E501
-            fallback_password (Password): [optional]  # noqa: E501
+            fallback_username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            fallback_password (str, none_type): Basic auth password.. [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

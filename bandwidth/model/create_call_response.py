@@ -32,11 +32,7 @@ from bandwidth.exceptions import ApiAttributeError
 
 def lazy_import():
     from bandwidth.model.callback_method_enum import CallbackMethodEnum
-    from bandwidth.model.password import Password
-    from bandwidth.model.username import Username
     globals()['CallbackMethodEnum'] = CallbackMethodEnum
-    globals()['Password'] = Password
-    globals()['Username'] = Username
 
 
 class CreateCallResponse(ModelNormal):
@@ -67,6 +63,18 @@ class CreateCallResponse(ModelNormal):
     }
 
     validations = {
+        ('username',): {
+            'max_length': 1024,
+        },
+        ('password',): {
+            'max_length': 1024,
+        },
+        ('fallback_username',): {
+            'max_length': 1024,
+        },
+        ('fallback_password',): {
+            'max_length': 1024,
+        },
     }
 
     @cached_property
@@ -108,10 +116,10 @@ class CreateCallResponse(ModelNormal):
             'answer_fallback_method': (CallbackMethodEnum,),  # noqa: E501
             'answer_fallback_url': (str, none_type,),  # noqa: E501
             'disconnect_url': (str, none_type,),  # noqa: E501
-            'username': (Username,),  # noqa: E501
-            'password': (Password,),  # noqa: E501
-            'fallback_username': (Username,),  # noqa: E501
-            'fallback_password': (Password,),  # noqa: E501
+            'username': (str, none_type,),  # noqa: E501
+            'password': (str, none_type,),  # noqa: E501
+            'fallback_username': (str, none_type,),  # noqa: E501
+            'fallback_password': (str, none_type,),  # noqa: E501
             'priority': (float, none_type,),  # noqa: E501
         }
 
@@ -203,10 +211,10 @@ class CreateCallResponse(ModelNormal):
             answer_fallback_method (CallbackMethodEnum): [optional]  # noqa: E501
             answer_fallback_url (str, none_type): Fallback URL to deliver the `answer` event webhook.. [optional]  # noqa: E501
             disconnect_url (str, none_type): URL to deliver the `disconnect` event webhook.. [optional]  # noqa: E501
-            username (Username): [optional]  # noqa: E501
-            password (Password): [optional]  # noqa: E501
-            fallback_username (Username): [optional]  # noqa: E501
-            fallback_password (Password): [optional]  # noqa: E501
+            username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            password (str, none_type): Basic auth password.. [optional]  # noqa: E501
+            fallback_username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            fallback_password (str, none_type): Basic auth password.. [optional]  # noqa: E501
             priority (float, none_type): The priority of this call over other calls from your account.. [optional]  # noqa: E501
         """
 
@@ -320,10 +328,10 @@ class CreateCallResponse(ModelNormal):
             answer_fallback_method (CallbackMethodEnum): [optional]  # noqa: E501
             answer_fallback_url (str, none_type): Fallback URL to deliver the `answer` event webhook.. [optional]  # noqa: E501
             disconnect_url (str, none_type): URL to deliver the `disconnect` event webhook.. [optional]  # noqa: E501
-            username (Username): [optional]  # noqa: E501
-            password (Password): [optional]  # noqa: E501
-            fallback_username (Username): [optional]  # noqa: E501
-            fallback_password (Password): [optional]  # noqa: E501
+            username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            password (str, none_type): Basic auth password.. [optional]  # noqa: E501
+            fallback_username (str, none_type): Basic auth username.. [optional]  # noqa: E501
+            fallback_password (str, none_type): Basic auth password.. [optional]  # noqa: E501
             priority (float, none_type): The priority of this call over other calls from your account.. [optional]  # noqa: E501
         """
 
