@@ -165,7 +165,7 @@ class TestApi:
         """
         media_file_name = f'text-media-id-{uuid.uuid4()}'
         media_file = b'12345'
-        messaging_client.upload_media(BW_ACCOUNT_ID, media_file_name, media_file)
+        messaging_client.upload_media(BW_ACCOUNT_ID, media_file_name, media_file, 'text/plain')
         upload_response = messaging_client.get_media(BW_ACCOUNT_ID, media_file_name)
         downloaded_media = upload_response.body
 
