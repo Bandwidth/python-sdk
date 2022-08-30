@@ -2493,6 +2493,7 @@
                     },
                     "carrierName": {
                         "type": "string",
+                        "nullable": true,
                         "description": "The name of the carrier. Not currently supported for MMS coming soon.",
                         "example": "other"
                     },
