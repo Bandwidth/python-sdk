@@ -4,8 +4,8 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**call_id** | **str** | The call ID of this conference member | [optional] 
-**conference_id** | **str** | The Bandwidth-generated conference ID | [optional] 
+**call_id** | **str** | The call id associated with the event. | [optional] 
+**conference_id** | **str** | The unique, Bandwidth-generated ID of the conference that was recorded | [optional] 
 **member_url** | **str** | A URL that may be used to retrieve information about or update the state of this conference member. This is the URL of this member&#39;s [Get Conference Member](/apis/voice/#operation/getConferenceMember) endpoint and [Modify Conference Member](/apis/voice/#operation/updateConferenceMember) endpoint. | [optional] 
 **mute** | **bool** | Whether or not this member is currently muted. Members who are muted are still able to hear other participants.  If used in a PUT request, updates this member&#39;s mute status. Has no effect if omitted. | [optional] 
 **hold** | **bool** | Whether or not this member is currently on hold. Members who are on hold are not able to hear or speak in the conference.  If used in a PUT request, updates this member&#39;s hold status. Has no effect if omitted. | [optional] 

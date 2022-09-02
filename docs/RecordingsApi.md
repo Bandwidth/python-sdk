@@ -795,7 +795,7 @@ with bandwidth.ApiClient(configuration) as api_client:
         callback_method=CallbackMethodEnum("POST"),
         username="mySecretUsername",
         password="mySecretPassword1!",
-        tag="my custom tag",
+        tag="exampleTag",
         callback_timeout=5.5,
     ) # TranscribeRecording | 
 

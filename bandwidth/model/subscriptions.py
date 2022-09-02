@@ -143,8 +143,8 @@ class Subscriptions(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            session_id (str): Session the subscriptions are associated with. If this is the only field, the subscriber will be subscribed to all participants in the session (including any participants that are later added to the session). Upon creation of a Participant, returns as an empty object.. [optional]  # noqa: E501
-            participants ([ParticipantSubscription]): (optional) A list of participants  in the session that will be subscribed to. Returns empty if used during the creation of a Participant. . [optional]  # noqa: E501
+            session_id (str): If present, and not overridden by the array of participants, it  represents the session the subscriptions are associated with. If this is the only field, the subscriber will be subscribed to all participants in the session (including any participants that are later added to the session). Upon creation of a Participant, returns as an empty object.. [optional]  # noqa: E501
+            participants ([ParticipantSubscription]): (optional) A list of participants  in the session that will be subscribed to.  If present and not  empty or null, this will override  any sessionId specified in the body. Returns empty if used during the creation of a Participant. . [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -230,8 +230,8 @@ class Subscriptions(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            session_id (str): Session the subscriptions are associated with. If this is the only field, the subscriber will be subscribed to all participants in the session (including any participants that are later added to the session). Upon creation of a Participant, returns as an empty object.. [optional]  # noqa: E501
-            participants ([ParticipantSubscription]): (optional) A list of participants  in the session that will be subscribed to. Returns empty if used during the creation of a Participant. . [optional]  # noqa: E501
+            session_id (str): If present, and not overridden by the array of participants, it  represents the session the subscriptions are associated with. If this is the only field, the subscriber will be subscribed to all participants in the session (including any participants that are later added to the session). Upon creation of a Participant, returns as an empty object.. [optional]  # noqa: E501
+            participants ([ParticipantSubscription]): (optional) A list of participants  in the session that will be subscribed to.  If present and not  empty or null, this will override  any sessionId specified in the body. Returns empty if used during the creation of a Participant. . [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

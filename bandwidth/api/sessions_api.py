@@ -596,7 +596,7 @@ class SessionsApi(object):
             participant_id (str): Participant ID
 
         Keyword Args:
-            subscriptions (Subscriptions): Optional set of subscriptions to set on the participant. Calling this endpoint with no/empty body will only add the participant to the session. NOTE: the request body for this endpoint is OPTIONAL and provided as a convenience to avoid additional calls to the Update Participant Subscriptions endpoint.. [optional]
+            subscriptions (Subscriptions): The Body describes an optional set of subscriptions to apply to the participant.  Calling this endpoint with no/empty body will only add the participant to the session, and will not subscribe the Participant to any media.  The request body for this endpoint is OPTIONAL and provided as a convenience to avoid additional calls to the Update Participant Subscriptions endpoint. --- If a body is provided it will result in direct control over what Participants are subscribed to.    - if the participants Array is provided and not empty, that list of Participants will be subscribed To   - if the participants Array is missing or empty, and the sessionId is provided, the participant will be subscribed to the session, including all subsequent changes to the membership of the session   - if the sessionId and the participant Array are both missing or empty, no subscriptions will be created. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object
@@ -1215,7 +1215,7 @@ class SessionsApi(object):
             participant_id (str): Participant ID
 
         Keyword Args:
-            subscriptions (Subscriptions): Update participant subscriptions request body.. [optional]
+            subscriptions (Subscriptions): The body describes the desired subscriptions for the Participant. --- If a body is provided it will result in direct control over what Participants are subscribed to.    - if the participants Array is provided and not empty, that list of Participants will be subscribed To   - if the participants Array is missing or empty, and the sessionId is provided, the participant will be subscribed to the session, including all subsequent changes to the membership of the session   - if the sessionId and the participant Array are both missing or empty, no subscriptions will be created. [optional]
             _return_http_data_only (bool): response data without head status
                 code and headers. Default is True.
             _preload_content (bool): if False, the urllib3.HTTPResponse object

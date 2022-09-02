@@ -22,6 +22,7 @@ from bandwidth.model_utils import (  # noqa: F401
     none_type,
     validate_and_convert_types
 )
+from bandwidth.model.create_message_request_error import CreateMessageRequestError
 from bandwidth.model.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.model.message import Message
 from bandwidth.model.message_request import MessageRequest

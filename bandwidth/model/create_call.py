@@ -65,6 +65,27 @@ class CreateCall(ModelNormal):
     }
 
     validations = {
+        ('answer_url',): {
+            'max_length': 2048,
+        },
+        ('username',): {
+            'max_length': 1024,
+        },
+        ('password',): {
+            'max_length': 1024,
+        },
+        ('answer_fallback_url',): {
+            'max_length': 2048,
+        },
+        ('fallback_username',): {
+            'max_length': 1024,
+        },
+        ('fallback_password',): {
+            'max_length': 1024,
+        },
+        ('disconnect_url',): {
+            'max_length': 2048,
+        },
         ('call_timeout',): {
             'inclusive_maximum': 300,
             'inclusive_minimum': 1,

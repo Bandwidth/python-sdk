@@ -143,7 +143,7 @@ class CreateLookupResponse(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            request_id (str): [optional]  # noqa: E501
+            request_id (str): The phone number lookup request ID from Bandwidth.. [optional]  # noqa: E501
             status (LookupStatusEnum): [optional]  # noqa: E501
         """
 
@@ -230,7 +230,7 @@ class CreateLookupResponse(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            request_id (str): [optional]  # noqa: E501
+            request_id (str): The phone number lookup request ID from Bandwidth.. [optional]  # noqa: E501
             status (LookupStatusEnum): [optional]  # noqa: E501
         """
 

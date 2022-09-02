@@ -65,6 +65,24 @@ class MachineDetectionConfiguration(ModelNormal):
     }
 
     validations = {
+        ('callback_url',): {
+            'max_length': 2048,
+        },
+        ('username',): {
+            'max_length': 1024,
+        },
+        ('password',): {
+            'max_length': 1024,
+        },
+        ('fallback_url',): {
+            'max_length': 2048,
+        },
+        ('fallback_username',): {
+            'max_length': 1024,
+        },
+        ('fallback_password',): {
+            'max_length': 1024,
+        },
     }
 
     @cached_property
@@ -91,12 +109,12 @@ class MachineDetectionConfiguration(ModelNormal):
         lazy_import()
         return {
             'mode': (MachineDetectionModeEnum,),  # noqa: E501
-            'detection_timeout': (float,),  # noqa: E501
-            'silence_timeout': (float,),  # noqa: E501
-            'speech_threshold': (float,),  # noqa: E501
-            'speech_end_threshold': (float,),  # noqa: E501
-            'machine_speech_end_threshold': (float,),  # noqa: E501
-            'delay_result': (bool,),  # noqa: E501
+            'detection_timeout': (float, none_type,),  # noqa: E501
+            'silence_timeout': (float, none_type,),  # noqa: E501
+            'speech_threshold': (float, none_type,),  # noqa: E501
+            'speech_end_threshold': (float, none_type,),  # noqa: E501
+            'machine_speech_end_threshold': (float, none_type,),  # noqa: E501
+            'delay_result': (bool, none_type,),  # noqa: E501
             'callback_url': (str, none_type,),  # noqa: E501
             'callback_method': (CallbackMethodEnum,),  # noqa: E501
             'username': (str, none_type,),  # noqa: E501
@@ -172,12 +190,12 @@ class MachineDetectionConfiguration(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             mode (MachineDetectionModeEnum): [optional]  # noqa: E501
-            detection_timeout (float): The timeout used for the whole operation, in seconds. If no result is determined in this period, a callback with a `timeout` result is sent.. [optional] if omitted the server will use the default value of 15  # noqa: E501
-            silence_timeout (float): If no speech is detected in this period, a callback with a 'silence' result is sent.. [optional] if omitted the server will use the default value of 10  # noqa: E501
-            speech_threshold (float): When speech has ended and a result couldn't be determined based on the audio content itself, this value is used to determine if the speaker is a machine based on the speech duration. If the length of the speech detected is greater than or equal to this threshold, the result will be 'answering-machine'. If the length of speech detected is below this threshold, the result will be 'human'.. [optional] if omitted the server will use the default value of 10  # noqa: E501
-            speech_end_threshold (float): Amount of silence (in seconds) before assuming the callee has finished speaking.. [optional] if omitted the server will use the default value of 5  # noqa: E501
-            machine_speech_end_threshold (float): When an answering machine is detected, the amount of silence (in seconds) before assuming the message has finished playing.. [optional]  # noqa: E501
-            delay_result (bool): If set to 'true' and if an answering machine is detected, the 'answering-machine' callback will be delayed until the machine is done speaking or until the 'detectionTimeout' is exceeded. If false, the 'answering-machine' result is sent immediately.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            detection_timeout (float, none_type): The timeout used for the whole operation, in seconds. If no result is determined in this period, a callback with a `timeout` result is sent.. [optional] if omitted the server will use the default value of 15  # noqa: E501
+            silence_timeout (float, none_type): If no speech is detected in this period, a callback with a 'silence' result is sent.. [optional] if omitted the server will use the default value of 10  # noqa: E501
+            speech_threshold (float, none_type): When speech has ended and a result couldn't be determined based on the audio content itself, this value is used to determine if the speaker is a machine based on the speech duration. If the length of the speech detected is greater than or equal to this threshold, the result will be 'answering-machine'. If the length of speech detected is below this threshold, the result will be 'human'.. [optional] if omitted the server will use the default value of 10  # noqa: E501
+            speech_end_threshold (float, none_type): Amount of silence (in seconds) before assuming the callee has finished speaking.. [optional] if omitted the server will use the default value of 5  # noqa: E501
+            machine_speech_end_threshold (float, none_type): When an answering machine is detected, the amount of silence (in seconds) before assuming the message has finished playing.  If not provided it will default to the speechEndThreshold value.. [optional]  # noqa: E501
+            delay_result (bool, none_type): If set to 'true' and if an answering machine is detected, the 'answering-machine' callback will be delayed until the machine is done speaking, or an end of message tone is detected, or until the 'detectionTimeout' is exceeded. If false, the 'answering-machine' result is sent immediately.. [optional] if omitted the server will use the default value of False  # noqa: E501
             callback_url (str, none_type): The URL to send the 'machineDetectionComplete' webhook when the detection is completed. Only for 'async' mode.. [optional]  # noqa: E501
             callback_method (CallbackMethodEnum): [optional]  # noqa: E501
             username (str, none_type): Basic auth username.. [optional]  # noqa: E501
@@ -272,12 +290,12 @@ class MachineDetectionConfiguration(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             mode (MachineDetectionModeEnum): [optional]  # noqa: E501
-            detection_timeout (float): The timeout used for the whole operation, in seconds. If no result is determined in this period, a callback with a `timeout` result is sent.. [optional] if omitted the server will use the default value of 15  # noqa: E501
-            silence_timeout (float): If no speech is detected in this period, a callback with a 'silence' result is sent.. [optional] if omitted the server will use the default value of 10  # noqa: E501
-            speech_threshold (float): When speech has ended and a result couldn't be determined based on the audio content itself, this value is used to determine if the speaker is a machine based on the speech duration. If the length of the speech detected is greater than or equal to this threshold, the result will be 'answering-machine'. If the length of speech detected is below this threshold, the result will be 'human'.. [optional] if omitted the server will use the default value of 10  # noqa: E501
-            speech_end_threshold (float): Amount of silence (in seconds) before assuming the callee has finished speaking.. [optional] if omitted the server will use the default value of 5  # noqa: E501
-            machine_speech_end_threshold (float): When an answering machine is detected, the amount of silence (in seconds) before assuming the message has finished playing.. [optional]  # noqa: E501
-            delay_result (bool): If set to 'true' and if an answering machine is detected, the 'answering-machine' callback will be delayed until the machine is done speaking or until the 'detectionTimeout' is exceeded. If false, the 'answering-machine' result is sent immediately.. [optional] if omitted the server will use the default value of False  # noqa: E501
+            detection_timeout (float, none_type): The timeout used for the whole operation, in seconds. If no result is determined in this period, a callback with a `timeout` result is sent.. [optional] if omitted the server will use the default value of 15  # noqa: E501
+            silence_timeout (float, none_type): If no speech is detected in this period, a callback with a 'silence' result is sent.. [optional] if omitted the server will use the default value of 10  # noqa: E501
+            speech_threshold (float, none_type): When speech has ended and a result couldn't be determined based on the audio content itself, this value is used to determine if the speaker is a machine based on the speech duration. If the length of the speech detected is greater than or equal to this threshold, the result will be 'answering-machine'. If the length of speech detected is below this threshold, the result will be 'human'.. [optional] if omitted the server will use the default value of 10  # noqa: E501
+            speech_end_threshold (float, none_type): Amount of silence (in seconds) before assuming the callee has finished speaking.. [optional] if omitted the server will use the default value of 5  # noqa: E501
+            machine_speech_end_threshold (float, none_type): When an answering machine is detected, the amount of silence (in seconds) before assuming the message has finished playing.  If not provided it will default to the speechEndThreshold value.. [optional]  # noqa: E501
+            delay_result (bool, none_type): If set to 'true' and if an answering machine is detected, the 'answering-machine' callback will be delayed until the machine is done speaking, or an end of message tone is detected, or until the 'detectionTimeout' is exceeded. If false, the 'answering-machine' result is sent immediately.. [optional] if omitted the server will use the default value of False  # noqa: E501
             callback_url (str, none_type): The URL to send the 'machineDetectionComplete' webhook when the detection is completed. Only for 'async' mode.. [optional]  # noqa: E501
             callback_method (CallbackMethodEnum): [optional]  # noqa: E501
             username (str, none_type): Basic auth username.. [optional]  # noqa: E501

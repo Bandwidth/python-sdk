@@ -54,7 +54,6 @@ class DeviceApiVersionEnum(ModelSimple):
     allowed_values = {
         ('value',): {
             'V3': "V3",
-            'V2': "V2",
         },
     }
 
@@ -106,10 +105,10 @@ class DeviceApiVersionEnum(ModelSimple):
         Note that value can be passed either in args or in kwargs, but not in both.
 
         Args:
-            args[0] (str): Optional field to define the device api version of this participant.. if omitted defaults to "V2", must be one of ["V3", "V2", ]  # noqa: E501
+            args[0] (str): Optional field to define the device api version of this participant.. if omitted defaults to "V3", must be one of ["V3", ]  # noqa: E501
 
         Keyword Args:
-            value (str): Optional field to define the device api version of this participant.. if omitted defaults to "V2", must be one of ["V3", "V2", ]  # noqa: E501
+            value (str): Optional field to define the device api version of this participant.. if omitted defaults to "V3", must be one of ["V3", ]  # noqa: E501
             _check_type (bool): if True, values for parameters in openapi_types
                                 will be type checked and a TypeError will be
                                 raised if the wrong type is input.
@@ -150,7 +149,7 @@ class DeviceApiVersionEnum(ModelSimple):
             args = list(args)
             value = args.pop(0)
         else:
-            value = "V2"
+            value = "V3"
 
         _check_type = kwargs.pop('_check_type', True)
         _spec_property_naming = kwargs.pop('_spec_property_naming', False)
@@ -196,10 +195,10 @@ class DeviceApiVersionEnum(ModelSimple):
         Note that value can be passed either in args or in kwargs, but not in both.
 
         Args:
-            args[0] (str): Optional field to define the device api version of this participant.. if omitted defaults to "V2", must be one of ["V3", "V2", ]  # noqa: E501
+            args[0] (str): Optional field to define the device api version of this participant.. if omitted defaults to "V3", must be one of ["V3", ]  # noqa: E501
 
         Keyword Args:
-            value (str): Optional field to define the device api version of this participant.. if omitted defaults to "V2", must be one of ["V3", "V2", ]  # noqa: E501
+            value (str): Optional field to define the device api version of this participant.. if omitted defaults to "V3", must be one of ["V3", ]  # noqa: E501
             _check_type (bool): if True, values for parameters in openapi_types
                                 will be type checked and a TypeError will be
                                 raised if the wrong type is input.
@@ -242,7 +241,7 @@ class DeviceApiVersionEnum(ModelSimple):
             args = list(args)
             value = args.pop(0)
         else:
-            value = "V2"
+            value = "V3"
 
         _check_type = kwargs.pop('_check_type', True)
         _spec_property_naming = kwargs.pop('_spec_property_naming', False)

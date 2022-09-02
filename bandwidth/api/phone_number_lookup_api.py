@@ -269,7 +269,7 @@ class PhoneNumberLookupApi(object):
 
         Args:
             account_id (str): The ID of the Bandwidth account that the user belongs to.
-            request_id (str):
+            request_id (str): The phone number lookup request ID from Bandwidth.
 
         Keyword Args:
             _return_http_data_only (bool): response data without head status

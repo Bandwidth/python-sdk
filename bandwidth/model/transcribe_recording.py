@@ -63,6 +63,12 @@ class TranscribeRecording(ModelNormal):
     }
 
     validations = {
+        ('username',): {
+            'max_length': 1024,
+        },
+        ('password',): {
+            'max_length': 1024,
+        },
         ('callback_timeout',): {
             'inclusive_maximum': 25,
             'inclusive_minimum': 1,
@@ -159,7 +165,7 @@ class TranscribeRecording(ModelNormal):
             callback_method (CallbackMethodEnum): [optional]  # noqa: E501
             username (str, none_type): Basic auth username.. [optional]  # noqa: E501
             password (str, none_type): Basic auth password.. [optional]  # noqa: E501
-            tag (str, none_type): A custom string that will be sent with the webhook to `callbackUrl`.. [optional]  # noqa: E501
+            tag (str, none_type): (optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.. [optional]  # noqa: E501
             callback_timeout (float, none_type): This is the timeout (in seconds) to use when delivering the webhook to `callbackUrl`. Can be any numeric value (including decimals) between 1 and 25.. [optional] if omitted the server will use the default value of 15  # noqa: E501
         """
 
@@ -250,7 +256,7 @@ class TranscribeRecording(ModelNormal):
             callback_method (CallbackMethodEnum): [optional]  # noqa: E501
             username (str, none_type): Basic auth username.. [optional]  # noqa: E501
             password (str, none_type): Basic auth password.. [optional]  # noqa: E501
-            tag (str, none_type): A custom string that will be sent with the webhook to `callbackUrl`.. [optional]  # noqa: E501
+            tag (str, none_type): (optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.. [optional]  # noqa: E501
             callback_timeout (float, none_type): This is the timeout (in seconds) to use when delivering the webhook to `callbackUrl`. Can be any numeric value (including decimals) between 1 and 25.. [optional] if omitted the server will use the default value of 15  # noqa: E501
         """
 

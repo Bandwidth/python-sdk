@@ -63,6 +63,18 @@ class CreateCallResponse(ModelNormal):
     }
 
     validations = {
+        ('username',): {
+            'max_length': 1024,
+        },
+        ('password',): {
+            'max_length': 1024,
+        },
+        ('fallback_username',): {
+            'max_length': 1024,
+        },
+        ('fallback_password',): {
+            'max_length': 1024,
+        },
     }
 
     @cached_property

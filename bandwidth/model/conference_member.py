@@ -145,8 +145,8 @@ class ConferenceMember(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            call_id (str): The call ID of this conference member. [optional]  # noqa: E501
-            conference_id (str): The Bandwidth-generated conference ID. [optional]  # noqa: E501
+            call_id (str): The call id associated with the event.. [optional]  # noqa: E501
+            conference_id (str): The unique, Bandwidth-generated ID of the conference that was recorded. [optional]  # noqa: E501
             member_url (str): A URL that may be used to retrieve information about or update the state of this conference member. This is the URL of this member's [Get Conference Member](/apis/voice/#operation/getConferenceMember) endpoint and [Modify Conference Member](/apis/voice/#operation/updateConferenceMember) endpoint.. [optional]  # noqa: E501
             mute (bool): Whether or not this member is currently muted. Members who are muted are still able to hear other participants.  If used in a PUT request, updates this member's mute status. Has no effect if omitted.. [optional]  # noqa: E501
             hold (bool): Whether or not this member is currently on hold. Members who are on hold are not able to hear or speak in the conference.  If used in a PUT request, updates this member's hold status. Has no effect if omitted.. [optional]  # noqa: E501
@@ -236,8 +236,8 @@ class ConferenceMember(ModelNormal):
                                 Animal class but this time we won't travel
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
-            call_id (str): The call ID of this conference member. [optional]  # noqa: E501
-            conference_id (str): The Bandwidth-generated conference ID. [optional]  # noqa: E501
+            call_id (str): The call id associated with the event.. [optional]  # noqa: E501
+            conference_id (str): The unique, Bandwidth-generated ID of the conference that was recorded. [optional]  # noqa: E501
             member_url (str): A URL that may be used to retrieve information about or update the state of this conference member. This is the URL of this member's [Get Conference Member](/apis/voice/#operation/getConferenceMember) endpoint and [Modify Conference Member](/apis/voice/#operation/updateConferenceMember) endpoint.. [optional]  # noqa: E501
             mute (bool): Whether or not this member is currently muted. Members who are muted are still able to hear other participants.  If used in a PUT request, updates this member's mute status. Has no effect if omitted.. [optional]  # noqa: E501
             hold (bool): Whether or not this member is currently on hold. Members who are on hold are not able to hear or speak in the conference.  If used in a PUT request, updates this member's hold status. Has no effect if omitted.. [optional]  # noqa: E501

@@ -1,5 +1,15 @@
 {
     "openapi": "3.0.3",
+    "info": {
+        "title": "Bandwidth",
+        "description": "Bandwidth's Communication APIs",
+        "contact": {
+            "name": "Bandwidth",
+            "url": "https://dev.bandwidth.com",
+            "email": "letstalk@bandwidth.com"
+        },
+        "version": "1.0.0"
+    },
     "security": [
         {
             "Basic": []
@@ -79,14 +89,14 @@
                     "500": {
                         "$ref": "#/components/responses/messagingInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://messaging.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://messaging.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/users/{accountId}/media/{mediaId}": {
             "get": {
@@ -129,13 +139,7 @@
                     "500": {
                         "$ref": "#/components/responses/messagingInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://messaging.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "put": {
                 "summary": "Upload Media",
@@ -186,13 +190,7 @@
                     "500": {
                         "$ref": "#/components/responses/messagingInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://messaging.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "delete": {
                 "summary": "Delete Media",
@@ -234,14 +232,14 @@
                     "500": {
                         "$ref": "#/components/responses/messagingInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://messaging.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://messaging.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/users/{accountId}/messages": {
             "get": {
@@ -320,13 +318,7 @@
                     "500": {
                         "$ref": "#/components/responses/messagingInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://messaging.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "post": {
                 "summary": "Create Message",
@@ -348,7 +340,7 @@
                         "$ref": "#/components/responses/createMessageResponse"
                     },
                     "400": {
-                        "$ref": "#/components/responses/messagingBadRequestError"
+                        "$ref": "#/components/responses/createMessageBadRequestError"
                     },
                     "401": {
                         "$ref": "#/components/responses/messagingUnauthorizedError"
@@ -368,14 +360,14 @@
                     "500": {
                         "$ref": "#/components/responses/messagingInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://messaging.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://messaging.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/calls": {
             "post": {
@@ -421,14 +413,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/calls/{callId}": {
             "get": {
@@ -474,13 +466,7 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "post": {
                 "tags": [
@@ -519,6 +505,9 @@
                     "405": {
                         "$ref": "#/components/responses/voiceNotAllowedError"
                     },
+                    "409": {
+                        "$ref": "#/components/responses/voiceConflictError"
+                    },
                     "415": {
                         "$ref": "#/components/responses/voiceUnsupportedMediaTypeError"
                     },
@@ -528,14 +517,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/calls/{callId}/bxml": {
             "put": {
@@ -575,6 +564,9 @@
                     "405": {
                         "$ref": "#/components/responses/voiceNotAllowedError"
                     },
+                    "409": {
+                        "$ref": "#/components/responses/voiceConflictError"
+                    },
                     "415": {
                         "$ref": "#/components/responses/voiceUnsupportedMediaTypeError"
                     },
@@ -584,14 +576,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/conferences": {
             "get": {
@@ -649,14 +641,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/conferences/{conferenceId}": {
             "get": {
@@ -702,13 +694,7 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "post": {
                 "tags": [
@@ -756,14 +742,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/conferences/{conferenceId}/bxml": {
             "put": {
@@ -812,14 +798,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/conferences/{conferenceId}/members/{memberId}": {
             "get": {
@@ -868,13 +854,7 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "put": {
                 "tags": [
@@ -925,14 +905,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/conferences/{conferenceId}/recordings": {
             "get": {
@@ -978,14 +958,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/conferences/{conferenceId}/recordings/{recordingId}": {
             "get": {
@@ -1034,14 +1014,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/conferences/{conferenceId}/recordings/{recordingId}/media": {
             "get": {
@@ -1064,7 +1044,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/downloadCallRecordingResponse"
+                        "$ref": "#/components/responses/downloadRecordingMediaResponse"
                     },
                     "400": {
                         "$ref": "#/components/responses/voiceBadRequestError"
@@ -1090,14 +1070,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/recordings": {
             "get": {
@@ -1152,14 +1132,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/calls/{callId}/recording": {
             "put": {
@@ -1208,14 +1188,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/calls/{callId}/recordings": {
             "get": {
@@ -1261,14 +1241,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/calls/{callId}/recordings/{recordingId}": {
             "get": {
@@ -1317,13 +1297,7 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
@@ -1371,14 +1345,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media": {
             "get": {
@@ -1401,7 +1375,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "$ref": "#/components/responses/downloadCallRecordingResponse"
+                        "$ref": "#/components/responses/downloadRecordingMediaResponse"
                     },
                     "400": {
                         "$ref": "#/components/responses/voiceBadRequestError"
@@ -1427,13 +1401,7 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
@@ -1481,14 +1449,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription": {
             "get": {
@@ -1537,13 +1505,7 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "post": {
                 "tags": [
@@ -1594,13 +1556,7 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
@@ -1648,14 +1604,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/statistics": {
             "get": {
@@ -1698,14 +1654,14 @@
                     "500": {
                         "$ref": "#/components/responses/voiceInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://voice.bandwidth.com/api/v2",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://voice.bandwidth.com/api/v2",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/code/voice": {
             "post": {
@@ -1739,14 +1695,14 @@
                     "500": {
                         "$ref": "#/components/responses/mfaInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://mfa.bandwidth.com/api/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://mfa.bandwidth.com/api/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/code/messaging": {
             "post": {
@@ -1780,14 +1736,14 @@
                     "500": {
                         "$ref": "#/components/responses/mfaInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://mfa.bandwidth.com/api/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://mfa.bandwidth.com/api/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/code/verify": {
             "post": {
@@ -1824,14 +1780,14 @@
                     "500": {
                         "$ref": "#/components/responses/mfaInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://mfa.bandwidth.com/api/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://mfa.bandwidth.com/api/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/tnlookup": {
             "post": {
@@ -1871,14 +1827,14 @@
                     "500": {
                         "$ref": "#/components/responses/tnLookupInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://numbers.bandwidth.com/api/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://numbers.bandwidth.com/api/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/tnlookup/{requestId}": {
             "get": {
@@ -1918,14 +1874,14 @@
                     "500": {
                         "$ref": "#/components/responses/tnLookupInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://numbers.bandwidth.com/api/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://numbers.bandwidth.com/api/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/participants": {
             "post": {
@@ -1959,14 +1915,14 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://api.webrtc.bandwidth.com/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/participants/{participantId}": {
             "get": {
@@ -2003,13 +1959,7 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
@@ -2045,14 +1995,14 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://api.webrtc.bandwidth.com/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/sessions": {
             "post": {
@@ -2086,14 +2036,14 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://api.webrtc.bandwidth.com/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/sessions/{sessionId}": {
             "get": {
@@ -2130,13 +2080,7 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
@@ -2172,14 +2116,14 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://api.webrtc.bandwidth.com/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/sessions/{sessionId}/participants": {
             "get": {
@@ -2219,14 +2163,14 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://api.webrtc.bandwidth.com/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/sessions/{sessionId}/participants/{participantId}": {
             "put": {
@@ -2272,13 +2216,7 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
@@ -2317,14 +2255,14 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://api.webrtc.bandwidth.com/v1",
+                    "description": "Production"
+                }
+            ]
         },
         "/accounts/{accountId}/sessions/{sessionId}/participants/{participantId}/subscriptions": {
             "get": {
@@ -2367,13 +2305,7 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
+                }
             },
             "put": {
                 "tags": [
@@ -2415,14 +2347,14 @@
                     "500": {
                         "$ref": "#/components/responses/webrtcInternalServerError"
                     }
-                },
-                "servers": [
-                    {
-                        "url": "https://api.webrtc.bandwidth.com/v1",
-                        "description": "Production"
-                    }
-                ]
-            }
+                }
+            },
+            "servers": [
+                {
+                    "url": "https://api.webrtc.bandwidth.com/v1",
+                    "description": "Production"
+                }
+            ]
         }
     },
     "components": {
@@ -2561,8 +2493,8 @@
                     },
                     "carrierName": {
                         "type": "string",
-                        "description": "The name of the carrier. Not currently supported for MMS coming soon.",
                         "nullable": true,
+                        "description": "The name of the carrier. Not currently supported for MMS coming soon.",
                         "example": "other"
                     },
                     "messageSize": {
@@ -2658,8 +2590,7 @@
                 "required": [
                     "type",
                     "description"
-                ],
-                "additionalProperties": true
+                ]
             },
             "media": {
                 "title": "Media",
@@ -2913,18 +2844,6 @@
                 ],
                 "description": "The machine detection mode. If set to 'async', the detection\nresult will be sent in a 'machineDetectionComplete' callback. If set to\n'sync', the 'answer' callback will wait for the machine detection to complete\nand will include its result."
             },
-            "username": {
-                "type": "string",
-                "nullable": true,
-                "description": "Basic auth username.",
-                "example": "mySecretUsername"
-            },
-            "password": {
-                "type": "string",
-                "nullable": true,
-                "description": "Basic auth password.",
-                "example": "mySecretPassword1!"
-            },
             "createCall": {
                 "type": "object",
                 "required": [
@@ -2959,38 +2878,57 @@
                         "type": "string",
                         "format": "uri",
                         "description": "The full URL to send the <a href='/docs/voice/webhooks/answer'>Answer</a>\nevent to when the called party answers. This endpoint should return the\nfirst <a href='/docs/voice/bxml'>BXML document</a> to be executed in the\ncall.\n\nMust use `https` if specifying `username` and `password`",
+                        "maxLength": 2048,
                         "example": "https://www.myCallbackServer.com/webhooks/answer"
                     },
                     "answerMethod": {
                         "$ref": "#/components/schemas/callbackMethodEnum"
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "answerFallbackUrl": {
                         "nullable": true,
                         "type": "string",
                         "format": "uri",
                         "description": "A fallback url which, if provided, will be used to retry the\n`answer` webhook delivery in case `answerUrl` fails to respond\n\nMust use `https` if specifying `fallbackUsername` and `fallbackPassword`",
+                        "maxLength": 2048,
                         "example": "https://www.myFallbackServer.com/webhooks/answer"
                     },
                     "answerFallbackMethod": {
                         "$ref": "#/components/schemas/callbackMethodEnum"
                     },
                     "fallbackUsername": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "fallbackPassword": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "disconnectUrl": {
                         "nullable": true,
                         "type": "string",
                         "format": "uri",
-                        "description": "The URL to send the <a href='/docs/voice/webhooks/disconnect'>Disconnect</a> event to when the call ends. This event does not expect a BXML response."
+                        "description": "The URL to send the <a href='/docs/voice/webhooks/disconnect'>Disconnect</a> event to when the call ends. This event does not expect a BXML response.",
+                        "maxLength": 2048
                     },
                     "disconnectMethod": {
                         "$ref": "#/components/schemas/callbackMethodEnum"
@@ -3132,16 +3070,32 @@
                         "description": "URL to deliver the `disconnect` event webhook."
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "fallbackUsername": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "fallbackPassword": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "priority": {
                         "nullable": true,
@@ -3283,10 +3237,18 @@
                         "$ref": "#/components/schemas/redirectMethodEnum"
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "redirectFallbackUrl": {
                         "nullable": true,
@@ -3299,10 +3261,18 @@
                         "$ref": "#/components/schemas/redirectMethodEnum"
                     },
                     "fallbackUsername": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "fallbackPassword": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "tag": {
                         "nullable": true,
@@ -3343,92 +3313,55 @@
                 "type": "object",
                 "properties": {
                     "applicationId": {
-                        "type": "string",
-                        "description": "The `applicationId` associated with the call",
-                        "example": "04e88489-df02-4e34-a0ee-27a91849555f"
+                        "$ref": "#/components/schemas/applicationId"
                     },
                     "accountId": {
-                        "type": "string",
-                        "description": "The account that placed the call",
-                        "example": "9900000"
+                        "$ref": "#/components/schemas/accountId"
                     },
                     "callId": {
-                        "type": "string",
-                        "description": "The `callId` of the call that created this recording",
-                        "example": "c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"
+                        "$ref": "#/components/schemas/callId"
                     },
                     "parentCallId": {
-                        "nullable": true,
-                        "type": "string",
-                        "description": "If the call was a transferred leg, this field contains the `callId` of the call that executed the [`<Transfer>`](/docs/voice/bxml/transfer)",
-                        "example": "c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"
+                        "$ref": "#/components/schemas/parentCallId"
                     },
                     "recordingId": {
-                        "type": "string",
-                        "description": "The recording's unique ID",
-                        "example": "r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"
+                        "$ref": "#/components/schemas/recordingId"
                     },
                     "to": {
-                        "type": "string",
-                        "description": "The phone number that received the call, in E.164 format (e.g. +15555555555), or if the call was to a SIP URI, the SIP URI",
-                        "example": "+19195551234"
+                        "$ref": "#/components/schemas/to"
                     },
                     "from": {
-                        "type": "string",
-                        "description": "The phone number that made the call, in E.164 format (e.g. +15555555555).",
-                        "example": "+19195554321"
+                        "$ref": "#/components/schemas/from"
                     },
                     "transferCallerId": {
-                        "nullable": true,
-                        "type": "string",
-                        "description": "If the call was a transferred leg, the `transferCallerId` field from the [`<Transfer>`](/docs/voice/bxml/transfer), if any.",
-                        "example": "+12125551234"
+                        "$ref": "#/components/schemas/transferCallerId"
                     },
                     "transferTo": {
-                        "nullable": true,
-                        "type": "string",
-                        "description": "If the call was a transferred leg, the number that the call was transferred to",
-                        "example": "+12125554321"
+                        "$ref": "#/components/schemas/transferTo"
                     },
                     "duration": {
-                        "type": "string",
-                        "description": "The duration of the recording in ISO-8601 format",
-                        "example": "PT2.998S"
+                        "$ref": "#/components/schemas/duration"
                     },
                     "direction": {
                         "$ref": "#/components/schemas/callDirectionEnum"
                     },
                     "channels": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "The number of channels in the recording. Either `1` or `2`",
-                        "example": 1
+                        "$ref": "#/components/schemas/channels"
                     },
                     "startTime": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The time that the recording started in ISO 8601 format",
-                        "example": "2022-06-16T13:15:07.160Z"
+                        "$ref": "#/components/schemas/startTime"
                     },
                     "endTime": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The time that the recording ended in ISO 8601 format",
-                        "example": "2022-06-16T13:15:18.314Z"
+                        "$ref": "#/components/schemas/endTime"
                     },
                     "fileFormat": {
                         "$ref": "#/components/schemas/fileFormatEnum"
                     },
                     "status": {
-                        "type": "string",
-                        "description": "The current status of the recording. Current values are 'processing', 'partial', 'complete', 'deleted' and 'error'. Additional states may be added in the future, so your application must be tolerant of unknown values.",
-                        "example": "complete"
+                        "$ref": "#/components/schemas/status"
                     },
                     "mediaUrl": {
-                        "type": "string",
-                        "format": "uri",
-                        "description": "The URL that can be used to download the audio recording",
-                        "example": "https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/recordings/r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/media"
+                        "$ref": "#/components/schemas/mediaUrl"
                     },
                     "transcription": {
                         "$ref": "#/components/schemas/transcriptionMetadata"
@@ -3504,10 +3437,18 @@
                         "$ref": "#/components/schemas/redirectMethodEnum"
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "redirectFallbackUrl": {
                         "nullable": true,
@@ -3520,10 +3461,18 @@
                         "$ref": "#/components/schemas/redirectMethodEnum"
                     },
                     "fallbackUsername": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "fallbackPassword": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     }
                 }
             },
@@ -3531,14 +3480,10 @@
                 "type": "object",
                 "properties": {
                     "callId": {
-                        "type": "string",
-                        "description": "The call ID of this conference member",
-                        "example": "c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"
+                        "$ref": "#/components/schemas/callId"
                     },
                     "conferenceId": {
-                        "type": "string",
-                        "description": "The Bandwidth-generated conference ID",
-                        "example": "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9"
+                        "$ref": "#/components/schemas/conferenceId"
                     },
                     "memberUrl": {
                         "type": "string",
@@ -3598,62 +3543,37 @@
                 "type": "object",
                 "properties": {
                     "accountId": {
-                        "type": "string",
-                        "description": "Your account ID",
-                        "example": "9900000"
+                        "$ref": "#/components/schemas/accountId"
                     },
                     "conferenceId": {
-                        "type": "string",
-                        "description": "The unique, Bandwidth-generated ID of the conference that was recorded",
-                        "example": "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9"
+                        "$ref": "#/components/schemas/conferenceId"
                     },
                     "name": {
-                        "type": "string",
-                        "description": "The user-specified name of the conference that was recorded",
-                        "example": "my-conference-name"
+                        "$ref": "#/components/schemas/name"
                     },
                     "recordingId": {
-                        "type": "string",
-                        "description": "The unique ID of this recording",
-                        "example": "r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833"
+                        "$ref": "#/components/schemas/recordingId"
                     },
                     "duration": {
-                        "type": "string",
-                        "description": "The duration of the recording in ISO-8601 format",
-                        "example": "PT13.67S"
+                        "$ref": "#/components/schemas/duration"
                     },
                     "channels": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "Always `1` for conference recordings; multi-channel recordings are not supported on conferences.",
-                        "example": 1
+                        "$ref": "#/components/schemas/channels"
                     },
                     "startTime": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The time that the recording started in ISO-8601 format",
-                        "example": "2022-06-17T22:19:40.375Z"
+                        "$ref": "#/components/schemas/startTime"
                     },
                     "endTime": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "The time that the recording ended in ISO-8601 format",
-                        "example": "2022-06-17T22:20:00.000Z"
+                        "$ref": "#/components/schemas/endTime"
                     },
                     "fileFormat": {
                         "$ref": "#/components/schemas/fileFormatEnum"
                     },
                     "status": {
-                        "type": "string",
-                        "description": "The current status of the recording. Current possible values\nare 'processing', 'partial', 'complete', 'deleted', and 'error'. Additional\nstates may be added in the future, so your application must be tolerant\nof unknown values.",
-                        "example": "completed"
+                        "$ref": "#/components/schemas/status"
                     },
                     "mediaUrl": {
-                        "nullable": true,
-                        "type": "string",
-                        "format": "uri",
-                        "description": "The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.",
-                        "example": "https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/recordings/r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833/media"
+                        "$ref": "#/components/schemas/mediaUrl"
                     }
                 }
             },
@@ -3665,6 +3585,7 @@
                         "$ref": "#/components/schemas/machineDetectionModeEnum"
                     },
                     "detectionTimeout": {
+                        "nullable": true,
                         "type": "number",
                         "format": "double",
                         "description": "The timeout used for the whole operation, in seconds. If no\nresult is determined in this period, a callback with a `timeout` result\nis sent.",
@@ -3672,6 +3593,7 @@
                         "example": 15
                     },
                     "silenceTimeout": {
+                        "nullable": true,
                         "type": "number",
                         "format": "double",
                         "description": "If no speech is detected in this period, a callback with a 'silence' result is sent.",
@@ -3679,6 +3601,7 @@
                         "example": 10
                     },
                     "speechThreshold": {
+                        "nullable": true,
                         "type": "number",
                         "format": "double",
                         "description": "When speech has ended and a result couldn't be determined based\non the audio content itself, this value is used to determine if the speaker\nis a machine based on the speech duration. If the length of the speech\ndetected is greater than or equal to this threshold, the result will be\n'answering-machine'. If the length of speech detected is below this threshold,\nthe result will be 'human'.",
@@ -3686,6 +3609,7 @@
                         "example": 10
                     },
                     "speechEndThreshold": {
+                        "nullable": true,
                         "type": "number",
                         "format": "double",
                         "description": "Amount of silence (in seconds) before assuming the callee has finished speaking.",
@@ -3693,14 +3617,16 @@
                         "example": 5
                     },
                     "machineSpeechEndThreshold": {
+                        "nullable": true,
                         "type": "number",
                         "format": "double",
-                        "description": "When an answering machine is detected, the amount of silence (in seconds) before assuming the message has finished playing.",
+                        "description": "When an answering machine is detected, the amount of silence (in seconds) before assuming the message has finished playing. \nIf not provided it will default to the speechEndThreshold value.",
                         "example": 5
                     },
                     "delayResult": {
+                        "nullable": true,
                         "type": "boolean",
-                        "description": "If set to 'true' and if an answering machine is detected, the\n'answering-machine' callback will be delayed until the machine is done\nspeaking or until the 'detectionTimeout' is exceeded. If false, the 'answering-machine'\nresult is sent immediately.",
+                        "description": "If set to 'true' and if an answering machine is detected, the\n'answering-machine' callback will be delayed until the machine is done\nspeaking, or an end of message tone is detected, or until the 'detectionTimeout' is exceeded. If false, the 'answering-machine'\nresult is sent immediately.",
                         "default": false,
                         "example": false
                     },
@@ -3709,32 +3635,50 @@
                         "description": "The URL to send the 'machineDetectionComplete' webhook when the detection is completed. Only for 'async' mode.",
                         "type": "string",
                         "format": "uri",
+                        "maxLength": 2048,
                         "example": "https://myServer.com/bandwidth/webhooks/machineDetectionComplete"
                     },
                     "callbackMethod": {
                         "$ref": "#/components/schemas/callbackMethodEnum"
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "fallbackUrl": {
                         "nullable": true,
                         "type": "string",
                         "format": "uri",
                         "description": "A fallback URL which, if provided, will be used to retry the\nmachine detection complete webhook delivery in case `callbackUrl` fails\nto respond",
+                        "maxLength": 2048,
                         "example": "https://myFallbackServer.com/bandwidth/webhooks/machineDetectionComplete"
                     },
                     "fallbackMethod": {
                         "$ref": "#/components/schemas/callbackMethodEnum"
                     },
                     "fallbackUsername": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "fallbackPassword": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     }
                 }
             },
@@ -3751,16 +3695,21 @@
                         "$ref": "#/components/schemas/callbackMethodEnum"
                     },
                     "username": {
-                        "$ref": "#/components/schemas/username"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth username.",
+                        "maxLength": 1024,
+                        "example": "mySecretUsername"
                     },
                     "password": {
-                        "$ref": "#/components/schemas/password"
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Basic auth password.",
+                        "maxLength": 1024,
+                        "example": "mySecretPassword1!"
                     },
                     "tag": {
-                        "nullable": true,
-                        "type": "string",
-                        "description": "A custom string that will be sent with the webhook to `callbackUrl`.",
-                        "example": "my custom tag"
+                        "$ref": "#/components/schemas/tag1"
                     },
                     "callbackTimeout": {
                         "nullable": true,
@@ -3796,9 +3745,7 @@
                         "example": "t-387bd648-18f3-4823-9d16-746bca0003c9"
                     },
                     "status": {
-                        "type": "string",
-                        "description": "The current status of the transcription. Current values are\n'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big',\nand 'file-size-too-small'. Additional states may be added in the future,\nso your application must be tolerant of unknown values.",
-                        "example": "available"
+                        "$ref": "#/components/schemas/status"
                     },
                     "completedTime": {
                         "type": "string",
@@ -3810,6 +3757,1260 @@
                         "format": "uri",
                         "description": "The URL of the [transcription](#operation/getCallTranscription)",
                         "example": "https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/recordings/r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/transcription"
+                    }
+                }
+            },
+            "voiceApiError": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "nullable": true,
+                        "type": "string"
+                    }
+                }
+            },
+            "answerCallback": {
+                "type": "object",
+                "description": "The Answer event is sent to the answerUrl specified in the createCall request when an outbound call is answered.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "machineDetectionResult": {
+                        "$ref": "#/components/schemas/machineDetectionResult"
+                    }
+                }
+            },
+            "bridgeCompleteCallback": {
+                "type": "object",
+                "description": "If the target call leaves the <Bridge>, then this callback is sent to the bridgeCompleteUrl, and the BXML returned in it is executed on the call. If this webhook is sent, the Bridge Target Complete webhook is NOT sent. This callback is also sent if any problem occurs that prevents the calls to be bridged.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "cause": {
+                        "$ref": "#/components/schemas/cause"
+                    },
+                    "errorMessage": {
+                        "$ref": "#/components/schemas/errorMessage"
+                    },
+                    "errorId": {
+                        "$ref": "#/components/schemas/errorId"
+                    }
+                }
+            },
+            "bridgeTargetCompleteCallback": {
+                "type": "object",
+                "description": "If the originating call leaves the <Bridge>, then this callback is sent to the bridgeTargetCompleteUrl, and the BXML returned in it is executed on the target call. If this webhook is sent, the Bridge Complete webhook is NOT sent.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    }
+                }
+            },
+            "conferenceCreatedCallback": {
+                "type": "object",
+                "description": "The Conference Created event is fired whenever a new conference that specified a callbackUrl is created. The response may be either empty or a BXML document. Only the following verbs are valid for conferences: PlayAudio, SpeakSentence, StartRecording, StopRecording, PauseRecording, ResumeRecording. Audio verbs will be heard by all members of the conference. Recordings capture audio from all members who are not muted or on hold, as well as any audio verbs that are played into the conference.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "conferenceId": {
+                        "$ref": "#/components/schemas/conferenceId"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/name"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    }
+                }
+            },
+            "conferenceRedirectCallback": {
+                "type": "object",
+                "description": "The Conference Redirect event is fired whenever an existing conference is modified via a POST request made to the /conferences/{conferenceId} endpoint. The response may be either empty or a BXML document. Only the following verbs are valid for conferences: PlayAudio, SpeakSentence, StartRecording, StopRecording, PauseRecording, ResumeRecording. Audio verbs will be heard by all members of the conference. Recordings capture audio from all members who are not muted or on hold, as well as any audio verbs that are played into the conference.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "conferenceId": {
+                        "$ref": "#/components/schemas/conferenceId"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/name"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    }
+                }
+            },
+            "conferenceMemberJoinCallback": {
+                "type": "object",
+                "description": "The Conference Member Join event is fired whenever a caller joins a conference that specified a callbackUrl. The response may be either empty or a BXML document. Only the following verbs are valid for conferences: PlayAudio, SpeakSentence, StartRecording, StopRecording, PauseRecording, ResumeRecording. Audio verbs will be heard by all members of the conference. Recordings capture audio from all members who are not muted or on hold, as well as any audio verbs that are played into the conference.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "conferenceId": {
+                        "$ref": "#/components/schemas/conferenceId"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/name"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    }
+                }
+            },
+            "conferenceMemberExitCallback": {
+                "type": "object",
+                "description": "The Conference Member Exit event is fired whenever a caller exits a conference that specified a callbackUrl. The response may be either empty or a BXML document. Only the following verbs are valid for conferences: PlayAudio, SpeakSentence, StartRecording, StopRecording, PauseRecording, ResumeRecording. Audio verbs will be heard by all members of the conference. Recordings capture audio from all members who are not muted or on hold, as well as any audio verbs that are played into the conference.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "conferenceId": {
+                        "$ref": "#/components/schemas/conferenceId"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/name"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    }
+                }
+            },
+            "conferenceCompletedCallback": {
+                "type": "object",
+                "description": "The Conference Completed event is fired when the last member leaves the conference. The response to this event may not contain BXML.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "conferenceId": {
+                        "$ref": "#/components/schemas/conferenceId"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/name"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    }
+                }
+            },
+            "conferenceRecordingAvailableCallback": {
+                "type": "object",
+                "description": "The Conference Recording Available event is sent after a conference recording has been processed. It indicates that the recording is available for download.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "conferenceId": {
+                        "$ref": "#/components/schemas/conferenceId"
+                    },
+                    "name": {
+                        "$ref": "#/components/schemas/name"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "recordingId": {
+                        "$ref": "#/components/schemas/recordingId"
+                    },
+                    "channels": {
+                        "$ref": "#/components/schemas/channels"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "endTime": {
+                        "$ref": "#/components/schemas/endTime"
+                    },
+                    "duration": {
+                        "$ref": "#/components/schemas/duration"
+                    },
+                    "fileFormat": {
+                        "$ref": "#/components/schemas/fileFormatEnum"
+                    },
+                    "mediaUrl": {
+                        "$ref": "#/components/schemas/mediaUrl"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/status"
+                    }
+                }
+            },
+            "disconenctCallback": {
+                "type": "object",
+                "description": "The Disconnect event is fired when a call ends, for any reason.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "endTime": {
+                        "$ref": "#/components/schemas/endTime"
+                    },
+                    "cause": {
+                        "$ref": "#/components/schemas/cause"
+                    },
+                    "errorMessage": {
+                        "$ref": "#/components/schemas/errorMessage"
+                    },
+                    "errorId": {
+                        "$ref": "#/components/schemas/errorId"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    }
+                }
+            },
+            "dtmfCallback": {
+                "type": "object",
+                "description": "The DTMF event is sent for every digit detected after a <StartGather> verb is executed. You may not respond to this event with BXML.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "digit": {
+                        "$ref": "#/components/schemas/digit"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "parentCallId": {
+                        "$ref": "#/components/schemas/parentCallId"
+                    },
+                    "transferCallerId": {
+                        "$ref": "#/components/schemas/transferCallerId"
+                    },
+                    "transferTo": {
+                        "$ref": "#/components/schemas/transferTo"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    }
+                }
+            },
+            "gatherCallback": {
+                "type": "object",
+                "description": "The gather event is sent after a <Gather> verb is executed. Its purpose is to report the gathered digits to the calling application.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "digits": {
+                        "$ref": "#/components/schemas/digits"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "parentCallId": {
+                        "$ref": "#/components/schemas/parentCallId"
+                    },
+                    "terminatingDigit": {
+                        "$ref": "#/components/schemas/terminatingDigit"
+                    },
+                    "transferCallerId": {
+                        "$ref": "#/components/schemas/transferCallerId"
+                    },
+                    "transferTo": {
+                        "$ref": "#/components/schemas/transferTo"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    }
+                }
+            },
+            "initiateCallback": {
+                "type": "object",
+                "description": "The Initiate event is fired when an inbound call is received for a Telephone Number on your Account. It is sent to the URL specified in the application associated with the location (sip-peer) that the called telephone number belongs to.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "diversion": {
+                        "$ref": "#/components/schemas/diversion"
+                    },
+                    "stirShaken": {
+                        "$ref": "#/components/schemas/stirShaken"
+                    }
+                }
+            },
+            "machineDetectionCompleteCallback": {
+                "type": "object",
+                "description": "This event is sent to the url informed when requesting a machine detection operation. It contains the machine detection operation result, which can be: human, answering-machine, silence, timeout, error. This event is not sent when sync answering machine detection mode is chosen.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "machineDetectionResult": {
+                        "$ref": "#/components/schemas/machineDetectionResult"
+                    }
+                }
+            },
+            "recordingCompleteCallback": {
+                "type": "object",
+                "description": "The Record Complete event is sent after a <Record> verb has executed if the call is still active. The BXML returned by this callback is executed next. When the recording is available for download, a Recording Available event will be sent.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "parentCallId": {
+                        "$ref": "#/components/schemas/parentCallId"
+                    },
+                    "recordingId": {
+                        "$ref": "#/components/schemas/recordingId"
+                    },
+                    "mediaUrl": {
+                        "$ref": "#/components/schemas/mediaUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "endTime": {
+                        "$ref": "#/components/schemas/endTime"
+                    },
+                    "duration": {
+                        "$ref": "#/components/schemas/duration"
+                    },
+                    "fileFormat": {
+                        "$ref": "#/components/schemas/fileFormatEnum"
+                    },
+                    "channels": {
+                        "$ref": "#/components/schemas/channels"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "transferCallerId": {
+                        "$ref": "#/components/schemas/transferCallerId"
+                    },
+                    "transferTo": {
+                        "$ref": "#/components/schemas/transferTo"
+                    }
+                }
+            },
+            "recordingAvailableCallback": {
+                "type": "object",
+                "description": "The Recording Available event is sent after a recording has been processed. It indicates that the recording is available for download.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "parentCallId": {
+                        "$ref": "#/components/schemas/parentCallId"
+                    },
+                    "recordingId": {
+                        "$ref": "#/components/schemas/recordingId"
+                    },
+                    "mediaUrl": {
+                        "$ref": "#/components/schemas/mediaUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "endTime": {
+                        "$ref": "#/components/schemas/endTime"
+                    },
+                    "duration": {
+                        "$ref": "#/components/schemas/duration"
+                    },
+                    "fileFormat": {
+                        "$ref": "#/components/schemas/fileFormatEnum"
+                    },
+                    "channels": {
+                        "$ref": "#/components/schemas/status"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/status"
+                    },
+                    "transferCallerId": {
+                        "$ref": "#/components/schemas/transferCallerId"
+                    },
+                    "transferTo": {
+                        "$ref": "#/components/schemas/transferTo"
+                    }
+                }
+            },
+            "redirectCallback": {
+                "type": "object",
+                "description": "The Redirect event is fired when a <Redirect> verb is executed. Its purpose is to get the next set of verbs from the calling application.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "parentCallId": {
+                        "$ref": "#/components/schemas/parentCallId"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "transferCallerId": {
+                        "$ref": "#/components/schemas/transferCallerId"
+                    },
+                    "transferTo": {
+                        "$ref": "#/components/schemas/transferTo"
+                    }
+                }
+            },
+            "transcriptionAvailableCallback": {
+                "type": "object",
+                "description": "The Transcription Available event is sent when the recording transcription is available to be downloaded.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "mediaUrl": {
+                        "$ref": "#/components/schemas/mediaUrl"
+                    },
+                    "parentCallId": {
+                        "$ref": "#/components/schemas/parentCallId"
+                    },
+                    "recordingId": {
+                        "$ref": "#/components/schemas/recordingId"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "endTime": {
+                        "$ref": "#/components/schemas/endTime"
+                    },
+                    "duration": {
+                        "$ref": "#/components/schemas/duration"
+                    },
+                    "fileFormat": {
+                        "$ref": "#/components/schemas/fileFormatEnum"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "transcription": {
+                        "$ref": "#/components/schemas/transcription"
+                    },
+                    "transferCallerId": {
+                        "$ref": "#/components/schemas/transferCallerId"
+                    },
+                    "transferTo": {
+                        "$ref": "#/components/schemas/transferTo"
+                    }
+                }
+            },
+            "transferAnswerCallback": {
+                "type": "object",
+                "description": "When processing a <Transfer> verb, this event is sent when a called party (B-leg) answers. The event is sent to the endpoint specified in the transferAnswerUrl attribute of the <PhoneNumber> tag that answered. BXML returned by this callback will be executed for the called party only. After all BXML has been executed, the called party will be bridged to the original call. Most BXML verbs are allowed in response to a transferAnswer event, but some are not allowed.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "transferCallerId": {
+                        "$ref": "#/components/schemas/transferCallerId"
+                    },
+                    "transferTo": {
+                        "$ref": "#/components/schemas/transferTo"
+                    }
+                }
+            },
+            "transferCompleteCallback": {
+                "type": "object",
+                "description": "This event is sent to the transferCompleteUrl of the A-leg's <Transfer> verb when the transferred call (B-leg) completes. In a simultaneous ringing scenario, only one B-leg succeeds and this event corresponds to that successful leg. If none of the calls were answered, the transferComplete event corresponds to one of the legs.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "transferCallerId": {
+                        "$ref": "#/components/schemas/transferCallerId"
+                    },
+                    "transferTo": {
+                        "$ref": "#/components/schemas/transferTo"
+                    },
+                    "cause": {
+                        "$ref": "#/components/schemas/cause"
+                    },
+                    "errorMessage": {
+                        "$ref": "#/components/schemas/errorMessage"
+                    },
+                    "errorId": {
+                        "$ref": "#/components/schemas/errorId"
+                    }
+                }
+            },
+            "transferDisconnectCallback": {
+                "type": "object",
+                "description": "This event is sent to the transferDisconnectUrl of each <PhoneNumber> tag when its respective call leg ends for any reason. The event is sent in the normal case, when the transferred leg is answered and later hung up, but is also sent if the new leg was never answered in the first place, if it was rejected, and if the original call leg hung up before the transferred leg.",
+                "properties": {
+                    "eventType": {
+                        "$ref": "#/components/schemas/eventType"
+                    },
+                    "eventTime": {
+                        "$ref": "#/components/schemas/eventTime"
+                    },
+                    "accountId": {
+                        "$ref": "#/components/schemas/accountId"
+                    },
+                    "applicationId": {
+                        "$ref": "#/components/schemas/applicationId"
+                    },
+                    "from": {
+                        "$ref": "#/components/schemas/from"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/to"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/callDirectionEnum"
+                    },
+                    "callId": {
+                        "$ref": "#/components/schemas/callId"
+                    },
+                    "callUrl": {
+                        "$ref": "#/components/schemas/callUrl"
+                    },
+                    "parentCallId": {
+                        "$ref": "#/components/schemas/parentCallId"
+                    },
+                    "enqueuedTime": {
+                        "$ref": "#/components/schemas/enqueuedTime"
+                    },
+                    "startTime": {
+                        "$ref": "#/components/schemas/startTime"
+                    },
+                    "answerTime": {
+                        "$ref": "#/components/schemas/answerTime"
+                    },
+                    "endTime": {
+                        "$ref": "#/components/schemas/endTime"
+                    },
+                    "tag": {
+                        "$ref": "#/components/schemas/tag1"
+                    },
+                    "transferCallerId": {
+                        "$ref": "#/components/schemas/transferCallerId"
+                    },
+                    "transferTo": {
+                        "$ref": "#/components/schemas/transferTo"
+                    },
+                    "cause": {
+                        "$ref": "#/components/schemas/cause"
+                    },
+                    "errorMessage": {
+                        "$ref": "#/components/schemas/errorMessage"
+                    },
+                    "errorId": {
+                        "$ref": "#/components/schemas/errorId"
+                    }
+                }
+            },
+            "eventType": {
+                "type": "string",
+                "description": "The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect.",
+                "example": "bridgeComplete"
+            },
+            "eventTime": {
+                "type": "string",
+                "description": "The approximate UTC date and time when the event was generated by the Bandwidth server, in ISO 8601 format. This may not be exactly the time of event execution."
+            },
+            "accountId": {
+                "type": "string",
+                "description": "The user account associated with the call.",
+                "example": "920012"
+            },
+            "applicationId": {
+                "type": "string",
+                "description": "The id of the application associated with the call.",
+                "example": "04e88489-df02-4e34-a0ee-27a91849555f"
+            },
+            "to": {
+                "type": "string",
+                "description": "The phone number that received the call, in E.164 format (e.g. +15555555555).",
+                "example": "+15555555555"
+            },
+            "from": {
+                "type": "string",
+                "description": "The provided identifier of the caller: can be a phone number in E.164 format (e.g. +15555555555) or one of Private, Restricted, Unavailable, or Anonymous.",
+                "example": "+15555555555"
+            },
+            "conferenceId": {
+                "type": "string",
+                "description": "The unique, Bandwidth-generated ID of the conference that was recorded",
+                "example": "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9"
+            },
+            "name": {
+                "type": "string",
+                "description": "The user-specified name of the conference that was recorded",
+                "example": "my-conference-name"
+            },
+            "recordingId": {
+                "type": "string",
+                "description": "The unique ID of this recording",
+                "example": "r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833"
+            },
+            "duration": {
+                "type": "string",
+                "description": "The duration of the recording in ISO-8601 format",
+                "example": "PT13.67S"
+            },
+            "channels": {
+                "type": "integer",
+                "format": "int32",
+                "description": "Always `1` for conference recordings; multi-channel recordings are not supported on conferences.",
+                "example": 1
+            },
+            "digit": {
+                "type": "string",
+                "description": "The digit collected in the call.",
+                "example": "2"
+            },
+            "digits": {
+                "type": "string",
+                "description": "(optional) The digits, letters, and/or symbols entered by the user. The string is empty if a timeout occurred before any buttons were pressed.",
+                "example": "123"
+            },
+            "terminatingDigit": {
+                "type": "string",
+                "description": "(optional) The digit the user pressed to end the gather. Empty string value if no terminating digit was pressed.",
+                "example": "#"
+            },
+            "startTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Time the call was started, in ISO 8601 format.",
+                "example": "2022-06-17T22:19:40.375Z"
+            },
+            "enqueuedTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "(optional) If call queueing is enabled and this is an outbound call, time the call was queued, in ISO 8601 format.",
+                "example": "2022-06-17T22:20:00.000Z",
+                "nullable": true
+            },
+            "answerTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Time the call was answered, in ISO 8601 format.",
+                "example": "2022-06-17T22:20:00.000Z",
+                "nullable": true
+            },
+            "endTime": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The time that the recording ended in ISO-8601 format",
+                "example": "2022-06-17T22:20:00.000Z"
+            },
+            "status": {
+                "type": "string",
+                "description": "The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.",
+                "example": "completed"
+            },
+            "transferCallerId": {
+                "type": "string",
+                "description": "The phone number used as the from field of the B-leg call, in E.164 format (e.g. +15555555555) or one of Restricted, Anonymous, Private, or Unavailable.",
+                "example": "+15555555555"
+            },
+            "transferTo": {
+                "type": "string",
+                "description": "The phone number used as the to field of the B-leg call, in E.164 format (e.g. +15555555555).",
+                "example": "+15555555555)"
+            },
+            "mediaUrl": {
+                "nullable": true,
+                "type": "string",
+                "format": "uri",
+                "description": "The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.",
+                "example": "https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/recordings/r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833/media"
+            },
+            "callId": {
+                "type": "string",
+                "description": "The call id associated with the event.",
+                "example": "c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"
+            },
+            "callUrl": {
+                "type": "string",
+                "description": "The URL of the call associated with the event.",
+                "example": "https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"
+            },
+            "parentCallId": {
+                "type": "string",
+                "description": "(optional) If the event is related to the B leg of a <Transfer>, the call id of the original call leg that executed the <Transfer>. Otherwise, this field will not be present.",
+                "example": "c-95ac8d6e-1a31c52e-b38f-4198-93c1-51633ec68f8d"
+            },
+            "tag1": {
+                "type": "string",
+                "description": "(optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.",
+                "example": "exampleTag",
+                "nullable": true
+            },
+            "cause": {
+                "type": "string",
+                "description": "Reason the call failed - hangup, busy, timeout, cancel, rejected, callback-error, invalid-bxml, application-error, account-limit, node-capacity-exceeded, error, or unknown.",
+                "example": "busy"
+            },
+            "errorMessage": {
+                "type": "string",
+                "description": "Text explaining the reason that caused the call to fail in case of errors.",
+                "example": "Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call",
+                "nullable": true
+            },
+            "errorId": {
+                "type": "string",
+                "description": "Bandwidth's internal id that references the error event.",
+                "example": "4642074b-7b58-478b-96e4-3a60955c6765",
+                "nullable": true
+            },
+            "machineDetectionResult": {
+                "type": "string",
+                "description": "(optional) if machine detection was requested in sync mode, the result will be specified here. Possible values are the same as the async counterpart: Machine Detection Complete",
+                "properties": {
+                    "value": {
+                        "type": "string",
+                        "description": "Possible values are answering-machine, human, silence, timeout, or error.",
+                        "example": "answering-machine"
+                    },
+                    "duration": {
+                        "type": "string",
+                        "description": "The amount of time it took to determine the result.",
+                        "example": "PT4.9891287S"
+                    }
+                },
+                "nullable": true
+            },
+            "diversion": {
+                "type": "object",
+                "properties": {
+                    "reason": {
+                        "type": "string",
+                        "description": "The reason for the diversion. Common values: unknown, user-busy, no-answer, unavailable, unconditional, time-of-day, do-not-disturb, deflection, follow-me, out-of-service, away.",
+                        "example": "unavailable"
+                    },
+                    "privacy": {
+                        "type": "string",
+                        "description": "off or full",
+                        "example": "off"
+                    },
+                    "screen": {
+                        "type": "string",
+                        "description": "No if the number was provided by the user, yes if the number was provided by the network",
+                        "example": "no"
+                    },
+                    "counter": {
+                        "type": "string",
+                        "description": "The number of diversions that have occurred",
+                        "example": "2"
+                    },
+                    "limit": {
+                        "type": "string",
+                        "description": "The maximum number of diversions allowed for this session",
+                        "example": "3"
+                    },
+                    "unknown": {
+                        "type": "string",
+                        "description": "The normal list of values is not exhaustive. Your application must be tolerant of unlisted keys and unlisted values of those keys.",
+                        "example": "unknownValue"
+                    },
+                    "origTo": {
+                        "type": "string",
+                        "description": "Always present. Indicates the last telephone number that the call was diverted from.",
+                        "example": "+15558884444"
                     }
                 }
             },
@@ -3829,189 +5030,23 @@
                     }
                 }
             },
-            "voiceApiError": {
+            "stirShaken": {
                 "type": "object",
                 "properties": {
-                    "type": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "nullable": true,
-                        "type": "string"
-                    }
-                }
-            },
-            "callCallback": {
-                "type": "object",
-                "description": "This object represents all possible fields that may be included in callbacks related to call events, including events that come from BXML verbs",
-                "properties": {
-                    "eventType": {
-                        "type": "string"
-                    },
-                    "eventTime": {
-                        "type": "string"
-                    },
-                    "accountId": {
-                        "type": "string"
-                    },
-                    "applicationId": {
-                        "type": "string"
-                    },
-                    "from": {
-                        "type": "string"
-                    },
-                    "to": {
-                        "type": "string"
-                    },
-                    "direction": {
-                        "type": "string"
-                    },
-                    "callId": {
-                        "type": "string"
-                    },
-                    "callUrl": {
-                        "type": "string"
-                    },
-                    "startTime": {
-                        "type": "string"
-                    },
-                    "answerTime": {
-                        "type": "string"
-                    },
-                    "transferCallerId": {
-                        "type": "string"
-                    },
-                    "transferTo": {
-                        "type": "string"
-                    },
-                    "cause": {
-                        "type": "string"
-                    },
-                    "errorMessage": {
-                        "type": "string"
-                    },
-                    "errorId": {
-                        "type": "string"
-                    },
-                    "endTime": {
-                        "type": "string"
-                    },
-                    "digit": {
-                        "type": "string"
-                    },
-                    "parentCallId": {
-                        "type": "string"
-                    },
-                    "recordingId": {
-                        "type": "string"
-                    },
-                    "duration": {
-                        "type": "string"
-                    },
-                    "fileFormat": {
-                        "type": "string"
-                    },
-                    "mediaUrl": {
-                        "type": "string"
-                    },
-                    "tag": {
-                        "type": "string"
-                    },
-                    "channels": {
-                        "type": "integer"
-                    },
-                    "status": {
-                        "type": "string"
-                    },
-                    "digits": {
-                        "type": "string"
-                    },
-                    "terminatingDigit": {
-                        "type": "string"
-                    },
-                    "transcription": {
-                        "$ref": "#/components/schemas/transcription"
-                    },
-                    "diversion": {
-                        "$ref": "#/components/schemas/diversion"
-                    }
-                }
-            },
-            "diversion": {
-                "type": "object",
-                "properties": {
-                    "reason": {
-                        "type": "string"
-                    },
-                    "privacy": {
-                        "type": "string"
-                    },
-                    "unknown": {
-                        "type": "string"
-                    },
-                    "origTo": {
-                        "type": "string"
-                    }
-                }
-            },
-            "conferenceCallback": {
-                "type": "object",
-                "description": "This object represents all possible fields that may be included in callbacks related to conference events",
-                "properties": {
-                    "conferenceId": {
+                    "verstat": {
                         "type": "string",
-                        "example": "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9"
+                        "description": "(optional) The verification status indicating whether the verification was successful or not. Possible values are TN-Verification-Passed and TN-Verification-Failed.",
+                        "example": "Tn-Verification-Passed"
                     },
-                    "name": {
-                        "type": "string"
+                    "attestationIndicator": {
+                        "type": "string",
+                        "description": "(optional) The attestation level verified by Bandwidth. Possible values are A (full), B (partial) or C (gateway).",
+                        "example": "A"
                     },
-                    "eventType": {
-                        "type": "string"
-                    },
-                    "eventTime": {
-                        "type": "string"
-                    },
-                    "tag": {
-                        "type": "string"
-                    },
-                    "callId": {
-                        "type": "string"
-                    },
-                    "to": {
-                        "type": "string"
-                    },
-                    "from": {
-                        "type": "string"
-                    },
-                    "accountId": {
-                        "type": "string"
-                    },
-                    "recordingId": {
-                        "type": "string"
-                    },
-                    "channels": {
-                        "type": "integer"
-                    },
-                    "startTime": {
-                        "type": "string"
-                    },
-                    "endTime": {
-                        "type": "string"
-                    },
-                    "duration": {
-                        "type": "string"
-                    },
-                    "fileFormat": {
-                        "type": "string"
-                    },
-                    "mediaUrl": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
+                    "originatingId": {
+                        "type": "string",
+                        "description": "(optional) A unique origination identifier.",
+                        "example": "99759086-1335-11ed-9bcf-5f7d464e91af"
                     }
                 }
             },
@@ -4196,15 +5231,47 @@
                 "description": "The request has been accepted for processing but not yet finished and in a terminal state (COMPLETE, PARTIAL_COMPLETE, or FAILED).",
                 "properties": {
                     "requestId": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The phone number lookup request ID from Bandwidth."
                     },
                     "status": {
                         "$ref": "#/components/schemas/lookupStatusEnum"
                     }
                 }
             },
+            "lookupStatus": {
+                "type": "object",
+                "description": "If requestId exists, the result for that request is returned. See the Examples for details on the various responses that you can receive. Generally, if you see a Response Code of 0 in a result for a TN, information will be available for it.  Any other Response Code will indicate no information was available for the TN.",
+                "properties": {
+                    "requestId": {
+                        "type": "string",
+                        "description": "The requestId.",
+                        "example": "004223a0-8b17-41b1-bf81-20732adf5590"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/lookupStatusEnum"
+                    },
+                    "result": {
+                        "type": "array",
+                        "description": "The carrier information results for the specified telephone number.",
+                        "items": {
+                            "$ref": "#/components/schemas/lookupResult"
+                        }
+                    },
+                    "failedTelephoneNumbers": {
+                        "type": "array",
+                        "description": "The telephone numbers whose lookup failed.",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "+191955512345"
+                        ]
+                    }
+                }
+            },
             "lookupResult": {
-                "type": "object", 
+                "type": "object",
                 "description": "Carrier information results for the specified telephone number.",
                 "properties": {
                     "Response Code": {
@@ -4254,37 +5321,6 @@
                     }
                 }
             },
-            "lookupStatus": {
-                "type": "object",
-                "description": "If requestId exists, the result for that request is returned. See the Examples for details on the various responses that you can receive. Generally, if you see a Response Code of 0 in a result for a TN, information will be available for it.  Any other Response Code will indicate no information was available for the TN.",
-                "properties": {
-                    "requestId": {
-                        "type": "string",
-                        "description": "The requestId.",
-                        "example": "004223a0-8b17-41b1-bf81-20732adf5590"
-                    },
-                    "status": {
-                        "$ref": "#/components/schemas/lookupStatusEnum"
-                    },
-                    "result": {
-                        "type": "array",
-                        "description": "The carrier information results for the specified telephone number.",
-                        "items": {
-                            "$ref": "#/components/schemas/lookupResult"
-                        }
-                    },
-                    "failedTelephoneNumbers": {
-                        "type": "array",
-                        "description": "The telephone numbers whose lookup failed.",
-                        "items": {
-                            "type": "string"
-                        },
-                        "example": [
-                            "+191955512345"
-                        ]
-                    }
-                }
-            },
             "tnLookupRequestError": {
                 "type": "object",
                 "properties": {
@@ -4306,10 +5342,9 @@
                 "type": "string",
                 "description": "Optional field to define the device api version of this participant.",
                 "example": "V3",
-                "default": "V2",
+                "default": "V3",
                 "enum": [
-                    "V3",
-                    "V2"
+                    "V3"
                 ]
             },
             "session": {
@@ -4432,12 +5467,12 @@
                 "properties": {
                     "sessionId": {
                         "type": "string",
-                        "description": "Session the subscriptions are associated with. If this is the only field, the subscriber will be subscribed to all participants in the session (including any participants that are later added to the session). Upon creation of a Participant, returns as an empty object.",
+                        "description": "If present, and not overridden by the array of participants, it  represents the session the subscriptions are associated with. If this is the only field, the subscriber will be subscribed to all participants in the session (including any participants that are later added to the session). Upon creation of a Participant, returns as an empty object.",
                         "example": "d8886aad-b956-4e1b-b2f4-d7c9f8162772"
                     },
                     "participants": {
                         "type": "array",
-                        "description": "(optional) A list of participants  in the session that will be subscribed to. Returns empty if used during the creation of a Participant. ",
+                        "description": "(optional) A list of participants  in the session that will be subscribed to.  If present and not  empty or null, this will override  any sessionId specified in the body. Returns empty if used during the creation of a Participant. ",
                         "example": [
                             {
                                 "participantId": "568749d5-04d5-483d-adf5-deac7dd3d521"
@@ -4717,7 +5752,7 @@
                     }
                 }
             },
-            "downloadCallRecordingResponse": {
+            "downloadRecordingMediaResponse": {
                 "description": "Media found",
                 "content": {
                     "audio/vnd.wave": {
@@ -4875,6 +5910,21 @@
                         "examples": {
                             "notAllowedErrorExample": {
                                 "$ref": "#/components/examples/voiceNotAllowedErrorExample"
+                            }
+                        }
+                    }
+                }
+            },
+            "voiceConflictError": {
+                "description": "Conflict",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/voiceApiError"
+                        },
+                        "examples": {
+                            "conflictErrorExample": {
+                                "$ref": "#/components/examples/voiceConflictErrorExample"
                             }
                         }
                     }
@@ -5626,22 +6676,23 @@
             },
             "accountId3": {
                 "name": "accountId",
-                "description": "The ID of the Bandwidth account that the user belongs to.",
                 "in": "path",
                 "required": true,
                 "schema": {
-                    "type": "string",
-                    "example": "9900000"
-                }
+                    "type": "string"
+                },
+                "description": "The ID of the Bandwidth account that the user belongs to.",
+                "example": "9900000"
             },
             "requestId": {
                 "name": "requestId",
                 "in": "path",
                 "required": true,
                 "schema": {
-                    "type": "string",
-                    "example": "004223a0-8b17-41b1-bf81-20732adf5590"
-                }
+                    "type": "string"
+                },
+                "description": "The phone number lookup request ID from Bandwidth.",
+                "example": "004223a0-8b17-41b1-bf81-20732adf5590"
             },
             "accountId4": {
                 "name": "accountId",
@@ -5858,7 +6909,7 @@
                 }
             },
             "addParticipantToSessionRequest": {
-                "description": "Optional set of subscriptions to set on the participant.\nCalling this endpoint with no/empty body will only add the participant to the session. NOTE: the request body for this endpoint is OPTIONAL and provided as a convenience to avoid additional calls to the Update Participant Subscriptions endpoint.",
+                "description": "The Body describes an optional set of subscriptions to apply to the participant.\n\nCalling this endpoint with no/empty body will only add the participant to the session, and will not subscribe the Participant to any media.\n\nThe request body for this endpoint is OPTIONAL and provided as a convenience to avoid additional calls to the Update Participant Subscriptions endpoint. --- If a body is provided it will result in direct control over what Participants are subscribed to.\n\n  - if the participants Array is provided and not empty, that list of Participants will be subscribed To\n  - if the participants Array is missing or empty, and the sessionId is provided, the participant will be subscribed to the session, including all subsequent changes to the membership of the session\n  - if the sessionId and the participant Array are both missing or empty, no subscriptions will be created",
                 "required": false,
                 "content": {
                     "application/json": {
@@ -5869,7 +6920,7 @@
                 }
             },
             "updateParticipantSubscriptionsRequest": {
-                "description": "Update participant subscriptions request body.",
+                "description": "The body describes the desired subscriptions for the Participant. --- If a body is provided it will result in direct control over what Participants are subscribed to.\n\n  - if the participants Array is provided and not empty, that list of Participants will be subscribed To\n  - if the participants Array is missing or empty, and the sessionId is provided, the participant will be subscribed to the session, including all subsequent changes to the membership of the session\n  - if the sessionId and the participant Array are both missing or empty, no subscriptions will be created",
                 "required": false,
                 "content": {
                     "application/json": {
@@ -5957,6 +7008,13 @@
             },
             "voiceNotAllowedErrorExample": {
                 "summary": "Example of a Not Allowed (405) Error",
+                "value": {
+                    "type": "validation",
+                    "description": "Invalid answerUrl: only http and https are allowed"
+                }
+            },
+            "voiceConflictErrorExample": {
+                "summary": "Example of a Conflict (409) Error",
                 "value": {
                     "type": "validation",
                     "description": "Invalid answerUrl: only http and https are allowed"
@@ -6108,15 +7166,5 @@
                 }
             }
         }
-    },
-    "info": {
-        "title": "Bandwidth",
-        "description": "Bandwidth's Communication APIs",
-        "contact": {
-            "name": "Bandwidth",
-            "url": "https://dev.bandwidth.com",
-            "email": "letstalk@bandwidth.com"
-        },
-        "version": "1.0.0"
     }
 }

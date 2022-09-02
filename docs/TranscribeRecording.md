@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **callback_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | [optional] 
 **username** | **str, none_type** | Basic auth username. | [optional] 
 **password** | **str, none_type** | Basic auth password. | [optional] 
-**tag** | **str, none_type** | A custom string that will be sent with the webhook to &#x60;callbackUrl&#x60;. | [optional] 
+**tag** | **str, none_type** | (optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present. | [optional] 
 **callback_timeout** | **float, none_type** | This is the timeout (in seconds) to use when delivering the webhook to &#x60;callbackUrl&#x60;. Can be any numeric value (including decimals) between 1 and 25. | [optional]  if omitted the server will use the default value of 15
 **any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 

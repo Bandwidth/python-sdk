@@ -140,7 +140,7 @@ with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = phone_number_lookup_api.PhoneNumberLookupApi(api_client)
     account_id = "9900000" # str | The ID of the Bandwidth account that the user belongs to.
-    request_id = "004223a0-8b17-41b1-bf81-20732adf5590" # str | 
+    request_id = "004223a0-8b17-41b1-bf81-20732adf5590" # str | The phone number lookup request ID from Bandwidth.
 
     # example passing only required values which don't have defaults set
     try:
@@ -157,7 +157,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| The ID of the Bandwidth account that the user belongs to. |
- **request_id** | **str**|  |
+ **request_id** | **str**| The phone number lookup request ID from Bandwidth. |
 
 ### Return type
 
