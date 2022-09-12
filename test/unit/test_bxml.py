@@ -5,6 +5,8 @@ Unit tests for BXML
 
 @copyright Bandwidth Inc.
 """
+import pytest
+
 from bandwidth.model.bxml.response import Response
 from bandwidth.model.bxml.bxml import Bxml
 from bandwidth.model.bxml.verbs import *
