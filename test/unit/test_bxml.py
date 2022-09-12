@@ -5,10 +5,9 @@ Unit tests for BXML
 
 @copyright Bandwidth Inc.
 """
-from bandwidth.voice.bxml.response import Response
-from bandwidth.voice.bxml.bxml import Bxml
-from bandwidth.voice.bxml.verbs import *
-from bandwidth.webrtc.utils import *
+from bandwidth.model.bxml.response import Response
+from bandwidth.model.bxml.bxml import Bxml
+from bandwidth.model.bxml.verbs import *
 
 
 class TestBxml:
