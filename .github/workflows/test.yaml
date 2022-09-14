@@ -80,7 +80,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       with:
-        ref: 'feature/openapi-generator'
+        ref: 'feature/openapi-generator-sdk'
       
     - name: Set up Python
       uses: actions/setup-python@v2
