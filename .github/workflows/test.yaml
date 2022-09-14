@@ -17,7 +17,7 @@ on:
 
 jobs:
   test_production:
-    name: Test
+    name: Test Production
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -49,6 +49,7 @@ jobs:
 
   test_feature:
     name: Test Feature
+    needs: test_production
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
