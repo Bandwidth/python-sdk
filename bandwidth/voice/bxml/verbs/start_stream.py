@@ -15,9 +15,9 @@ START_STREAM_TAG = "StartStream"
 
 class StartStream(AbstractBxmlVerb):
 
-    def __init__(self, destination, name=None, tracks=None, streamEventUrl=None, streamEventMethod=None, username=None, password=None):
+    def __init__(self, destination, name=None, tracks=None, streamEventUrl=None, streamEventMethod=None, username=None, password=None, streamParams=None):
         """
-        Initializes the PlayAudio class with the following parameters
+        Initializes the StartStream class with the following parameters
 
         :param str destination: A websocket URI to send the stream to
         :param str name: A name to refer to this stream by
@@ -34,6 +34,7 @@ class StartStream(AbstractBxmlVerb):
         self.streamEventMethod = streamEventMethod
         self.username = username
         self.password = password
+        self.stream_params = streamParams
 
     def to_etree_element(self):
         """
@@ -55,6 +56,9 @@ class StartStream(AbstractBxmlVerb):
             root.set("username", self.username)
         if self.password is not None:
             root.set("password", self.password)
+        if self.stream_params is not None:
+            for stream_param in self.stream_params:
+                root.append(stream_param.to_etree_element())
         return root
 
     def to_bxml(self):

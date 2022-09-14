@@ -10,18 +10,20 @@ from lxml import etree
 
 from .base_verb import AbstractBxmlVerb
 
-STOP_STREAM_TAG = "StopStream"
+STREAM_PARAM_TAG = "StreamParam"
 
 
-class StopStream(AbstractBxmlVerb):
+class StreamParam(AbstractBxmlVerb):
 
-    def __init__(self, name):
+    def __init__(self, name, value):
         """
-        Initializes the StopStream class with the following parameters
+        Initializes the StreamParam class with the following parameters
 
-        :param str name: The name of the stream to stop
+        :param str name: The name of this parameter, up to 256 characters.
+        :param str value: The value of this parameter, up to 2048 characters.
         """
         self.name = name
+        self.value = value
 
     def to_etree_element(self):
         """
@@ -29,8 +31,9 @@ class StopStream(AbstractBxmlVerb):
 
         :return etree.Element: The etree Element representing this class
         """
-        root = etree.Element(STOP_STREAM_TAG)
+        root = etree.Element(STREAM_PARAM_TAG)
         root.set("name", self.name)
+        root.set("value", self.value)
         return root
 
     def to_bxml(self):
