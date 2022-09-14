@@ -112,7 +112,7 @@ jobs:
     steps:
       - name: Notify Slack of Failures
         uses: Bandwidth/build-notify-slack-action@v1.0.0
-        if: ${{ jobs.test_production.status == failure || jobs.test_feature.status == failure }} && !github.event.pull_request.draft
+        if: (${{ jobs.test_production.status }} == failure || ${{ jobs.test_feature.status }} == failure) && !github.event.pull_request.draft
         with:
           job-status: ${{ job.status }}
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
