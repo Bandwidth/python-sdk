@@ -7,7 +7,9 @@ Unit tests for Response Model
 """
 from bandwidth.model.bxml.response import Response
 
-def test_response():
+def test_response_init():
+    """Test initializing the <Response> root
+    """
     response = Response()
     expected_bxml = "<?xml version='1.0' encoding='utf8'?>\n<Response />"
     assert response.to_bxml() == expected_bxml
