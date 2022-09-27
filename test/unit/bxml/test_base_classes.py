@@ -36,4 +36,9 @@ class TestBaseClasses(unittest.TestCase):
         assert(type(self.verb3[0]) == Verb)
         assert(len(self.verb3) == 1)
         assert(expected_bxml == self.verb3.to_bxml())
+    
+    def test_adding_verbs_to_root_during_creation(self):
+        self.root2 = Root(tag="TestRoot2", nested_verbs=[self.verb1, self.verb2])
+
+        assert(len(self.root2) == 2)
 
