@@ -5,10 +5,10 @@ Bandwidth's Tag BXML verb
 
 @copyright Bandwidth INC
 """
-from ..verb import BxmlVerb
+from ..verb import Verb
 
 
-class Tag(BxmlVerb):
+class Tag(Verb):
 
     def __init__(self, content=""):
         """Initialize a <Tag> verb

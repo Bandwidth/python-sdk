@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 from bandwidth.model.bxml.verb import BxmlVerb
 
 
-class BxmlRoot:
+class Root:
     """Base class for BXML roots
     """
 

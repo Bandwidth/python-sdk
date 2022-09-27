@@ -5,12 +5,12 @@ Class that allows user to generate a Bxml document
 
 @copyright Bandwidth INC
 """
-from .root import BxmlRoot
-from .verb import BxmlVerb
+from .root import Root
+from .verb import Verb
 
 
-class Bxml(BxmlRoot):
-    def __init__(self, nested_verbs: list[BxmlVerb] = []):
+class Bxml(Root):
+    def __init__(self, nested_verbs: list[Verb] = []):
         """Initialize an instance of the <Bxml> root
 
         Args:

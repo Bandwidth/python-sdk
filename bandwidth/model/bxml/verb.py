@@ -9,7 +9,7 @@ from __future__ import annotations
 import xml.etree.ElementTree as ET
 
 
-class BxmlVerb:
+class Verb:
     """Base class for BXML verbs
     """
 
