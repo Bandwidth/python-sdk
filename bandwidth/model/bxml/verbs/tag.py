@@ -18,8 +18,11 @@ class Tag(Verb):
         """
         super().__init__(tag="Tag", attributes=None, content=content, nested_verbs=None)
     
-    def add_verb(self):
+    def add_verb(self, verb: Verb):
         """Adding verbs is not allowed for <Tag>
+
+        Args:
+            verb (Verb): BXML verb
 
         Raises:
             AttributeError: This method is not allowed for <Tag>

@@ -37,7 +37,7 @@ class Verb:
         """
         return len(self._nested_verbs)
     
-    def __getitem__(self, position) -> BxmlVerb:
+    def __getitem__(self, position) -> Verb:
         """Override default getitem method. Makes the object iterable.
 
         Args:
@@ -67,7 +67,9 @@ class Verb:
         Returns:
             ET.Element: The XML dom for the verb and its nested verbs
         """
-        root = ET.Element(self.tag)
+        root = ET.Element(self._tag)
+        if self._content:
+            root.text = self._content
         if self._nested_verbs:
             for verb in self._nested_verbs:
                 root.append(verb._to_etree_element())
@@ -89,4 +91,4 @@ class Verb:
             str: Serialized BXML string
         """
         xml_document = self._generate_xml()
-        return ET.tostring(xml_document._root)
+        return ET.tostring(xml_document._root).decode('utf8')

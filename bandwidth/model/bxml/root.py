@@ -7,21 +7,21 @@ Defines the base verb class for all BXML roots
 """
 import xml.etree.ElementTree as ET
 
-from bandwidth.model.bxml.verb import BxmlVerb
+from bandwidth.model.bxml.verb import Verb
 
 
 class Root:
     """Base class for BXML roots
     """
 
-    def __init__(self, tag: str, nested_verbs: list[BxmlVerb] = None):
+    def __init__(self, tag: str, nested_verbs: list[Verb] = None):
         """Initialize instance of class
 
         Args:
             tag (str): The XML element name
             nested_verbs (list[BxmlVerb], optional): List of nested BXML verbs. Defaults to None.
         """
-        self.tag = tag
+        self._tag = tag
         self._nested_verbs = nested_verbs
         if not self._nested_verbs:
             self._nested_verbs = []
@@ -34,7 +34,7 @@ class Root:
         """
         return len(self._nested_verbs)
     
-    def __getitem__(self, position: int) -> BxmlVerb:
+    def __getitem__(self, position: int) -> Verb:
         """Override default getitem method. Makes the object iterable.
 
         Args:
@@ -51,14 +51,14 @@ class Root:
         Returns:
             ET.Element: The XML dom for the verb and its nested verbs
         """
-        root = ET.Element(self.tag)
+        root = ET.Element(self._tag)
         if self._nested_verbs:
             for verb in self._nested_verbs:
                 root.append(verb._to_etree_element())
         dom = ET.ElementTree(root)
         return dom
     
-    def add_verb(self, verb: BxmlVerb) -> None:
+    def add_verb(self, verb: Verb) -> None:
         """Add a verb to the object's nested_verbs array
 
         Args:
