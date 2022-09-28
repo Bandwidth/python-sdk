@@ -12,7 +12,7 @@ from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs.sip_uri import SipUri
 
 
-class TestPhoneNumber(unittest.TestCase):
+class TestSipUri(unittest.TestCase):
     
     def setUp(self):
         self.phone_number = SipUri(

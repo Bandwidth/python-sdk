@@ -62,19 +62,19 @@ class Transfer(Verb):
                 Defaults to None.
         """
         self.attributes = {
-            "transferCallerId": transfer_caller_id,
             "callTimeout": call_timeout,
-            "transferCompleteUrl": transfer_complete_url,
-            "transferCompleteMethod": transfer_complete_method,
-            "transferCompleteFallbackUrl": transfer_complete_fallback_url,
-            "transferCompleteFallbackMethod": transfer_complete_fallback_method,
-            "username": username,
-            "password": password,
-            "fallbackUsername": fallback_username,
-            "fallbackPassword": fallback_password,
-            "tag": tag,
             "diversionReason": diversion_reason,
-            "diversionTreatment": diversion_treatment
+            "diversionTreatment": diversion_treatment,
+            "fallbackPassword": fallback_password,
+            "fallbackUsername": fallback_username,
+            "password": password,
+            "tag": tag,
+            "transferCallerId": transfer_caller_id,
+            "transferCompleteFallbackMethod": transfer_complete_fallback_method,
+            "transferCompleteFallbackUrl": transfer_complete_fallback_url,
+            "transferCompleteMethod": transfer_complete_method,
+            "transferCompleteUrl": transfer_complete_url,
+            "username": username
         }
         super().__init__(
             tag="Transfer",
