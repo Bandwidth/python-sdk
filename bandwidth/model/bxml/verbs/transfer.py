@@ -15,7 +15,7 @@ from ..verbs.sip_uri import SipUri
 class Transfer(Verb):
 
     def __init__(
-        self, transfer_to: List[PhoneNumber, SipUri] = [], 
+        self, transfer_to: List[Union[PhoneNumber, SipUri]] = [], 
         transfer_caller_id: str=None, call_timeout: str=None, 
         transfer_complete_url: str=None, transfer_complete_method: str=None,
         transfer_complete_fallback_url: str=None, 
