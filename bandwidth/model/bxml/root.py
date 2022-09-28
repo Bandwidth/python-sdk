@@ -5,6 +5,7 @@ Defines the base verb class for all BXML roots
 
 @copyright Bandwidth INC
 """
+from typing import List
 import xml.etree.ElementTree as ET
 
 from bandwidth.model.bxml.verb import Verb
@@ -14,7 +15,7 @@ class Root:
     """Base class for BXML roots
     """
 
-    def __init__(self, tag: str, nested_verbs: list[Verb] = None):
+    def __init__(self, tag: str, nested_verbs: List[Verb] = None):
         """Initialize instance of class
 
         Args:
