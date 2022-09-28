@@ -15,11 +15,11 @@ def _generate_transfer_model(device_token: str, voice_call_id: str, sip_uri: str
     """
     uui = "".join(voice_call_id.split("-")[1::])
     sip_uri = SipUri(
-        uui=f"{uui};encoding=base64,{device_token};encoding=jwt",
-        uri=sip_uri
+        uri=sip_uri,
+        uui=f"{uui};encoding=base64,{device_token};encoding=jwt"
     )
     transfer = Transfer(
-        sip_uris=[sip_uri]
+        transfer_to=[sip_uri]
     )
     return transfer
 
