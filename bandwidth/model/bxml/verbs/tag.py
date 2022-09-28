@@ -16,7 +16,7 @@ class Tag(Verb):
         Args:
             content (str, optional): Custom tag value. Defaults to "".
         """
-        super().__init__(tag="Tag", attributes=None, content=content, nested_verbs=None)
+        super().__init__(tag="Tag", content=content, attributes=None, nested_verbs=None)
     
     def add_verb(self, verb: Verb):
         """Adding verbs is not allowed for <Tag>
