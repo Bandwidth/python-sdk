@@ -48,14 +48,27 @@ class Verb:
         """
         return self._nested_verbs[position]
     
+    def _set_attributes(self, root: ET.Element):
+        """Set XML attributes on an Element
+
+        Args:
+            root (ET.Element): XML Element to add attributes to
+        """
+        if self._attributes:
+            for key, value in self._attributes.items():
+                if value:
+                    root.set(key, value)
+
     def _to_etree_element(self) -> ET.Element:
+        """Generate an ET.Element object from a Verb Object
+
+        Returns:
+            ET.Element: ET.Element representation of Verb
+        """
         root = ET.Element(self._tag)
         if self._content:
             root.text = self._content
-        if self._attributes:
-            for key, value in self._attributes:
-                if value:
-                    root.set(key, value)
+        self._set_attributes(root)
         if self._nested_verbs:
             for verb in self._nested_verbs:
                 root.append(verb._to_etree_element())
@@ -70,6 +83,7 @@ class Verb:
         root = ET.Element(self._tag)
         if self._content:
             root.text = self._content
+        self._set_attributes(root)
         if self._nested_verbs:
             for verb in self._nested_verbs:
                 root.append(verb._to_etree_element())
