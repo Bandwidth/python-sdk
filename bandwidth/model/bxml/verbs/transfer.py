@@ -5,7 +5,7 @@ Bandwidth's Transfer BXML verb
 
 @copyright Bandwidth INC
 """
-from typing import Union
+from typing import Union, List
 
 from ..verb import Verb
 from ..verbs.phone_number import PhoneNumber
@@ -15,7 +15,7 @@ from ..verbs.sip_uri import SipUri
 class Transfer(Verb):
 
     def __init__(
-        self, transfer_to: list[PhoneNumber, SipUri] = [], 
+        self, transfer_to: List[PhoneNumber, SipUri] = [], 
         transfer_caller_id: str=None, call_timeout: str=None, 
         transfer_complete_url: str=None, transfer_complete_method: str=None,
         transfer_complete_fallback_url: str=None, 
