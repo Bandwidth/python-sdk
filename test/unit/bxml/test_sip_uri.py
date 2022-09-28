@@ -20,14 +20,6 @@ class TestPhoneNumber(unittest.TestCase):
             uui="abc123",
             transfer_answer_url="https://example.com/webhooks/transfer_answer",
             transfer_answer_method="POST",
-            transfer_answer_fallback_url="",
-            transfer_answer_fallback_method="",
-            transfer_disconnect_url="",
-            transfer_disconnect_method="",
-            username="",
-            password="",
-            fallback_username="",
-            fallback_password="",
             tag="test"
         )
         self.test_verb = Verb(tag="test")

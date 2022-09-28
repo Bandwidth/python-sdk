@@ -19,20 +19,12 @@ class TestPhoneNumber(unittest.TestCase):
             number="+19195551234",
             transfer_answer_url="https://example.com/webhooks/transfer_answer",
             transfer_answer_method="POST",
-            transfer_answer_fallback_url="",
-            transfer_answer_fallback_method="",
-            transfer_disconnect_url="",
-            transfer_disconnect_method="",
-            username="",
-            password="",
-            fallback_username="",
-            fallback_password="",
-            tag="test"
+            tag=""
         )
         self.test_verb = Verb(tag="test")
     
     def test_to_bxml(self):
-        expected = '<PhoneNumber transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="test">+19195551234</PhoneNumber>'
+        expected = '<PhoneNumber transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="">+19195551234</PhoneNumber>'
         assert(expected == self.phone_number.to_bxml())
     
     def test_add_verb(self):

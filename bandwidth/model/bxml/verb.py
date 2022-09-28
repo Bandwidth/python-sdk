@@ -56,7 +56,7 @@ class Verb:
         """
         if self._attributes:
             for key, value in self._attributes.items():
-                if value:
+                if value is not None:
                     root.set(key, value)
 
     def _to_etree_element(self) -> ET.Element:

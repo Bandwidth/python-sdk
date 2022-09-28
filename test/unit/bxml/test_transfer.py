@@ -28,14 +28,6 @@ class TestTransfer(unittest.TestCase):
             transfer_to=[self.sip_uri],
             transfer_caller_id = "+19195554321",
             call_timeout = "15",
-            transfer_complete_url = "",
-            transfer_complete_method = "",
-            transfer_complete_fallback_url = "",
-            transfer_complete_fallback_method = "",
-            username = "",
-            password = "",
-            fallback_username = "",
-            fallback_password = "",
             tag = "test"
         )
     
