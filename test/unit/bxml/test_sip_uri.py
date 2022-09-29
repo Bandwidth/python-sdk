@@ -19,7 +19,7 @@ class TestSipUri(unittest.TestCase):
         self.phone_number = SipUri(
             uri="sip:1-999-123-4567@voip-provider.example.net",
             uui="abc123",
-            transfer_answer_url="https://example.com/webhooks/transfer_answer"
+            transfer_answer_url="https://example.com/webhooks/transfer_answer",
             transfer_answer_method="POST",
             tag="test"
         )

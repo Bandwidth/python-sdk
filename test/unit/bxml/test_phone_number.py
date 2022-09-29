@@ -18,9 +18,9 @@ class TestPhoneNumber(unittest.TestCase):
     def setUp(self):
         self.phone_number = PhoneNumber(
             number="+19195551234",
-            transfer_answer_url="https://example.com/webhooks/transfer_answer"
+            transfer_answer_url="https://example.com/webhooks/transfer_answer",
             transfer_answer_method="POST",
-            tag="",
+            tag=""
         )
         self.test_verb = Verb(tag="test")
     
