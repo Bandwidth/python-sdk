@@ -5,6 +5,7 @@ Unit tests for the <PhoneNumber> BXML verb
 
 @copyright Bandwidth Inc.
 """
+import os
 import pytest
 import unittest
 
@@ -27,15 +28,21 @@ class TestTransfer(unittest.TestCase):
         self.transfer = Transfer(
             transfer_to=[self.sip_uri],
             call_timeout = "15",
-            tag = "test",
-            transfer_caller_id = "+19195554321"
+            transfer_caller_id = "+19195554321",
+            tag = "test"
         )
     
     def test_to_bxml(self):
-        expected = '<Transfer callTimeout="15" tag="test" transferCallerId="+19195554321"><SipUri uui="test">sip@bw.com</SipUri></Transfer>'
+        if os.environ['PYTHON_VERSION'] == '3.7':
+            expected = '<Transfer callTimeout="15" tag="test" transferCallerId="+19195554321"><SipUri uui="test">sip@bw.com</SipUri></Transfer>'
+        else:
+            expected = '<Transfer transferCallerId="+19195554321" callTimeout="15" tag="test"><SipUri uui="test">sip@bw.com</SipUri></Transfer>'
         assert(expected == self.transfer.to_bxml())
     
     def test_add_verb(self):
-        expected = '<Transfer callTimeout="15" tag="test" transferCallerId="+19195554321"><SipUri uui="test">sip@bw.com</SipUri><PhoneNumber tag="test">+19195551234</PhoneNumber></Transfer>'
+        if os.environ['PYTHON_VERSION'] == '3.7':
+            expected = '<Transfer callTimeout="15" tag="test" transferCallerId="+19195554321"><SipUri uui="test">sip@bw.com</SipUri><PhoneNumber tag="test">+19195551234</PhoneNumber></Transfer>'
+        else:
+            expected = '<Transfer transferCallerId="+19195554321" callTimeout="15" tag="test"><SipUri uui="test">sip@bw.com</SipUri><PhoneNumber tag="test">+19195551234</PhoneNumber></Transfer>'
         self.transfer.add_transfer_recipient(self.phone_number)
         assert(expected == self.transfer.to_bxml())
