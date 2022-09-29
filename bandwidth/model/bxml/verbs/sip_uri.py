@@ -34,18 +34,18 @@ class SipUri(Verb):
             tag (str, optional):  A custom string that will be sent with these and all future callbacks unless overwritten by a future tag attribute or cleared. May be cleared by setting tag="" Max length 256 characters. Defaults to None.
         """
         self.attributes = {
-            "fallbackPassword": fallback_password,
-            "fallbackUsername": fallback_username,
-            "password": password,
-            "tag": tag,
-            "transferAnswerFallbackMethod": transfer_answer_fallback_method,
-            "transferAnswerFallbackUrl": transfer_answer_fallback_url,
-            "transferAnswerMethod": transfer_answer_method,
+            "uui": uui,
             "transferAnswerUrl": transfer_answer_url,
-            "transferDisconnectMethod": transfer_disconnect_method,
+            "transferAnswerMethod": transfer_answer_method,
+            "transferAnswerFallbackUrl": transfer_answer_fallback_url,
+            "transferAnswerFallbackMethod": transfer_answer_fallback_method,
             "transferDisconnectUrl": transfer_disconnect_url,
+            "transferDisconnectMethod": transfer_disconnect_method,
             "username": username,
-            "uui": uui
+            "password": password,
+            "fallbackUsername": fallback_username,
+            "fallbackPassword": fallback_password,
+            "tag": tag
         }
         super().__init__(
             tag="SipUri",
