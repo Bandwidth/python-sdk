@@ -1,38 +1,30 @@
 """
-play_audio.py
+tag.py
 
-Representation of Bandwidth's play audio BXML verb
+Bandwidth's Tag BXML verb
 
 @copyright Bandwidth INC
 """
-
-from lxml import etree
-
-from .base_verb import AbstractBxmlVerb
-
-TAG_TAG = "Tag"
+from ..verb import Verb
 
 
-class Tag(AbstractBxmlVerb):
+class Tag(Verb):
 
-    def __init__(self, tag=None):
+    def __init__(self, content=""):
+        """Initialize a <Tag> verb
+
+        Args:
+            content (str, optional): Custom tag value. Defaults to "".
         """
-        Initializes the Tag class with the following parameters
+        super().__init__(tag="Tag", content=content, attributes=None, nested_verbs=None)
+    
+    def add_verb(self, verb: Verb):
+        """Adding verbs is not allowed for <Tag>
 
-        :param str tag: The tag to set the call to 
+        Args:
+            verb (Verb): BXML verb
+
+        Raises:
+            AttributeError: This method is not allowed for <Tag>
         """
-        self.tag = tag
-
-    def to_etree_element(self):
-        """
-        Converts the class into an etree element. Used for other verb classes to build xml
-
-        :return etree.Element: The etree Element representing this class
-        """
-        root = etree.Element(TAG_TAG)
-        if self.tag is not None:
-            root.text = self.tag
-        return root
-
-    def to_bxml(self):
-        return etree.tostring(self.to_etree_element()).decode()
+        raise AttributeError('Adding verbs is not supported by <Tag>')

@@ -1,90 +1,66 @@
 """
 sip_uri.py
 
-Representation of Bandwidth's sip uri BXML verb
+Bandwidth's SipUri BXML verb
 
 @copyright Bandwidth INC
 """
-
-from lxml import etree
-
-from .base_verb import AbstractBxmlVerb
-
-SIP_URI_TAG = "SipUri"
+from ..verb import Verb
 
 
-class SipUri(AbstractBxmlVerb):
+class SipUri(Verb):
 
-    def __init__(self, uri=None, transfer_answer_url=None, transfer_answer_method=None,
-                username=None, password=None, tag=None, uui=None,
-                transfer_disconnect_url=None, transfer_disconnect_method=None,
-                transfer_answer_fallback_url=None, transfer_answer_fallback_method=None,
-                fallback_username=None, fallback_password=None):
+    def __init__(
+        self, uri: str, uui: str=None, transfer_answer_url: str=None, transfer_answer_method: str=None,
+        transfer_answer_fallback_url: str=None, transfer_answer_fallback_method: str=None,
+        transfer_disconnect_url: str=None, transfer_disconnect_method: str=None, username: str=None,
+        password: str=None, fallback_username: str=None, fallback_password: str=None, tag: str=None
+    ):
+        """Initialize a <SipUri> verb
+
+        Args:
+            uri (str): A SIP URI to transfer the call to (e.g. sip:user@server.com)
+            uui (str, optional): he value of the User-To-User header to send within the initial INVITE. Must include the encoding parameter as specified in RFC 7433. Only base64 and jwt encoding are currently allowed. This value, including the encoding specifier, may not exceed 256 characters. Defaults to None.
+            transfer_answer_url (str, optional): URL, if any, to send the Transfer Answer event to and request BXML to be executed for the called party before the call is bridged. May be a relative URL. Defaults to None.
+            transfer_answer_method (str, optional): The HTTP method to use for the request to transferAnswerUrl. GET or POST. Default value is POST. Defaults to None.
+            transfer_answer_fallback_url (str, optional): A fallback url which, if provided, will be used to retry the Transfer Answer callback delivery in case transferAnswerUrl fails to respond. Defaults to None.
+            transfer_answer_fallback_method (str, optional): The HTTP method to use to deliver the Transfer Answer callback to transferAnswerFallbackUrl. GET or POST. Default value is POST. Defaults to None.
+            transfer_disconnect_url (str, optional): URL, if any, to send the Transfer Disconnect event to. This event will be sent regardless of how the transfer ends and may not be responded to with BXML. May be a relative URL. Defaults to None.
+            transfer_disconnect_method (str, optional): The HTTP method to use for the request to transferDisconnectUrl. GET or POST. Default value is POST. Defaults to Defaults to Defaults to None.
+            username (str, optional): The username to send in the HTTP request to transferAnswerUrl and transferDisconnectUrl. Defaults to Defaults to None.
+            password (str, optional): The password to send in the HTTP request to transferAnswerUrl and transferDisconnectUrl. Defaults to Defaults to None.
+            fallback_username (str, optional): The username to send in the HTTP request to transferAnswerFallbackUrl. Defaults to None.
+            fallback_password (str, optional): The password to send in the HTTP request to transferAnswerFallbackUrl. Defaults to None.
+            tag (str, optional):  A custom string that will be sent with these and all future callbacks unless overwritten by a future tag attribute or cleared. May be cleared by setting tag="" Max length 256 characters. Defaults to None.
         """
-        Initializes the SipUri class with the following parameters
+        self.attributes = {
+            "fallbackPassword": fallback_password,
+            "fallbackUsername": fallback_username,
+            "password": password,
+            "tag": tag,
+            "transferAnswerFallbackMethod": transfer_answer_fallback_method,
+            "transferAnswerFallbackUrl": transfer_answer_fallback_url,
+            "transferAnswerMethod": transfer_answer_method,
+            "transferAnswerUrl": transfer_answer_url,
+            "transferDisconnectMethod": transfer_disconnect_method,
+            "transferDisconnectUrl": transfer_disconnect_url,
+            "username": username,
+            "uui": uui
+        }
+        super().__init__(
+            tag="SipUri",
+            content=uri,
+            attributes=self.attributes, 
+            nested_verbs=None
+        )
+    
+    def add_verb(self, verb: Verb):
+        """Adding verbs is not allowed for <SipUri>
 
-        :param str uri: The sip uri 
-        :param str transfer_answer_url: The url to send the transfer event to
-        :param str transfer_answer_method: The http method of the transfer event request
-        :param str transfer_disconnect_url: The url to send the transfer disconnect event to
-        :param str transfer_disconnect_method: The http method of the transfer disconnect event request
-        :param str username: The username to authenticate on the transfer event url
-        :param str password: The password to authenticate on the transfer event url
-        :param str tag: Custom string sent in the callback
-        :param str uui: The value of the `User-To-User` header to send within the initial `INVITE` 
-        :param str transfer_answer_fallback_url: URL for fallback events
-        :param str transfer_answer_fallback_method: HTTP method for fallback events
-        :param str fallback_username: Basic auth username for fallback events
-        :param str fallback_password: Basic auth password for fallback events
+        Args:
+            verb (Verb): BXML verb
+
+        Raises:
+            AttributeError: This method is not allowed for <SipUri>
         """
-        self.uri = uri
-        self.transfer_answer_url = transfer_answer_url
-        self.transfer_answer_method = transfer_answer_method
-        self.username = username
-        self.password = password
-        self.tag = tag
-        self.uui = uui
-        self.transfer_disconnect_method = transfer_disconnect_method
-        self.transfer_disconnect_url = transfer_disconnect_url
-        self.transfer_answer_fallback_url = transfer_answer_fallback_url
-        self.transfer_answer_fallback_method = transfer_answer_fallback_method
-        self.fallback_username = fallback_username
-        self.fallback_password = fallback_password
-
-    def to_etree_element(self):
-        """
-        Converts the class into an etree element. Used for other verb classes to build xml
-
-        :return etree.Element: The etree Element representing this class
-        """
-        root = etree.Element(SIP_URI_TAG)
-        if self.uri is not None:
-            root.text = self.uri
-        if self.transfer_answer_url is not None:
-            root.set("transferAnswerUrl", self.transfer_answer_url)
-        if self.transfer_answer_method is not None:
-            root.set("transferAnswerMethod", self.transfer_answer_method)
-        if self.username is not None:
-            root.set("username", self.username)
-        if self.password is not None:
-            root.set("password", self.password)
-        if self.tag is not None:
-            root.set("tag", self.tag)
-        if self.uui is not None:
-            root.set("uui", self.uui)
-        if self.transfer_disconnect_method is not None:
-            root.set("transferDisconnectMethod", self.transfer_disconnect_method)
-        if self.transfer_disconnect_url is not None:
-            root.set("transferDisconnectUrl", self.transfer_disconnect_url)
-        if self.transfer_answer_fallback_url is not None:
-            root.set("transferAnswerFallbackUrl", self.transfer_answer_fallback_url)
-        if self.transfer_answer_fallback_method is not None:
-            root.set("transferAnswerFallbackMethod", self.transfer_answer_fallback_method)
-        if self.fallback_username is not None:
-            root.set("fallbackUsername", self.fallback_username)
-        if self.fallback_password is not None:
-            root.set("fallbackPassword", self.fallback_password)
-        return root
-
-    def to_bxml(self):
-        return etree.tostring(self.to_etree_element()).decode()
+        raise AttributeError('Adding verbs is not supported by <SipUri>')
