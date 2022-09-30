@@ -24,5 +24,5 @@ class TestHangup(unittest.TestCase):
     
     def test_add_verb(self):
         with pytest.raises(AttributeError):
-            self.tag.add_verb(self.test_verb)
+            self.hangup.add_verb(self.test_verb)
 
