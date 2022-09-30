@@ -46,8 +46,15 @@ class SipUri(TerminalVerb):
         self.fallback_username = fallback_username
         self.fallback_password = fallback_password
         self.tag = tag
-        self.attributes = {
-            "uui": uui,
+        super().__init__(
+            tag="SipUri",
+            content=self.uri,
+        )
+
+    @property
+    def attributes(self):
+        return {
+            "uui": self.uui,
             "transferAnswerUrl": self.transfer_answer_url,
             "transferAnswerMethod": self.transfer_answer_method,
             "transferAnswerFallbackUrl": self.transfer_answer_fallback_url,
@@ -60,8 +67,3 @@ class SipUri(TerminalVerb):
             "fallbackPassword": self.fallback_password,
             "tag": self.tag
         }
-        super().__init__(
-            tag="SipUri",
-            content=self.uri,
-            attributes=self.attributes
-        )

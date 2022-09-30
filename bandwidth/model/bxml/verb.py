@@ -13,13 +13,12 @@ class Verb:
     """Base class for BXML verbs
     """
 
-    def __init__(self, tag: str, content: str = None, attributes: dict = None, nested_verbs: list[Verb] = None):
+    def __init__(self, tag: str, content: str = None, nested_verbs: list[Verb] = None):
         """Initialize the verb model
 
         Args:
             tag (str): Name of the XML element
             content (str, optional): XML element content. Defaults to None.
-            attributes (dict, optional): XML element attributes. Defaults to None.
             nested_verbs (list[BxmlVerb], optional): XML element children. Defaults to None.
         """
         self._tag = tag
@@ -29,8 +28,8 @@ class Verb:
             self._nested_verbs = []
 
     @property
-    def attributes():
-        return {}
+    def attributes(self):
+        return None
 
     def __len__(self) -> int:
         """Override default len method. Returns length of _nested_verbs array
@@ -57,7 +56,7 @@ class Verb:
         Args:
             root (ET.Element): XML Element to add attributes to
         """
-        if self.attributes:
+        if self.attributes is not None:
             for key, value in self.attributes.items():
                 if value is not None:
                     root.set(key, value)

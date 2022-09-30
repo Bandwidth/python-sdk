@@ -44,7 +44,14 @@ class PhoneNumber(TerminalVerb):
         self.fallback_username = fallback_username
         self.fallback_password = fallback_password
         self.tag = tag
-        self.attributes = {
+        super().__init__(
+            tag="PhoneNumber",
+            content=self.number
+        )
+
+    @property
+    def attributes(self):
+        return {
             "transferAnswerUrl": self.transfer_answer_url,
             "transferAnswerMethod": self.transfer_answer_method,
             "transferAnswerFallbackUrl": self.transfer_answer_fallback_url,
@@ -57,8 +64,3 @@ class PhoneNumber(TerminalVerb):
             "fallbackPassword": self.fallback_password,
             "tag": self.tag
         }
-        super().__init__(
-            tag="PhoneNumber",
-            content=self.number,
-            attributes=self.attributes
-        )

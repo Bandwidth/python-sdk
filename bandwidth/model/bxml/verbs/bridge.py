@@ -55,7 +55,14 @@ class Bridge(TerminalVerb):
         self.fallback_username = fallback_username
         self.fallback_password = fallback_password
         self.tag = tag
-        self.attributes = {
+        super().__init__(
+            tag="Bridge",
+            content=self.target_call,
+        )
+
+    @property
+    def attributes(self):
+        return {
             "bridgeCompleteUrl": self.bridge_complete_url,
             "bridgeCompleteMethod": self.bridge_complete_method,
             "bridgeCompleteFallbackUrl": self.bridge_complete_fallback_url,
@@ -70,8 +77,3 @@ class Bridge(TerminalVerb):
             "fallbackPassword": self.fallback_password,
             "tag": self.tag
         }
-        super().__init__(
-            tag="Bridge",
-            content=self.target_call,
-            attributes=self.attributes
-        )
