@@ -16,4 +16,5 @@ class Tag(TerminalVerb):
         Args:
             content (str, optional): Custom tag value. Defaults to "".
         """
-        super().__init__(tag="Tag", content=content, attributes=None, nested_verbs=None)
+        self.content = content
+        super().__init__(tag="Tag", content=self.content, attributes=None)
