@@ -5,10 +5,10 @@ Bandwidth's Forward BXML verb
 
 @copyright Bandwidth INC
 """
-from ..verb import Verb
+from ..terminal_verb import TerminalVerb
 
 
-class Forward(Verb):
+class Forward(TerminalVerb):
 
     def __init__(
         self, to: str=None, from_: str=None, 
@@ -49,21 +49,10 @@ class Forward(Verb):
         self.attributes = {
             "to": to,
             "from_": from_,
-            "callTimeout": call_timeout,
-            "diversionTreatment": diversion_treatment,
-            "diversionReason": diversion_reason,
+            "call_timeout": call_timeout,
+            "diversion_treatment": diversion_treatment,
+            "diversion_reason": diversion_reason,
             "uui": uui,
         }     
 
-        super().__init__(tag="Forward", content=None, attributes=self.attributes, nested_verbs=None)
-    
-    def add_verb(self, verb: Verb):
-        """Adding verbs is not allowed for <Forward>
-
-        Args:
-            verb (Verb): BXML verb
-
-        Raises:
-            AttributeError: This method is not allowed for <Forward>
-        """
-        raise AttributeError('Adding verbs is not supported by <Forward>')
+        super().__init__(tag="Forward", content=None, attributes=self.attributes) 
