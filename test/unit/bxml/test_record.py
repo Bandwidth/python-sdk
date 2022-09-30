@@ -23,6 +23,7 @@ class TestRecord(unittest.TestCase):
         expected = '<Record maxDuration="10" />'
         assert(expected == self.record.to_bxml())
 
+
     def test_add_verb(self):
         with pytest.raises(AttributeError):
             self.record.add_verb(self.test_verb)

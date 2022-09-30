@@ -6,6 +6,7 @@ Defines the base verb class for all BXML verbs
 @copyright Bandwidth INC
 """
 from __future__ import annotations
+from typing import Union
 import xml.etree.ElementTree as ET
 
 
@@ -28,7 +29,7 @@ class Verb:
             self._nested_verbs = []
 
     @property
-    def attributes(self):
+    def attributes(self) -> Union[None, dict]:
         return None
 
     def __len__(self) -> int:
