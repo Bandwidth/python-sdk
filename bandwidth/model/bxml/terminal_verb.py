@@ -5,6 +5,8 @@ Defines the base verb class for all BXML verbs
 
 @copyright Bandwidth INC
 """
+from typing import List
+
 from .verb import Verb
 
 
@@ -12,7 +14,7 @@ class TerminalVerb(Verb):
     """Base class for BXML verbs
     """
 
-    def __init__(self, tag: str, content: str = None, attributes: dict = None, nested_verbs: list[Verb] = None):
+    def __init__(self, tag: str, content: str = None, attributes: dict = None, nested_verbs: List[Verb] = None):
         """Initialize the verb model
 
         Args:
