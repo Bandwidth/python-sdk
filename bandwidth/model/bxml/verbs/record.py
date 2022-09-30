@@ -67,7 +67,7 @@ class Record(TerminalVerb):
         super().__init__(tag="Record", content=None)
 
     @property
-    def attributes(self):
+    def _attributes(self):
         return {
             "recordCompleteUrl": self.record_complete_url,
             "recordCompleteMethod": self.record_complete_method,

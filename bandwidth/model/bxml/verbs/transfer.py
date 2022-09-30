@@ -82,7 +82,7 @@ class Transfer(Verb):
         )
 
     @property
-    def attributes(self):
+    def _attributes(self):
         return {
             "transferCallerId": self.transfer_caller_id,
             "callTimeout": self.call_timeout,

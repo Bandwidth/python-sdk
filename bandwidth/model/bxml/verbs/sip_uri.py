@@ -52,7 +52,7 @@ class SipUri(TerminalVerb):
         )
 
     @property
-    def attributes(self):
+    def _attributes(self):
         return {
             "uui": self.uui,
             "transferAnswerUrl": self.transfer_answer_url,

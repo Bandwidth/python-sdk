@@ -50,7 +50,7 @@ class PhoneNumber(TerminalVerb):
         )
 
     @property
-    def attributes(self):
+    def _attributes(self):
         return {
             "transferAnswerUrl": self.transfer_answer_url,
             "transferAnswerMethod": self.transfer_answer_method,

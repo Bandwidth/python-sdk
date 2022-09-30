@@ -61,7 +61,7 @@ class Bridge(TerminalVerb):
         )
 
     @property
-    def attributes(self):
+    def _attributes(self):
         return {
             "bridgeCompleteUrl": self.bridge_complete_url,
             "bridgeCompleteMethod": self.bridge_complete_method,

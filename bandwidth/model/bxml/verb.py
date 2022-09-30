@@ -29,7 +29,7 @@ class Verb:
             self._nested_verbs = []
 
     @property
-    def attributes(self) -> Union[None, dict]:
+    def _attributes(self) -> Union[None, dict]:
         return None
 
     def __len__(self) -> int:
@@ -57,8 +57,8 @@ class Verb:
         Args:
             root (ET.Element): XML Element to add attributes to
         """
-        if self.attributes is not None:
-            for key, value in self.attributes.items():
+        if self._attributes is not None:
+            for key, value in self._attributes.items():
                 if value is not None:
                     root.set(key, value)
 
