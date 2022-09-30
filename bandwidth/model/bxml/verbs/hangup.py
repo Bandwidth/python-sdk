@@ -5,10 +5,10 @@ Bandwidth's Hangup BXML verb
 
 @copyright Bandwidth INC
 """
-from ..verb import Verb
+from ..terminal_verb import TerminalVerb
 
 
-class Hangup(Verb):
+class Hangup(TerminalVerb):
 
     def __init__(self):
         """Initialize a <Hangup> verb
@@ -17,14 +17,3 @@ class Hangup(Verb):
             None
         """
         super().__init__(tag="Hangup", content=None, attributes=None, nested_verbs=None)
-    
-    def add_verb(self, verb: Verb):
-        """Adding verbs is not allowed for <Hangup>
-
-        Args:
-            verb (Verb): BXML verb
-
-        Raises:
-            AttributeError: This method is not allowed for <Hangup>
-        """
-        raise AttributeError('Adding verbs is not supported by <Hangup>')
