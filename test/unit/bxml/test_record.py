@@ -5,7 +5,6 @@ Unit tests for the <Record> BXML verb
 
 @copyright Bandwidth Inc.
 """
-from rich import inspect
 import pytest
 import unittest
 
@@ -17,9 +16,7 @@ class TestRecord(unittest.TestCase):
 
     def setUp(self):
         self.record = Record()
-        inspect(self.record)
         self.record.max_duration = "10"
-        inspect(self.record)
         self.test_verb = Verb(tag="test")
 
     def test_to_bxml(self):
