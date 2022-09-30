@@ -24,10 +24,13 @@ class Verb:
         """
         self._tag = tag
         self._content = content
-        self._attributes = attributes
         self._nested_verbs = nested_verbs
         if not self._nested_verbs:
             self._nested_verbs = []
+
+    @property
+    def attributes():
+        return {}
 
     def __len__(self) -> int:
         """Override default len method. Returns length of _nested_verbs array
@@ -54,8 +57,8 @@ class Verb:
         Args:
             root (ET.Element): XML Element to add attributes to
         """
-        if self._attributes:
-            for key, value in self._attributes.items():
+        if self.attributes:
+            for key, value in self.attributes.items():
                 if value is not None:
                     root.set(key, value)
 
