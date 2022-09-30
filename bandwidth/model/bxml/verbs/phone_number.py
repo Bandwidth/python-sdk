@@ -5,10 +5,10 @@ Bandwidth's PhoneNumber BXML verb
 
 @copyright Bandwidth INC
 """
-from ..verb import Verb
+from ..terminal_verb import TerminalVerb
 
 
-class PhoneNumber(Verb):
+class PhoneNumber(TerminalVerb):
 
     def __init__(
         self, number: str, transfer_answer_url: str=None, transfer_answer_method: str=None,
@@ -48,17 +48,6 @@ class PhoneNumber(Verb):
         super().__init__(
             tag="PhoneNumber",
             content=number,
-            attributes=self.attributes, 
+            attributes=self.attributes,
             nested_verbs=None
         )
-    
-    def add_verb(self, verb: Verb):
-        """Adding verbs is not allowed for <PhoneNumber>
-
-        Args:
-            verb (Verb): BXML verb
-
-        Raises:
-            AttributeError: This method is not allowed for <PhoneNumber>
-        """
-        raise AttributeError('Adding verbs is not supported by <PhoneNumber>')
