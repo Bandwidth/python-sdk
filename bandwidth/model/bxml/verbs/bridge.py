@@ -41,24 +41,38 @@ class Bridge(TerminalVerb):
             fallback_password (str, optional): _description_. Defaults to None.
             tag (str, optional): _description_. Defaults to None.
         """
+        self.target_call = target_call
+        self.bridge_complete_url = bridge_complete_url
+        self.bridge_complete_method = bridge_complete_method
+        self.bridge_complete_fallback_url = bridge_complete_fallback_url
+        self.bridge_complete_fallback_method = bridge_complete_fallback_method
+        self.bridge_target_complete_url = bridge_target_complete_url
+        self.bridge_target_complete_method = bridge_target_complete_method
+        self.bridge_target_complete_fallback_url = bridge_target_complete_fallback_url
+        self.bridge_target_complete_fallback_method = bridge_target_complete_fallback_method
+        self.username = username
+        self.password = password
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
+        self.tag = tag
         self.attributes = {
-            "bridgeCompleteUrl": bridge_complete_url,
-            "bridgeCompleteMethod": bridge_complete_method,
-            "bridgeCompleteFallbackUrl": bridge_complete_fallback_url,
-            "bridgeCompleteFallbackMethod": bridge_complete_fallback_method,
-            "bridgeTargetCompleteUrl": bridge_target_complete_url,
-            "bridgeTargetCompleteMethod": bridge_target_complete_method,
-            "bridgeTargetCompleteFallback_url": bridge_target_complete_fallback_url,
-            "bridgeTargetCompleteFallbackMethod": bridge_target_complete_fallback_method,
-            "username": username,
-            "password": password,
-            "fallbackUsername": fallback_username,
-            "fallbackUassword": fallback_password,
-            "tag": tag
+            "bridgeCompleteUrl": self.bridge_complete_url,
+            "bridgeCompleteMethod": self.bridge_complete_method,
+            "bridgeCompleteFallbackUrl": self.bridge_complete_fallback_url,
+            "bridgeCompleteFallbackMethod": self.bridge_complete_fallback_method,
+            "bridgeTargetCompleteUrl": self.bridge_target_complete_url,
+            "bridgeTargetCompleteMethod": self.bridge_target_complete_method,
+            "bridgeTargetCompleteFallback_url": self.bridge_target_complete_fallback_url,
+            "bridgeTargetCompleteFallbackMethod": self.bridge_target_complete_fallback_method,
+            "username": self.username,
+            "password": self.password,
+            "fallbackUsername": self.fallback_username,
+            "fallbackPassword": self.fallback_password,
+            "tag": self.tag
         }
         super().__init__(
             tag="Bridge",
-            content=target_call,
+            content=self.target_call,
             attributes=self.attributes,
             nested_verbs=None
         )
