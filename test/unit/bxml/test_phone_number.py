@@ -5,6 +5,7 @@ Unit tests for the <PhoneNumber> BXML verb
 
 @copyright Bandwidth Inc.
 """
+import os
 import pytest
 import unittest
 
@@ -17,14 +18,18 @@ class TestPhoneNumber(unittest.TestCase):
     def setUp(self):
         self.phone_number = PhoneNumber(
             number="+19195551234",
-            tag="",
+            transfer_answer_url="https://example.com/webhooks/transfer_answer",
             transfer_answer_method="POST",
-            transfer_answer_url="https://example.com/webhooks/transfer_answer"
+            tag=""
         )
         self.test_verb = Verb(tag="test")
     
     def test_to_bxml(self):
-        expected = '<PhoneNumber tag="" transferAnswerMethod="POST" transferAnswerUrl="https://example.com/webhooks/transfer_answer">+19195551234</PhoneNumber>'
+        if os.environ['PYTHON_VERSION'] == '3.7':
+            expected = '<PhoneNumber tag="" transferAnswerMethod="POST" transferAnswerUrl="https://example.com/webhooks/transfer_answer">+19195551234</PhoneNumber>'
+        else:
+            expected = '<PhoneNumber transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="">+19195551234</PhoneNumber>'
+            
         assert(expected == self.phone_number.to_bxml())
     
     def test_add_verb(self):

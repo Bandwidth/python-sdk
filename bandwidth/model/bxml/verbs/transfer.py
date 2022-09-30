@@ -15,13 +15,13 @@ from ..verbs.sip_uri import SipUri
 class Transfer(Verb):
 
     def __init__(
-        self, transfer_to: List[Union[PhoneNumber, SipUri]] = [], 
-        transfer_caller_id: str=None, call_timeout: str=None, 
+        self, transfer_to: List[Union[PhoneNumber, SipUri]] = [],
+        transfer_caller_id: str=None, call_timeout: str=None,
         transfer_complete_url: str=None, transfer_complete_method: str=None,
-        transfer_complete_fallback_url: str=None, 
-        transfer_complete_fallback_method: str=None, username: str=None, 
-        password: str=None, fallback_username: str=None, 
-        fallback_password: str=None, tag: str=None, 
+        transfer_complete_fallback_url: str=None,
+        transfer_complete_fallback_method: str=None, username: str=None,
+        password: str=None, fallback_username: str=None,
+        fallback_password: str=None, tag: str=None,
         diversion_treatment: str=None, diversion_reason: str=None
     ):
         """Initialize a <Transfer> verb
@@ -58,30 +58,44 @@ class Transfer(Verb):
                 out-of-service
                 away
 
-                This parameter is considered only when diversionTreatment is set to stack. Defaults is unknown. 
+                This parameter is considered only when diversionTreatment is set to stack. Defaults is unknown.
                 Defaults to None.
         """
+        self.transfer_to = transfer_to
+        self.transfer_caller_id = transfer_caller_id
+        self.call_timeout = call_timeout
+        self.transfer_complete_url = transfer_complete_url
+        self.transfer_complete_method = transfer_complete_method
+        self.transfer_complete_fallback_url = transfer_complete_fallback_url
+        self.transfer_complete_fallback_method = transfer_complete_fallback_method
+        self.username = username
+        self.password = password
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
+        self.tag = tag
+        self.diversion_treatment = diversion_treatment
+        self.diversion_reason = diversion_reason
         self.attributes = {
-            "callTimeout": call_timeout,
-            "diversionReason": diversion_reason,
-            "diversionTreatment": diversion_treatment,
-            "fallbackPassword": fallback_password,
-            "fallbackUsername": fallback_username,
-            "password": password,
-            "tag": tag,
-            "transferCallerId": transfer_caller_id,
-            "transferCompleteFallbackMethod": transfer_complete_fallback_method,
-            "transferCompleteFallbackUrl": transfer_complete_fallback_url,
-            "transferCompleteMethod": transfer_complete_method,
-            "transferCompleteUrl": transfer_complete_url,
-            "username": username
+            "transferCallerId": self.transfer_caller_id,
+            "callTimeout": self.call_timeout,
+            "transferCompleteUrl": self.transfer_complete_url,
+            "transferCompleteMethod": self.transfer_complete_method,
+            "transferCompleteFallbackUrl": self.transfer_complete_fallback_url,
+            "transferCompleteFallbackMethod": self.transfer_complete_fallback_method,
+            "username": self.username,
+            "password": self.password,
+            "fallbackUsername": self.fallback_username,
+            "fallbackPassword": self.fallback_password,
+            "tag": self.tag,
+            "diversionTreatment": self.diversion_treatment,
+            "diversionReason": self.diversion_reason
         }
         super().__init__(
             tag="Transfer",
             content=None,
-            attributes=self.attributes, 
-            nested_verbs=transfer_to
+            attributes=self.attributes,
+            nested_verbs=self.transfer_to
         )
-    
+
     def add_transfer_recipient(self, recipient: Union[PhoneNumber, SipUri]):
         super().add_verb(recipient)

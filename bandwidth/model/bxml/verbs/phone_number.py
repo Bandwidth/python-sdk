@@ -5,10 +5,10 @@ Bandwidth's PhoneNumber BXML verb
 
 @copyright Bandwidth INC
 """
-from ..verb import Verb
+from ..terminal_verb import TerminalVerb
 
 
-class PhoneNumber(Verb):
+class PhoneNumber(TerminalVerb):
 
     def __init__(
         self, number: str, transfer_answer_url: str=None, transfer_answer_method: str=None,
@@ -32,33 +32,33 @@ class PhoneNumber(Verb):
             fallback_password (str, optional): The password to send in the HTTP request to transferAnswerFallbackUrl. Defaults to None.
             tag (str, optional):  A custom string that will be sent with these and all future callbacks unless overwritten by a future tag attribute or cleared. May be cleared by setting tag="" Max length 256 characters. Defaults to None.
         """
+        self.number = number
+        self.transfer_answer_url = transfer_answer_url
+        self.transfer_answer_method = transfer_answer_method
+        self.transfer_answer_fallback_url = transfer_answer_fallback_url
+        self.transfer_answer_fallback_method = transfer_answer_fallback_method
+        self.transfer_disconnect_url = transfer_disconnect_url
+        self.transfer_disconnect_method = transfer_disconnect_method
+        self.username = username
+        self.password = password
+        self.fallback_username = fallback_username
+        self.fallback_password = fallback_password
+        self.tag = tag
         self.attributes = {
-            "fallbackPassword": fallback_password,
-            "fallbackUsername": fallback_username,
-            "password": password,
-            "tag": tag,
-            "transferAnswerFallbackMethod": transfer_answer_fallback_method,
-            "transferAnswerFallbackUrl": transfer_answer_fallback_url,
-            "transferAnswerMethod": transfer_answer_method,
-            "transferAnswerUrl": transfer_answer_url,
-            "transferDisconnectMethod": transfer_disconnect_method,
-            "transferDisconnectUrl": transfer_disconnect_url,
-            "username": username
+            "transferAnswerUrl": self.transfer_answer_url,
+            "transferAnswerMethod": self.transfer_answer_method,
+            "transferAnswerFallbackUrl": self.transfer_answer_fallback_url,
+            "transferAnswerFallbackMethod": self.transfer_answer_fallback_method,
+            "transferDisconnectUrl": self.transfer_disconnect_url,
+            "transferDisconnectMethod": self.transfer_disconnect_method,
+            "username": self.username,
+            "password": self.password,
+            "fallbackUsername": self.fallback_username,
+            "fallbackPassword": self.fallback_password,
+            "tag": self.tag
         }
         super().__init__(
             tag="PhoneNumber",
-            content=number,
-            attributes=self.attributes, 
-            nested_verbs=None
+            content=self.number,
+            attributes=self.attributes
         )
-    
-    def add_verb(self, verb: Verb):
-        """Adding verbs is not allowed for <PhoneNumber>
-
-        Args:
-            verb (Verb): BXML verb
-
-        Raises:
-            AttributeError: This method is not allowed for <PhoneNumber>
-        """
-        raise AttributeError('Adding verbs is not supported by <PhoneNumber>')

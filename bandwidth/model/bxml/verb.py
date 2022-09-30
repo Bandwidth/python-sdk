@@ -13,7 +13,7 @@ class Verb:
     """Base class for BXML verbs
     """
 
-    def __init__(self, tag: str, content: str = None, attributes: dict = None, nested_verbs: list[BxmlVerb] = None):
+    def __init__(self, tag: str, content: str = None, attributes: dict = None, nested_verbs: list[Verb] = None):
         """Initialize the verb model
 
         Args:
@@ -36,7 +36,7 @@ class Verb:
             int: Length of self._nested_verbs
         """
         return len(self._nested_verbs)
-    
+
     def __getitem__(self, position) -> Verb:
         """Override default getitem method. Makes the object iterable.
 
@@ -44,10 +44,10 @@ class Verb:
             position (int): Desired self._nested_verbs list position
 
         Returns:
-            BxmlVerb: Desired BXML verb 
+            BxmlVerb: Desired BXML verb
         """
         return self._nested_verbs[position]
-    
+
     def _set_attributes(self, root: ET.Element):
         """Set XML attributes on an Element
 
