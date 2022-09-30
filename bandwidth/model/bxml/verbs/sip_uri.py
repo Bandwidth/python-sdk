@@ -5,10 +5,10 @@ Bandwidth's SipUri BXML verb
 
 @copyright Bandwidth INC
 """
-from ..verb import Verb
+from ..terminal_verb import TerminalVerb
 
 
-class SipUri(Verb):
+class SipUri(TerminalVerb):
 
     def __init__(
         self, uri: str, uui: str=None, transfer_answer_url: str=None, transfer_answer_method: str=None,
@@ -50,17 +50,6 @@ class SipUri(Verb):
         super().__init__(
             tag="SipUri",
             content=uri,
-            attributes=self.attributes, 
+            attributes=self.attributes,
             nested_verbs=None
         )
-    
-    def add_verb(self, verb: Verb):
-        """Adding verbs is not allowed for <SipUri>
-
-        Args:
-            verb (Verb): BXML verb
-
-        Raises:
-            AttributeError: This method is not allowed for <SipUri>
-        """
-        raise AttributeError('Adding verbs is not supported by <SipUri>')

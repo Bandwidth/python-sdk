@@ -5,10 +5,10 @@ Bandwidth's Bridge BXML verb
 
 @copyright Bandwidth INC
 """
-from ..verb import Verb
+from ..terminal_verb import TerminalVerb
 
 
-class Bridge(Verb):
+class Bridge(TerminalVerb):
 
     def __init__(
         self, target_call: str, bridge_complete_url: str=None,
@@ -62,6 +62,3 @@ class Bridge(Verb):
             attributes=self.attributes,
             nested_verbs=None
         )
-
-    def add_verb(self, verb: Verb):
-        raise AttributeError('Adding verbs is not supported by <Bridge>')
