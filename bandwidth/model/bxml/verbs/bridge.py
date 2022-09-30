@@ -73,6 +73,5 @@ class Bridge(TerminalVerb):
         super().__init__(
             tag="Bridge",
             content=self.target_call,
-            attributes=self.attributes,
-            nested_verbs=None
+            attributes=self.attributes
         )

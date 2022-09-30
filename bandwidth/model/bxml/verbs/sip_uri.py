@@ -63,6 +63,5 @@ class SipUri(TerminalVerb):
         super().__init__(
             tag="SipUri",
             content=self.uri,
-            attributes=self.attributes,
-            nested_verbs=None
+            attributes=self.attributes
         )

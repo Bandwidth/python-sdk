@@ -60,6 +60,5 @@ class PhoneNumber(TerminalVerb):
         super().__init__(
             tag="PhoneNumber",
             content=self.number,
-            attributes=self.attributes,
-            nested_verbs=None
+            attributes=self.attributes
         )
