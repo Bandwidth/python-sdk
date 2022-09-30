@@ -1,7 +1,7 @@
 """
 test_Pause.py
 
-Unit tests for the <PhoneNumber> BXML verb
+Unit tests for the <Pause> BXML verb
 
 @copyright Bandwidth Inc.
 """
