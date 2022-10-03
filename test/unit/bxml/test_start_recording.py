@@ -16,18 +16,20 @@ from bandwidth.model.bxml.verbs.start_recording import StartRecording
 class TestRecord(unittest.TestCase):
 
     def setUp(self):
-        self.start_recording = StartRecording()
-        self.start_recording.recording_available_url = "example.com"
-        self.start_recording.recording_available_method = "POST"
-        self.start_recording.transcribe = "true"
-        self.start_recording.transcription_available_url = "transcription-example.com"
-        self.start_recording.transcription_available_method = "POST"
-        self.start_recording.username = "user"
-        self.start_recording.password = "pass"
-        self.start_recording.tag = "tag"
-        self.start_recording.file_format = "wav"
-        self.start_recording.multi_channel = "true"
+        self.start_recording = StartRecording(
+            recording_available_url = "example.com",
+            recording_available_method = "POST",
+            transcribe = "true",
+            transcription_available_url = "transcription-example.com",
+            transcription_available_method = "POST",
+            username = "user",
+            password = "pass",
+            tag = "tag",
+            file_format = "wav",
+            multi_channel = "true"
+        )
         self.test_verb = Verb(tag="test")
+        
 
     def test_to_bxml(self):
         if os.environ['PYTHON_VERSION'] == '3.7':
