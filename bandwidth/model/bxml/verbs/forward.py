@@ -46,13 +46,21 @@ class Forward(TerminalVerb):
                 Must include the encoding parameter as specified in RFC 7433. Only base64 and jwt encoding are currently allowed. 
                 This value, including the encoding specifier, may not exceed 256 characters.
         """
-        self.attributes = {
-            "to": to,
-            "from_": from_,
-            "call_timeout": call_timeout,
-            "diversion_treatment": diversion_treatment,
-            "diversion_reason": diversion_reason,
-            "uui": uui,
-        }     
+        self.to = to
+        self.from_ = from_
+        self.call_timeout = call_timeout
+        self.diversion_treatment = diversion_treatment
+        self.diversion_reason = diversion_reason
+        self.uui = uui
 
-        super().__init__(tag="Forward", content=None, attributes=self.attributes) 
+        super().__init__(tag="Forward", content=None) 
+    @property
+    def _attributes(self):
+        return {
+            "to": self.to,
+            "from_": self.from_,
+            "call_timeout": self.call_timeout,
+            "diversion_treatment": self.diversion_treatment,
+            "diversion_reason": self.diversion_reason,
+            "uui": self.uui,
+        }        

@@ -9,6 +9,7 @@ import os
 import pytest
 import unittest
 
+from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs.forward import Forward
 
 class TestForward(unittest.TestCase):
@@ -22,6 +23,8 @@ class TestForward(unittest.TestCase):
             diversion_reason="away",
             uui="93d6f3c0be5845960b744fa28015d8ede84bd1a4;encoding=base64,asdf;encoding=jwt"
         )
+        self.test_verb = Verb(tag="test")
+
     
     def test_to_bxml(self):
         if os.environ['PYTHON_VERSION'] == '3.7':
