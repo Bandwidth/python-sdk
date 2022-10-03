@@ -1,5 +1,6 @@
 from .bridge import Bridge
 from .pause import Pause
+from .pause_recording import PauseRecording
 from .hangup import Hangup
 from .gather import Gather
 from .phone_number import PhoneNumber
