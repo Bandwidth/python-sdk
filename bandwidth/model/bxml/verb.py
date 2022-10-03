@@ -6,6 +6,7 @@ Defines the base verb class for all BXML verbs
 @copyright Bandwidth INC
 """
 from __future__ import annotations
+from typing import Union
 import xml.etree.ElementTree as ET
 
 
@@ -13,21 +14,23 @@ class Verb:
     """Base class for BXML verbs
     """
 
-    def __init__(self, tag: str, content: str = None, attributes: dict = None, nested_verbs: list[Verb] = None):
+    def __init__(self, tag: str, content: str = None, nested_verbs: list[Verb] = None):
         """Initialize the verb model
 
         Args:
             tag (str): Name of the XML element
             content (str, optional): XML element content. Defaults to None.
-            attributes (dict, optional): XML element attributes. Defaults to None.
             nested_verbs (list[BxmlVerb], optional): XML element children. Defaults to None.
         """
         self._tag = tag
         self._content = content
-        self._attributes = attributes
         self._nested_verbs = nested_verbs
         if not self._nested_verbs:
             self._nested_verbs = []
+
+    @property
+    def _attributes(self) -> Union[None, dict]:
+        return None
 
     def __len__(self) -> int:
         """Override default len method. Returns length of _nested_verbs array
@@ -54,7 +57,7 @@ class Verb:
         Args:
             root (ET.Element): XML Element to add attributes to
         """
-        if self._attributes:
+        if self._attributes is not None:
             for key, value in self._attributes.items():
                 if value is not None:
                     root.set(key, value)
