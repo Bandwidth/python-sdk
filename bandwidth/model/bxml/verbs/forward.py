@@ -59,8 +59,8 @@ class Forward(TerminalVerb):
         return {
             "to": self.to,
             "from_": self.from_,
-            "call_timeout": self.call_timeout,
-            "diversion_treatment": self.diversion_treatment,
-            "diversion_reason": self.diversion_reason,
+            "callTimeout": self.call_timeout,
+            "diversionTreatment": self.diversion_treatment,
+            "diversionReason": self.diversion_reason,
             "uui": self.uui,
         }        
