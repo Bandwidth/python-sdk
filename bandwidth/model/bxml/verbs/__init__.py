@@ -1,4 +1,5 @@
 from .bridge import Bridge
+from .pause import Pause
 from .hangup import Hangup
 from .gather import Gather
 from .phone_number import PhoneNumber
