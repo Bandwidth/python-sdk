@@ -71,23 +71,18 @@ class Gather(Verb):
     @property
     def _attributes(self):
         return {
-            "gather_url": self.gather_url,
-            "gather_method": self.gather_method,
-            "gather_fallback_url": self.gather_fallback_url,
-            "gather_fallback_method": self.gather_fallback_method,
+            "gatherUrl": self.gather_url,
+            "gatherMethod": self.gather_method,
+            "gatherFallbackUrl": self.gather_fallback_url,
+            "gatherFallbackMethod": self.gather_fallback_method,
             "username": self.username,
             "password": self.password,
-            "fallback_username": self.fallback_username,
-            "fallback_password": self.fallback_password,
+            "fallbackUsername": self.fallback_username,
+            "fallbackPassword": self.fallback_password,
             "tag": self.tag,
-            "terminating_digits": self.terminating_digits,
-            "max_digits": self.max_digits,
-            "inter_digit_timeout": self.inter_digit_timeout,
-            "first_digit_timeout": self.first_digit_timeout,
-            "repeat_count": self.repeat_count,
+            "terminatingDigits": self.terminating_digits,
+            "maxDigits": self.max_digits,
+            "interDigitTimeout": self.inter_digit_timeout,
+            "firstDigitTimeout": self.first_digit_timeout,
+            "repeatCount": self.repeat_count,
         }
-        self.attributes = {
-
-             }       
-
-        super().__init__(tag="Gather", content=None, attributes=self.attributes, nested_verbs=self.audio_verbs)
