@@ -10,8 +10,11 @@ class Pause(TerminalVerb):
         Args:
             duration (str, optional): The time in seconds to pause. Default value is 1.
         """
-        self.attributes = {
-        "duration": duration
-        }
+        self.duration = duration
 
-        super().__init__(tag="Pause", content=None, attributes=self.attributes)
+        super().__init__(tag="Pause", content=None)
+    @property
+    def _attributes(self):
+        return {
+            "duration": self.duration
+        }
