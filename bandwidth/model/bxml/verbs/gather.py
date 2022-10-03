@@ -63,21 +63,31 @@ class Gather(Verb):
         self.first_digit_timeout = first_digit_timeout
         self.repeat_count = repeat_count
         self.audio_verbs = audio_verbs
+        super().__init__(
+            tag="Gather", 
+            content=None,
+            nested_verbs=self.audio_verbs)
+
+    @property
+    def _attributes(self):
+        return {
+            "gather_url": self.gather_url,
+            "gather_method": self.gather_method,
+            "gather_fallback_url": self.gather_fallback_url,
+            "gather_fallback_method": self.gather_fallback_method,
+            "username": self.username,
+            "password": self.password,
+            "fallback_username": self.fallback_username,
+            "fallback_password": self.fallback_password,
+            "tag": self.tag,
+            "terminating_digits": self.terminating_digits,
+            "max_digits": self.max_digits,
+            "inter_digit_timeout": self.inter_digit_timeout,
+            "first_digit_timeout": self.first_digit_timeout,
+            "repeat_count": self.repeat_count,
+        }
         self.attributes = {
-            "gather_url": gather_url,
-            "gather_method": gather_method,
-            "gather_fallback_url": gather_fallback_url,
-            "gather_fallback_method": gather_fallback_method,
-            "username": username,
-            "password": password,
-            "fallback_username": fallback_username,
-            "fallback_password": fallback_password,
-            "tag": tag,
-            "terminating_digits": terminating_digits,
-            "max_digits": max_digits,
-            "inter_digit_timeout": inter_digit_timeout,
-            "first_digit_timeout": first_digit_timeout,
-            "repeat_count": repeat_count,
+
              }       
 
         super().__init__(tag="Gather", content=None, attributes=self.attributes, nested_verbs=self.audio_verbs)

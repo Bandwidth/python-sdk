@@ -28,13 +28,15 @@ class SpeakSentence(TerminalVerb):
         self.voice = voice
         self.gender = gender
         self.locale = locale
-        self.attributes = {
-            "voice": self.voice,
-            "gender": self.gender,
-            "locale": self.locale,
-        }
         super().__init__(
             tag="SpeakSentence",
             content=self.text,
-            attributes=self.attributes
         )
+
+    @property
+    def _attributes(self):
+        return {
+            "voice": self.voice,
+            "gender": self.gender,
+            "locale": self.locale,
+        }        

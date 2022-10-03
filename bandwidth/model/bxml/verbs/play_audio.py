@@ -24,12 +24,14 @@ class PlayAudio(TerminalVerb):
         self.audio_uri = audio_uri
         self.username = username
         self.password = password
-        self.attributes = {
-            "username": self.username,
-            "password": self.password,
-        }
         super().__init__(
             tag="PlayAudio",
             content=self.audio_uri,
-            attributes=self.attributes
         )
+
+    @property
+    def _attributes(self):
+        return {
+            "username": self.username,
+            "password": self.password,
+        }
