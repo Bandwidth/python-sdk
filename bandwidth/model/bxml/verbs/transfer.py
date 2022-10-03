@@ -75,7 +75,15 @@ class Transfer(Verb):
         self.tag = tag
         self.diversion_treatment = diversion_treatment
         self.diversion_reason = diversion_reason
-        self.attributes = {
+        super().__init__(
+            tag="Transfer",
+            content=None,
+            nested_verbs=self.transfer_to
+        )
+
+    @property
+    def _attributes(self):
+        return {
             "transferCallerId": self.transfer_caller_id,
             "callTimeout": self.call_timeout,
             "transferCompleteUrl": self.transfer_complete_url,
@@ -90,12 +98,6 @@ class Transfer(Verb):
             "diversionTreatment": self.diversion_treatment,
             "diversionReason": self.diversion_reason
         }
-        super().__init__(
-            tag="Transfer",
-            content=None,
-            attributes=self.attributes,
-            nested_verbs=self.transfer_to
-        )
 
     def add_transfer_recipient(self, recipient: Union[PhoneNumber, SipUri]):
         super().add_verb(recipient)
