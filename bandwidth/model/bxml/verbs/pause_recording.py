@@ -13,4 +13,4 @@ class PauseRecording(TerminalVerb):
     def __init__(self):
         """Initialize a <PauseRecording> verb
         """
-        super().__init__(tag="PauseRecording", content=None, attributes=None)
+        super().__init__(tag="PauseRecording", content=None)
