@@ -1,4 +1,5 @@
 from .bridge import Bridge
+from .conference import Conference
 from .hangup import Hangup
 from .gather import Gather
 from .pause import Pause
