@@ -18,8 +18,8 @@ from .resume_recording import ResumeRecording
 class Conference(Verb):
 
     def __init__(
-        self, audio_and_recording_verbs: List[Union[PlayAudio, SpeakSentence, StartRecording, StopRecording, PauseRecording, ResumeRecording]] = [],
-        name: str, mute: str=None, 
+        self, name: str,
+        audio_and_recording_verbs: List[Union[PlayAudio, SpeakSentence, StartRecording, StopRecording, PauseRecording, ResumeRecording]] = [], mute: str=None, 
         hold: str=None, call_ids_to_coach: str=None, 
         conference_event_url: str=None, conference_event_method: str=None, 
         conference_event_fallback_url: str=None, conference_event_fallback_method: str=None, 
