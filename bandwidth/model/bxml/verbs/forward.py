@@ -47,7 +47,7 @@ class Forward(TerminalVerb):
                 This value, including the encoding specifier, may not exceed 256 characters.
         """
         self.to = to
-        self.from_ = from_
+        self._from = _from
         self.call_timeout = call_timeout
         self.diversion_treatment = diversion_treatment
         self.diversion_reason = diversion_reason
