@@ -6,6 +6,7 @@ from .pause_recording import PauseRecording
 from .phone_number import PhoneNumber
 from .play_audio import PlayAudio
 from .record import Record
+from .ring import Ring
 from .send_dtmf import SendDtmf
 from .sip_uri import SipUri
 from .speak_sentence import SpeakSentence
