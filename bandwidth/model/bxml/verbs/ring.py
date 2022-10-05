@@ -22,7 +22,7 @@ class Ring(TerminalVerb):
         """
         self.duration = duration
         self.answer_call = answer_call
-        super().__init__(tag="Ring", content=None)
+        super().__init__(tag="Ring")
 
     @property
     def _attributes(self):
