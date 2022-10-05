@@ -28,6 +28,6 @@ class TerminalVerb(Verb):
             verb (Verb): BXML verb
 
         Raises:
-            AttributeError: This method is not allowed for <SipUri>
+            AttributeError: This method is not allowed for this verb
         """
         raise AttributeError('Adding verbs is not supported by this verb')
