@@ -54,8 +54,7 @@ class Forward(TerminalVerb):
         self.uui = uui
 
         super().__init__(tag="Forward")
-"""
-Don't need to define this since default for the parent class is `None`
+
     @property
     def _attributes(self):
         return {
