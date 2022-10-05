@@ -1,6 +1,8 @@
 """
 pause.py
+
 Bandwidth's Pause BXML verb
+
 @copyright Bandwidth INC
 """
 from ..terminal_verb import TerminalVerb
@@ -12,7 +14,8 @@ class Pause(TerminalVerb):
         """
         self.duration = duration
 
-        super().__init__(tag="Pause", content=None)
+        super().__init__(tag="Pause")
+    
     @property
     def _attributes(self):
         return {

@@ -16,4 +16,4 @@ class Hangup(TerminalVerb):
         Args:
             None
         """
-        super().__init__(tag="Hangup", content=None)
+        super().__init__(tag="Hangup")

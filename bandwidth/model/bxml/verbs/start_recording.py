@@ -43,7 +43,7 @@ class StartRecording(TerminalVerb):
         self.tag = tag
         self.file_format = file_format
         self.multi_channel = multi_channel
-        super().__init__(tag="StartRecording", content=None)
+        super().__init__(tag="StartRecording")
 
     @property
     def _attributes(self):

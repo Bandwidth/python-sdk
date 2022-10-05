@@ -16,4 +16,4 @@ class StopRecording(TerminalVerb):
         Args: There are no args or text content for StopRecording
         """
 
-        super().__init__(tag="StopRecording", content=None)
+        super().__init__(tag="StopRecording")

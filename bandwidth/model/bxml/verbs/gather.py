@@ -65,7 +65,6 @@ class Gather(Verb):
         self.audio_verbs = audio_verbs
         super().__init__(
             tag="Gather", 
-            content=None,
             nested_verbs=self.audio_verbs)
 
     @property
