@@ -29,8 +29,7 @@ class StartGather(TerminalVerb):
         self.password = password
         self.tag = tag
         super().__init__(
-            tag="StartGather",
-            content=None
+            tag="StartGather"
         )
 
     @property
