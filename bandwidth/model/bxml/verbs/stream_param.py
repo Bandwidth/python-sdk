@@ -22,8 +22,7 @@ class StreamParam(TerminalVerb):
         self.name = name
         self.value = value
         super().__init__(
-            tag="StreamParam",
-            content=None
+            tag="StreamParam"
         )
 
     @property

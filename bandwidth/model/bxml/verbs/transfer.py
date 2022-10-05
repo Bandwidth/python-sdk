@@ -77,7 +77,6 @@ class Transfer(Verb):
         self.diversion_reason = diversion_reason
         super().__init__(
             tag="Transfer",
-            content=None,
             nested_verbs=self.transfer_to
         )
 

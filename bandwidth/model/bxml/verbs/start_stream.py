@@ -45,7 +45,6 @@ class StartStream(Verb):
         self.password = password
         super().__init__(
             tag="StartStream",
-            content=None,
             nested_verbs=self.stream_params
         )
 

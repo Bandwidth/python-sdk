@@ -21,7 +21,6 @@ class StopStream(TerminalVerb):
         self.name = name
         super().__init__(
             tag="StopStream",
-            content=None
         )
 
     @property
