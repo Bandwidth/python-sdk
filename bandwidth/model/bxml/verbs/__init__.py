@@ -9,6 +9,7 @@ from .record import Record
 from .send_dtmf import SendDtmf
 from .sip_uri import SipUri
 from .speak_sentence import SpeakSentence
+from .start_gather import StartGather
 from .start_recording import StartRecording
 from .start_stream import StartStream
 from .stop_gather import StopGather
