@@ -11,7 +11,7 @@ from ..terminal_verb import TerminalVerb
 class Forward(TerminalVerb):
 
     def __init__(
-        self, to: str=None, from_: str=None, 
+        self, to: str=None, _from: str=None, 
         call_timeout: str=None, diversion_treatment: str=None, 
         diversion_reason: str=None, uui: str=None
     ):
@@ -47,18 +47,19 @@ class Forward(TerminalVerb):
                 This value, including the encoding specifier, may not exceed 256 characters.
         """
         self.to = to
-        self.from_ = from_
+        self._from = _from
         self.call_timeout = call_timeout
         self.diversion_treatment = diversion_treatment
         self.diversion_reason = diversion_reason
         self.uui = uui
 
-        super().__init__(tag="Forward", content=None) 
+        super().__init__(tag="Forward")
+
     @property
     def _attributes(self):
         return {
             "to": self.to,
-            "from_": self.from_,
+            "_from": self._from,
             "callTimeout": self.call_timeout,
             "diversionTreatment": self.diversion_treatment,
             "diversionReason": self.diversion_reason,
