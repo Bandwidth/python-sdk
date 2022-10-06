@@ -12,7 +12,7 @@ from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs.redirect import Redirect
 
 
-class TestRecord(unittest.TestCase):
+class TestRedirect(unittest.TestCase):
 
     def setUp(self):
         self.redirect = Redirect("https://example.com/redirect")

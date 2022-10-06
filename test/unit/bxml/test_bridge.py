@@ -13,7 +13,7 @@ from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs.bridge import Bridge
 
 
-class TestSipUri(unittest.TestCase):
+class TestBridge(unittest.TestCase):
 
     def setUp(self):
         self.bridge = Bridge(

@@ -13,7 +13,7 @@ from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs.start_recording import StartRecording
 
 
-class TestRecord(unittest.TestCase):
+class TestStartRecording(unittest.TestCase):
 
     def setUp(self):
         self.start_recording = StartRecording(
@@ -29,14 +29,14 @@ class TestRecord(unittest.TestCase):
             multi_channel = "true"
         )
         self.test_verb = Verb(tag="test")
-        
+
 
     def test_to_bxml(self):
         if os.environ['PYTHON_VERSION'] == '3.7':
             expected = '<StartRecording fileFormat="wav" multiChannel="true" password="pass" recordingAvailableMethod="POST" recordingAvailableUrl="example.com" tag="tag" transcribe="true" transcriptionAvailableMethod="POST" transcriptionAvailableUrl="transcription-example.com" username="user" />'
         else:
             expected = '<StartRecording recordingAvailableUrl="example.com" recordingAvailableMethod="POST" transcribe="true" transcriptionAvailableUrl="transcription-example.com" transcriptionAvailableMethod="POST" username="user" password="pass" tag="tag" fileFormat="wav" multiChannel="true" />'
-            
+
         assert(expected == self.start_recording.to_bxml())
 
 

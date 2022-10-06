@@ -12,7 +12,7 @@ from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs.stop_gather import StopGather
 
 
-class TestTag(unittest.TestCase):
+class TestStopGather(unittest.TestCase):
 
     def setUp(self):
         self.stop_gather = StopGather()

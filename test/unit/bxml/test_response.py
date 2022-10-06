@@ -10,8 +10,8 @@ import unittest
 from bandwidth.model.bxml.response import Response
 
 
-class TestTag(unittest.TestCase):
-    
+class TestResponse(unittest.TestCase):
+
     def setUp(self):
         self.response = Response()
 

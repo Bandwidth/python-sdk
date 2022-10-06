@@ -12,7 +12,7 @@ from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs.stop_stream import StopStream
 
 
-class TestTag(unittest.TestCase):
+class TestStopStream(unittest.TestCase):
 
     def setUp(self):
         self.stop_stream = StopStream(name="conf")

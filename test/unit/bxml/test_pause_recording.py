@@ -12,7 +12,7 @@ from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs.pause_recording import PauseRecording
 
 
-class TestTag(unittest.TestCase):
+class TestPauseRecording(unittest.TestCase):
 
     def setUp(self):
         self.pause_recording = PauseRecording()
