@@ -16,7 +16,7 @@ class TestRecord(unittest.TestCase):
 
     def setUp(self):
         self.record = Record()
-        self.record.max_duration = "10"
+        self.record.max_duration = 10
         self.test_verb = Verb(tag="test")
 
     def test_to_bxml(self):

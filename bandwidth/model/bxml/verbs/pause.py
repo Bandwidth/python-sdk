@@ -6,6 +6,8 @@ Bandwidth's Pause BXML verb
 @copyright Bandwidth INC
 """
 from ..terminal_verb import TerminalVerb
+
+
 class Pause(TerminalVerb):
     def __init__(self, duration:int=1):
         """Initialize a <Pause> verb

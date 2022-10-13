@@ -11,18 +11,18 @@ from ..terminal_verb import TerminalVerb
 class Record(TerminalVerb):
 
     def __init__(
-        self, record_complete_url: str = None,
-        record_complete_method: str = None,
-        record_complete_fallback_url: str = None,
-        record_complete_fallback_method: str = None,
-        recording_available_url: str = None,
-        recording_available_method: str = None,
-        transcribe: str = None, transcription_available_url: str = None,
-        transcription_available_method: str = None,  username: str=None,
+        self, record_complete_url: str=None,
+        record_complete_method: str=None,
+        record_complete_fallback_url: str=None,
+        record_complete_fallback_method: str=None,
+        recording_available_url: str=None,
+        recording_available_method: str=None,
+        transcribe: str=None, transcription_available_url: str=None,
+        transcription_available_method: str=None,  username: str=None,
         password: str=None, fallback_username: str=None,
         fallback_password: str=None, tag: str=None,
-        terminating_digits: str = None, max_duration: str = None,
-        silence_timeout: str = None, file_format: str = None
+        terminating_digits: str=None, max_duration: int=None,
+        silence_timeout: str=None, file_format: str=None
     ):
         """Initialize a <Record> verb
 
@@ -42,7 +42,7 @@ class Record(TerminalVerb):
             fallback_password (str, optional): The password to send in the HTTP request to recordCompleteFallbackUrl. If specified, the URLs must be TLS-encrypted (i.e., https). Defaults to None.
             tag (str, optional): A custom string that will be sent with this and all future callbacks unless overwritten by a future tag attribute or <Tag> verb, or cleared. May be cleared by setting tag="". Max length 256 characters. Defaults to None.
             terminating_digits (str, optional): When pressed, this digit will terminate the recording. Default value is “#”. This feature can be disabled with "". Defaults to None.
-            max_duration (str, optional): Maximum length of recording (in seconds). Max 10800 (3 hours). Default value is 60. Defaults to None.
+            max_duration (int, optional): Maximum length of recording (in seconds). Max 10800 (3 hours). Default value is 60. Defaults to None.
             silence_timeout (str, optional): Length of silence after which to end the recording (in seconds). Max is equivalent to the maximum maxDuration value. Default value is 0, which means no timeout. Defaults to None.
             file_format (str, optional): The audio format that the recording will be saved as: mp3 or wav. Default value is wav. Defaults to None.
         """
@@ -64,6 +64,7 @@ class Record(TerminalVerb):
         self.max_duration = max_duration
         self.silence_timeout = silence_timeout
         self.file_format = file_format
+
         super().__init__(tag="Record", content=None)
 
     @property
@@ -84,7 +85,7 @@ class Record(TerminalVerb):
             "fallbackPassword": self.fallback_password,
             "tag": self.tag,
             "terminatingDigits": self.terminating_digits,
-            "maxDuration": self.max_duration,
+            "maxDuration": str(self.max_duration),
             "silenceTimeout": self.silence_timeout,
             "fileFormat": self.file_format
         }
