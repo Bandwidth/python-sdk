@@ -17,8 +17,8 @@ class TestSendDtmf(unittest.TestCase):
     def setUp(self):
         self.send_dtmf = SendDtmf(
             digits="1234",
-            tone_duration="3",
-            tone_interval="5"
+            tone_duration=3,
+            tone_interval=5
         )
         self.test_verb = Verb(tag="test")
 
