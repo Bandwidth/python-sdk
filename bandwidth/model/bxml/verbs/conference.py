@@ -5,7 +5,6 @@ Bandwidth's Conference BXML verb
 
 @copyright Bandwidth INC
 """
-from typing import Union, List
 from ..terminal_verb import TerminalVerb
 
 

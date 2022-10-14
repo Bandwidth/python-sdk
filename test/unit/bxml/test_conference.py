@@ -6,11 +6,11 @@ Unit tests for the <Conference> BXML verb
 @copyright Bandwidth Inc.
 """
 import os
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs import Conference
+
 
 class TestConference(unittest.TestCase):
 
@@ -39,7 +39,3 @@ class TestConference(unittest.TestCase):
         else:
             expected = '<Conference mute="true" hold="false" callIdsToCoach="example-call-id" conferenceEventUrl="example.com/eventurl" conferenceEventMethod="POST" conferenceEventFallbackUrl="backupexample.com/eventurl" conferenceEventFallbackMethod="POST" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" callbackTimeout="5">conf1</Conference>'
         assert(expected == self.conference.to_bxml())
-
-    def test_add_verb(self):
-        with pytest.raises(AttributeError):
-            self.tag.add_verb(self.test_verb)

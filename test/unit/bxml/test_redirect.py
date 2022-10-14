@@ -5,7 +5,6 @@ Unit tests for the <Record> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verb import Verb
@@ -22,9 +21,3 @@ class TestRedirect(unittest.TestCase):
     def test_to_bxml(self):
         expected = '<Redirect redirectUrl="https://example.com/redirect" />'
         assert(expected == self.redirect.to_bxml())
-
-
-    def test_add_verb(self):
-        with pytest.raises(AttributeError):
-            self.record.add_verb(self.test_verb)
-

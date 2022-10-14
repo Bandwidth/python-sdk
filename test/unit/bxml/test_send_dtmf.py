@@ -5,7 +5,6 @@ Unit tests for the <SendDtmf> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verb import Verb
@@ -25,9 +24,3 @@ class TestSendDtmf(unittest.TestCase):
     def test_to_bxml(self):
         expected = '<SendDtmf toneDuration="3" toneInterval="5">1234</SendDtmf>'
         assert(expected == self.send_dtmf.to_bxml())
-
-
-    def test_add_verb(self):
-        with pytest.raises(AttributeError):
-            self.send_dtmf.add_verb(self.test_verb)
-

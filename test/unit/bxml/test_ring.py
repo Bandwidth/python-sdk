@@ -6,7 +6,6 @@ Unit tests for the <Ring> BXML verb
 @copyright Bandwidth Inc.
 """
 import os
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verb import Verb
@@ -26,10 +25,6 @@ class TestRing(unittest.TestCase):
         if os.environ['PYTHON_VERSION'] == '3.7':
             expected = '<Ring answerCall="True" duration="30" />'
         else:
-            expected = '<Ring duration="30" answerCall="True" />'
+            expected = '<Ring duration="30" answerCall="true" />'
 
         assert(expected == self.ring.to_bxml())
-
-    def test_add_verb(self):
-        with pytest.raises(AttributeError):
-            self.ring.add_verb(self.test_verb)
