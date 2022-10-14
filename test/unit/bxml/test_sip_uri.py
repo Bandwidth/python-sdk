@@ -6,7 +6,6 @@ Unit tests for the <SipUri> BXML verb
 @copyright Bandwidth Inc.
 """
 import os
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verb import Verb
@@ -31,7 +30,3 @@ class TestSipUri(unittest.TestCase):
         else:
             expected = '<SipUri uui="abc123" transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="test">sip:1-999-123-4567@voip-provider.example.net</SipUri>'
         assert(expected == self.sip_uri.to_bxml())
-
-    def test_add_verb(self):
-        with pytest.raises(AttributeError):
-            self.sip_uri.add_verb(self.test_verb)

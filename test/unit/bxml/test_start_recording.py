@@ -6,7 +6,6 @@ Unit tests for the <StartRecording> BXML verb
 @copyright Bandwidth Inc.
 """
 import os
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verb import Verb
@@ -38,8 +37,3 @@ class TestStartRecording(unittest.TestCase):
             expected = '<StartRecording recordingAvailableUrl="example.com" recordingAvailableMethod="POST" transcribe="true" transcriptionAvailableUrl="transcription-example.com" transcriptionAvailableMethod="POST" username="user" password="pass" tag="tag" fileFormat="wav" multiChannel="true" />'
 
         assert(expected == self.start_recording.to_bxml())
-
-
-    def test_add_verb(self):
-        with pytest.raises(AttributeError):
-            self.start_recording.add_verb(self.test_verb)

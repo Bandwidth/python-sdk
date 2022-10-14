@@ -6,14 +6,14 @@ Unit tests for the <Gather> BXML verb
 @copyright Bandwidth Inc.
 """
 import os
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs import PlayAudio,SpeakSentence,Gather
 
+
 class TestGather(unittest.TestCase):
-    
+
     def setUp(self):
         self.play_audio = PlayAudio(
             audio_uri="https://audio.url/audio1.wav",
@@ -24,7 +24,7 @@ class TestGather(unittest.TestCase):
         self.speak_sentence = SpeakSentence(
             text='Hello. Your number is <say-as interpret-as="telephone">asdf</say-as>, lets play a game. What is 10 + 3. Press the pound key when finished.'
         )
-        
+
         self.gather = Gather(
             gather_url="test.com",
             gather_method="POST",
@@ -42,14 +42,14 @@ class TestGather(unittest.TestCase):
             repeat_count = "2",
             audio_verbs=[self.play_audio]
         )
-    
+
     def test_to_bxml(self):
         if os.environ['PYTHON_VERSION'] == '3.7':
             expected = '<Gather fallbackPassword="pass" fallbackUsername="user" firstDigitTimeout="3" gatherFallbackMethod="GET" gatherFallbackUrl="fallback-test.com" gatherMethod="POST" gatherUrl="test.com" interDigitTimeout="1" maxDigits="5" password="pass" repeatCount="2" tag="tag" terminatingDigits="2" username="user"><PlayAudio password="pass" username="user">https://audio.url/audio1.wav</PlayAudio></Gather>'
         else:
             expected = '<Gather gatherUrl="test.com" gatherMethod="POST" gatherFallbackUrl="fallback-test.com" gatherFallbackMethod="GET" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" terminatingDigits="2" maxDigits="5" interDigitTimeout="1" firstDigitTimeout="3" repeatCount="2"><PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio></Gather>'
         assert(expected == self.gather.to_bxml())
-    
+
     def test_add_verb(self):
         if os.environ['PYTHON_VERSION'] == '3.7':
             expected = '<Gather fallbackPassword="pass" fallbackUsername="user" firstDigitTimeout="3" gatherFallbackMethod="GET" gatherFallbackUrl="fallback-test.com" gatherMethod="POST" gatherUrl="test.com" interDigitTimeout="1" maxDigits="5" password="pass" repeatCount="2" tag="tag" terminatingDigits="2" username="user"><PlayAudio password="pass" username="user">https://audio.url/audio1.wav</PlayAudio><SpeakSentence>Hello. Your number is &lt;say-as interpret-as="telephone"&gt;asdf&lt;/say-as&gt;, lets play a game. What is 10 + 3. Press the pound key when finished.</SpeakSentence></Gather>'
