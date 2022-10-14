@@ -19,8 +19,6 @@ from bandwidth.api.conferences_api import ConferencesApi
 from bandwidth.api.mfa_api import MFAApi
 from bandwidth.api.media_api import MediaApi
 from bandwidth.api.messages_api import MessagesApi
-from bandwidth.api.participants_api import ParticipantsApi
 from bandwidth.api.phone_number_lookup_api import PhoneNumberLookupApi
 from bandwidth.api.recordings_api import RecordingsApi
-from bandwidth.api.sessions_api import SessionsApi
 from bandwidth.api.statistics_api import StatisticsApi

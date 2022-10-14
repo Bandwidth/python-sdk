@@ -153,9 +153,6 @@ Class | Method | HTTP request | Description
 *MediaApi* | [**upload_media**](docs/MediaApi.md#upload_media) | **PUT** /users/{accountId}/media/{mediaId} | Upload Media
 *MessagesApi* | [**create_message**](docs/MessagesApi.md#create_message) | **POST** /users/{accountId}/messages | Create Message
 *MessagesApi* | [**list_messages**](docs/MessagesApi.md#list_messages) | **GET** /users/{accountId}/messages | List Messages
-*ParticipantsApi* | [**create_participant**](docs/ParticipantsApi.md#create_participant) | **POST** /accounts/{accountId}/participants | Create Participant
-*ParticipantsApi* | [**delete_participant**](docs/ParticipantsApi.md#delete_participant) | **DELETE** /accounts/{accountId}/participants/{participantId} | Delete Participant
-*ParticipantsApi* | [**get_participant**](docs/ParticipantsApi.md#get_participant) | **GET** /accounts/{accountId}/participants/{participantId} | Get Participant
 *PhoneNumberLookupApi* | [**create_lookup**](docs/PhoneNumberLookupApi.md#create_lookup) | **POST** /accounts/{accountId}/tnlookup | Create Lookup
 *PhoneNumberLookupApi* | [**get_lookup_status**](docs/PhoneNumberLookupApi.md#get_lookup_status) | **GET** /accounts/{accountId}/tnlookup/{requestId} | Get Lookup Request Status
 *RecordingsApi* | [**delete_call_transcription**](docs/RecordingsApi.md#delete_call_transcription) | **DELETE** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription | Delete Transcription
@@ -168,14 +165,6 @@ Class | Method | HTTP request | Description
 *RecordingsApi* | [**list_call_recordings**](docs/RecordingsApi.md#list_call_recordings) | **GET** /accounts/{accountId}/calls/{callId}/recordings | List Call Recordings
 *RecordingsApi* | [**transcribe_call_recording**](docs/RecordingsApi.md#transcribe_call_recording) | **POST** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription | Create Transcription Request
 *RecordingsApi* | [**update_call_recording_state**](docs/RecordingsApi.md#update_call_recording_state) | **PUT** /accounts/{accountId}/calls/{callId}/recording | Update Recording
-*SessionsApi* | [**add_participant_to_session**](docs/SessionsApi.md#add_participant_to_session) | **PUT** /accounts/{accountId}/sessions/{sessionId}/participants/{participantId} | Add Participant to Session
-*SessionsApi* | [**create_session**](docs/SessionsApi.md#create_session) | **POST** /accounts/{accountId}/sessions | Create Session
-*SessionsApi* | [**delete_session**](docs/SessionsApi.md#delete_session) | **DELETE** /accounts/{accountId}/sessions/{sessionId} | Delete Session
-*SessionsApi* | [**get_participant_subscriptions**](docs/SessionsApi.md#get_participant_subscriptions) | **GET** /accounts/{accountId}/sessions/{sessionId}/participants/{participantId}/subscriptions | Get Participant Subscriptions
-*SessionsApi* | [**get_session**](docs/SessionsApi.md#get_session) | **GET** /accounts/{accountId}/sessions/{sessionId} | Get Session
-*SessionsApi* | [**list_session_participants**](docs/SessionsApi.md#list_session_participants) | **GET** /accounts/{accountId}/sessions/{sessionId}/participants | List Participants in Session
-*SessionsApi* | [**remove_participant_from_session**](docs/SessionsApi.md#remove_participant_from_session) | **DELETE** /accounts/{accountId}/sessions/{sessionId}/participants/{participantId} | Remove Participant from Session
-*SessionsApi* | [**update_participant_subscriptions**](docs/SessionsApi.md#update_participant_subscriptions) | **PUT** /accounts/{accountId}/sessions/{sessionId}/participants/{participantId}/subscriptions | Update Participant Subscriptions
 *StatisticsApi* | [**get_statistics**](docs/StatisticsApi.md#get_statistics) | **GET** /accounts/{accountId}/statistics | Get Account Statistics
 
 
@@ -205,16 +194,12 @@ Class | Method | HTTP request | Description
  - [CreateCallResponse](docs/CreateCallResponse.md)
  - [CreateLookupResponse](docs/CreateLookupResponse.md)
  - [CreateMessageRequestError](docs/CreateMessageRequestError.md)
- - [CreateParticipantRequest](docs/CreateParticipantRequest.md)
- - [CreateParticipantResponse](docs/CreateParticipantResponse.md)
  - [DeferredResult](docs/DeferredResult.md)
- - [DeviceApiVersionEnum](docs/DeviceApiVersionEnum.md)
  - [DisconenctCallback](docs/DisconenctCallback.md)
  - [Diversion](docs/Diversion.md)
  - [DtmfCallback](docs/DtmfCallback.md)
  - [FieldError](docs/FieldError.md)
  - [FileFormatEnum](docs/FileFormatEnum.md)
- - [ForbiddenRequest](docs/ForbiddenRequest.md)
  - [GatherCallback](docs/GatherCallback.md)
  - [InitiateCallback](docs/InitiateCallback.md)
  - [ListMessageDirectionEnum](docs/ListMessageDirectionEnum.md)
@@ -239,19 +224,13 @@ Class | Method | HTTP request | Description
  - [MfaRequestError](docs/MfaRequestError.md)
  - [MfaUnauthorizedRequestError](docs/MfaUnauthorizedRequestError.md)
  - [PageInfo](docs/PageInfo.md)
- - [Participant](docs/Participant.md)
- - [ParticipantSubscription](docs/ParticipantSubscription.md)
  - [PriorityEnum](docs/PriorityEnum.md)
- - [PublishPermissionsEnum](docs/PublishPermissionsEnum.md)
  - [RecordingAvailableCallback](docs/RecordingAvailableCallback.md)
  - [RecordingCompleteCallback](docs/RecordingCompleteCallback.md)
  - [RecordingStateEnum](docs/RecordingStateEnum.md)
  - [RedirectCallback](docs/RedirectCallback.md)
  - [RedirectMethodEnum](docs/RedirectMethodEnum.md)
- - [RequestError](docs/RequestError.md)
- - [Session](docs/Session.md)
  - [StirShaken](docs/StirShaken.md)
- - [Subscriptions](docs/Subscriptions.md)
  - [Tag](docs/Tag.md)
  - [TnLookupRequestError](docs/TnLookupRequestError.md)
  - [TranscribeRecording](docs/TranscribeRecording.md)
@@ -262,7 +241,6 @@ Class | Method | HTTP request | Description
  - [TransferAnswerCallback](docs/TransferAnswerCallback.md)
  - [TransferCompleteCallback](docs/TransferCompleteCallback.md)
  - [TransferDisconnectCallback](docs/TransferDisconnectCallback.md)
- - [UnauthorizedRequest](docs/UnauthorizedRequest.md)
  - [UpdateCall](docs/UpdateCall.md)
  - [UpdateCallRecording](docs/UpdateCallRecording.md)
  - [UpdateConference](docs/UpdateConference.md)
