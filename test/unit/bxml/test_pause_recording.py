@@ -5,6 +5,7 @@ Unit tests for the <PauseRecording> BXML verb
 
 @copyright Bandwidth Inc.
 """
+import pytest
 import unittest
 
 from bandwidth.model.bxml.verb import Verb
@@ -20,3 +21,8 @@ class TestPauseRecording(unittest.TestCase):
     def test_to_bxml(self):
         expected = '<PauseRecording />'
         assert(expected == self.pause_recording.to_bxml())
+
+    def test_add_verb(self):
+        with pytest.raises(AttributeError):
+            self.pause_recording.add_verb(self.test_verb)
+

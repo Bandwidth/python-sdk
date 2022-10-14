@@ -29,3 +29,7 @@ class TestBridge(unittest.TestCase):
         else:
             expected = '<Bridge bridgeCompleteUrl="https://example.com" tag="test">+19198675309</Bridge>'
         assert(expected == self.bridge.to_bxml())
+
+    def test_add_verb(self):
+        with pytest.raises(AttributeError):
+            self.bridge.add_verb(self.test_verb)
