@@ -25,6 +25,6 @@ class TestRing(unittest.TestCase):
         if os.environ['PYTHON_VERSION'] == '3.7':
             expected = '<Ring answerCall="True" duration="30" />'
         else:
-            expected = '<Ring duration="30" answerCall="true" />'
+            expected = '<Ring duration="30" answerCall="True" />'
 
         assert(expected == self.ring.to_bxml())
