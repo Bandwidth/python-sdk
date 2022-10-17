@@ -23,7 +23,6 @@ VERSION = "1.0.0"
 REQUIRES = [
   "urllib3 >= 1.25.3",
   "python-dateutil",
-  # "lxml>=4.9.1",
 ]
 
 setup(
