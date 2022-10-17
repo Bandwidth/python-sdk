@@ -18,5 +18,5 @@ class TestResponse(unittest.TestCase):
     def test_response_init(self):
         """Test initializing the <Response> root
         """
-        expected_bxml = "<?xml version='1.0' encoding='utf8'?>\n<Response />"
+        expected_bxml = "<?xml version='1.0' encoding='UTF-8'?>\n<Response />"
         assert self.response.to_bxml() == expected_bxml
