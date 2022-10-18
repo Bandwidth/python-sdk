@@ -13,10 +13,10 @@ class StartRecording(TerminalVerb):
     def __init__(
         self, recording_available_url: str = None,
         recording_available_method: str = None,
-        transcribe: str = None, transcription_available_url: str = None,
+        transcribe: bool = None, transcription_available_url: str = None,
         transcription_available_method: str = None,  username: str=None,
         password: str=None, tag: str=None,
-        file_format: str = None, multi_channel: str = None
+        file_format: str = None, multi_channel: bool = None
     ):
         """Initialize a <StartRecording> verb
 
@@ -50,12 +50,12 @@ class StartRecording(TerminalVerb):
         return {
             "recordingAvailableUrl": self.recording_available_url,
             "recordingAvailableMethod": self.recording_available_method,
-            "transcribe": self.transcribe,
+            "transcribe": str(self.transcribe),
             "transcriptionAvailableUrl": self.transcription_available_url,
             "transcriptionAvailableMethod": self.transcription_available_method,
             "username": self.username,
             "password": self.password,
             "tag": self.tag,
             "fileFormat": self.file_format,
-            "multiChannel": self.multi_channel
+            "multiChannel": str(self.multi_channel)
         }

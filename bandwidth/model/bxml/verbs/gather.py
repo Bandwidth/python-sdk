@@ -15,13 +15,13 @@ class Gather(Verb):
 
     def __init__(
         self, audio_verbs: List[Union[PlayAudio, SpeakSentence]] = [],
-        gather_url: str=None, gather_method: str=None, 
-        gather_fallback_url: str=None, gather_fallback_method: str=None, 
+        gather_url: str=None, gather_method: str=None,
+        gather_fallback_url: str=None, gather_fallback_method: str=None,
         username: str=None, password: str=None,
-        fallback_username: str=None, fallback_password: str=None, 
+        fallback_username: str=None, fallback_password: str=None,
         tag: str=None, terminating_digits: str=None,
-        max_digits: str=None, inter_digit_timeout: str=None, 
-        first_digit_timeout: str=None, repeat_count: str=None
+        max_digits: int=None, inter_digit_timeout: int=None,
+        first_digit_timeout: int=None, repeat_count: int=None
     ):
         """Initialize a <Gather> verb
 
@@ -34,14 +34,14 @@ class Gather(Verb):
             password (str, optional): The password to send in the HTTP request to gather_url.
             fallback_username (str, optional): The username to send in the HTTP request to gather_fallback_url.
             fallback_password (str, optional): The password to send in the HTTP request to gather_fallback_url.
-            tag (str, optional): A custom string that will be sent with this and all future callbacks unless overwritten by a future tag attribute or <Tag> verb, or cleared. 
+            tag (str, optional): A custom string that will be sent with this and all future callbacks unless overwritten by a future tag attribute or <Tag> verb, or cleared.
                 May be cleared by setting tag="". Max length 256 characters.
             terminating_digits (str, optional): When any of these digits are pressed, it will terminate the Gather. Default value is "", which disables this feature.
-            max_digits (str, optional): Max number of digits to collect. Default value is 50. Range: decimal values between 1 - 50.
-            inter_digit_timeout (str, optional): Time (in seconds) allowed between digit presses before automatically terminating the Gather. Default value is 5. Range: decimal values between 1 - 60.
-            first_digit_timeout (str, optional): Time (in seconds) to pause after any audio from nested <SpeakSentence> or <PlayAudio> verb is played (in seconds) before terminating the Gather. 
+            max_digits (int, optional): Max number of digits to collect. Default value is 50. Range: decimal values between 1 - 50.
+            inter_digit_timeout (int, optional): Time (in seconds) allowed between digit presses before automatically terminating the Gather. Default value is 5. Range: decimal values between 1 - 60.
+            first_digit_timeout (int, optional): Time (in seconds) to pause after any audio from nested <SpeakSentence> or <PlayAudio> verb is played (in seconds) before terminating the Gather.
                 Default value is 5. Range: decimal values between 0 - 60.
-            repeat_count (str, optional): The number of times the audio prompt should be played if no digits are pressed. For example, if this value is 3, the nested audio clip will be played a maximum of three times. 
+            repeat_count (int, optional): The number of times the audio prompt should be played if no digits are pressed. For example, if this value is 3, the nested audio clip will be played a maximum of three times.
                 The delay between repetitions will be equal to first_digit_timeout. Default value is 1. repeat_count * number of verbs must not be greater than 20.
 
         Nested Verbs:
@@ -64,7 +64,7 @@ class Gather(Verb):
         self.repeat_count = repeat_count
         self.audio_verbs = audio_verbs
         super().__init__(
-            tag="Gather", 
+            tag="Gather",
             nested_verbs=self.audio_verbs)
 
     @property
@@ -80,8 +80,8 @@ class Gather(Verb):
             "fallbackPassword": self.fallback_password,
             "tag": self.tag,
             "terminatingDigits": self.terminating_digits,
-            "maxDigits": self.max_digits,
-            "interDigitTimeout": self.inter_digit_timeout,
-            "firstDigitTimeout": self.first_digit_timeout,
-            "repeatCount": self.repeat_count,
+            "maxDigits": str(self.max_digits),
+            "interDigitTimeout": str(self.inter_digit_timeout),
+            "firstDigitTimeout": str(self.first_digit_timeout),
+            "repeatCount": str(self.repeat_count),
         }
