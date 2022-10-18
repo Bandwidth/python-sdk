@@ -26,11 +26,7 @@ class TestStartGather(unittest.TestCase):
         self.test_verb = Verb(tag="test")
 
     def test_to_bxml(self):
-        if os.environ['PYTHON_VERSION'] == '3.7':
-            expected = '<StartGather dtmfMethod="POST" dtmfUrl="https://example.com/startgather" password="pass" tag="tag" username="user" />'
-        else:
-            expected = '<StartGather dtmfUrl="https://example.com/startgather" dtmfMethod="POST" username="user" password="pass" tag="tag" />'
-
+        expected = '<StartGather dtmfUrl="https://example.com/startgather" dtmfMethod="POST" username="user" password="pass" tag="tag" />'
         assert(expected == self.start_gather.to_bxml())
 
     def test_add_verb(self):

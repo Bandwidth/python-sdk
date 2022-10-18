@@ -24,10 +24,7 @@ class TestBridge(unittest.TestCase):
         self.test_verb = Verb(tag="test")
 
     def test_to_bxml(self):
-        if os.environ['PYTHON_VERSION'] == '3.7':
-            expected = '<Bridge bridgeCompleteUrl="https://example.com" tag="test">+19198675309</Bridge>'
-        else:
-            expected = '<Bridge bridgeCompleteUrl="https://example.com" tag="test">+19198675309</Bridge>'
+        expected = '<Bridge bridgeCompleteUrl="https://example.com" tag="test">+19198675309</Bridge>'
         assert(expected == self.bridge.to_bxml())
 
     def test_add_verb(self):

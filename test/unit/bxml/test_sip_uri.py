@@ -26,10 +26,7 @@ class TestSipUri(unittest.TestCase):
         self.test_verb = Verb(tag="test")
 
     def test_to_bxml(self):
-        if os.environ['PYTHON_VERSION'] == '3.7':
-            expected = '<SipUri tag="test" transferAnswerMethod="POST" transferAnswerUrl="https://example.com/webhooks/transfer_answer" uui="abc123">sip:1-999-123-4567@voip-provider.example.net</SipUri>'
-        else:
-            expected = '<SipUri uui="abc123" transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="test">sip:1-999-123-4567@voip-provider.example.net</SipUri>'
+        expected = '<SipUri uui="abc123" transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="test">sip:1-999-123-4567@voip-provider.example.net</SipUri>'
         assert(expected == self.sip_uri.to_bxml())
 
     def test_add_verb(self):
