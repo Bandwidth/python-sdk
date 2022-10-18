@@ -6,11 +6,11 @@ Unit tests for the <Gather> BXML verb
 @copyright Bandwidth Inc.
 """
 import os
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verb import Verb
 from bandwidth.model.bxml.verbs import PlayAudio,SpeakSentence,Gather
+
 
 class TestGather(unittest.TestCase):
 
@@ -36,10 +36,10 @@ class TestGather(unittest.TestCase):
             fallback_password="pass",
             tag = "tag",
             terminating_digits = "2",
-            max_digits = "5",
-            inter_digit_timeout = "1",
-            first_digit_timeout = "3",
-            repeat_count = "2",
+            max_digits = 5,
+            inter_digit_timeout = 1,
+            first_digit_timeout = 3,
+            repeat_count = 2,
             audio_verbs=[self.play_audio]
         )
 

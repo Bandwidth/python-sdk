@@ -5,7 +5,6 @@ Unit tests for the <StopStream> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verb import Verb
@@ -21,8 +20,3 @@ class TestStopStream(unittest.TestCase):
     def test_to_bxml(self):
         expected = '<StopStream name="conf" />'
         assert(expected == self.stop_stream.to_bxml())
-
-    def test_add_verb(self):
-        with pytest.raises(AttributeError):
-            self.stop_stream.add_verb(self.test_verb)
-

@@ -12,15 +12,15 @@ class SendDtmf(TerminalVerb):
 
     def __init__(
         self, digits: str,
-        tone_duration: str=None, 
-        tone_interval: str=None,
+        tone_duration: int=None,
+        tone_interval: int=None,
     ):
         """Initialize a <SendDtmf> verb
 
         Args:
             digits (str): String containing the DTMF characters to be sent in a call. Allows a maximum of 50 characters. The digits will be sent one-by-one with a marginal delay.
-            tone_duration (str, optional): The length (in milliseconds) of each DTMF tone. Default value is 200. Range: decimal values between 50 - 5000.
-            tone_interval (str, optional): The duration of silence (in milliseconds) following each DTMF tone. Default value is 400. Range: decimal values between 50 - 5000.
+            tone_duration (int, optional): The length (in milliseconds) of each DTMF tone. Default value is 200. Range: decimal values between 50 - 5000.
+            tone_interval (int, optional): The duration of silence (in milliseconds) following each DTMF tone. Default value is 400. Range: decimal values between 50 - 5000.
         """
         self.digits = digits
         self.tone_duration = tone_duration
@@ -33,6 +33,6 @@ class SendDtmf(TerminalVerb):
     @property
     def _attributes(self):
         return {
-            "toneDuration": self.tone_duration,
-            "toneInterval": self.tone_interval
+            "toneDuration": str(self.tone_duration),
+            "toneInterval": str(self.tone_interval)
         }

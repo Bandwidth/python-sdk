@@ -6,10 +6,10 @@ Unit tests for the <StartStream> BXML verb
 @copyright Bandwidth Inc.
 """
 import os
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verbs import StartStream, StreamParam
+
 
 class TestStartStream(unittest.TestCase):
 

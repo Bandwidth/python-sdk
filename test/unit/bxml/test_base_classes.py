@@ -6,10 +6,12 @@ Unit tests for Root and Verb base classes
 
 @copyright Bandwidth Inc.
 """
+import pytest
 import unittest
 
 from bandwidth.model.bxml.root import Root
 from bandwidth.model.bxml.verb import Verb
+from bandwidth.model.bxml.terminal_verb import TerminalVerb
 
 
 class TestBaseClasses(unittest.TestCase):
@@ -19,6 +21,7 @@ class TestBaseClasses(unittest.TestCase):
         self.verb1 = Verb(tag="TestVerb1", content="test")
         self.verb2 = Verb(tag="TestVerb2")
         self.verb3 = Verb(tag="TestVerb3")
+        self.terminal_verb = TerminalVerb(tag="TestTerminalVerb")
 
     def test_root(self):
         self.root.add_verb(self.verb1)
@@ -42,3 +45,6 @@ class TestBaseClasses(unittest.TestCase):
 
         assert(len(self.root2) == 2)
 
+    def test_adding_verbs_to_terminal_verb(self):
+        with pytest.raises(AttributeError):
+            self.terminal_verb.add_verb(self.verb1)

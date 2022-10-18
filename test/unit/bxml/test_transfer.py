@@ -6,7 +6,6 @@ Unit tests for the <PhoneNumber> BXML verb
 @copyright Bandwidth Inc.
 """
 import os
-import pytest
 import unittest
 
 from bandwidth.model.bxml.verbs.transfer import Transfer
