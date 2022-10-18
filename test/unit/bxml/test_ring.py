@@ -22,5 +22,5 @@ class TestRing(unittest.TestCase):
         self.test_verb = Verb(tag="test")
 
     def test_to_bxml(self):
-        expected = '<Ring duration="30" answerCall="true" />'
+        expected = '<Ring duration="30" answerCall="True" />'
         assert(expected == self.ring.to_bxml())

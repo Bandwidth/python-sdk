@@ -65,13 +65,13 @@ class Conference(TerminalVerb):
         self.tag = tag
         self.callback_timeout = callback_timeout
         super().__init__(
-            tag="Conference",
-            content=self.name
+            tag="Conference"
         )
 
     @property
     def _attributes(self):
         return {
+            "name": self.name,
             "mute": self.mute,
             "hold": self.hold,
             "callIdsToCoach": self.call_ids_to_coach,
