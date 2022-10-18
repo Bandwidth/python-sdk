@@ -31,9 +31,5 @@ class TestStartRecording(unittest.TestCase):
 
 
     def test_to_bxml(self):
-        if os.environ['PYTHON_VERSION'] == '3.7':
-            expected = '<StartRecording fileFormat="wav" multiChannel="True" password="pass" recordingAvailableMethod="POST" recordingAvailableUrl="example.com" tag="tag" transcribe="True" transcriptionAvailableMethod="POST" transcriptionAvailableUrl="transcription-example.com" username="user" />'
-        else:
-            expected = '<StartRecording recordingAvailableUrl="example.com" recordingAvailableMethod="POST" transcribe="True" transcriptionAvailableUrl="transcription-example.com" transcriptionAvailableMethod="POST" username="user" password="pass" tag="tag" fileFormat="wav" multiChannel="True" />'
-
+        expected = '<StartRecording recordingAvailableUrl="example.com" recordingAvailableMethod="POST" transcribe="True" transcriptionAvailableUrl="transcription-example.com" transcriptionAvailableMethod="POST" username="user" password="pass" tag="tag" fileFormat="wav" multiChannel="True" />'
         assert(expected == self.start_recording.to_bxml())

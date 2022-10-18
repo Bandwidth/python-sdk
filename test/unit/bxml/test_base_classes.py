@@ -27,7 +27,7 @@ class TestBaseClasses(unittest.TestCase):
         self.root.add_verb(self.verb1)
         self.root.add_verb(self.verb2)
 
-        expected_bxml = "<?xml version='1.0' encoding='utf8'?>\n<TestRoot><TestVerb1>test</TestVerb1><TestVerb2 /></TestRoot>"
+        expected_bxml = "<?xml version='1.0' encoding='UTF-8'?>\n<TestRoot><TestVerb1>test</TestVerb1><TestVerb2 /></TestRoot>"
         assert(type(self.root[0]) == Verb)
         assert(len(self.root) == 2)
         assert(expected_bxml == self.root.to_bxml())

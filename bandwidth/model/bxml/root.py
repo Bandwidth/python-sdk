@@ -34,7 +34,7 @@ class Root:
             int: Length of self._nested_verbs
         """
         return len(self._nested_verbs)
-    
+
     def __getitem__(self, position: int) -> Verb:
         """Override default getitem method. Makes the object iterable.
 
@@ -42,10 +42,10 @@ class Root:
             position (int): Desired self._nested_verbs list position
 
         Returns:
-            BxmlVerb: Desired BXML verb 
+            BxmlVerb: Desired BXML verb
         """
         return self._nested_verbs[position]
-    
+
     def _generate_xml(self) -> ET.Element:
         """Generates an XML dom
 
@@ -58,7 +58,7 @@ class Root:
                 root.append(verb._to_etree_element())
         dom = ET.ElementTree(root)
         return dom
-    
+
     def add_verb(self, verb: Verb) -> None:
         """Add a verb to the object's nested_verbs array
 
@@ -66,7 +66,7 @@ class Root:
             verb (BxmlVerb): BXML verb to nest within the parent. Becomes a child xml element.
         """
         self._nested_verbs.append(verb)
-    
+
     def to_bxml(self) -> str:
         """Return the serialized BXML string
 
@@ -74,5 +74,4 @@ class Root:
             str: Serialized BXML string
         """
         xml_document = self._generate_xml()
-        return ET.tostring(xml_document._root, encoding='utf8', method='xml').decode("utf8")
-
+        return ET.tostring(xml_document._root, encoding='UTF-8', method='xml', xml_declaration=True).decode("utf8")

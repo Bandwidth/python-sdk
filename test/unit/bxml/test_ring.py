@@ -22,9 +22,5 @@ class TestRing(unittest.TestCase):
         self.test_verb = Verb(tag="test")
 
     def test_to_bxml(self):
-        if os.environ['PYTHON_VERSION'] == '3.7':
-            expected = '<Ring answerCall="True" duration="30" />'
-        else:
-            expected = '<Ring duration="30" answerCall="True" />'
-
+        expected = '<Ring duration="30" answerCall="True" />'
         assert(expected == self.ring.to_bxml())

@@ -24,9 +24,5 @@ class TestPhoneNumber(unittest.TestCase):
         self.test_verb = Verb(tag="test")
 
     def test_to_bxml(self):
-        if os.environ['PYTHON_VERSION'] == '3.7':
-            expected = '<PhoneNumber tag="" transferAnswerMethod="POST" transferAnswerUrl="https://example.com/webhooks/transfer_answer">+19195551234</PhoneNumber>'
-        else:
-            expected = '<PhoneNumber transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="">+19195551234</PhoneNumber>'
-
+        expected = '<PhoneNumber transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="">+19195551234</PhoneNumber>'
         assert(expected == self.phone_number.to_bxml())

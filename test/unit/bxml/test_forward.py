@@ -24,10 +24,6 @@ class TestForward(unittest.TestCase):
         )
         self.test_verb = Verb(tag="test")
 
-
     def test_to_bxml(self):
-        if os.environ['PYTHON_VERSION'] == '3.7':
-            expected = '<Forward _from="19195554322" callTimeout="15" diversionReason="away" diversionTreatment="propagate" to="19195554321" uui="93d6f3c0be5845960b744fa28015d8ede84bd1a4;encoding=base64,asdf;encoding=jwt" />'
-        else:
-            expected = '<Forward to="19195554321" _from="19195554322" callTimeout="15" diversionTreatment="propagate" diversionReason="away" uui="93d6f3c0be5845960b744fa28015d8ede84bd1a4;encoding=base64,asdf;encoding=jwt" />'
+        expected = '<Forward to="19195554321" _from="19195554322" callTimeout="15" diversionTreatment="propagate" diversionReason="away" uui="93d6f3c0be5845960b744fa28015d8ede84bd1a4;encoding=base64,asdf;encoding=jwt" />'
         assert(expected == self.forward.to_bxml())

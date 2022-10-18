@@ -23,8 +23,5 @@ class TestPlayAudio(unittest.TestCase):
 
 
     def test_to_bxml(self):
-        if os.environ['PYTHON_VERSION'] == '3.7':
-            expected = '<PlayAudio password="pass" username="user">https://audio.url/audio1.wav</PlayAudio>'
-        else:
-            expected = '<PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio>'
+        expected = '<PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio>'
         assert(expected == self.play_audio.to_bxml())
