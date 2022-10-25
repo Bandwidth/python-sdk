@@ -54,11 +54,11 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         assert_that(result, has_properties(
             'response_code', 0,
             'e_164_format', e_164_format,
-            'line_provider', contains_string(line_provider),
             'country', is_one_of_string(["US", "Canada"]),
             'line_type', is_one_of_string(["Mobile", "Fixed"])
             )
         )
+        self.assertIs(type(result.line_provider), str)
 
     def pollLookupStatus(self, request_id: str) -> LookupStatus:
         """Poll LookupRequest for 'COMPLETE' status
