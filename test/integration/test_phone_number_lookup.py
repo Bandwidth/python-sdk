@@ -37,7 +37,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         self.api_instance = phone_number_lookup_api.PhoneNumberLookupApi(api_client)
         self.account_id = BW_ACCOUNT_ID
 
-    def validateResult(self, result: LookupResult, e_164_format: str, line_provider: str) -> None:
+    def validateResult(self, result: LookupResult, e_164_format: str) -> None:
         """Verify a successful phone number lookup LookupResult object
 
         Args:
@@ -54,11 +54,11 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         assert_that(result, has_properties(
             'response_code', 0,
             'e_164_format', e_164_format,
-            'line_provider', contains_string(line_provider),
             'country', is_one_of_string(["US", "Canada"]),
             'line_type', is_one_of_string(["Mobile", "Fixed"])
             )
         )
+        self.assertIs(type(result.line_provider), str)
 
     def pollLookupStatus(self, request_id: str) -> LookupStatus:
         """Poll LookupRequest for 'COMPLETE' status
@@ -144,19 +144,19 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         # Check the information for a Bandwidth TN
         bw_lookup_result: LookupResult = get_lookup_status_response.result[0]
-        self.validateResult(bw_lookup_result, BW_NUMBER, BW_NUMBER_PROVIDER)
+        self.validateResult(bw_lookup_result, BW_NUMBER)
 
         # Check the information for a Verizon TN
         vzw_lookup_result = get_lookup_status_response.result[1]
-        self.validateResult(vzw_lookup_result, VZW_NUMBER, "Verizon")
+        self.validateResult(vzw_lookup_result, VZW_NUMBER)
 
         # Check the information for an AT&T TN
         att_lookup_result = get_lookup_status_response.result[2]
-        self.validateResult(att_lookup_result, ATT_NUMBER, "AT&T")
+        self.validateResult(att_lookup_result, ATT_NUMBER)
 
         # Check the information for a T-Mobile TN
         t_mobile_lookup_result = get_lookup_status_response.result[3]
-        self.validateResult(t_mobile_lookup_result, T_MOBILE_NUMBER, "T-Mobile")
+        self.validateResult(t_mobile_lookup_result, T_MOBILE_NUMBER)
 
         # The only way to get a failed number is if the api call to the downstream service fails - so there is no way to force this in our testing currently
         # check the failed_telephone_number list
