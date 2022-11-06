@@ -296,7 +296,8 @@ class APIController(BaseController):
                      from_date_time=None,
                      to_date_time=None,
                      page_token=None,
-                     limit=None):
+                     limit=None,
+                     sort=None):
         """Does a GET request to /users/{accountId}/messages.
 
         Gets a list of messages based on query parameters.
@@ -354,7 +355,8 @@ class APIController(BaseController):
             'fromDateTime': from_date_time,
             'toDateTime': to_date_time,
             'pageToken': page_token,
-            'limit': limit
+            'limit': limit,
+            'sort': sort
         }
         _query_builder = APIHelper.append_url_with_query_parameters(
             _query_builder,
