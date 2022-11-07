@@ -15,6 +15,10 @@ on:
           - WARNING
           - DEBUG
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true            
+
 jobs:
   test_production:
     name: Test Production
