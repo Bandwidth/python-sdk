@@ -1,6 +1,0 @@
-# action.yml
-name: 'Deploy'
-description: 'Deploys the python sdk to PYPI'
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
