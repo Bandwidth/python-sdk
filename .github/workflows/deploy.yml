@@ -4,38 +4,123 @@ on:
   release:
     types:
       - published
+
 jobs:
+  deploy_pre_release:
+    name: Deploy OpenAPI Generator Client Pre-Release to PYPI
+    if: ${{ github.event.release.prerelease && github.event.release.target_commitish == 'feature/openapi-generator-sdk' }}
+    runs-on: ubuntu-latest
+    env:
+      BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
+      BW_USERNAME: ${{ secrets.BW_USERNAME }}
+      BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
+      BW_USERNAME_FORBIDDEN: ${{ secrets.BW_USERNAME_FORBIDDEN }}
+      BW_PASSWORD_FORBIDDEN: ${{ secrets.BW_PASSWORD_FORBIDDEN }}
+      BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
+      BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
+      BW_NUMBER: ${{ secrets.BW_NUMBER }}
+      USER_NUMBER: ${{ secrets.USER_NUMBER }}
+      VZW_NUMBER: ${{ secrets.VZW_NUMBER }}
+      ATT_NUMBER: ${{ secrets.ATT_NUMBER }}
+      T_MOBILE_NUMBER: ${{ secrets.T_MOBILE_NUMBER }}
+      BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
+      PYTHON_VERSION: ${{ matrix.python-version }}
+      OPERATING_SYSTEM: ${{ matrix.os }}
+      MANTECA_ACTIVE_NUMBER: ${{ secrets.MANTECA_ACTIVE_NUMBER }}
+      MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_IDLE_NUMBER }}
+      MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
+      MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
+      BW_NUMBER_PROVIDER: ${{ secrets.BW_NUMBER_PROVIDER }}
+    steps:
+      - name: Set Release Version
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
+      - name: Check Release Tag Format
+        run: |
+          re=[0-9]+\.[0-9]+\.[0-9]+b[0-9]+
+          if ! [[ $RELEASE_VERSION =~ $re ]]; then
+            echo 'Tag does not match expected regex pattern for beta releases (v[0-9]+.[0-9]+.[0-9]+b[0-9]+)'
+            echo $RELEASE_VERSION
+            echo 'Please update your tag to match the expected regex pattern'
+            exit 1
+          fi
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: feature/openapi-generator-sdk
+
+      - name: Install Packages
+        run: |
+          pip install -r requirements.txt
+          pip install -r test-requirements.txt
+      - name: Test
+        run: |
+          pytest -v
+      - name: Deploy to PYPI
+        run: |
+          pip install twine
+          pip install wheel
+          python setup.py sdist bdist_wheel
+          twine upload dist/* -u $PYPI_USERNAME -p $PYPI_PASSWORD
+        env:
+          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+
+      - uses: Bandwidth/build-notify-slack-action@v1.0.0
+        if: always()
+        with:
+          job-status: ${{ job.status }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL }}
+
   deploy:
-    name: Deploy to PYPI
+    name: Deploy `main` to PYPI
     if: ${{ !github.event.release.prerelease && github.event.release.target_commitish == 'main' }}
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Set Release Version
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
-    - name: Install Packages
-      run: pip install -r requirements_dev.txt
+      - name: Check Release Tag Format
+        run: |
+          re=[0-9]+\.[0-9]+\.[0-9]+
+          if ! [[ $RELEASE_VERSION =~ $re ]]; then
+            echo 'Tag does not match expected regex pattern for beta releases (v[0-9]+.[0-9]+.[0-9]+b[0-9]+)'
+            echo $RELEASE_VERSION
+            echo 'Please update your tag to match the expected regex pattern'
+            exit 1
+          fi
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Test
-      env:
-        BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
-        BW_USERNAME: ${{ secrets.BW_USERNAME }}
-        BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
-        BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
-        BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
-        BW_NUMBER: ${{ secrets.BW_NUMBER }}
-        USER_NUMBER: ${{ secrets.USER_NUMBER }}
-        BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
-      run: python -m pytest --pyargs bandwidth
+      - name: Install Packages
+        run: pip install -r requirements_dev.txt
 
-    - name: Deploy to PYPI
-      uses: ./.github/actions/deploy
-      env:
-        PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-    - uses: Bandwidth/build-notify-slack-action@v1.0.0
-      if: always()
-      with:
-        job-status: ${{ job.status }}
-        slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-        slack-channel: ${{ secrets.SLACK_CHANNEL }}
+      - name: Test
+        env:
+          BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
+          BW_USERNAME: ${{ secrets.BW_USERNAME }}
+          BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
+          BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
+          BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
+          BW_NUMBER: ${{ secrets.BW_NUMBER }}
+          USER_NUMBER: ${{ secrets.USER_NUMBER }}
+          BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
+        run: python -m pytest --pyargs bandwidth
+
+      - name: Deploy to PYPI
+        run: |
+          pip install twine
+          pip install wheel
+          python setup.py sdist bdist_wheel
+          twine upload dist/* -u $PYPI_USERNAME -p $PYPI_PASSWORD
+        env:
+          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+
+      - uses: Bandwidth/build-notify-slack-action@v1.0.0
+        if: always()
+        with:
+          job-status: ${{ job.status }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL }}
