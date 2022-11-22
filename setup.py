@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import os
 import sys
 from setuptools import setup, find_packages
+
+VERSION = os.environ['RELEASE_VERSION']
 
 if sys.version_info[0] < 3:
     with open('README.md', 'r') as fh:
@@ -15,7 +18,7 @@ with open("requirements.txt", "r") as fp:
 
 setup(
     name='bandwidth-sdk',
-    version='14.3.0',
+    version=VERSION,
     description='Bandwidth\'s set of APIs',
     long_description=long_description,
     long_description_content_type="text/markdown",
