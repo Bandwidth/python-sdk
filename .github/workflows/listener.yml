@@ -49,7 +49,7 @@ jobs:
           script: |
             github.rest.issues.createComment({
               issue_number: ${{ github.event.client_payload.prNumber }},
-              owner: Bandwidth,
-              repo: api-specs,
+              owner: 'Bandwidth',
+              repo: 'api-specs',
               body: 'Python SDK built successfully\n\nSee the corresponding PR opened on the SDK repository (no action required):\nhttps://github.com/Bandwidth/api-docs/pull/${{ env.PR_NUMBER }}'
             })
