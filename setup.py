@@ -9,6 +9,7 @@
 """
 
 import os
+import sys
 from setuptools import setup, find_packages  # noqa: H301
 
 NAME = "bandwidth-sdk"
@@ -19,6 +20,13 @@ VERSION = os.environ['RELEASE_VERSION']
 #
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
+
+if sys.version_info[0] < 3:
+    with open('README.md', 'r') as fh:
+        long_description = fh.read()
+else:
+    with open('README.md', 'r', encoding='utf-8') as fh:
+        long_description = fh.read()
 
 REQUIRES = [
   "urllib3 >= 1.25.3",
