@@ -29,10 +29,10 @@ jobs:
         python-version: [3.7, 3.8, 3.9, '3.10']
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
 
@@ -82,12 +82,12 @@ jobs:
       BW_NUMBER_PROVIDER: ${{ secrets.BW_NUMBER_PROVIDER }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         ref: 'feature/openapi-generator-sdk'
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
 
