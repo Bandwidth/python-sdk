@@ -342,6 +342,9 @@ class TestRecordings(unittest.TestCase):
         # Make sure the call is alive
         assert_that(call_status['status'], equal_to('ALIVE'))
 
+        # Add a sleep to prevent timing issues
+        time.sleep(TEST_SLEEP)
+
         # Update the call to pause the recording
         update_call_recording = UpdateCallRecording(RecordingStateEnum('paused'))
         update_response = self.recordings_api_instance.update_call_recording_state(BW_ACCOUNT_ID, call_id, update_call_recording, _return_http_data_only=False)

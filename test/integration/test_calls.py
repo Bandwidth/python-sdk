@@ -95,7 +95,7 @@ class CallsIntegration(unittest.TestCase):
         self.testCallId = "Call-Id"
         self.testBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence><Pause duration="3"/></Bxml>'
         self.callIdArray = []
-        self.TEST_SLEEP = 3
+        self.TEST_SLEEP = 5
         self.TEST_SLEEP_LONG = 15
 
     def tearDown(self):
