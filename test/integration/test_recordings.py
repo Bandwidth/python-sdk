@@ -33,6 +33,7 @@ from bandwidth.model.transcription import Transcription
 from bandwidth.model.update_call import UpdateCall
 from bandwidth.model.update_call_recording import UpdateCallRecording
 from bandwidth.rest import RESTClientObject, RESTResponse
+from test.utils.call_cleanup import callCleanup
 from test.utils.env_variables import *
 
 
@@ -65,9 +66,6 @@ class TestRecordings(unittest.TestCase):
     Integration tests for the Recordings API.
     """
 
-    global callIdArray
-    callIdArray = []
-
     def setUp(self) -> None:
         """
         Set up for our tests by creating the CallsApi and RecordingsApi instances
@@ -91,26 +89,11 @@ class TestRecordings(unittest.TestCase):
         # Rest client for interacting with Manteca
         self.rest_client = RESTClientObject(Configuration.get_default_copy())
 
-    def tearDown(self) -> None:
-        """
-           Whenever we create an actual call, we'll add the call_id to the callIdArray. Then when the integration test is done, as part of tearDown we'll:
-                Do a get to check is the call status is still active
-                    If so, update to completed to end the call
-                    If not, pop that callID off the array
-                Once we go through the whole array, we clear the array so it's empty for the next integration test.    
-           if the status is active, send UpdateCall to change to completed
-        """
+        # Call ID Array
+        self.callIdArray = []
 
-        if len(callIdArray) > 0:       
-            for callId in callIdArray:
-                body = UpdateCall(state=CallStateEnum("completed"))
-                get_call_response: CallState = self.calls_api_instance.get_call_state(BW_ACCOUNT_ID, callId, _return_http_data_only=False)
-                if get_call_response[0].state == 'active':
-                    self.calls_api_instance.update_call(BW_ACCOUNT_ID, callId, body, _return_http_data_only=False)
-                elif get_call_response[0].state == 'complete':
-                    callIdArray.remove(callId)
-            callIdArray.clear()
-        pass   
+    def tearDown(self):
+        callCleanup(self)
 
     def create_and_validate_call(self, answer_url: str) -> Tuple[str, str]:
         """
@@ -157,7 +140,7 @@ class TestRecordings(unittest.TestCase):
         ))
 
         # Adding the call to the callIdArray
-        callIdArray.append(create_call_response.call_id)
+        self.callIdArray.append(create_call_response.call_id)
 
         # Return our test id and call id
         return (test_id, create_call_response.call_id)
