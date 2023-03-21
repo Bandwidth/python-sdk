@@ -1,19 +1,7 @@
 name: Test
 
 on:
-  schedule:
-    - cron: "0 4 * * *"
   pull_request:
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: Log level
-        required: false
-        default: WARNING
-        type: choice
-        options:
-          - WARNING
-          - DEBUG
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
@@ -40,10 +28,9 @@ env:
   BW_NUMBER_PROVIDER: ${{ secrets.BW_NUMBER_PROVIDER }}
 
 jobs:
-  test_main:
-    name: Test Main Branch
+  test_pr_main:
+    name: Test PR to Main Branch
     runs-on: ${{ matrix.os }}
-    if: ${{ github.event_name == 'schedule' }}
     strategy:
       matrix:
         os: [windows-2022, windows-2019, ubuntu-20.04, ubuntu-22.04]
@@ -51,8 +38,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: 'main'
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -65,9 +50,8 @@ jobs:
           python -m pytest --pyargs bandwidth
 
   test_feature:
-    name: Test Feature Branch
+    name: Test PR to Feature Branch
     runs-on: ${{ matrix.os }}
-    if: ${{ github.event_name == 'schedule' }}
     strategy:
       matrix:
         os: [windows-2022, windows-2019, ubuntu-20.04, ubuntu-22.04]
@@ -78,8 +62,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: 'feature/openapi-generator-sdk'
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -102,42 +84,3 @@ jobs:
         run: |
           echo "Log level: WARNING"
           pytest -v --log-cli-level=WARNING
-
-  test_pr:
-    name: Test PR Branch
-    runs-on: ${{ matrix.os }}
-    if: ${{ github.event_name == 'pull_request' }}
-    strategy:
-      matrix: 
-        os: [windows-2022, windows-2019, ubuntu-20.04, ubuntu-22.04]
-        ruby-version: [2.7, 3.0, 3.1, 3.2]
-    env:
-      PYTHON_VERSION: ${{ matrix.python-version }}
-      OPERATING_SYSTEM: ${{ matrix.os }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install Packages and Test
-        run: |
-          pip install -r requirements_dev.txt
-          python -m pytest --pyargs bandwidth
-
-  notify_for_failures:
-    name: Notify for Failures
-    needs: [test_main, test_feature, test_pr]
-    if: failure() && !github.event.pull_request.draft
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify Slack of Failures
-        uses: Bandwidth/build-notify-slack-action@v1.0.0
-        with:
-          job-status: failure
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          slack-channel: ${{ secrets.SLACK_CHANNEL }}
-

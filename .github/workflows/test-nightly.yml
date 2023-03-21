@@ -1,0 +1,113 @@
+name: Test Main and Feature Branch Nightly
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: Log level
+        required: false
+        default: WARNING
+        type: choice
+        options:
+          - WARNING
+          - DEBUG
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+env:
+  BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
+  BW_USERNAME: ${{ secrets.BW_USERNAME }}
+  BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
+  BW_USERNAME_FORBIDDEN: ${{ secrets.BW_USERNAME_FORBIDDEN }}
+  BW_PASSWORD_FORBIDDEN: ${{ secrets.BW_PASSWORD_FORBIDDEN }}
+  BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
+  BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
+  BW_NUMBER: ${{ secrets.BW_NUMBER }}
+  USER_NUMBER: ${{ secrets.USER_NUMBER }}
+  VZW_NUMBER: ${{ secrets.VZW_NUMBER }}
+  ATT_NUMBER: ${{ secrets.ATT_NUMBER }}
+  T_MOBILE_NUMBER: ${{ secrets.T_MOBILE_NUMBER }}
+  BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
+  MANTECA_ACTIVE_NUMBER: ${{ secrets.MANTECA_ACTIVE_NUMBER }}
+  MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_IDLE_NUMBER }}
+  MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
+  MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
+  BW_NUMBER_PROVIDER: ${{ secrets.BW_NUMBER_PROVIDER }}
+
+jobs:
+  test_main:
+    name: Test Main Branch Nightly
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-2022, windows-2019, ubuntu-20.04, ubuntu-22.04]
+        python-version: [3.7, 3.8, 3.9, '3.10']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: 'main'
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Packages and Test
+        run: |
+          pip install -r requirements_dev.txt
+          python -m pytest --pyargs bandwidth
+
+  test_feature:
+    name: Test Feature Branch Nightly
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-2022, windows-2019, ubuntu-20.04, ubuntu-22.04]
+        python-version: [3.8, 3.9, '3.10']
+    env:
+      PYTHON_VERSION: ${{ matrix.python-version }}
+      OPERATING_SYSTEM: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: 'feature/openapi-generator-sdk'
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Packages
+        run: |
+          pip install -r requirements.txt
+          pip install -r test-requirements.txt
+
+      - name: Test at Debug Level
+        if: ${{ inputs.logLevel == 'DEBUG' }}
+        run: |
+          echo "Log level: DEBUG"
+          pytest -v --log-cli-level=DEBUG
+
+      - name: Test at Warning Level
+        if: ${{( inputs.logLevel == null) || ( inputs.logLevel  == 'WARNING') }}
+        run: |
+          echo "Log level: WARNING"
+          pytest -v --log-cli-level=WARNING
+
+  notify_for_failures:
+    name: Notify for Failures
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack of Failures
+        uses: Bandwidth/build-notify-slack-action@v1.0.0
+        with:
+          job-status: failure
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL }}
