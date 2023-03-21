@@ -131,7 +131,7 @@ class ConferencesIntegration(unittest.TestCase):
         )
 
         # Get the test id from the response
-        test_id = response.data
+        test_id = response.data.decode("utf-8")
 
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER,
                                application_id=MANTECA_APPLICATION_ID, answer_url=answer_url, tag=test_id)
