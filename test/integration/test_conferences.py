@@ -29,6 +29,7 @@ from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenE
 from test.utils.env_variables import *
 from test.utils.call_cleanup import callCleanup
 
+
 class ConferencesIntegration(unittest.TestCase):
     """
     Voice Conferences API integration test
@@ -40,8 +41,8 @@ class ConferencesIntegration(unittest.TestCase):
         for testing as well as the unauthorized and forbidden credentials for the 4xx tests.
         """
         configuration = bandwidth.Configuration(
-            username = BW_USERNAME,
-            password = BW_PASSWORD
+            username=BW_USERNAME,
+            password=BW_PASSWORD
         )
         api_client = bandwidth.ApiClient(configuration)
 
@@ -49,11 +50,11 @@ class ConferencesIntegration(unittest.TestCase):
         self.conference_api_instance = conferences_api.ConferencesApi(api_client)
 
         unauthorizedConfiguration = bandwidth.Configuration(
-             username='bad_username',
-             password='bad_password'
+            username='bad_username',
+            password='bad_password'
         )
         unauthorized_api_client = bandwidth.ApiClient(unauthorizedConfiguration)
-        self.unauthorized_api_instance = conferences_api.ConferencesApi(unauthorized_api_client)            
+        self.unauthorized_api_instance = conferences_api.ConferencesApi(unauthorized_api_client)
 
         forbiddenConfiguration = bandwidth.Configuration(
             username=FORBIDDEN_USERNAME,
@@ -63,26 +64,26 @@ class ConferencesIntegration(unittest.TestCase):
         self.forbidden_api_instance = conferences_api.ConferencesApi(forbidden_api_client)
 
         # Rest client for interacting with Manteca
-        self.rest_client = RESTClientObject(bandwidth.Configuration.get_default_copy())    
+        self.rest_client = RESTClientObject(bandwidth.Configuration.get_default_copy())
         configuration = bandwidth.Configuration(
-            username = BW_USERNAME,
-            password = BW_PASSWORD,
+            username=BW_USERNAME,
+            password=BW_PASSWORD,
         )
 
         self.account_id = BW_ACCOUNT_ID
         self.callIdArray = []
         self.testUpdateConf = UpdateConference(
-                     state=ConferenceStateEnum("active"),
-                     redirect_url=MANTECA_BASE_URL + "/bxml/pause",
-                     redirect_method=RedirectMethodEnum("POST"),
-                     username="mySecretUsername",
-                     password="mySecretPassword1!",
-                     redirect_fallback_url=MANTECA_BASE_URL + "/bxml/pause",
-                     redirect_fallback_method=RedirectMethodEnum("POST"),
-                     fallback_username="mySecretUsername",
-                     fallback_password="mySecretPassword1!",
-                     tag="My Custom Tag",
-                   )
+            state=ConferenceStateEnum("active"),
+            redirect_url=MANTECA_BASE_URL + "/bxml/pause",
+            redirect_method=RedirectMethodEnum("POST"),
+            username="mySecretUsername",
+            password="mySecretPassword1!",
+            redirect_fallback_url=MANTECA_BASE_URL + "/bxml/pause",
+            redirect_fallback_method=RedirectMethodEnum("POST"),
+            fallback_username="mySecretUsername",
+            fallback_password="mySecretPassword1!",
+            tag="My Custom Tag",
+        )
         self.testUpdateBxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is test BXML.</SpeakSentence></Bxml>'
         self.testUpdateMember = UpdateConferenceMember(mute=False)
         self.testConfId = "Conf-id"
@@ -91,7 +92,7 @@ class ConferencesIntegration(unittest.TestCase):
         self.TEST_SLEEP = 3
         self.TEST_SLEEP_LONG = 10
         self.MAX_RETRIES = 40
-        
+
     def tearDown(self):
         callCleanup(self)
 
@@ -110,7 +111,7 @@ class ConferencesIntegration(unittest.TestCase):
         """
         Create and validate a call between two bandwidth numbers.  Initializes the call with the Manteca
         system.
-        
+
         Args:
             answer_url (str): The answer url for the call to create.
         Return:
@@ -129,11 +130,14 @@ class ConferencesIntegration(unittest.TestCase):
             }
         )
 
-        test_id = json.loads(response.data)
+        # Get the test id from the response
+        test_id = response.data.decode("utf-8")
 
-        call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=answer_url, tag=test_id)
+        call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER,
+                               application_id=MANTECA_APPLICATION_ID, answer_url=answer_url, tag=test_id)
 
-        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, call_body)
+        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(
+            BW_ACCOUNT_ID, call_body)
 
         assert_that(create_call_response, has_properties(
             "call_id", instance_of(str),
@@ -143,26 +147,27 @@ class ConferencesIntegration(unittest.TestCase):
             '_from', MANTECA_ACTIVE_NUMBER
         ))
 
-
         time.sleep(self.TEST_SLEEP)
-        list_conferences_response = self.conference_api_instance.list_conferences(BW_ACCOUNT_ID, name=test_id, _return_http_data_only=False)
-    
+        list_conferences_response = self.conference_api_instance.list_conferences(
+            BW_ACCOUNT_ID, name=test_id, _return_http_data_only=False)
+
         assert_that(list_conferences_response[1], 200)
 
         # TODO: This is not deterministic; our latest conference may not always be the one we just created due to parallelism.
         # This new solution should guarantee the right conference id is grabbed.
         conference_id = list_conferences_response[0][0].id
 
-        get_conference_response = self.conference_api_instance.get_conference(BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
-        assert_that(get_conference_response[1], 200)       
-   
+        get_conference_response = self.conference_api_instance.get_conference(
+            BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
+        assert_that(get_conference_response[1], 200)
+
         self.callIdArray.append(create_call_response.call_id)
 
         return (test_id, create_call_response.call_id, conference_id)
 
     def validate_recording(self, recording: ConferenceRecordingMetadata, conference_id: str) -> None:
-        assert_that(recording.status,'complete')
-        assert_that(recording.file_format,FileFormatEnum('wav'))
+        assert_that(recording.status, 'complete')
+        assert_that(recording.file_format, FileFormatEnum('wav'))
 
     def get_test_status(self, test_id: str) -> Dict:
         """
@@ -196,7 +201,8 @@ class ConferencesIntegration(unittest.TestCase):
         answer_url = MANTECA_BASE_URL + "bxml/joinConferencePause"
         (test_id, call_id, conference_id) = self.create_conference(answer_url)
 
-        list_conferences_response = self.conference_api_instance.list_conferences(BW_ACCOUNT_ID, _return_http_data_only=False)
+        list_conferences_response = self.conference_api_instance.list_conferences(
+            BW_ACCOUNT_ID, _return_http_data_only=False)
 
         assert_that(list_conferences_response[1], 200)
         assert_that(list_conferences_response[0][0].name, instance_of(str))
@@ -205,35 +211,40 @@ class ConferencesIntegration(unittest.TestCase):
         # TODO: Also non-deterministic; we could differentiate by conference name instead? The conference name is set to be the test id by Manteca
         # conferenceId = (list_conferences_response[0][len(list_conferences_response[0])-1].id)
 
-        get_conference_response = self.conference_api_instance.get_conference(BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
+        get_conference_response = self.conference_api_instance.get_conference(
+            BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
         assert_that(get_conference_response[1], 200)
         assert_that(get_conference_response[0].id, conference_id)
         assert_that(get_conference_response[0].name, instance_of(str))
         callId = (get_conference_response[0].active_members[0].call_id)
         self.callIdArray.append(callId)
 
-        get_conference_member_response = self.conference_api_instance.get_conference_member(BW_ACCOUNT_ID, conference_id, callId,  _return_http_data_only=False)
+        get_conference_member_response = self.conference_api_instance.get_conference_member(
+            BW_ACCOUNT_ID, conference_id, callId,  _return_http_data_only=False)
         assert_that(get_conference_member_response[1], 200)
         assert_that(get_conference_member_response[0].conference_id, conference_id)
         assert_that(get_conference_member_response[0].call_id, callId)
 
         # time.sleep(self.TEST_SLEEP)
-        update_conference_member_response = self.conference_api_instance.update_conference_member(BW_ACCOUNT_ID, conference_id, callId, self.testUpdateMember, _return_http_data_only=False)
-        assert_that(update_conference_member_response[1], 204)   
+        update_conference_member_response = self.conference_api_instance.update_conference_member(
+            BW_ACCOUNT_ID, conference_id, callId, self.testUpdateMember, _return_http_data_only=False)
+        assert_that(update_conference_member_response[1], 204)
 
-        # time.sleep(self.TEST_SLEEP)   
-        update_conference_response = self.conference_api_instance.update_conference(BW_ACCOUNT_ID, conference_id, self.testUpdateConf, _return_http_data_only=False)
-        assert_that(update_conference_response[1], 204)   
-
+        # time.sleep(self.TEST_SLEEP)
+        update_conference_response = self.conference_api_instance.update_conference(
+            BW_ACCOUNT_ID, conference_id, self.testUpdateConf, _return_http_data_only=False)
+        assert_that(update_conference_response[1], 204)
 
         updateBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence></Bxml>'
 
         # time.sleep(self.TEST_SLEEP)
-        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(BW_ACCOUNT_ID, conference_id, updateBxmlBody, _return_http_data_only=False)
-        assert_that(update_conference_bxml_response[1], 204)          
+        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(
+            BW_ACCOUNT_ID, conference_id, updateBxmlBody, _return_http_data_only=False)
+        assert_that(update_conference_bxml_response[1], 204)
 
         update_call = UpdateCall(state=CallStateEnum('completed'))
-        self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, update_call,  _return_http_data_only=False)
+        self.calls_api_instance.update_call(
+            BW_ACCOUNT_ID, call_id, update_call,  _return_http_data_only=False)
 
     def test_conference_recordings(self) -> None:
         """
@@ -247,13 +258,15 @@ class ConferencesIntegration(unittest.TestCase):
         answer_url = MANTECA_BASE_URL + "bxml/joinConferencePause"
         (test_id, call_id, conference_id) = self.create_conference(answer_url)
 
-        list_conferences_response = self.conference_api_instance.list_conferences(BW_ACCOUNT_ID, _return_http_data_only=False)
+        list_conferences_response = self.conference_api_instance.list_conferences(
+            BW_ACCOUNT_ID, _return_http_data_only=False)
 
         assert_that(list_conferences_response[1], 200)
-        
+
         updateBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><StartRecording/><SpeakSentence locale="en_US" gender="female" voice="susan">This should be a conference recording.</SpeakSentence><StopRecording/></Bxml>'
-        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(BW_ACCOUNT_ID, conference_id, updateBxmlBody, _return_http_data_only=False)
-        assert_that(update_conference_bxml_response[1], 204)   
+        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(
+            BW_ACCOUNT_ID, conference_id, updateBxmlBody, _return_http_data_only=False)
+        assert_that(update_conference_bxml_response[1], 204)
 
         # Poll Manteca to ensure our conference is recorded
         call_status = self.get_test_status(test_id)
@@ -266,8 +279,9 @@ class ConferencesIntegration(unittest.TestCase):
         # If we failed to get a recorded conference, fail due to polling timeout
         assert call_status['callRecorded'] == True
 
-        list_conference_recordings_response: List[ConferenceRecordingMetadata] = self.conference_api_instance.list_conference_recordings(BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
-        assert_that(list_conference_recordings_response[1],200)
+        list_conference_recordings_response: List[ConferenceRecordingMetadata] = self.conference_api_instance.list_conference_recordings(
+            BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
+        assert_that(list_conference_recordings_response[1], 200)
 
         conference_recordings = list_conference_recordings_response[0]
         assert_that(len(conference_recordings), greater_than(0))
@@ -276,148 +290,172 @@ class ConferencesIntegration(unittest.TestCase):
         self.validate_recording(first_recording, conference_id)
         recording_id = first_recording.recording_id
 
-        recording_response: ConferenceRecordingMetadata = self.conference_api_instance.get_conference_recording(BW_ACCOUNT_ID, conference_id, recording_id, _return_http_data_only=False)
+        recording_response: ConferenceRecordingMetadata = self.conference_api_instance.get_conference_recording(
+            BW_ACCOUNT_ID, conference_id, recording_id, _return_http_data_only=False)
         assert_that(recording_response[1], 200)
         assert_that(recording_response[0].conference_id, conference_id)
         assert_that(recording_response[0].recording_id, recording_id)
-        assert_that(recording_response[0].name, instance_of(str))  
+        assert_that(recording_response[0].name, instance_of(str))
 
         self.validate_recording(recording_response[0], conference_id)
 
-        recording_media_response = self.conference_api_instance.download_conference_recording(BW_ACCOUNT_ID, conference_id, recording_id, _preload_content=False)
-        conference_recording_media = recording_media_response.data                   
+        recording_media_response = self.conference_api_instance.download_conference_recording(
+            BW_ACCOUNT_ID, conference_id, recording_id, _preload_content=False)
+        conference_recording_media = recording_media_response.data
 
     def test_list_conferences_unauthorized(self) -> None:
-         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.list_conferences(BW_ACCOUNT_ID, _return_http_data_only=False)
- 
-         self.assertApiException(context, UnauthorizedException, 401)
-  
+        with self.assertRaises(UnauthorizedException) as context:
+            self.unauthorized_api_instance.list_conferences(
+                BW_ACCOUNT_ID, _return_http_data_only=False)
+
+        self.assertApiException(context, UnauthorizedException, 401)
+
     def test_list_conferences_forbidden(self) -> None:
-         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.list_conferences(BW_ACCOUNT_ID, _return_http_data_only=False)
- 
-         self.assertApiException(context, ForbiddenException, 403)
- 
+        with self.assertRaises(ForbiddenException) as context:
+            self.forbidden_api_instance.list_conferences(
+                BW_ACCOUNT_ID, _return_http_data_only=False)
+
+        self.assertApiException(context, ForbiddenException, 403)
+
     def test_get_conferences_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.get_conference(BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
+            self.unauthorized_api_instance.get_conference(
+                BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_get_conferences_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.get_conference(BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
+            self.forbidden_api_instance.get_conference(
+                BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
 
         self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_conferences_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
-            self.conference_api_instance.get_conference(BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
-        
-        self.assertApiException(context, NotFoundException, 404)    
+            self.conference_api_instance.get_conference(
+                BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
+
+        self.assertApiException(context, NotFoundException, 404)
 
     def test_get_conference_member_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.get_conference_member(BW_ACCOUNT_ID, self.testConfId, self.testMemberId, _return_http_data_only=False)
+            self.unauthorized_api_instance.get_conference_member(
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, _return_http_data_only=False)
 
-        self.assertApiException(context, UnauthorizedException, 401)    
+        self.assertApiException(context, UnauthorizedException, 401)
 
     def test_get_conference_member_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.get_conference_member(BW_ACCOUNT_ID, self.testConfId, self.testMemberId, _return_http_data_only=False)
+            self.forbidden_api_instance.get_conference_member(
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, _return_http_data_only=False)
 
         self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_conference_member_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
-            self.conference_api_instance.get_conference_member(BW_ACCOUNT_ID, self.testConfId, self.testMemberId, _return_http_data_only=False)
-        
-        self.assertApiException(context, NotFoundException, 404)    
-    
+            self.conference_api_instance.get_conference_member(
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, _return_http_data_only=False)
+
+        self.assertApiException(context, NotFoundException, 404)
+
     def test_list_conference_recordings_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.list_conference_recordings(BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
+            self.unauthorized_api_instance.list_conference_recordings(
+                BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
 
         self.assertApiException(context, UnauthorizedException, 401)
-    
+
     def test_list_conference_recordings_forbidden(self) -> None:
-        with self.assertRaises(ForbiddenException) as context:          
-            self.forbidden_api_instance.list_conference_recordings(BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
+        with self.assertRaises(ForbiddenException) as context:
+            self.forbidden_api_instance.list_conference_recordings(
+                BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
 
         self.assertApiException(context, ForbiddenException, 403)
-    
+
     def test_get_recording_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.get_conference_recording(BW_ACCOUNT_ID, self.testConfId, self.testRecordId, _return_http_data_only=False)
+            self.unauthorized_api_instance.get_conference_recording(
+                BW_ACCOUNT_ID, self.testConfId, self.testRecordId, _return_http_data_only=False)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_get_recording_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.get_conference_recording(BW_ACCOUNT_ID, self.testConfId, self.testRecordId, _return_http_data_only=False)
+            self.forbidden_api_instance.get_conference_recording(
+                BW_ACCOUNT_ID, self.testConfId, self.testRecordId, _return_http_data_only=False)
 
-        self.assertApiException(context, ForbiddenException, 403)     
+        self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_conference_recording_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
-            self.conference_api_instance.get_conference_member(BW_ACCOUNT_ID, self.testConfId, self.testRecordId, _return_http_data_only=False)
-        
-        self.assertApiException(context, NotFoundException, 404)    
-    
+            self.conference_api_instance.get_conference_member(
+                BW_ACCOUNT_ID, self.testConfId, self.testRecordId, _return_http_data_only=False)
+
+        self.assertApiException(context, NotFoundException, 404)
+
     def test_update_conference_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.update_conference(BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf, _return_http_data_only=False)
+            self.unauthorized_api_instance.update_conference(
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf, _return_http_data_only=False)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_update_conference_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.update_conference(BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf, _return_http_data_only=False)
+            self.forbidden_api_instance.update_conference(
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf, _return_http_data_only=False)
 
-        self.assertApiException(context, ForbiddenException, 403) 
+        self.assertApiException(context, ForbiddenException, 403)
 
     def test_update_conference_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
-            self.conference_api_instance.update_conference(BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf, _return_http_data_only=False)
-        
-        self.assertApiException(context, NotFoundException, 404)    
-    
+            self.conference_api_instance.update_conference(
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf, _return_http_data_only=False)
+
+        self.assertApiException(context, NotFoundException, 404)
+
     def test_update_conference_bxml_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.update_conference_bxml(BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml, _return_http_data_only=False)
+            self.unauthorized_api_instance.update_conference_bxml(
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml, _return_http_data_only=False)
 
-        self.assertApiException(context, UnauthorizedException, 401)   
+        self.assertApiException(context, UnauthorizedException, 401)
 
     def test_update_conference_bxml_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.update_conference_bxml(BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml, _return_http_data_only=False)
+            self.forbidden_api_instance.update_conference_bxml(
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml, _return_http_data_only=False)
 
-        self.assertApiException(context, ForbiddenException, 403) 
+        self.assertApiException(context, ForbiddenException, 403)
 
     def test_update_conference_bxml_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
-            self.conference_api_instance.update_conference_bxml(BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml, _return_http_data_only=False)
-        
-        self.assertApiException(context, NotFoundException, 404)    
-    
+            self.conference_api_instance.update_conference_bxml(
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml, _return_http_data_only=False)
+
+        self.assertApiException(context, NotFoundException, 404)
+
     def test_update_conference_member_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.update_conference_member(BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember, _return_http_data_only=False)
+            self.unauthorized_api_instance.update_conference_member(
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember, _return_http_data_only=False)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_update_conference_member_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.update_conference_member(BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember, _return_http_data_only=False)
+            self.forbidden_api_instance.update_conference_member(
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember, _return_http_data_only=False)
 
-        self.assertApiException(context, ForbiddenException, 403)   
+        self.assertApiException(context, ForbiddenException, 403)
 
     def test_update_conference_member_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
-            self.conference_api_instance.update_conference_member(BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember, _return_http_data_only=False)
-        
-        self.assertApiException(context, NotFoundException, 404)    
+            self.conference_api_instance.update_conference_member(
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember, _return_http_data_only=False)
+
+        self.assertApiException(context, NotFoundException, 404)
 
 
 if __name__ == '__main__':
