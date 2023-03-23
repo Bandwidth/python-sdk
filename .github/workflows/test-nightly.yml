@@ -62,6 +62,14 @@ jobs:
           pip install -r requirements_dev.txt
           python -m pytest --pyargs bandwidth
 
+      - name: Notify Slack of Failures
+        if: failure()
+        uses: Bandwidth/build-notify-slack-action@v1.0.0
+        with:
+          job-status: failure
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL }}
+
   test_feature:
     name: Test Feature Branch Nightly
     runs-on: ${{ matrix.os }}
@@ -100,12 +108,8 @@ jobs:
           echo "Log level: WARNING"
           pytest -v --log-cli-level=WARNING
 
-  notify_for_failures:
-    name: Notify for Failures
-    if: failure()
-    runs-on: ubuntu-latest
-    steps:
       - name: Notify Slack of Failures
+        if: failure()
         uses: Bandwidth/build-notify-slack-action@v1.0.0
         with:
           job-status: failure
