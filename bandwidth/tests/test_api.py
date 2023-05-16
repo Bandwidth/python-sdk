@@ -222,7 +222,7 @@ class TestApi:
 
         create_response = voice_client.create_call(BW_ACCOUNT_ID, call_body)
         create_response_body = create_response.body
-        time.sleep(10)
+        time.sleep(15)
         get_response = voice_client.get_call(BW_ACCOUNT_ID, create_response.body.call_id)
         get_response_body = get_response.body
 
