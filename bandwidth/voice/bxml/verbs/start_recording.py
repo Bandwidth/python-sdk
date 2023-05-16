@@ -16,7 +16,7 @@ START_RECORDING_TAG = "StartRecording"
 class StartRecording(AbstractBxmlVerb):
 
     def __init__(self, tag=None, username=None, password=None, recording_available_url=None, recording_available_method=None,
-        file_format=None, multi_channel=None, transcribe=None, transcription_available_url=None, transcription_available_method=None):
+        file_format=None, multi_channel=None, detect_language=None, transcribe=None, transcription_available_url=None, transcription_available_method=None):
         """
         Initializes the Record class with the following parameters
 
@@ -27,6 +27,7 @@ class StartRecording(AbstractBxmlVerb):
         :param str recording_available_method: HTTP method for record available callback
         :param str file_format: The file format to save the recording in
         :param bool multi_channel: Whether or not to record the channels separately (default is false, 1 recording)
+        :param bool detect_language: Indicates that the recording may not be in English, and the transcription service will need to detect the dominant language the recording is in and transcribe accordingly. Current supported languages are English, French, and Spanish.
         :param bool transcribe: True to transcribe the recording on completion, False otherwise
         :param str transcription_available_url: URL to send the transcriptionAvailable event to.
         :param str transcription_available_method: The HTTP method to use for the request to transcriptionAvailableUrl. GET or POST
@@ -38,6 +39,7 @@ class StartRecording(AbstractBxmlVerb):
         self.recording_available_method = recording_available_method
         self.file_format = file_format
         self.multi_channel = multi_channel
+        self.detect_language = detect_language
         self.transcribe = transcribe
         self.transcription_available_url = transcription_available_url
         self.transcription_available_method = transcription_available_method
@@ -60,6 +62,10 @@ class StartRecording(AbstractBxmlVerb):
             #Convert True to "true", or False to "false"
             strn = "true" if self.multi_channel else "false"
             root.set("multiChannel", strn)
+        if self.detect_language is not None:
+            #Convert True to "true", or False to "false"
+            strn = "true" if self.detect_language else "false"
+            root.set("detectLanguage", strn)
         if self.transcribe is not None:
             #Convert True to "true", or False to "false"
             strn = "true" if self.transcribe else "false"
