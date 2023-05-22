@@ -141,6 +141,7 @@ class TestBxml:
             terminating_digits="#",
             max_duration=90,
             file_format="mp3",
+            detect_language=True,
             transcribe=False,
             transcription_available_url="https://transcribe.url.server/available",
             transcription_available_method="POST",
@@ -151,7 +152,7 @@ class TestBxml:
             fallback_password="fpass"
         )
         response.add_verb(record)
-        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Record tag="tag" username="user" password="pass" recordCompleteUrl="https://record.url.server/record" recordCompleteMethod="POST" recordingAvailableUrl="https://record.url.server/available" recordingAvailableMethod="GET" terminatingDigits="#" maxDuration="90" fileFormat="mp3" transcribe="false" transcriptionAvailableUrl="https://transcribe.url.server/available" transcriptionAvailableMethod="POST" silenceTimeout="90" recordCompleteFallbackUrl="https://test.com" recordCompleteFallbackMethod="GET" fallbackUsername="fuser" fallbackPassword="fpass"/></Response>'
+        expected_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><Record tag="tag" username="user" password="pass" recordCompleteUrl="https://record.url.server/record" recordCompleteMethod="POST" recordingAvailableUrl="https://record.url.server/available" recordingAvailableMethod="GET" terminatingDigits="#" maxDuration="90" fileFormat="mp3" detectLanguage="true" transcribe="false" transcriptionAvailableUrl="https://transcribe.url.server/available" transcriptionAvailableMethod="POST" silenceTimeout="90" recordCompleteFallbackUrl="https://test.com" recordCompleteFallbackMethod="GET" fallbackUsername="fuser" fallbackPassword="fpass"/></Response>'
         assert response.to_bxml() == expected_bxml
 
     def test_redirect(self):
@@ -445,5 +446,3 @@ class TestBxml:
         actual = response.to_bxml()
 
         assert expected == actual
-    
-    

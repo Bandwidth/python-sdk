@@ -17,7 +17,7 @@ class Record(AbstractBxmlVerb):
 
     def __init__(self, tag=None, username=None, password=None, record_complete_url=None, record_complete_method=None,
         recording_available_url=None, recording_available_method=None, terminating_digits=None, max_duration=None,
-        file_format=None, transcribe=None, transcription_available_url=None, transcription_available_method=None,
+        file_format=None, detect_language=None, transcribe=None, transcription_available_url=None, transcription_available_method=None,
         silence_timeout=None, record_complete_fallback_url=None, record_complete_fallback_method=None,
         fallback_username=None, fallback_password=None):
         """
@@ -33,6 +33,7 @@ class Record(AbstractBxmlVerb):
         :param str terminating_digits: Digits to terminate the recording
         :param int max_duration: Max duration to record in seconds
         :param str file_format: The file format to save the recording in
+        :param bool detect_language: Indicates that the recording may not be in English, and the transcription service will need to detect the dominant language the recording is in and transcribe accordingly. Current supported languages are English, French, and Spanish.
         :param bool transcribe: True to transcribe the recording on completion, False otherwise
         :param str transcription_available_url: URL to send the transcriptionAvailable event to.
         :param str transcription_available_method: The HTTP method to use for the request to transcriptionAvailableUrl. GET or POST
@@ -52,6 +53,7 @@ class Record(AbstractBxmlVerb):
         self.terminating_digits = terminating_digits
         self.max_duration = max_duration
         self.file_format = file_format
+        self.detect_language = detect_language
         self.transcribe = transcribe
         self.transcription_available_url = transcription_available_url
         self.transcription_available_method = transcription_available_method
@@ -83,6 +85,10 @@ class Record(AbstractBxmlVerb):
             root.set("maxDuration", str(self.max_duration))
         if self.file_format is not None:
             root.set("fileFormat", self.file_format)
+        if self.detect_language is not None:
+            #Convert True to "true", or False to "false"
+            strn = "true" if self.detect_language else "false"
+            root.set("detectLanguage", strn)
         if self.transcribe is not None:
             #Convert True to "true", or False to "false"
             strn = "true" if self.transcribe else "false"
