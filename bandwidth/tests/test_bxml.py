@@ -446,3 +446,42 @@ class TestBxml:
         actual = response.to_bxml()
 
         assert expected == actual
+
+    def test_start_transcription_bxml_verb(self):
+        expected = '<?xml version="1.0" encoding="UTF-8"?><Response><StartTranscription name="name" tracks="both" transcriptionEventUrl="https://www.test.com/transcription" transcriptionEventMethod="POST" username="username" password="password" destination="https://www.test.com/transcribeCallback" stabilized="true"><CustomParam name="name1" value="value1"/><CustomParam name="name2" value="value2"/></StartTranscription></Response>'
+        response = Response()
+        custom_param_1 = CustomParam(
+            name="name1",
+            value="value1"
+        )
+        custom_param_2 = CustomParam(
+            name="name2",
+            value="value2"
+        )
+        custom_params = [custom_param_1, custom_param_2]
+        start_transcription = StartTranscription(
+            name='name',
+            tracks='both',
+            transcription_event_url='https://www.test.com/transcription',
+            transcription_event_method='POST',
+            username='username',
+            password='password',
+            destination='https://www.test.com/transcribeCallback',
+            stabilized=True,
+            custom_params=custom_params
+        )
+        response.add_verb(start_transcription)
+        actual = response.to_bxml()
+
+        assert expected == actual
+
+    def test_stop_transcription_bxml(self):
+        expected= '<?xml version="1.0" encoding="UTF-8"?><Response><StopTranscription name="name"/></Response>'
+        response = Response()
+        stop_transcription = StopTranscription(
+            name='name'
+        )
+        response.add_verb(stop_transcription)
+        actual = response.to_bxml()
+
+        assert expected == actual
