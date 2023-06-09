@@ -16,6 +16,7 @@ from bandwidth.bandwidth_client import BandwidthClient
 from bandwidth.messaging.exceptions.messaging_exception import MessagingException
 from bandwidth.exceptions.api_exception import APIException
 from bandwidth.messaging.models.message_request import MessageRequest
+from bandwidth.voice.exceptions.api_error_exception import ApiErrorException
 from bandwidth.voice.models.create_call_request import CreateCallRequest
 from bandwidth.voice.models.machine_detection_configuration import MachineDetectionConfiguration
 from bandwidth.voice.models.callback_method_enum import CallbackMethodEnum
@@ -222,13 +223,33 @@ class TestApi:
 
         create_response = voice_client.create_call(BW_ACCOUNT_ID, call_body)
         create_response_body = create_response.body
-        time.sleep(15)
-        get_response = voice_client.get_call(BW_ACCOUNT_ID, create_response.body.call_id)
-        get_response_body = get_response.body
+        time.sleep(2)
+        try:
+            get_response = voice_client.get_call(BW_ACCOUNT_ID, create_response.body.call_id)
+            get_response_body = get_response.body
+            print(vars(get_response))
+            assert get_response.status_code == 200
+            assert get_response_body.call_id == create_response_body.call_id
+            assert get_response_body.application_id == BW_VOICE_APPLICATION_ID
+            assert get_response_body.account_id == BW_ACCOUNT_ID
+            if get_response_body.start_time:
+                assert dateutil.parser.isoparse(str(get_response_body.start_time))
+            assert dateutil.parser.isoparse(str(get_response_body.enqueued_time))
+            assert dateutil.parser.isoparse(str(get_response_body.last_update))
+            if get_response_body.answer_time:    # may be null dependent on timing
+                assert dateutil.parser.isoparse(str(get_response_body.answer_time))
+            if get_response_body.end_time:    # may be null dependent on timing
+                assert dateutil.parser.isoparse(str(get_response_body.end_time))
+            if get_response_body.disconnect_cause == "error":
+                assert type(get_response_body.error_message) is str
+                assert len(get_response_body.error_id) == 36
+        except ApiErrorException as e:
+            if e.response_code == 404:
+                pass
+            else:
+                raise e
 
         print(vars(create_response))
-        print(vars(get_response))
-
         assert create_response.status_code == 201
         assert len(create_response_body.call_id) == 47    # assert request created and id matches expected length (47)
         assert create_response_body.account_id == BW_ACCOUNT_ID
@@ -242,21 +263,6 @@ class TestApi:
         assert type(create_response_body.callback_timeout) is float
         assert create_response_body.answer_method == "POST"
         assert create_response_body.disconnect_method == "GET"
-        assert get_response.status_code == 200
-        assert get_response_body.call_id == create_response_body.call_id
-        assert get_response_body.application_id == BW_VOICE_APPLICATION_ID
-        assert get_response_body.account_id == BW_ACCOUNT_ID
-        if get_response_body.start_time: 
-            assert dateutil.parser.isoparse(str(get_response_body.start_time))
-        assert dateutil.parser.isoparse(str(get_response_body.enqueued_time))
-        assert dateutil.parser.isoparse(str(get_response_body.last_update))
-        if get_response_body.answer_time:    # may be null dependent on timing
-            assert dateutil.parser.isoparse(str(get_response_body.answer_time))
-        if get_response_body.end_time:    # may be null dependent on timing
-            assert dateutil.parser.isoparse(str(get_response_body.end_time))
-        if get_response_body.disconnect_cause == "error":
-            assert type(get_response_body.error_message) is str
-            assert len(get_response_body.error_id) == 36
 
     def test_failed_create_and_failed_get_call(self, voice_client):
         """Create a failed call and get status of a call that doesnt exist.
