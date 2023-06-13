@@ -244,9 +244,7 @@ class TestApi:
                 assert type(get_response_body.error_message) is str
                 assert len(get_response_body.error_id) == 36
         except ApiErrorException as e:
-            if e.response_code == 404:
-                pass
-            else:
+            if e.response_code != 404:
                 raise e
 
         print(vars(create_response))
