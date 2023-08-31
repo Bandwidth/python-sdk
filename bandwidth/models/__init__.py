@@ -1,90 +1,105 @@
+# coding: utf-8
+
 # flake8: noqa
+"""
+    Bandwidth
 
-# import all models into this package
-# if you have many models here with many references from one model to another this may
-# raise a RecursionError
-# to avoid this, import only the models that you directly need like:
-# from from bandwidth.model.pet import Pet
-# or import this package, but before doing it, use:
-# import sys
-# sys.setrecursionlimit(n)
+    Bandwidth's Communication APIs
 
-from bandwidth.model.account_statistics import AccountStatistics
-from bandwidth.model.answer_callback import AnswerCallback
-from bandwidth.model.bridge_complete_callback import BridgeCompleteCallback
-from bandwidth.model.bridge_target_complete_callback import BridgeTargetCompleteCallback
-from bandwidth.model.call_direction_enum import CallDirectionEnum
-from bandwidth.model.call_recording_metadata import CallRecordingMetadata
-from bandwidth.model.call_state import CallState
-from bandwidth.model.call_state_enum import CallStateEnum
-from bandwidth.model.callback_method_enum import CallbackMethodEnum
-from bandwidth.model.code_request import CodeRequest
-from bandwidth.model.conference import Conference
-from bandwidth.model.conference_completed_callback import ConferenceCompletedCallback
-from bandwidth.model.conference_created_callback import ConferenceCreatedCallback
-from bandwidth.model.conference_member import ConferenceMember
-from bandwidth.model.conference_member_exit_callback import ConferenceMemberExitCallback
-from bandwidth.model.conference_member_join_callback import ConferenceMemberJoinCallback
-from bandwidth.model.conference_recording_available_callback import ConferenceRecordingAvailableCallback
-from bandwidth.model.conference_recording_metadata import ConferenceRecordingMetadata
-from bandwidth.model.conference_redirect_callback import ConferenceRedirectCallback
-from bandwidth.model.conference_state_enum import ConferenceStateEnum
-from bandwidth.model.create_call import CreateCall
-from bandwidth.model.create_call_response import CreateCallResponse
-from bandwidth.model.create_lookup_response import CreateLookupResponse
-from bandwidth.model.create_message_request_error import CreateMessageRequestError
-from bandwidth.model.deferred_result import DeferredResult
-from bandwidth.model.disconenct_callback import DisconenctCallback
-from bandwidth.model.diversion import Diversion
-from bandwidth.model.dtmf_callback import DtmfCallback
-from bandwidth.model.field_error import FieldError
-from bandwidth.model.file_format_enum import FileFormatEnum
-from bandwidth.model.gather_callback import GatherCallback
-from bandwidth.model.initiate_callback import InitiateCallback
-from bandwidth.model.list_message_direction_enum import ListMessageDirectionEnum
-from bandwidth.model.list_message_item import ListMessageItem
-from bandwidth.model.lookup_request import LookupRequest
-from bandwidth.model.lookup_result import LookupResult
-from bandwidth.model.lookup_status import LookupStatus
-from bandwidth.model.lookup_status_enum import LookupStatusEnum
-from bandwidth.model.machine_detection_complete_callback import MachineDetectionCompleteCallback
-from bandwidth.model.machine_detection_configuration import MachineDetectionConfiguration
-from bandwidth.model.machine_detection_mode_enum import MachineDetectionModeEnum
-from bandwidth.model.media import Media
-from bandwidth.model.message import Message
-from bandwidth.model.message_direction_enum import MessageDirectionEnum
-from bandwidth.model.message_request import MessageRequest
-from bandwidth.model.message_status_enum import MessageStatusEnum
-from bandwidth.model.message_type_enum import MessageTypeEnum
-from bandwidth.model.messages_list import MessagesList
-from bandwidth.model.messaging_code_response import MessagingCodeResponse
-from bandwidth.model.messaging_request_error import MessagingRequestError
-from bandwidth.model.mfa_forbidden_request_error import MfaForbiddenRequestError
-from bandwidth.model.mfa_request_error import MfaRequestError
-from bandwidth.model.mfa_unauthorized_request_error import MfaUnauthorizedRequestError
-from bandwidth.model.page_info import PageInfo
-from bandwidth.model.priority_enum import PriorityEnum
-from bandwidth.model.recording_available_callback import RecordingAvailableCallback
-from bandwidth.model.recording_complete_callback import RecordingCompleteCallback
-from bandwidth.model.recording_state_enum import RecordingStateEnum
-from bandwidth.model.redirect_callback import RedirectCallback
-from bandwidth.model.redirect_method_enum import RedirectMethodEnum
-from bandwidth.model.stir_shaken import StirShaken
-from bandwidth.model.tag import Tag
-from bandwidth.model.tn_lookup_request_error import TnLookupRequestError
-from bandwidth.model.transcribe_recording import TranscribeRecording
-from bandwidth.model.transcription import Transcription
-from bandwidth.model.transcription_available_callback import TranscriptionAvailableCallback
-from bandwidth.model.transcription_list import TranscriptionList
-from bandwidth.model.transcription_metadata import TranscriptionMetadata
-from bandwidth.model.transfer_answer_callback import TransferAnswerCallback
-from bandwidth.model.transfer_complete_callback import TransferCompleteCallback
-from bandwidth.model.transfer_disconnect_callback import TransferDisconnectCallback
-from bandwidth.model.update_call import UpdateCall
-from bandwidth.model.update_call_recording import UpdateCallRecording
-from bandwidth.model.update_conference import UpdateConference
-from bandwidth.model.update_conference_member import UpdateConferenceMember
-from bandwidth.model.verify_code_request import VerifyCodeRequest
-from bandwidth.model.verify_code_response import VerifyCodeResponse
-from bandwidth.model.voice_api_error import VoiceApiError
-from bandwidth.model.voice_code_response import VoiceCodeResponse
+    The version of the OpenAPI document: 1.0.0
+    Contact: letstalk@bandwidth.com
+    Generated by OpenAPI Generator (https://openapi-generator.tech)
+
+    Do not edit the class manually.
+"""  # noqa: E501
+
+
+# import models into model package
+from bandwidth.models.account_statistics import AccountStatistics
+from bandwidth.models.answer_callback import AnswerCallback
+from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback
+from bandwidth.models.bridge_target_complete_callback import BridgeTargetCompleteCallback
+from bandwidth.models.call_direction_enum import CallDirectionEnum
+from bandwidth.models.call_recording_metadata import CallRecordingMetadata
+from bandwidth.models.call_state import CallState
+from bandwidth.models.call_state_enum import CallStateEnum
+from bandwidth.models.callback_method_enum import CallbackMethodEnum
+from bandwidth.models.code_request import CodeRequest
+from bandwidth.models.conference import Conference
+from bandwidth.models.conference_completed_callback import ConferenceCompletedCallback
+from bandwidth.models.conference_created_callback import ConferenceCreatedCallback
+from bandwidth.models.conference_member import ConferenceMember
+from bandwidth.models.conference_member_exit_callback import ConferenceMemberExitCallback
+from bandwidth.models.conference_member_join_callback import ConferenceMemberJoinCallback
+from bandwidth.models.conference_recording_available_callback import ConferenceRecordingAvailableCallback
+from bandwidth.models.conference_recording_metadata import ConferenceRecordingMetadata
+from bandwidth.models.conference_redirect_callback import ConferenceRedirectCallback
+from bandwidth.models.conference_state_enum import ConferenceStateEnum
+from bandwidth.models.create_call import CreateCall
+from bandwidth.models.create_call_response import CreateCallResponse
+from bandwidth.models.create_lookup_response import CreateLookupResponse
+from bandwidth.models.create_message_request_error import CreateMessageRequestError
+from bandwidth.models.deferred_result import DeferredResult
+from bandwidth.models.disconnect_callback import DisconnectCallback
+from bandwidth.models.diversion import Diversion
+from bandwidth.models.dtmf_callback import DtmfCallback
+from bandwidth.models.field_error import FieldError
+from bandwidth.models.file_format_enum import FileFormatEnum
+from bandwidth.models.gather_callback import GatherCallback
+from bandwidth.models.inbound_message_callback import InboundMessageCallback
+from bandwidth.models.inbound_message_callback_message import InboundMessageCallbackMessage
+from bandwidth.models.initiate_callback import InitiateCallback
+from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum
+from bandwidth.models.list_message_item import ListMessageItem
+from bandwidth.models.lookup_request import LookupRequest
+from bandwidth.models.lookup_result import LookupResult
+from bandwidth.models.lookup_status import LookupStatus
+from bandwidth.models.lookup_status_enum import LookupStatusEnum
+from bandwidth.models.machine_detection_complete_callback import MachineDetectionCompleteCallback
+from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration
+from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnum
+from bandwidth.models.machine_detection_result import MachineDetectionResult
+from bandwidth.models.media import Media
+from bandwidth.models.message import Message
+from bandwidth.models.message_delivered_callback import MessageDeliveredCallback
+from bandwidth.models.message_delivered_callback_message import MessageDeliveredCallbackMessage
+from bandwidth.models.message_direction_enum import MessageDirectionEnum
+from bandwidth.models.message_failed_callback import MessageFailedCallback
+from bandwidth.models.message_failed_callback_message import MessageFailedCallbackMessage
+from bandwidth.models.message_request import MessageRequest
+from bandwidth.models.message_sending_callback import MessageSendingCallback
+from bandwidth.models.message_sending_callback_message import MessageSendingCallbackMessage
+from bandwidth.models.message_status_enum import MessageStatusEnum
+from bandwidth.models.message_type_enum import MessageTypeEnum
+from bandwidth.models.messages_list import MessagesList
+from bandwidth.models.messaging_code_response import MessagingCodeResponse
+from bandwidth.models.messaging_request_error import MessagingRequestError
+from bandwidth.models.mfa_forbidden_request_error import MfaForbiddenRequestError
+from bandwidth.models.mfa_request_error import MfaRequestError
+from bandwidth.models.mfa_unauthorized_request_error import MfaUnauthorizedRequestError
+from bandwidth.models.page_info import PageInfo
+from bandwidth.models.priority_enum import PriorityEnum
+from bandwidth.models.recording_available_callback import RecordingAvailableCallback
+from bandwidth.models.recording_complete_callback import RecordingCompleteCallback
+from bandwidth.models.recording_state_enum import RecordingStateEnum
+from bandwidth.models.redirect_callback import RedirectCallback
+from bandwidth.models.redirect_method_enum import RedirectMethodEnum
+from bandwidth.models.stir_shaken import StirShaken
+from bandwidth.models.tag import Tag
+from bandwidth.models.tn_lookup_request_error import TnLookupRequestError
+from bandwidth.models.transcribe_recording import TranscribeRecording
+from bandwidth.models.transcription import Transcription
+from bandwidth.models.transcription_available_callback import TranscriptionAvailableCallback
+from bandwidth.models.transcription_list import TranscriptionList
+from bandwidth.models.transcription_metadata import TranscriptionMetadata
+from bandwidth.models.transfer_answer_callback import TransferAnswerCallback
+from bandwidth.models.transfer_complete_callback import TransferCompleteCallback
+from bandwidth.models.transfer_disconnect_callback import TransferDisconnectCallback
+from bandwidth.models.update_call import UpdateCall
+from bandwidth.models.update_call_recording import UpdateCallRecording
+from bandwidth.models.update_conference import UpdateConference
+from bandwidth.models.update_conference_member import UpdateConferenceMember
+from bandwidth.models.verify_code_request import VerifyCodeRequest
+from bandwidth.models.verify_code_response import VerifyCodeResponse
+from bandwidth.models.voice_api_error import VoiceApiError
+from bandwidth.models.voice_code_response import VoiceCodeResponse

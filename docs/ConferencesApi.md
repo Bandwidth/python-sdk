@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 
 # **download_conference_recording**
-> file_type download_conference_recording(account_id, conference_id, recording_id)
+> bytearray download_conference_recording(account_id, conference_id, recording_id)
 
 Download Conference Recording
 
@@ -25,13 +25,13 @@ Downloads the specified recording file.
 ### Example
 
 * Basic Authentication (Basic):
-
 ```python
 import time
+import os
 import bandwidth
-from bandwidth.api import conferences_api
-from bandwidth.model.voice_api_error import VoiceApiError
+from bandwidth.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = bandwidth.Configuration(
@@ -45,39 +45,40 @@ configuration = bandwidth.Configuration(
 
 # Configure HTTP basic authorization: Basic
 configuration = bandwidth.Configuration(
-    username = 'YOUR_USERNAME',
-    password = 'YOUR_PASSWORD'
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
 )
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = conferences_api.ConferencesApi(api_client)
-    account_id = "9900000" # str | Your Bandwidth Account ID
-    conference_id = "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9" # str | Programmable Voice API Conference ID
-    recording_id = "r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85" # str | Programmable Voice API Recording ID
+    api_instance = bandwidth.ConferencesApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
+    conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9' # str | Programmable Voice API Conference ID.
+    recording_id = 'r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | Programmable Voice API Recording ID.
 
-    # example passing only required values which don't have defaults set
     try:
         # Download Conference Recording
         api_response = api_instance.download_conference_recording(account_id, conference_id, recording_id)
+        print("The response of ConferencesApi->download_conference_recording:\n")
         pprint(api_response)
-    except bandwidth.ApiException as e:
+    except Exception as e:
         print("Exception when calling ConferencesApi->download_conference_recording: %s\n" % e)
 ```
+
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID |
- **conference_id** | **str**| Programmable Voice API Conference ID |
- **recording_id** | **str**| Programmable Voice API Recording ID |
+ **account_id** | **str**| Your Bandwidth Account ID. | 
+ **conference_id** | **str**| Programmable Voice API Conference ID. | 
+ **recording_id** | **str**| Programmable Voice API Recording ID. | 
 
 ### Return type
 
-**file_type**
+**bytearray**
 
 ### Authorization
 
@@ -88,9 +89,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: audio/vnd.wave, audio/mpeg, application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Media found |  -  |
@@ -100,7 +99,7 @@ Name | Type | Description  | Notes
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
 **415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -115,14 +114,14 @@ Returns information about the specified conference.
 ### Example
 
 * Basic Authentication (Basic):
-
 ```python
 import time
+import os
 import bandwidth
-from bandwidth.api import conferences_api
-from bandwidth.model.conference import Conference
-from bandwidth.model.voice_api_error import VoiceApiError
+from bandwidth.models.conference import Conference
+from bandwidth.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = bandwidth.Configuration(
@@ -136,33 +135,34 @@ configuration = bandwidth.Configuration(
 
 # Configure HTTP basic authorization: Basic
 configuration = bandwidth.Configuration(
-    username = 'YOUR_USERNAME',
-    password = 'YOUR_PASSWORD'
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
 )
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = conferences_api.ConferencesApi(api_client)
-    account_id = "9900000" # str | Your Bandwidth Account ID
-    conference_id = "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9" # str | Programmable Voice API Conference ID
+    api_instance = bandwidth.ConferencesApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
+    conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9' # str | Programmable Voice API Conference ID.
 
-    # example passing only required values which don't have defaults set
     try:
         # Get Conference Information
         api_response = api_instance.get_conference(account_id, conference_id)
+        print("The response of ConferencesApi->get_conference:\n")
         pprint(api_response)
-    except bandwidth.ApiException as e:
+    except Exception as e:
         print("Exception when calling ConferencesApi->get_conference: %s\n" % e)
 ```
+
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID |
- **conference_id** | **str**| Programmable Voice API Conference ID |
+ **account_id** | **str**| Your Bandwidth Account ID. | 
+ **conference_id** | **str**| Programmable Voice API Conference ID. | 
 
 ### Return type
 
@@ -177,9 +177,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Conferences retrieved successfully |  -  |
@@ -189,7 +187,7 @@ Name | Type | Description  | Notes
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
 **415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -204,14 +202,14 @@ Returns information about the specified conference member.
 ### Example
 
 * Basic Authentication (Basic):
-
 ```python
 import time
+import os
 import bandwidth
-from bandwidth.api import conferences_api
-from bandwidth.model.conference_member import ConferenceMember
-from bandwidth.model.voice_api_error import VoiceApiError
+from bandwidth.models.conference_member import ConferenceMember
+from bandwidth.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = bandwidth.Configuration(
@@ -225,35 +223,36 @@ configuration = bandwidth.Configuration(
 
 # Configure HTTP basic authorization: Basic
 configuration = bandwidth.Configuration(
-    username = 'YOUR_USERNAME',
-    password = 'YOUR_PASSWORD'
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
 )
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = conferences_api.ConferencesApi(api_client)
-    account_id = "9900000" # str | Your Bandwidth Account ID
-    conference_id = "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9" # str | Programmable Voice API Conference ID
-    member_id = "c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85" # str | Programmable Voice API Conference Member ID
+    api_instance = bandwidth.ConferencesApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
+    conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9' # str | Programmable Voice API Conference ID.
+    member_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | Programmable Voice API Conference Member ID.
 
-    # example passing only required values which don't have defaults set
     try:
         # Get Conference Member
         api_response = api_instance.get_conference_member(account_id, conference_id, member_id)
+        print("The response of ConferencesApi->get_conference_member:\n")
         pprint(api_response)
-    except bandwidth.ApiException as e:
+    except Exception as e:
         print("Exception when calling ConferencesApi->get_conference_member: %s\n" % e)
 ```
+
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID |
- **conference_id** | **str**| Programmable Voice API Conference ID |
- **member_id** | **str**| Programmable Voice API Conference Member ID |
+ **account_id** | **str**| Your Bandwidth Account ID. | 
+ **conference_id** | **str**| Programmable Voice API Conference ID. | 
+ **member_id** | **str**| Programmable Voice API Conference Member ID. | 
 
 ### Return type
 
@@ -268,9 +267,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Conference member found |  -  |
@@ -280,7 +277,7 @@ Name | Type | Description  | Notes
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
 **415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -295,14 +292,14 @@ Returns metadata for the specified recording.
 ### Example
 
 * Basic Authentication (Basic):
-
 ```python
 import time
+import os
 import bandwidth
-from bandwidth.api import conferences_api
-from bandwidth.model.conference_recording_metadata import ConferenceRecordingMetadata
-from bandwidth.model.voice_api_error import VoiceApiError
+from bandwidth.models.conference_recording_metadata import ConferenceRecordingMetadata
+from bandwidth.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = bandwidth.Configuration(
@@ -316,35 +313,36 @@ configuration = bandwidth.Configuration(
 
 # Configure HTTP basic authorization: Basic
 configuration = bandwidth.Configuration(
-    username = 'YOUR_USERNAME',
-    password = 'YOUR_PASSWORD'
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
 )
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = conferences_api.ConferencesApi(api_client)
-    account_id = "9900000" # str | Your Bandwidth Account ID
-    conference_id = "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9" # str | Programmable Voice API Conference ID
-    recording_id = "r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85" # str | Programmable Voice API Recording ID
+    api_instance = bandwidth.ConferencesApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
+    conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9' # str | Programmable Voice API Conference ID.
+    recording_id = 'r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | Programmable Voice API Recording ID.
 
-    # example passing only required values which don't have defaults set
     try:
         # Get Conference Recording Information
         api_response = api_instance.get_conference_recording(account_id, conference_id, recording_id)
+        print("The response of ConferencesApi->get_conference_recording:\n")
         pprint(api_response)
-    except bandwidth.ApiException as e:
+    except Exception as e:
         print("Exception when calling ConferencesApi->get_conference_recording: %s\n" % e)
 ```
+
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID |
- **conference_id** | **str**| Programmable Voice API Conference ID |
- **recording_id** | **str**| Programmable Voice API Recording ID |
+ **account_id** | **str**| Your Bandwidth Account ID. | 
+ **conference_id** | **str**| Programmable Voice API Conference ID. | 
+ **recording_id** | **str**| Programmable Voice API Recording ID. | 
 
 ### Return type
 
@@ -359,9 +357,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Conference recording found |  -  |
@@ -371,13 +367,13 @@ Name | Type | Description  | Notes
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
 **415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_conference_recordings**
-> [ConferenceRecordingMetadata] list_conference_recordings(account_id, conference_id)
+> List[ConferenceRecordingMetadata] list_conference_recordings(account_id, conference_id)
 
 Get Conference Recordings
 
@@ -386,14 +382,14 @@ Returns a (potentially empty) list of metadata for the recordings that took plac
 ### Example
 
 * Basic Authentication (Basic):
-
 ```python
 import time
+import os
 import bandwidth
-from bandwidth.api import conferences_api
-from bandwidth.model.conference_recording_metadata import ConferenceRecordingMetadata
-from bandwidth.model.voice_api_error import VoiceApiError
+from bandwidth.models.conference_recording_metadata import ConferenceRecordingMetadata
+from bandwidth.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = bandwidth.Configuration(
@@ -407,37 +403,38 @@ configuration = bandwidth.Configuration(
 
 # Configure HTTP basic authorization: Basic
 configuration = bandwidth.Configuration(
-    username = 'YOUR_USERNAME',
-    password = 'YOUR_PASSWORD'
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
 )
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = conferences_api.ConferencesApi(api_client)
-    account_id = "9900000" # str | Your Bandwidth Account ID
-    conference_id = "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9" # str | Programmable Voice API Conference ID
+    api_instance = bandwidth.ConferencesApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
+    conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9' # str | Programmable Voice API Conference ID.
 
-    # example passing only required values which don't have defaults set
     try:
         # Get Conference Recordings
         api_response = api_instance.list_conference_recordings(account_id, conference_id)
+        print("The response of ConferencesApi->list_conference_recordings:\n")
         pprint(api_response)
-    except bandwidth.ApiException as e:
+    except Exception as e:
         print("Exception when calling ConferencesApi->list_conference_recordings: %s\n" % e)
 ```
+
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID |
- **conference_id** | **str**| Programmable Voice API Conference ID |
+ **account_id** | **str**| Your Bandwidth Account ID. | 
+ **conference_id** | **str**| Programmable Voice API Conference ID. | 
 
 ### Return type
 
-[**[ConferenceRecordingMetadata]**](ConferenceRecordingMetadata.md)
+[**List[ConferenceRecordingMetadata]**](ConferenceRecordingMetadata.md)
 
 ### Authorization
 
@@ -448,9 +445,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Conference recordings retrieved successfully |  -  |
@@ -460,13 +455,13 @@ Name | Type | Description  | Notes
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
 **415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_conferences**
-> [Conference] list_conferences(account_id)
+> List[Conference] list_conferences(account_id, name=name, min_created_time=min_created_time, max_created_time=max_created_time, page_size=page_size, page_token=page_token)
 
 Get Conferences
 
@@ -475,14 +470,14 @@ Returns a max of 1000 conferences, sorted by `createdTime` from oldest to newest
 ### Example
 
 * Basic Authentication (Basic):
-
 ```python
 import time
+import os
 import bandwidth
-from bandwidth.api import conferences_api
-from bandwidth.model.conference import Conference
-from bandwidth.model.voice_api_error import VoiceApiError
+from bandwidth.models.conference import Conference
+from bandwidth.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = bandwidth.Configuration(
@@ -496,54 +491,46 @@ configuration = bandwidth.Configuration(
 
 # Configure HTTP basic authorization: Basic
 configuration = bandwidth.Configuration(
-    username = 'YOUR_USERNAME',
-    password = 'YOUR_PASSWORD'
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
 )
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = conferences_api.ConferencesApi(api_client)
-    account_id = "9900000" # str | Your Bandwidth Account ID
-    name = "my-custom-name" # str | Filter results by the `name` field. (optional)
-    min_created_time = "2022-06-21T19:13:21Z" # str | Filter results to conferences which have a `createdTime` after or at `minCreatedTime` (in ISO8601 format). (optional)
-    max_created_time = "2022-06-21T19:13:21Z" # str | Filter results to conferences which have a `createdTime` before or at `maxCreatedTime` (in ISO8601 format). (optional)
-    page_size = 500 # int | Specifies the max number of conferences that will be returned. (optional) if omitted the server will use the default value of 1000
-    page_token = "pageToken_example" # str | Not intended for explicit use. To use pagination, follow the links in the `Link` header of the response, as indicated in the endpoint description. (optional)
+    api_instance = bandwidth.ConferencesApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
+    name = 'my-custom-name' # str | Filter results by the `name` field. (optional)
+    min_created_time = '2022-06-21T19:13:21Z' # str | Filter results to conferences which have a `createdTime` after or at `minCreatedTime` (in ISO8601 format). (optional)
+    max_created_time = '2022-06-21T19:13:21Z' # str | Filter results to conferences which have a `createdTime` before or at `maxCreatedTime` (in ISO8601 format). (optional)
+    page_size = 1000 # int | Specifies the max number of conferences that will be returned. (optional) (default to 1000)
+    page_token = 'page_token_example' # str | Not intended for explicit use. To use pagination, follow the links in the `Link` header of the response, as indicated in the endpoint description. (optional)
 
-    # example passing only required values which don't have defaults set
-    try:
-        # Get Conferences
-        api_response = api_instance.list_conferences(account_id)
-        pprint(api_response)
-    except bandwidth.ApiException as e:
-        print("Exception when calling ConferencesApi->list_conferences: %s\n" % e)
-
-    # example passing only required values which don't have defaults set
-    # and optional values
     try:
         # Get Conferences
         api_response = api_instance.list_conferences(account_id, name=name, min_created_time=min_created_time, max_created_time=max_created_time, page_size=page_size, page_token=page_token)
+        print("The response of ConferencesApi->list_conferences:\n")
         pprint(api_response)
-    except bandwidth.ApiException as e:
+    except Exception as e:
         print("Exception when calling ConferencesApi->list_conferences: %s\n" % e)
 ```
+
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID |
- **name** | **str**| Filter results by the &#x60;name&#x60; field. | [optional]
- **min_created_time** | **str**| Filter results to conferences which have a &#x60;createdTime&#x60; after or at &#x60;minCreatedTime&#x60; (in ISO8601 format). | [optional]
- **max_created_time** | **str**| Filter results to conferences which have a &#x60;createdTime&#x60; before or at &#x60;maxCreatedTime&#x60; (in ISO8601 format). | [optional]
- **page_size** | **int**| Specifies the max number of conferences that will be returned. | [optional] if omitted the server will use the default value of 1000
- **page_token** | **str**| Not intended for explicit use. To use pagination, follow the links in the &#x60;Link&#x60; header of the response, as indicated in the endpoint description. | [optional]
+ **account_id** | **str**| Your Bandwidth Account ID. | 
+ **name** | **str**| Filter results by the &#x60;name&#x60; field. | [optional] 
+ **min_created_time** | **str**| Filter results to conferences which have a &#x60;createdTime&#x60; after or at &#x60;minCreatedTime&#x60; (in ISO8601 format). | [optional] 
+ **max_created_time** | **str**| Filter results to conferences which have a &#x60;createdTime&#x60; before or at &#x60;maxCreatedTime&#x60; (in ISO8601 format). | [optional] 
+ **page_size** | **int**| Specifies the max number of conferences that will be returned. | [optional] [default to 1000]
+ **page_token** | **str**| Not intended for explicit use. To use pagination, follow the links in the &#x60;Link&#x60; header of the response, as indicated in the endpoint description. | [optional] 
 
 ### Return type
 
-[**[Conference]**](Conference.md)
+[**List[Conference]**](Conference.md)
 
 ### Authorization
 
@@ -554,9 +541,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Conferences retrieved successfully |  -  |
@@ -566,7 +551,7 @@ Name | Type | Description  | Notes
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
 **415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -581,14 +566,14 @@ Update the conference state.
 ### Example
 
 * Basic Authentication (Basic):
-
 ```python
 import time
+import os
 import bandwidth
-from bandwidth.api import conferences_api
-from bandwidth.model.update_conference import UpdateConference
-from bandwidth.model.voice_api_error import VoiceApiError
+from bandwidth.models.update_conference import UpdateConference
+from bandwidth.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = bandwidth.Configuration(
@@ -602,44 +587,34 @@ configuration = bandwidth.Configuration(
 
 # Configure HTTP basic authorization: Basic
 configuration = bandwidth.Configuration(
-    username = 'YOUR_USERNAME',
-    password = 'YOUR_PASSWORD'
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
 )
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = conferences_api.ConferencesApi(api_client)
-    account_id = "9900000" # str | Your Bandwidth Account ID
-    conference_id = "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9" # str | Programmable Voice API Conference ID
-    update_conference = UpdateConference(
-        status=ConferenceStateEnum("active"),
-        redirect_url="https://myServer.com/bandwidth/webhooks/conferenceRedirect",
-        redirect_method=RedirectMethodEnum("POST"),
-        username="mySecretUsername",
-        password="mySecretPassword1!",
-        redirect_fallback_url="https://myFallbackServer.com/bandwidth/webhooks/conferenceRedirect",
-        redirect_fallback_method=RedirectMethodEnum("POST"),
-        fallback_username="mySecretUsername",
-        fallback_password="mySecretPassword1!",
-    ) # UpdateConference | 
+    api_instance = bandwidth.ConferencesApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
+    conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9' # str | Programmable Voice API Conference ID.
+    update_conference = bandwidth.UpdateConference() # UpdateConference | 
 
-    # example passing only required values which don't have defaults set
     try:
         # Update Conference
         api_instance.update_conference(account_id, conference_id, update_conference)
-    except bandwidth.ApiException as e:
+    except Exception as e:
         print("Exception when calling ConferencesApi->update_conference: %s\n" % e)
 ```
+
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID |
- **conference_id** | **str**| Programmable Voice API Conference ID |
- **update_conference** | [**UpdateConference**](UpdateConference.md)|  |
+ **account_id** | **str**| Your Bandwidth Account ID. | 
+ **conference_id** | **str**| Programmable Voice API Conference ID. | 
+ **update_conference** | [**UpdateConference**](UpdateConference.md)|  | 
 
 ### Return type
 
@@ -654,19 +629,17 @@ void (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**204** | Conference successfully modified |  -  |
+**204** | Conference was successfully modified. |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
 **415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -681,13 +654,13 @@ Update the conference BXML document.
 ### Example
 
 * Basic Authentication (Basic):
-
 ```python
 import time
+import os
 import bandwidth
-from bandwidth.api import conferences_api
-from bandwidth.model.voice_api_error import VoiceApiError
+from bandwidth.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = bandwidth.Configuration(
@@ -701,37 +674,37 @@ configuration = bandwidth.Configuration(
 
 # Configure HTTP basic authorization: Basic
 configuration = bandwidth.Configuration(
-    username = 'YOUR_USERNAME',
-    password = 'YOUR_PASSWORD'
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
 )
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = conferences_api.ConferencesApi(api_client)
-    account_id = "9900000" # str | Your Bandwidth Account ID
-    conference_id = "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9" # str | Programmable Voice API Conference ID
-    body = '''<?xml version="1.0" encoding="UTF-8"?>
+    api_instance = bandwidth.ConferencesApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
+    conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9' # str | Programmable Voice API Conference ID.
+    body = <?xml version="1.0" encoding="UTF-8"?>
 <Bxml>
     <StopRecording/>
-</Bxml>''' # str | 
+</Bxml> # str | 
 
-    # example passing only required values which don't have defaults set
     try:
         # Update Conference BXML
         api_instance.update_conference_bxml(account_id, conference_id, body)
-    except bandwidth.ApiException as e:
+    except Exception as e:
         print("Exception when calling ConferencesApi->update_conference_bxml: %s\n" % e)
 ```
+
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID |
- **conference_id** | **str**| Programmable Voice API Conference ID |
- **body** | **str**|  |
+ **account_id** | **str**| Your Bandwidth Account ID. | 
+ **conference_id** | **str**| Programmable Voice API Conference ID. | 
+ **body** | **str**|  | 
 
 ### Return type
 
@@ -746,19 +719,17 @@ void (empty response body)
  - **Content-Type**: application/xml
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**204** | Conference successfully modified |  -  |
+**204** | Conference successfully modified. |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
 **415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -773,14 +744,14 @@ Updates settings for a particular conference member.
 ### Example
 
 * Basic Authentication (Basic):
-
 ```python
 import time
+import os
 import bandwidth
-from bandwidth.api import conferences_api
-from bandwidth.model.update_conference_member import UpdateConferenceMember
-from bandwidth.model.voice_api_error import VoiceApiError
+from bandwidth.models.update_conference_member import UpdateConferenceMember
+from bandwidth.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = bandwidth.Configuration(
@@ -794,40 +765,36 @@ configuration = bandwidth.Configuration(
 
 # Configure HTTP basic authorization: Basic
 configuration = bandwidth.Configuration(
-    username = 'YOUR_USERNAME',
-    password = 'YOUR_PASSWORD'
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
 )
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = conferences_api.ConferencesApi(api_client)
-    account_id = "9900000" # str | Your Bandwidth Account ID
-    conference_id = "conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9" # str | Programmable Voice API Conference ID
-    member_id = "c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85" # str | Programmable Voice API Conference Member ID
-    update_conference_member = UpdateConferenceMember(
-        mute=False,
-        hold=False,
-        call_ids_to_coach=["c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"],
-    ) # UpdateConferenceMember | 
+    api_instance = bandwidth.ConferencesApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
+    conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9' # str | Programmable Voice API Conference ID.
+    member_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | Programmable Voice API Conference Member ID.
+    update_conference_member = bandwidth.UpdateConferenceMember() # UpdateConferenceMember | 
 
-    # example passing only required values which don't have defaults set
     try:
         # Update Conference Member
         api_instance.update_conference_member(account_id, conference_id, member_id, update_conference_member)
-    except bandwidth.ApiException as e:
+    except Exception as e:
         print("Exception when calling ConferencesApi->update_conference_member: %s\n" % e)
 ```
+
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID |
- **conference_id** | **str**| Programmable Voice API Conference ID |
- **member_id** | **str**| Programmable Voice API Conference Member ID |
- **update_conference_member** | [**UpdateConferenceMember**](UpdateConferenceMember.md)|  |
+ **account_id** | **str**| Your Bandwidth Account ID. | 
+ **conference_id** | **str**| Programmable Voice API Conference ID. | 
+ **member_id** | **str**| Programmable Voice API Conference Member ID. | 
+ **update_conference_member** | [**UpdateConferenceMember**](UpdateConferenceMember.md)|  | 
 
 ### Return type
 
@@ -842,19 +809,17 @@ void (empty response body)
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**204** | Conference member successfully modified |  -  |
+**204** | Conference member was successfully modified. |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
 **415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

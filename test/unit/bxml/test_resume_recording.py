@@ -7,8 +7,8 @@ Unit tests for the <ResumeRecording> BXML verb
 """
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.resume_recording import ResumeRecording
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import ResumeRecording
 
 
 class TestResumeRecording(unittest.TestCase):

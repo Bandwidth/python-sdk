@@ -1,9 +1,9 @@
 import time
 from bandwidth.exceptions import NotFoundException
 from test.utils.env_variables import *
-from bandwidth.model.call_state import CallState
-from bandwidth.model.call_state_enum import CallStateEnum
-from bandwidth.model.update_call import UpdateCall
+from bandwidth.models.call_state import CallState
+from bandwidth.models.call_state_enum import CallStateEnum
+from bandwidth.models.update_call import UpdateCall
 
 TEST_SLEEP = 3
 MAX_RETRIES = 10

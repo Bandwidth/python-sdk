@@ -25,5 +25,5 @@
 .gitignore
 setup.cfg
 setup.py
-*requirements.txt
+#*requirements.txt
 test/*

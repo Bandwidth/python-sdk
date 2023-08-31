@@ -12,16 +12,16 @@ from hamcrest import assert_that, has_properties, not_none, instance_of
 
 import bandwidth
 from bandwidth.api import calls_api
-from bandwidth.model.create_call import CreateCall
-from bandwidth.model.create_call_response import CreateCallResponse
-from bandwidth.model.call_direction_enum import CallDirectionEnum
-from bandwidth.model.callback_method_enum import CallbackMethodEnum
-from bandwidth.model.machine_detection_configuration import MachineDetectionConfiguration
-from bandwidth.model.machine_detection_mode_enum import MachineDetectionModeEnum
-from bandwidth.model.call_state_enum import CallStateEnum
-from bandwidth.model.redirect_method_enum import RedirectMethodEnum
-from bandwidth.model.call_state import CallState
-from bandwidth.model.update_call import UpdateCall
+from bandwidth.models.create_call import CreateCall
+from bandwidth.models.create_call_response import CreateCallResponse
+from bandwidth.models.call_direction_enum import CallDirectionEnum
+from bandwidth.models.callback_method_enum import CallbackMethodEnum
+from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration
+from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnum
+from bandwidth.models.call_state_enum import CallStateEnum
+from bandwidth.models.redirect_method_enum import RedirectMethodEnum
+from bandwidth.models.call_state import CallState
+from bandwidth.models.update_call import UpdateCall
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException, NotFoundException
 
 class CallsIntegration(unittest.TestCase):

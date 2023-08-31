@@ -7,8 +7,8 @@ Unit tests for the <StopStream> BXML verb
 """
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.stop_stream import StopStream
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import StopStream
 
 
 class TestStopStream(unittest.TestCase):

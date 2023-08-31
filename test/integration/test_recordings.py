@@ -20,18 +20,18 @@ from hamcrest import *
 from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.configuration import Configuration
 from bandwidth.exceptions import ForbiddenException, NotFoundException, UnauthorizedException
-from bandwidth.model.call_recording_metadata import CallRecordingMetadata
-from bandwidth.model.call_state import CallState
-from bandwidth.model.call_state_enum import CallStateEnum
+from bandwidth.models.call_recording_metadata import CallRecordingMetadata
+from bandwidth.models.call_state import CallState
+from bandwidth.models.call_state_enum import CallStateEnum
 from bandwidth.api.calls_api import CallsApi
-from bandwidth.model.create_call_response import CreateCallResponse
-from bandwidth.model.create_call import CreateCall
-from bandwidth.model.file_format_enum import FileFormatEnum
-from bandwidth.model.recording_state_enum import RecordingStateEnum
-from bandwidth.model.transcribe_recording import TranscribeRecording
-from bandwidth.model.transcription import Transcription
-from bandwidth.model.update_call import UpdateCall
-from bandwidth.model.update_call_recording import UpdateCallRecording
+from bandwidth.models.create_call_response import CreateCallResponse
+from bandwidth.models.create_call import CreateCall
+from bandwidth.models.file_format_enum import FileFormatEnum
+from bandwidth.models.recording_state_enum import RecordingStateEnum
+from bandwidth.models.transcribe_recording import TranscribeRecording
+from bandwidth.models.transcription import Transcription
+from bandwidth.models.update_call import UpdateCall
+from bandwidth.models.update_call_recording import UpdateCallRecording
 from bandwidth.rest import RESTClientObject, RESTResponse
 from test.utils.call_cleanup import callCleanup
 from test.utils.env_variables import *

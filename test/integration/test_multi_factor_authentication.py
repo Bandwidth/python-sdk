@@ -10,11 +10,11 @@ from random import randint
 
 import bandwidth
 from bandwidth.api import mfa_api
-from bandwidth.model.code_request import CodeRequest
-from bandwidth.model.messaging_code_response import MessagingCodeResponse
-from bandwidth.model.verify_code_request import VerifyCodeRequest
-from bandwidth.model.verify_code_response import VerifyCodeResponse
-from bandwidth.model.voice_code_response import VoiceCodeResponse
+from bandwidth.models.code_request import CodeRequest
+from bandwidth.models.messaging_code_response import MessagingCodeResponse
+from bandwidth.models.verify_code_request import VerifyCodeRequest
+from bandwidth.models.verify_code_response import VerifyCodeResponse
+from bandwidth.models.voice_code_response import VoiceCodeResponse
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
 from test.utils.env_variables import *
 

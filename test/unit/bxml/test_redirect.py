@@ -7,8 +7,8 @@ Unit tests for the <Record> BXML verb
 """
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.redirect import Redirect
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import Redirect
 
 
 class TestRedirect(unittest.TestCase):

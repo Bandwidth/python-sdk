@@ -5,11 +5,10 @@ Unit tests for the <StartRecording> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import os
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.start_recording import StartRecording
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import StartRecording
 
 
 class TestStartRecording(unittest.TestCase):

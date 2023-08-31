@@ -7,8 +7,8 @@ Unit tests for the <StopRecording> BXML verb
 """
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.stop_recording import StopRecording
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml.verbs.stop_recording import StopRecording
 
 
 class TestStopRecording(unittest.TestCase):

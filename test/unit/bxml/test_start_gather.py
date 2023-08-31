@@ -5,11 +5,10 @@ Unit tests for the <StartGather> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import os
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.start_gather import StartGather
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import StartGather
 
 
 class TestStartGather(unittest.TestCase):

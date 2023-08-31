@@ -7,8 +7,8 @@ Unit tests for the <SpeakSentence> BXML verb
 """
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs import SpeakSentence
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import SpeakSentence
 
 
 class TestSpeakSentence(unittest.TestCase):

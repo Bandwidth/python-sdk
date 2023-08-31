@@ -5,11 +5,10 @@ Unit tests for the <Ring> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import os
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.ring import Ring
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml.verbs.ring import Ring
 
 
 class TestRing(unittest.TestCase):

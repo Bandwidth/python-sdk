@@ -5,11 +5,10 @@ Unit tests for the <Forward> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import os
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.forward import Forward
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml.verbs.forward import Forward
 
 class TestForward(unittest.TestCase):
 

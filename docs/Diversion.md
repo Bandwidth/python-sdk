@@ -11,8 +11,24 @@ Name | Type | Description | Notes
 **limit** | **str** | The maximum number of diversions allowed for this session | [optional] 
 **unknown** | **str** | The normal list of values is not exhaustive. Your application must be tolerant of unlisted keys and unlisted values of those keys. | [optional] 
 **orig_to** | **str** | Always present. Indicates the last telephone number that the call was diverted from. | [optional] 
-**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
 
+## Example
+
+```python
+from bandwidth.models.diversion import Diversion
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of Diversion from a JSON string
+diversion_instance = Diversion.from_json(json)
+# print the JSON string representation of the object
+print Diversion.to_json()
+
+# convert the object into a dict
+diversion_dict = diversion_instance.to_dict()
+# create an instance of Diversion from a dict
+diversion_form_dict = diversion.from_dict(diversion_dict)
+```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

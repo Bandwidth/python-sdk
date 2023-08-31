@@ -18,14 +18,14 @@ from datetime import datetime
 import bandwidth
 from hamcrest import *
 from bandwidth.api import messages_api
-from bandwidth.model.list_message_direction_enum import ListMessageDirectionEnum
-from bandwidth.model.list_message_item import ListMessageItem
-from bandwidth.model.message_request import MessageRequest
-from bandwidth.model.message_status_enum import MessageStatusEnum
-from bandwidth.model.message_type_enum import MessageTypeEnum
-from bandwidth.model.messages_list import MessagesList
-from bandwidth.model.priority_enum import PriorityEnum
-from bandwidth.model.message import Message
+from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum
+from bandwidth.models.list_message_item import ListMessageItem
+from bandwidth.models.message_request import MessageRequest
+from bandwidth.models.message_status_enum import MessageStatusEnum
+from bandwidth.models.message_type_enum import MessageTypeEnum
+from bandwidth.models.messages_list import MessagesList
+from bandwidth.models.priority_enum import PriorityEnum
+from bandwidth.models.message import Message
 from bandwidth.exceptions import ApiException, UnauthorizedException
 from test.utils.env_variables import *
 

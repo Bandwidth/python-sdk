@@ -7,8 +7,8 @@ Unit tests for the <Hangup> BXML verb
 """
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.hangup import Hangup
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml.verbs.hangup import Hangup
 
 
 class TestHangup(unittest.TestCase):

@@ -2,19 +2,18 @@
 Integration test for Bandwidth's Phone Number Lookup API
 """
 
-import os
 import json
 import time
 import unittest
 
 import bandwidth
 from bandwidth.api import phone_number_lookup_api
-from bandwidth.model.lookup_request import LookupRequest
-from bandwidth.model.create_lookup_response import CreateLookupResponse
-from bandwidth.model.lookup_status import LookupStatus
-from bandwidth.model.lookup_result import LookupResult
-from bandwidth.model.lookup_status_enum import LookupStatusEnum
-from bandwidth.model.tn_lookup_request_error import TnLookupRequestError
+from bandwidth.models.lookup_request import LookupRequest
+from bandwidth.models.create_lookup_response import CreateLookupResponse
+from bandwidth.models.lookup_status import LookupStatus
+from bandwidth.models.lookup_result import LookupResult
+from bandwidth.models.lookup_status_enum import LookupStatusEnum
+from bandwidth.models.tn_lookup_request_error import TnLookupRequestError
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
 from test.utils.env_variables import *
 
@@ -47,7 +46,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         """
 
         # if result has 1 of these attributes it should have the other
-        if result.get('mobile_country_code') or result.get('mobile_network_code'):
+        if result.mobile_country_code or result.mobile_network_code:
             self.assertIs(type(result.mobile_country_code), str)
             self.assertIs(type(result.mobile_network_code), str)
 
@@ -117,25 +116,23 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
         # Create the lookup request and validate the response
         create_lookup_response: CreateLookupResponse = self.api_instance.create_lookup(
             self.account_id, lookup_request, _return_http_data_only=False)
-                
-        self.assertEqual(create_lookup_response[1], 202)
-        self.assertIs(type(create_lookup_response[0].status), LookupStatusEnum)
-        self.assertEqual(create_lookup_response[0].status, LookupStatusEnum("IN_PROGRESS"))
-        self.assertIs(type(create_lookup_response[0].request_id), str)
-        self.assertRegex(create_lookup_response[0].request_id,
+
+        self.assertIs(type(create_lookup_response.status), LookupStatusEnum)
+        self.assertEqual(create_lookup_response.status, LookupStatusEnum("IN_PROGRESS"))
+        self.assertIs(type(create_lookup_response.request_id), str)
+        self.assertRegex(create_lookup_response.request_id,
                          r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')
 
         # Check the status code for the GET LookupStatus response
         get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(
-            self.account_id, create_lookup_response[0].request_id, _return_http_data_only=False)
-        self.assertEqual(get_lookup_status_response[1], 200)
+            self.account_id, create_lookup_response.request_id, _return_http_data_only=False)
 
         # make the request again without _return_http_data_only=False to just get the LookupStatus model
         get_lookup_status_response: LookupStatus = self.pollLookupStatus(
-            create_lookup_response[0].request_id)
+            create_lookup_response.request_id)
 
         self.assertEqual(get_lookup_status_response.request_id,
-                         create_lookup_response[0].request_id)
+                         create_lookup_response.request_id)
         self.assertIs(type(get_lookup_status_response), LookupStatus)
 
         # Assert that each result is of type LookupResult
@@ -143,7 +140,7 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
             self.assertIs(type(get_lookup_status_response.result[i]), LookupResult)
 
         # Check the information for a Bandwidth TN
-        bw_lookup_result: LookupResult = get_lookup_status_response.result[0]
+        bw_lookup_result = get_lookup_status_response.result[0]
         self.validateResult(bw_lookup_result, BW_NUMBER)
 
         # Check the information for a Verizon TN

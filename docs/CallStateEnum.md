@@ -5,7 +5,6 @@ The call state. Possible values:<br>`active` to redirect the call (default)<br>`
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**value** | **str** | The call state. Possible values:&lt;br&gt;&#x60;active&#x60; to redirect the call (default)&lt;br&gt;&#x60;completed&#x60; to hang up the call if it is answered, cancel it if it is an unanswered outbound call, or reject it if it an unanswered inbound call | defaults to "active",  must be one of ["active", "completed", ]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

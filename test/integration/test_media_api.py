@@ -10,7 +10,7 @@ import logging
 import bandwidth
 from hamcrest import *
 from bandwidth.api import media_api
-from bandwidth.model.media import Media
+from bandwidth.models.media import Media
 from bandwidth.exceptions import ApiException, NotFoundException
 from test.utils.env_variables import *
 

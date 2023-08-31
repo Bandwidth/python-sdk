@@ -7,8 +7,8 @@ Unit tests for the <SendDtmf> BXML verb
 """
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.send_dtmf import SendDtmf
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml.verbs.send_dtmf import SendDtmf
 
 
 class TestSendDtmf(unittest.TestCase):
