@@ -86,7 +86,7 @@ class TestMessagesApi(unittest.TestCase):
         assert_that(api_response, has_properties(
             'application_id', self.application_id,
             'to', self.to_number,
-            '_from', self.from_number,
+            'var_from', self.from_number,
             'owner', self.from_number,
             'text', self.text,
             'media', self.media,
