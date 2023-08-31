@@ -124,7 +124,7 @@ class TestRecordings(unittest.TestCase):
         test_id = response.data.decode("utf-8")
 
         # Make a CreateCall body and assign the appropriate params
-        call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER,
+        call_body = CreateCall(to=MANTECA_IDLE_NUMBER, var_from=MANTECA_ACTIVE_NUMBER,
                                application_id=MANTECA_APPLICATION_ID, answer_url=answer_url, tag=test_id)
 
         # Make the call

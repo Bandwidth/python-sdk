@@ -60,7 +60,7 @@ class TestMessagesApi(unittest.TestCase):
         self.message_request = MessageRequest(
             application_id=self.application_id,
             to=self.to_number,
-            _from=self.from_number,
+            var_from=self.from_number,
             text=self.text,
             media=self.media,
             tag=self.tag,
@@ -71,7 +71,7 @@ class TestMessagesApi(unittest.TestCase):
         self.invalid_message_request = MessageRequest(
             application_id=self.application_id,
             to=['+invalid'],
-            _from='+invalid',
+            var_from='+invalid',
             text='',
         )
 

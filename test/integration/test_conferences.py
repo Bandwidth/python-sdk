@@ -133,7 +133,7 @@ class ConferencesIntegration(unittest.TestCase):
         # Get the test id from the response
         test_id = response.data.decode("utf-8")
 
-        call_body = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER,
+        call_body = CreateCall(to=MANTECA_IDLE_NUMBER, var_from=MANTECA_ACTIVE_NUMBER,
                                application_id=MANTECA_APPLICATION_ID, answer_url=answer_url, tag=test_id)
 
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(

@@ -55,7 +55,7 @@ class CallsIntegration(unittest.TestCase):
         self.account_id = BW_ACCOUNT_ID
         self.createCallBody = CreateCall(
             to=USER_NUMBER, 
-            _from=BW_NUMBER, 
+            var_from=BW_NUMBER, 
             application_id=BW_VOICE_APPLICATION_ID, 
             answer_url=BASE_CALLBACK_URL,
             answer_method=CallbackMethodEnum("POST"),
@@ -89,8 +89,8 @@ class CallsIntegration(unittest.TestCase):
             priority=5,
             tag="tag_example",
         )
-        self.testCallBody = CreateCall(to=USER_NUMBER, _from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=BASE_CALLBACK_URL)
-        self.testMantecaCallBody = CreateCall(to=MANTECA_IDLE_NUMBER, _from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=MANTECA_BASE_URL + "/bxml/pause")
+        self.testCallBody = CreateCall(to=USER_NUMBER, var_from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=BASE_CALLBACK_URL)
+        self.testMantecaCallBody = CreateCall(to=MANTECA_IDLE_NUMBER, var_from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=MANTECA_BASE_URL + "/bxml/pause")
         self.updateStateCompleted = UpdateCall(state=CallStateEnum("completed"))
         self.testCallId = "Call-Id"
         self.testBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence><Pause duration="3"/></Bxml>'
@@ -135,7 +135,7 @@ class CallsIntegration(unittest.TestCase):
     def test_create_call_bad_request(self):
         """Validate a bad (400) request
         """
-        call_body = CreateCall(to="invalidNumberFormat", _from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=BASE_CALLBACK_URL)
+        call_body = CreateCall(to="invalidNumberFormat", var_from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=BASE_CALLBACK_URL)
         
         with self.assertRaises(ApiException) as context:
             self.calls_api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
