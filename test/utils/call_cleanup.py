@@ -27,9 +27,9 @@ def callCleanup(self):
                 while (repeat and retries <= MAX_RETRIES):
                     try:
                         get_call_response: CallState = self.calls_api_instance.get_call_state(BW_ACCOUNT_ID, callId, _return_http_data_only=False)
-                        if get_call_response[0].state == 'active':
+                        if get_call_response.state == 'active':
                             self.calls_api_instance.update_call(BW_ACCOUNT_ID, callId, body, _return_http_data_only=False)
-                        elif get_call_response[0].state == 'complete':
+                        elif get_call_response.state == 'complete':
                             self.callIdArray.remove(callId)
                         
                         # We succeeded, break the loop
