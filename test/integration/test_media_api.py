@@ -111,7 +111,7 @@ class TestMedia(unittest.TestCase):
         # returns void
         self.api_instance.delete_media(self.account_id, self.media_id)
     
-    def _steps(self) -> None:
+    def _steps(self):
         call_order = ['uploadMedia', 'listMedia', 'getMedia', 'deleteMedia']
         for name in call_order: 
             yield name, getattr(self, name)
