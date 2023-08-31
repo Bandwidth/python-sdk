@@ -27,3 +27,4 @@ setup.cfg
 setup.py
 #*requirements.txt
 test/*
+.github/workflows/python.yml
