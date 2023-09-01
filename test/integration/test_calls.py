@@ -359,7 +359,7 @@ class CallsIntegration(unittest.TestCase):
         call_id = create_call_response[0].call_id
 
         #Adding the call to the self.callIdArray
-        self.callIdArray.append(create_call_response[0].call_id)
+        self.callIdArray.append(create_call_response.call_id)
 
         time.sleep(self.TEST_SLEEP)        
         with self.assertRaises(ForbiddenException) as context:
