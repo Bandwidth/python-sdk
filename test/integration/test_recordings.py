@@ -17,6 +17,8 @@ import json
 
 import bandwidth
 from hamcrest import *
+
+from bandwidth import ApiResponse
 from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.configuration import Configuration
 from bandwidth.exceptions import ForbiddenException, NotFoundException, UnauthorizedException
@@ -227,12 +229,12 @@ class TestRecordings(unittest.TestCase):
         (test_id, call_id) = self.complete_recorded_call()
 
         # List Call Recordings Endpoint
-        response: List[CallRecordingMetadata] = self.recordings_api_instance.list_call_recordings(
+        response: ApiResponse = self.recordings_api_instance.list_call_recordings_with_http_info(
             BW_ACCOUNT_ID, call_id, _return_http_data_only=False)
-        assert_that(response[1], equal_to(200))  # Check response code
+        assert_that(response.status_code, equal_to(200))  # Check response code
 
         # We should get back 1 recording
-        call_recordings = response[0]
+        call_recordings: List[CallRecordingMetadata] = response.data
         assert_that(call_recordings, has_length(1))
 
         # Checks on the first recording
@@ -341,19 +343,22 @@ class TestRecordings(unittest.TestCase):
         time.sleep(TEST_SLEEP)
 
         # Update the call to pause the recording
-        update_call_recording = UpdateCallRecording(RecordingStateEnum('paused'))
-        update_response = self.recordings_api_instance.update_call_recording_state(
-            BW_ACCOUNT_ID, call_id, update_call_recording, _return_http_data_only=False)
-        assert_that(update_response[1], equal_to(200))
+        update_call_recording = UpdateCallRecording()
+        update_call_recording.state = RecordingStateEnum.PAUSED
+        update_response = self.recordings_api_instance.update_call_recording_state_with_http_info(
+            BW_ACCOUNT_ID, call_id, update_call_recording)
+        assert_that(update_response.status_code, equal_to(200))
 
         # Update the call to resume the recording
-        update_call_recording = UpdateCallRecording(RecordingStateEnum('recording'))
-        update_response = self.recordings_api_instance.update_call_recording_state(
-            BW_ACCOUNT_ID, call_id, update_call_recording, _return_http_data_only=False)
-        assert_that(update_response[1], equal_to(200))
+        update_call_recording = UpdateCallRecording()
+        update_call_recording.state = RecordingStateEnum.ACTIVE
+        self.recordings_api_instance.update_call_recording_state_with_http_info(
+            BW_ACCOUNT_ID, call_id, update_call_recording)
+        assert_that(update_response.status_code, equal_to(200))
 
         # Kill the call
-        update_call = UpdateCall(state=CallStateEnum('completed'))
+        update_call = UpdateCall()
+        update_call.state = CallStateEnum.COMPLETED
         self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, update_call)
 
     def test_4xx_errors(self) -> None:
