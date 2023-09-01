@@ -17,6 +17,8 @@ from datetime import datetime
 
 import bandwidth
 from hamcrest import *
+
+from bandwidth import ApiResponse
 from bandwidth.api import messages_api
 from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.models.list_message_item import ListMessageItem
@@ -77,11 +79,11 @@ class TestMessagesApi(unittest.TestCase):
 
 
     def test_create_message(self):
-        response = self.api_instance.create_message(self.account_id, self.message_request, _return_http_data_only=False)
+        response: ApiResponse = self.api_instance.create_message_with_http_info(self.account_id, self.message_request, _return_http_data_only=False)
 
-        assert_that(response[1], equal_to(202))
+        assert_that(response.status_code, equal_to(202))
 
-        api_response = response[0]
+        api_response = response.data
         assert_that(api_response, instance_of(Message))
         assert_that(api_response, has_properties(
             'application_id', self.application_id,
@@ -96,7 +98,7 @@ class TestMessagesApi(unittest.TestCase):
             'segment_count', 1,
             )
         )
-        assert_that(datetime.fromisoformat(api_response.time[:-1]), instance_of(datetime))
+        assert_that(api_response.time, instance_of(datetime))
 
 
     def test_create_message_bad_request(self):    
@@ -120,11 +122,11 @@ class TestMessagesApi(unittest.TestCase):
     def test_list_messages(self):
         message_direction = ListMessageDirectionEnum("OUTBOUND")
         
-        response = self.api_instance.list_messages(self.account_id, message_direction=message_direction, _return_http_data_only=False)
+        response = self.api_instance.list_messages_with_http_info(self.account_id, message_direction=message_direction, _return_http_data_only=False)
 
-        assert_that(response[1], equal_to(200))
+        assert_that(response.status_code, equal_to(200))
 
-        api_response = response[0]
+        api_response = response.data
         assert_that(api_response, instance_of(MessagesList))
         assert_that(api_response, has_properties(
             'total_count', greater_than(0),
@@ -144,7 +146,7 @@ class TestMessagesApi(unittest.TestCase):
             'segment_count', greater_than(0),
             'source_tn', matches_regexp('^\\+[1-9]\\d{1,14}$')
         ))
-        assert_that(datetime.fromisoformat(message.receive_time[:-1]), instance_of(datetime))
+        assert_that(message.receive_time, instance_of(datetime))
 
 
     def test_list_messages_bad_request(self):
