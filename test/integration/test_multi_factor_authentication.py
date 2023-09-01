@@ -15,7 +15,7 @@ from bandwidth.models.messaging_code_response import MessagingCodeResponse
 from bandwidth.models.verify_code_request import VerifyCodeRequest
 from bandwidth.models.verify_code_response import VerifyCodeResponse
 from bandwidth.models.voice_code_response import VoiceCodeResponse
-from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException
+from bandwidth.exceptions import ApiException, BadRequestException, UnauthorizedException, ForbiddenException
 from test.utils.env_variables import *
 
 from hamcrest.core import *
@@ -58,20 +58,20 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             digits=6,
         )
 
-    def assertAuthException(self, context: ApiException, expectedException: ApiException, expected_status_code: int) -> None:
+    def assertAuthException(self, context: Exception, expected_exception: Exception, expected_status_code: int) -> None:
         """Validates that an auth exception (401 or 403) is properly formatted
         Args:
             context (ApiException): Exception to validate
-            expectedException (ApiException): Expected exception type
+            expected_exception (ApiException): Expected exception type
             expected_status_code (int): Expected status code
         """
-        self.assertIs(type(context.exception), expectedException)
+        self.assertIs(type(context.exception), expected_exception)
         self.assertIs(type(context.exception.status), int)
         self.assertEqual(context.exception.status, expected_status_code)
         self.assertIs(type(context.exception.body), str)
 
         # alternate option using hamcrest mathcers - reads like normal sentence, easy to read/speak & less brain overload
-        assert_that(context.exception, is_(expectedException))
+        assert_that(context.exception, is_(expected_exception))
 
         assert_that(context.exception, has_properties(
             'status', equal_to(expected_status_code),
@@ -81,11 +81,11 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     def testSuccessfulMfaGenerateMessagingCodeRequest(self) -> None:
         """Test a successful MFA messaging code request 
         """
-        api_response_with_http_info = self.api_instance.generate_messaging_code(
+        api_response_with_http_info = self.api_instance.generate_messaging_code_with_http_info(
             self.account_id, self.messaging_code_request,
             _return_http_data_only=False
         )
-        self.assertEqual(api_response_with_http_info[1], 200)
+        self.assertEqual(api_response_with_http_info.status_code, 200)
 
         api_response: MessagingCodeResponse = self.api_instance.generate_messaging_code(
             self.account_id, self.messaging_code_request)
@@ -94,11 +94,11 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     def testSuccessfulMfaGenerateVoiceCodeRequest(self) -> None:
         """Test a successful MFA voice code request
         """
-        api_response_with_http_info = self.api_instance.generate_voice_code(
+        api_response_with_http_info = self.api_instance.generate_voice_code_with_http_info(
             self.account_id, self.voice_code_request,
             _return_http_data_only=False
         )
-        self.assertEqual(api_response_with_http_info[1], 200)
+        self.assertEqual(api_response_with_http_info.status_code, 200)
 
         api_response: VoiceCodeResponse = self.api_instance.generate_voice_code(
             self.account_id, self.voice_code_request)
@@ -114,11 +114,11 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             expiration_time_in_minutes=3.0,
             code="123456",
         )
-        api_response_with_http_info = self.api_instance.verify_code(
+        api_response_with_http_info = self.api_instance.verify_code_with_http_info(
             self.account_id, verify_code_request,
             _return_http_data_only=False
         )
-        self.assertEqual(api_response_with_http_info[1], 200)
+        self.assertEqual(api_response_with_http_info.status_code, 200)
 
         api_response: VerifyCodeResponse = self.api_instance.verify_code(
             self.account_id, verify_code_request)
@@ -132,10 +132,10 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     def testBadRequest(self) -> None:
         """Validates a bad (400) request
         """
-        with self.assertRaises(ApiException) as context:
+        with self.assertRaises(BadRequestException) as context:
             self.api_instance.generate_messaging_code(self.account_id, self.bad_code_request)
 
-        self.assertAuthException(context, ApiException, 400)
+        self.assertAuthException(context, BadRequestException, 400)
 
     def testUnauthorizedRequest(self) -> None:
         """Validate an unauthorized (401) request
@@ -181,7 +181,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         while True:
             try:
                 logging.debug('Testing rate limit, attempt #'+ str(call_count))
-                api_response_with_http_info = self.api_instance.verify_code(
+                self.api_instance.verify_code(
                     self.account_id, verify_code_request
                 )
                 call_count += 1
@@ -189,14 +189,14 @@ class TestMultiFactorAuthentication(unittest.TestCase):
                 if e.status == 429:
                     logging.debug('Got rate limit error')
                     time.sleep(35)
-                    api_response_with_http_info = self.api_instance.verify_code(
+                    api_response_with_http_info = self.api_instance.verify_code_with_http_info(
                         self.account_id, verify_code_request,
                         _return_http_data_only=False
                     )
-                    self.assertEqual(api_response_with_http_info[1], 200)
+                    self.assertEqual(api_response_with_http_info.status_code, 200)
                     break
                 else:
                     raise e
             except:
                 logging.error("Unexpected error while testing rate limit!")
-                raise e  
+                raise e
