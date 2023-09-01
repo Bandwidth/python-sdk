@@ -15,7 +15,7 @@ class TestForward(unittest.TestCase):
     def setUp(self):
         self.forward = Forward(
             to="19195554321",
-            var_from="19195554322",
+            _from="19195554322",
             call_timeout = "15",
             diversion_treatment="propagate",
             diversion_reason="away",

@@ -7,6 +7,8 @@ import filecmp
 import unittest
 import logging
 
+from bandwidth import ApiResponse
+
 import bandwidth
 from hamcrest import *
 from bandwidth.api import media_api
@@ -27,7 +29,8 @@ class TestMedia(unittest.TestCase):
         self.api_client = bandwidth.ApiClient(configuration)
         self.api_instance = media_api.MediaApi(self.api_client)
         self.account_id = BW_ACCOUNT_ID
-        self.media_path = "./test/fixtures/"
+        # self.media_path = "./test/fixtures/"
+        self.media_path = "../../test/fixtures/"
         self.media_file = "python_cat.jpeg"
         self.media_id = PYTHON_VERSION + "_" + RUNNER_OS + "_" + str(uuid.uuid4()) + "_" + self.media_file
         self.download_file_path = "cat_download.jpeg"
@@ -40,17 +43,17 @@ class TestMedia(unittest.TestCase):
         content_type = "image/jpeg"
         cache_control = "no-cache"
 
-        api_response_with_http_info = self.api_instance.upload_media(
+        api_response_with_http_info: ApiResponse = self.api_instance.upload_media_with_http_info(
             account_id=self.account_id,
             media_id=media_id,
-            body=self.original_file,
+            body=bytearray(self.original_file.read()),
             _content_type=content_type,
             cache_control=cache_control,
             _return_http_data_only=False
         )
 
         logging.debug(api_response_with_http_info)
-        assert_that(api_response_with_http_info[1], equal_to(204))
+        assert_that(api_response_with_http_info.status_code, equal_to(204))
 
         # reopen the media file
         # the client automatically closes any files passed into request bodies
@@ -60,7 +63,7 @@ class TestMedia(unittest.TestCase):
         self.api_instance.upload_media(
             account_id=self.account_id,
             media_id=media_id,
-            body=reopened_file,
+            body=bytearray(reopened_file.read()),
             _content_type=content_type,
             cache_control=cache_control,
             _return_http_data_only=False
@@ -69,10 +72,10 @@ class TestMedia(unittest.TestCase):
     def listMedia(self) -> None:
         """Test listing all media on the account
         """
-        api_response_with_http_info = self.api_instance.list_media(
+        api_response_with_http_info = self.api_instance.list_media_with_http_info(
             self.account_id, _return_http_data_only=False)
 
-        assert_that(api_response_with_http_info[1], equal_to(200))
+        assert_that(api_response_with_http_info.status_code, equal_to(200))
 
         api_response = self.api_instance.list_media(self.account_id)
         logging.debug("List Media" + str(api_response))
@@ -83,17 +86,17 @@ class TestMedia(unittest.TestCase):
     def getMedia(self) -> None:
         """Test downloading the media we previously uploaded
         """
-        api_response_with_http_info = self.api_instance.get_media(
-            self.account_id, self.media_id, _return_http_data_only=False)
+        api_response_with_http_info = self.api_instance.get_media_with_http_info(
+            self.account_id, self.media_id)
 
         logging.debug(api_response_with_http_info)
-        assert_that(api_response_with_http_info[1], equal_to(200))
+        assert_that(api_response_with_http_info.status_code, equal_to(200))
 
         api_response = self.api_instance.get_media(
-            self.account_id, self.media_id, _preload_content=False)
+            self.account_id, self.media_id)
 
         with open(self.media_path + self.download_file_path, "wb") as download_file:
-            download_file.write(api_response.data)
+            download_file.write(api_response)
 
         assert_that(filecmp.cmp(self.media_path + self.media_file,
                         self.media_path + self.download_file_path), equal_to(True))
@@ -102,11 +105,11 @@ class TestMedia(unittest.TestCase):
     def deleteMedia(self) -> None:
         """Test deleting the media that we previously uploaded
         """
-        api_response_with_http_info = self.api_instance.delete_media(
-            self.account_id, self.media_id, _return_http_data_only=False)
+        api_response_with_http_info = self.api_instance.delete_media_with_http_info(
+            self.account_id, self.media_id)
         
         logging.debug(api_response_with_http_info)
-        assert_that(api_response_with_http_info[1], equal_to(204))
+        assert_that(api_response_with_http_info.status_code, equal_to(204))
 
         # returns void
         self.api_instance.delete_media(self.account_id, self.media_id)
