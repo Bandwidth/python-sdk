@@ -1,7 +1,7 @@
 """
 Integration test for Bandwidth's Voice Voice Calls API
 """
-
+from bandwidth import ApiResponse
 from test.utils.env_variables import *
 from test.utils.call_cleanup import callCleanup
 import time
@@ -24,13 +24,14 @@ from bandwidth.models.call_state import CallState
 from bandwidth.models.update_call import UpdateCall
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException, NotFoundException
 
+
 class CallsIntegration(unittest.TestCase):
     """Voice Calls API integration test"""
 
     def setUp(self):
         configuration = bandwidth.Configuration(
-            username = BW_USERNAME,
-            password = BW_PASSWORD,
+            username=BW_USERNAME,
+            password=BW_PASSWORD,
         )
         api_client = bandwidth.ApiClient(configuration)
         self.calls_api_instance = calls_api.CallsApi(api_client)
@@ -118,13 +119,16 @@ class CallsIntegration(unittest.TestCase):
             Validate a Create Call request with all optional parameters
         """
         time.sleep(self.TEST_SLEEP)
-        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.createCallBody, _return_http_data_only=False)
+        create_call_response: ApiResponse = self.calls_api_instance.create_call_with_http_info(
+            BW_ACCOUNT_ID,
+            self.createCallBody
+        )
 
         #Adding the call to the self.callIdArray
-        self.callIdArray.append(create_call_response[0].call_id)
+        self.callIdArray.append(create_call_response.data.call_id)
 
-        assert_that(create_call_response[1], 201)
-        assert_that(create_call_response[0], has_properties(
+        assert_that(create_call_response.status_code, 201)
+        assert_that(create_call_response, has_properties(
             'call_id', instance_of(str),
             'account_id', BW_ACCOUNT_ID,
             'application_id', BW_VOICE_APPLICATION_ID,
@@ -138,7 +142,7 @@ class CallsIntegration(unittest.TestCase):
         call_body = CreateCall(to="invalidNumberFormat", var_from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=BASE_CALLBACK_URL)
         
         with self.assertRaises(ApiException) as context:
-            self.calls_api_instance.create_call(BW_ACCOUNT_ID, call_body, _return_http_data_only=False)
+            self.calls_api_instance.create_call_with_http_info(BW_ACCOUNT_ID, call_body)
             
         assert_that(context.exception.status, 400)
 
@@ -146,7 +150,7 @@ class CallsIntegration(unittest.TestCase):
         """Validate an unauthorized (401) request
         """
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.create_call(BW_ACCOUNT_ID, self.testCallBody, _return_http_data_only=False)
+            self.unauthorized_api_instance.create_call(BW_ACCOUNT_ID, self.testCallBody)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
@@ -154,7 +158,7 @@ class CallsIntegration(unittest.TestCase):
         """Validate a forbidden (403) request
         """
         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.create_call(BW_ACCOUNT_ID, self.testCallBody, _return_http_data_only=False)
+            self.forbidden_api_instance.create_call(BW_ACCOUNT_ID, self.testCallBody)
 
         self.assertApiException(context, ForbiddenException, 403)
 
@@ -162,18 +166,18 @@ class CallsIntegration(unittest.TestCase):
     def test_get_call_state(self):
         """Validate an Get Call State Request
         """
-        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testCallBody, _return_http_data_only=False)
-        call_id = create_call_response[0].call_id
+        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testCallBody)
+        call_id = create_call_response.call_id
 
         #Adding the call to the self.callIdArray
-        self.callIdArray.append(create_call_response[0].call_id)
+        self.callIdArray.append(call_id)
 
         time.sleep(self.TEST_SLEEP)
 
-        get_call_response: CallState = self.calls_api_instance.get_call_state(BW_ACCOUNT_ID, call_id, _return_http_data_only=False)
+        get_call_response: ApiResponse = self.calls_api_instance.get_call_state_with_http_info(BW_ACCOUNT_ID, call_id)
 
-        assert_that(get_call_response[1], 200)
-        assert_that(get_call_response[0], has_properties(
+        assert_that(get_call_response.status_code, 200)
+        assert_that(get_call_response.data, has_properties(
             "call_id", call_id,
             "state", instance_of(str),
             "direction", CallDirectionEnum("outbound"),
@@ -186,7 +190,7 @@ class CallsIntegration(unittest.TestCase):
         """Validate an unauthorized (401) request
         """
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId, _return_http_data_only=False)
+            self.unauthorized_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
@@ -211,10 +215,10 @@ class CallsIntegration(unittest.TestCase):
         """
         time.sleep(self.TEST_SLEEP)            
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody, _return_http_data_only=False)
-        call_id = create_call_response[0].call_id
+        call_id = create_call_response.call_id
 
         #Adding the call to the self.callIdArray
-        self.callIdArray.append(create_call_response[0].call_id)
+        self.callIdArray.append(call_id)
 
         updateCallBody = UpdateCall(
             state=CallStateEnum("active"),
@@ -230,22 +234,22 @@ class CallsIntegration(unittest.TestCase):
         )
 
         time.sleep(self.TEST_SLEEP)
-        update_call_response: UpdateCall = self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, updateCallBody, _return_http_data_only=False)
-        assert_that(update_call_response[1], 200)
+        update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, updateCallBody, _return_http_data_only=False)
+        assert_that(update_call_response.status_code, 200)
 
         time.sleep(self.TEST_SLEEP)
         # hanging-up the call
-        update_call_response: UpdateCall = self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, self.updateStateCompleted, _return_http_data_only=False)
-        assert_that(update_call_response[1], 200)
+        update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted, _return_http_data_only=False)
+        assert_that(update_call_response.status_code, 200)
     
     def test_update_call_bad_request(self):
         """Validate a bad (400) update call request
         """
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody, _return_http_data_only=False)
-        call_id = create_call_response[0].call_id
+        call_id = create_call_response.call_id
 
         #Adding the call to the self.callIdArray
-        self.callIdArray.append(create_call_response[0].call_id)
+        self.callIdArray.append(call_id)
 
         time.sleep(self.TEST_SLEEP)        
 
@@ -307,36 +311,36 @@ class CallsIntegration(unittest.TestCase):
         self.callIdArray.append(create_call_response[0].call_id)
 
         time.sleep(self.TEST_SLEEP)
-        update_call_bxml_response: UpdateCall = self.calls_api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, self.testBxmlBody, _return_http_data_only=False)
-        assert_that(update_call_bxml_response[1], 204)
+        update_call_bxml_response: ApiResponse = self.calls_api_instance.update_call_bxml_with_http_info(BW_ACCOUNT_ID, call_id, self.testBxmlBody, _return_http_data_only=False)
+        assert_that(update_call_bxml_response.status_code, 204)
         
         time.sleep(self.TEST_SLEEP)  
         # hanging-up the call
-        update_call_response: UpdateCall = self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, self.updateStateCompleted, _return_http_data_only=False)
-        assert_that(update_call_response[1], 200)
+        update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted, _return_http_data_only=False)
+        assert_that(update_call_response.status_code, 200)
 
     def test_update_call_bxml_bad_request(self):    
         """Validate a bad (400) update call bxml request
         """
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody, _return_http_data_only=False)
-        call_id = create_call_response[0].call_id
+        call_id = create_call_response.call_id
 
         #Adding the call to the self.callIdArray
-        self.callIdArray.append(create_call_response[0].call_id)
+        self.callIdArray.append(call_id)
 
         time.sleep(self.TEST_SLEEP)        
 
         invalidBxmlBody = "invalidBXML"
 
         with self.assertRaises(ApiException) as context:
-            self.calls_api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, invalidBxmlBody, _return_http_data_only=False)
+            self.calls_api_instance.update_call_bxml_with_http_info(BW_ACCOUNT_ID, call_id, invalidBxmlBody)
             
-        assert_that(context.exception.status, 400)
+        assert_that(context.exception.status_code, 400)
 
         time.sleep(self.TEST_SLEEP)  
         # hanging-up the call
-        update_call_response: UpdateCall = self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, self.updateStateCompleted, _return_http_data_only=False)
-        assert_that(update_call_response[1], 200)
+        update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
+        assert_that(update_call_response.status_code, 200)
 
 
     def test_update_call_bxml_unauthorized(self):
