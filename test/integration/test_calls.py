@@ -133,7 +133,7 @@ class CallsIntegration(unittest.TestCase):
             'account_id', BW_ACCOUNT_ID,
             'application_id', BW_VOICE_APPLICATION_ID,
             'to', USER_NUMBER,
-            'from', BW_NUMBER
+            'var_from', BW_NUMBER
         ))
 
     def test_create_call_bad_request(self):
