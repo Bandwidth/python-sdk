@@ -287,7 +287,7 @@ class TestRecordings(unittest.TestCase):
             BW_ACCOUNT_ID, call_id, recording_id)
         assert_that(transcription_response.status_code, equal_to(200))  # Check response code
 
-        transcription_list = transcription_response.data[0]
+        transcription_list = transcription_response.data
         assert_that(transcription_list.transcripts, has_length(1))
         transcription = transcription_list.transcripts[0]
         assert_that(transcription, instance_of(Transcription))
