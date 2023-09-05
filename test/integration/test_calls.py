@@ -133,7 +133,7 @@ class CallsIntegration(unittest.TestCase):
             'account_id', BW_ACCOUNT_ID,
             'application_id', BW_VOICE_APPLICATION_ID,
             'to', USER_NUMBER,
-            'var_from', BW_NUMBER
+            'from', BW_NUMBER
         ))
 
     def test_create_call_bad_request(self):
@@ -308,7 +308,7 @@ class CallsIntegration(unittest.TestCase):
         call_id = create_call_response[0].call_id
 
         #Adding the call to the self.callIdArray
-        self.callIdArray.append(create_call_response[0].call_id)
+        self.callIdArray.append(create_call_response.call_id)
 
         time.sleep(self.TEST_SLEEP)
         update_call_bxml_response: ApiResponse = self.calls_api_instance.update_call_bxml_with_http_info(BW_ACCOUNT_ID, call_id, self.testBxmlBody)
@@ -356,10 +356,10 @@ class CallsIntegration(unittest.TestCase):
         """Validate a forbidden (403) update call bxml request
         """
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody, _return_http_data_only=False)
-        call_id = create_call_response[0].call_id
+        call_id = create_call_response.call_id
 
         #Adding the call to the self.callIdArray
-        self.callIdArray.append(create_call_response.call_id)
+        self.callIdArray.append(call_id)
 
         time.sleep(self.TEST_SLEEP)        
         with self.assertRaises(ForbiddenException) as context:
