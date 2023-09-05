@@ -11,6 +11,7 @@ import unittest
 from hamcrest import assert_that, has_properties, not_none, instance_of, greater_than
 
 import bandwidth
+from bandwidth import ApiResponse
 from bandwidth.api import calls_api
 from bandwidth.models.create_call import CreateCall
 from bandwidth.models.create_call_response import CreateCallResponse
@@ -214,16 +215,16 @@ class ConferencesIntegration(unittest.TestCase):
         get_conference_response = self.conference_api_instance.get_conference_with_http_info(
             BW_ACCOUNT_ID, conference_id)
         assert_that(get_conference_response.status_code, 200)
-        assert_that(get_conference_response.data[0].id, conference_id)
-        assert_that(get_conference_response.data[0].name, instance_of(str))
-        callId = (get_conference_response.data[0].active_members[0].call_id)
+        assert_that(get_conference_response.data.id, conference_id)
+        assert_that(get_conference_response.data.name, instance_of(str))
+        callId = (get_conference_response.data.active_members[0].call_id)
         self.callIdArray.append(callId)
 
         get_conference_member_response = self.conference_api_instance.get_conference_member_with_http_info(
             BW_ACCOUNT_ID, conference_id, callId)
         assert_that(get_conference_member_response.status_code, 200)
-        assert_that(get_conference_member_response.data[0].conference_id, conference_id)
-        assert_that(get_conference_member_response.data[0].call_id, callId)
+        assert_that(get_conference_member_response.data.conference_id, conference_id)
+        assert_that(get_conference_member_response.data.call_id, callId)
 
         # time.sleep(self.TEST_SLEEP)
         update_conference_member_response = self.conference_api_instance.update_conference_member_with_http_info(
@@ -279,11 +280,11 @@ class ConferencesIntegration(unittest.TestCase):
         # If we failed to get a recorded conference, fail due to polling timeout
         assert call_status['callRecorded'] == True
 
-        list_conference_recordings_response: List[ConferenceRecordingMetadata] = self.conference_api_instance.list_conference_recordings_with_http_info(
+        list_conference_recordings_response: ApiResponse = self.conference_api_instance.list_conference_recordings_with_http_info(
             BW_ACCOUNT_ID, conference_id)
         assert_that(list_conference_recordings_response.status_code, 200)
 
-        conference_recordings = list_conference_recordings_response[0]
+        conference_recordings = list_conference_recordings_response.data
         assert_that(len(conference_recordings), greater_than(0))
 
         first_recording: ConferenceRecordingMetadata = conference_recordings[0]
