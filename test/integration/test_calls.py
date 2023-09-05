@@ -128,7 +128,7 @@ class CallsIntegration(unittest.TestCase):
         self.callIdArray.append(create_call_response.data.call_id)
 
         assert_that(create_call_response.status_code, 201)
-        assert_that(create_call_response, has_properties(
+        assert_that(create_call_response.data, has_properties(
             'call_id', instance_of(str),
             'account_id', BW_ACCOUNT_ID,
             'application_id', BW_VOICE_APPLICATION_ID,

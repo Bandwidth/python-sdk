@@ -166,7 +166,7 @@ class ConferencesIntegration(unittest.TestCase):
 
         return (test_id, create_call_response.call_id, conference_id)
 
-    def validate_recording(self, recording: ConferenceRecordingMetadata, conference_id: str) -> None:
+    def validate_recording(self, recording: ConferenceRecordingMetadata) -> None:
         assert_that(recording.status, 'complete')
         assert_that(recording.file_format, FileFormatEnum('wav'))
 
@@ -229,7 +229,7 @@ class ConferencesIntegration(unittest.TestCase):
         # time.sleep(self.TEST_SLEEP)
         update_conference_member_response = self.conference_api_instance.update_conference_member_with_http_info(
             BW_ACCOUNT_ID, conference_id, callId, self.testUpdateMember)
-        assert_that(update_conference_member_response.statu_code, 204)
+        assert_that(update_conference_member_response.status_code, 204)
 
         # time.sleep(self.TEST_SLEEP)
         update_conference_response = self.conference_api_instance.update_conference_with_http_info(
@@ -288,7 +288,7 @@ class ConferencesIntegration(unittest.TestCase):
         assert_that(len(conference_recordings), greater_than(0))
 
         first_recording: ConferenceRecordingMetadata = conference_recordings[0]
-        self.validate_recording(first_recording, conference_id)
+        self.validate_recording(first_recording)
         recording_id = first_recording.recording_id
 
         recording_response: ConferenceRecordingMetadata = self.conference_api_instance.get_conference_recording_with_http_info(
@@ -298,7 +298,7 @@ class ConferencesIntegration(unittest.TestCase):
         assert_that(recording_response.data.recording_id, recording_id)
         assert_that(recording_response.data.name, instance_of(str))
 
-        self.validate_recording(recording_response.data.conference_id, conference_id)
+        self.validate_recording(recording_response.data)
 
         recording_media_response = self.conference_api_instance.download_conference_recording(
             BW_ACCOUNT_ID, conference_id, recording_id, _preload_content=False)
