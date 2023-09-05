@@ -148,18 +148,18 @@ class ConferencesIntegration(unittest.TestCase):
         ))
 
         time.sleep(self.TEST_SLEEP)
-        list_conferences_response = self.conference_api_instance.list_conferences(
-            BW_ACCOUNT_ID, name=test_id, _return_http_data_only=False)
+        list_conferences_response = self.conference_api_instance.list_conferences_with_http_info(
+            BW_ACCOUNT_ID, name=test_id)
 
-        assert_that(list_conferences_response[1], 200)
+        assert_that(list_conferences_response.status_code, 200)
 
         # TODO: This is not deterministic; our latest conference may not always be the one we just created due to parallelism.
         # This new solution should guarantee the right conference id is grabbed.
         conference_id = list_conferences_response[0][0].id
 
-        get_conference_response = self.conference_api_instance.get_conference(
-            BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
-        assert_that(get_conference_response[1], 200)
+        get_conference_response = self.conference_api_instance.get_conference_with_http_info(
+            BW_ACCOUNT_ID, conference_id)
+        assert_that(get_conference_response.status_code, 200)
 
         self.callIdArray.append(create_call_response.call_id)
 
@@ -201,46 +201,46 @@ class ConferencesIntegration(unittest.TestCase):
         answer_url = MANTECA_BASE_URL + "bxml/joinConferencePause"
         (test_id, call_id, conference_id) = self.create_conference(answer_url)
 
-        list_conferences_response = self.conference_api_instance.list_conferences(
-            BW_ACCOUNT_ID, _return_http_data_only=False)
+        list_conferences_response = self.conference_api_instance.list_conferences_with_http_info(
+            BW_ACCOUNT_ID)
 
-        assert_that(list_conferences_response[1], 200)
-        assert_that(list_conferences_response[0][0].name, instance_of(str))
-        assert_that(list_conferences_response[0][0].id, instance_of(str))
+        assert_that(list_conferences_response.status_code, 200)
+        assert_that(list_conferences_response.data[0].name, instance_of(str))
+        assert_that(list_conferences_response.data[0].id, instance_of(str))
 
         # TODO: Also non-deterministic; we could differentiate by conference name instead? The conference name is set to be the test id by Manteca
         # conferenceId = (list_conferences_response[0][len(list_conferences_response[0])-1].id)
 
-        get_conference_response = self.conference_api_instance.get_conference(
-            BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
-        assert_that(get_conference_response[1], 200)
-        assert_that(get_conference_response[0].id, conference_id)
-        assert_that(get_conference_response[0].name, instance_of(str))
-        callId = (get_conference_response[0].active_members[0].call_id)
+        get_conference_response = self.conference_api_instance.get_conference_with_http_info(
+            BW_ACCOUNT_ID, conference_id)
+        assert_that(get_conference_response.status_code, 200)
+        assert_that(get_conference_response.data[0].id, conference_id)
+        assert_that(get_conference_response.data[0].name, instance_of(str))
+        callId = (get_conference_response.data[0].active_members[0].call_id)
         self.callIdArray.append(callId)
 
-        get_conference_member_response = self.conference_api_instance.get_conference_member(
-            BW_ACCOUNT_ID, conference_id, callId,  _return_http_data_only=False)
-        assert_that(get_conference_member_response[1], 200)
-        assert_that(get_conference_member_response[0].conference_id, conference_id)
-        assert_that(get_conference_member_response[0].call_id, callId)
+        get_conference_member_response = self.conference_api_instance.get_conference_member_with_http_info(
+            BW_ACCOUNT_ID, conference_id, callId)
+        assert_that(get_conference_member_response.status_code, 200)
+        assert_that(get_conference_member_response.data[0].conference_id, conference_id)
+        assert_that(get_conference_member_response.data[0].call_id, callId)
 
         # time.sleep(self.TEST_SLEEP)
-        update_conference_member_response = self.conference_api_instance.update_conference_member(
-            BW_ACCOUNT_ID, conference_id, callId, self.testUpdateMember, _return_http_data_only=False)
-        assert_that(update_conference_member_response[1], 204)
+        update_conference_member_response = self.conference_api_instance.update_conference_member_with_http_info(
+            BW_ACCOUNT_ID, conference_id, callId, self.testUpdateMember)
+        assert_that(update_conference_member_response.statu_code, 204)
 
         # time.sleep(self.TEST_SLEEP)
-        update_conference_response = self.conference_api_instance.update_conference(
-            BW_ACCOUNT_ID, conference_id, self.testUpdateConf, _return_http_data_only=False)
-        assert_that(update_conference_response[1], 204)
+        update_conference_response = self.conference_api_instance.update_conference_with_http_info(
+            BW_ACCOUNT_ID, conference_id, self.testUpdateConf)
+        assert_that(update_conference_response.status_code, 204)
 
         updateBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence></Bxml>'
 
         # time.sleep(self.TEST_SLEEP)
-        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(
-            BW_ACCOUNT_ID, conference_id, updateBxmlBody, _return_http_data_only=False)
-        assert_that(update_conference_bxml_response[1], 204)
+        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml_with_http_info(
+            BW_ACCOUNT_ID, conference_id, updateBxmlBody)
+        assert_that(update_conference_bxml_response.status_code, 204)
 
         update_call = UpdateCall(state=CallStateEnum('completed'))
         self.calls_api_instance.update_call(
@@ -264,9 +264,9 @@ class ConferencesIntegration(unittest.TestCase):
         assert_that(list_conferences_response[1], 200)
 
         updateBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><StartRecording/><SpeakSentence locale="en_US" gender="female" voice="susan">This should be a conference recording.</SpeakSentence><StopRecording/></Bxml>'
-        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml(
-            BW_ACCOUNT_ID, conference_id, updateBxmlBody, _return_http_data_only=False)
-        assert_that(update_conference_bxml_response[1], 204)
+        update_conference_bxml_response = self.conference_api_instance.update_conference_bxml_with_http_info(
+            BW_ACCOUNT_ID, conference_id, updateBxmlBody)
+        assert_that(update_conference_bxml_response.status_code, 204)
 
         # Poll Manteca to ensure our conference is recorded
         call_status = self.get_test_status(test_id)
@@ -279,9 +279,9 @@ class ConferencesIntegration(unittest.TestCase):
         # If we failed to get a recorded conference, fail due to polling timeout
         assert call_status['callRecorded'] == True
 
-        list_conference_recordings_response: List[ConferenceRecordingMetadata] = self.conference_api_instance.list_conference_recordings(
-            BW_ACCOUNT_ID, conference_id, _return_http_data_only=False)
-        assert_that(list_conference_recordings_response[1], 200)
+        list_conference_recordings_response: List[ConferenceRecordingMetadata] = self.conference_api_instance.list_conference_recordings_with_http_info(
+            BW_ACCOUNT_ID, conference_id)
+        assert_that(list_conference_recordings_response.status_code, 200)
 
         conference_recordings = list_conference_recordings_response[0]
         assert_that(len(conference_recordings), greater_than(0))
@@ -290,14 +290,14 @@ class ConferencesIntegration(unittest.TestCase):
         self.validate_recording(first_recording, conference_id)
         recording_id = first_recording.recording_id
 
-        recording_response: ConferenceRecordingMetadata = self.conference_api_instance.get_conference_recording(
-            BW_ACCOUNT_ID, conference_id, recording_id, _return_http_data_only=False)
-        assert_that(recording_response[1], 200)
-        assert_that(recording_response[0].conference_id, conference_id)
-        assert_that(recording_response[0].recording_id, recording_id)
-        assert_that(recording_response[0].name, instance_of(str))
+        recording_response: ConferenceRecordingMetadata = self.conference_api_instance.get_conference_recording_with_http_info(
+            BW_ACCOUNT_ID, conference_id, recording_id)
+        assert_that(recording_response.status_code, 200)
+        assert_that(recording_response.data.conference_id, conference_id)
+        assert_that(recording_response.data.recording_id, recording_id)
+        assert_that(recording_response.data.name, instance_of(str))
 
-        self.validate_recording(recording_response[0], conference_id)
+        self.validate_recording(recording_response.data.conference_id, conference_id)
 
         recording_media_response = self.conference_api_instance.download_conference_recording(
             BW_ACCOUNT_ID, conference_id, recording_id, _preload_content=False)
