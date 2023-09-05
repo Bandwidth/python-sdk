@@ -305,7 +305,7 @@ class CallsIntegration(unittest.TestCase):
         """Validate an UpdateCallBxml Request
         """
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody)
-        call_id = create_call_response[0].call_id
+        call_id = create_call_response.call_id
 
         #Adding the call to the self.callIdArray
         self.callIdArray.append(create_call_response.call_id)
@@ -340,7 +340,7 @@ class CallsIntegration(unittest.TestCase):
         time.sleep(self.TEST_SLEEP)  
         # hanging-up the call
         update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
-        assert_that(update_call_response.status, 200)
+        assert_that(update_call_response.status_code, 200)
 
 
     def test_update_call_bxml_unauthorized(self):

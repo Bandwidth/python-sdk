@@ -243,9 +243,9 @@ class TestRecordings(unittest.TestCase):
         recording_id = first_recording.recording_id
 
         # Get Single Recording Endpoint
-        recording_response: CallRecordingMetadata = self.recordings_api_instance.get_call_recording(
+        recording_response: ApiResponse = self.recordings_api_instance.get_call_recording_with_http_info(
             BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
-        assert_that(recording_response[1], equal_to(200))  # Check response code
+        assert_that(recording_response.status_code, equal_to(200))  # Check response code
 
         recording = recording_response[0]
         assert_that(recording.recording_id, equal_to(recording_id))
@@ -522,8 +522,14 @@ class TestRecordings(unittest.TestCase):
         assert_that(call_status['status'], equal_to('ALIVE'))
 
         # Common models
-        pause_recording = UpdateCallRecording(RecordingStateEnum('paused'))
-        resume_recording = UpdateCallRecording(RecordingStateEnum('recording'))
+        paused = RecordingStateEnum('paused')
+        recording = RecordingStateEnum('recording')
+
+        pause_recording = UpdateCallRecording()
+        pause_recording.state = paused
+        resume_recording = UpdateCallRecording()
+        resume_recording.state = recording
+
 
         # Use the unauthorized client to try to update (401)
         assert_that(calling(self.unauthorized_recordings_api_instance.update_call_recording_state).with_args(
