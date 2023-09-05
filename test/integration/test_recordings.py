@@ -283,11 +283,11 @@ class TestRecordings(unittest.TestCase):
         assert_that(call_status['callTranscribed'], equal_to(True))
 
         # Get the transcription
-        transcription_response = self.recordings_api_instance.get_call_transcription(
-            BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
-        assert_that(transcription_response[1], equal_to(200))  # Check response code
+        transcription_response = self.recordings_api_instance.get_call_transcription_with_http_info(
+            BW_ACCOUNT_ID, call_id, recording_id)
+        assert_that(transcription_response.status_code, equal_to(200))  # Check response code
 
-        transcription_list = transcription_response[0]
+        transcription_list = transcription_response.data[0]
         assert_that(transcription_list.transcripts, has_length(1))
         transcription = transcription_list.transcripts[0]
         assert_that(transcription, instance_of(Transcription))
@@ -297,23 +297,23 @@ class TestRecordings(unittest.TestCase):
         ))
 
         # Delete the transcription
-        delete_transcription_response = self.recordings_api_instance.delete_call_transcription(
-            BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
-        assert_that(delete_transcription_response[1], equal_to(204))  # Check response code
+        delete_transcription_response = self.recordings_api_instance.delete_call_transcription_with_http_info(
+            BW_ACCOUNT_ID, call_id, recording_id)
+        assert_that(delete_transcription_response.status_code, equal_to(204))  # Check response code
 
         assert_that(calling(self.recordings_api_instance.get_call_transcription).with_args(
             BW_ACCOUNT_ID, call_id, recording_id), raises(NotFoundException))
 
         # Delete Recording media
-        delete_recording_media_response = self.recordings_api_instance.delete_recording_media(
-            BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
+        delete_recording_media_response = self.recordings_api_instance.delete_recording_media_with_http_info(
+            BW_ACCOUNT_ID, call_id, recording_id)
         # Validate the 204 response
-        assert_that(delete_recording_media_response[1], equal_to(204))
+        assert_that(delete_recording_media_response.status_code, equal_to(204))
 
         # Delete Recording
-        delete_recording_response = self.recordings_api_instance.delete_recording(
-            BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
-        assert_that(delete_recording_response[1], equal_to(204))
+        delete_recording_response = self.recordings_api_instance.delete_recording_with_http_info(
+            BW_ACCOUNT_ID, call_id, recording_id)
+        assert_that(delete_recording_response.status_code, equal_to(204))
         call_recordings = self.recordings_api_instance.list_call_recordings(BW_ACCOUNT_ID, call_id)
         assert_that(call_recordings, has_length(0))
 
