@@ -522,13 +522,8 @@ class TestRecordings(unittest.TestCase):
         assert_that(call_status['status'], equal_to('ALIVE'))
 
         # Common models
-        paused = RecordingStateEnum('paused')
-        recording = RecordingStateEnum('recording')
-
-        pause_recording = UpdateCallRecording()
-        pause_recording.state = paused
-        resume_recording = UpdateCallRecording()
-        resume_recording.state = recording
+        pause_recording = UpdateCallRecording(state=RecordingStateEnum('paused'))
+        resume_recording = UpdateCallRecording(state=RecordingStateEnum('recording'))
 
 
         # Use the unauthorized client to try to update (401)
