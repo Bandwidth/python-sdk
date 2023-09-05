@@ -302,7 +302,7 @@ class ConferencesIntegration(unittest.TestCase):
 
         recording_media_response = self.conference_api_instance.download_conference_recording(
             BW_ACCOUNT_ID, conference_id, recording_id)
-        conference_recording_media = recording_media_response.data
+        conference_recording_media = recording_media_response
 
     def test_list_conferences_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:

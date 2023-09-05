@@ -254,7 +254,7 @@ class TestRecordings(unittest.TestCase):
         # Download recording media
         recording_media_response = self.recordings_api_instance.download_call_recording(
             BW_ACCOUNT_ID, call_id, recording_id)
-        call_recording_media = recording_media_response.data
+        call_recording_media = recording_media_response
 
         '''
         Do a verification test on the actual recording data?
@@ -267,9 +267,9 @@ class TestRecordings(unittest.TestCase):
         transcription_url = MANTECA_BASE_URL + "/transcriptions"
         transcribe_recording_request = TranscribeRecording(
             callback_url=transcription_url, tag=test_id)
-        transcription_response = self.recordings_api_instance.transcribe_call_recording(
-            BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording_request, _return_http_data_only=False)
-        assert_that(transcription_response[1], equal_to(204))  # Check response code
+        transcription_response = self.recordings_api_instance.transcribe_call_recording_with_http_info(
+            BW_ACCOUNT_ID, call_id, recording_id, transcribe_recording_request)
+        assert_that(transcription_response.status_code, equal_to(204))  # Check response code
 
         # Poll Manteca to make sure our call is transcribed
         call_status = self.get_test_status(test_id)
