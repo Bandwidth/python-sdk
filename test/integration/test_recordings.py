@@ -247,7 +247,7 @@ class TestRecordings(unittest.TestCase):
             BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
         assert_that(recording_response.status_code, equal_to(200))  # Check response code
 
-        recording = recording_response[0]
+        recording = recording_response.data
         assert_that(recording.recording_id, equal_to(recording_id))
         self.validate_recording(recording, call_id)
 

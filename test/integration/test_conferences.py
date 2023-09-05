@@ -155,7 +155,7 @@ class ConferencesIntegration(unittest.TestCase):
 
         # TODO: This is not deterministic; our latest conference may not always be the one we just created due to parallelism.
         # This new solution should guarantee the right conference id is grabbed.
-        conference_id = list_conferences_response[0][0].id
+        conference_id = list_conferences_response.data[0].id
 
         get_conference_response = self.conference_api_instance.get_conference_with_http_info(
             BW_ACCOUNT_ID, conference_id)
