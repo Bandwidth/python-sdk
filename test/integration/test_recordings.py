@@ -343,15 +343,13 @@ class TestRecordings(unittest.TestCase):
         time.sleep(TEST_SLEEP)
 
         # Update the call to pause the recording
-        update_call_recording = UpdateCallRecording()
-        update_call_recording.state = RecordingStateEnum.PAUSED
+        update_call_recording = UpdateCallRecording(state=RecordingStateEnum('paused'))
         update_response = self.recordings_api_instance.update_call_recording_state_with_http_info(
             BW_ACCOUNT_ID, call_id, update_call_recording)
         assert_that(update_response.status_code, equal_to(200))
 
         # Update the call to resume the recording
-        update_call_recording = UpdateCallRecording()
-        update_call_recording.state = RecordingStateEnum.ACTIVE
+        update_call_recording = UpdateCallRecording(state=RecordingStateEnum('recording'))
         self.recordings_api_instance.update_call_recording_state_with_http_info(
             BW_ACCOUNT_ID, call_id, update_call_recording)
         assert_that(update_response.status_code, equal_to(200))
