@@ -301,7 +301,7 @@ class ConferencesIntegration(unittest.TestCase):
         self.validate_recording(recording_response.data)
 
         recording_media_response = self.conference_api_instance.download_conference_recording(
-            BW_ACCOUNT_ID, conference_id, recording_id, _preload_content=False)
+            BW_ACCOUNT_ID, conference_id, recording_id)
         conference_recording_media = recording_media_response.data
 
     def test_list_conferences_unauthorized(self) -> None:

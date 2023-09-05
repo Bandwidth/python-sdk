@@ -253,7 +253,7 @@ class TestRecordings(unittest.TestCase):
 
         # Download recording media
         recording_media_response = self.recordings_api_instance.download_call_recording(
-            BW_ACCOUNT_ID, call_id, recording_id, _preload_content=False)
+            BW_ACCOUNT_ID, call_id, recording_id)
         call_recording_media = recording_media_response.data
 
         '''
