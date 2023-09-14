@@ -5,11 +5,10 @@ Unit tests for the <PhoneNumber> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import os
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.phone_number import PhoneNumber
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import PhoneNumber
 
 
 class TestPhoneNumber(unittest.TestCase):

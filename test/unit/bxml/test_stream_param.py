@@ -8,8 +8,8 @@ Unit tests for the <StreamParam> BXML verb
 import unittest
 
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs import StreamParam
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import StreamParam
 
 
 class TestStreamParam(unittest.TestCase):

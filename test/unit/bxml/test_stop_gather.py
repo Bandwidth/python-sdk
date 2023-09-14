@@ -7,8 +7,8 @@ Unit tests for the <StopGather> BXML verb
 """
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.stop_gather import StopGather
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import StopGather
 
 
 class TestStopGather(unittest.TestCase):

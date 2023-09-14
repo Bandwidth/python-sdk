@@ -7,7 +7,7 @@ Unit tests for Bxml Model
 """
 import unittest
 
-from bandwidth.model.bxml.bxml import Bxml
+from bandwidth.models.bxml import Bxml
 
 
 class TestBxml(unittest.TestCase):

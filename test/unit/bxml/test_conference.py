@@ -5,11 +5,10 @@ Unit tests for the <Conference> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import os
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs import Conference
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import Conference
 
 
 class TestConference(unittest.TestCase):

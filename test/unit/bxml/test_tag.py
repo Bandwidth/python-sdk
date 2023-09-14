@@ -7,8 +7,8 @@ Unit tests for the <Tag> BXML verb
 """
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.tag import Tag
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import Tag
 
 
 class TestTag(unittest.TestCase):

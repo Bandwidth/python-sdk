@@ -5,12 +5,10 @@ Unit tests for the <Bridge> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import os
-import pytest
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.bridge import Bridge
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import Bridge
 
 
 class TestBridge(unittest.TestCase):

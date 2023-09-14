@@ -7,7 +7,7 @@ Unit tests for Response Model
 """
 import unittest
 
-from bandwidth.model.bxml.response import Response
+from bandwidth.models.bxml import Response
 
 
 class TestResponse(unittest.TestCase):

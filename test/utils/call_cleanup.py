@@ -1,9 +1,9 @@
 import time
 from bandwidth.exceptions import NotFoundException
 from test.utils.env_variables import *
-from bandwidth.model.call_state import CallState
-from bandwidth.model.call_state_enum import CallStateEnum
-from bandwidth.model.update_call import UpdateCall
+from bandwidth.models.call_state import CallState
+from bandwidth.models.call_state_enum import CallStateEnum
+from bandwidth.models.update_call import UpdateCall
 
 TEST_SLEEP = 3
 MAX_RETRIES = 10
@@ -27,9 +27,9 @@ def callCleanup(self):
                 while (repeat and retries <= MAX_RETRIES):
                     try:
                         get_call_response: CallState = self.calls_api_instance.get_call_state(BW_ACCOUNT_ID, callId, _return_http_data_only=False)
-                        if get_call_response[0].state == 'active':
+                        if get_call_response.state == 'active':
                             self.calls_api_instance.update_call(BW_ACCOUNT_ID, callId, body, _return_http_data_only=False)
-                        elif get_call_response[0].state == 'complete':
+                        elif get_call_response.state == 'complete':
                             self.callIdArray.remove(callId)
                         
                         # We succeeded, break the loop

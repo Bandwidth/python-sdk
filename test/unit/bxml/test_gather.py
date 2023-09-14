@@ -5,11 +5,9 @@ Unit tests for the <Gather> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import os
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs import PlayAudio,SpeakSentence,Gather
+from bandwidth.models.bxml import PlayAudio,SpeakSentence,Gather
 
 
 class TestGather(unittest.TestCase):

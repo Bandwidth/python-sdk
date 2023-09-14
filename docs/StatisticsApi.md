@@ -17,14 +17,14 @@ Returns details about the current state of the account.
 ### Example
 
 * Basic Authentication (Basic):
-
 ```python
 import time
+import os
 import bandwidth
-from bandwidth.api import statistics_api
-from bandwidth.model.account_statistics import AccountStatistics
-from bandwidth.model.voice_api_error import VoiceApiError
+from bandwidth.models.account_statistics import AccountStatistics
+from bandwidth.rest import ApiException
 from pprint import pprint
+
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = bandwidth.Configuration(
@@ -38,31 +38,32 @@ configuration = bandwidth.Configuration(
 
 # Configure HTTP basic authorization: Basic
 configuration = bandwidth.Configuration(
-    username = 'YOUR_USERNAME',
-    password = 'YOUR_PASSWORD'
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
 )
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = statistics_api.StatisticsApi(api_client)
-    account_id = "9900000" # str | Your Bandwidth Account ID
+    api_instance = bandwidth.StatisticsApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
 
-    # example passing only required values which don't have defaults set
     try:
         # Get Account Statistics
         api_response = api_instance.get_statistics(account_id)
+        print("The response of StatisticsApi->get_statistics:\n")
         pprint(api_response)
-    except bandwidth.ApiException as e:
+    except Exception as e:
         print("Exception when calling StatisticsApi->get_statistics: %s\n" % e)
 ```
+
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID |
+ **account_id** | **str**| Your Bandwidth Account ID. | 
 
 ### Return type
 
@@ -77,9 +78,7 @@ Name | Type | Description  | Notes
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-
 ### HTTP response details
-
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Statistics Found |  -  |
@@ -89,7 +88,7 @@ Name | Type | Description  | Notes
 **404** | Not Found |  -  |
 **405** | Method Not Allowed |  -  |
 **415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again <br>  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
 **500** | Internal Server Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -9,9 +9,9 @@ Unit tests for Root and Verb base classes
 import pytest
 import unittest
 
-from bandwidth.model.bxml.root import Root
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.terminal_verb import TerminalVerb
+from bandwidth.models.bxml import Root
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import TerminalVerb
 
 
 class TestBaseClasses(unittest.TestCase):

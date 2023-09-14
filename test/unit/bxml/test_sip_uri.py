@@ -5,11 +5,10 @@ Unit tests for the <SipUri> BXML verb
 
 @copyright Bandwidth Inc.
 """
-import os
 import unittest
 
-from bandwidth.model.bxml.verb import Verb
-from bandwidth.model.bxml.verbs.sip_uri import SipUri
+from bandwidth.models.bxml import Verb
+from bandwidth.models.bxml import SipUri
 
 
 class TestSipUri(unittest.TestCase):

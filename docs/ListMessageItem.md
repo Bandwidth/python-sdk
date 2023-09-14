@@ -13,15 +13,32 @@ Name | Type | Description | Notes
 **message_type** | [**MessageTypeEnum**](MessageTypeEnum.md) |  | [optional] 
 **segment_count** | **int** | The number of segments the message was sent as. | [optional] 
 **error_code** | **int** | The numeric error code of the message. | [optional] 
-**receive_time** | **str** | The ISO 8601 datetime of the message. | [optional] 
-**carrier_name** | **str, none_type** | The name of the carrier. Not currently supported for MMS coming soon. | [optional] 
-**message_size** | **int, none_type** | The size of the message including message content and headers. | [optional] 
+**receive_time** | **datetime** | The ISO 8601 datetime of the message. | [optional] 
+**carrier_name** | **str** | The name of the carrier. Not currently supported for MMS coming soon. | [optional] 
+**message_size** | **int** | The size of the message including message content and headers. | [optional] 
 **message_length** | **int** | The length of the message content. | [optional] 
-**attachment_count** | **int, none_type** | The number of attachments the message has. | [optional] 
-**recipient_count** | **int, none_type** | The number of recipients the message has. | [optional] 
-**campaign_class** | **str, none_type** | The campaign class of the message if it has one. | [optional] 
-**any string name** | **bool, date, datetime, dict, float, int, list, str, none_type** | any string name can be used but the value must be the correct type | [optional]
+**attachment_count** | **int** | The number of attachments the message has. | [optional] 
+**recipient_count** | **int** | The number of recipients the message has. | [optional] 
+**campaign_class** | **str** | The campaign class of the message if it has one. | [optional] 
+**campaign_id** | **str** | The campaign ID of the message if it has one. | [optional] 
 
+## Example
+
+```python
+from bandwidth.models.list_message_item import ListMessageItem
+
+# TODO update the JSON string below
+json = "{}"
+# create an instance of ListMessageItem from a JSON string
+list_message_item_instance = ListMessageItem.from_json(json)
+# print the JSON string representation of the object
+print ListMessageItem.to_json()
+
+# convert the object into a dict
+list_message_item_dict = list_message_item_instance.to_dict()
+# create an instance of ListMessageItem from a dict
+list_message_item_form_dict = list_message_item.from_dict(list_message_item_dict)
+```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
