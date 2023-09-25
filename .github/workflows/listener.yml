@@ -15,7 +15,6 @@ jobs:
         with:
           identity-source: repo
           durable-team-name: BAND SWI
-          artifactory-access-token-type: readers
           export-github-pat: true
 
       - uses: actions/checkout@v2
