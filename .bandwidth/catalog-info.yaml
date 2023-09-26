@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  schemaVersion: v1.0.0
+  name: python-sdk-location
+  description: Links to additional entities in the python-sdk repository.
+  annotations:
+    github.com/project-slug: Bandwidth/python-sdk
+spec:
+  targets:
+    - ./component.yaml
