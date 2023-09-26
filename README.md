@@ -2,12 +2,12 @@
 
 [![Test](https://github.com/Bandwidth/python-sdk/actions/workflows/test.yaml/badge.svg)](https://github.com/Bandwidth/python-sdk/actions/workflows/test.yaml)
 
-| **OS** | **Python** |
-|:---:|:---:|
-| Windows 2016 | 3.7, 3.8, 3.9, 3.10 |
-| Windows 2019 | 3.7, 3.8, 3.9, 3.10 |
-| Ubuntu 20.04 | 3.7, 3.8, 3.9, 3.10 |
-| Ubuntu 22.04 | 3.7, 3.8, 3.9, 3.10 |
+| **OS** |        **Python**         |
+|:---:|:-------------------------:|
+| Windows 2016 | 3.7, 3.8, 3.9, 3.10, 3.11 |
+| Windows 2019 | 3.7, 3.8, 3.9, 3.10, 3.11 |
+| Ubuntu 20.04 | 3.7, 3.8, 3.9, 3.10, 3.11 |
+| Ubuntu 22.04 | 3.7, 3.8, 3.9, 3.10, 3.11 |
 
 
 ## Getting Started
