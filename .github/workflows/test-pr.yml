@@ -72,6 +72,7 @@ jobs:
 
       - name: Install Packages
         run: |
+          pip install --upgrade setuptools
           pip install -r requirements.txt
           pip install -r test-requirements.txt
 
