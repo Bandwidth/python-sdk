@@ -20,7 +20,7 @@ class StopTranscription(TerminalVerb):
         self.name = name
 
         super().__init__(
-            tag="StartTranscription",
+            tag="StopTranscription",
         )
 
     @property
