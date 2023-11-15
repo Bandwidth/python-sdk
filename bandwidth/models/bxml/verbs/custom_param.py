@@ -12,8 +12,8 @@ class CustomParam(TerminalVerb):
     def __init__(self, name: str = None, value: str = None):
         """
         Initialize a <CustomParam> verb
-        :param name:
-        :param value:
+        :param name: The name of this parameter, up to 256 characters.
+        :param value: The value of this parameter, up to 2048 characters.
         """
         self.name = name
         self.value = value
