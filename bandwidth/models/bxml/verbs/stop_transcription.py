@@ -15,7 +15,7 @@ class StopTranscription(TerminalVerb):
     ):
         """
         Initialize a <StopTranscription> verb
-        :param name:
+        :param name: The name of the transcription to stop
         """
         self.name = name
 
