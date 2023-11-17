@@ -15,7 +15,6 @@ class TestRedirect(unittest.TestCase):
 
     def setUp(self):
         self.redirect = Redirect("https://example.com/redirect")
-        # self.redirect.redirect_url = "https://example.com/redirect"
         self.test_verb = Verb(tag="test")
 
     def test_to_bxml(self):
