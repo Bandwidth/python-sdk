@@ -1,4 +1,4 @@
-# Ingest repository_dispatch events and trigger appropriate actions
+# Ingest repository_dispatch events and trigger appropriate actions 
 name: Listener
 
 on:
@@ -6,24 +6,24 @@ on:
     types: [Build]
 
 jobs:
-  build:
+  build: 
     if: ${{ github.event.action == 'Build' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build SDK and Open PR
-        uses: Bandwidth/generate-sdk-action@v1.0.0
-        with:
+      - name: Build SDK and Open PR 
+        uses: Bandwidth/generate-sdk-action@v2.0.1
+        with: 
           branch-name: ${{ github.event.client_payload.branchName }}
           username: ${{ secrets.DX_GITHUB_USERNAME }}
           token: ${{ secrets.DX_GITHUB_TOKEN }}
-          openapi-generator-version: v5.4.0
-          language: python
+          openapi-generator-version: 6.0.1
+          language: python 
           config: ./openapi-config.yml
-        env:
+        env: 
           GITHUB_TOKEN: ${{ secrets.DX_GITHUB_TOKEN }}
-
+      
       - name: Open Pull Request
         run: |
           exists=$(hub pr list -h {{ inputs.branch-name }})
@@ -34,34 +34,22 @@ jobs:
             echo "PR already exists for this branch"
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.DX_GITHUB_TOKEN }}
-
-      - name: Output PR Number
+          GITHUB_TOKEN:  ${{ secrets.DX_GITHUB_TOKEN }}
+     
+      - name: Output PR Number 
         id: output-pr-number
         run: echo "PR_NUMBER=$(hub pr list -h ${{ inputs.branch-name }} -f %I)" >> $GITHUB_ENV
         env:
-          GITHUB_TOKEN: ${{ secrets.DX_GITHUB_TOKEN }}
+          GITHUB_TOKEN:  ${{ secrets.DX_GITHUB_TOKEN }}
 
-      - uses: actions/github-script@v6
+      # Comment on PR
+      - name: Comment on PR
+        uses: actions/github-script@v6
         with:
-          github-token: ${{secrets.DX_GITHUB_TOKEN}}
           script: |
             github.rest.issues.createComment({
               issue_number: ${{ github.event.client_payload.prNumber }},
-              owner: context.repo.owner,
+              owner: 'Bandwidth',
               repo: 'api-specs',
               body: 'Python SDK built successfully\n\nSee the corresponding PR opened on the SDK repository (no action required):\nhttps://github.com/Bandwidth/api-docs/pull/${{ env.PR_NUMBER }}'
-            })
-
-      - name: Notify for Failure
-        uses: actions/github-script@v6
-        if: failure()
-        with:
-          github-token: ${{secrets.DX_GITHUB_TOKEN}}
-          script: |
-            github.rest.issues.createComment({
-              issue_number: ${{ github.event.client_payload.prNumber }},
-              owner: context.repo.owner,
-              repo: 'api-specs',
-              body: 'Python SDK failed to build successfully\n\nSee the Python SDK repository [action logs](https://github.com/Bandwidth/python-sdk/actions) for more information.'
             })
