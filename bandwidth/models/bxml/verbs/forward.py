@@ -19,7 +19,7 @@ class Forward(TerminalVerb):
 
         Args:
             to (str): The phone number destination of the call.
-            from_ (str, optional): The phone number that the recipient will receive the call from.
+            _from (str, optional): The phone number that the recipient will receive the call from.
             call_timeout (str, optional): The number of seconds to wait before timing out the call.
             diversion_treatment (str, optional): Can be any of the following:
                 none: No diversion headers are sent on the outbound leg of the transferred call.
