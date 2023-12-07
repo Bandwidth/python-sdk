@@ -44,8 +44,9 @@ jobs:
             echo 'Please update your tag to match the expected regex pattern'
             exit 1
           fi
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: feature/openapi-generator-sdk
 
@@ -53,9 +54,11 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install -r test-requirements.txt
+
       - name: Test
         run: |
           pytest -v
+
       - name: Deploy to PYPI
         run: |
           pip install twine
@@ -111,8 +114,9 @@ jobs:
             echo 'Please update your tag to match the expected regex pattern'
             exit 1
           fi
+
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install Packages
         run: |-
