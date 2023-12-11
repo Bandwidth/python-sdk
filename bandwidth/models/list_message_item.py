@@ -19,125 +19,143 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, StrictInt, StrictStr
+from pydantic import Field
 from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.models.message_status_enum import MessageStatusEnum
 from bandwidth.models.message_type_enum import MessageTypeEnum
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 class ListMessageItem(BaseModel):
     """
     ListMessageItem
-    """
-    message_id: Optional[StrictStr] = Field(None, alias="messageId", description="The message id")
-    account_id: Optional[StrictStr] = Field(None, alias="accountId", description="The account id associated with this message.")
-    source_tn: Optional[StrictStr] = Field(None, alias="sourceTn", description="The source phone number of the message.")
-    destination_tn: Optional[StrictStr] = Field(None, alias="destinationTn", description="The recipient phone number of the message.")
-    message_status: Optional[MessageStatusEnum] = Field(None, alias="messageStatus")
-    message_direction: Optional[ListMessageDirectionEnum] = Field(None, alias="messageDirection")
-    message_type: Optional[MessageTypeEnum] = Field(None, alias="messageType")
-    segment_count: Optional[StrictInt] = Field(None, alias="segmentCount", description="The number of segments the message was sent as.")
-    error_code: Optional[StrictInt] = Field(None, alias="errorCode", description="The numeric error code of the message.")
-    receive_time: Optional[datetime] = Field(None, alias="receiveTime", description="The ISO 8601 datetime of the message.")
-    carrier_name: Optional[StrictStr] = Field(None, alias="carrierName", description="The name of the carrier. Not currently supported for MMS coming soon.")
-    message_size: Optional[StrictInt] = Field(None, alias="messageSize", description="The size of the message including message content and headers.")
-    message_length: Optional[StrictInt] = Field(None, alias="messageLength", description="The length of the message content.")
-    attachment_count: Optional[StrictInt] = Field(None, alias="attachmentCount", description="The number of attachments the message has.")
-    recipient_count: Optional[StrictInt] = Field(None, alias="recipientCount", description="The number of recipients the message has.")
-    campaign_class: Optional[StrictStr] = Field(None, alias="campaignClass", description="The campaign class of the message if it has one.")
-    campaign_id: Optional[StrictStr] = Field(None, alias="campaignId", description="The campaign ID of the message if it has one.")
+    """ # noqa: E501
+    message_id: Optional[StrictStr] = Field(default=None, description="The message id", alias="messageId")
+    account_id: Optional[StrictStr] = Field(default=None, description="The account id associated with this message.", alias="accountId")
+    source_tn: Optional[StrictStr] = Field(default=None, description="The source phone number of the message.", alias="sourceTn")
+    destination_tn: Optional[StrictStr] = Field(default=None, description="The recipient phone number of the message.", alias="destinationTn")
+    message_status: Optional[MessageStatusEnum] = Field(default=None, alias="messageStatus")
+    message_direction: Optional[ListMessageDirectionEnum] = Field(default=None, alias="messageDirection")
+    message_type: Optional[MessageTypeEnum] = Field(default=None, alias="messageType")
+    segment_count: Optional[StrictInt] = Field(default=None, description="The number of segments the message was sent as.", alias="segmentCount")
+    error_code: Optional[StrictInt] = Field(default=None, description="The numeric error code of the message.", alias="errorCode")
+    receive_time: Optional[datetime] = Field(default=None, description="The ISO 8601 datetime of the message.", alias="receiveTime")
+    carrier_name: Optional[StrictStr] = Field(default=None, description="The name of the carrier. Not currently supported for MMS coming soon.", alias="carrierName")
+    message_size: Optional[StrictInt] = Field(default=None, description="The size of the message including message content and headers.", alias="messageSize")
+    message_length: Optional[StrictInt] = Field(default=None, description="The length of the message content.", alias="messageLength")
+    attachment_count: Optional[StrictInt] = Field(default=None, description="The number of attachments the message has.", alias="attachmentCount")
+    recipient_count: Optional[StrictInt] = Field(default=None, description="The number of recipients the message has.", alias="recipientCount")
+    campaign_class: Optional[StrictStr] = Field(default=None, description="The campaign class of the message if it has one.", alias="campaignClass")
+    campaign_id: Optional[StrictStr] = Field(default=None, description="The campaign ID of the message if it has one.", alias="campaignId")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["messageId", "accountId", "sourceTn", "destinationTn", "messageStatus", "messageDirection", "messageType", "segmentCount", "errorCode", "receiveTime", "carrierName", "messageSize", "messageLength", "attachmentCount", "recipientCount", "campaignClass", "campaignId"]
+    __properties: ClassVar[List[str]] = ["messageId", "accountId", "sourceTn", "destinationTn", "messageStatus", "messageDirection", "messageType", "segmentCount", "errorCode", "receiveTime", "carrierName", "messageSize", "messageLength", "attachmentCount", "recipientCount", "campaignClass", "campaignId"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = {
+        "populate_by_name": True,
+        "validate_assignment": True
+    }
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ListMessageItem:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of ListMessageItem from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude={
+                "additional_properties",
+            },
+            exclude_none=True,
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
         # set to None if carrier_name (nullable) is None
-        # and __fields_set__ contains the field
-        if self.carrier_name is None and "carrier_name" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.carrier_name is None and "carrier_name" in self.model_fields_set:
             _dict['carrierName'] = None
 
         # set to None if message_size (nullable) is None
-        # and __fields_set__ contains the field
-        if self.message_size is None and "message_size" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.message_size is None and "message_size" in self.model_fields_set:
             _dict['messageSize'] = None
 
         # set to None if attachment_count (nullable) is None
-        # and __fields_set__ contains the field
-        if self.attachment_count is None and "attachment_count" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.attachment_count is None and "attachment_count" in self.model_fields_set:
             _dict['attachmentCount'] = None
 
         # set to None if recipient_count (nullable) is None
-        # and __fields_set__ contains the field
-        if self.recipient_count is None and "recipient_count" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.recipient_count is None and "recipient_count" in self.model_fields_set:
             _dict['recipientCount'] = None
 
         # set to None if campaign_class (nullable) is None
-        # and __fields_set__ contains the field
-        if self.campaign_class is None and "campaign_class" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.campaign_class is None and "campaign_class" in self.model_fields_set:
             _dict['campaignClass'] = None
 
         # set to None if campaign_id (nullable) is None
-        # and __fields_set__ contains the field
-        if self.campaign_id is None and "campaign_id" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.campaign_id is None and "campaign_id" in self.model_fields_set:
             _dict['campaignId'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ListMessageItem:
+    def from_dict(cls, obj: Dict) -> Self:
         """Create an instance of ListMessageItem from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ListMessageItem.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = ListMessageItem.parse_obj({
-            "message_id": obj.get("messageId"),
-            "account_id": obj.get("accountId"),
-            "source_tn": obj.get("sourceTn"),
-            "destination_tn": obj.get("destinationTn"),
-            "message_status": obj.get("messageStatus"),
-            "message_direction": obj.get("messageDirection"),
-            "message_type": obj.get("messageType"),
-            "segment_count": obj.get("segmentCount"),
-            "error_code": obj.get("errorCode"),
-            "receive_time": obj.get("receiveTime"),
-            "carrier_name": obj.get("carrierName"),
-            "message_size": obj.get("messageSize"),
-            "message_length": obj.get("messageLength"),
-            "attachment_count": obj.get("attachmentCount"),
-            "recipient_count": obj.get("recipientCount"),
-            "campaign_class": obj.get("campaignClass"),
-            "campaign_id": obj.get("campaignId")
+        _obj = cls.model_validate({
+            "messageId": obj.get("messageId"),
+            "accountId": obj.get("accountId"),
+            "sourceTn": obj.get("sourceTn"),
+            "destinationTn": obj.get("destinationTn"),
+            "messageStatus": obj.get("messageStatus"),
+            "messageDirection": obj.get("messageDirection"),
+            "messageType": obj.get("messageType"),
+            "segmentCount": obj.get("segmentCount"),
+            "errorCode": obj.get("errorCode"),
+            "receiveTime": obj.get("receiveTime"),
+            "carrierName": obj.get("carrierName"),
+            "messageSize": obj.get("messageSize"),
+            "messageLength": obj.get("messageLength"),
+            "attachmentCount": obj.get("attachmentCount"),
+            "recipientCount": obj.get("recipientCount"),
+            "campaignClass": obj.get("campaignClass"),
+            "campaignId": obj.get("campaignId")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

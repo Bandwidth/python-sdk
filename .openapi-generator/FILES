@@ -1,4 +1,3 @@
-.github/workflows/python.yml
 .gitlab-ci.yml
 .travis.yml
 README.md

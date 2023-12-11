@@ -19,47 +19,65 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictStr, conlist
+from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, StrictStr
+from pydantic import Field
 from bandwidth.models.lookup_result import LookupResult
 from bandwidth.models.lookup_status_enum import LookupStatusEnum
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 class LookupStatus(BaseModel):
     """
     If requestId exists, the result for that request is returned. See the Examples for details on the various responses that you can receive. Generally, if you see a Response Code of 0 in a result for a TN, information will be available for it.  Any other Response Code will indicate no information was available for the TN.
-    """
-    request_id: Optional[StrictStr] = Field(None, alias="requestId", description="The requestId.")
+    """ # noqa: E501
+    request_id: Optional[StrictStr] = Field(default=None, description="The requestId.", alias="requestId")
     status: Optional[LookupStatusEnum] = None
-    result: Optional[conlist(LookupResult)] = Field(None, description="The carrier information results for the specified telephone number.")
-    failed_telephone_numbers: Optional[conlist(StrictStr)] = Field(None, alias="failedTelephoneNumbers", description="The telephone numbers whose lookup failed.")
+    result: Optional[List[LookupResult]] = Field(default=None, description="The carrier information results for the specified telephone number.")
+    failed_telephone_numbers: Optional[List[StrictStr]] = Field(default=None, description="The telephone numbers whose lookup failed.", alias="failedTelephoneNumbers")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["requestId", "status", "result", "failedTelephoneNumbers"]
+    __properties: ClassVar[List[str]] = ["requestId", "status", "result", "failedTelephoneNumbers"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = {
+        "populate_by_name": True,
+        "validate_assignment": True
+    }
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> LookupStatus:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of LookupStatus from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude={
+                "additional_properties",
+            },
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in result (list)
         _items = []
         if self.result:
@@ -75,19 +93,19 @@ class LookupStatus(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> LookupStatus:
+    def from_dict(cls, obj: Dict) -> Self:
         """Create an instance of LookupStatus from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return LookupStatus.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = LookupStatus.parse_obj({
-            "request_id": obj.get("requestId"),
+        _obj = cls.model_validate({
+            "requestId": obj.get("requestId"),
             "status": obj.get("status"),
             "result": [LookupResult.from_dict(_item) for _item in obj.get("result")] if obj.get("result") is not None else None,
-            "failed_telephone_numbers": obj.get("failedTelephoneNumbers")
+            "failedTelephoneNumbers": obj.get("failedTelephoneNumbers")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
