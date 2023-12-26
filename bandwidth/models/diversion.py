@@ -19,48 +19,66 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, StrictStr
+from pydantic import Field
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 class Diversion(BaseModel):
     """
     Diversion
-    """
-    reason: Optional[StrictStr] = Field(None, description="The reason for the diversion. Common values: unknown, user-busy, no-answer, unavailable, unconditional, time-of-day, do-not-disturb, deflection, follow-me, out-of-service, away.")
-    privacy: Optional[StrictStr] = Field(None, description="off or full")
-    screen: Optional[StrictStr] = Field(None, description="No if the number was provided by the user, yes if the number was provided by the network")
-    counter: Optional[StrictStr] = Field(None, description="The number of diversions that have occurred")
-    limit: Optional[StrictStr] = Field(None, description="The maximum number of diversions allowed for this session")
-    unknown: Optional[StrictStr] = Field(None, description="The normal list of values is not exhaustive. Your application must be tolerant of unlisted keys and unlisted values of those keys.")
-    orig_to: Optional[StrictStr] = Field(None, alias="origTo", description="Always present. Indicates the last telephone number that the call was diverted from.")
+    """ # noqa: E501
+    reason: Optional[StrictStr] = Field(default=None, description="The reason for the diversion. Common values: unknown, user-busy, no-answer, unavailable, unconditional, time-of-day, do-not-disturb, deflection, follow-me, out-of-service, away.")
+    privacy: Optional[StrictStr] = Field(default=None, description="off or full")
+    screen: Optional[StrictStr] = Field(default=None, description="No if the number was provided by the user, yes if the number was provided by the network")
+    counter: Optional[StrictStr] = Field(default=None, description="The number of diversions that have occurred")
+    limit: Optional[StrictStr] = Field(default=None, description="The maximum number of diversions allowed for this session")
+    unknown: Optional[StrictStr] = Field(default=None, description="The normal list of values is not exhaustive. Your application must be tolerant of unlisted keys and unlisted values of those keys.")
+    orig_to: Optional[StrictStr] = Field(default=None, description="Always present. Indicates the last telephone number that the call was diverted from.", alias="origTo")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["reason", "privacy", "screen", "counter", "limit", "unknown", "origTo"]
+    __properties: ClassVar[List[str]] = ["reason", "privacy", "screen", "counter", "limit", "unknown", "origTo"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = {
+        "populate_by_name": True,
+        "validate_assignment": True
+    }
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Diversion:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of Diversion from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude={
+                "additional_properties",
+            },
+            exclude_none=True,
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -69,22 +87,22 @@ class Diversion(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Diversion:
+    def from_dict(cls, obj: Dict) -> Self:
         """Create an instance of Diversion from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Diversion.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = Diversion.parse_obj({
+        _obj = cls.model_validate({
             "reason": obj.get("reason"),
             "privacy": obj.get("privacy"),
             "screen": obj.get("screen"),
             "counter": obj.get("counter"),
             "limit": obj.get("limit"),
             "unknown": obj.get("unknown"),
-            "orig_to": obj.get("origTo")
+            "origTo": obj.get("origTo")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
