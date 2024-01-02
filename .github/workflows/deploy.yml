@@ -132,7 +132,7 @@ jobs:
           pip install twine
           pip install wheel
           python setup.py sdist bdist_wheel
-          twine upload dist/* -u $PYPI_USERNAME -p $PYPI_PASSWORD
+          twine upload dist/* -u __token__ -p $PYPI_API_KEY
         env:
           PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
           PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
