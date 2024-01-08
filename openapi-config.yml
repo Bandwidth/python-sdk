@@ -3,3 +3,4 @@ packageName: bandwidth
 packageVersion: 15.0.0
 packageUrl: 'https://dev.bandwidth.com/sdks/python'
 disallowAdditionalPropertiesIfNotPresent: false
+templateDir: custom_templates
