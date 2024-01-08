@@ -24,7 +24,6 @@
 
 .gitignore
 setup.cfg
-setup.py
-#*requirements.txt
+*requirements.txt
 test/*
 .github/workflows/python.yml
