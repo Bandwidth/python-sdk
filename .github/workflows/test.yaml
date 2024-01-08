@@ -46,7 +46,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-2022, windows-2019, ubuntu-20.04, ubuntu-latest]
-        python-version: [3.8, 3.9, "3.10", "3.11"]
+        python-version: [3.8, 3.9, "3.10", "3.11", "3.12"]
     env:
       PYTHON_VERSION: ${{ matrix.python-version }}
       OPERATING_SYSTEM: ${{ matrix.os }}
