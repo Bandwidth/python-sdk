@@ -19,86 +19,104 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, StrictInt, StrictStr
+from pydantic import Field
 from bandwidth.models.file_format_enum import FileFormatEnum
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 class ConferenceRecordingMetadata(BaseModel):
     """
     ConferenceRecordingMetadata
-    """
-    account_id: Optional[StrictStr] = Field(None, alias="accountId", description="The user account associated with the call.")
-    conference_id: Optional[StrictStr] = Field(None, alias="conferenceId", description="The unique, Bandwidth-generated ID of the conference that was recorded")
-    name: Optional[StrictStr] = Field(None, description="The user-specified name of the conference that was recorded")
-    recording_id: Optional[StrictStr] = Field(None, alias="recordingId", description="The unique ID of this recording")
-    duration: Optional[StrictStr] = Field(None, description="The duration of the recording in ISO-8601 format")
-    channels: Optional[StrictInt] = Field(None, description="Always `1` for conference recordings; multi-channel recordings are not supported on conferences.")
-    start_time: Optional[datetime] = Field(None, alias="startTime", description="Time the call was started, in ISO 8601 format.")
-    end_time: Optional[datetime] = Field(None, alias="endTime", description="The time that the recording ended in ISO-8601 format")
-    file_format: Optional[FileFormatEnum] = Field(None, alias="fileFormat")
-    status: Optional[StrictStr] = Field(None, description="The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.")
-    media_url: Optional[StrictStr] = Field(None, alias="mediaUrl", description="The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.")
+    """ # noqa: E501
+    account_id: Optional[StrictStr] = Field(default=None, description="The user account associated with the call.", alias="accountId")
+    conference_id: Optional[StrictStr] = Field(default=None, description="The unique, Bandwidth-generated ID of the conference that was recorded", alias="conferenceId")
+    name: Optional[StrictStr] = Field(default=None, description="The user-specified name of the conference that was recorded")
+    recording_id: Optional[StrictStr] = Field(default=None, description="The unique ID of this recording", alias="recordingId")
+    duration: Optional[StrictStr] = Field(default=None, description="The duration of the recording in ISO-8601 format")
+    channels: Optional[StrictInt] = Field(default=None, description="Always `1` for conference recordings; multi-channel recordings are not supported on conferences.")
+    start_time: Optional[datetime] = Field(default=None, description="Time the call was started, in ISO 8601 format.", alias="startTime")
+    end_time: Optional[datetime] = Field(default=None, description="The time that the recording ended in ISO-8601 format", alias="endTime")
+    file_format: Optional[FileFormatEnum] = Field(default=None, alias="fileFormat")
+    status: Optional[StrictStr] = Field(default=None, description="The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.")
+    media_url: Optional[StrictStr] = Field(default=None, description="The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.", alias="mediaUrl")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["accountId", "conferenceId", "name", "recordingId", "duration", "channels", "startTime", "endTime", "fileFormat", "status", "mediaUrl"]
+    __properties: ClassVar[List[str]] = ["accountId", "conferenceId", "name", "recordingId", "duration", "channels", "startTime", "endTime", "fileFormat", "status", "mediaUrl"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = {
+        "populate_by_name": True,
+        "validate_assignment": True
+    }
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> ConferenceRecordingMetadata:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of ConferenceRecordingMetadata from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude={
+                "additional_properties",
+            },
+            exclude_none=True,
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
         # set to None if media_url (nullable) is None
-        # and __fields_set__ contains the field
-        if self.media_url is None and "media_url" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.media_url is None and "media_url" in self.model_fields_set:
             _dict['mediaUrl'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> ConferenceRecordingMetadata:
+    def from_dict(cls, obj: Dict) -> Self:
         """Create an instance of ConferenceRecordingMetadata from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return ConferenceRecordingMetadata.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = ConferenceRecordingMetadata.parse_obj({
-            "account_id": obj.get("accountId"),
-            "conference_id": obj.get("conferenceId"),
+        _obj = cls.model_validate({
+            "accountId": obj.get("accountId"),
+            "conferenceId": obj.get("conferenceId"),
             "name": obj.get("name"),
-            "recording_id": obj.get("recordingId"),
+            "recordingId": obj.get("recordingId"),
             "duration": obj.get("duration"),
             "channels": obj.get("channels"),
-            "start_time": obj.get("startTime"),
-            "end_time": obj.get("endTime"),
-            "file_format": obj.get("fileFormat"),
+            "startTime": obj.get("startTime"),
+            "endTime": obj.get("endTime"),
+            "fileFormat": obj.get("fileFormat"),
             "status": obj.get("status"),
-            "media_url": obj.get("mediaUrl")
+            "mediaUrl": obj.get("mediaUrl")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

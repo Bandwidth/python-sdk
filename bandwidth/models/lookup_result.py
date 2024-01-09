@@ -19,50 +19,68 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, StrictInt, StrictStr
+from pydantic import Field
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 class LookupResult(BaseModel):
     """
     Carrier information results for the specified telephone number.
-    """
-    response_code: Optional[StrictInt] = Field(None, alias="Response Code", description="Our vendor's response code.")
-    message: Optional[StrictStr] = Field(None, alias="Message", description="Message associated with the response code.")
-    e_164_format: Optional[StrictStr] = Field(None, alias="E.164 Format", description="The telephone number in E.164 format.")
-    formatted: Optional[StrictStr] = Field(None, alias="Formatted", description="The formatted version of the telephone number.")
-    country: Optional[StrictStr] = Field(None, alias="Country", description="The country of the telephone number.")
-    line_type: Optional[StrictStr] = Field(None, alias="Line Type", description="The line type of the telephone number.")
-    line_provider: Optional[StrictStr] = Field(None, alias="Line Provider", description="The messaging service provider of the telephone number.")
-    mobile_country_code: Optional[StrictStr] = Field(None, alias="Mobile Country Code", description="The first half of the Home Network Identity (HNI).")
-    mobile_network_code: Optional[StrictStr] = Field(None, alias="Mobile Network Code", description="The second half of the HNI.")
+    """ # noqa: E501
+    response_code: Optional[StrictInt] = Field(default=None, description="Our vendor's response code.", alias="Response Code")
+    message: Optional[StrictStr] = Field(default=None, description="Message associated with the response code.", alias="Message")
+    e_164_format: Optional[StrictStr] = Field(default=None, description="The telephone number in E.164 format.", alias="E.164 Format")
+    formatted: Optional[StrictStr] = Field(default=None, description="The formatted version of the telephone number.", alias="Formatted")
+    country: Optional[StrictStr] = Field(default=None, description="The country of the telephone number.", alias="Country")
+    line_type: Optional[StrictStr] = Field(default=None, description="The line type of the telephone number.", alias="Line Type")
+    line_provider: Optional[StrictStr] = Field(default=None, description="The messaging service provider of the telephone number.", alias="Line Provider")
+    mobile_country_code: Optional[StrictStr] = Field(default=None, description="The first half of the Home Network Identity (HNI).", alias="Mobile Country Code")
+    mobile_network_code: Optional[StrictStr] = Field(default=None, description="The second half of the HNI.", alias="Mobile Network Code")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["Response Code", "Message", "E.164 Format", "Formatted", "Country", "Line Type", "Line Provider", "Mobile Country Code", "Mobile Network Code"]
+    __properties: ClassVar[List[str]] = ["Response Code", "Message", "E.164 Format", "Formatted", "Country", "Line Type", "Line Provider", "Mobile Country Code", "Mobile Network Code"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = {
+        "populate_by_name": True,
+        "validate_assignment": True
+    }
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> LookupResult:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of LookupResult from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude={
+                "additional_properties",
+            },
+            exclude_none=True,
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -71,24 +89,24 @@ class LookupResult(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> LookupResult:
+    def from_dict(cls, obj: Dict) -> Self:
         """Create an instance of LookupResult from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return LookupResult.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = LookupResult.parse_obj({
-            "response_code": obj.get("Response Code"),
-            "message": obj.get("Message"),
-            "e_164_format": obj.get("E.164 Format"),
-            "formatted": obj.get("Formatted"),
-            "country": obj.get("Country"),
-            "line_type": obj.get("Line Type"),
-            "line_provider": obj.get("Line Provider"),
-            "mobile_country_code": obj.get("Mobile Country Code"),
-            "mobile_network_code": obj.get("Mobile Network Code")
+        _obj = cls.model_validate({
+            "Response Code": obj.get("Response Code"),
+            "Message": obj.get("Message"),
+            "E.164 Format": obj.get("E.164 Format"),
+            "Formatted": obj.get("Formatted"),
+            "Country": obj.get("Country"),
+            "Line Type": obj.get("Line Type"),
+            "Line Provider": obj.get("Line Provider"),
+            "Mobile Country Code": obj.get("Mobile Country Code"),
+            "Mobile Network Code": obj.get("Mobile Network Code")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

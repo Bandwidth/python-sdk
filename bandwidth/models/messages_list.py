@@ -19,46 +19,64 @@ import re  # noqa: F401
 import json
 
 
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictInt, conlist
+from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, StrictInt
+from pydantic import Field
 from bandwidth.models.list_message_item import ListMessageItem
 from bandwidth.models.page_info import PageInfo
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 class MessagesList(BaseModel):
     """
     MessagesList
-    """
-    total_count: Optional[StrictInt] = Field(None, alias="totalCount", description="The total number of messages matched by the search. When the request has limitTotalCount set to true this value is limited to 10,000.")
-    page_info: Optional[PageInfo] = Field(None, alias="pageInfo")
-    messages: Optional[conlist(ListMessageItem)] = None
+    """ # noqa: E501
+    total_count: Optional[StrictInt] = Field(default=None, description="The total number of messages matched by the search. When the request has limitTotalCount set to true this value is limited to 10,000.", alias="totalCount")
+    page_info: Optional[PageInfo] = Field(default=None, alias="pageInfo")
+    messages: Optional[List[ListMessageItem]] = None
     additional_properties: Dict[str, Any] = {}
-    __properties = ["totalCount", "pageInfo", "messages"]
+    __properties: ClassVar[List[str]] = ["totalCount", "pageInfo", "messages"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = {
+        "populate_by_name": True,
+        "validate_assignment": True
+    }
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> MessagesList:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of MessagesList from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude={
+                "additional_properties",
+            },
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of page_info
         if self.page_info:
             _dict['pageInfo'] = self.page_info.to_dict()
@@ -77,17 +95,17 @@ class MessagesList(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> MessagesList:
+    def from_dict(cls, obj: Dict) -> Self:
         """Create an instance of MessagesList from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return MessagesList.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = MessagesList.parse_obj({
-            "total_count": obj.get("totalCount"),
-            "page_info": PageInfo.from_dict(obj.get("pageInfo")) if obj.get("pageInfo") is not None else None,
+        _obj = cls.model_validate({
+            "totalCount": obj.get("totalCount"),
+            "pageInfo": PageInfo.from_dict(obj.get("pageInfo")) if obj.get("pageInfo") is not None else None,
             "messages": [ListMessageItem.from_dict(_item) for _item in obj.get("messages")] if obj.get("messages") is not None else None
         })
         # store additional fields in additional_properties

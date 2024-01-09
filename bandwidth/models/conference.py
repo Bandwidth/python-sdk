@@ -19,51 +19,69 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictStr, conlist
+from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, StrictStr
+from pydantic import Field
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
 from bandwidth.models.conference_member import ConferenceMember
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 class Conference(BaseModel):
     """
     Conference
-    """
-    id: Optional[StrictStr] = Field(None, description="The Bandwidth-generated conference ID.")
-    name: Optional[StrictStr] = Field(None, description="The name of the conference, as specified by your application.")
-    created_time: Optional[datetime] = Field(None, alias="createdTime", description="The time the conference was initiated, in ISO 8601 format.")
-    completed_time: Optional[datetime] = Field(None, alias="completedTime", description="The time the conference was terminated, in ISO 8601 format.")
-    conference_event_url: Optional[StrictStr] = Field(None, alias="conferenceEventUrl", description="The URL to send the conference-related events.")
-    conference_event_method: Optional[CallbackMethodEnum] = Field(None, alias="conferenceEventMethod")
-    tag: Optional[StrictStr] = Field(None, description="The custom string attached to the conference that will be sent with callbacks.")
-    active_members: Optional[conlist(ConferenceMember)] = Field(None, alias="activeMembers", description="A list of active members of the conference. Omitted if this is a response to the [Get Conferences endpoint](/apis/voice#tag/Conferences/operation/listConferences).")
+    """ # noqa: E501
+    id: Optional[StrictStr] = Field(default=None, description="The Bandwidth-generated conference ID.")
+    name: Optional[StrictStr] = Field(default=None, description="The name of the conference, as specified by your application.")
+    created_time: Optional[datetime] = Field(default=None, description="The time the conference was initiated, in ISO 8601 format.", alias="createdTime")
+    completed_time: Optional[datetime] = Field(default=None, description="The time the conference was terminated, in ISO 8601 format.", alias="completedTime")
+    conference_event_url: Optional[StrictStr] = Field(default=None, description="The URL to send the conference-related events.", alias="conferenceEventUrl")
+    conference_event_method: Optional[CallbackMethodEnum] = Field(default=None, alias="conferenceEventMethod")
+    tag: Optional[StrictStr] = Field(default=None, description="The custom string attached to the conference that will be sent with callbacks.")
+    active_members: Optional[List[ConferenceMember]] = Field(default=None, description="A list of active members of the conference. Omitted if this is a response to the [Get Conferences endpoint](/apis/voice#tag/Conferences/operation/listConferences).", alias="activeMembers")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["id", "name", "createdTime", "completedTime", "conferenceEventUrl", "conferenceEventMethod", "tag", "activeMembers"]
+    __properties: ClassVar[List[str]] = ["id", "name", "createdTime", "completedTime", "conferenceEventUrl", "conferenceEventMethod", "tag", "activeMembers"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = {
+        "populate_by_name": True,
+        "validate_assignment": True
+    }
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Conference:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of Conference from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude={
+                "additional_properties",
+            },
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of each item in active_members (list)
         _items = []
         if self.active_members:
@@ -77,50 +95,50 @@ class Conference(BaseModel):
                 _dict[_key] = _value
 
         # set to None if completed_time (nullable) is None
-        # and __fields_set__ contains the field
-        if self.completed_time is None and "completed_time" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.completed_time is None and "completed_time" in self.model_fields_set:
             _dict['completedTime'] = None
 
         # set to None if conference_event_url (nullable) is None
-        # and __fields_set__ contains the field
-        if self.conference_event_url is None and "conference_event_url" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.conference_event_url is None and "conference_event_url" in self.model_fields_set:
             _dict['conferenceEventUrl'] = None
 
         # set to None if conference_event_method (nullable) is None
-        # and __fields_set__ contains the field
-        if self.conference_event_method is None and "conference_event_method" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.conference_event_method is None and "conference_event_method" in self.model_fields_set:
             _dict['conferenceEventMethod'] = None
 
         # set to None if tag (nullable) is None
-        # and __fields_set__ contains the field
-        if self.tag is None and "tag" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.tag is None and "tag" in self.model_fields_set:
             _dict['tag'] = None
 
         # set to None if active_members (nullable) is None
-        # and __fields_set__ contains the field
-        if self.active_members is None and "active_members" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.active_members is None and "active_members" in self.model_fields_set:
             _dict['activeMembers'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Conference:
+    def from_dict(cls, obj: Dict) -> Self:
         """Create an instance of Conference from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Conference.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = Conference.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
             "name": obj.get("name"),
-            "created_time": obj.get("createdTime"),
-            "completed_time": obj.get("completedTime"),
-            "conference_event_url": obj.get("conferenceEventUrl"),
-            "conference_event_method": obj.get("conferenceEventMethod"),
+            "createdTime": obj.get("createdTime"),
+            "completedTime": obj.get("completedTime"),
+            "conferenceEventUrl": obj.get("conferenceEventUrl"),
+            "conferenceEventMethod": obj.get("conferenceEventMethod"),
             "tag": obj.get("tag"),
-            "active_members": [ConferenceMember.from_dict(_item) for _item in obj.get("activeMembers")] if obj.get("activeMembers") is not None else None
+            "activeMembers": [ConferenceMember.from_dict(_item) for _item in obj.get("activeMembers")] if obj.get("activeMembers") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

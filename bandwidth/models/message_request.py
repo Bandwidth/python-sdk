@@ -19,50 +19,69 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictStr, conlist, constr
+from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, StrictStr
+from pydantic import Field
+from typing_extensions import Annotated
 from bandwidth.models.priority_enum import PriorityEnum
+try:
+    from typing import Self
+except ImportError:
+    from typing_extensions import Self
 
 class MessageRequest(BaseModel):
     """
     MessageRequest
-    """
-    application_id: StrictStr = Field(..., alias="applicationId", description="The ID of the Application your from number is associated with in the Bandwidth Phone Number Dashboard.")
-    to: conlist(StrictStr, unique_items=True) = Field(..., description="The phone number(s) the message should be sent to in E164 format.")
-    var_from: StrictStr = Field(..., alias="from", description="One of your telephone numbers the message should come from in E164 format.")
-    text: Optional[constr(strict=True, max_length=2048)] = Field(None, description="The contents of the text message. Must be 2048 characters or less.")
-    media: Optional[conlist(constr(strict=True, max_length=4096))] = Field(None, description="A list of URLs to include as media attachments as part of the message. Each URL can be at most 4096 characters.")
-    tag: Optional[StrictStr] = Field(None, description="A custom string that will be included in callback events of the message. Max 1024 characters.")
+    """ # noqa: E501
+    application_id: StrictStr = Field(description="The ID of the Application your from number is associated with in the Bandwidth Phone Number Dashboard.", alias="applicationId")
+    to: List[StrictStr] = Field(description="The phone number(s) the message should be sent to in E164 format.")
+    var_from: StrictStr = Field(description="One of your telephone numbers the message should come from in E164 format.", alias="from")
+    text: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="The contents of the text message. Must be 2048 characters or less.")
+    media: Optional[List[Annotated[str, Field(strict=True, max_length=4096)]]] = Field(default=None, description="A list of URLs to include as media attachments as part of the message. Each URL can be at most 4096 characters.")
+    tag: Optional[StrictStr] = Field(default=None, description="A custom string that will be included in callback events of the message. Max 1024 characters.")
     priority: Optional[PriorityEnum] = None
-    expiration: Optional[datetime] = Field(None, description="A string with the date/time value that the message will automatically expire by. This must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a date-time in the future. Not supported on MMS.")
+    expiration: Optional[datetime] = Field(default=None, description="A string with the date/time value that the message will automatically expire by. This must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a date-time in the future. Not supported on MMS.")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["applicationId", "to", "from", "text", "media", "tag", "priority", "expiration"]
+    __properties: ClassVar[List[str]] = ["applicationId", "to", "from", "text", "media", "tag", "priority", "expiration"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = {
+        "populate_by_name": True,
+        "validate_assignment": True
+    }
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> MessageRequest:
+    def from_json(cls, json_str: str) -> Self:
         """Create an instance of MessageRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude={
+                "additional_properties",
+            },
+            exclude_none=True,
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -71,18 +90,18 @@ class MessageRequest(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> MessageRequest:
+    def from_dict(cls, obj: Dict) -> Self:
         """Create an instance of MessageRequest from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return MessageRequest.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = MessageRequest.parse_obj({
-            "application_id": obj.get("applicationId"),
+        _obj = cls.model_validate({
+            "applicationId": obj.get("applicationId"),
             "to": obj.get("to"),
-            "var_from": obj.get("from"),
+            "from": obj.get("from"),
             "text": obj.get("text"),
             "media": obj.get("media"),
             "tag": obj.get("tag"),

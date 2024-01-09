@@ -15,12 +15,10 @@
 
 import copy
 import logging
-import multiprocessing
 import sys
 import urllib3
 
 import http.client as httplib
-from bandwidth.exceptions import ApiValueError
 
 JSON_SCHEMA_VALIDATION_KEYWORDS = {
     'multipleOf', 'maximum', 'exclusiveMaximum',
@@ -28,7 +26,7 @@ JSON_SCHEMA_VALIDATION_KEYWORDS = {
     'minLength', 'pattern', 'maxItems', 'minItems'
 }
 
-class Configuration(object):
+class Configuration:
     """This class contains various settings of the API client.
 
     :param host: Base url.
@@ -50,7 +48,8 @@ class Configuration(object):
       configuration.
     :param server_operation_variables: Mapping from operation ID to a mapping with
       string values to replace variables in templated server configuration.
-      The validation of enums is performed for variables with defined enum values before.
+      The validation of enums is performed for variables with defined enum
+      values before.
     :param ssl_ca_cert: str - the path to a file of concatenated CA certificates
       in PEM format.
 
@@ -82,7 +81,7 @@ conf = bandwidth.Configuration(
                  server_index=None, server_variables=None,
                  server_operation_index=None, server_operation_variables=None,
                  ssl_ca_cert=None,
-                 ):
+                 ) -> None:
         """Constructor
         """
         self._base_path = "http://localhost" if host is None else host
@@ -165,13 +164,6 @@ conf = bandwidth.Configuration(
            Set this to the SNI value expected by the server.
         """
 
-        self.connection_pool_maxsize = multiprocessing.cpu_count() * 5
-        """urllib3 connection pool's maximum number of connections saved
-           per pool. urllib3 uses 1 connection as default value, but this is
-           not the best value when you are making a lot of possibly parallel
-           requests to the same host, which is often the case here.
-           cpu_count * 5 is used as default value to increase performance.
-        """
 
         self.proxy = None
         """Proxy URL
