@@ -1,4 +1,3 @@
-.github/workflows/python.yml
 .gitlab-ci.yml
 .travis.yml
 README.md
@@ -205,6 +204,5 @@ docs/VoiceApiError.md
 docs/VoiceCodeResponse.md
 git_push.sh
 pyproject.toml
-requirements.txt
-test-requirements.txt
+setup.py
 tox.ini
