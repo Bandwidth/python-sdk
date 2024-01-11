@@ -21,7 +21,7 @@ class Record(TerminalVerb):
         transcription_available_method: str=None,  username: str=None,
         password: str=None, fallback_username: str=None,
         fallback_password: str=None, tag: str=None,
-        terminating_digits: str=None, max_duration: int=None,
+        terminating_digits: str=None, max_duration: int=60,
         silence_timeout: str=None, file_format: str=None
     ):
         """Initialize a <Record> verb
