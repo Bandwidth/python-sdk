@@ -16,7 +16,7 @@ class Transfer(Verb):
 
     def __init__(
         self, transfer_to: List[Union[PhoneNumber, SipUri]] = [],
-        transfer_caller_id: str=None, call_timeout: str=None,
+        transfer_caller_id: str=None, transfer_caller_display_name: str=None, call_timeout: str=None,
         transfer_complete_url: str=None, transfer_complete_method: str=None,
         transfer_complete_fallback_url: str=None,
         transfer_complete_fallback_method: str=None, username: str=None,
@@ -29,6 +29,7 @@ class Transfer(Verb):
         Args:
             transfer_to (list[PhoneNumber, SipUri], optional): List of recipients to transfer a call to. Defaults to [].
             transfer_caller_id (str, optional): The caller ID to use when the call is transferred, if different. Must be in E.164 format (e.g. +15555555555) or be one of the following strings Restricted, Anonymous, Private, or Unavailable. Leave as default to pass along the number of the remote party. Defaults to None.
+            transfer_caller_display_name (str, optional): The caller display name to use when the call is transferred. May not exceed 256 characters nor contain control characters such as new lines.
             call_timeout (str, optional):The timeout (in seconds) for the callee to answer the call after it starts ringing. If the call does not start ringing within 30s, the call will be cancelled regardless of this value. Range: decimal values between 1 - 300. Default value is 30 seconds. Defaults to None.
             transfer_complete_url (str, optional): URL to send the Transfer Complete event to and request new BXML. Optional but recommended. See below for further details. May be a relative URL. Defaults to None.
             transfer_complete_method (str, optional): The HTTP method to use for the request to transferCompleteUrl. GET or POST. Default value is POST. Defaults to None.
@@ -63,6 +64,7 @@ class Transfer(Verb):
         """
         self.transfer_to = transfer_to
         self.transfer_caller_id = transfer_caller_id
+        self.transfer_caller_display_name = transfer_caller_display_name
         self.call_timeout = call_timeout
         self.transfer_complete_url = transfer_complete_url
         self.transfer_complete_method = transfer_complete_method
@@ -84,6 +86,7 @@ class Transfer(Verb):
     def _attributes(self):
         return {
             "transferCallerId": self.transfer_caller_id,
+            "transferCallerDisplayName": self.transfer_caller_display_name,
             "callTimeout": self.call_timeout,
             "transferCompleteUrl": self.transfer_complete_url,
             "transferCompleteMethod": self.transfer_complete_method,

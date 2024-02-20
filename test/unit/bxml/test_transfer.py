@@ -27,14 +27,15 @@ class TestTransfer(unittest.TestCase):
             transfer_to=[self.sip_uri],
             call_timeout = "15",
             transfer_caller_id = "+19195554321",
+            transfer_caller_display_name="test",
             tag = "test"
         )
 
     def test_to_bxml(self):
-        expected = '<Transfer transferCallerId="+19195554321" callTimeout="15" tag="test"><SipUri uui="test">sip@bw.com</SipUri></Transfer>'
+        expected = '<Transfer transferCallerId="+19195554321" transferCallerDisplayName="test" callTimeout="15" tag="test"><SipUri uui="test">sip@bw.com</SipUri></Transfer>'
         assert(expected == self.transfer.to_bxml())
 
     def test_add_verb(self):
-        expected = '<Transfer transferCallerId="+19195554321" callTimeout="15" tag="test"><SipUri uui="test">sip@bw.com</SipUri><PhoneNumber tag="test">+19195551234</PhoneNumber></Transfer>'
+        expected = '<Transfer transferCallerId="+19195554321" transferCallerDisplayName="test" callTimeout="15" tag="test"><SipUri uui="test">sip@bw.com</SipUri><PhoneNumber tag="test">+19195551234</PhoneNumber></Transfer>'
         self.transfer.add_transfer_recipient(self.phone_number)
         assert(expected == self.transfer.to_bxml())
