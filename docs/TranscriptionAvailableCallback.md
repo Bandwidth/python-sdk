@@ -3,6 +3,7 @@
 The Transcription Available event is sent when the recording transcription is available to be downloaded.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -37,7 +38,7 @@ json = "{}"
 # create an instance of TranscriptionAvailableCallback from a JSON string
 transcription_available_callback_instance = TranscriptionAvailableCallback.from_json(json)
 # print the JSON string representation of the object
-print TranscriptionAvailableCallback.to_json()
+print(TranscriptionAvailableCallback.to_json())
 
 # convert the object into a dict
 transcription_available_callback_dict = transcription_available_callback_instance.to_dict()

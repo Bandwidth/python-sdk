@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | The id of the message. | [optional] 
@@ -28,7 +29,7 @@ json = "{}"
 # create an instance of Message from a JSON string
 message_instance = Message.from_json(json)
 # print the JSON string representation of the object
-print Message.to_json()
+print(Message.to_json())
 
 # convert the object into a dict
 message_dict = message_instance.to_dict()

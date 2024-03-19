@@ -19,56 +19,74 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.message_direction_enum import MessageDirectionEnum
 from bandwidth.models.priority_enum import PriorityEnum
+from typing import Optional, Set
+from typing_extensions import Self
 
 class Message(BaseModel):
     """
     Message
-    """
-    id: Optional[StrictStr] = Field(None, description="The id of the message.")
-    owner: Optional[StrictStr] = Field(None, description="The Bandwidth phone number associated with the message.")
-    application_id: Optional[StrictStr] = Field(None, alias="applicationId", description="The application ID associated with the message.")
-    time: Optional[datetime] = Field(None, description="The datetime stamp of the message in ISO 8601")
-    segment_count: Optional[StrictInt] = Field(None, alias="segmentCount", description="The number of segments the original message from the user is broken into before sending over to carrier networks.")
+    """ # noqa: E501
+    id: Optional[StrictStr] = Field(default=None, description="The id of the message.")
+    owner: Optional[StrictStr] = Field(default=None, description="The Bandwidth phone number associated with the message.")
+    application_id: Optional[StrictStr] = Field(default=None, description="The application ID associated with the message.", alias="applicationId")
+    time: Optional[datetime] = Field(default=None, description="The datetime stamp of the message in ISO 8601")
+    segment_count: Optional[StrictInt] = Field(default=None, description="The number of segments the original message from the user is broken into before sending over to carrier networks.", alias="segmentCount")
     direction: Optional[MessageDirectionEnum] = None
-    to: Optional[conlist(StrictStr, unique_items=True)] = Field(None, description="The phone number recipients of the message.")
-    var_from: Optional[StrictStr] = Field(None, alias="from", description="The phone number the message was sent from.")
-    media: Optional[conlist(StrictStr, unique_items=True)] = Field(None, description="The list of media URLs sent in the message. Including a `filename` field in the `Content-Disposition` header of the media linked with a URL will set the displayed file name. This is a best practice to ensure that your media has a readable file name.")
-    text: Optional[StrictStr] = Field(None, description="The contents of the message.")
-    tag: Optional[StrictStr] = Field(None, description="The custom string set by the user.")
+    to: Optional[List[StrictStr]] = Field(default=None, description="The phone number recipients of the message.")
+    var_from: Optional[StrictStr] = Field(default=None, description="The phone number the message was sent from.", alias="from")
+    media: Optional[List[StrictStr]] = Field(default=None, description="The list of media URLs sent in the message. Including a `filename` field in the `Content-Disposition` header of the media linked with a URL will set the displayed file name. This is a best practice to ensure that your media has a readable file name.")
+    text: Optional[StrictStr] = Field(default=None, description="The contents of the message.")
+    tag: Optional[StrictStr] = Field(default=None, description="The custom string set by the user.")
     priority: Optional[PriorityEnum] = None
-    expiration: Optional[datetime] = Field(None, description="The expiration date-time set by the user.")
+    expiration: Optional[datetime] = Field(default=None, description="The expiration date-time set by the user.")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "media", "text", "tag", "priority", "expiration"]
+    __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "media", "text", "tag", "priority", "expiration"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Message:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of Message from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        excluded_fields: Set[str] = set([
+            "additional_properties",
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -77,23 +95,23 @@ class Message(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> Message:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of Message from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return Message.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = Message.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
             "owner": obj.get("owner"),
-            "application_id": obj.get("applicationId"),
+            "applicationId": obj.get("applicationId"),
             "time": obj.get("time"),
-            "segment_count": obj.get("segmentCount"),
+            "segmentCount": obj.get("segmentCount"),
             "direction": obj.get("direction"),
             "to": obj.get("to"),
-            "var_from": obj.get("from"),
+            "from": obj.get("from"),
             "media": obj.get("media"),
             "text": obj.get("text"),
             "tag": obj.get("tag"),

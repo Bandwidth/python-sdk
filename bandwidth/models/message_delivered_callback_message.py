@@ -19,55 +19,73 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr, conlist
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.message_direction_enum import MessageDirectionEnum
 from bandwidth.models.priority_enum import PriorityEnum
+from typing import Optional, Set
+from typing_extensions import Self
 
 class MessageDeliveredCallbackMessage(BaseModel):
     """
     Message Delivered Callback Message Schema
-    """
-    id: StrictStr = Field(...)
-    owner: StrictStr = Field(...)
-    application_id: StrictStr = Field(..., alias="applicationId")
-    time: datetime = Field(...)
-    segment_count: StrictInt = Field(..., alias="segmentCount")
-    direction: MessageDirectionEnum = Field(...)
-    to: conlist(StrictStr, unique_items=True) = Field(...)
-    var_from: StrictStr = Field(..., alias="from")
-    text: StrictStr = Field(...)
-    tag: StrictStr = Field(...)
-    media: Optional[conlist(StrictStr)] = None
+    """ # noqa: E501
+    id: StrictStr
+    owner: StrictStr
+    application_id: StrictStr = Field(alias="applicationId")
+    time: datetime
+    segment_count: StrictInt = Field(alias="segmentCount")
+    direction: MessageDirectionEnum
+    to: List[StrictStr]
+    var_from: StrictStr = Field(alias="from")
+    text: StrictStr
+    tag: StrictStr
+    media: Optional[List[StrictStr]] = None
     priority: Optional[PriorityEnum] = None
     additional_properties: Dict[str, Any] = {}
-    __properties = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority"]
+    __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> MessageDeliveredCallbackMessage:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of MessageDeliveredCallbackMessage from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        excluded_fields: Set[str] = set([
+            "additional_properties",
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -76,23 +94,23 @@ class MessageDeliveredCallbackMessage(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> MessageDeliveredCallbackMessage:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of MessageDeliveredCallbackMessage from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return MessageDeliveredCallbackMessage.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = MessageDeliveredCallbackMessage.parse_obj({
+        _obj = cls.model_validate({
             "id": obj.get("id"),
             "owner": obj.get("owner"),
-            "application_id": obj.get("applicationId"),
+            "applicationId": obj.get("applicationId"),
             "time": obj.get("time"),
-            "segment_count": obj.get("segmentCount"),
+            "segmentCount": obj.get("segmentCount"),
             "direction": obj.get("direction"),
             "to": obj.get("to"),
-            "var_from": obj.get("from"),
+            "from": obj.get("from"),
             "text": obj.get("text"),
             "tag": obj.get("tag"),
             "media": obj.get("media"),

@@ -3,6 +3,7 @@
 The gather event is sent after a <Gather> verb is executed. Its purpose is to report the gathered digits to the calling application.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -34,7 +35,7 @@ json = "{}"
 # create an instance of GatherCallback from a JSON string
 gather_callback_instance = GatherCallback.from_json(json)
 # print the JSON string representation of the object
-print GatherCallback.to_json()
+print(GatherCallback.to_json())
 
 # convert the object into a dict
 gather_callback_dict = gather_callback_instance.to_dict()

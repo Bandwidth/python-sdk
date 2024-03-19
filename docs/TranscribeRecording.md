@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **callback_url** | **str** | The URL to send the [TranscriptionAvailable](/docs/voice/webhooks/transcriptionAvailable) event to. You should not include sensitive or personally-identifiable information in the callbackUrl field! Always use the proper username and password fields for authorization. | [optional] 
@@ -22,7 +23,7 @@ json = "{}"
 # create an instance of TranscribeRecording from a JSON string
 transcribe_recording_instance = TranscribeRecording.from_json(json)
 # print the JSON string representation of the object
-print TranscribeRecording.to_json()
+print(TranscribeRecording.to_json())
 
 # convert the object into a dict
 transcribe_recording_dict = transcribe_recording_instance.to_dict()

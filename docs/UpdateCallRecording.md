@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **state** | [**RecordingStateEnum**](RecordingStateEnum.md) |  | 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of UpdateCallRecording from a JSON string
 update_call_recording_instance = UpdateCallRecording.from_json(json)
 # print the JSON string representation of the object
-print UpdateCallRecording.to_json()
+print(UpdateCallRecording.to_json())
 
 # convert the object into a dict
 update_call_recording_dict = update_call_recording_instance.to_dict()

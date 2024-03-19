@@ -3,6 +3,7 @@
 If the recording was transcribed, metadata about the transcription
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | The unique transcription ID | [optional] 
@@ -20,7 +21,7 @@ json = "{}"
 # create an instance of TranscriptionMetadata from a JSON string
 transcription_metadata_instance = TranscriptionMetadata.from_json(json)
 # print the JSON string representation of the object
-print TranscriptionMetadata.to_json()
+print(TranscriptionMetadata.to_json())
 
 # convert the object into a dict
 transcription_metadata_dict = transcription_metadata_instance.to_dict()

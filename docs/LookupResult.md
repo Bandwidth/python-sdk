@@ -3,6 +3,7 @@
 Carrier information results for the specified telephone number.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **response_code** | **int** | Our vendor&#39;s response code. | [optional] 
@@ -25,7 +26,7 @@ json = "{}"
 # create an instance of LookupResult from a JSON string
 lookup_result_instance = LookupResult.from_json(json)
 # print the JSON string representation of the object
-print LookupResult.to_json()
+print(LookupResult.to_json())
 
 # convert the object into a dict
 lookup_result_dict = lookup_result_instance.to_dict()

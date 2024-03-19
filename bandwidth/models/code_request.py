@@ -18,62 +18,80 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, conint, constr, validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CodeRequest(BaseModel):
     """
     CodeRequest
-    """
-    to: constr(strict=True) = Field(..., description="The phone number to send the mfa code to.")
-    var_from: constr(strict=True, max_length=32) = Field(..., alias="from", description="The application phone number, the sender of the mfa code.")
-    application_id: constr(strict=True, max_length=50) = Field(..., alias="applicationId", description="The application unique ID, obtained from Bandwidth.")
-    scope: Optional[constr(strict=True, max_length=25)] = Field(None, description="An optional field to denote what scope or action the mfa code is addressing.  If not supplied, defaults to \"2FA\".")
-    message: constr(strict=True, max_length=2048) = Field(..., description="The message format of the mfa code.  There are three values that the system will replace \"{CODE}\", \"{NAME}\", \"{SCOPE}\".  The \"{SCOPE}\" and \"{NAME} value template are optional, while \"{CODE}\" must be supplied.  As the name would suggest, code will be replace with the actual mfa code.  Name is replaced with the application name, configured during provisioning of mfa.  The scope value is the same value sent during the call and partitioned by the server.")
-    digits: conint(strict=True, le=8, ge=4) = Field(..., description="The number of digits for your mfa code.  The valid number ranges from 2 to 8, inclusively.")
+    """ # noqa: E501
+    to: Annotated[str, Field(strict=True)] = Field(description="The phone number to send the mfa code to.")
+    var_from: Annotated[str, Field(strict=True, max_length=32)] = Field(description="The application phone number, the sender of the mfa code.", alias="from")
+    application_id: Annotated[str, Field(strict=True, max_length=50)] = Field(description="The application unique ID, obtained from Bandwidth.", alias="applicationId")
+    scope: Optional[Annotated[str, Field(strict=True, max_length=25)]] = Field(default=None, description="An optional field to denote what scope or action the mfa code is addressing.  If not supplied, defaults to \"2FA\".")
+    message: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="The message format of the mfa code.  There are three values that the system will replace \"{CODE}\", \"{NAME}\", \"{SCOPE}\".  The \"{SCOPE}\" and \"{NAME} value template are optional, while \"{CODE}\" must be supplied.  As the name would suggest, code will be replace with the actual mfa code.  Name is replaced with the application name, configured during provisioning of mfa.  The scope value is the same value sent during the call and partitioned by the server.")
+    digits: Annotated[int, Field(le=8, strict=True, ge=4)] = Field(description="The number of digits for your mfa code.  The valid number ranges from 2 to 8, inclusively.")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["to", "from", "applicationId", "scope", "message", "digits"]
+    __properties: ClassVar[List[str]] = ["to", "from", "applicationId", "scope", "message", "digits"]
 
-    @validator('to')
+    @field_validator('to')
     def to_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if not re.match(r"^\+[1-9]\d{1,14}$", value):
             raise ValueError(r"must validate the regular expression /^\+[1-9]\d{1,14}$/")
         return value
 
-    @validator('var_from')
+    @field_validator('var_from')
     def var_from_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if not re.match(r"^\+[1-9]\d{1,14}$", value):
             raise ValueError(r"must validate the regular expression /^\+[1-9]\d{1,14}$/")
         return value
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CodeRequest:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CodeRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        excluded_fields: Set[str] = set([
+            "additional_properties",
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -82,18 +100,18 @@ class CodeRequest(BaseModel):
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CodeRequest:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CodeRequest from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CodeRequest.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = CodeRequest.parse_obj({
+        _obj = cls.model_validate({
             "to": obj.get("to"),
-            "var_from": obj.get("from"),
-            "application_id": obj.get("applicationId"),
+            "from": obj.get("from"),
+            "applicationId": obj.get("applicationId"),
             "scope": obj.get("scope"),
             "message": obj.get("message"),
             "digits": obj.get("digits")

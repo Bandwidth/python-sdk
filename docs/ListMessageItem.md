@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **message_id** | **str** | The message id | [optional] 
@@ -32,7 +33,7 @@ json = "{}"
 # create an instance of ListMessageItem from a JSON string
 list_message_item_instance = ListMessageItem.from_json(json)
 # print the JSON string representation of the object
-print ListMessageItem.to_json()
+print(ListMessageItem.to_json())
 
 # convert the object into a dict
 list_message_item_dict = list_message_item_instance.to_dict()

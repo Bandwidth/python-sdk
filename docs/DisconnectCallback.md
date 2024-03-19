@@ -3,6 +3,7 @@
 The Disconnect event is fired when a call ends, for any reason.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -33,7 +34,7 @@ json = "{}"
 # create an instance of DisconnectCallback from a JSON string
 disconnect_callback_instance = DisconnectCallback.from_json(json)
 # print the JSON string representation of the object
-print DisconnectCallback.to_json()
+print(DisconnectCallback.to_json())
 
 # convert the object into a dict
 disconnect_callback_dict = disconnect_callback_instance.to_dict()

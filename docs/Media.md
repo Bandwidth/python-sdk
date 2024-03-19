@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **content** | **str** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of Media from a JSON string
 media_instance = Media.from_json(json)
 # print the JSON string representation of the object
-print Media.to_json()
+print(Media.to_json())
 
 # convert the object into a dict
 media_dict = media_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **call_id** | **str** | The call id associated with the event. | [optional] 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of ConferenceMember from a JSON string
 conference_member_instance = ConferenceMember.from_json(json)
 # print the JSON string representation of the object
-print ConferenceMember.to_json()
+print(ConferenceMember.to_json())
 
 # convert the object into a dict
 conference_member_dict = conference_member_instance.to_dict()

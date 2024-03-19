@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **to** | **str** | The phone number to send the mfa code to. | 
@@ -19,7 +20,7 @@ json = "{}"
 # create an instance of VerifyCodeRequest from a JSON string
 verify_code_request_instance = VerifyCodeRequest.from_json(json)
 # print the JSON string representation of the object
-print VerifyCodeRequest.to_json()
+print(VerifyCodeRequest.to_json())
 
 # convert the object into a dict
 verify_code_request_dict = verify_code_request_instance.to_dict()

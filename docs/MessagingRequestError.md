@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of MessagingRequestError from a JSON string
 messaging_request_error_instance = MessagingRequestError.from_json(json)
 # print the JSON string representation of the object
-print MessagingRequestError.to_json()
+print(MessagingRequestError.to_json())
 
 # convert the object into a dict
 messaging_request_error_dict = messaging_request_error_instance.to_dict()

@@ -3,6 +3,7 @@
 The status of the request (IN_PROGRESS, COMPLETE, PARTIAL_COMPLETE, or FAILED).
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

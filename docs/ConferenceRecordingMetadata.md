@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **account_id** | **str** | The user account associated with the call. | [optional] 
@@ -26,7 +27,7 @@ json = "{}"
 # create an instance of ConferenceRecordingMetadata from a JSON string
 conference_recording_metadata_instance = ConferenceRecordingMetadata.from_json(json)
 # print the JSON string representation of the object
-print ConferenceRecordingMetadata.to_json()
+print(ConferenceRecordingMetadata.to_json())
 
 # convert the object into a dict
 conference_recording_metadata_dict = conference_recording_metadata_instance.to_dict()

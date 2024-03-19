@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **valid** | **bool** | Whether or not the supplied code is valid. | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of VerifyCodeResponse from a JSON string
 verify_code_response_instance = VerifyCodeResponse.from_json(json)
 # print the JSON string representation of the object
-print VerifyCodeResponse.to_json()
+print(VerifyCodeResponse.to_json())
 
 # convert the object into a dict
 verify_code_response_dict = verify_code_response_instance.to_dict()

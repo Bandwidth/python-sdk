@@ -3,6 +3,7 @@
 The HTTP method to use for the request to `redirectUrl`. GET or POST. Default value is POST.<br><br>Not allowed if `state` is `completed`.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

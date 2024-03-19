@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | [**ConferenceStateEnum**](ConferenceStateEnum.md) |  | [optional] 
@@ -24,7 +25,7 @@ json = "{}"
 # create an instance of UpdateConference from a JSON string
 update_conference_instance = UpdateConference.from_json(json)
 # print the JSON string representation of the object
-print UpdateConference.to_json()
+print(UpdateConference.to_json())
 
 # convert the object into a dict
 update_conference_dict = update_conference_instance.to_dict()

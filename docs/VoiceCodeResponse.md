@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **call_id** | **str** | Programmable Voice API Call ID. | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of VoiceCodeResponse from a JSON string
 voice_code_response_instance = VoiceCodeResponse.from_json(json)
 # print the JSON string representation of the object
-print VoiceCodeResponse.to_json()
+print(VoiceCodeResponse.to_json())
 
 # convert the object into a dict
 voice_code_response_dict = voice_code_response_instance.to_dict()
