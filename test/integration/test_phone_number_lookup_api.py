@@ -115,7 +115,8 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         # Create the lookup request and validate the response
         create_lookup_response: CreateLookupResponse = self.api_instance.create_lookup(
-            self.account_id, lookup_request, _return_http_data_only=False)
+            self.account_id, lookup_request
+        )
 
         self.assertIs(type(create_lookup_response.status), LookupStatusEnum)
         self.assertEqual(create_lookup_response.status, LookupStatusEnum("IN_PROGRESS"))
@@ -125,9 +126,10 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
         # Check the status code for the GET LookupStatus response
         get_lookup_status_response: LookupStatus = self.api_instance.get_lookup_status(
-            self.account_id, create_lookup_response.request_id, _return_http_data_only=False)
+            self.account_id,
+            create_lookup_response.request_id
+        )
 
-        # make the request again without _return_http_data_only=False to just get the LookupStatus model
         get_lookup_status_response: LookupStatus = self.pollLookupStatus(
             create_lookup_response.request_id)
 

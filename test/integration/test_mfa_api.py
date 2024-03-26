@@ -82,8 +82,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         """Test a successful MFA messaging code request 
         """
         api_response_with_http_info = self.api_instance.generate_messaging_code_with_http_info(
-            self.account_id, self.messaging_code_request,
-            _return_http_data_only=False
+            self.account_id, self.messaging_code_request
         )
         self.assertEqual(api_response_with_http_info.status_code, 200)
 
@@ -95,8 +94,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         """Test a successful MFA voice code request
         """
         api_response_with_http_info = self.api_instance.generate_voice_code_with_http_info(
-            self.account_id, self.voice_code_request,
-            _return_http_data_only=False
+            self.account_id, self.voice_code_request
         )
         self.assertEqual(api_response_with_http_info.status_code, 200)
 
@@ -115,8 +113,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             code="123456",
         )
         api_response_with_http_info = self.api_instance.verify_code_with_http_info(
-            self.account_id, verify_code_request,
-            _return_http_data_only=False
+            self.account_id, verify_code_request
         )
         self.assertEqual(api_response_with_http_info.status_code, 200)
 
@@ -169,7 +166,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         self.assertAuthException(context, ForbiddenException, 403)
 
     def testRateLimit(self) -> None:
-        """Validate that the API reutrns a 429 error, and that the 429 clears after 30 seconds
+        """Validate that the API returns a 429 error, and that the 429 clears after 30 seconds
         """
         verify_code_request = VerifyCodeRequest(
             to="+1" + str(randint(1111111111, 9999999999)),
@@ -190,8 +187,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
                     logging.debug('Got rate limit error')
                     time.sleep(35)
                     api_response_with_http_info = self.api_instance.verify_code_with_http_info(
-                        self.account_id, verify_code_request,
-                        _return_http_data_only=False
+                        self.account_id, verify_code_request
                     )
                     self.assertEqual(api_response_with_http_info.status_code, 200)
                     break
@@ -199,4 +195,4 @@ class TestMultiFactorAuthentication(unittest.TestCase):
                     raise e
             except:
                 logging.error("Unexpected error while testing rate limit!")
-                raise e
+                raise Exception("Unexpected error while testing rate limit!")

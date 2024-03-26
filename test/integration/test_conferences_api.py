@@ -245,7 +245,8 @@ class ConferencesIntegration(unittest.TestCase):
 
         update_call = UpdateCall(state=CallStateEnum('completed'))
         self.calls_api_instance.update_call(
-            BW_ACCOUNT_ID, call_id, update_call,  _return_http_data_only=False)
+            BW_ACCOUNT_ID, call_id, update_call
+        )
 
     def test_conference_recordings(self) -> None:
         """
@@ -260,7 +261,7 @@ class ConferencesIntegration(unittest.TestCase):
         (test_id, call_id, conference_id) = self.create_conference(answer_url)
 
         list_conferences_response = self.conference_api_instance.list_conferences(
-            BW_ACCOUNT_ID, _return_http_data_only=False)
+            BW_ACCOUNT_ID)
 
         assert_that(list_conferences_response[1], 200)
 
@@ -307,154 +308,154 @@ class ConferencesIntegration(unittest.TestCase):
     def test_list_conferences_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.list_conferences(
-                BW_ACCOUNT_ID, _return_http_data_only=False)
+                BW_ACCOUNT_ID)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_list_conferences_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.list_conferences(
-                BW_ACCOUNT_ID, _return_http_data_only=False)
+                BW_ACCOUNT_ID)
 
         self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_conferences_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.get_conference(
-                BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_get_conferences_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.get_conference(
-                BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId)
 
         self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_conferences_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
             self.conference_api_instance.get_conference(
-                BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId)
 
         self.assertApiException(context, NotFoundException, 404)
 
     def test_get_conference_member_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.get_conference_member(
-                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_get_conference_member_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.get_conference_member(
-                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId)
 
         self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_conference_member_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
             self.conference_api_instance.get_conference_member(
-                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId)
 
         self.assertApiException(context, NotFoundException, 404)
 
     def test_list_conference_recordings_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.list_conference_recordings(
-                BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_list_conference_recordings_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.list_conference_recordings(
-                BW_ACCOUNT_ID, self.testConfId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId)
 
         self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_recording_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.get_conference_recording(
-                BW_ACCOUNT_ID, self.testConfId, self.testRecordId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testRecordId)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_get_recording_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.get_conference_recording(
-                BW_ACCOUNT_ID, self.testConfId, self.testRecordId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testRecordId)
 
         self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_conference_recording_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
             self.conference_api_instance.get_conference_member(
-                BW_ACCOUNT_ID, self.testConfId, self.testRecordId, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testRecordId)
 
         self.assertApiException(context, NotFoundException, 404)
 
     def test_update_conference_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.update_conference(
-                BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_update_conference_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.update_conference(
-                BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf)
 
         self.assertApiException(context, ForbiddenException, 403)
 
     def test_update_conference_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
             self.conference_api_instance.update_conference(
-                BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf)
 
         self.assertApiException(context, NotFoundException, 404)
 
     def test_update_conference_bxml_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.update_conference_bxml(
-                BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_update_conference_bxml_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.update_conference_bxml(
-                BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml)
 
         self.assertApiException(context, ForbiddenException, 403)
 
     def test_update_conference_bxml_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
             self.conference_api_instance.update_conference_bxml(
-                BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml)
 
         self.assertApiException(context, NotFoundException, 404)
 
     def test_update_conference_member_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.update_conference_member(
-                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_update_conference_member_forbidden(self) -> None:
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.update_conference_member(
-                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember)
 
         self.assertApiException(context, ForbiddenException, 403)
 
     def test_update_conference_member_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
             self.conference_api_instance.update_conference_member(
-                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember, _return_http_data_only=False)
+                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember)
 
         self.assertApiException(context, NotFoundException, 404)
 
