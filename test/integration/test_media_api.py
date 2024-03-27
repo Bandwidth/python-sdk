@@ -45,7 +45,7 @@ class TestMedia(unittest.TestCase):
         api_response_with_http_info: ApiResponse = self.api_instance.upload_media_with_http_info(
             account_id=self.account_id,
             media_id=media_id,
-            body=bytearray(self.original_file.read()),
+            body=bytes(self.original_file.read()),
             _content_type=content_type,
             cache_control=cache_control
         )
