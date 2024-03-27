@@ -3,6 +3,7 @@
 Setting the conference state to `completed` ends the conference and ejects all members.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

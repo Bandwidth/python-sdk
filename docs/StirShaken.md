@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **verstat** | **str** | (optional) The verification status indicating whether the verification was successful or not. Possible values are TN-Verification-Passed and TN-Verification-Failed. | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of StirShaken from a JSON string
 stir_shaken_instance = StirShaken.from_json(json)
 # print the JSON string representation of the object
-print StirShaken.to_json()
+print(StirShaken.to_json())
 
 # convert the object into a dict
 stir_shaken_dict = stir_shaken_instance.to_dict()

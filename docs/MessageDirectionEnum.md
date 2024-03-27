@@ -3,6 +3,7 @@
 The direction of the message. One of in out.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

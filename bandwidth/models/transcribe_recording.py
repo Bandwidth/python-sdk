@@ -18,104 +18,122 @@ import pprint
 import re  # noqa: F401
 import json
 
-
-from typing import Any, Dict, Optional, Union
-from pydantic import BaseModel, Field, StrictBool, StrictStr, confloat, conint, constr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
+from typing import Optional, Set
+from typing_extensions import Self
 
 class TranscribeRecording(BaseModel):
     """
     TranscribeRecording
-    """
-    callback_url: Optional[StrictStr] = Field(None, alias="callbackUrl", description="The URL to send the [TranscriptionAvailable](/docs/voice/webhooks/transcriptionAvailable) event to. You should not include sensitive or personally-identifiable information in the callbackUrl field! Always use the proper username and password fields for authorization.")
-    callback_method: Optional[CallbackMethodEnum] = Field(None, alias="callbackMethod")
-    username: Optional[constr(strict=True, max_length=1024)] = Field(None, description="Basic auth username.")
-    password: Optional[constr(strict=True, max_length=1024)] = Field(None, description="Basic auth password.")
-    tag: Optional[StrictStr] = Field(None, description="(optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.")
-    callback_timeout: Optional[Union[confloat(le=25, ge=1, strict=True), conint(le=25, ge=1, strict=True)]] = Field(15, alias="callbackTimeout", description="This is the timeout (in seconds) to use when delivering the webhook to `callbackUrl`. Can be any numeric value (including decimals) between 1 and 25.")
-    detect_language: Optional[StrictBool] = Field(False, alias="detectLanguage", description="A boolean value to indicate that the recording may not be in English, and the transcription service will need to detect the dominant language the recording is in and transcribe accordingly. Current supported languages are English, French, and Spanish.")
+    """ # noqa: E501
+    callback_url: Optional[StrictStr] = Field(default=None, description="The URL to send the [TranscriptionAvailable](/docs/voice/webhooks/transcriptionAvailable) event to. You should not include sensitive or personally-identifiable information in the callbackUrl field! Always use the proper username and password fields for authorization.", alias="callbackUrl")
+    callback_method: Optional[CallbackMethodEnum] = Field(default=None, alias="callbackMethod")
+    username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.")
+    password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.")
+    tag: Optional[StrictStr] = Field(default=None, description="(optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.")
+    callback_timeout: Optional[Union[Annotated[float, Field(le=25, strict=True, ge=1)], Annotated[int, Field(le=25, strict=True, ge=1)]]] = Field(default=15, description="This is the timeout (in seconds) to use when delivering the webhook to `callbackUrl`. Can be any numeric value (including decimals) between 1 and 25.", alias="callbackTimeout")
+    detect_language: Optional[StrictBool] = Field(default=False, description="A boolean value to indicate that the recording may not be in English, and the transcription service will need to detect the dominant language the recording is in and transcribe accordingly. Current supported languages are English, French, and Spanish.", alias="detectLanguage")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["callbackUrl", "callbackMethod", "username", "password", "tag", "callbackTimeout", "detectLanguage"]
+    __properties: ClassVar[List[str]] = ["callbackUrl", "callbackMethod", "username", "password", "tag", "callbackTimeout", "detectLanguage"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> TranscribeRecording:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of TranscribeRecording from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        excluded_fields: Set[str] = set([
+            "additional_properties",
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
         # set to None if callback_method (nullable) is None
-        # and __fields_set__ contains the field
-        if self.callback_method is None and "callback_method" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.callback_method is None and "callback_method" in self.model_fields_set:
             _dict['callbackMethod'] = None
 
         # set to None if username (nullable) is None
-        # and __fields_set__ contains the field
-        if self.username is None and "username" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.username is None and "username" in self.model_fields_set:
             _dict['username'] = None
 
         # set to None if password (nullable) is None
-        # and __fields_set__ contains the field
-        if self.password is None and "password" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.password is None and "password" in self.model_fields_set:
             _dict['password'] = None
 
         # set to None if tag (nullable) is None
-        # and __fields_set__ contains the field
-        if self.tag is None and "tag" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.tag is None and "tag" in self.model_fields_set:
             _dict['tag'] = None
 
         # set to None if callback_timeout (nullable) is None
-        # and __fields_set__ contains the field
-        if self.callback_timeout is None and "callback_timeout" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.callback_timeout is None and "callback_timeout" in self.model_fields_set:
             _dict['callbackTimeout'] = None
 
         # set to None if detect_language (nullable) is None
-        # and __fields_set__ contains the field
-        if self.detect_language is None and "detect_language" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.detect_language is None and "detect_language" in self.model_fields_set:
             _dict['detectLanguage'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> TranscribeRecording:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of TranscribeRecording from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return TranscribeRecording.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = TranscribeRecording.parse_obj({
-            "callback_url": obj.get("callbackUrl"),
-            "callback_method": obj.get("callbackMethod"),
+        _obj = cls.model_validate({
+            "callbackUrl": obj.get("callbackUrl"),
+            "callbackMethod": obj.get("callbackMethod"),
             "username": obj.get("username"),
             "password": obj.get("password"),
             "tag": obj.get("tag"),
-            "callback_timeout": obj.get("callbackTimeout") if obj.get("callbackTimeout") is not None else 15,
-            "detect_language": obj.get("detectLanguage") if obj.get("detectLanguage") is not None else False
+            "callbackTimeout": obj.get("callbackTimeout") if obj.get("callbackTimeout") is not None else 15,
+            "detectLanguage": obj.get("detectLanguage") if obj.get("detectLanguage") is not None else False
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -38,8 +38,8 @@ class TestMessagesApi(unittest.TestCase):
     def setUp(self):
         # API Client
         configuration = bandwidth.Configuration(
-            username = BW_USERNAME,
-            password = BW_PASSWORD
+            username=BW_USERNAME,
+            password=BW_PASSWORD
         )
         api_client = bandwidth.ApiClient(configuration)
         self.api_instance = messages_api.MessagesApi(api_client)
@@ -68,7 +68,7 @@ class TestMessagesApi(unittest.TestCase):
             tag=self.tag,
             priority=self.priority,
         )
-        
+
         # Invalid Message Request
         self.invalid_message_request = MessageRequest(
             application_id=self.application_id,
@@ -77,9 +77,11 @@ class TestMessagesApi(unittest.TestCase):
             text='',
         )
 
-
     def test_create_message(self):
-        response: ApiResponse = self.api_instance.create_message_with_http_info(self.account_id, self.message_request, _return_http_data_only=False)
+        response: ApiResponse = self.api_instance.create_message_with_http_info(
+            self.account_id,
+            self.message_request,
+        )
 
         assert_that(response.status_code, equal_to(202))
 
@@ -96,21 +98,18 @@ class TestMessagesApi(unittest.TestCase):
             'priority', instance_of(PriorityEnum),
             'priority', self.priority,
             'segment_count', 1,
-            )
         )
+                    )
         assert_that(api_response.time, instance_of(datetime))
 
-
-    def test_create_message_bad_request(self):    
+    def test_create_message_bad_request(self):
         assert_that(calling(self.api_instance.create_message).with_args(
             self.account_id, self.invalid_message_request)), raises(ApiException)
-
 
     def test_create_message_unauthorized(self):
         assert_that(calling(self.unauthorized_api_instance.create_message).with_args(
             self.account_id, self.invalid_message_request)), raises(UnauthorizedException)
 
-    
     @unittest.skip('The SDK catches incorrect content-type before making the request and attempts to create an ApiException,\
                     but the creation of the exception fails since there is no response body. This should probably create some\
                     kind of Client Exception instead, since this is not an actual API Exception.')
@@ -118,11 +117,10 @@ class TestMessagesApi(unittest.TestCase):
         assert_that(calling(self.api_instance.create_message).with_args(
             self.account_id, self.message_request, _content_type='application/xml')), raises(ApiException)
 
-
     def test_list_messages(self):
         message_direction = ListMessageDirectionEnum("OUTBOUND")
-        
-        response = self.api_instance.list_messages_with_http_info(self.account_id, message_direction=message_direction, _return_http_data_only=False)
+
+        response = self.api_instance.list_messages_with_http_info(self.account_id, message_direction=message_direction)
 
         assert_that(response.status_code, equal_to(200))
 
@@ -134,7 +132,7 @@ class TestMessagesApi(unittest.TestCase):
         ))
 
         assert_that(api_response.messages[0], instance_of(ListMessageItem))
-        
+
         message = api_response.messages[0]
         assert_that(message, has_properties(
             'account_id', self.account_id,
@@ -148,16 +146,14 @@ class TestMessagesApi(unittest.TestCase):
         ))
         assert_that(message.receive_time, instance_of(datetime))
 
-
     def test_list_messages_bad_request(self):
         assert_that(calling(self.api_instance.list_messages).with_args(
             self.account_id), raises(ApiException))
 
-    
     def test_list_messages_unauthorized(self):
         assert_that(calling(self.unauthorized_api_instance.list_messages).with_args(
             self.account_id), raises(UnauthorizedException))
-        
+
 
 if __name__ == '__main__':
     unittest.main()

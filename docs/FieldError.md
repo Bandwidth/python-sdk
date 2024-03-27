@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **field_name** | **str** | The name of the field that contains the error | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of FieldError from a JSON string
 field_error_instance = FieldError.from_json(json)
 # print the JSON string representation of the object
-print FieldError.to_json()
+print(FieldError.to_json())
 
 # convert the object into a dict
 field_error_dict = field_error_instance.to_dict()

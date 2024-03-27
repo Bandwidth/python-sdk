@@ -3,6 +3,7 @@
 The direction of the message. One of INBOUND OUTBOUND.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

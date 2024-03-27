@@ -3,6 +3,7 @@
 When processing a <Transfer> verb, this event is sent when a called party (B-leg) answers. The event is sent to the endpoint specified in the transferAnswerUrl attribute of the <PhoneNumber> tag that answered. BXML returned by this callback will be executed for the called party only. After all BXML has been executed, the called party will be bridged to the original call. Most BXML verbs are allowed in response to a transferAnswer event, but some are not allowed.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -31,7 +32,7 @@ json = "{}"
 # create an instance of TransferAnswerCallback from a JSON string
 transfer_answer_callback_instance = TransferAnswerCallback.from_json(json)
 # print the JSON string representation of the object
-print TransferAnswerCallback.to_json()
+print(TransferAnswerCallback.to_json())
 
 # convert the object into a dict
 transfer_answer_callback_dict = transfer_answer_callback_instance.to_dict()

@@ -19,160 +19,179 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Any, Dict, Optional, Union
-from pydantic import BaseModel, Field, StrictFloat, StrictInt, StrictStr, constr
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CreateCallResponse(BaseModel):
     """
     CreateCallResponse
-    """
-    application_id: StrictStr = Field(..., alias="applicationId", description="The id of the application associated with the `from` number.")
-    account_id: StrictStr = Field(..., alias="accountId", description="The bandwidth account ID associated with the call.")
-    call_id: StrictStr = Field(..., alias="callId", description="Programmable Voice API Call ID.")
-    to: StrictStr = Field(..., description="Recipient of the outgoing call.")
-    var_from: StrictStr = Field(..., alias="from", description="Phone number that created the outbound call.")
-    enqueued_time: Optional[datetime] = Field(None, alias="enqueuedTime", description="The time at which the call was accepted into the queue.")
-    call_url: StrictStr = Field(..., alias="callUrl", description="The URL to update this call's state.")
-    call_timeout: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="callTimeout", description="The timeout (in seconds) for the callee to answer the call after it starts ringing.")
-    callback_timeout: Optional[Union[StrictFloat, StrictInt]] = Field(None, alias="callbackTimeout", description="This is the timeout (in seconds) to use when delivering webhooks for the call.")
-    tag: Optional[StrictStr] = Field(None, description="Custom tag value.")
-    answer_method: Optional[CallbackMethodEnum] = Field(..., alias="answerMethod")
-    answer_url: StrictStr = Field(..., alias="answerUrl", description="URL to deliver the `answer` event webhook.")
-    answer_fallback_method: Optional[CallbackMethodEnum] = Field(None, alias="answerFallbackMethod")
-    answer_fallback_url: Optional[StrictStr] = Field(None, alias="answerFallbackUrl", description="Fallback URL to deliver the `answer` event webhook.")
-    disconnect_method: Optional[CallbackMethodEnum] = Field(..., alias="disconnectMethod")
-    disconnect_url: Optional[StrictStr] = Field(None, alias="disconnectUrl", description="URL to deliver the `disconnect` event webhook.")
-    username: Optional[constr(strict=True, max_length=1024)] = Field(None, description="Basic auth username.")
-    password: Optional[constr(strict=True, max_length=1024)] = Field(None, description="Basic auth password.")
-    fallback_username: Optional[constr(strict=True, max_length=1024)] = Field(None, alias="fallbackUsername", description="Basic auth username.")
-    fallback_password: Optional[constr(strict=True, max_length=1024)] = Field(None, alias="fallbackPassword", description="Basic auth password.")
-    priority: Optional[StrictInt] = Field(None, description="The priority of this call over other calls from your account.")
+    """ # noqa: E501
+    application_id: StrictStr = Field(description="The id of the application associated with the `from` number.", alias="applicationId")
+    account_id: StrictStr = Field(description="The bandwidth account ID associated with the call.", alias="accountId")
+    call_id: StrictStr = Field(description="Programmable Voice API Call ID.", alias="callId")
+    to: StrictStr = Field(description="Recipient of the outgoing call.")
+    var_from: StrictStr = Field(description="Phone number that created the outbound call.", alias="from")
+    enqueued_time: Optional[datetime] = Field(default=None, description="The time at which the call was accepted into the queue.", alias="enqueuedTime")
+    call_url: StrictStr = Field(description="The URL to update this call's state.", alias="callUrl")
+    call_timeout: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The timeout (in seconds) for the callee to answer the call after it starts ringing.", alias="callTimeout")
+    callback_timeout: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="This is the timeout (in seconds) to use when delivering webhooks for the call.", alias="callbackTimeout")
+    tag: Optional[StrictStr] = Field(default=None, description="Custom tag value.")
+    answer_method: Optional[CallbackMethodEnum] = Field(alias="answerMethod")
+    answer_url: StrictStr = Field(description="URL to deliver the `answer` event webhook.", alias="answerUrl")
+    answer_fallback_method: Optional[CallbackMethodEnum] = Field(default=None, alias="answerFallbackMethod")
+    answer_fallback_url: Optional[StrictStr] = Field(default=None, description="Fallback URL to deliver the `answer` event webhook.", alias="answerFallbackUrl")
+    disconnect_method: Optional[CallbackMethodEnum] = Field(alias="disconnectMethod")
+    disconnect_url: Optional[StrictStr] = Field(default=None, description="URL to deliver the `disconnect` event webhook.", alias="disconnectUrl")
+    username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.")
+    password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.")
+    fallback_username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.", alias="fallbackUsername")
+    fallback_password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.", alias="fallbackPassword")
+    priority: Optional[StrictInt] = Field(default=None, description="The priority of this call over other calls from your account.")
     additional_properties: Dict[str, Any] = {}
-    __properties = ["applicationId", "accountId", "callId", "to", "from", "enqueuedTime", "callUrl", "callTimeout", "callbackTimeout", "tag", "answerMethod", "answerUrl", "answerFallbackMethod", "answerFallbackUrl", "disconnectMethod", "disconnectUrl", "username", "password", "fallbackUsername", "fallbackPassword", "priority"]
+    __properties: ClassVar[List[str]] = ["applicationId", "accountId", "callId", "to", "from", "enqueuedTime", "callUrl", "callTimeout", "callbackTimeout", "tag", "answerMethod", "answerUrl", "answerFallbackMethod", "answerFallbackUrl", "disconnectMethod", "disconnectUrl", "username", "password", "fallbackUsername", "fallbackPassword", "priority"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CreateCallResponse:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CreateCallResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        excluded_fields: Set[str] = set([
+            "additional_properties",
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
         # set to None if enqueued_time (nullable) is None
-        # and __fields_set__ contains the field
-        if self.enqueued_time is None and "enqueued_time" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.enqueued_time is None and "enqueued_time" in self.model_fields_set:
             _dict['enqueuedTime'] = None
 
         # set to None if tag (nullable) is None
-        # and __fields_set__ contains the field
-        if self.tag is None and "tag" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.tag is None and "tag" in self.model_fields_set:
             _dict['tag'] = None
 
         # set to None if answer_method (nullable) is None
-        # and __fields_set__ contains the field
-        if self.answer_method is None and "answer_method" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.answer_method is None and "answer_method" in self.model_fields_set:
             _dict['answerMethod'] = None
 
         # set to None if answer_fallback_method (nullable) is None
-        # and __fields_set__ contains the field
-        if self.answer_fallback_method is None and "answer_fallback_method" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.answer_fallback_method is None and "answer_fallback_method" in self.model_fields_set:
             _dict['answerFallbackMethod'] = None
 
         # set to None if answer_fallback_url (nullable) is None
-        # and __fields_set__ contains the field
-        if self.answer_fallback_url is None and "answer_fallback_url" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.answer_fallback_url is None and "answer_fallback_url" in self.model_fields_set:
             _dict['answerFallbackUrl'] = None
 
         # set to None if disconnect_method (nullable) is None
-        # and __fields_set__ contains the field
-        if self.disconnect_method is None and "disconnect_method" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.disconnect_method is None and "disconnect_method" in self.model_fields_set:
             _dict['disconnectMethod'] = None
 
         # set to None if disconnect_url (nullable) is None
-        # and __fields_set__ contains the field
-        if self.disconnect_url is None and "disconnect_url" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.disconnect_url is None and "disconnect_url" in self.model_fields_set:
             _dict['disconnectUrl'] = None
 
         # set to None if username (nullable) is None
-        # and __fields_set__ contains the field
-        if self.username is None and "username" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.username is None and "username" in self.model_fields_set:
             _dict['username'] = None
 
         # set to None if password (nullable) is None
-        # and __fields_set__ contains the field
-        if self.password is None and "password" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.password is None and "password" in self.model_fields_set:
             _dict['password'] = None
 
         # set to None if fallback_username (nullable) is None
-        # and __fields_set__ contains the field
-        if self.fallback_username is None and "fallback_username" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.fallback_username is None and "fallback_username" in self.model_fields_set:
             _dict['fallbackUsername'] = None
 
         # set to None if fallback_password (nullable) is None
-        # and __fields_set__ contains the field
-        if self.fallback_password is None and "fallback_password" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.fallback_password is None and "fallback_password" in self.model_fields_set:
             _dict['fallbackPassword'] = None
 
         # set to None if priority (nullable) is None
-        # and __fields_set__ contains the field
-        if self.priority is None and "priority" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.priority is None and "priority" in self.model_fields_set:
             _dict['priority'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CreateCallResponse:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CreateCallResponse from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CreateCallResponse.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = CreateCallResponse.parse_obj({
-            "application_id": obj.get("applicationId"),
-            "account_id": obj.get("accountId"),
-            "call_id": obj.get("callId"),
+        _obj = cls.model_validate({
+            "applicationId": obj.get("applicationId"),
+            "accountId": obj.get("accountId"),
+            "callId": obj.get("callId"),
             "to": obj.get("to"),
-            "var_from": obj.get("from"),
-            "enqueued_time": obj.get("enqueuedTime"),
-            "call_url": obj.get("callUrl"),
-            "call_timeout": obj.get("callTimeout"),
-            "callback_timeout": obj.get("callbackTimeout"),
+            "from": obj.get("from"),
+            "enqueuedTime": obj.get("enqueuedTime"),
+            "callUrl": obj.get("callUrl"),
+            "callTimeout": obj.get("callTimeout"),
+            "callbackTimeout": obj.get("callbackTimeout"),
             "tag": obj.get("tag"),
-            "answer_method": obj.get("answerMethod"),
-            "answer_url": obj.get("answerUrl"),
-            "answer_fallback_method": obj.get("answerFallbackMethod"),
-            "answer_fallback_url": obj.get("answerFallbackUrl"),
-            "disconnect_method": obj.get("disconnectMethod"),
-            "disconnect_url": obj.get("disconnectUrl"),
+            "answerMethod": obj.get("answerMethod"),
+            "answerUrl": obj.get("answerUrl"),
+            "answerFallbackMethod": obj.get("answerFallbackMethod"),
+            "answerFallbackUrl": obj.get("answerFallbackUrl"),
+            "disconnectMethod": obj.get("disconnectMethod"),
+            "disconnectUrl": obj.get("disconnectUrl"),
             "username": obj.get("username"),
             "password": obj.get("password"),
-            "fallback_username": obj.get("fallbackUsername"),
-            "fallback_password": obj.get("fallbackPassword"),
+            "fallbackUsername": obj.get("fallbackUsername"),
+            "fallbackPassword": obj.get("fallbackPassword"),
             "priority": obj.get("priority")
         })
         # store additional fields in additional_properties

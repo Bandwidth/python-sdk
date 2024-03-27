@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **message** | **str** | Unauthorized | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of MfaUnauthorizedRequestError from a JSON string
 mfa_unauthorized_request_error_instance = MfaUnauthorizedRequestError.from_json(json)
 # print the JSON string representation of the object
-print MfaUnauthorizedRequestError.to_json()
+print(MfaUnauthorizedRequestError.to_json())
 
 # convert the object into a dict
 mfa_unauthorized_request_error_dict = mfa_unauthorized_request_error_instance.to_dict()

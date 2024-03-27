@@ -3,6 +3,7 @@
 The Redirect event is fired when a <Redirect> verb is executed. Its purpose is to get the next set of verbs from the calling application.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -32,7 +33,7 @@ json = "{}"
 # create an instance of RedirectCallback from a JSON string
 redirect_callback_instance = RedirectCallback.from_json(json)
 # print the JSON string representation of the object
-print RedirectCallback.to_json()
+print(RedirectCallback.to_json())
 
 # convert the object into a dict
 redirect_callback_dict = redirect_callback_instance.to_dict()

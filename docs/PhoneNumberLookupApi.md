@@ -18,9 +18,8 @@ Create a Phone Number Lookup Request.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.create_lookup_response import CreateLookupResponse
 from bandwidth.models.lookup_request import LookupRequest
@@ -64,6 +63,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -83,6 +83,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **202** | Accepted |  -  |
@@ -105,9 +106,8 @@ Get an existing Phone Number Lookup Request.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.lookup_status import LookupStatus
 from bandwidth.rest import ApiException
@@ -150,6 +150,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -169,6 +170,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |

@@ -3,6 +3,7 @@
 The Conference Recording Available event is sent after a conference recording has been processed. It indicates that the recording is available for download.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -30,7 +31,7 @@ json = "{}"
 # create an instance of ConferenceRecordingAvailableCallback from a JSON string
 conference_recording_available_callback_instance = ConferenceRecordingAvailableCallback.from_json(json)
 # print the JSON string representation of the object
-print ConferenceRecordingAvailableCallback.to_json()
+print(ConferenceRecordingAvailableCallback.to_json())
 
 # convert the object into a dict
 conference_recording_available_callback_dict = conference_recording_available_callback_instance.to_dict()

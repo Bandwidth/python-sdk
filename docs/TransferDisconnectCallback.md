@@ -3,6 +3,7 @@
 This event is sent to the transferDisconnectUrl of each <PhoneNumber> tag when its respective call leg ends for any reason. The event is sent in the normal case, when the transferred leg is answered and later hung up, but is also sent if the new leg was never answered in the first place, if it was rejected, and if the original call leg hung up before the transferred leg.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -36,7 +37,7 @@ json = "{}"
 # create an instance of TransferDisconnectCallback from a JSON string
 transfer_disconnect_callback_instance = TransferDisconnectCallback.from_json(json)
 # print the JSON string representation of the object
-print TransferDisconnectCallback.to_json()
+print(TransferDisconnectCallback.to_json())
 
 # convert the object into a dict
 transfer_disconnect_callback_dict = transfer_disconnect_callback_instance.to_dict()

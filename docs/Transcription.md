@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **text** | **str** | The transcribed text | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of Transcription from a JSON string
 transcription_instance = Transcription.from_json(json)
 # print the JSON string representation of the object
-print Transcription.to_json()
+print(Transcription.to_json())
 
 # convert the object into a dict
 transcription_dict = transcription_instance.to_dict()

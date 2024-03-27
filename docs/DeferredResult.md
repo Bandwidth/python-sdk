@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **result** | **object** |  | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of DeferredResult from a JSON string
 deferred_result_instance = DeferredResult.from_json(json)
 # print the JSON string representation of the object
-print DeferredResult.to_json()
+print(DeferredResult.to_json())
 
 # convert the object into a dict
 deferred_result_dict = deferred_result_instance.to_dict()

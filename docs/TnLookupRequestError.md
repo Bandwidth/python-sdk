@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **message** | **str** | A description of what validation error occurred. | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of TnLookupRequestError from a JSON string
 tn_lookup_request_error_instance = TnLookupRequestError.from_json(json)
 # print the JSON string representation of the object
-print TnLookupRequestError.to_json()
+print(TnLookupRequestError.to_json())
 
 # convert the object into a dict
 tn_lookup_request_error_dict = tn_lookup_request_error_instance.to_dict()

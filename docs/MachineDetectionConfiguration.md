@@ -3,6 +3,7 @@
 The machine detection request used to perform <a href='/docs/voice/guides/machineDetection'>machine detection</a> on the call.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **mode** | [**MachineDetectionModeEnum**](MachineDetectionModeEnum.md) |  | [optional] 
@@ -31,7 +32,7 @@ json = "{}"
 # create an instance of MachineDetectionConfiguration from a JSON string
 machine_detection_configuration_instance = MachineDetectionConfiguration.from_json(json)
 # print the JSON string representation of the object
-print MachineDetectionConfiguration.to_json()
+print(MachineDetectionConfiguration.to_json())
 
 # convert the object into a dict
 machine_detection_configuration_dict = machine_detection_configuration_instance.to_dict()

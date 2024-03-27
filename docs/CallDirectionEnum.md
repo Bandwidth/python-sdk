@@ -3,6 +3,7 @@
 The direction of the call.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

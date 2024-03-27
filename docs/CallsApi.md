@@ -20,9 +20,8 @@ Creates an outbound phone call.  All calls are initially queued. Your outbound c
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.create_call import CreateCall
 from bandwidth.models.create_call_response import CreateCallResponse
@@ -66,6 +65,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -85,6 +85,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | Call Successfully Created |  * Location - The URL for further interactions with this call <br>  |
@@ -109,9 +110,8 @@ Retrieve the current state of a specific call. This information is near-realtime
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.call_state import CallState
 from bandwidth.rest import ApiException
@@ -154,6 +154,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -173,6 +174,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Call found |  -  |
@@ -197,9 +199,8 @@ Interrupts and redirects a call to a different URL that should return a BXML doc
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.update_call import UpdateCall
 from bandwidth.rest import ApiException
@@ -241,6 +242,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -261,6 +263,7 @@ void (empty response body)
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Call was successfully modified. |  -  |
@@ -286,9 +289,8 @@ Interrupts and replaces an active call's BXML document.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.rest import ApiException
 from pprint import pprint
@@ -332,6 +334,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -352,6 +355,7 @@ void (empty response body)
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Call BXML was successfully replaced. |  -  |

@@ -3,6 +3,7 @@
 The Record Complete event is sent after a <Record> verb has executed if the call is still active. The BXML returned by this callback is executed next. When the recording is available for download, a Recording Available event will be sent.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -38,7 +39,7 @@ json = "{}"
 # create an instance of RecordingCompleteCallback from a JSON string
 recording_complete_callback_instance = RecordingCompleteCallback.from_json(json)
 # print the JSON string representation of the object
-print RecordingCompleteCallback.to_json()
+print(RecordingCompleteCallback.to_json())
 
 # convert the object into a dict
 recording_complete_callback_dict = recording_complete_callback_instance.to_dict()

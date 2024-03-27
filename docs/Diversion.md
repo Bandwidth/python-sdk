@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **reason** | **str** | The reason for the diversion. Common values: unknown, user-busy, no-answer, unavailable, unconditional, time-of-day, do-not-disturb, deflection, follow-me, out-of-service, away. | [optional] 
@@ -22,7 +23,7 @@ json = "{}"
 # create an instance of Diversion from a JSON string
 diversion_instance = Diversion.from_json(json)
 # print the JSON string representation of the object
-print Diversion.to_json()
+print(Diversion.to_json())
 
 # convert the object into a dict
 diversion_dict = diversion_instance.to_dict()

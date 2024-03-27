@@ -45,10 +45,9 @@ class TestMedia(unittest.TestCase):
         api_response_with_http_info: ApiResponse = self.api_instance.upload_media_with_http_info(
             account_id=self.account_id,
             media_id=media_id,
-            body=bytearray(self.original_file.read()),
+            body=bytes(self.original_file.read()),
             _content_type=content_type,
-            cache_control=cache_control,
-            _return_http_data_only=False
+            cache_control=cache_control
         )
 
         logging.debug(api_response_with_http_info)
@@ -62,17 +61,16 @@ class TestMedia(unittest.TestCase):
         self.api_instance.upload_media(
             account_id=self.account_id,
             media_id=media_id,
-            body=bytearray(reopened_file.read()),
+            body=bytes(reopened_file.read()),
             _content_type=content_type,
-            cache_control=cache_control,
-            _return_http_data_only=False
+            cache_control=cache_control
         )
 
     def listMedia(self) -> None:
         """Test listing all media on the account
         """
         api_response_with_http_info = self.api_instance.list_media_with_http_info(
-            self.account_id, _return_http_data_only=False)
+            self.account_id)
 
         assert_that(api_response_with_http_info.status_code, equal_to(200))
 

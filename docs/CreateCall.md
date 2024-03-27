@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **to** | **str** | The destination to call (must be an E.164 formatted number (e.g. &#x60;+15555551212&#x60;) or a SIP URI (e.g. &#x60;sip:user@server.example&#x60;)). | 
@@ -35,7 +36,7 @@ json = "{}"
 # create an instance of CreateCall from a JSON string
 create_call_instance = CreateCall.from_json(json)
 # print the JSON string representation of the object
-print CreateCall.to_json()
+print(CreateCall.to_json())
 
 # convert the object into a dict
 create_call_dict = create_call_instance.to_dict()

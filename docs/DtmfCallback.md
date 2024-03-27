@@ -3,6 +3,7 @@
 The DTMF event is sent for every digit detected after a <StartGather> verb is executed. You may not respond to this event with BXML.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -33,7 +34,7 @@ json = "{}"
 # create an instance of DtmfCallback from a JSON string
 dtmf_callback_instance = DtmfCallback.from_json(json)
 # print the JSON string representation of the object
-print DtmfCallback.to_json()
+print(DtmfCallback.to_json())
 
 # convert the object into a dict
 dtmf_callback_dict = dtmf_callback_instance.to_dict()

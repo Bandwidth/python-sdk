@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **application_id** | **str** | The ID of the Application your from number is associated with in the Bandwidth Phone Number Dashboard. | 
@@ -23,7 +24,7 @@ json = "{}"
 # create an instance of MessageRequest from a JSON string
 message_request_instance = MessageRequest.from_json(json)
 # print the JSON string representation of the object
-print MessageRequest.to_json()
+print(MessageRequest.to_json())
 
 # convert the object into a dict
 message_request_dict = message_request_instance.to_dict()

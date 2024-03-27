@@ -3,6 +3,7 @@
 The priority specified by the user.  Not supported on MMS.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

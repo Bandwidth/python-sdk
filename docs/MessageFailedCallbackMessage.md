@@ -3,6 +3,7 @@
 Message Failed Callback Message Schema
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | 
@@ -28,7 +29,7 @@ json = "{}"
 # create an instance of MessageFailedCallbackMessage from a JSON string
 message_failed_callback_message_instance = MessageFailedCallbackMessage.from_json(json)
 # print the JSON string representation of the object
-print MessageFailedCallbackMessage.to_json()
+print(MessageFailedCallbackMessage.to_json())
 
 # convert the object into a dict
 message_failed_callback_message_dict = message_failed_callback_message_instance.to_dict()

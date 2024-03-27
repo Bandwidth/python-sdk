@@ -3,6 +3,7 @@
 Message Sending Callback Message Schema
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | 
@@ -28,7 +29,7 @@ json = "{}"
 # create an instance of MessageSendingCallbackMessage from a JSON string
 message_sending_callback_message_instance = MessageSendingCallbackMessage.from_json(json)
 # print the JSON string representation of the object
-print MessageSendingCallbackMessage.to_json()
+print(MessageSendingCallbackMessage.to_json())
 
 # convert the object into a dict
 message_sending_callback_message_dict = message_sending_callback_message_instance.to_dict()
