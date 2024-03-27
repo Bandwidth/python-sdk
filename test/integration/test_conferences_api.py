@@ -132,7 +132,7 @@ class ConferencesIntegration(unittest.TestCase):
         )
 
         # Get the test id from the response
-        test_id = response.data.decode("utf-8")
+        test_id = response.response.data.decode("utf-8")
 
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, var_from=MANTECA_ACTIVE_NUMBER,
                                application_id=MANTECA_APPLICATION_ID, answer_url=answer_url, tag=test_id)
@@ -185,7 +185,7 @@ class ConferencesIntegration(unittest.TestCase):
             method='GET',
             url=status_url
         )
-        return json.loads(response.data)
+        return json.loads(response.response.data)
 
     def test_conference_and_members(self):
         """
