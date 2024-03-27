@@ -29,7 +29,7 @@ class TestMedia(unittest.TestCase):
         self.api_client = bandwidth.ApiClient(configuration)
         self.api_instance = media_api.MediaApi(self.api_client)
         self.account_id = BW_ACCOUNT_ID
-        self.media_path = "../../test/fixtures/"
+        self.media_path = "./test/fixtures/"
         self.media_file = "python_cat.jpeg"
         self.media_id = PYTHON_VERSION + "_" + RUNNER_OS + "_" + str(uuid.uuid4()) + "_" + self.media_file
         self.download_file_path = "cat_download.jpeg"
