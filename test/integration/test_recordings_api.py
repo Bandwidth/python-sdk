@@ -10,6 +10,7 @@
 
 
 import os
+from rich import inspect
 from typing import Dict, List, Tuple
 import unittest
 import time
@@ -123,7 +124,6 @@ class TestRecordings(unittest.TestCase):
         )
 
         # Get the test id from the response
-        # test_id = response.data.decode("utf-8")
         test_id = response.response.data.decode("utf-8")
 
         # Make a CreateCall body and assign the appropriate params
@@ -210,7 +210,7 @@ class TestRecordings(unittest.TestCase):
             method='GET',
             url=status_url
         )
-        return json.loads(response.data)
+        return json.loads(response.response.data)
 
     def test_successful_call_recording(self) -> None:
         """
