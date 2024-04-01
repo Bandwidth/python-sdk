@@ -198,7 +198,7 @@ class CallsIntegration(unittest.TestCase):
         """Validate a forbidden (403) request
         """
         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId, _return_http_data_only=False)
+            self.forbidden_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId)
 
         self.assertApiException(context, ForbiddenException, 403)  
 
@@ -206,7 +206,7 @@ class CallsIntegration(unittest.TestCase):
         """Validate an invalid Get Call State Request due to a bad callID
         """
         with self.assertRaises(NotFoundException) as context:
-            self.calls_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId, _return_http_data_only=False)
+            self.calls_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId)
         
         self.assertApiException(context, NotFoundException, 404)
 
@@ -214,7 +214,7 @@ class CallsIntegration(unittest.TestCase):
         """Validate an UpdateCall Request
         """
         time.sleep(self.TEST_SLEEP)            
-        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody, _return_http_data_only=False)
+        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody)
         call_id = create_call_response.call_id
 
         #Adding the call to the self.callIdArray
@@ -255,7 +255,7 @@ class CallsIntegration(unittest.TestCase):
 
         with self.assertRaises(ApiException) as context:
             badRequestBody = UpdateCall(states="badRequest")
-            self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, badRequestBody, _return_http_data_only=False)
+            self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, badRequestBody)
             
         assert_that(context.exception.status, 400)
                 
@@ -268,14 +268,14 @@ class CallsIntegration(unittest.TestCase):
         """Validate an unauthorized (401) update call request
         """
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.update_call(BW_ACCOUNT_ID, self.testCallId, self.updateStateCompleted, _return_http_data_only=False)
+            self.unauthorized_api_instance.update_call(BW_ACCOUNT_ID, self.testCallId, self.updateStateCompleted)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_update_call_forbidden(self):
         """Validate a forbidden (403) update call request
         """
-        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody, _return_http_data_only=False)
+        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody)
         call_id = create_call_response.call_id
 
         #Adding the call to the self.callIdArray
@@ -284,7 +284,7 @@ class CallsIntegration(unittest.TestCase):
         time.sleep(self.TEST_SLEEP)        
 
         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.update_call(BW_ACCOUNT_ID, call_id, self.updateStateCompleted, _return_http_data_only=False)
+            self.forbidden_api_instance.update_call(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
 
         self.assertApiException(context, ForbiddenException, 403)
 
@@ -297,7 +297,7 @@ class CallsIntegration(unittest.TestCase):
         """Validate a not found update call request
         """
         with self.assertRaises(NotFoundException) as context:
-            self.calls_api_instance.update_call(BW_ACCOUNT_ID, self.testCallId, self.updateStateCompleted, _return_http_data_only=False)
+            self.calls_api_instance.update_call(BW_ACCOUNT_ID, self.testCallId, self.updateStateCompleted)
         
         self.assertApiException(context, NotFoundException, 404)
 
@@ -348,14 +348,14 @@ class CallsIntegration(unittest.TestCase):
         """
 
         with self.assertRaises(UnauthorizedException) as context:
-            self.unauthorized_api_instance.update_call_bxml(BW_ACCOUNT_ID, self.testCallId, self.testBxmlBody, _return_http_data_only=False)
+            self.unauthorized_api_instance.update_call_bxml(BW_ACCOUNT_ID, self.testCallId, self.testBxmlBody)
 
         self.assertApiException(context, UnauthorizedException, 401)
 
     def test_update_call_bxml_forbidden(self):
         """Validate a forbidden (403) update call bxml request
         """
-        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody, _return_http_data_only=False)
+        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody)
         call_id = create_call_response.call_id
 
         #Adding the call to the self.callIdArray
@@ -363,7 +363,7 @@ class CallsIntegration(unittest.TestCase):
 
         time.sleep(self.TEST_SLEEP)        
         with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, self.testBxmlBody, _return_http_data_only=False)
+            self.forbidden_api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, self.testBxmlBody)
 
         self.assertApiException(context, ForbiddenException, 403)
 
@@ -372,7 +372,7 @@ class CallsIntegration(unittest.TestCase):
             Validate a not found update call bxml request
         """
         with self.assertRaises(NotFoundException) as context:
-            self.calls_api_instance.update_call_bxml(BW_ACCOUNT_ID, self.testCallId, self.testBxmlBody, _return_http_data_only=False)
+            self.calls_api_instance.update_call_bxml(BW_ACCOUNT_ID, self.testCallId, self.testBxmlBody)
         
         self.assertApiException(context, NotFoundException, 404)               
 

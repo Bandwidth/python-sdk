@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **error** | **str** | A message describing the error with your request. | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of MfaRequestError from a JSON string
 mfa_request_error_instance = MfaRequestError.from_json(json)
 # print the JSON string representation of the object
-print MfaRequestError.to_json()
+print(MfaRequestError.to_json())
 
 # convert the object into a dict
 mfa_request_error_dict = mfa_request_error_instance.to_dict()

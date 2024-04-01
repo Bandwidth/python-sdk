@@ -123,7 +123,7 @@ class TestRecordings(unittest.TestCase):
         )
 
         # Get the test id from the response
-        test_id = response.data.decode("utf-8")
+        test_id = response.response.data.decode("utf-8")
 
         # Make a CreateCall body and assign the appropriate params
         call_body = CreateCall(to=MANTECA_IDLE_NUMBER, var_from=MANTECA_ACTIVE_NUMBER,
@@ -209,7 +209,7 @@ class TestRecordings(unittest.TestCase):
             method='GET',
             url=status_url
         )
-        return json.loads(response.data)
+        return json.loads(response.response.data)
 
     def test_successful_call_recording(self) -> None:
         """
@@ -230,7 +230,9 @@ class TestRecordings(unittest.TestCase):
 
         # List Call Recordings Endpoint
         response: ApiResponse = self.recordings_api_instance.list_call_recordings_with_http_info(
-            BW_ACCOUNT_ID, call_id, _return_http_data_only=False)
+            BW_ACCOUNT_ID,
+            call_id
+        )
         assert_that(response.status_code, equal_to(200))  # Check response code
 
         # We should get back 1 recording
@@ -244,7 +246,10 @@ class TestRecordings(unittest.TestCase):
 
         # Get Single Recording Endpoint
         recording_response: ApiResponse = self.recordings_api_instance.get_call_recording_with_http_info(
-            BW_ACCOUNT_ID, call_id, recording_id, _return_http_data_only=False)
+            BW_ACCOUNT_ID,
+            call_id,
+            recording_id
+        )
         assert_that(recording_response.status_code, equal_to(200))  # Check response code
 
         recording = recording_response.data

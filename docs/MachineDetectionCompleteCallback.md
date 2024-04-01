@@ -3,6 +3,7 @@
 This event is sent to the url informed when requesting a machine detection operation. It contains the machine detection operation result, which can be: human, answering-machine, silence, timeout, error. This event is not sent when sync answering machine detection mode is chosen.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -30,7 +31,7 @@ json = "{}"
 # create an instance of MachineDetectionCompleteCallback from a JSON string
 machine_detection_complete_callback_instance = MachineDetectionCompleteCallback.from_json(json)
 # print the JSON string representation of the object
-print MachineDetectionCompleteCallback.to_json()
+print(MachineDetectionCompleteCallback.to_json())
 
 # convert the object into a dict
 machine_detection_complete_callback_dict = machine_detection_complete_callback_instance.to_dict()

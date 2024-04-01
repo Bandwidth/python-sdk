@@ -25,9 +25,8 @@ Downloads the specified recording file.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.rest import ApiException
 from pprint import pprint
@@ -70,6 +69,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -90,6 +90,7 @@ Name | Type | Description  | Notes
  - **Accept**: audio/vnd.wave, audio/mpeg, application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Media found |  -  |
@@ -114,9 +115,8 @@ Returns information about the specified conference.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.conference import Conference
 from bandwidth.rest import ApiException
@@ -159,6 +159,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -178,6 +179,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Conferences retrieved successfully |  -  |
@@ -202,9 +204,8 @@ Returns information about the specified conference member.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.conference_member import ConferenceMember
 from bandwidth.rest import ApiException
@@ -248,6 +249,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -268,6 +270,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Conference member found |  -  |
@@ -292,9 +295,8 @@ Returns metadata for the specified recording.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.conference_recording_metadata import ConferenceRecordingMetadata
 from bandwidth.rest import ApiException
@@ -338,6 +340,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -358,6 +361,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Conference recording found |  -  |
@@ -382,9 +386,8 @@ Returns a (potentially empty) list of metadata for the recordings that took plac
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.conference_recording_metadata import ConferenceRecordingMetadata
 from bandwidth.rest import ApiException
@@ -427,6 +430,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -446,6 +450,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Conference recordings retrieved successfully |  -  |
@@ -470,9 +475,8 @@ Returns a max of 1000 conferences, sorted by `createdTime` from oldest to newest
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.conference import Conference
 from bandwidth.rest import ApiException
@@ -519,6 +523,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -542,6 +547,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Conferences retrieved successfully |  -  |
@@ -566,9 +572,8 @@ Update the conference state.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.update_conference import UpdateConference
 from bandwidth.rest import ApiException
@@ -610,6 +615,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -630,6 +636,7 @@ void (empty response body)
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Conference was successfully modified. |  -  |
@@ -654,9 +661,8 @@ Update the conference BXML document.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.rest import ApiException
 from pprint import pprint
@@ -700,6 +706,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -720,6 +727,7 @@ void (empty response body)
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Conference successfully modified. |  -  |
@@ -744,9 +752,8 @@ Updates settings for a particular conference member.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.update_conference_member import UpdateConferenceMember
 from bandwidth.rest import ApiException
@@ -789,6 +796,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -810,6 +818,7 @@ void (empty response body)
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | Conference member was successfully modified. |  -  |

@@ -3,6 +3,7 @@
 This event is sent to the transferCompleteUrl of the A-leg's <Transfer> verb when the transferred call (B-leg) completes. In a simultaneous ringing scenario, only one B-leg succeeds and this event corresponds to that successful leg. If none of the calls were answered, the transferComplete event corresponds to one of the legs.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -34,7 +35,7 @@ json = "{}"
 # create an instance of TransferCompleteCallback from a JSON string
 transfer_complete_callback_instance = TransferCompleteCallback.from_json(json)
 # print the JSON string representation of the object
-print TransferCompleteCallback.to_json()
+print(TransferCompleteCallback.to_json())
 
 # convert the object into a dict
 transfer_complete_callback_dict = transfer_complete_callback_instance.to_dict()

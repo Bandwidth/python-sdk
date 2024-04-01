@@ -3,6 +3,7 @@
 The type of message. Either SMS or MMS.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

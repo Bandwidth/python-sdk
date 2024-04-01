@@ -17,9 +17,8 @@ Returns details about the current state of the account.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.account_statistics import AccountStatistics
 from bandwidth.rest import ApiException
@@ -61,6 +60,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -79,6 +79,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Statistics Found |  -  |

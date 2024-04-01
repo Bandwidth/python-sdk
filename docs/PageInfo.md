@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **prev_page** | **str** | The link to the previous page for pagination. | [optional] 
@@ -19,7 +20,7 @@ json = "{}"
 # create an instance of PageInfo from a JSON string
 page_info_instance = PageInfo.from_json(json)
 # print the JSON string representation of the object
-print PageInfo.to_json()
+print(PageInfo.to_json())
 
 # convert the object into a dict
 page_info_dict = page_info_instance.to_dict()

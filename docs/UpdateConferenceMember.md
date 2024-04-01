@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **mute** | **bool** | Whether or not this member is currently muted. Members who are muted are still able to hear other participants.  Updates this member&#39;s mute status. Has no effect if omitted. | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of UpdateConferenceMember from a JSON string
 update_conference_member_instance = UpdateConferenceMember.from_json(json)
 # print the JSON string representation of the object
-print UpdateConferenceMember.to_json()
+print(UpdateConferenceMember.to_json())
 
 # convert the object into a dict
 update_conference_member_dict = update_conference_member_instance.to_dict()

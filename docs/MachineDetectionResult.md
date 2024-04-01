@@ -3,6 +3,7 @@
 (optional) if machine detection was requested in sync mode, the result will be specified here. Possible values are the same as the async counterpart: Machine Detection Complete
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **value** | **str** | Possible values are answering-machine, human, silence, timeout, or error. | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of MachineDetectionResult from a JSON string
 machine_detection_result_instance = MachineDetectionResult.from_json(json)
 # print the JSON string representation of the object
-print MachineDetectionResult.to_json()
+print(MachineDetectionResult.to_json())
 
 # convert the object into a dict
 machine_detection_result_dict = machine_detection_result_instance.to_dict()

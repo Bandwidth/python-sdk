@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **application_id** | **str** | The application id associated with the call. | [optional] 
@@ -33,7 +34,7 @@ json = "{}"
 # create an instance of CallState from a JSON string
 call_state_instance = CallState.from_json(json)
 # print the JSON string representation of the object
-print CallState.to_json()
+print(CallState.to_json())
 
 # convert the object into a dict
 call_state_dict = call_state_instance.to_dict()

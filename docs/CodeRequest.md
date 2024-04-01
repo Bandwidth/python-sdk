@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **to** | **str** | The phone number to send the mfa code to. | 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of CodeRequest from a JSON string
 code_request_instance = CodeRequest.from_json(json)
 # print the JSON string representation of the object
-print CodeRequest.to_json()
+print(CodeRequest.to_json())
 
 # convert the object into a dict
 code_request_dict = code_request_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **message** | **str** | The message containing the reason behind the request being forbidden. | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of MfaForbiddenRequestError from a JSON string
 mfa_forbidden_request_error_instance = MfaForbiddenRequestError.from_json(json)
 # print the JSON string representation of the object
-print MfaForbiddenRequestError.to_json()
+print(MfaForbiddenRequestError.to_json())
 
 # convert the object into a dict
 mfa_forbidden_request_error_dict = mfa_forbidden_request_error_instance.to_dict()

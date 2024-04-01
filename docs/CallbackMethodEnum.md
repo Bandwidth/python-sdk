@@ -3,6 +3,7 @@
 The HTTP method to use to deliver the callback. GET or POST. Default value is POST.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

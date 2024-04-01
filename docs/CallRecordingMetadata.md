@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **application_id** | **str** | The id of the application associated with the call. | [optional] 
@@ -33,7 +34,7 @@ json = "{}"
 # create an instance of CallRecordingMetadata from a JSON string
 call_recording_metadata_instance = CallRecordingMetadata.from_json(json)
 # print the JSON string representation of the object
-print CallRecordingMetadata.to_json()
+print(CallRecordingMetadata.to_json())
 
 # convert the object into a dict
 call_recording_metadata_dict = call_recording_metadata_instance.to_dict()

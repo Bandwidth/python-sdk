@@ -19,62 +19,80 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from typing import Any, Dict, Optional
-from pydantic import BaseModel, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.call_direction_enum import CallDirectionEnum
 from bandwidth.models.file_format_enum import FileFormatEnum
 from bandwidth.models.transcription_metadata import TranscriptionMetadata
+from typing import Optional, Set
+from typing_extensions import Self
 
 class CallRecordingMetadata(BaseModel):
     """
     CallRecordingMetadata
-    """
-    application_id: Optional[StrictStr] = Field(None, alias="applicationId", description="The id of the application associated with the call.")
-    account_id: Optional[StrictStr] = Field(None, alias="accountId", description="The user account associated with the call.")
-    call_id: Optional[StrictStr] = Field(None, alias="callId", description="The call id associated with the event.")
-    parent_call_id: Optional[StrictStr] = Field(None, alias="parentCallId", description="(optional) If the event is related to the B leg of a <Transfer>, the call id of the original call leg that executed the <Transfer>. Otherwise, this field will not be present.")
-    recording_id: Optional[StrictStr] = Field(None, alias="recordingId", description="The unique ID of this recording")
-    to: Optional[StrictStr] = Field(None, description="The phone number that received the call, in E.164 format (e.g. +15555555555).")
-    var_from: Optional[StrictStr] = Field(None, alias="from", description="The provided identifier of the caller: can be a phone number in E.164 format (e.g. +15555555555) or one of Private, Restricted, Unavailable, or Anonymous.")
-    transfer_caller_id: Optional[StrictStr] = Field(None, alias="transferCallerId", description="The phone number used as the from field of the B-leg call, in E.164 format (e.g. +15555555555) or one of Restricted, Anonymous, Private, or Unavailable.")
-    transfer_to: Optional[StrictStr] = Field(None, alias="transferTo", description="The phone number used as the to field of the B-leg call, in E.164 format (e.g. +15555555555).")
-    duration: Optional[StrictStr] = Field(None, description="The duration of the recording in ISO-8601 format")
+    """ # noqa: E501
+    application_id: Optional[StrictStr] = Field(default=None, description="The id of the application associated with the call.", alias="applicationId")
+    account_id: Optional[StrictStr] = Field(default=None, description="The user account associated with the call.", alias="accountId")
+    call_id: Optional[StrictStr] = Field(default=None, description="The call id associated with the event.", alias="callId")
+    parent_call_id: Optional[StrictStr] = Field(default=None, description="(optional) If the event is related to the B leg of a <Transfer>, the call id of the original call leg that executed the <Transfer>. Otherwise, this field will not be present.", alias="parentCallId")
+    recording_id: Optional[StrictStr] = Field(default=None, description="The unique ID of this recording", alias="recordingId")
+    to: Optional[StrictStr] = Field(default=None, description="The phone number that received the call, in E.164 format (e.g. +15555555555).")
+    var_from: Optional[StrictStr] = Field(default=None, description="The provided identifier of the caller: can be a phone number in E.164 format (e.g. +15555555555) or one of Private, Restricted, Unavailable, or Anonymous.", alias="from")
+    transfer_caller_id: Optional[StrictStr] = Field(default=None, description="The phone number used as the from field of the B-leg call, in E.164 format (e.g. +15555555555) or one of Restricted, Anonymous, Private, or Unavailable.", alias="transferCallerId")
+    transfer_to: Optional[StrictStr] = Field(default=None, description="The phone number used as the to field of the B-leg call, in E.164 format (e.g. +15555555555).", alias="transferTo")
+    duration: Optional[StrictStr] = Field(default=None, description="The duration of the recording in ISO-8601 format")
     direction: Optional[CallDirectionEnum] = None
-    channels: Optional[StrictInt] = Field(None, description="Always `1` for conference recordings; multi-channel recordings are not supported on conferences.")
-    start_time: Optional[datetime] = Field(None, alias="startTime", description="Time the call was started, in ISO 8601 format.")
-    end_time: Optional[datetime] = Field(None, alias="endTime", description="The time that the recording ended in ISO-8601 format")
-    file_format: Optional[FileFormatEnum] = Field(None, alias="fileFormat")
-    status: Optional[StrictStr] = Field(None, description="The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.")
-    media_url: Optional[StrictStr] = Field(None, alias="mediaUrl", description="The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.")
+    channels: Optional[StrictInt] = Field(default=None, description="Always `1` for conference recordings; multi-channel recordings are not supported on conferences.")
+    start_time: Optional[datetime] = Field(default=None, description="Time the call was started, in ISO 8601 format.", alias="startTime")
+    end_time: Optional[datetime] = Field(default=None, description="The time that the recording ended in ISO-8601 format", alias="endTime")
+    file_format: Optional[FileFormatEnum] = Field(default=None, alias="fileFormat")
+    status: Optional[StrictStr] = Field(default=None, description="The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.")
+    media_url: Optional[StrictStr] = Field(default=None, description="The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.", alias="mediaUrl")
     transcription: Optional[TranscriptionMetadata] = None
     additional_properties: Dict[str, Any] = {}
-    __properties = ["applicationId", "accountId", "callId", "parentCallId", "recordingId", "to", "from", "transferCallerId", "transferTo", "duration", "direction", "channels", "startTime", "endTime", "fileFormat", "status", "mediaUrl", "transcription"]
+    __properties: ClassVar[List[str]] = ["applicationId", "accountId", "callId", "parentCallId", "recordingId", "to", "from", "transferCallerId", "transferTo", "duration", "direction", "channels", "startTime", "endTime", "fileFormat", "status", "mediaUrl", "transcription"]
 
-    class Config:
-        """Pydantic configuration"""
-        allow_population_by_field_name = True
-        validate_assignment = True
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.dict(by_alias=True))
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
         return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> CallRecordingMetadata:
+    def from_json(cls, json_str: str) -> Optional[Self]:
         """Create an instance of CallRecordingMetadata from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
-    def to_dict(self):
-        """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                            "additional_properties"
-                          },
-                          exclude_none=True)
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        excluded_fields: Set[str] = set([
+            "additional_properties",
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
         # override the default output from pydantic by calling `to_dict()` of transcription
         if self.transcription:
             _dict['transcription'] = self.transcription.to_dict()
@@ -84,45 +102,45 @@ class CallRecordingMetadata(BaseModel):
                 _dict[_key] = _value
 
         # set to None if media_url (nullable) is None
-        # and __fields_set__ contains the field
-        if self.media_url is None and "media_url" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.media_url is None and "media_url" in self.model_fields_set:
             _dict['mediaUrl'] = None
 
         # set to None if transcription (nullable) is None
-        # and __fields_set__ contains the field
-        if self.transcription is None and "transcription" in self.__fields_set__:
+        # and model_fields_set contains the field
+        if self.transcription is None and "transcription" in self.model_fields_set:
             _dict['transcription'] = None
 
         return _dict
 
     @classmethod
-    def from_dict(cls, obj: dict) -> CallRecordingMetadata:
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
         """Create an instance of CallRecordingMetadata from a dict"""
         if obj is None:
             return None
 
         if not isinstance(obj, dict):
-            return CallRecordingMetadata.parse_obj(obj)
+            return cls.model_validate(obj)
 
-        _obj = CallRecordingMetadata.parse_obj({
-            "application_id": obj.get("applicationId"),
-            "account_id": obj.get("accountId"),
-            "call_id": obj.get("callId"),
-            "parent_call_id": obj.get("parentCallId"),
-            "recording_id": obj.get("recordingId"),
+        _obj = cls.model_validate({
+            "applicationId": obj.get("applicationId"),
+            "accountId": obj.get("accountId"),
+            "callId": obj.get("callId"),
+            "parentCallId": obj.get("parentCallId"),
+            "recordingId": obj.get("recordingId"),
             "to": obj.get("to"),
-            "var_from": obj.get("from"),
-            "transfer_caller_id": obj.get("transferCallerId"),
-            "transfer_to": obj.get("transferTo"),
+            "from": obj.get("from"),
+            "transferCallerId": obj.get("transferCallerId"),
+            "transferTo": obj.get("transferTo"),
             "duration": obj.get("duration"),
             "direction": obj.get("direction"),
             "channels": obj.get("channels"),
-            "start_time": obj.get("startTime"),
-            "end_time": obj.get("endTime"),
-            "file_format": obj.get("fileFormat"),
+            "startTime": obj.get("startTime"),
+            "endTime": obj.get("endTime"),
+            "fileFormat": obj.get("fileFormat"),
             "status": obj.get("status"),
-            "media_url": obj.get("mediaUrl"),
-            "transcription": TranscriptionMetadata.from_dict(obj.get("transcription")) if obj.get("transcription") is not None else None
+            "mediaUrl": obj.get("mediaUrl"),
+            "transcription": TranscriptionMetadata.from_dict(obj["transcription"]) if obj.get("transcription") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

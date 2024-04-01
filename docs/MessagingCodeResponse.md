@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **message_id** | **str** | Messaging API Message ID. | [optional] 
@@ -16,7 +17,7 @@ json = "{}"
 # create an instance of MessagingCodeResponse from a JSON string
 messaging_code_response_instance = MessagingCodeResponse.from_json(json)
 # print the JSON string representation of the object
-print MessagingCodeResponse.to_json()
+print(MessagingCodeResponse.to_json())
 
 # convert the object into a dict
 messaging_code_response_dict = messaging_code_response_instance.to_dict()

@@ -3,6 +3,7 @@
 Inbound Message Callback Message Schema
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | 
@@ -28,7 +29,7 @@ json = "{}"
 # create an instance of InboundMessageCallbackMessage from a JSON string
 inbound_message_callback_message_instance = InboundMessageCallbackMessage.from_json(json)
 # print the JSON string representation of the object
-print InboundMessageCallbackMessage.to_json()
+print(InboundMessageCallbackMessage.to_json())
 
 # convert the object into a dict
 inbound_message_callback_message_dict = inbound_message_callback_message_instance.to_dict()

@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** | The Bandwidth-generated conference ID. | [optional] 
@@ -23,7 +24,7 @@ json = "{}"
 # create an instance of Conference from a JSON string
 conference_instance = Conference.from_json(json)
 # print the JSON string representation of the object
-print Conference.to_json()
+print(Conference.to_json())
 
 # convert the object into a dict
 conference_dict = conference_instance.to_dict()

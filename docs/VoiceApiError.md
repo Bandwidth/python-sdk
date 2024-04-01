@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | [optional] 
@@ -18,7 +19,7 @@ json = "{}"
 # create an instance of VoiceApiError from a JSON string
 voice_api_error_instance = VoiceApiError.from_json(json)
 # print the JSON string representation of the object
-print VoiceApiError.to_json()
+print(VoiceApiError.to_json())
 
 # convert the object into a dict
 voice_api_error_dict = voice_api_error_instance.to_dict()

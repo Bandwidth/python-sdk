@@ -3,6 +3,7 @@
 Message Delivered Callback
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **time** | **datetime** |  | 
@@ -21,7 +22,7 @@ json = "{}"
 # create an instance of MessageDeliveredCallback from a JSON string
 message_delivered_callback_instance = MessageDeliveredCallback.from_json(json)
 # print the JSON string representation of the object
-print MessageDeliveredCallback.to_json()
+print(MessageDeliveredCallback.to_json())
 
 # convert the object into a dict
 message_delivered_callback_dict = message_delivered_callback_instance.to_dict()

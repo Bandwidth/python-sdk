@@ -3,6 +3,7 @@
 The format that the recording is stored in.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

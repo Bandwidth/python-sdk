@@ -2,6 +2,7 @@
 
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **current_call_queue_size** | **int** | The number of calls currently enqueued. | [optional] 
@@ -17,7 +18,7 @@ json = "{}"
 # create an instance of AccountStatistics from a JSON string
 account_statistics_instance = AccountStatistics.from_json(json)
 # print the JSON string representation of the object
-print AccountStatistics.to_json()
+print(AccountStatistics.to_json())
 
 # convert the object into a dict
 account_statistics_dict = account_statistics_instance.to_dict()

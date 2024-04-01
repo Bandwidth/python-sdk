@@ -3,6 +3,7 @@
 If the target call leaves the <Bridge>, then this callback is sent to the bridgeCompleteUrl, and the BXML returned in it is executed on the call. If this webhook is sent, the Bridge Target Complete webhook is NOT sent. This callback is also sent if any problem occurs that prevents the calls to be bridged.
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **event_type** | **str** | The event type, value can be one of the following: answer, bridgeComplete, bridgeTargetComplete, conferenceCreated, conferenceRedirect, conferenceMemberJoin, conferenceMemberExit, conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf, gather, initiate, machineDetectionComplete, recordingComplete, recordingAvailable, redirect, transcriptionAvailable, transferAnswer, transferComplete, transferDisconnect. | [optional] 
@@ -32,7 +33,7 @@ json = "{}"
 # create an instance of BridgeCompleteCallback from a JSON string
 bridge_complete_callback_instance = BridgeCompleteCallback.from_json(json)
 # print the JSON string representation of the object
-print BridgeCompleteCallback.to_json()
+print(BridgeCompleteCallback.to_json())
 
 # convert the object into a dict
 bridge_complete_callback_dict = bridge_complete_callback_instance.to_dict()

@@ -20,9 +20,8 @@ Deletes a media file from Bandwidth API server. Make sure you don't have any app
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.rest import ApiException
 from pprint import pprint
@@ -62,6 +61,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -81,6 +81,7 @@ void (empty response body)
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
@@ -105,9 +106,8 @@ Downloads a media file you previously uploaded.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.rest import ApiException
 from pprint import pprint
@@ -149,6 +149,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -168,6 +169,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/octet-stream, application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  -  |
@@ -192,9 +194,8 @@ Gets a list of your media files. No query parameters are supported.
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.models.media import Media
 from bandwidth.rest import ApiException
@@ -237,6 +238,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -256,6 +258,7 @@ Name | Type | Description  | Notes
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | OK |  * Continuation-Token - Continuation token used to retrieve subsequent media. <br>  |
@@ -280,9 +283,8 @@ Upload a file. You may add headers to the request in order to provide some contr
 ### Example
 
 * Basic Authentication (Basic):
+
 ```python
-import time
-import os
 import bandwidth
 from bandwidth.rest import ApiException
 from pprint import pprint
@@ -325,6 +327,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 ### Parameters
 
+
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
@@ -347,6 +350,7 @@ void (empty response body)
  - **Accept**: application/json
 
 ### HTTP response details
+
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | No Content |  -  |
