@@ -14,11 +14,11 @@ from ..verbs.stream_param import StreamParam
 class StartStream(Verb):
 
     def __init__(
-        self, destination: str, stream_params: List[StreamParam],
-        name: str, tracks: str,
-        stream_event_url: str,
-        stream_event_method: str,
-        username: str, password: str,
+        self, destination: str, stream_params: List[StreamParam] = [],
+        name: str=None, tracks: str=None,
+        stream_event_url: str=None,
+        stream_event_method: str=None,
+        username: str=None, password: str=None,
     ):
         """Initialize a <Transfer> verb
 

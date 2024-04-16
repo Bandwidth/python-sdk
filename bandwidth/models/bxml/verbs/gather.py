@@ -14,14 +14,14 @@ from .speak_sentence import SpeakSentence
 class Gather(Verb):
 
     def __init__(
-        self, audio_verbs: List[Union[PlayAudio, SpeakSentence]],
-        gather_url: str, gather_method: str,
-        gather_fallback_url: str, gather_fallback_method: str,
-        username: str, password: str,
-        fallback_username: str, fallback_password: str,
-        tag: str, terminating_digits: str,
-        max_digits: int, inter_digit_timeout: int,
-        first_digit_timeout: int, repeat_count: int
+        self, audio_verbs: List[Union[PlayAudio, SpeakSentence]] = [],
+        gather_url: str=None, gather_method: str=None,
+        gather_fallback_url: str=None, gather_fallback_method: str=None,
+        username: str=None, password: str=None,
+        fallback_username: str=None, fallback_password: str=None,
+        tag: str=None, terminating_digits: str=None,
+        max_digits: int=None, inter_digit_timeout: int=None,
+        first_digit_timeout: int=None, repeat_count: int=None
     ):
         """Initialize a <Gather> verb
 

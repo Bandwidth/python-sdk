@@ -12,8 +12,8 @@ class SendDtmf(TerminalVerb):
 
     def __init__(
         self, digits: str,
-        tone_duration: int,
-        tone_interval: int,
+        tone_duration: int=None,
+        tone_interval: int=None,
     ):
         """Initialize a <SendDtmf> verb
 

@@ -11,17 +11,17 @@ from ..terminal_verb import TerminalVerb
 class Bridge(TerminalVerb):
 
     def __init__(
-        self, target_call: str, bridge_complete_url: str,
-        bridge_complete_method: str,
-        bridge_complete_fallback_url: str,
-        bridge_complete_fallback_method: str,
-        bridge_target_complete_url: str,
-        bridge_target_complete_method: str,
-        bridge_target_complete_fallback_url: str,
-        bridge_target_complete_fallback_method: str,
-        username: str, password: str,
-        fallback_username: str, fallback_password: str,
-        tag: str
+        self, target_call: str, bridge_complete_url: str=None,
+        bridge_complete_method: str=None,
+        bridge_complete_fallback_url: str=None,
+        bridge_complete_fallback_method: str=None,
+        bridge_target_complete_url: str=None,
+        bridge_target_complete_method: str=None,
+        bridge_target_complete_fallback_url: str=None,
+        bridge_target_complete_fallback_method: str=None,
+        username: str=None, password: str=None,
+        fallback_username: str=None, fallback_password: str=None,
+        tag: str=None
     ):
         """Initialize a <Bridge> verb
 

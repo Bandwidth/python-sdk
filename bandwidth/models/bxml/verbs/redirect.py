@@ -11,11 +11,11 @@ from ..terminal_verb import TerminalVerb
 class Redirect(TerminalVerb):
 
     def __init__(
-        self, redirect_url: str, redirect_method: str,
-        redirect_fallback_url: str,
-        redirect_fallback_method: str, username: str,
-        password: str, fallback_username: str,
-        fallback_password: str, tag: str
+        self, redirect_url: str, redirect_method: str = None,
+        redirect_fallback_url: str = None,
+        redirect_fallback_method: str = None, username: str = None,
+        password: str = None, fallback_username: str = None,
+        fallback_password: str = None, tag: str = None
     ):
         """Initialize a <Redirect> verb
 

@@ -12,7 +12,7 @@ class PlayAudio(TerminalVerb):
 
     def __init__(
         self, audio_uri: str, 
-        username: str, password: str
+        username: str=None, password: str=None
     ):
         """Initialize a <PlayAudio> verb
 

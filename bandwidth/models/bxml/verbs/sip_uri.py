@@ -11,10 +11,10 @@ from ..terminal_verb import TerminalVerb
 class SipUri(TerminalVerb):
 
     def __init__(
-        self, uri: str, uui: str, transfer_answer_url: str, transfer_answer_method: str,
-        transfer_answer_fallback_url: str, transfer_answer_fallback_method: str,
-        transfer_disconnect_url: str, transfer_disconnect_method: str, username: str,
-        password: str, fallback_username: str, fallback_password: str, tag: str
+        self, uri: str, uui: str=None, transfer_answer_url: str=None, transfer_answer_method: str=None,
+        transfer_answer_fallback_url: str=None, transfer_answer_fallback_method: str=None,
+        transfer_disconnect_url: str=None, transfer_disconnect_method: str=None, username: str=None,
+        password: str=None, fallback_username: str=None, fallback_password: str=None, tag: str=None
     ):
         """Initialize a <SipUri> verb
 

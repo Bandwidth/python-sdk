@@ -11,8 +11,8 @@ from ..terminal_verb import TerminalVerb
 class SpeakSentence(TerminalVerb):
 
     def __init__(
-        self, text: str, voice: str, 
-        gender: str, locale: str
+        self, text: str, voice: str=None, 
+        gender: str=None, locale: str=None
     ):
         """Initialize a <SpeakSentence> verb
 

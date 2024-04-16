@@ -13,15 +13,15 @@ from ..verbs.custom_param import CustomParam
 
 class StartTranscription(Verb):
     def __init__(
-            self, name: str,
-            tracks: str,
-            transcription_event_url: str,
-            transcription_event_method: str,
-            username: str,
-            password: str,
-            destination: str,
-            stabilized: bool,
-            custom_params: List[CustomParam],
+            self, name: str = None,
+            tracks: str = None,
+            transcription_event_url: str = None,
+            transcription_event_method: str = None,
+            username: str = None,
+            password: str = None,
+            destination: str = None,
+            stabilized: bool = None,
+            custom_params: List[CustomParam] = None,
     ):
         """
         Initialize a <StartTranscription> verb
