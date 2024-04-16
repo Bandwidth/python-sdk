@@ -65,7 +65,7 @@ class Record(TerminalVerb):
         self.silence_timeout = silence_timeout
         self.file_format = file_format
 
-        super().__init__(tag="Record", content)
+        super().__init__(tag="Record", content=None)
 
     @property
     def _attributes(self):
