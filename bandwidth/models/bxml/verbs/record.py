@@ -85,7 +85,7 @@ class Record(TerminalVerb):
             "fallbackPassword": self.fallback_password,
             "tag": self.tag,
             "terminatingDigits": self.terminating_digits,
-            "maxDuration": str(self.max_duration),
+            "maxDuration": self.max_duration,
             "silenceTimeout": self.silence_timeout,
             "fileFormat": self.file_format
         }

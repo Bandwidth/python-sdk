@@ -80,8 +80,8 @@ class Gather(Verb):
             "fallbackPassword": self.fallback_password,
             "tag": self.tag,
             "terminatingDigits": self.terminating_digits,
-            "maxDigits": str(self.max_digits),
-            "interDigitTimeout": str(self.inter_digit_timeout),
-            "firstDigitTimeout": str(self.first_digit_timeout),
-            "repeatCount": str(self.repeat_count),
+            "maxDigits": self.max_digits,
+            "interDigitTimeout": self.inter_digit_timeout,
+            "firstDigitTimeout": self.first_digit_timeout,
+            "repeatCount": self.repeat_count,
         }

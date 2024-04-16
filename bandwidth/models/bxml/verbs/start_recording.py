@@ -50,12 +50,12 @@ class StartRecording(TerminalVerb):
         return {
             "recordingAvailableUrl": self.recording_available_url,
             "recordingAvailableMethod": self.recording_available_method,
-            "transcribe": str(self.transcribe),
+            "transcribe": self.transcribe,
             "transcriptionAvailableUrl": self.transcription_available_url,
             "transcriptionAvailableMethod": self.transcription_available_method,
             "username": self.username,
             "password": self.password,
             "tag": self.tag,
             "fileFormat": self.file_format,
-            "multiChannel": str(self.multi_channel)
+            "multiChannel": self.multi_channel
         }
