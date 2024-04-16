@@ -5,6 +5,10 @@ Bandwidth's SpeakSentence BXML verb
 
 @copyright Bandwidth INC
 """
+import re
+
+import xml.etree.ElementTree as ET
+
 from ..terminal_verb import TerminalVerb
 
 
@@ -40,3 +44,9 @@ class SpeakSentence(TerminalVerb):
             "gender": self.gender,
             "locale": self.locale,
         }        
+
+    def to_bxml(self) -> str:
+        SSML_REGEX = r"&lt;([a-zA-Z//].*?)&gt;"
+
+        xml_document = self._generate_xml()
+        return re.sub(SSML_REGEX, r"<\1>", ET.tostring(xml_document._root).decode('utf8'))

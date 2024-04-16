@@ -6,8 +6,6 @@ Defines the base verb class for all BXML verbs
 @copyright Bandwidth INC
 """
 from __future__ import annotations
-
-import re
 from typing import Union
 import xml.etree.ElementTree as ET
 
@@ -109,7 +107,6 @@ class Verb:
         Returns:
             str: Serialized BXML string
         """
-        SSML_REGEX = r"&lt;([a-zA-Z//].*?)&gt;"
 
         xml_document = self._generate_xml()
-        return re.sub(SSML_REGEX, r"<\1>", ET.tostring(xml_document._root).decode('utf8'))
+        return ET.tostring(xml_document._root).decode('utf8')
