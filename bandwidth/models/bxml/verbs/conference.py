@@ -11,13 +11,13 @@ from ..terminal_verb import TerminalVerb
 class Conference(TerminalVerb):
 
     def __init__(
-        self, name: str, mute: str=None,
-        hold: str=None, call_ids_to_coach: str=None,
-        conference_event_url: str=None, conference_event_method: str=None,
-        conference_event_fallback_url: str=None, conference_event_fallback_method: str=None,
-        username: str=None, password: str=None,
-        fallback_username: str=None, fallback_password: str=None,
-        tag: str=None, callback_timeout: str=None,
+        self, name: str, mute: str,
+        hold: str, call_ids_to_coach: str,
+        conference_event_url: str, conference_event_method: str,
+        conference_event_fallback_url: str, conference_event_fallback_method: str,
+        username: str, password: str,
+        fallback_username: str, fallback_password: str,
+        tag: str, callback_timeout: str,
     ):
         """Initialize a <Conference> verb
 

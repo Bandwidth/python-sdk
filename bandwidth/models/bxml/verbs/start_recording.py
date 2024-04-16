@@ -11,12 +11,12 @@ from ..terminal_verb import TerminalVerb
 class StartRecording(TerminalVerb):
 
     def __init__(
-        self, recording_available_url: str = None,
-        recording_available_method: str = None,
-        transcribe: bool = None, transcription_available_url: str = None,
-        transcription_available_method: str = None,  username: str=None,
-        password: str=None, tag: str=None,
-        file_format: str = None, multi_channel: bool = None
+        self, recording_available_url: str,
+        recording_available_method: str,
+        transcribe: bool, transcription_available_url: str,
+        transcription_available_method: str,  username: str,
+        password: str, tag: str,
+        file_format: str, multi_channel: bool
     ):
         """Initialize a <StartRecording> verb
 

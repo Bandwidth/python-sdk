@@ -9,7 +9,7 @@ from ..terminal_verb import TerminalVerb
 
 
 class CustomParam(TerminalVerb):
-    def __init__(self, name: str = None, value: str = None):
+    def __init__(self, name: str, value: str):
         """
         Initialize a <CustomParam> verb
         :param name: The name of this parameter, up to 256 characters.

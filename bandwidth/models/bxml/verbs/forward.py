@@ -11,9 +11,9 @@ from ..terminal_verb import TerminalVerb
 class Forward(TerminalVerb):
 
     def __init__(
-        self, to: str=None, _from: str=None, 
-        call_timeout: str=None, diversion_treatment: str=None, 
-        diversion_reason: str=None, uui: str=None
+        self, to: str, _from: str, 
+        call_timeout: str, diversion_treatment: str, 
+        diversion_reason: str, uui: str
     ):
         """Initialize a <Forward> verb
 

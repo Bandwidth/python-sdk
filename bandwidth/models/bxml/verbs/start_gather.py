@@ -11,8 +11,8 @@ from ..terminal_verb import TerminalVerb
 class StartGather(TerminalVerb):
 
     def __init__(
-        self, dtmf_url: str, dtmf_method: str=None, username: str=None,
-        password: str=None, tag: str=None,
+        self, dtmf_url: str, dtmf_method: str, username: str,
+        password: str, tag: str,
     ):
         """Initialize a <StartGather> verb
 

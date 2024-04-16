@@ -11,8 +11,8 @@ from ..terminal_verb import TerminalVerb
 class Ring(TerminalVerb):
 
     def __init__(
-        self, duration: int=None,
-        answer_call: bool=None,
+        self, duration: int,
+        answer_call: bool,
     ):
         """Initialize a <Ring> verb
 

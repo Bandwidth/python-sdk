@@ -11,18 +11,18 @@ from ..terminal_verb import TerminalVerb
 class Record(TerminalVerb):
 
     def __init__(
-        self, record_complete_url: str=None,
-        record_complete_method: str=None,
-        record_complete_fallback_url: str=None,
-        record_complete_fallback_method: str=None,
-        recording_available_url: str=None,
-        recording_available_method: str=None,
-        transcribe: str=None, transcription_available_url: str=None,
-        transcription_available_method: str=None,  username: str=None,
-        password: str=None, fallback_username: str=None,
-        fallback_password: str=None, tag: str=None,
-        terminating_digits: str=None, max_duration: int=60,
-        silence_timeout: str=None, file_format: str=None
+        self, record_complete_url: str,
+        record_complete_method: str,
+        record_complete_fallback_url: str,
+        record_complete_fallback_method: str,
+        recording_available_url: str,
+        recording_available_method: str,
+        transcribe: str, transcription_available_url: str,
+        transcription_available_method: str,  username: str,
+        password: str, fallback_username: str,
+        fallback_password: str, tag: str,
+        terminating_digits: str, max_duration: int,
+        silence_timeout: str, file_format: str
     ):
         """Initialize a <Record> verb
 
@@ -65,7 +65,7 @@ class Record(TerminalVerb):
         self.silence_timeout = silence_timeout
         self.file_format = file_format
 
-        super().__init__(tag="Record", content=None)
+        super().__init__(tag="Record", content)
 
     @property
     def _attributes(self):

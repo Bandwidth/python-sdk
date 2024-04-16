@@ -11,7 +11,7 @@ from ..terminal_verb import TerminalVerb
 class StopTranscription(TerminalVerb):
     def __init__(
             self,
-            name: str = None,
+            name: str,
     ):
         """
         Initialize a <StopTranscription> verb

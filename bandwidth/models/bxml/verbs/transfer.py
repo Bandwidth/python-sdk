@@ -15,14 +15,14 @@ from ..verbs.sip_uri import SipUri
 class Transfer(Verb):
 
     def __init__(
-        self, transfer_to: List[Union[PhoneNumber, SipUri]] = [],
-        transfer_caller_id: str=None, transfer_caller_display_name: str=None, call_timeout: str=None,
-        transfer_complete_url: str=None, transfer_complete_method: str=None,
-        transfer_complete_fallback_url: str=None,
-        transfer_complete_fallback_method: str=None, username: str=None,
-        password: str=None, fallback_username: str=None,
-        fallback_password: str=None, tag: str=None,
-        diversion_treatment: str=None, diversion_reason: str=None
+        self, transfer_to: List[Union[PhoneNumber, SipUri]],
+        transfer_caller_id: str, transfer_caller_display_name: str, call_timeout: str,
+        transfer_complete_url: str, transfer_complete_method: str,
+        transfer_complete_fallback_url: str,
+        transfer_complete_fallback_method: str, username: str,
+        password: str, fallback_username: str,
+        fallback_password: str, tag: str,
+        diversion_treatment: str, diversion_reason: str
     ):
         """Initialize a <Transfer> verb
 
