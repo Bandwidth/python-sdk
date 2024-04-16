@@ -60,7 +60,7 @@ class Verb:
         if self._attributes is not None:
             for key, value in self._attributes.items():
                 if value is not None:
-                    root.set(key.strip("_"), value)
+                    root.set(key.strip("_"), str(value))
 
     def _to_etree_element(self) -> ET.Element:
         """Generate an ET.Element object from a Verb Object
