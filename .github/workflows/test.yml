@@ -78,10 +78,10 @@ jobs:
           echo "Log level: WARNING"
           pytest -v --log-cli-level=WARNING
 
-      - name: Notify Slack of Failures
-        uses: Bandwidth/build-notify-slack-action@v1.0.0
-        if: failure() && !github.event.pull_request.draft
-        with:
-          job-status: ${{ job.status }}
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          slack-channel: ${{ secrets.SLACK_CHANNEL }}
+#      - name: Notify Slack of Failures
+#        uses: Bandwidth/build-notify-slack-action@v2.0.0
+#        if: failure() && !github.event.pull_request.draft
+#        with:
+#          job-status: ${{ job.status }}
+#          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+#          slack-channel: ${{ secrets.SLACK_CHANNEL }}

@@ -33,6 +33,6 @@ class SendDtmf(TerminalVerb):
     @property
     def _attributes(self):
         return {
-            "toneDuration": str(self.tone_duration),
-            "toneInterval": str(self.tone_interval)
+            "toneDuration": self.tone_duration,
+            "toneInterval": self.tone_interval
         }

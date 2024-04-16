@@ -27,6 +27,6 @@ class Ring(TerminalVerb):
     @property
     def _attributes(self):
         return {
-            "duration": str(self.duration),
-            "answerCall": str(self.answer_call),
+            "duration": self.duration,
+            "answerCall": self.answer_call,
         }

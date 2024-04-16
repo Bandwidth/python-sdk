@@ -60,5 +60,5 @@ class StartTranscription(Verb):
             "username": self.username,
             "password": self.password,
             "destination": self.destination,
-            "stabilized": str(self.stabilized),
+            "stabilized": self.stabilized,
         }

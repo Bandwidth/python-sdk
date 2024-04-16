@@ -41,6 +41,13 @@ class TestGather(unittest.TestCase):
             audio_verbs=[self.play_audio]
         )
 
+    def test_defaults(self):
+        gather = Gather(
+            audio_verbs=[self.play_audio]
+        )
+        expected = '<Gather><PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio></Gather>'
+        assert(expected == gather.to_bxml())
+
     def test_to_bxml(self):
         expected = '<Gather gatherUrl="test.com" gatherMethod="POST" gatherFallbackUrl="fallback-test.com" gatherFallbackMethod="GET" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" terminatingDigits="2" maxDigits="5" interDigitTimeout="1" firstDigitTimeout="3" repeatCount="2"><PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio></Gather>'
         assert(expected == self.gather.to_bxml())
