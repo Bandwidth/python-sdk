@@ -69,12 +69,12 @@ jobs:
           PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
           PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
 
-      - uses: Bandwidth/build-notify-slack-action@v1.0.0
-        if: always()
-        with:
-          job-status: ${{ job.status }}
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          slack-channel: ${{ secrets.SLACK_CHANNEL }}
+#      - uses: Bandwidth/build-notify-slack-action@v1.0.0
+#        if: always()
+#        with:
+#          job-status: ${{ job.status }}
+#          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+#          slack-channel: ${{ secrets.SLACK_CHANNEL }}
 
   deploy:
     name: Deploy `main` to PYPI
@@ -136,9 +136,9 @@ jobs:
         env:
           PYPI_API_KEY: ${{ secrets.PYPI_API_KEY }}
 
-      - uses: Bandwidth/build-notify-slack-action@v1.0.0
-        if: always()
-        with:
-          job-status: ${{ job.status }}
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          slack-channel: ${{ secrets.SLACK_CHANNEL }}
+#      - uses: Bandwidth/build-notify-slack-action@v1.0.0
+#        if: always()
+#        with:
+#          job-status: ${{ job.status }}
+#          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+#          slack-channel: ${{ secrets.SLACK_CHANNEL }}
