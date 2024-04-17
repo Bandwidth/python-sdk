@@ -11,6 +11,7 @@ from .verb import Verb
 class TerminalVerb(Verb):
     """Base class for BXML verbs
     """
+    ssml_regex = r"&lt;([a-zA-Z//].*?)&gt;"
 
     def __init__(self, tag: str, content: str = None):
         """Initialize the verb model

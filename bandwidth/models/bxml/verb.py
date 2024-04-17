@@ -6,6 +6,7 @@ Defines the base verb class for all BXML verbs
 @copyright Bandwidth INC
 """
 from __future__ import annotations
+import re
 from typing import Union
 import xml.etree.ElementTree as ET
 
@@ -107,6 +108,8 @@ class Verb:
         Returns:
             str: Serialized BXML string
         """
+        ssml_regex = r"&lt;([a-zA-Z//].*?)&gt;"
 
         xml_document = self._generate_xml()
-        return ET.tostring(xml_document._root).decode('utf8')
+        # if the root name is speakSentence, replace content with the SSML regex
+        return re.sub(ssml_regex, r"<\1>", ET.tostring(xml_document._root).decode('utf8'))
