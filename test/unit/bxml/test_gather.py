@@ -53,6 +53,6 @@ class TestGather(unittest.TestCase):
         assert(expected == self.gather.to_bxml())
 
     def test_add_verb(self):
-        expected = '<Gather gatherUrl="test.com" gatherMethod="POST" gatherFallbackUrl="fallback-test.com" gatherFallbackMethod="GET" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" terminatingDigits="2" maxDigits="5" interDigitTimeout="1" firstDigitTimeout="3" repeatCount="2"><PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio><SpeakSentence>Hello. Your number is &lt;say-as interpret-as="telephone"&gt;asdf&lt;/say-as&gt;, lets play a game. What is 10 + 3. Press the pound key when finished.</SpeakSentence></Gather>'
+        expected = '<Gather gatherUrl="test.com" gatherMethod="POST" gatherFallbackUrl="fallback-test.com" gatherFallbackMethod="GET" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" terminatingDigits="2" maxDigits="5" interDigitTimeout="1" firstDigitTimeout="3" repeatCount="2"><PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio><SpeakSentence>Hello. Your number is <say-as interpret-as="telephone">asdf</say-as>, lets play a game. What is 10 + 3. Press the pound key when finished.</SpeakSentence></Gather>'
         self.gather.add_verb(self.speak_sentence)
         assert(expected == self.gather.to_bxml())

@@ -43,10 +43,8 @@ class SpeakSentence(TerminalVerb):
             "voice": self.voice,
             "gender": self.gender,
             "locale": self.locale,
-        }        
+        }
 
     def to_bxml(self) -> str:
-        SSML_REGEX = r"&lt;([a-zA-Z//].*?)&gt;"
-
         xml_document = self._generate_xml()
-        return re.sub(SSML_REGEX, r"<\1>", ET.tostring(xml_document._root).decode('utf8'))
+        return re.sub(self.ssml_regex, r"<\1>", ET.tostring(xml_document._root).decode('utf8'))
