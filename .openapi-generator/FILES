@@ -204,7 +204,5 @@ docs/VoiceApiError.md
 docs/VoiceCodeResponse.md
 git_push.sh
 pyproject.toml
-requirements.txt
 setup.py
-test-requirements.txt
 tox.ini
