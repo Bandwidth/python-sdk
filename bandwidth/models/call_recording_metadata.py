@@ -23,7 +23,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.call_direction_enum import CallDirectionEnum
 from bandwidth.models.file_format_enum import FileFormatEnum
-from bandwidth.models.transcription_metadata import TranscriptionMetadata
+from bandwidth.models.recording_transcription_metadata import RecordingTranscriptionMetadata
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -48,7 +48,7 @@ class CallRecordingMetadata(BaseModel):
     file_format: Optional[FileFormatEnum] = Field(default=None, alias="fileFormat")
     status: Optional[StrictStr] = Field(default=None, description="The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.")
     media_url: Optional[StrictStr] = Field(default=None, description="The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.", alias="mediaUrl")
-    transcription: Optional[TranscriptionMetadata] = None
+    transcription: Optional[RecordingTranscriptionMetadata] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["applicationId", "accountId", "callId", "parentCallId", "recordingId", "to", "from", "transferCallerId", "transferTo", "duration", "direction", "channels", "startTime", "endTime", "fileFormat", "status", "mediaUrl", "transcription"]
 
@@ -140,7 +140,7 @@ class CallRecordingMetadata(BaseModel):
             "fileFormat": obj.get("fileFormat"),
             "status": obj.get("status"),
             "mediaUrl": obj.get("mediaUrl"),
-            "transcription": TranscriptionMetadata.from_dict(obj["transcription"]) if obj.get("transcription") is not None else None
+            "transcription": RecordingTranscriptionMetadata.from_dict(obj["transcription"]) if obj.get("transcription") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
