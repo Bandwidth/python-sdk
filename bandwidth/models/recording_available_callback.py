@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.call_direction_enum import CallDirectionEnum
 from bandwidth.models.file_format_enum import FileFormatEnum
@@ -47,7 +47,7 @@ class RecordingAvailableCallback(BaseModel):
     end_time: Optional[datetime] = Field(default=None, description="The time that the recording ended in ISO-8601 format", alias="endTime")
     duration: Optional[StrictStr] = Field(default=None, description="The duration of the recording in ISO-8601 format")
     file_format: Optional[FileFormatEnum] = Field(default=None, alias="fileFormat")
-    channels: Optional[StrictStr] = Field(default=None, description="The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.")
+    channels: Optional[StrictInt] = Field(default=None, description="Always `1` for conference recordings; multi-channel recordings are not supported on conferences.")
     tag: Optional[StrictStr] = Field(default=None, description="(optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.")
     status: Optional[StrictStr] = Field(default=None, description="The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.")
     transfer_caller_id: Optional[StrictStr] = Field(default=None, description="The phone number used as the from field of the B-leg call, in E.164 format (e.g. +15555555555) or one of Restricted, Anonymous, Private, or Unavailable.", alias="transferCallerId")

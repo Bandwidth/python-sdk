@@ -16,6 +16,7 @@ tags:
   - name: Conferences
   - name: Recordings
   - name: Statistics
+  - name: Transcriptions
   - name: MFA
   - name: Phone Number Lookup
 paths:
@@ -259,6 +260,52 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/createCallResponse'
+        '400':
+          $ref: '#/components/responses/voiceBadRequestError'
+        '401':
+          $ref: '#/components/responses/voiceUnauthorizedError'
+        '403':
+          $ref: '#/components/responses/voiceForbiddenError'
+        '404':
+          $ref: '#/components/responses/voiceNotFoundError'
+        '405':
+          $ref: '#/components/responses/voiceNotAllowedError'
+        '415':
+          $ref: '#/components/responses/voiceUnsupportedMediaTypeError'
+        '429':
+          $ref: '#/components/responses/voiceTooManyRequestsError'
+        '500':
+          $ref: '#/components/responses/voiceInternalServerError'
+    get:
+      tags:
+        - Calls
+      summary: Get Calls
+      description: >-
+        Returns a max of 10000 calls, sorted by `createdTime` from oldest to
+        newest.
+
+
+        **NOTE:** If the number of calls in the account is bigger than
+        `pageSize`, a `Link` header (with format `<{url}>; rel="next"`) will be
+        returned in the response. The url can be used to retrieve the next page
+        of call records.
+
+        Also, call information is kept for 7 days after the calls are hung up.
+        If you attempt to retrieve information for a call that is older than 7
+        days, you will get an empty array [] in response.
+      operationId: listCalls
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/to'
+        - $ref: '#/components/parameters/from'
+        - $ref: '#/components/parameters/minStartTimeCalls'
+        - $ref: '#/components/parameters/maxStartTimeCalls'
+        - $ref: '#/components/parameters/disconnectCause'
+        - $ref: '#/components/parameters/pageSizeCalls'
+        - $ref: '#/components/parameters/pageToken1'
+      responses:
+        '200':
+          $ref: '#/components/responses/listCallsResponse'
         '400':
           $ref: '#/components/responses/voiceBadRequestError'
         '401':
@@ -916,9 +963,7 @@ paths:
       description: >-
         Downloads the specified transcription.
 
-
-        If the transcribed recording was multi-channel, then there will be 2
-        transcripts.
+        If the recording was multi-channel, then there will be 2 transcripts.
 
         The caller/called party transcript will be the first item while
         [`<PlayAudio>`](/docs/voice/bxml/playAudio) and
@@ -928,14 +973,14 @@ paths:
         During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript
         will be the first item while the B-leg transcript will be the second
         item.
-      operationId: getCallTranscription
+      operationId: getRecordingTranscription
       parameters:
         - $ref: '#/components/parameters/accountId'
         - $ref: '#/components/parameters/callId'
         - $ref: '#/components/parameters/recordingId'
       responses:
         '200':
-          $ref: '#/components/responses/getCallTranscriptionResponse'
+          $ref: '#/components/responses/getRecordingTranscriptionResponse'
         '400':
           $ref: '#/components/responses/voiceBadRequestError'
         '401':
@@ -1001,7 +1046,7 @@ paths:
         transcription will not be accessible anymore. However, it is not deleted
         immediately. This deletion process, while transparent and irreversible,
         can take an additional 24 to 48 hours.
-      operationId: deleteCallTranscription
+      operationId: deleteRecordingTranscription
       parameters:
         - $ref: '#/components/parameters/accountId'
         - $ref: '#/components/parameters/callId'
@@ -1038,6 +1083,108 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/getStatisticsResponse'
+        '400':
+          $ref: '#/components/responses/voiceBadRequestError'
+        '401':
+          $ref: '#/components/responses/voiceUnauthorizedError'
+        '403':
+          $ref: '#/components/responses/voiceForbiddenError'
+        '404':
+          $ref: '#/components/responses/voiceNotFoundError'
+        '405':
+          $ref: '#/components/responses/voiceNotAllowedError'
+        '415':
+          $ref: '#/components/responses/voiceUnsupportedMediaTypeError'
+        '429':
+          $ref: '#/components/responses/voiceTooManyRequestsError'
+        '500':
+          $ref: '#/components/responses/voiceInternalServerError'
+    servers: *ref_1
+  /accounts/{accountId}/calls/{callId}/transcriptions:
+    get:
+      tags:
+        - Transcriptions
+      summary: Enumerate transcriptions made with StartTranscription
+      description: >-
+        Enumerates the transcriptions created on this call via
+        [startTranscription](/docs/voice/bxml/startTranscription).
+      operationId: listRealTimeTranscriptions
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/callId'
+      responses:
+        '200':
+          $ref: '#/components/responses/listTranscriptionsResponse'
+        '400':
+          $ref: '#/components/responses/voiceBadRequestError'
+        '401':
+          $ref: '#/components/responses/voiceUnauthorizedError'
+        '403':
+          $ref: '#/components/responses/voiceForbiddenError'
+        '404':
+          $ref: '#/components/responses/voiceNotFoundError'
+        '405':
+          $ref: '#/components/responses/voiceNotAllowedError'
+        '415':
+          $ref: '#/components/responses/voiceUnsupportedMediaTypeError'
+        '429':
+          $ref: '#/components/responses/voiceTooManyRequestsError'
+        '500':
+          $ref: '#/components/responses/voiceInternalServerError'
+    servers: *ref_1
+  /accounts/{accountId}/calls/{callId}/transcriptions/{transcriptionId}:
+    get:
+      tags:
+        - Transcriptions
+      summary: Retrieve a specific transcription
+      description: >-
+        Retrieve the specified transcription that was created on this call via
+        [startTranscription](/docs/voice/bxml/startTranscription).
+      operationId: getRealTimeTranscription
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/callId'
+        - $ref: '#/components/parameters/transcriptionId'
+      responses:
+        '200':
+          $ref: '#/components/responses/getCallTranscriptionResponse'
+        '400':
+          $ref: '#/components/responses/voiceBadRequestError'
+        '401':
+          $ref: '#/components/responses/voiceUnauthorizedError'
+        '403':
+          $ref: '#/components/responses/voiceForbiddenError'
+        '404':
+          $ref: '#/components/responses/voiceNotFoundError'
+        '405':
+          $ref: '#/components/responses/voiceNotAllowedError'
+        '415':
+          $ref: '#/components/responses/voiceUnsupportedMediaTypeError'
+        '429':
+          $ref: '#/components/responses/voiceTooManyRequestsError'
+        '500':
+          $ref: '#/components/responses/voiceInternalServerError'
+    delete:
+      tags:
+        - Transcriptions
+      summary: Delete a specific transcription
+      description: >-
+        Delete the specified transcription that was created on this call via
+        [startTranscription](/docs/voice/bxml/startTranscription).
+
+
+        Note: After the deletion is requested and a `204` is returned, the
+        transcription will not be accessible anymore. However, it is not deleted
+        immediately. This deletion process, while transparent and irreversible,
+        can take an additional 24 to 48 hours.
+      operationId: deleteRealTimeTranscription
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/callId'
+        - $ref: '#/components/parameters/transcriptionId'
+      responses:
+        '204':
+          $ref: '#/components/responses/deleteCallTranscriptionResponse'
         '400':
           $ref: '#/components/responses/voiceBadRequestError'
         '401':
@@ -1501,8 +1648,14 @@ components:
         from:
           type: string
           description: >-
-            One of your telephone numbers the message should come from in E164
-            format.
+            Either an alphanumeric sender ID or the sender's Bandwidth phone
+            number in E.164 format, which must be hosted within Bandwidth and
+            linked to the account that is generating the message. 
+
+            Alphanumeric Sender IDs can contain up to 11 characters, upper-case
+            letters A-Z, lower-case letters a-z, numbers 0-9, space, hyphen -,
+            plus +, underscore _ and ampersand &. Alphanumeric Sender IDs must
+            contain at least one letter.
           example: '+15551113333'
         text:
           type: string
@@ -2625,7 +2778,7 @@ components:
         mediaUrl:
           $ref: '#/components/schemas/mediaUrl'
         transcription:
-          $ref: '#/components/schemas/transcriptionMetadata'
+          $ref: '#/components/schemas/recordingTranscriptionMetadata'
     conference:
       type: object
       properties:
@@ -3062,14 +3215,95 @@ components:
             Current supported languages are English, French, and Spanish.
           default: false
           example: true
-    transcriptionList:
+    recordingTranscriptions:
       type: object
       properties:
         transcripts:
           type: array
           items:
             $ref: '#/components/schemas/transcription'
-    transcriptionMetadata:
+    callTranscriptionMetadataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/callTranscriptionMetadata'
+      example:
+        - transcriptionId: t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b
+          transcriptionUrl: >-
+            https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-fef240ff-5cfc9091-8069-4863-a8c0-a4dcbbf1f1a4/transcriptions/t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b
+    callTranscriptionMetadata:
+      type: object
+      properties:
+        transcriptionId:
+          type: string
+          description: The programmable voice API transcription ID.
+          example: t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b
+        transcriptionUrl:
+          type: string
+          description: >-
+            A URL that may be used to retrieve the transcription itself. This
+            points to the
+
+            [Get Call
+            Transcription](/apis/voice/#operation/getCallTranscription)
+            endpoint.
+          example: >-
+            https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-fef240ff-5cfc9091-8069-4863-a8c0-a4dcbbf1f1a4/transcriptions/t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b
+    callTranscriptionResponse:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The user account associated with the call.
+          example: '920012'
+        callId:
+          type: string
+          description: The call id associated with the event.
+          example: c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+        transcriptionId:
+          type: string
+          description: The programmable voice API transcription ID.
+          example: t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b
+        tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/callTranscription'
+          example:
+            - detectedLanguage: en-US
+              track: inbound
+              text: Hello World! This is an example.
+              confidence: 0.9
+    callTranscription:
+      type: object
+      properties:
+        detectedLanguage:
+          type: string
+          enum:
+            - en-US
+            - es-US
+            - fr-FR
+          description: The detected language for this transcription.
+          example: en-US
+        track:
+          type: string
+          enum:
+            - inbound
+            - outbound
+          description: Which `track` this transcription is derived from.
+          example: inbound
+        text:
+          type: string
+          description: The transcription itself.
+          example: Hello World! This is an example.
+        confidence:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: >-
+            How confident the transcription engine was in transcribing the
+            associated audio (from `0` to `1`).
+          example: 0.9
+    recordingTranscriptionMetadata:
       nullable: true
       type: object
       description: If the recording was transcribed, metadata about the transcription
@@ -3641,7 +3875,7 @@ components:
         fileFormat:
           $ref: '#/components/schemas/fileFormatEnum'
         channels:
-          $ref: '#/components/schemas/status'
+          $ref: '#/components/schemas/channels'
         tag:
           $ref: '#/components/schemas/tag1'
         status:
@@ -4491,6 +4725,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/callState'
+    listCallsResponse:
+      description: Calls retrieved successfully
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/callState'
     getStatisticsResponse:
       description: Statistics Found
       content:
@@ -4522,12 +4764,26 @@ components:
           schema:
             type: string
             format: binary
-    getCallTranscriptionResponse:
-      description: Transcription found
+    getRecordingTranscriptionResponse:
+      description: Transcription found.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/transcriptionList'
+            $ref: '#/components/schemas/recordingTranscriptions'
+    listTranscriptionsResponse:
+      description: Transcription found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/callTranscriptionMetadataList'
+    getCallTranscriptionResponse:
+      description: Transcription found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/callTranscriptionResponse'
+    deleteCallTranscriptionResponse:
+      description: Transcription data was deleted.
     listConferencesResponse:
       description: Conferences retrieved successfully
       content:
@@ -5030,6 +5286,14 @@ components:
         type: string
       description: Programmable Voice API Conference Member ID.
       example: c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+    transcriptionId:
+      name: transcriptionId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Programmable Voice API Transcription ID.
+      example: t-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
     to:
       name: to
       in: query
@@ -5106,6 +5370,38 @@ components:
         default: 1000
       description: Specifies the max number of conferences that will be returned.
       example: 500
+    minStartTimeCalls:
+      name: minStartTime
+      in: query
+      required: false
+      schema:
+        type: string
+      description: >-
+        Filter results to calls which have a `startTime` after or including
+        `minStartTime` (in ISO8601 format).
+      example: '2022-06-21T19:13:21Z'
+    maxStartTimeCalls:
+      name: maxStartTime
+      in: query
+      required: false
+      schema:
+        type: string
+      description: >-
+        Filter results to calls which have a `startTime` before or including
+        `maxStartTime` (in ISO8601 format).
+      example: '2022-06-21T19:13:21Z'
+    pageSizeCalls:
+      name: pageSize
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 10000
+        default: 1000
+      description: Specifies the max number of calls that will be returned.
+      example: 500
     pageToken1:
       name: pageToken
       in: query
@@ -5116,6 +5412,14 @@ components:
         Not intended for explicit use. To use pagination, follow the links in
         the `Link` header of the response, as indicated in the endpoint
         description.
+    disconnectCause:
+      name: disconnectCause
+      in: query
+      required: false
+      schema:
+        type: string
+      description: Filter results to calls with specified call Disconnect Cause.
+      example: hangup
     requestId:
       name: requestId
       in: path
@@ -5417,12 +5721,14 @@ components:
     Basic:
       type: http
       scheme: basic
-      description: |-
+      description: >-
         Basic authentication is a simple authentication scheme built into the
-        HTTP protocol. To use it, send your HTTP requests with an Authorization
-        header that contains the word Basic followed by a space and a
-        base64-encoded string `username:password`Example: `Authorization: Basic
-        ZGVtbZpwQDU1dzByZA==`
+        HTTP protocol. To use it, send your HTTP requests with an
+        `Authorization` header that contains the word `Basic` followed by a
+        space and a Base64-encoded string `username:password`.
+
+
+        - Example: `Authorization: Basic ZGVtbZpwQDU1dzByZA==`
   callbacks:
     inboundCallback:
       '{inboundCallbackUrl}':
