@@ -11,6 +11,7 @@ bandwidth/api/mfa_api.py
 bandwidth/api/phone_number_lookup_api.py
 bandwidth/api/recordings_api.py
 bandwidth/api/statistics_api.py
+bandwidth/api/transcriptions_api.py
 bandwidth/api_client.py
 bandwidth/api_response.py
 bandwidth/configuration.py
@@ -24,6 +25,9 @@ bandwidth/models/call_direction_enum.py
 bandwidth/models/call_recording_metadata.py
 bandwidth/models/call_state.py
 bandwidth/models/call_state_enum.py
+bandwidth/models/call_transcription.py
+bandwidth/models/call_transcription_metadata.py
+bandwidth/models/call_transcription_response.py
 bandwidth/models/callback_method_enum.py
 bandwidth/models/code_request.py
 bandwidth/models/conference.py
@@ -83,6 +87,8 @@ bandwidth/models/priority_enum.py
 bandwidth/models/recording_available_callback.py
 bandwidth/models/recording_complete_callback.py
 bandwidth/models/recording_state_enum.py
+bandwidth/models/recording_transcription_metadata.py
+bandwidth/models/recording_transcriptions.py
 bandwidth/models/redirect_callback.py
 bandwidth/models/redirect_method_enum.py
 bandwidth/models/stir_shaken.py
@@ -91,8 +97,6 @@ bandwidth/models/tn_lookup_request_error.py
 bandwidth/models/transcribe_recording.py
 bandwidth/models/transcription.py
 bandwidth/models/transcription_available_callback.py
-bandwidth/models/transcription_list.py
-bandwidth/models/transcription_metadata.py
 bandwidth/models/transfer_answer_callback.py
 bandwidth/models/transfer_complete_callback.py
 bandwidth/models/transfer_disconnect_callback.py
@@ -114,6 +118,9 @@ docs/CallDirectionEnum.md
 docs/CallRecordingMetadata.md
 docs/CallState.md
 docs/CallStateEnum.md
+docs/CallTranscription.md
+docs/CallTranscriptionMetadata.md
+docs/CallTranscriptionResponse.md
 docs/CallbackMethodEnum.md
 docs/CallsApi.md
 docs/CodeRequest.md
@@ -179,6 +186,8 @@ docs/PriorityEnum.md
 docs/RecordingAvailableCallback.md
 docs/RecordingCompleteCallback.md
 docs/RecordingStateEnum.md
+docs/RecordingTranscriptionMetadata.md
+docs/RecordingTranscriptions.md
 docs/RecordingsApi.md
 docs/RedirectCallback.md
 docs/RedirectMethodEnum.md
@@ -189,8 +198,7 @@ docs/TnLookupRequestError.md
 docs/TranscribeRecording.md
 docs/Transcription.md
 docs/TranscriptionAvailableCallback.md
-docs/TranscriptionList.md
-docs/TranscriptionMetadata.md
+docs/TranscriptionsApi.md
 docs/TransferAnswerCallback.md
 docs/TransferCompleteCallback.md
 docs/TransferDisconnectCallback.md
@@ -204,7 +212,5 @@ docs/VoiceApiError.md
 docs/VoiceCodeResponse.md
 git_push.sh
 pyproject.toml
-requirements.txt
 setup.py
-test-requirements.txt
 tox.ini

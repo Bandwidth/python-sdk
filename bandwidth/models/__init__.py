@@ -23,6 +23,9 @@ from bandwidth.models.call_direction_enum import CallDirectionEnum
 from bandwidth.models.call_recording_metadata import CallRecordingMetadata
 from bandwidth.models.call_state import CallState
 from bandwidth.models.call_state_enum import CallStateEnum
+from bandwidth.models.call_transcription import CallTranscription
+from bandwidth.models.call_transcription_metadata import CallTranscriptionMetadata
+from bandwidth.models.call_transcription_response import CallTranscriptionResponse
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
 from bandwidth.models.code_request import CodeRequest
 from bandwidth.models.conference import Conference
@@ -82,6 +85,8 @@ from bandwidth.models.priority_enum import PriorityEnum
 from bandwidth.models.recording_available_callback import RecordingAvailableCallback
 from bandwidth.models.recording_complete_callback import RecordingCompleteCallback
 from bandwidth.models.recording_state_enum import RecordingStateEnum
+from bandwidth.models.recording_transcription_metadata import RecordingTranscriptionMetadata
+from bandwidth.models.recording_transcriptions import RecordingTranscriptions
 from bandwidth.models.redirect_callback import RedirectCallback
 from bandwidth.models.redirect_method_enum import RedirectMethodEnum
 from bandwidth.models.stir_shaken import StirShaken
@@ -90,8 +95,6 @@ from bandwidth.models.tn_lookup_request_error import TnLookupRequestError
 from bandwidth.models.transcribe_recording import TranscribeRecording
 from bandwidth.models.transcription import Transcription
 from bandwidth.models.transcription_available_callback import TranscriptionAvailableCallback
-from bandwidth.models.transcription_list import TranscriptionList
-from bandwidth.models.transcription_metadata import TranscriptionMetadata
 from bandwidth.models.transfer_answer_callback import TransferAnswerCallback
 from bandwidth.models.transfer_complete_callback import TransferCompleteCallback
 from bandwidth.models.transfer_disconnect_callback import TransferDisconnectCallback

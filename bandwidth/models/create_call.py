@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
@@ -31,8 +31,9 @@ class CreateCall(BaseModel):
     CreateCall
     """ # noqa: E501
     to: StrictStr = Field(description="The destination to call (must be an E.164 formatted number (e.g. `+15555551212`) or a SIP URI (e.g. `sip:user@server.example`)).")
-    var_from: StrictStr = Field(description="A Bandwidth phone number on your account the call should come from (must be in E.164 format, like `+15555551212`, or be one of the following strings: `Restricted`, `Anonymous`, `Private`, or `Unavailable`).", alias="from")
-    display_name: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="The caller display name to use when the call is created.  May not exceed 256 characters nor contain control characters such as new lines.", alias="displayName")
+    var_from: StrictStr = Field(description="A Bandwidth phone number on your account the call should come from (must be in E.164 format, like `+15555551212`) even if `privacy` is set to true.", alias="from")
+    privacy: Optional[StrictBool] = Field(default=None, description="Hide the calling number. The `displayName` field can be used to customize the displayed name.")
+    display_name: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="The caller display name to use when the call is created.  May not exceed 256 characters nor contain control characters such as new lines. If `privacy` is true, only the following values are valid: `Restricted`, `Anonymous`, `Private`, or `Unavailable`.", alias="displayName")
     uui: Optional[StrictStr] = Field(default=None, description="A comma-separated list of 'User-To-User' headers to be sent in the INVITE when calling a SIP URI. Each value must end with an 'encoding' parameter as described in <a href='https://tools.ietf.org/html/rfc7433'>RFC 7433</a>. Only 'jwt' and 'base64' encodings are allowed. The entire value cannot exceed 350 characters, including parameters and separators.")
     application_id: StrictStr = Field(description="The id of the application associated with the `from` number.", alias="applicationId")
     answer_url: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="The full URL to send the <a href='/docs/voice/webhooks/answer'>Answer</a> event to when the called party answers. This endpoint should return the first <a href='/docs/voice/bxml'>BXML document</a> to be executed in the call.  Must use `https` if specifying `username` and `password`.", alias="answerUrl")
@@ -51,7 +52,7 @@ class CreateCall(BaseModel):
     priority: Optional[Annotated[int, Field(le=5, strict=True, ge=1)]] = Field(default=5, description="The priority of this call over other calls from your account. For example, if during a call your application needs to place a new call and bridge it with the current call, you might want to create the call with priority 1 so that it will be the next call picked off your queue, ahead of other less time sensitive calls. A lower value means higher priority, so a priority 1 call takes precedence over a priority 2 call.")
     tag: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="A custom string that will be sent with all webhooks for this call unless overwritten by a future <a href='/docs/voice/bxml/tag'>`<Tag>`</a> verb or `tag` attribute on another verb, or cleared.  May be cleared by setting `tag=\"\"`  Max length 256 characters.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["to", "from", "displayName", "uui", "applicationId", "answerUrl", "answerMethod", "username", "password", "answerFallbackUrl", "answerFallbackMethod", "fallbackUsername", "fallbackPassword", "disconnectUrl", "disconnectMethod", "callTimeout", "callbackTimeout", "machineDetection", "priority", "tag"]
+    __properties: ClassVar[List[str]] = ["to", "from", "privacy", "displayName", "uui", "applicationId", "answerUrl", "answerMethod", "username", "password", "answerFallbackUrl", "answerFallbackMethod", "fallbackUsername", "fallbackPassword", "disconnectUrl", "disconnectMethod", "callTimeout", "callbackTimeout", "machineDetection", "priority", "tag"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -101,6 +102,11 @@ class CreateCall(BaseModel):
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
+
+        # set to None if privacy (nullable) is None
+        # and model_fields_set contains the field
+        if self.privacy is None and "privacy" in self.model_fields_set:
+            _dict['privacy'] = None
 
         # set to None if display_name (nullable) is None
         # and model_fields_set contains the field
@@ -191,6 +197,7 @@ class CreateCall(BaseModel):
         _obj = cls.model_validate({
             "to": obj.get("to"),
             "from": obj.get("from"),
+            "privacy": obj.get("privacy"),
             "displayName": obj.get("displayName"),
             "uui": obj.get("uui"),
             "applicationId": obj.get("applicationId"),
