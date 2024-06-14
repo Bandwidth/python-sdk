@@ -39,7 +39,7 @@ class TestCreateLookupResponse(unittest.TestCase):
         model = bandwidth.models.create_lookup_response.CreateLookupResponse()  # noqa: E501
         if include_optional :
             return CreateLookupResponse(
-                request_id = '', 
+                request_id = '',
                 status = 'COMPLETE'
             )
         else :

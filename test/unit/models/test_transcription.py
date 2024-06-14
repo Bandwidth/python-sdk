@@ -39,7 +39,7 @@ class TestTranscription(unittest.TestCase):
         model = bandwidth.models.transcription.Transcription()  # noqa: E501
         if include_optional :
             return Transcription(
-                text = 'Nice talking to you, friend!', 
+                text = 'Nice talking to you, friend!',
                 confidence = 0.9
             )
         else :

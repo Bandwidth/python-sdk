@@ -39,7 +39,7 @@ class TestMachineDetectionResult(unittest.TestCase):
         model = bandwidth.models.machine_detection_result.MachineDetectionResult()  # noqa: E501
         if include_optional :
             return MachineDetectionResult(
-                value = 'answering-machine', 
+                value = 'answering-machine',
                 duration = 'PT4.9891287S'
             )
         else :

@@ -39,7 +39,7 @@ class TestDeferredResult(unittest.TestCase):
         model = bandwidth.models.deferred_result.DeferredResult()  # noqa: E501
         if include_optional :
             return DeferredResult(
-                result = None, 
+                result = None,
                 set_or_expired = True
             )
         else :

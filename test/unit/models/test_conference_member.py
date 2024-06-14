@@ -39,11 +39,11 @@ class TestConferenceMember(unittest.TestCase):
         model = bandwidth.models.conference_member.ConferenceMember()  # noqa: E501
         if include_optional :
             return ConferenceMember(
-                call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
-                conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9', 
-                member_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/members/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
-                mute = False, 
-                hold = False, 
+                call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
+                conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9',
+                member_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/members/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
+                mute = False,
+                hold = False,
                 call_ids_to_coach = ["c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"]
             )
         else :

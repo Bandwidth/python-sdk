@@ -39,14 +39,14 @@ class TestLookupResult(unittest.TestCase):
         model = bandwidth.models.lookup_result.LookupResult()  # noqa: E501
         if include_optional :
             return LookupResult(
-                response_code = 0, 
-                message = 'NOERROR', 
-                e_164_format = '+19195551234', 
-                formatted = '(919) 555-1234', 
-                country = 'US', 
-                line_type = 'Mobile', 
-                line_provider = 'Verizon Wireless', 
-                mobile_country_code = '310', 
+                response_code = 0,
+                message = 'NOERROR',
+                e_164_format = '+19195551234',
+                formatted = '(919) 555-1234',
+                country = 'US',
+                line_type = 'Mobile',
+                line_provider = 'Verizon Wireless',
+                mobile_country_code = '310',
                 mobile_network_code = '010'
             )
         else :

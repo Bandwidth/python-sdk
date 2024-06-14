@@ -39,7 +39,7 @@ class TestAccountStatistics(unittest.TestCase):
         model = bandwidth.models.account_statistics.AccountStatistics()  # noqa: E501
         if include_optional :
             return AccountStatistics(
-                current_call_queue_size = 0, 
+                current_call_queue_size = 0,
                 max_call_queue_size = 900
             )
         else :

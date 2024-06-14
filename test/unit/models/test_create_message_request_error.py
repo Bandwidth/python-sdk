@@ -39,11 +39,11 @@ class TestCreateMessageRequestError(unittest.TestCase):
         model = bandwidth.models.create_message_request_error.CreateMessageRequestError()  # noqa: E501
         if include_optional :
             return CreateMessageRequestError(
-                type = '', 
-                description = '', 
+                type = '',
+                description = '',
                 field_errors = [
                     bandwidth.models.field_error.fieldError(
-                        field_name = 'from', 
+                        field_name = 'from',
                         description = ''+invalid' must be replaced with a valid E164 formatted telephone number', )
                     ]
             )

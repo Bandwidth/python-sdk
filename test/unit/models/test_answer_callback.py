@@ -39,21 +39,21 @@ class TestAnswerCallback(unittest.TestCase):
         model = bandwidth.models.answer_callback.AnswerCallback()  # noqa: E501
         if include_optional :
             return AnswerCallback(
-                event_type = 'bridgeComplete', 
-                event_time = '2022-06-17T22:19:40.375Z', 
-                account_id = '920012', 
-                application_id = '04e88489-df02-4e34-a0ee-27a91849555f', 
-                var_from = '+15555555555', 
-                to = '+15555555555', 
-                direction = 'inbound', 
-                call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
-                call_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
-                enqueued_time = '2022-06-17T22:20Z', 
-                start_time = '2022-06-17T22:19:40.375Z', 
-                answer_time = '2022-06-17T22:20Z', 
-                tag = 'exampleTag', 
+                event_type = 'bridgeComplete',
+                event_time = '2022-06-17T22:19:40.375Z',
+                account_id = '920012',
+                application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
+                var_from = '+15555555555',
+                to = '+15555555555',
+                direction = 'inbound',
+                call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
+                call_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
+                enqueued_time = '2022-06-17T22:20Z',
+                start_time = '2022-06-17T22:19:40.375Z',
+                answer_time = '2022-06-17T22:20Z',
+                tag = 'exampleTag',
                 machine_detection_result = bandwidth.models.machine_detection_result.machineDetectionResult(
-                    value = 'answering-machine', 
+                    value = 'answering-machine',
                     duration = 'PT4.9891287S', )
             )
         else :

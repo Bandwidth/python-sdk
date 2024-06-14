@@ -41,7 +41,7 @@ class TestTranscriptionList(unittest.TestCase):
             return TranscriptionList(
                 transcripts = [
                     bandwidth.models.transcription.transcription(
-                        text = 'Nice talking to you, friend!', 
+                        text = 'Nice talking to you, friend!',
                         confidence = 0.9, )
                     ]
             )

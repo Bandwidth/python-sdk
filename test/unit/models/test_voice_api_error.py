@@ -39,8 +39,8 @@ class TestVoiceApiError(unittest.TestCase):
         model = bandwidth.models.voice_api_error.VoiceApiError()  # noqa: E501
         if include_optional :
             return VoiceApiError(
-                type = '', 
-                description = '', 
+                type = '',
+                description = '',
                 id = ''
             )
         else :

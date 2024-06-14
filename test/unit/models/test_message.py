@@ -39,18 +39,18 @@ class TestMessage(unittest.TestCase):
         model = bandwidth.models.message.Message()  # noqa: E501
         if include_optional :
             return Message(
-                id = '1589228074636lm4k2je7j7jklbn2', 
-                owner = '+15554443333', 
-                application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
-                time = '2022-09-14T18:20:16Z', 
-                segment_count = 2, 
-                direction = 'in', 
-                to = ["+15552223333"], 
-                var_from = '+15553332222', 
-                media = ["https://dev.bandwidth.com/images/bandwidth-logo.png"], 
-                text = 'Hello world', 
-                tag = 'custom tag', 
-                priority = 'default', 
+                id = '1589228074636lm4k2je7j7jklbn2',
+                owner = '+15554443333',
+                application_id = '93de2206-9669-4e07-948d-329f4b722ee2',
+                time = '2022-09-14T18:20:16Z',
+                segment_count = 2,
+                direction = 'in',
+                to = ["+15552223333"],
+                var_from = '+15553332222',
+                media = ["https://dev.bandwidth.com/images/bandwidth-logo.png"],
+                text = 'Hello world',
+                tag = 'custom tag',
+                priority = 'default',
                 expiration = '2021-02-01T11:29:18-05:00'
             )
         else :

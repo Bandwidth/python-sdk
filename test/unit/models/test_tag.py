@@ -39,7 +39,7 @@ class TestTag(unittest.TestCase):
         model = bandwidth.models.tag.Tag()  # noqa: E501
         if include_optional :
             return Tag(
-                key = '', 
+                key = '',
                 value = ''
             )
         else :

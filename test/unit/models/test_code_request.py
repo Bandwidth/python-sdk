@@ -39,11 +39,11 @@ class TestCodeRequest(unittest.TestCase):
         model = bandwidth.models.code_request.CodeRequest()  # noqa: E501
         if include_optional :
             return CodeRequest(
-                to = '+19195551234', 
-                var_from = '+19195554321', 
-                application_id = '66fd98ae-ac8d-a00f-7fcd-ba3280aeb9b1', 
-                scope = '2FA', 
-                message = 'Your temporary {NAME} {SCOPE} code is {CODE}', 
+                to = '+19195551234',
+                var_from = '+19195554321',
+                application_id = '66fd98ae-ac8d-a00f-7fcd-ba3280aeb9b1',
+                scope = '2FA',
+                message = 'Your temporary {NAME} {SCOPE} code is {CODE}',
                 digits = 6
             )
         else :

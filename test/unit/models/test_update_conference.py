@@ -39,14 +39,14 @@ class TestUpdateConference(unittest.TestCase):
         model = bandwidth.models.update_conference.UpdateConference()  # noqa: E501
         if include_optional :
             return UpdateConference(
-                status = 'active', 
-                redirect_url = 'https://myServer.example/bandwidth/webhooks/conferenceRedirect', 
-                redirect_method = 'POST', 
-                username = 'mySecretUsername', 
-                password = 'mySecretPassword1!', 
-                redirect_fallback_url = 'https://myFallbackServer.example/bandwidth/webhooks/conferenceRedirect', 
-                redirect_fallback_method = 'POST', 
-                fallback_username = 'mySecretUsername', 
+                status = 'active',
+                redirect_url = 'https://myServer.example/bandwidth/webhooks/conferenceRedirect',
+                redirect_method = 'POST',
+                username = 'mySecretUsername',
+                password = 'mySecretPassword1!',
+                redirect_fallback_url = 'https://myFallbackServer.example/bandwidth/webhooks/conferenceRedirect',
+                redirect_fallback_method = 'POST',
+                fallback_username = 'mySecretUsername',
                 fallback_password = 'mySecretPassword1!'
             )
         else :

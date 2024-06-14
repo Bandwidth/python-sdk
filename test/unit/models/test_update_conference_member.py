@@ -39,8 +39,8 @@ class TestUpdateConferenceMember(unittest.TestCase):
         model = bandwidth.models.update_conference_member.UpdateConferenceMember()  # noqa: E501
         if include_optional :
             return UpdateConferenceMember(
-                mute = False, 
-                hold = False, 
+                mute = False,
+                hold = False,
                 call_ids_to_coach = ["c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"]
             )
         else :

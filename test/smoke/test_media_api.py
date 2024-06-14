@@ -104,22 +104,22 @@ class TestMedia(unittest.TestCase):
         """
         api_response_with_http_info = self.api_instance.delete_media_with_http_info(
             self.account_id, self.media_id)
-        
+
         logging.debug(api_response_with_http_info)
         assert_that(api_response_with_http_info.status_code, equal_to(204))
 
         # returns void
         self.api_instance.delete_media(self.account_id, self.media_id)
-    
+
     def _steps(self):
         call_order = ['uploadMedia', 'listMedia', 'getMedia', 'deleteMedia']
-        for name in call_order: 
+        for name in call_order:
             yield name, getattr(self, name)
 
     def test_steps(self) -> None:
         """Test each function from _steps.call_order in specified order
         """
-        
+
         for name, step in self._steps():
             step()
 

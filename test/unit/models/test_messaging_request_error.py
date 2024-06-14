@@ -39,7 +39,7 @@ class TestMessagingRequestError(unittest.TestCase):
         model = bandwidth.models.messaging_request_error.MessagingRequestError()  # noqa: E501
         if include_optional :
             return MessagingRequestError(
-                type = '', 
+                type = '',
                 description = ''
             )
         else :

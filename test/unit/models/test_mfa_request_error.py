@@ -39,7 +39,7 @@ class TestMfaRequestError(unittest.TestCase):
         model = bandwidth.models.mfa_request_error.MfaRequestError()  # noqa: E501
         if include_optional :
             return MfaRequestError(
-                error = '400 Request is malformed or invalid', 
+                error = '400 Request is malformed or invalid',
                 request_id = '354cc8a3-6701-461e-8fa7-8671703dd898'
             )
         else :

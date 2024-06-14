@@ -39,8 +39,8 @@ class TestMedia(unittest.TestCase):
         model = bandwidth.models.media.Media()  # noqa: E501
         if include_optional :
             return Media(
-                content = '', 
-                content_length = 56, 
+                content = '',
+                content_length = 56,
                 media_name = ''
             )
         else :

@@ -39,13 +39,13 @@ class TestMessageRequest(unittest.TestCase):
         model = bandwidth.models.message_request.MessageRequest()  # noqa: E501
         if include_optional :
             return MessageRequest(
-                application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
-                to = ["+15554443333","+15552223333"], 
-                var_from = '+15551113333', 
-                text = 'Hello world', 
-                media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"], 
-                tag = 'custom string', 
-                priority = 'default', 
+                application_id = '93de2206-9669-4e07-948d-329f4b722ee2',
+                to = ["+15554443333","+15552223333"],
+                var_from = '+15551113333',
+                text = 'Hello world',
+                media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
+                tag = 'custom string',
+                priority = 'default',
                 expiration = '2021-02-01T11:29:18-05:00'
             )
         else :

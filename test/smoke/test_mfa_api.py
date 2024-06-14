@@ -79,7 +79,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         )
 
     def testSuccessfulMfaGenerateMessagingCodeRequest(self) -> None:
-        """Test a successful MFA messaging code request 
+        """Test a successful MFA messaging code request
         """
         api_response_with_http_info = self.api_instance.generate_messaging_code_with_http_info(
             self.account_id, self.messaging_code_request

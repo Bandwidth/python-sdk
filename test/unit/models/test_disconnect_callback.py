@@ -39,22 +39,22 @@ class TestDisconnectCallback(unittest.TestCase):
         model = bandwidth.models.disconnect_callback.DisconnectCallback()  # noqa: E501
         if include_optional :
             return DisconnectCallback(
-                event_type = 'bridgeComplete', 
-                event_time = '2022-06-17T22:19:40.375Z', 
-                account_id = '920012', 
-                application_id = '04e88489-df02-4e34-a0ee-27a91849555f', 
-                var_from = '+15555555555', 
-                to = '+15555555555', 
-                call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
-                direction = 'inbound', 
-                call_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
-                enqueued_time = '2022-06-17T22:20Z', 
-                start_time = '2022-06-17T22:19:40.375Z', 
-                answer_time = '2022-06-17T22:20Z', 
-                end_time = '2022-06-17T22:20Z', 
-                cause = 'busy', 
-                error_message = 'Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call', 
-                error_id = '4642074b-7b58-478b-96e4-3a60955c6765', 
+                event_type = 'bridgeComplete',
+                event_time = '2022-06-17T22:19:40.375Z',
+                account_id = '920012',
+                application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
+                var_from = '+15555555555',
+                to = '+15555555555',
+                call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
+                direction = 'inbound',
+                call_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
+                enqueued_time = '2022-06-17T22:20Z',
+                start_time = '2022-06-17T22:19:40.375Z',
+                answer_time = '2022-06-17T22:20Z',
+                end_time = '2022-06-17T22:20Z',
+                cause = 'busy',
+                error_message = 'Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call',
+                error_id = '4642074b-7b58-478b-96e4-3a60955c6765',
                 tag = 'exampleTag'
             )
         else :

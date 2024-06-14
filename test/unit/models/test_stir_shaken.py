@@ -39,8 +39,8 @@ class TestStirShaken(unittest.TestCase):
         model = bandwidth.models.stir_shaken.StirShaken()  # noqa: E501
         if include_optional :
             return StirShaken(
-                verstat = 'Tn-Verification-Passed', 
-                attestation_indicator = 'A', 
+                verstat = 'Tn-Verification-Passed',
+                attestation_indicator = 'A',
                 originating_id = '99759086-1335-11ed-9bcf-5f7d464e91af'
             )
         else :

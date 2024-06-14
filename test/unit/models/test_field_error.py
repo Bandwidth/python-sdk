@@ -39,7 +39,7 @@ class TestFieldError(unittest.TestCase):
         model = bandwidth.models.field_error.FieldError()  # noqa: E501
         if include_optional :
             return FieldError(
-                field_name = 'from', 
+                field_name = 'from',
                 description = ''+invalid' must be replaced with a valid E164 formatted telephone number'
             )
         else :

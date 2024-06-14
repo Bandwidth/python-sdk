@@ -1,5 +1,5 @@
 import os
-    
+
 try:
     BW_USERNAME = os.environ['BW_USERNAME']
     BW_PASSWORD = os.environ['BW_PASSWORD']

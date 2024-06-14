@@ -39,9 +39,9 @@ class TestVerifyCodeRequest(unittest.TestCase):
         model = bandwidth.models.verify_code_request.VerifyCodeRequest()  # noqa: E501
         if include_optional :
             return VerifyCodeRequest(
-                to = '+19195551234', 
-                scope = '2FA', 
-                expiration_time_in_minutes = 3, 
+                to = '+19195551234',
+                scope = '2FA',
+                expiration_time_in_minutes = 3,
                 code = '123456'
             )
         else :

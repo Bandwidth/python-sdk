@@ -39,9 +39,9 @@ class TestTranscriptionMetadata(unittest.TestCase):
         model = bandwidth.models.transcription_metadata.TranscriptionMetadata()  # noqa: E501
         if include_optional :
             return TranscriptionMetadata(
-                id = 't-387bd648-18f3-4823-9d16-746bca0003c9', 
-                status = 'completed', 
-                completed_time = '2022-06-13T18:46:29.715Z', 
+                id = 't-387bd648-18f3-4823-9d16-746bca0003c9',
+                status = 'completed',
+                completed_time = '2022-06-13T18:46:29.715Z',
                 url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/recordings/r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/transcription'
             )
         else :

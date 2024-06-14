@@ -39,12 +39,12 @@ class TestTranscribeRecording(unittest.TestCase):
         model = bandwidth.models.transcribe_recording.TranscribeRecording()  # noqa: E501
         if include_optional :
             return TranscribeRecording(
-                callback_url = 'https://myServer.example/bandwidth/webhooks/transcriptionAvailable', 
-                callback_method = 'POST', 
-                username = 'mySecretUsername', 
-                password = 'mySecretPassword1!', 
-                tag = 'exampleTag', 
-                callback_timeout = 5.5, 
+                callback_url = 'https://myServer.example/bandwidth/webhooks/transcriptionAvailable',
+                callback_method = 'POST',
+                username = 'mySecretUsername',
+                password = 'mySecretPassword1!',
+                tag = 'exampleTag',
+                callback_timeout = 5.5,
                 detect_language = True
             )
         else :

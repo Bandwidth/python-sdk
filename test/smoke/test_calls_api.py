@@ -43,8 +43,8 @@ class CallsIntegration(unittest.TestCase):
              password='bad_password'
         )
         unauthorized_api_client = bandwidth.ApiClient(unauthorizedConfiguration)
-        self.unauthorized_api_instance = calls_api.CallsApi(unauthorized_api_client)            
-        
+        self.unauthorized_api_instance = calls_api.CallsApi(unauthorized_api_client)
+
         # Forbidden API Client
 
         forbiddenConfiguration = bandwidth.Configuration(
@@ -52,12 +52,12 @@ class CallsIntegration(unittest.TestCase):
             password=FORBIDDEN_PASSWORD
         )
         forbidden_api_client = bandwidth.ApiClient(forbiddenConfiguration)
-        self.forbidden_api_instance = calls_api.CallsApi(forbidden_api_client)        
+        self.forbidden_api_instance = calls_api.CallsApi(forbidden_api_client)
         self.account_id = BW_ACCOUNT_ID
         self.createCallBody = CreateCall(
-            to=USER_NUMBER, 
-            var_from=BW_NUMBER, 
-            application_id=BW_VOICE_APPLICATION_ID, 
+            to=USER_NUMBER,
+            var_from=BW_NUMBER,
+            application_id=BW_VOICE_APPLICATION_ID,
             answer_url=BASE_CALLBACK_URL,
             answer_method=CallbackMethodEnum("POST"),
             username="mySecretUsername",
@@ -100,7 +100,7 @@ class CallsIntegration(unittest.TestCase):
         self.TEST_SLEEP_LONG = 15
 
     def tearDown(self):
-        callCleanup(self)             
+        callCleanup(self)
 
     def assertApiException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
         """Validates that common API exceptions, (401, 403, and 404) are properly formatted
@@ -140,10 +140,10 @@ class CallsIntegration(unittest.TestCase):
         """Validate a bad (400) request
         """
         call_body = CreateCall(to="invalidNumberFormat", var_from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=BASE_CALLBACK_URL)
-        
+
         with self.assertRaises(ApiException) as context:
             self.calls_api_instance.create_call_with_http_info(BW_ACCOUNT_ID, call_body)
-            
+
         assert_that(context.exception.status, 400)
 
     def test_create_call_unauthorized(self) -> None:
@@ -200,20 +200,20 @@ class CallsIntegration(unittest.TestCase):
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId)
 
-        self.assertApiException(context, ForbiddenException, 403)  
+        self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_call_state_not_found(self):
         """Validate an invalid Get Call State Request due to a bad callID
         """
         with self.assertRaises(NotFoundException) as context:
             self.calls_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId)
-        
+
         self.assertApiException(context, NotFoundException, 404)
 
     def test_update_call(self):
         """Validate an UpdateCall Request
         """
-        time.sleep(self.TEST_SLEEP)            
+        time.sleep(self.TEST_SLEEP)
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody)
         call_id = create_call_response.call_id
 
@@ -241,7 +241,7 @@ class CallsIntegration(unittest.TestCase):
         # hanging-up the call
         update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
         assert_that(update_call_response.status_code, 200)
-    
+
     def test_update_call_bad_request(self):
         """Validate a bad (400) update call request
         """
@@ -251,14 +251,14 @@ class CallsIntegration(unittest.TestCase):
         #Adding the call to the self.callIdArray
         self.callIdArray.append(call_id)
 
-        time.sleep(self.TEST_SLEEP)        
+        time.sleep(self.TEST_SLEEP)
 
         with self.assertRaises(ApiException) as context:
             badRequestBody = UpdateCall(states="badRequest")
             self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, badRequestBody)
-            
+
         assert_that(context.exception.status, 400)
-                
+
         # hanging-up the call
         time.sleep(self.TEST_SLEEP)
         update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
@@ -281,7 +281,7 @@ class CallsIntegration(unittest.TestCase):
         #Adding the call to the self.callIdArray
         self.callIdArray.append(call_id)
 
-        time.sleep(self.TEST_SLEEP)        
+        time.sleep(self.TEST_SLEEP)
 
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.update_call(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
@@ -298,7 +298,7 @@ class CallsIntegration(unittest.TestCase):
         """
         with self.assertRaises(NotFoundException) as context:
             self.calls_api_instance.update_call(BW_ACCOUNT_ID, self.testCallId, self.updateStateCompleted)
-        
+
         self.assertApiException(context, NotFoundException, 404)
 
     def test_update_call_bxml(self):
@@ -313,13 +313,13 @@ class CallsIntegration(unittest.TestCase):
         time.sleep(self.TEST_SLEEP)
         update_call_bxml_response: ApiResponse = self.calls_api_instance.update_call_bxml_with_http_info(BW_ACCOUNT_ID, call_id, self.testBxmlBody)
         assert_that(update_call_bxml_response.status_code, 204)
-        
-        time.sleep(self.TEST_SLEEP)  
+
+        time.sleep(self.TEST_SLEEP)
         # hanging-up the call
         update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
         assert_that(update_call_response.status_code, 200)
 
-    def test_update_call_bxml_bad_request(self):    
+    def test_update_call_bxml_bad_request(self):
         """Validate a bad (400) update call bxml request
         """
         create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody)
@@ -328,16 +328,16 @@ class CallsIntegration(unittest.TestCase):
         #Adding the call to the self.callIdArray
         self.callIdArray.append(call_id)
 
-        time.sleep(self.TEST_SLEEP)        
+        time.sleep(self.TEST_SLEEP)
 
         invalidBxmlBody = "invalidBXML"
 
         with self.assertRaises(ApiException) as context:
             self.calls_api_instance.update_call_bxml_with_http_info(BW_ACCOUNT_ID, call_id, invalidBxmlBody)
-            
+
         assert_that(context.exception.status, 400)
 
-        time.sleep(self.TEST_SLEEP)  
+        time.sleep(self.TEST_SLEEP)
         # hanging-up the call
         update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
         assert_that(update_call_response.status_code, 200)
@@ -361,7 +361,7 @@ class CallsIntegration(unittest.TestCase):
         #Adding the call to the self.callIdArray
         self.callIdArray.append(call_id)
 
-        time.sleep(self.TEST_SLEEP)        
+        time.sleep(self.TEST_SLEEP)
         with self.assertRaises(ForbiddenException) as context:
             self.forbidden_api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, self.testBxmlBody)
 
@@ -373,8 +373,8 @@ class CallsIntegration(unittest.TestCase):
         """
         with self.assertRaises(NotFoundException) as context:
             self.calls_api_instance.update_call_bxml(BW_ACCOUNT_ID, self.testCallId, self.testBxmlBody)
-        
-        self.assertApiException(context, NotFoundException, 404)               
+
+        self.assertApiException(context, NotFoundException, 404)
 
 if __name__ == '__main__':
     unittest.main()

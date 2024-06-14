@@ -39,17 +39,17 @@ class TestMessageFailedCallbackMessage(unittest.TestCase):
         model = bandwidth.models.message_failed_callback_message.MessageFailedCallbackMessage()  # noqa: E501
         if include_optional :
             return MessageFailedCallbackMessage(
-                id = '1661365814859loidf7mcwd4qacn7', 
-                owner = '+15553332222', 
-                application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
-                time = '2016-09-14T18:20:16Z', 
-                segment_count = 1, 
-                direction = 'in', 
-                to = ["+15552223333"], 
-                var_from = '+15553332222', 
-                text = 'Hello world', 
-                tag = 'custom string', 
-                media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"], 
+                id = '1661365814859loidf7mcwd4qacn7',
+                owner = '+15553332222',
+                application_id = '93de2206-9669-4e07-948d-329f4b722ee2',
+                time = '2016-09-14T18:20:16Z',
+                segment_count = 1,
+                direction = 'in',
+                to = ["+15552223333"],
+                var_from = '+15553332222',
+                text = 'Hello world',
+                tag = 'custom string',
+                media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
                 priority = 'default'
             )
         else :

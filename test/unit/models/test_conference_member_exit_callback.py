@@ -39,13 +39,13 @@ class TestConferenceMemberExitCallback(unittest.TestCase):
         model = bandwidth.models.conference_member_exit_callback.ConferenceMemberExitCallback()  # noqa: E501
         if include_optional :
             return ConferenceMemberExitCallback(
-                event_type = 'bridgeComplete', 
-                event_time = '2022-06-17T22:19:40.375Z', 
-                conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9', 
-                name = 'my-conference-name', 
-                var_from = '+15555555555', 
-                to = '+15555555555', 
-                call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
+                event_type = 'bridgeComplete',
+                event_time = '2022-06-17T22:19:40.375Z',
+                conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9',
+                name = 'my-conference-name',
+                var_from = '+15555555555',
+                to = '+15555555555',
+                call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 tag = 'exampleTag'
             )
         else :

@@ -39,15 +39,15 @@ class TestUpdateCall(unittest.TestCase):
         model = bandwidth.models.update_call.UpdateCall()  # noqa: E501
         if include_optional :
             return UpdateCall(
-                state = 'active', 
-                redirect_url = 'https://myServer.example/bandwidth/webhooks/redirect', 
-                redirect_method = 'POST', 
-                username = 'mySecretUsername', 
-                password = 'mySecretPassword1!', 
-                redirect_fallback_url = 'https://myFallbackServer.example/bandwidth/webhooks/redirect', 
-                redirect_fallback_method = 'POST', 
-                fallback_username = 'mySecretUsername', 
-                fallback_password = 'mySecretPassword1!', 
+                state = 'active',
+                redirect_url = 'https://myServer.example/bandwidth/webhooks/redirect',
+                redirect_method = 'POST',
+                username = 'mySecretUsername',
+                password = 'mySecretPassword1!',
+                redirect_fallback_url = 'https://myFallbackServer.example/bandwidth/webhooks/redirect',
+                redirect_fallback_method = 'POST',
+                fallback_username = 'mySecretUsername',
+                fallback_password = 'mySecretPassword1!',
                 tag = 'My Custom Tag'
             )
         else :

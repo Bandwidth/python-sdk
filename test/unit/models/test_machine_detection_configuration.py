@@ -39,20 +39,20 @@ class TestMachineDetectionConfiguration(unittest.TestCase):
         model = bandwidth.models.machine_detection_configuration.MachineDetectionConfiguration()  # noqa: E501
         if include_optional :
             return MachineDetectionConfiguration(
-                mode = 'async', 
-                detection_timeout = 15, 
-                silence_timeout = 10, 
-                speech_threshold = 10, 
-                speech_end_threshold = 5, 
-                machine_speech_end_threshold = 5, 
-                delay_result = False, 
-                callback_url = 'https://myServer.example/bandwidth/webhooks/machineDetectionComplete', 
-                callback_method = 'POST', 
-                username = 'mySecretUsername', 
-                password = 'mySecretPassword1!', 
-                fallback_url = 'https://myFallbackServer.example/bandwidth/webhooks/machineDetectionComplete', 
-                fallback_method = 'POST', 
-                fallback_username = 'mySecretUsername', 
+                mode = 'async',
+                detection_timeout = 15,
+                silence_timeout = 10,
+                speech_threshold = 10,
+                speech_end_threshold = 5,
+                machine_speech_end_threshold = 5,
+                delay_result = False,
+                callback_url = 'https://myServer.example/bandwidth/webhooks/machineDetectionComplete',
+                callback_method = 'POST',
+                username = 'mySecretUsername',
+                password = 'mySecretPassword1!',
+                fallback_url = 'https://myFallbackServer.example/bandwidth/webhooks/machineDetectionComplete',
+                fallback_method = 'POST',
+                fallback_username = 'mySecretUsername',
                 fallback_password = 'mySecretPassword1!'
             )
         else :

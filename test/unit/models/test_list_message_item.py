@@ -39,22 +39,22 @@ class TestListMessageItem(unittest.TestCase):
         model = bandwidth.models.list_message_item.ListMessageItem()  # noqa: E501
         if include_optional :
             return ListMessageItem(
-                message_id = '1589228074636lm4k2je7j7jklbn2', 
-                account_id = '9900000', 
-                source_tn = '+15554443333', 
-                destination_tn = '+15554442222', 
-                message_status = 'RECEIVED', 
-                message_direction = 'INBOUND', 
-                message_type = 'sms', 
-                segment_count = 1, 
-                error_code = 9902, 
-                receive_time = '2020-04-07T14:03:07Z', 
-                carrier_name = 'other', 
-                message_size = 27, 
-                message_length = 18, 
-                attachment_count = 1, 
-                recipient_count = 1, 
-                campaign_class = 'T', 
+                message_id = '1589228074636lm4k2je7j7jklbn2',
+                account_id = '9900000',
+                source_tn = '+15554443333',
+                destination_tn = '+15554442222',
+                message_status = 'RECEIVED',
+                message_direction = 'INBOUND',
+                message_type = 'sms',
+                segment_count = 1,
+                error_code = 9902,
+                receive_time = '2020-04-07T14:03:07Z',
+                carrier_name = 'other',
+                message_size = 27,
+                message_length = 18,
+                attachment_count = 1,
+                recipient_count = 1,
+                campaign_class = 'T',
                 campaign_id = 'CJEUMDK'
             )
         else :

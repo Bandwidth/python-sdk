@@ -39,9 +39,9 @@ class TestPageInfo(unittest.TestCase):
         model = bandwidth.models.page_info.PageInfo()  # noqa: E501
         if include_optional :
             return PageInfo(
-                prev_page = 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&nextPage=DLAPE902', 
-                next_page = 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&prevPage=GL83PD3C', 
-                prev_page_token = 'DLAPE902', 
+                prev_page = 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&nextPage=DLAPE902',
+                next_page = 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&prevPage=GL83PD3C',
+                prev_page_token = 'DLAPE902',
                 next_page_token = 'GL83PD3C'
             )
         else :

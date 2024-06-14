@@ -39,12 +39,12 @@ class TestDiversion(unittest.TestCase):
         model = bandwidth.models.diversion.Diversion()  # noqa: E501
         if include_optional :
             return Diversion(
-                reason = 'unavailable', 
-                privacy = 'off', 
-                screen = 'no', 
-                counter = '2', 
-                limit = '3', 
-                unknown = 'unknownValue', 
+                reason = 'unavailable',
+                privacy = 'off',
+                screen = 'no',
+                counter = '2',
+                limit = '3',
+                unknown = 'unknownValue',
                 orig_to = '+15558884444'
             )
         else :

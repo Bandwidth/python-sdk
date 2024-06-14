@@ -39,10 +39,10 @@ class TestConferenceCompletedCallback(unittest.TestCase):
         model = bandwidth.models.conference_completed_callback.ConferenceCompletedCallback()  # noqa: E501
         if include_optional :
             return ConferenceCompletedCallback(
-                event_type = 'bridgeComplete', 
-                event_time = '2022-06-17T22:19:40.375Z', 
-                conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9', 
-                name = 'my-conference-name', 
+                event_type = 'bridgeComplete',
+                event_time = '2022-06-17T22:19:40.375Z',
+                conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9',
+                name = 'my-conference-name',
                 tag = 'exampleTag'
             )
         else :
