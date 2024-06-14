@@ -37,7 +37,6 @@ env:
     MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_IDLE_NUMBER }}
     MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
     MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
-    BW_NUMBER_PROVIDER: ${{ secrets.BW_NUMBER_PROVIDER }}
 
 jobs:
     test:
