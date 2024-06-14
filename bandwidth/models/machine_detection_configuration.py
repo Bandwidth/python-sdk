@@ -28,7 +28,7 @@ from typing_extensions import Self
 
 class MachineDetectionConfiguration(BaseModel):
     """
-    The machine detection request used to perform <a href='/docs/voice/guides/machineDetection'>machine detection</a> on the call.
+    The machine detection request used to perform <a href='/docs/voice/guides/machineDetection'>machine detection</a> on the call. Currently, there is an issue where decimal values are not getting processed correctly. Please use whole number values. We are working to resolve this issue. Please contact Bandwidth Support if you need more information.
     """ # noqa: E501
     mode: Optional[MachineDetectionModeEnum] = None
     detection_timeout: Optional[Union[StrictFloat, StrictInt]] = Field(default=15, description="The timeout used for the whole operation, in seconds. If no result is determined in this period, a callback with a `timeout` result is sent.", alias="detectionTimeout")

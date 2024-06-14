@@ -18,6 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
+from typing import Optional
 from typing_extensions import Annotated
 from bandwidth.models.call_state import CallState
 from bandwidth.models.create_call import CreateCall
@@ -640,6 +641,410 @@ class CallsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/accounts/{accountId}/calls/{callId}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def list_calls(
+        self,
+        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
+        to: Annotated[Optional[StrictStr], Field(description="Filter results by the `to` field.")] = None,
+        var_from: Annotated[Optional[StrictStr], Field(description="Filter results by the `from` field.")] = None,
+        min_start_time: Annotated[Optional[StrictStr], Field(description="Filter results to calls which have a `startTime` after or including `minStartTime` (in ISO8601 format).")] = None,
+        max_start_time: Annotated[Optional[StrictStr], Field(description="Filter results to calls which have a `startTime` before or including `maxStartTime` (in ISO8601 format).")] = None,
+        disconnect_cause: Annotated[Optional[StrictStr], Field(description="Filter results to calls with specified call Disconnect Cause.")] = None,
+        page_size: Annotated[Optional[Annotated[int, Field(le=10000, strict=True, ge=1)]], Field(description="Specifies the max number of calls that will be returned.")] = None,
+        page_token: Annotated[Optional[StrictStr], Field(description="Not intended for explicit use. To use pagination, follow the links in the `Link` header of the response, as indicated in the endpoint description.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
+    ) -> List[CallState]:
+        """Get Calls
+
+        Returns a max of 10000 calls, sorted by `createdTime` from oldest to newest.  **NOTE:** If the number of calls in the account is bigger than `pageSize`, a `Link` header (with format `<{url}>; rel=\"next\"`) will be returned in the response. The url can be used to retrieve the next page of call records. Also, call information is kept for 7 days after the calls are hung up. If you attempt to retrieve information for a call that is older than 7 days, you will get an empty array [] in response.
+
+        :param account_id: Your Bandwidth Account ID. (required)
+        :type account_id: str
+        :param to: Filter results by the `to` field.
+        :type to: str
+        :param var_from: Filter results by the `from` field.
+        :type var_from: str
+        :param min_start_time: Filter results to calls which have a `startTime` after or including `minStartTime` (in ISO8601 format).
+        :type min_start_time: str
+        :param max_start_time: Filter results to calls which have a `startTime` before or including `maxStartTime` (in ISO8601 format).
+        :type max_start_time: str
+        :param disconnect_cause: Filter results to calls with specified call Disconnect Cause.
+        :type disconnect_cause: str
+        :param page_size: Specifies the max number of calls that will be returned.
+        :type page_size: int
+        :param page_token: Not intended for explicit use. To use pagination, follow the links in the `Link` header of the response, as indicated in the endpoint description.
+        :type page_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_calls_serialize(
+            account_id=account_id,
+            to=to,
+            var_from=var_from,
+            min_start_time=min_start_time,
+            max_start_time=max_start_time,
+            disconnect_cause=disconnect_cause,
+            page_size=page_size,
+            page_token=page_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[CallState]",
+            '400': "VoiceApiError",
+            '401': "VoiceApiError",
+            '403': "VoiceApiError",
+            '404': "VoiceApiError",
+            '405': "VoiceApiError",
+            '415': "VoiceApiError",
+            '429': "VoiceApiError",
+            '500': "VoiceApiError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def list_calls_with_http_info(
+        self,
+        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
+        to: Annotated[Optional[StrictStr], Field(description="Filter results by the `to` field.")] = None,
+        var_from: Annotated[Optional[StrictStr], Field(description="Filter results by the `from` field.")] = None,
+        min_start_time: Annotated[Optional[StrictStr], Field(description="Filter results to calls which have a `startTime` after or including `minStartTime` (in ISO8601 format).")] = None,
+        max_start_time: Annotated[Optional[StrictStr], Field(description="Filter results to calls which have a `startTime` before or including `maxStartTime` (in ISO8601 format).")] = None,
+        disconnect_cause: Annotated[Optional[StrictStr], Field(description="Filter results to calls with specified call Disconnect Cause.")] = None,
+        page_size: Annotated[Optional[Annotated[int, Field(le=10000, strict=True, ge=1)]], Field(description="Specifies the max number of calls that will be returned.")] = None,
+        page_token: Annotated[Optional[StrictStr], Field(description="Not intended for explicit use. To use pagination, follow the links in the `Link` header of the response, as indicated in the endpoint description.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
+    ) -> ApiResponse[List[CallState]]:
+        """Get Calls
+
+        Returns a max of 10000 calls, sorted by `createdTime` from oldest to newest.  **NOTE:** If the number of calls in the account is bigger than `pageSize`, a `Link` header (with format `<{url}>; rel=\"next\"`) will be returned in the response. The url can be used to retrieve the next page of call records. Also, call information is kept for 7 days after the calls are hung up. If you attempt to retrieve information for a call that is older than 7 days, you will get an empty array [] in response.
+
+        :param account_id: Your Bandwidth Account ID. (required)
+        :type account_id: str
+        :param to: Filter results by the `to` field.
+        :type to: str
+        :param var_from: Filter results by the `from` field.
+        :type var_from: str
+        :param min_start_time: Filter results to calls which have a `startTime` after or including `minStartTime` (in ISO8601 format).
+        :type min_start_time: str
+        :param max_start_time: Filter results to calls which have a `startTime` before or including `maxStartTime` (in ISO8601 format).
+        :type max_start_time: str
+        :param disconnect_cause: Filter results to calls with specified call Disconnect Cause.
+        :type disconnect_cause: str
+        :param page_size: Specifies the max number of calls that will be returned.
+        :type page_size: int
+        :param page_token: Not intended for explicit use. To use pagination, follow the links in the `Link` header of the response, as indicated in the endpoint description.
+        :type page_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_calls_serialize(
+            account_id=account_id,
+            to=to,
+            var_from=var_from,
+            min_start_time=min_start_time,
+            max_start_time=max_start_time,
+            disconnect_cause=disconnect_cause,
+            page_size=page_size,
+            page_token=page_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[CallState]",
+            '400': "VoiceApiError",
+            '401': "VoiceApiError",
+            '403': "VoiceApiError",
+            '404': "VoiceApiError",
+            '405': "VoiceApiError",
+            '415': "VoiceApiError",
+            '429': "VoiceApiError",
+            '500': "VoiceApiError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def list_calls_without_preload_content(
+        self,
+        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
+        to: Annotated[Optional[StrictStr], Field(description="Filter results by the `to` field.")] = None,
+        var_from: Annotated[Optional[StrictStr], Field(description="Filter results by the `from` field.")] = None,
+        min_start_time: Annotated[Optional[StrictStr], Field(description="Filter results to calls which have a `startTime` after or including `minStartTime` (in ISO8601 format).")] = None,
+        max_start_time: Annotated[Optional[StrictStr], Field(description="Filter results to calls which have a `startTime` before or including `maxStartTime` (in ISO8601 format).")] = None,
+        disconnect_cause: Annotated[Optional[StrictStr], Field(description="Filter results to calls with specified call Disconnect Cause.")] = None,
+        page_size: Annotated[Optional[Annotated[int, Field(le=10000, strict=True, ge=1)]], Field(description="Specifies the max number of calls that will be returned.")] = None,
+        page_token: Annotated[Optional[StrictStr], Field(description="Not intended for explicit use. To use pagination, follow the links in the `Link` header of the response, as indicated in the endpoint description.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
+    ) -> RESTResponseType:
+        """Get Calls
+
+        Returns a max of 10000 calls, sorted by `createdTime` from oldest to newest.  **NOTE:** If the number of calls in the account is bigger than `pageSize`, a `Link` header (with format `<{url}>; rel=\"next\"`) will be returned in the response. The url can be used to retrieve the next page of call records. Also, call information is kept for 7 days after the calls are hung up. If you attempt to retrieve information for a call that is older than 7 days, you will get an empty array [] in response.
+
+        :param account_id: Your Bandwidth Account ID. (required)
+        :type account_id: str
+        :param to: Filter results by the `to` field.
+        :type to: str
+        :param var_from: Filter results by the `from` field.
+        :type var_from: str
+        :param min_start_time: Filter results to calls which have a `startTime` after or including `minStartTime` (in ISO8601 format).
+        :type min_start_time: str
+        :param max_start_time: Filter results to calls which have a `startTime` before or including `maxStartTime` (in ISO8601 format).
+        :type max_start_time: str
+        :param disconnect_cause: Filter results to calls with specified call Disconnect Cause.
+        :type disconnect_cause: str
+        :param page_size: Specifies the max number of calls that will be returned.
+        :type page_size: int
+        :param page_token: Not intended for explicit use. To use pagination, follow the links in the `Link` header of the response, as indicated in the endpoint description.
+        :type page_token: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._list_calls_serialize(
+            account_id=account_id,
+            to=to,
+            var_from=var_from,
+            min_start_time=min_start_time,
+            max_start_time=max_start_time,
+            disconnect_cause=disconnect_cause,
+            page_size=page_size,
+            page_token=page_token,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "List[CallState]",
+            '400': "VoiceApiError",
+            '401': "VoiceApiError",
+            '403': "VoiceApiError",
+            '404': "VoiceApiError",
+            '405': "VoiceApiError",
+            '415': "VoiceApiError",
+            '429': "VoiceApiError",
+            '500': "VoiceApiError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _list_calls_serialize(
+        self,
+        account_id,
+        to,
+        var_from,
+        min_start_time,
+        max_start_time,
+        disconnect_cause,
+        page_size,
+        page_token,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _hosts = [
+            'https://voice.bandwidth.com/api/v2'
+        ]
+        _host = _hosts[_host_index]
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, str] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if account_id is not None:
+            _path_params['accountId'] = account_id
+        # process the query parameters
+        if to is not None:
+            
+            _query_params.append(('to', to))
+            
+        if var_from is not None:
+            
+            _query_params.append(('from', var_from))
+            
+        if min_start_time is not None:
+            
+            _query_params.append(('minStartTime', min_start_time))
+            
+        if max_start_time is not None:
+            
+            _query_params.append(('maxStartTime', max_start_time))
+            
+        if disconnect_cause is not None:
+            
+            _query_params.append(('disconnectCause', disconnect_cause))
+            
+        if page_size is not None:
+            
+            _query_params.append(('pageSize', page_size))
+            
+        if page_token is not None:
+            
+            _query_params.append(('pageToken', page_token))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'Basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/accounts/{accountId}/calls',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

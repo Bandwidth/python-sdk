@@ -4,105 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**delete_call_transcription**](RecordingsApi.md#delete_call_transcription) | **DELETE** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription | Delete Transcription
 [**delete_recording**](RecordingsApi.md#delete_recording) | **DELETE** /accounts/{accountId}/calls/{callId}/recordings/{recordingId} | Delete Recording
 [**delete_recording_media**](RecordingsApi.md#delete_recording_media) | **DELETE** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media | Delete Recording Media
+[**delete_recording_transcription**](RecordingsApi.md#delete_recording_transcription) | **DELETE** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription | Delete Transcription
 [**download_call_recording**](RecordingsApi.md#download_call_recording) | **GET** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media | Download Recording
 [**get_call_recording**](RecordingsApi.md#get_call_recording) | **GET** /accounts/{accountId}/calls/{callId}/recordings/{recordingId} | Get Call Recording
-[**get_call_transcription**](RecordingsApi.md#get_call_transcription) | **GET** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription | Get Transcription
+[**get_recording_transcription**](RecordingsApi.md#get_recording_transcription) | **GET** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription | Get Transcription
 [**list_account_call_recordings**](RecordingsApi.md#list_account_call_recordings) | **GET** /accounts/{accountId}/recordings | Get Call Recordings
 [**list_call_recordings**](RecordingsApi.md#list_call_recordings) | **GET** /accounts/{accountId}/calls/{callId}/recordings | List Call Recordings
 [**transcribe_call_recording**](RecordingsApi.md#transcribe_call_recording) | **POST** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription | Create Transcription Request
 [**update_call_recording_state**](RecordingsApi.md#update_call_recording_state) | **PUT** /accounts/{accountId}/calls/{callId}/recording | Update Recording
 
-
-# **delete_call_transcription**
-> delete_call_transcription(account_id, call_id, recording_id)
-
-Delete Transcription
-
-Deletes the specified recording's transcription.  Note: After the deletion is requested and a `204` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
-
-### Example
-
-* Basic Authentication (Basic):
-
-```python
-import bandwidth
-from bandwidth.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = bandwidth.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
-
-# Enter a context with an instance of the API client
-with bandwidth.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = bandwidth.RecordingsApi(api_client)
-    account_id = '9900000' # str | Your Bandwidth Account ID.
-    call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | Programmable Voice API Call ID.
-    recording_id = 'r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | Programmable Voice API Recording ID.
-
-    try:
-        # Delete Transcription
-        api_instance.delete_call_transcription(account_id, call_id, recording_id)
-    except Exception as e:
-        print("Exception when calling RecordingsApi->delete_call_transcription: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID. | 
- **call_id** | **str**| Programmable Voice API Call ID. | 
- **recording_id** | **str**| Programmable Voice API Recording ID. | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[Basic](../README.md#Basic)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**204** | The transcription was successfully deleted. |  -  |
-**400** | Bad Request |  -  |
-**401** | Unauthorized |  -  |
-**403** | Forbidden |  -  |
-**404** | Not Found |  -  |
-**405** | Method Not Allowed |  -  |
-**415** | Unsupported Media Type |  -  |
-**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
-**500** | Internal Server Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_recording**
 > delete_recording(account_id, call_id, recording_id)
@@ -269,6 +181,94 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | The recording media was successfully deleted. |  -  |
+**400** | Bad Request |  -  |
+**401** | Unauthorized |  -  |
+**403** | Forbidden |  -  |
+**404** | Not Found |  -  |
+**405** | Method Not Allowed |  -  |
+**415** | Unsupported Media Type |  -  |
+**429** | Too Many Requests |  * Retry-After - When you should try your request again. <br>  |
+**500** | Internal Server Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **delete_recording_transcription**
+> delete_recording_transcription(account_id, call_id, recording_id)
+
+Delete Transcription
+
+Deletes the specified recording's transcription.  Note: After the deletion is requested and a `204` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
+
+### Example
+
+* Basic Authentication (Basic):
+
+```python
+import bandwidth
+from bandwidth.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = bandwidth.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure HTTP basic authorization: Basic
+configuration = bandwidth.Configuration(
+    username = os.environ["USERNAME"],
+    password = os.environ["PASSWORD"]
+)
+
+# Enter a context with an instance of the API client
+with bandwidth.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = bandwidth.RecordingsApi(api_client)
+    account_id = '9900000' # str | Your Bandwidth Account ID.
+    call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | Programmable Voice API Call ID.
+    recording_id = 'r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | Programmable Voice API Recording ID.
+
+    try:
+        # Delete Transcription
+        api_instance.delete_recording_transcription(account_id, call_id, recording_id)
+    except Exception as e:
+        print("Exception when calling RecordingsApi->delete_recording_transcription: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **account_id** | **str**| Your Bandwidth Account ID. | 
+ **call_id** | **str**| Programmable Voice API Call ID. | 
+ **recording_id** | **str**| Programmable Voice API Recording ID. | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Basic](../README.md#Basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**204** | The transcription was successfully deleted. |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
@@ -461,12 +461,12 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_call_transcription**
-> TranscriptionList get_call_transcription(account_id, call_id, recording_id)
+# **get_recording_transcription**
+> RecordingTranscriptions get_recording_transcription(account_id, call_id, recording_id)
 
 Get Transcription
 
-Downloads the specified transcription.  If the transcribed recording was multi-channel, then there will be 2 transcripts. The caller/called party transcript will be the first item while [`<PlayAudio>`](/docs/voice/bxml/playAudio) and [`<SpeakSentence>`](/docs/voice/bxml/speakSentence) transcript will be the second item. During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be the first item while the B-leg transcript will be the second item.
+Downloads the specified transcription. If the recording was multi-channel, then there will be 2 transcripts. The caller/called party transcript will be the first item while [`<PlayAudio>`](/docs/voice/bxml/playAudio) and [`<SpeakSentence>`](/docs/voice/bxml/speakSentence) transcript will be the second item. During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be the first item while the B-leg transcript will be the second item.
 
 ### Example
 
@@ -474,7 +474,7 @@ Downloads the specified transcription.  If the transcribed recording was multi-c
 
 ```python
 import bandwidth
-from bandwidth.models.transcription_list import TranscriptionList
+from bandwidth.models.recording_transcriptions import RecordingTranscriptions
 from bandwidth.rest import ApiException
 from pprint import pprint
 
@@ -505,11 +505,11 @@ with bandwidth.ApiClient(configuration) as api_client:
 
     try:
         # Get Transcription
-        api_response = api_instance.get_call_transcription(account_id, call_id, recording_id)
-        print("The response of RecordingsApi->get_call_transcription:\n")
+        api_response = api_instance.get_recording_transcription(account_id, call_id, recording_id)
+        print("The response of RecordingsApi->get_recording_transcription:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling RecordingsApi->get_call_transcription: %s\n" % e)
+        print("Exception when calling RecordingsApi->get_recording_transcription: %s\n" % e)
 ```
 
 
@@ -525,7 +525,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TranscriptionList**](TranscriptionList.md)
+[**RecordingTranscriptions**](RecordingTranscriptions.md)
 
 ### Authorization
 
@@ -540,7 +540,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Transcription found |  -  |
+**200** | Transcription found. |  -  |
 **400** | Bad Request |  -  |
 **401** | Unauthorized |  -  |
 **403** | Forbidden |  -  |
