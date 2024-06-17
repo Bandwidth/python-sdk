@@ -7,12 +7,12 @@ Bandwidth's Transfer BXML verb
 """
 from typing import Union, List
 
-from ..verb import Verb
+from ..nestable_verb import NestableVerb
 from ..verbs.phone_number import PhoneNumber
 from ..verbs.sip_uri import SipUri
 
 
-class Transfer(Verb):
+class Transfer(NestableVerb):
 
     def __init__(
         self, transfer_to: List[Union[PhoneNumber, SipUri]] = [],

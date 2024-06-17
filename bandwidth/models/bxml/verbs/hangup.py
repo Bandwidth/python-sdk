@@ -5,10 +5,10 @@ Bandwidth's Hangup BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class Hangup(TerminalVerb):
+class Hangup(Verb):
 
     def __init__(self):
         """Initialize a <Hangup> verb

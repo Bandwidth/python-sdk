@@ -5,10 +5,10 @@ Bandwidth's Conference BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class Conference(TerminalVerb):
+class Conference(Verb):
 
     def __init__(
         self, name: str, mute: str=None,

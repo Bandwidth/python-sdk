@@ -7,11 +7,11 @@ Bandwidth's Start Transcription BXML verb
 """
 from typing import List
 
-from ..verb import Verb
+from ..nestable_verb import NestableVerb
 from ..verbs.custom_param import CustomParam
 
 
-class StartTranscription(Verb):
+class StartTranscription(NestableVerb):
     def __init__(
             self, name: str = None,
             tracks: str = None,
