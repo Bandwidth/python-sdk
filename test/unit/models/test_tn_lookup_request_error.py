@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.tn_lookup_request_error import TnLookupRequestError  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.tn_lookup_request_error import TnLookupRequestError
 
 class TestTnLookupRequestError(unittest.TestCase):
     """TnLookupRequestError unit test stubs"""
@@ -29,19 +26,19 @@ class TestTnLookupRequestError(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> TnLookupRequestError:
         """Test TnLookupRequestError
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `TnLookupRequestError`
         """
-        model = bandwidth.models.tn_lookup_request_error.TnLookupRequestError()  # noqa: E501
-        if include_optional :
+        model = TnLookupRequestError()
+        if include_optional:
             return TnLookupRequestError(
                 message = 'example error message'
             )
-        else :
+        else:
             return TnLookupRequestError(
         )
         """

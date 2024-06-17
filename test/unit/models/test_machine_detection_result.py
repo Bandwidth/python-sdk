@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.machine_detection_result import MachineDetectionResult  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.machine_detection_result import MachineDetectionResult
 
 class TestMachineDetectionResult(unittest.TestCase):
     """MachineDetectionResult unit test stubs"""
@@ -29,20 +26,20 @@ class TestMachineDetectionResult(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> MachineDetectionResult:
         """Test MachineDetectionResult
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `MachineDetectionResult`
         """
-        model = bandwidth.models.machine_detection_result.MachineDetectionResult()  # noqa: E501
-        if include_optional :
+        model = MachineDetectionResult()
+        if include_optional:
             return MachineDetectionResult(
                 value = 'answering-machine',
                 duration = 'PT4.9891287S'
             )
-        else :
+        else:
             return MachineDetectionResult(
         )
         """

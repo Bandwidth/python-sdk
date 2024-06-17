@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.voice_api_error import VoiceApiError  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.voice_api_error import VoiceApiError
 
 class TestVoiceApiError(unittest.TestCase):
     """VoiceApiError unit test stubs"""
@@ -29,21 +26,21 @@ class TestVoiceApiError(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> VoiceApiError:
         """Test VoiceApiError
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `VoiceApiError`
         """
-        model = bandwidth.models.voice_api_error.VoiceApiError()  # noqa: E501
-        if include_optional :
+        model = VoiceApiError()
+        if include_optional:
             return VoiceApiError(
                 type = '',
                 description = '',
                 id = ''
             )
-        else :
+        else:
             return VoiceApiError(
         )
         """

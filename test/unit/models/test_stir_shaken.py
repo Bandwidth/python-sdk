@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.stir_shaken import StirShaken  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.stir_shaken import StirShaken
 
 class TestStirShaken(unittest.TestCase):
     """StirShaken unit test stubs"""
@@ -29,21 +26,21 @@ class TestStirShaken(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> StirShaken:
         """Test StirShaken
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `StirShaken`
         """
-        model = bandwidth.models.stir_shaken.StirShaken()  # noqa: E501
-        if include_optional :
+        model = StirShaken()
+        if include_optional:
             return StirShaken(
                 verstat = 'Tn-Verification-Passed',
                 attestation_indicator = 'A',
                 originating_id = '99759086-1335-11ed-9bcf-5f7d464e91af'
             )
-        else :
+        else:
             return StirShaken(
         )
         """

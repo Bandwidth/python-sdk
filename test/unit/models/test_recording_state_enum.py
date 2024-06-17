@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.recording_state_enum import RecordingStateEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.recording_state_enum import RecordingStateEnum
 
 class TestRecordingStateEnum(unittest.TestCase):
     """RecordingStateEnum unit test stubs"""

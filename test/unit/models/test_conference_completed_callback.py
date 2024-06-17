@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.conference_completed_callback import ConferenceCompletedCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.conference_completed_callback import ConferenceCompletedCallback
 
 class TestConferenceCompletedCallback(unittest.TestCase):
     """ConferenceCompletedCallback unit test stubs"""
@@ -29,15 +26,15 @@ class TestConferenceCompletedCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> ConferenceCompletedCallback:
         """Test ConferenceCompletedCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `ConferenceCompletedCallback`
         """
-        model = bandwidth.models.conference_completed_callback.ConferenceCompletedCallback()  # noqa: E501
-        if include_optional :
+        model = ConferenceCompletedCallback()
+        if include_optional:
             return ConferenceCompletedCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
@@ -45,7 +42,7 @@ class TestConferenceCompletedCallback(unittest.TestCase):
                 name = 'my-conference-name',
                 tag = 'exampleTag'
             )
-        else :
+        else:
             return ConferenceCompletedCallback(
         )
         """

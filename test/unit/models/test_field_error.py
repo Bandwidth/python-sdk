@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.field_error import FieldError  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.field_error import FieldError
 
 class TestFieldError(unittest.TestCase):
     """FieldError unit test stubs"""
@@ -29,20 +26,20 @@ class TestFieldError(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> FieldError:
         """Test FieldError
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `FieldError`
         """
-        model = bandwidth.models.field_error.FieldError()  # noqa: E501
-        if include_optional :
+        model = FieldError()
+        if include_optional:
             return FieldError(
                 field_name = 'from',
                 description = ''+invalid' must be replaced with a valid E164 formatted telephone number'
             )
-        else :
+        else:
             return FieldError(
         )
         """

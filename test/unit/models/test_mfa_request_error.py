@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.mfa_request_error import MfaRequestError  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.mfa_request_error import MfaRequestError
 
 class TestMfaRequestError(unittest.TestCase):
     """MfaRequestError unit test stubs"""
@@ -29,20 +26,20 @@ class TestMfaRequestError(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> MfaRequestError:
         """Test MfaRequestError
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `MfaRequestError`
         """
-        model = bandwidth.models.mfa_request_error.MfaRequestError()  # noqa: E501
-        if include_optional :
+        model = MfaRequestError()
+        if include_optional:
             return MfaRequestError(
                 error = '400 Request is malformed or invalid',
                 request_id = '354cc8a3-6701-461e-8fa7-8671703dd898'
             )
-        else :
+        else:
             return MfaRequestError(
         )
         """

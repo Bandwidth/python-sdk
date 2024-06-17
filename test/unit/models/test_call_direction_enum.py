@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.call_direction_enum import CallDirectionEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.call_direction_enum import CallDirectionEnum
 
 class TestCallDirectionEnum(unittest.TestCase):
     """CallDirectionEnum unit test stubs"""

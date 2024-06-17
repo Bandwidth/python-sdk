@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.update_conference_member import UpdateConferenceMember  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.update_conference_member import UpdateConferenceMember
 
 class TestUpdateConferenceMember(unittest.TestCase):
     """UpdateConferenceMember unit test stubs"""
@@ -29,21 +26,21 @@ class TestUpdateConferenceMember(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> UpdateConferenceMember:
         """Test UpdateConferenceMember
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `UpdateConferenceMember`
         """
-        model = bandwidth.models.update_conference_member.UpdateConferenceMember()  # noqa: E501
-        if include_optional :
+        model = UpdateConferenceMember()
+        if include_optional:
             return UpdateConferenceMember(
                 mute = False,
                 hold = False,
                 call_ids_to_coach = ["c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"]
             )
-        else :
+        else:
             return UpdateConferenceMember(
         )
         """

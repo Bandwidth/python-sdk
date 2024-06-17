@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.message_failed_callback_message import MessageFailedCallbackMessage  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.message_failed_callback_message import MessageFailedCallbackMessage
 
 class TestMessageFailedCallbackMessage(unittest.TestCase):
     """MessageFailedCallbackMessage unit test stubs"""
@@ -29,15 +26,15 @@ class TestMessageFailedCallbackMessage(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> MessageFailedCallbackMessage:
         """Test MessageFailedCallbackMessage
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `MessageFailedCallbackMessage`
         """
-        model = bandwidth.models.message_failed_callback_message.MessageFailedCallbackMessage()  # noqa: E501
-        if include_optional :
+        model = MessageFailedCallbackMessage()
+        if include_optional:
             return MessageFailedCallbackMessage(
                 id = '1661365814859loidf7mcwd4qacn7',
                 owner = '+15553332222',
@@ -52,7 +49,7 @@ class TestMessageFailedCallbackMessage(unittest.TestCase):
                 media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
                 priority = 'default'
             )
-        else :
+        else:
             return MessageFailedCallbackMessage(
                 id = '1661365814859loidf7mcwd4qacn7',
                 owner = '+15553332222',

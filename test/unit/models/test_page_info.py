@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.page_info import PageInfo  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.page_info import PageInfo
 
 class TestPageInfo(unittest.TestCase):
     """PageInfo unit test stubs"""
@@ -29,22 +26,22 @@ class TestPageInfo(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> PageInfo:
         """Test PageInfo
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `PageInfo`
         """
-        model = bandwidth.models.page_info.PageInfo()  # noqa: E501
-        if include_optional :
+        model = PageInfo()
+        if include_optional:
             return PageInfo(
                 prev_page = 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&nextPage=DLAPE902',
                 next_page = 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&prevPage=GL83PD3C',
                 prev_page_token = 'DLAPE902',
                 next_page_token = 'GL83PD3C'
             )
-        else :
+        else:
             return PageInfo(
         )
         """

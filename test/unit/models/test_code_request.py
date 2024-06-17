@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.code_request import CodeRequest  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.code_request import CodeRequest
 
 class TestCodeRequest(unittest.TestCase):
     """CodeRequest unit test stubs"""
@@ -29,15 +26,15 @@ class TestCodeRequest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> CodeRequest:
         """Test CodeRequest
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `CodeRequest`
         """
-        model = bandwidth.models.code_request.CodeRequest()  # noqa: E501
-        if include_optional :
+        model = CodeRequest()
+        if include_optional:
             return CodeRequest(
                 to = '+19195551234',
                 var_from = '+19195554321',
@@ -46,7 +43,7 @@ class TestCodeRequest(unittest.TestCase):
                 message = 'Your temporary {NAME} {SCOPE} code is {CODE}',
                 digits = 6
             )
-        else :
+        else:
             return CodeRequest(
                 to = '+19195551234',
                 var_from = '+19195554321',

@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.deferred_result import DeferredResult  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.deferred_result import DeferredResult
 
 class TestDeferredResult(unittest.TestCase):
     """DeferredResult unit test stubs"""
@@ -29,20 +26,20 @@ class TestDeferredResult(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> DeferredResult:
         """Test DeferredResult
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `DeferredResult`
         """
-        model = bandwidth.models.deferred_result.DeferredResult()  # noqa: E501
-        if include_optional :
+        model = DeferredResult()
+        if include_optional:
             return DeferredResult(
                 result = None,
                 set_or_expired = True
             )
-        else :
+        else:
             return DeferredResult(
         )
         """

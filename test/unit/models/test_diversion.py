@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.diversion import Diversion  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.diversion import Diversion
 
 class TestDiversion(unittest.TestCase):
     """Diversion unit test stubs"""
@@ -29,15 +26,15 @@ class TestDiversion(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> Diversion:
         """Test Diversion
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `Diversion`
         """
-        model = bandwidth.models.diversion.Diversion()  # noqa: E501
-        if include_optional :
+        model = Diversion()
+        if include_optional:
             return Diversion(
                 reason = 'unavailable',
                 privacy = 'off',
@@ -47,7 +44,7 @@ class TestDiversion(unittest.TestCase):
                 unknown = 'unknownValue',
                 orig_to = '+15558884444'
             )
-        else :
+        else:
             return Diversion(
         )
         """

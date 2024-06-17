@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.update_call import UpdateCall  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.update_call import UpdateCall
 
 class TestUpdateCall(unittest.TestCase):
     """UpdateCall unit test stubs"""
@@ -29,15 +26,15 @@ class TestUpdateCall(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> UpdateCall:
         """Test UpdateCall
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `UpdateCall`
         """
-        model = bandwidth.models.update_call.UpdateCall()  # noqa: E501
-        if include_optional :
+        model = UpdateCall()
+        if include_optional:
             return UpdateCall(
                 state = 'active',
                 redirect_url = 'https://myServer.example/bandwidth/webhooks/redirect',
@@ -50,7 +47,7 @@ class TestUpdateCall(unittest.TestCase):
                 fallback_password = 'mySecretPassword1!',
                 tag = 'My Custom Tag'
             )
-        else :
+        else:
             return UpdateCall(
         )
         """

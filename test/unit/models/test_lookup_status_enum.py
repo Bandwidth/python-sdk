@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.lookup_status_enum import LookupStatusEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.lookup_status_enum import LookupStatusEnum
 
 class TestLookupStatusEnum(unittest.TestCase):
     """LookupStatusEnum unit test stubs"""

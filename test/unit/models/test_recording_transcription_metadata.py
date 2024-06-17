@@ -14,14 +14,11 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.transcription_metadata import TranscriptionMetadata  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.recording_transcription_metadata import RecordingTranscriptionMetadata
 
-class TestTranscriptionMetadata(unittest.TestCase):
-    """TranscriptionMetadata unit test stubs"""
+class TestRecordingTranscriptionMetadata(unittest.TestCase):
+    """RecordingTranscriptionMetadata unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,28 +26,28 @@ class TestTranscriptionMetadata(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
-        """Test TranscriptionMetadata
+    def make_instance(self, include_optional) -> RecordingTranscriptionMetadata:
+        """Test RecordingTranscriptionMetadata
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `TranscriptionMetadata`
+        # uncomment below to create an instance of `RecordingTranscriptionMetadata`
         """
-        model = bandwidth.models.transcription_metadata.TranscriptionMetadata()  # noqa: E501
-        if include_optional :
-            return TranscriptionMetadata(
+        model = RecordingTranscriptionMetadata()
+        if include_optional:
+            return RecordingTranscriptionMetadata(
                 id = 't-387bd648-18f3-4823-9d16-746bca0003c9',
                 status = 'completed',
                 completed_time = '2022-06-13T18:46:29.715Z',
                 url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/recordings/r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/transcription'
             )
-        else :
-            return TranscriptionMetadata(
+        else:
+            return RecordingTranscriptionMetadata(
         )
         """
 
-    def testTranscriptionMetadata(self):
-        """Test TranscriptionMetadata"""
+    def testRecordingTranscriptionMetadata(self):
+        """Test RecordingTranscriptionMetadata"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

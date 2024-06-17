@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.callback_method_enum import CallbackMethodEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.callback_method_enum import CallbackMethodEnum
 
 class TestCallbackMethodEnum(unittest.TestCase):
     """CallbackMethodEnum unit test stubs"""

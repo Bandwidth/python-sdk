@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.lookup_result import LookupResult  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.lookup_result import LookupResult
 
 class TestLookupResult(unittest.TestCase):
     """LookupResult unit test stubs"""
@@ -29,15 +26,15 @@ class TestLookupResult(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> LookupResult:
         """Test LookupResult
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `LookupResult`
         """
-        model = bandwidth.models.lookup_result.LookupResult()  # noqa: E501
-        if include_optional :
+        model = LookupResult()
+        if include_optional:
             return LookupResult(
                 response_code = 0,
                 message = 'NOERROR',
@@ -49,7 +46,7 @@ class TestLookupResult(unittest.TestCase):
                 mobile_country_code = '310',
                 mobile_network_code = '010'
             )
-        else :
+        else:
             return LookupResult(
         )
         """

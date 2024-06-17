@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.messaging_code_response import MessagingCodeResponse  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.messaging_code_response import MessagingCodeResponse
 
 class TestMessagingCodeResponse(unittest.TestCase):
     """MessagingCodeResponse unit test stubs"""
@@ -29,19 +26,19 @@ class TestMessagingCodeResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> MessagingCodeResponse:
         """Test MessagingCodeResponse
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `MessagingCodeResponse`
         """
-        model = bandwidth.models.messaging_code_response.MessagingCodeResponse()  # noqa: E501
-        if include_optional :
+        model = MessagingCodeResponse()
+        if include_optional:
             return MessagingCodeResponse(
-                message_id = '9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6'
+                message_id = '1589228074636lm4k2je7j7jklbn2'
             )
-        else :
+        else:
             return MessagingCodeResponse(
         )
         """

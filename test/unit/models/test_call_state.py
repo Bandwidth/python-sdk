@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.call_state import CallState  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.call_state import CallState
 
 class TestCallState(unittest.TestCase):
     """CallState unit test stubs"""
@@ -29,22 +26,22 @@ class TestCallState(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> CallState:
         """Test CallState
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `CallState`
         """
-        model = bandwidth.models.call_state.CallState()  # noqa: E501
-        if include_optional :
+        model = CallState()
+        if include_optional:
             return CallState(
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 account_id = '9900000',
                 call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 parent_call_id = 'c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 to = '+19195551234',
-                var_from = '19195554321',
+                var_from = '+19195554321',
                 direction = 'inbound',
                 state = 'disconnected',
                 stir_shaken = {"verstat":"TN-Verification-Passed","attestationIndicator":"A","originatingId":"abc123"},
@@ -58,7 +55,7 @@ class TestCallState(unittest.TestCase):
                 error_id = '',
                 last_update = '2022-06-16T13:15:18.314Z'
             )
-        else :
+        else:
             return CallState(
         )
         """

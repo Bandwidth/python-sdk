@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.conference_recording_available_callback import ConferenceRecordingAvailableCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.conference_recording_available_callback import ConferenceRecordingAvailableCallback
 
 class TestConferenceRecordingAvailableCallback(unittest.TestCase):
     """ConferenceRecordingAvailableCallback unit test stubs"""
@@ -29,21 +26,21 @@ class TestConferenceRecordingAvailableCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> ConferenceRecordingAvailableCallback:
         """Test ConferenceRecordingAvailableCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `ConferenceRecordingAvailableCallback`
         """
-        model = bandwidth.models.conference_recording_available_callback.ConferenceRecordingAvailableCallback()  # noqa: E501
-        if include_optional :
+        model = ConferenceRecordingAvailableCallback()
+        if include_optional:
             return ConferenceRecordingAvailableCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
                 conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9',
                 name = 'my-conference-name',
-                account_id = '920012',
+                account_id = '9900000',
                 recording_id = 'r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833',
                 channels = 1,
                 start_time = '2022-06-17T22:19:40.375Z',
@@ -54,7 +51,7 @@ class TestConferenceRecordingAvailableCallback(unittest.TestCase):
                 tag = 'exampleTag',
                 status = 'completed'
             )
-        else :
+        else:
             return ConferenceRecordingAvailableCallback(
         )
         """

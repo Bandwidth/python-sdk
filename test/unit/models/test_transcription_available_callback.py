@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.transcription_available_callback import TranscriptionAvailableCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.transcription_available_callback import TranscriptionAvailableCallback
 
 class TestTranscriptionAvailableCallback(unittest.TestCase):
     """TranscriptionAvailableCallback unit test stubs"""
@@ -29,19 +26,19 @@ class TestTranscriptionAvailableCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> TranscriptionAvailableCallback:
         """Test TranscriptionAvailableCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `TranscriptionAvailableCallback`
         """
-        model = bandwidth.models.transcription_available_callback.TranscriptionAvailableCallback()  # noqa: E501
-        if include_optional :
+        model = TranscriptionAvailableCallback()
+        if include_optional:
             return TranscriptionAvailableCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
-                account_id = '920012',
+                account_id = '9900000',
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 var_from = '+15555555555',
                 to = '+15555555555',
@@ -58,12 +55,12 @@ class TestTranscriptionAvailableCallback(unittest.TestCase):
                 file_format = 'wav',
                 tag = 'exampleTag',
                 transcription = bandwidth.models.transcription.transcription(
-                    text = 'Nice talking to you, friend!',
+                    text = 'Nice talking to you, friend!', 
                     confidence = 0.9, ),
                 transfer_caller_id = '+15555555555',
-                transfer_to = '+15555555555)'
+                transfer_to = '+15555555555'
             )
-        else :
+        else:
             return TranscriptionAvailableCallback(
         )
         """

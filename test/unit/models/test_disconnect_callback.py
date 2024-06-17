@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.disconnect_callback import DisconnectCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.disconnect_callback import DisconnectCallback
 
 class TestDisconnectCallback(unittest.TestCase):
     """DisconnectCallback unit test stubs"""
@@ -29,19 +26,19 @@ class TestDisconnectCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> DisconnectCallback:
         """Test DisconnectCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `DisconnectCallback`
         """
-        model = bandwidth.models.disconnect_callback.DisconnectCallback()  # noqa: E501
-        if include_optional :
+        model = DisconnectCallback()
+        if include_optional:
             return DisconnectCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
-                account_id = '920012',
+                account_id = '9900000',
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 var_from = '+15555555555',
                 to = '+15555555555',
@@ -57,7 +54,7 @@ class TestDisconnectCallback(unittest.TestCase):
                 error_id = '4642074b-7b58-478b-96e4-3a60955c6765',
                 tag = 'exampleTag'
             )
-        else :
+        else:
             return DisconnectCallback(
         )
         """

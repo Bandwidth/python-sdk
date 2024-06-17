@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.answer_callback import AnswerCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.answer_callback import AnswerCallback
 
 class TestAnswerCallback(unittest.TestCase):
     """AnswerCallback unit test stubs"""
@@ -29,19 +26,19 @@ class TestAnswerCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> AnswerCallback:
         """Test AnswerCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `AnswerCallback`
         """
-        model = bandwidth.models.answer_callback.AnswerCallback()  # noqa: E501
-        if include_optional :
+        model = AnswerCallback()
+        if include_optional:
             return AnswerCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
-                account_id = '920012',
+                account_id = '9900000',
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 var_from = '+15555555555',
                 to = '+15555555555',
@@ -53,10 +50,10 @@ class TestAnswerCallback(unittest.TestCase):
                 answer_time = '2022-06-17T22:20Z',
                 tag = 'exampleTag',
                 machine_detection_result = bandwidth.models.machine_detection_result.machineDetectionResult(
-                    value = 'answering-machine',
+                    value = 'answering-machine', 
                     duration = 'PT4.9891287S', )
             )
-        else :
+        else:
             return AnswerCallback(
         )
         """

@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.create_message_request_error import CreateMessageRequestError  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.create_message_request_error import CreateMessageRequestError
 
 class TestCreateMessageRequestError(unittest.TestCase):
     """CreateMessageRequestError unit test stubs"""
@@ -29,25 +26,25 @@ class TestCreateMessageRequestError(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> CreateMessageRequestError:
         """Test CreateMessageRequestError
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `CreateMessageRequestError`
         """
-        model = bandwidth.models.create_message_request_error.CreateMessageRequestError()  # noqa: E501
-        if include_optional :
+        model = CreateMessageRequestError()
+        if include_optional:
             return CreateMessageRequestError(
                 type = '',
                 description = '',
                 field_errors = [
                     bandwidth.models.field_error.fieldError(
-                        field_name = 'from',
+                        field_name = 'from', 
                         description = ''+invalid' must be replaced with a valid E164 formatted telephone number', )
                     ]
             )
-        else :
+        else:
             return CreateMessageRequestError(
                 type = '',
                 description = '',

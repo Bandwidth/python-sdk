@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.update_conference import UpdateConference  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.update_conference import UpdateConference
 
 class TestUpdateConference(unittest.TestCase):
     """UpdateConference unit test stubs"""
@@ -29,15 +26,15 @@ class TestUpdateConference(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> UpdateConference:
         """Test UpdateConference
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `UpdateConference`
         """
-        model = bandwidth.models.update_conference.UpdateConference()  # noqa: E501
-        if include_optional :
+        model = UpdateConference()
+        if include_optional:
             return UpdateConference(
                 status = 'active',
                 redirect_url = 'https://myServer.example/bandwidth/webhooks/conferenceRedirect',
@@ -49,7 +46,7 @@ class TestUpdateConference(unittest.TestCase):
                 fallback_username = 'mySecretUsername',
                 fallback_password = 'mySecretPassword1!'
             )
-        else :
+        else:
             return UpdateConference(
         )
         """

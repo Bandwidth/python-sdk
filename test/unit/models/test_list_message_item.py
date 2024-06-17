@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.list_message_item import ListMessageItem  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.list_message_item import ListMessageItem
 
 class TestListMessageItem(unittest.TestCase):
     """ListMessageItem unit test stubs"""
@@ -29,15 +26,15 @@ class TestListMessageItem(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> ListMessageItem:
         """Test ListMessageItem
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `ListMessageItem`
         """
-        model = bandwidth.models.list_message_item.ListMessageItem()  # noqa: E501
-        if include_optional :
+        model = ListMessageItem()
+        if include_optional:
             return ListMessageItem(
                 message_id = '1589228074636lm4k2je7j7jklbn2',
                 account_id = '9900000',
@@ -57,7 +54,7 @@ class TestListMessageItem(unittest.TestCase):
                 campaign_class = 'T',
                 campaign_id = 'CJEUMDK'
             )
-        else :
+        else:
             return ListMessageItem(
         )
         """

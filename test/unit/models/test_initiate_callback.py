@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.initiate_callback import InitiateCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.initiate_callback import InitiateCallback
 
 class TestInitiateCallback(unittest.TestCase):
     """InitiateCallback unit test stubs"""
@@ -29,19 +26,19 @@ class TestInitiateCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> InitiateCallback:
         """Test InitiateCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `InitiateCallback`
         """
-        model = bandwidth.models.initiate_callback.InitiateCallback()  # noqa: E501
-        if include_optional :
+        model = InitiateCallback()
+        if include_optional:
             return InitiateCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
-                account_id = '920012',
+                account_id = '9900000',
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 var_from = '+15555555555',
                 to = '+15555555555',
@@ -50,19 +47,19 @@ class TestInitiateCallback(unittest.TestCase):
                 call_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 start_time = '2022-06-17T22:19:40.375Z',
                 diversion = bandwidth.models.diversion.diversion(
-                    reason = 'unavailable',
-                    privacy = 'off',
-                    screen = 'no',
-                    counter = '2',
-                    limit = '3',
-                    unknown = 'unknownValue',
+                    reason = 'unavailable', 
+                    privacy = 'off', 
+                    screen = 'no', 
+                    counter = '2', 
+                    limit = '3', 
+                    unknown = 'unknownValue', 
                     orig_to = '+15558884444', ),
                 stir_shaken = bandwidth.models.stir_shaken.stirShaken(
-                    verstat = 'Tn-Verification-Passed',
-                    attestation_indicator = 'A',
+                    verstat = 'Tn-Verification-Passed', 
+                    attestation_indicator = 'A', 
                     originating_id = '99759086-1335-11ed-9bcf-5f7d464e91af', )
             )
-        else :
+        else:
             return InitiateCallback(
         )
         """

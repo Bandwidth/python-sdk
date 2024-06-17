@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.message_request import MessageRequest  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.message_request import MessageRequest
 
 class TestMessageRequest(unittest.TestCase):
     """MessageRequest unit test stubs"""
@@ -29,15 +26,15 @@ class TestMessageRequest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> MessageRequest:
         """Test MessageRequest
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `MessageRequest`
         """
-        model = bandwidth.models.message_request.MessageRequest()  # noqa: E501
-        if include_optional :
+        model = MessageRequest()
+        if include_optional:
             return MessageRequest(
                 application_id = '93de2206-9669-4e07-948d-329f4b722ee2',
                 to = ["+15554443333","+15552223333"],
@@ -48,7 +45,7 @@ class TestMessageRequest(unittest.TestCase):
                 priority = 'default',
                 expiration = '2021-02-01T11:29:18-05:00'
             )
-        else :
+        else:
             return MessageRequest(
                 application_id = '93de2206-9669-4e07-948d-329f4b722ee2',
                 to = ["+15554443333","+15552223333"],

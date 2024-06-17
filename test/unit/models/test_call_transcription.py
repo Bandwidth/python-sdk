@@ -15,10 +15,10 @@
 
 import unittest
 
-from bandwidth.models.account_statistics import AccountStatistics
+from bandwidth.models.call_transcription import CallTranscription
 
-class TestAccountStatistics(unittest.TestCase):
-    """AccountStatistics unit test stubs"""
+class TestCallTranscription(unittest.TestCase):
+    """CallTranscription unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,26 +26,28 @@ class TestAccountStatistics(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> AccountStatistics:
-        """Test AccountStatistics
+    def make_instance(self, include_optional) -> CallTranscription:
+        """Test CallTranscription
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `AccountStatistics`
+        # uncomment below to create an instance of `CallTranscription`
         """
-        model = AccountStatistics()
+        model = CallTranscription()
         if include_optional:
-            return AccountStatistics(
-                current_call_queue_size = 0,
-                max_call_queue_size = 900
+            return CallTranscription(
+                detected_language = 'en-US',
+                track = 'inbound',
+                text = 'Hello World! This is an example.',
+                confidence = 0.9
             )
         else:
-            return AccountStatistics(
+            return CallTranscription(
         )
         """
 
-    def testAccountStatistics(self):
-        """Test AccountStatistics"""
+    def testCallTranscription(self):
+        """Test CallTranscription"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

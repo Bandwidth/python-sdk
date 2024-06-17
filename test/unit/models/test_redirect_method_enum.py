@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.redirect_method_enum import RedirectMethodEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.redirect_method_enum import RedirectMethodEnum
 
 class TestRedirectMethodEnum(unittest.TestCase):
     """RedirectMethodEnum unit test stubs"""

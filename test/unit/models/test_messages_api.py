@@ -15,22 +15,29 @@
 
 import unittest
 
-from bandwidth.api.statistics_api import StatisticsApi
+from bandwidth.api.messages_api import MessagesApi
 
 
-class TestStatisticsApi(unittest.TestCase):
-    """StatisticsApi unit test stubs"""
+class TestMessagesApi(unittest.TestCase):
+    """MessagesApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = StatisticsApi()
+        self.api = MessagesApi()
 
     def tearDown(self) -> None:
         pass
 
-    def test_get_statistics(self) -> None:
-        """Test case for get_statistics
+    def test_create_message(self) -> None:
+        """Test case for create_message
 
-        Get Account Statistics
+        Create Message
+        """
+        pass
+
+    def test_list_messages(self) -> None:
+        """Test case for list_messages
+
+        List Messages
         """
         pass
 

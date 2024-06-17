@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.message_delivered_callback import MessageDeliveredCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.message_delivered_callback import MessageDeliveredCallback
 
 class TestMessageDeliveredCallback(unittest.TestCase):
     """MessageDeliveredCallback unit test stubs"""
@@ -29,52 +26,52 @@ class TestMessageDeliveredCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> MessageDeliveredCallback:
         """Test MessageDeliveredCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `MessageDeliveredCallback`
         """
-        model = bandwidth.models.message_delivered_callback.MessageDeliveredCallback()  # noqa: E501
-        if include_optional :
+        model = MessageDeliveredCallback()
+        if include_optional:
             return MessageDeliveredCallback(
                 time = '2016-09-14T18:20:16Z',
                 type = 'message-delivered',
                 to = '+15552223333',
                 description = 'Message delivered to carrier.',
                 message = bandwidth.models.message_delivered_callback_message.messageDeliveredCallbackMessage(
-                    id = '1661365814859loidf7mcwd4qacn7',
-                    owner = '+15553332222',
-                    application_id = '93de2206-9669-4e07-948d-329f4b722ee2',
-                    time = '2016-09-14T18:20:16Z',
-                    segment_count = 1,
-                    direction = 'in',
-                    to = ["+15552223333"],
-                    from = '+15553332222',
-                    text = 'Hello world',
-                    tag = 'custom string',
-                    media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
+                    id = '1661365814859loidf7mcwd4qacn7', 
+                    owner = '+15553332222', 
+                    application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
+                    time = '2016-09-14T18:20:16Z', 
+                    segment_count = 1, 
+                    direction = 'in', 
+                    to = ["+15552223333"], 
+                    from = '+15553332222', 
+                    text = 'Hello world', 
+                    tag = 'custom string', 
+                    media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"], 
                     priority = 'default', )
             )
-        else :
+        else:
             return MessageDeliveredCallback(
                 time = '2016-09-14T18:20:16Z',
                 type = 'message-delivered',
                 to = '+15552223333',
                 description = 'Message delivered to carrier.',
                 message = bandwidth.models.message_delivered_callback_message.messageDeliveredCallbackMessage(
-                    id = '1661365814859loidf7mcwd4qacn7',
-                    owner = '+15553332222',
-                    application_id = '93de2206-9669-4e07-948d-329f4b722ee2',
-                    time = '2016-09-14T18:20:16Z',
-                    segment_count = 1,
-                    direction = 'in',
-                    to = ["+15552223333"],
-                    from = '+15553332222',
-                    text = 'Hello world',
-                    tag = 'custom string',
-                    media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
+                    id = '1661365814859loidf7mcwd4qacn7', 
+                    owner = '+15553332222', 
+                    application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
+                    time = '2016-09-14T18:20:16Z', 
+                    segment_count = 1, 
+                    direction = 'in', 
+                    to = ["+15552223333"], 
+                    from = '+15553332222', 
+                    text = 'Hello world', 
+                    tag = 'custom string', 
+                    media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"], 
                     priority = 'default', ),
         )
         """

@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.messaging_request_error import MessagingRequestError  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.messaging_request_error import MessagingRequestError
 
 class TestMessagingRequestError(unittest.TestCase):
     """MessagingRequestError unit test stubs"""
@@ -29,20 +26,20 @@ class TestMessagingRequestError(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> MessagingRequestError:
         """Test MessagingRequestError
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `MessagingRequestError`
         """
-        model = bandwidth.models.messaging_request_error.MessagingRequestError()  # noqa: E501
-        if include_optional :
+        model = MessagingRequestError()
+        if include_optional:
             return MessagingRequestError(
                 type = '',
                 description = ''
             )
-        else :
+        else:
             return MessagingRequestError(
                 type = '',
                 description = '',

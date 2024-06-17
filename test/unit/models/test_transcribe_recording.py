@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.transcribe_recording import TranscribeRecording  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.transcribe_recording import TranscribeRecording
 
 class TestTranscribeRecording(unittest.TestCase):
     """TranscribeRecording unit test stubs"""
@@ -29,15 +26,15 @@ class TestTranscribeRecording(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> TranscribeRecording:
         """Test TranscribeRecording
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `TranscribeRecording`
         """
-        model = bandwidth.models.transcribe_recording.TranscribeRecording()  # noqa: E501
-        if include_optional :
+        model = TranscribeRecording()
+        if include_optional:
             return TranscribeRecording(
                 callback_url = 'https://myServer.example/bandwidth/webhooks/transcriptionAvailable',
                 callback_method = 'POST',
@@ -47,7 +44,7 @@ class TestTranscribeRecording(unittest.TestCase):
                 callback_timeout = 5.5,
                 detect_language = True
             )
-        else :
+        else:
             return TranscribeRecording(
         )
         """

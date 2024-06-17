@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.voice_code_response import VoiceCodeResponse  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.voice_code_response import VoiceCodeResponse
 
 class TestVoiceCodeResponse(unittest.TestCase):
     """VoiceCodeResponse unit test stubs"""
@@ -29,19 +26,19 @@ class TestVoiceCodeResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> VoiceCodeResponse:
         """Test VoiceCodeResponse
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `VoiceCodeResponse`
         """
-        model = bandwidth.models.voice_code_response.VoiceCodeResponse()  # noqa: E501
-        if include_optional :
+        model = VoiceCodeResponse()
+        if include_optional:
             return VoiceCodeResponse(
                 call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
             )
-        else :
+        else:
             return VoiceCodeResponse(
         )
         """

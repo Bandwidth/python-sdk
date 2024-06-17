@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.conference_state_enum import ConferenceStateEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.conference_state_enum import ConferenceStateEnum
 
 class TestConferenceStateEnum(unittest.TestCase):
     """ConferenceStateEnum unit test stubs"""

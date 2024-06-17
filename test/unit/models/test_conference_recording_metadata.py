@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.conference_recording_metadata import ConferenceRecordingMetadata  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.conference_recording_metadata import ConferenceRecordingMetadata
 
 class TestConferenceRecordingMetadata(unittest.TestCase):
     """ConferenceRecordingMetadata unit test stubs"""
@@ -29,17 +26,17 @@ class TestConferenceRecordingMetadata(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> ConferenceRecordingMetadata:
         """Test ConferenceRecordingMetadata
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `ConferenceRecordingMetadata`
         """
-        model = bandwidth.models.conference_recording_metadata.ConferenceRecordingMetadata()  # noqa: E501
-        if include_optional :
+        model = ConferenceRecordingMetadata()
+        if include_optional:
             return ConferenceRecordingMetadata(
-                account_id = '920012',
+                account_id = '9900000',
                 conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9',
                 name = 'my-conference-name',
                 recording_id = 'r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833',
@@ -51,7 +48,7 @@ class TestConferenceRecordingMetadata(unittest.TestCase):
                 status = 'completed',
                 media_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/recordings/r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833/media'
             )
-        else :
+        else:
             return ConferenceRecordingMetadata(
         )
         """

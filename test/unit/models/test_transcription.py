@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.transcription import Transcription  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.transcription import Transcription
 
 class TestTranscription(unittest.TestCase):
     """Transcription unit test stubs"""
@@ -29,20 +26,20 @@ class TestTranscription(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> Transcription:
         """Test Transcription
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `Transcription`
         """
-        model = bandwidth.models.transcription.Transcription()  # noqa: E501
-        if include_optional :
+        model = Transcription()
+        if include_optional:
             return Transcription(
                 text = 'Nice talking to you, friend!',
                 confidence = 0.9
             )
-        else :
+        else:
             return Transcription(
         )
         """

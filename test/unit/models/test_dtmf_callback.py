@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.dtmf_callback import DtmfCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.dtmf_callback import DtmfCallback
 
 class TestDtmfCallback(unittest.TestCase):
     """DtmfCallback unit test stubs"""
@@ -29,19 +26,19 @@ class TestDtmfCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> DtmfCallback:
         """Test DtmfCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `DtmfCallback`
         """
-        model = bandwidth.models.dtmf_callback.DtmfCallback()  # noqa: E501
-        if include_optional :
+        model = DtmfCallback()
+        if include_optional:
             return DtmfCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
-                account_id = '920012',
+                account_id = '9900000',
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 var_from = '+15555555555',
                 to = '+15555555555',
@@ -54,10 +51,10 @@ class TestDtmfCallback(unittest.TestCase):
                 answer_time = '2022-06-17T22:20Z',
                 parent_call_id = 'c-95ac8d6e-1a31c52e-b38f-4198-93c1-51633ec68f8d',
                 transfer_caller_id = '+15555555555',
-                transfer_to = '+15555555555)',
+                transfer_to = '+15555555555',
                 tag = 'exampleTag'
             )
-        else :
+        else:
             return DtmfCallback(
         )
         """

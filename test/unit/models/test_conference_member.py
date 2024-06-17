@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.conference_member import ConferenceMember  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.conference_member import ConferenceMember
 
 class TestConferenceMember(unittest.TestCase):
     """ConferenceMember unit test stubs"""
@@ -29,15 +26,15 @@ class TestConferenceMember(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> ConferenceMember:
         """Test ConferenceMember
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `ConferenceMember`
         """
-        model = bandwidth.models.conference_member.ConferenceMember()  # noqa: E501
-        if include_optional :
+        model = ConferenceMember()
+        if include_optional:
             return ConferenceMember(
                 call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9',
@@ -46,7 +43,7 @@ class TestConferenceMember(unittest.TestCase):
                 hold = False,
                 call_ids_to_coach = ["c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"]
             )
-        else :
+        else:
             return ConferenceMember(
         )
         """

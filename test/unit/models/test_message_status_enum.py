@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.message_status_enum import MessageStatusEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.message_status_enum import MessageStatusEnum
 
 class TestMessageStatusEnum(unittest.TestCase):
     """MessageStatusEnum unit test stubs"""

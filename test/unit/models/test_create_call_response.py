@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.create_call_response import CreateCallResponse  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.create_call_response import CreateCallResponse
 
 class TestCreateCallResponse(unittest.TestCase):
     """CreateCallResponse unit test stubs"""
@@ -29,15 +26,15 @@ class TestCreateCallResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> CreateCallResponse:
         """Test CreateCallResponse
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `CreateCallResponse`
         """
-        model = bandwidth.models.create_call_response.CreateCallResponse()  # noqa: E501
-        if include_optional :
+        model = CreateCallResponse()
+        if include_optional:
             return CreateCallResponse(
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 account_id = '9900000',
@@ -61,7 +58,7 @@ class TestCreateCallResponse(unittest.TestCase):
                 fallback_password = 'mySecretPassword1!',
                 priority = 5
             )
-        else :
+        else:
             return CreateCallResponse(
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 account_id = '9900000',

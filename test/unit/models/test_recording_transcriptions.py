@@ -14,14 +14,11 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.transcription_list import TranscriptionList  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.recording_transcriptions import RecordingTranscriptions
 
-class TestTranscriptionList(unittest.TestCase):
-    """TranscriptionList unit test stubs"""
+class TestRecordingTranscriptions(unittest.TestCase):
+    """RecordingTranscriptions unit test stubs"""
 
     def setUp(self):
         pass
@@ -29,29 +26,29 @@ class TestTranscriptionList(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
-        """Test TranscriptionList
+    def make_instance(self, include_optional) -> RecordingTranscriptions:
+        """Test RecordingTranscriptions
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `TranscriptionList`
+        # uncomment below to create an instance of `RecordingTranscriptions`
         """
-        model = bandwidth.models.transcription_list.TranscriptionList()  # noqa: E501
-        if include_optional :
-            return TranscriptionList(
+        model = RecordingTranscriptions()
+        if include_optional:
+            return RecordingTranscriptions(
                 transcripts = [
                     bandwidth.models.transcription.transcription(
-                        text = 'Nice talking to you, friend!',
+                        text = 'Nice talking to you, friend!', 
                         confidence = 0.9, )
                     ]
             )
-        else :
-            return TranscriptionList(
+        else:
+            return RecordingTranscriptions(
         )
         """
 
-    def testTranscriptionList(self):
-        """Test TranscriptionList"""
+    def testRecordingTranscriptions(self):
+        """Test RecordingTranscriptions"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

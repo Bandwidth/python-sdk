@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.priority_enum import PriorityEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.priority_enum import PriorityEnum
 
 class TestPriorityEnum(unittest.TestCase):
     """PriorityEnum unit test stubs"""

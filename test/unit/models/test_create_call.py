@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.create_call import CreateCall  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.create_call import CreateCall
 
 class TestCreateCall(unittest.TestCase):
     """CreateCall unit test stubs"""
@@ -29,18 +26,19 @@ class TestCreateCall(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> CreateCall:
         """Test CreateCall
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `CreateCall`
         """
-        model = bandwidth.models.create_call.CreateCall()  # noqa: E501
-        if include_optional :
+        model = CreateCall()
+        if include_optional:
             return CreateCall(
                 to = '+19195551234',
-                var_from = '+19195554321',
+                var_from = '+15555551212',
+                privacy = False,
                 display_name = 'John Doe',
                 uui = 'eyJhbGciOiJIUzI1NiJ9.WyJoaSJd.-znkjYyCkgz4djmHUPSXl9YrJ6Nix_XvmlwKGFh5ERM;encoding=jwt,aGVsbG8gd29ybGQ;encoding=base64',
                 application_id = '1234-qwer-5679-tyui',
@@ -57,28 +55,28 @@ class TestCreateCall(unittest.TestCase):
                 call_timeout = 30,
                 callback_timeout = 15,
                 machine_detection = bandwidth.models.machine_detection_configuration.machineDetectionConfiguration(
-                    mode = 'async',
-                    detection_timeout = 15,
-                    silence_timeout = 10,
-                    speech_threshold = 10,
-                    speech_end_threshold = 5,
-                    machine_speech_end_threshold = 5,
-                    delay_result = False,
-                    callback_url = 'https://myServer.example/bandwidth/webhooks/machineDetectionComplete',
-                    callback_method = 'POST',
-                    username = 'mySecretUsername',
-                    password = 'mySecretPassword1!',
-                    fallback_url = 'https://myFallbackServer.example/bandwidth/webhooks/machineDetectionComplete',
-                    fallback_method = 'POST',
-                    fallback_username = 'mySecretUsername',
+                    mode = 'async', 
+                    detection_timeout = 15, 
+                    silence_timeout = 10, 
+                    speech_threshold = 10, 
+                    speech_end_threshold = 5, 
+                    machine_speech_end_threshold = 5, 
+                    delay_result = False, 
+                    callback_url = 'https://myServer.example/bandwidth/webhooks/machineDetectionComplete', 
+                    callback_method = 'POST', 
+                    username = 'mySecretUsername', 
+                    password = 'mySecretPassword1!', 
+                    fallback_url = 'https://myFallbackServer.example/bandwidth/webhooks/machineDetectionComplete', 
+                    fallback_method = 'POST', 
+                    fallback_username = 'mySecretUsername', 
                     fallback_password = 'mySecretPassword1!', ),
                 priority = 5,
                 tag = 'arbitrary text here'
             )
-        else :
+        else:
             return CreateCall(
                 to = '+19195551234',
-                var_from = '+19195554321',
+                var_from = '+15555551212',
                 application_id = '1234-qwer-5679-tyui',
                 answer_url = 'https://www.myCallbackServer.example/webhooks/answer',
         )

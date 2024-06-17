@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.conference_redirect_callback import ConferenceRedirectCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.conference_redirect_callback import ConferenceRedirectCallback
 
 class TestConferenceRedirectCallback(unittest.TestCase):
     """ConferenceRedirectCallback unit test stubs"""
@@ -29,15 +26,15 @@ class TestConferenceRedirectCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> ConferenceRedirectCallback:
         """Test ConferenceRedirectCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `ConferenceRedirectCallback`
         """
-        model = bandwidth.models.conference_redirect_callback.ConferenceRedirectCallback()  # noqa: E501
-        if include_optional :
+        model = ConferenceRedirectCallback()
+        if include_optional:
             return ConferenceRedirectCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
@@ -45,7 +42,7 @@ class TestConferenceRedirectCallback(unittest.TestCase):
                 name = 'my-conference-name',
                 tag = 'exampleTag'
             )
-        else :
+        else:
             return ConferenceRedirectCallback(
         )
         """

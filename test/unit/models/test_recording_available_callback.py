@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.recording_available_callback import RecordingAvailableCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.recording_available_callback import RecordingAvailableCallback
 
 class TestRecordingAvailableCallback(unittest.TestCase):
     """RecordingAvailableCallback unit test stubs"""
@@ -29,19 +26,19 @@ class TestRecordingAvailableCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> RecordingAvailableCallback:
         """Test RecordingAvailableCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `RecordingAvailableCallback`
         """
-        model = bandwidth.models.recording_available_callback.RecordingAvailableCallback()  # noqa: E501
-        if include_optional :
+        model = RecordingAvailableCallback()
+        if include_optional:
             return RecordingAvailableCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
-                account_id = '920012',
+                account_id = '9900000',
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 var_from = '+15555555555',
                 to = '+15555555555',
@@ -56,13 +53,13 @@ class TestRecordingAvailableCallback(unittest.TestCase):
                 end_time = '2022-06-17T22:20Z',
                 duration = 'PT13.67S',
                 file_format = 'wav',
-                channels = 'completed',
+                channels = 1,
                 tag = 'exampleTag',
                 status = 'completed',
                 transfer_caller_id = '+15555555555',
-                transfer_to = '+15555555555)'
+                transfer_to = '+15555555555'
             )
-        else :
+        else:
             return RecordingAvailableCallback(
         )
         """

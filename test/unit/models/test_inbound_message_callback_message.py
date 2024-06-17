@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.inbound_message_callback_message import InboundMessageCallbackMessage  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.inbound_message_callback_message import InboundMessageCallbackMessage
 
 class TestInboundMessageCallbackMessage(unittest.TestCase):
     """InboundMessageCallbackMessage unit test stubs"""
@@ -29,15 +26,15 @@ class TestInboundMessageCallbackMessage(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> InboundMessageCallbackMessage:
         """Test InboundMessageCallbackMessage
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `InboundMessageCallbackMessage`
         """
-        model = bandwidth.models.inbound_message_callback_message.InboundMessageCallbackMessage()  # noqa: E501
-        if include_optional :
+        model = InboundMessageCallbackMessage()
+        if include_optional:
             return InboundMessageCallbackMessage(
                 id = '1661365814859loidf7mcwd4qacn7',
                 owner = '+15553332222',
@@ -52,7 +49,7 @@ class TestInboundMessageCallbackMessage(unittest.TestCase):
                 media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
                 priority = 'default'
             )
-        else :
+        else:
             return InboundMessageCallbackMessage(
                 id = '1661365814859loidf7mcwd4qacn7',
                 owner = '+15553332222',

@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.conference import Conference  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.conference import Conference
 
 class TestConference(unittest.TestCase):
     """Conference unit test stubs"""
@@ -29,15 +26,15 @@ class TestConference(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> Conference:
         """Test Conference
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `Conference`
         """
-        model = bandwidth.models.conference.Conference()  # noqa: E501
-        if include_optional :
+        model = Conference()
+        if include_optional:
             return Conference(
                 id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9',
                 name = 'my-conference-name',
@@ -48,15 +45,15 @@ class TestConference(unittest.TestCase):
                 tag = 'my custom tag',
                 active_members = [
                     bandwidth.models.conference_member.conferenceMember(
-                        call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
-                        conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9',
-                        member_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/members/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
-                        mute = False,
-                        hold = False,
+                        call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
+                        conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9', 
+                        member_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/members/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
+                        mute = False, 
+                        hold = False, 
                         call_ids_to_coach = ["c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"], )
                     ]
             )
-        else :
+        else:
             return Conference(
         )
         """

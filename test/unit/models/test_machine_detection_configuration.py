@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration
 
 class TestMachineDetectionConfiguration(unittest.TestCase):
     """MachineDetectionConfiguration unit test stubs"""
@@ -29,15 +26,15 @@ class TestMachineDetectionConfiguration(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> MachineDetectionConfiguration:
         """Test MachineDetectionConfiguration
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `MachineDetectionConfiguration`
         """
-        model = bandwidth.models.machine_detection_configuration.MachineDetectionConfiguration()  # noqa: E501
-        if include_optional :
+        model = MachineDetectionConfiguration()
+        if include_optional:
             return MachineDetectionConfiguration(
                 mode = 'async',
                 detection_timeout = 15,
@@ -55,7 +52,7 @@ class TestMachineDetectionConfiguration(unittest.TestCase):
                 fallback_username = 'mySecretUsername',
                 fallback_password = 'mySecretPassword1!'
             )
-        else :
+        else:
             return MachineDetectionConfiguration(
         )
         """

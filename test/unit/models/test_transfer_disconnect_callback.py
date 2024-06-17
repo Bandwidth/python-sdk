@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.transfer_disconnect_callback import TransferDisconnectCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.transfer_disconnect_callback import TransferDisconnectCallback
 
 class TestTransferDisconnectCallback(unittest.TestCase):
     """TransferDisconnectCallback unit test stubs"""
@@ -29,19 +26,19 @@ class TestTransferDisconnectCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> TransferDisconnectCallback:
         """Test TransferDisconnectCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `TransferDisconnectCallback`
         """
-        model = bandwidth.models.transfer_disconnect_callback.TransferDisconnectCallback()  # noqa: E501
-        if include_optional :
+        model = TransferDisconnectCallback()
+        if include_optional:
             return TransferDisconnectCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
-                account_id = '920012',
+                account_id = '9900000',
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 var_from = '+15555555555',
                 to = '+15555555555',
@@ -55,12 +52,12 @@ class TestTransferDisconnectCallback(unittest.TestCase):
                 end_time = '2022-06-17T22:20Z',
                 tag = 'exampleTag',
                 transfer_caller_id = '+15555555555',
-                transfer_to = '+15555555555)',
+                transfer_to = '+15555555555',
                 cause = 'busy',
                 error_message = 'Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call',
                 error_id = '4642074b-7b58-478b-96e4-3a60955c6765'
             )
-        else :
+        else:
             return TransferDisconnectCallback(
         )
         """

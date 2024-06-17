@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.media import Media  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.media import Media
 
 class TestMedia(unittest.TestCase):
     """Media unit test stubs"""
@@ -29,21 +26,21 @@ class TestMedia(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> Media:
         """Test Media
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `Media`
         """
-        model = bandwidth.models.media.Media()  # noqa: E501
-        if include_optional :
+        model = Media()
+        if include_optional:
             return Media(
                 content = '',
                 content_length = 56,
                 media_name = ''
             )
-        else :
+        else:
             return Media(
         )
         """

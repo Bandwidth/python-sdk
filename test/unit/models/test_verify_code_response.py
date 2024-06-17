@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.verify_code_response import VerifyCodeResponse  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.verify_code_response import VerifyCodeResponse
 
 class TestVerifyCodeResponse(unittest.TestCase):
     """VerifyCodeResponse unit test stubs"""
@@ -29,19 +26,19 @@ class TestVerifyCodeResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> VerifyCodeResponse:
         """Test VerifyCodeResponse
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `VerifyCodeResponse`
         """
-        model = bandwidth.models.verify_code_response.VerifyCodeResponse()  # noqa: E501
-        if include_optional :
+        model = VerifyCodeResponse()
+        if include_optional:
             return VerifyCodeResponse(
                 valid = True
             )
-        else :
+        else:
             return VerifyCodeResponse(
         )
         """

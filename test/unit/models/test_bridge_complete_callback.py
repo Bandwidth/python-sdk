@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback
 
 class TestBridgeCompleteCallback(unittest.TestCase):
     """BridgeCompleteCallback unit test stubs"""
@@ -29,19 +26,19 @@ class TestBridgeCompleteCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> BridgeCompleteCallback:
         """Test BridgeCompleteCallback
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `BridgeCompleteCallback`
         """
-        model = bandwidth.models.bridge_complete_callback.BridgeCompleteCallback()  # noqa: E501
-        if include_optional :
+        model = BridgeCompleteCallback()
+        if include_optional:
             return BridgeCompleteCallback(
                 event_type = 'bridgeComplete',
                 event_time = '2022-06-17T22:19:40.375Z',
-                account_id = '920012',
+                account_id = '9900000',
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
                 var_from = '+15555555555',
                 to = '+15555555555',
@@ -56,7 +53,7 @@ class TestBridgeCompleteCallback(unittest.TestCase):
                 error_message = 'Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call',
                 error_id = '4642074b-7b58-478b-96e4-3a60955c6765'
             )
-        else :
+        else:
             return BridgeCompleteCallback(
         )
         """

@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.file_format_enum import FileFormatEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.file_format_enum import FileFormatEnum
 
 class TestFileFormatEnum(unittest.TestCase):
     """FileFormatEnum unit test stubs"""

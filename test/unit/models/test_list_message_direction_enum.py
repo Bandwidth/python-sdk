@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum
 
 class TestListMessageDirectionEnum(unittest.TestCase):
     """ListMessageDirectionEnum unit test stubs"""

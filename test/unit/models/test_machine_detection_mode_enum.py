@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnum
 
 class TestMachineDetectionModeEnum(unittest.TestCase):
     """MachineDetectionModeEnum unit test stubs"""

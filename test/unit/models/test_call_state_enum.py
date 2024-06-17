@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.call_state_enum import CallStateEnum  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.call_state_enum import CallStateEnum
 
 class TestCallStateEnum(unittest.TestCase):
     """CallStateEnum unit test stubs"""

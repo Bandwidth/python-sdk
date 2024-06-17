@@ -14,11 +14,8 @@
 
 
 import unittest
-import datetime
 
-import bandwidth
-from bandwidth.models.message import Message  # noqa: E501
-from bandwidth.rest import ApiException
+from bandwidth.models.message import Message
 
 class TestMessage(unittest.TestCase):
     """Message unit test stubs"""
@@ -29,15 +26,15 @@ class TestMessage(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional):
+    def make_instance(self, include_optional) -> Message:
         """Test Message
             include_option is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         # uncomment below to create an instance of `Message`
         """
-        model = bandwidth.models.message.Message()  # noqa: E501
-        if include_optional :
+        model = Message()
+        if include_optional:
             return Message(
                 id = '1589228074636lm4k2je7j7jklbn2',
                 owner = '+15554443333',
@@ -53,7 +50,7 @@ class TestMessage(unittest.TestCase):
                 priority = 'default',
                 expiration = '2021-02-01T11:29:18-05:00'
             )
-        else :
+        else:
             return Message(
         )
         """
