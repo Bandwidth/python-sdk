@@ -219,8 +219,8 @@ class TestRecordings(unittest.TestCase):
             - get_call_recording
             - download_call_recording
             - transcribe_call_recording
-            - get_call_transcription
-            - delete_call_transcription
+            - get_recording_transcription
+            - delete_recording_transcription
             - delete_recording_media
             - delete_recording
         """
@@ -288,7 +288,7 @@ class TestRecordings(unittest.TestCase):
         assert_that(call_status['callTranscribed'], equal_to(True))
 
         # Get the transcription
-        transcription_response = self.recordings_api_instance.get_call_transcription_with_http_info(
+        transcription_response = self.recordings_api_instance.get_recording_transcription_with_http_info(
             BW_ACCOUNT_ID, call_id, recording_id)
         assert_that(transcription_response.status_code, equal_to(200))  # Check response code
 
@@ -302,11 +302,11 @@ class TestRecordings(unittest.TestCase):
         ))
 
         # Delete the transcription
-        delete_transcription_response = self.recordings_api_instance.delete_call_transcription_with_http_info(
+        delete_transcription_response = self.recordings_api_instance.get_recording_transcription_with_http_info(
             BW_ACCOUNT_ID, call_id, recording_id)
         assert_that(delete_transcription_response.status_code, equal_to(204))  # Check response code
 
-        assert_that(calling(self.recordings_api_instance.get_call_transcription).with_args(
+        assert_that(calling(self.recordings_api_instance.get_recording_transcription).with_args(
             BW_ACCOUNT_ID, call_id, recording_id), raises(NotFoundException))
 
         # Delete Recording media
@@ -454,28 +454,28 @@ class TestRecordings(unittest.TestCase):
         assert_that(call_status['callTranscribed'], equal_to(True))
 
         # Use the unauthorized client to get transcripion (401)
-        assert_that(calling(self.unauthorized_recordings_api_instance.get_call_transcription).with_args(
+        assert_that(calling(self.unauthorized_recordings_api_instance.get_recording_transcription).with_args(
             BW_ACCOUNT_ID, call_id, recording_id), raises(UnauthorizedException))
 
         # Non-existent account id (403)
-        assert_that(calling(self.recordings_api_instance.get_call_transcription).with_args(
+        assert_that(calling(self.recordings_api_instance.get_recording_transcription).with_args(
             "not an account id", call_id, recording_id), raises(ForbiddenException))
 
         # Non-existent recording id (404)
-        assert_that(calling(self.recordings_api_instance.get_call_transcription).with_args(
+        assert_that(calling(self.recordings_api_instance.get_recording_transcription).with_args(
             BW_ACCOUNT_ID, call_id, "not a recording id"), raises(NotFoundException))
 
         # Delete Transcription
         # Use the unauthorized client to delete transcripion (401)
-        assert_that(calling(self.unauthorized_recordings_api_instance.delete_call_transcription).with_args(
+        assert_that(calling(self.unauthorized_recordings_api_instance.delete_recording_transcription).with_args(
             BW_ACCOUNT_ID, call_id, recording_id), raises(UnauthorizedException))
 
         # Non-existent account id (403)
-        assert_that(calling(self.recordings_api_instance.delete_call_transcription).with_args(
+        assert_that(calling(self.recordings_api_instance.delete_recording_transcription).with_args(
             "not an account id", call_id, recording_id), raises(ForbiddenException))
 
         # Non-existent recording id (404)
-        assert_that(calling(self.recordings_api_instance.delete_call_transcription).with_args(
+        assert_that(calling(self.recordings_api_instance.delete_recording_transcription).with_args(
             BW_ACCOUNT_ID, call_id, "not a recording id"), raises(NotFoundException))
 
         # Delete Recording Media
