@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.bridge_target_complete_callback import BridgeTargetCompleteCallback
 
@@ -28,11 +29,9 @@ class TestBridgeTargetCompleteCallback(unittest.TestCase):
 
     def make_instance(self, include_optional) -> BridgeTargetCompleteCallback:
         """Test BridgeTargetCompleteCallback
-            include_option is a boolean, when False only required
+            include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `BridgeTargetCompleteCallback`
-        """
         model = BridgeTargetCompleteCallback()
         if include_optional:
             return BridgeTargetCompleteCallback(
@@ -53,12 +52,25 @@ class TestBridgeTargetCompleteCallback(unittest.TestCase):
         else:
             return BridgeTargetCompleteCallback(
         )
-        """
 
     def testBridgeTargetCompleteCallback(self):
         """Test BridgeTargetCompleteCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        model = self.make_instance(True)
+        assert(model is not None)
+        assert(isinstance(model, BridgeTargetCompleteCallback))
+        assert model.event_type == 'bridgeComplete'
+        assert(isinstance(model.event_time, datetime))
+        assert model.account_id == '9900000'
+        assert model.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert model.var_from == '+15555555555'
+        assert model.to == '+15555555555'
+        assert model.direction == 'inbound'
+        assert model.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert model.call_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert(isinstance(model.enqueued_time, datetime))
+        assert(isinstance(model.start_time, datetime))
+        assert(isinstance(model.answer_time, datetime))
+        assert model.tag == 'exampleTag'
 
 if __name__ == '__main__':
     unittest.main()

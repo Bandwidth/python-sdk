@@ -14,8 +14,10 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.answer_callback import AnswerCallback
+from bandwidth.models.machine_detection_result import MachineDetectionResult
 
 class TestAnswerCallback(unittest.TestCase):
     """AnswerCallback unit test stubs"""
@@ -28,11 +30,9 @@ class TestAnswerCallback(unittest.TestCase):
 
     def make_instance(self, include_optional) -> AnswerCallback:
         """Test AnswerCallback
-            include_option is a boolean, when False only required
+            include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `AnswerCallback`
-        """
         model = AnswerCallback()
         if include_optional:
             return AnswerCallback(
@@ -49,19 +49,35 @@ class TestAnswerCallback(unittest.TestCase):
                 start_time = '2022-06-17T22:19:40.375Z',
                 answer_time = '2022-06-17T22:20Z',
                 tag = 'exampleTag',
-                machine_detection_result = bandwidth.models.machine_detection_result.machineDetectionResult(
+                machine_detection_result = MachineDetectionResult(
                     value = 'answering-machine', 
                     duration = 'PT4.9891287S', )
             )
         else:
             return AnswerCallback(
         )
-        """
 
     def testAnswerCallback(self):
         """Test AnswerCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        model = self.make_instance(True)
+        assert(model is not None)
+        assert(isinstance(model, AnswerCallback))
+        assert model.event_type == 'bridgeComplete'
+        assert(isinstance(model.event_time, datetime))
+        assert model.account_id == '9900000'
+        assert model.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert model.var_from == '+15555555555'
+        assert model.to == '+15555555555'
+        assert model.direction == 'inbound'
+        assert model.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert model.call_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert(isinstance(model.enqueued_time, datetime))
+        assert(isinstance(model.start_time, datetime))
+        assert(isinstance(model.answer_time, datetime))
+        assert model.tag == 'exampleTag'
+        assert model.machine_detection_result.value == 'answering-machine'
+        assert model.machine_detection_result.duration == 'PT4.9891287S'
+
 
 if __name__ == '__main__':
     unittest.main()

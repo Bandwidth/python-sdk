@@ -14,8 +14,10 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.call_recording_metadata import CallRecordingMetadata
+from bandwidth.models.recording_transcription_metadata import RecordingTranscriptionMetadata
 
 class TestCallRecordingMetadata(unittest.TestCase):
     """CallRecordingMetadata unit test stubs"""
@@ -28,11 +30,9 @@ class TestCallRecordingMetadata(unittest.TestCase):
 
     def make_instance(self, include_optional) -> CallRecordingMetadata:
         """Test CallRecordingMetadata
-            include_option is a boolean, when False only required
+            include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CallRecordingMetadata`
-        """
         model = CallRecordingMetadata()
         if include_optional:
             return CallRecordingMetadata(
@@ -53,7 +53,7 @@ class TestCallRecordingMetadata(unittest.TestCase):
                 file_format = 'wav',
                 status = 'completed',
                 media_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/recordings/r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833/media',
-                transcription = bandwidth.models.recording_transcription_metadata.recordingTranscriptionMetadata(
+                transcription = RecordingTranscriptionMetadata(
                     id = 't-387bd648-18f3-4823-9d16-746bca0003c9', 
                     status = 'completed', 
                     completed_time = '2022-06-13T18:46:29.715Z', 
@@ -62,12 +62,33 @@ class TestCallRecordingMetadata(unittest.TestCase):
         else:
             return CallRecordingMetadata(
         )
-        """
 
     def testCallRecordingMetadata(self):
         """Test CallRecordingMetadata"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        model = self.make_instance(True)
+        assert(model is not None)
+        assert(isinstance(model, CallRecordingMetadata))
+        assert model.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert model.account_id == '9900000'
+        assert model.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert model.parent_call_id == 'c-95ac8d6e-1a31c52e-b38f-4198-93c1-51633ec68f8d'
+        assert model.recording_id == 'r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833'
+        assert model.to == '+15555555555'
+        assert model.var_from == '+15555555555'
+        assert model.transfer_caller_id == '+15555555555'
+        assert model.transfer_to == '+15555555555'
+        assert model.duration == 'PT13.67S'
+        assert model.direction == 'inbound'
+        assert model.channels == 1
+        assert(isinstance(model.start_time, datetime))
+        assert(isinstance(model.end_time, datetime))
+        assert model.file_format == 'wav'
+        assert model.status == 'completed'
+        assert model.media_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/recordings/r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833/media'
+        assert model.transcription.id == 't-387bd648-18f3-4823-9d16-746bca0003c9'
+        assert model.transcription.status == 'completed'
+        assert(isinstance(model.transcription.completed_time, datetime))
+        assert model.transcription.url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/recordings/r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/transcription'
 
 if __name__ == '__main__':
     unittest.main()

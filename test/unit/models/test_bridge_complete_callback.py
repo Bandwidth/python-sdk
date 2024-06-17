@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback
 
@@ -28,11 +29,9 @@ class TestBridgeCompleteCallback(unittest.TestCase):
 
     def make_instance(self, include_optional) -> BridgeCompleteCallback:
         """Test BridgeCompleteCallback
-            include_option is a boolean, when False only required
+            include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `BridgeCompleteCallback`
-        """
         model = BridgeCompleteCallback()
         if include_optional:
             return BridgeCompleteCallback(
@@ -56,12 +55,28 @@ class TestBridgeCompleteCallback(unittest.TestCase):
         else:
             return BridgeCompleteCallback(
         )
-        """
 
     def testBridgeCompleteCallback(self):
         """Test BridgeCompleteCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        model = self.make_instance(True)
+        assert(model is not None)
+        assert(isinstance(model, BridgeCompleteCallback))
+        assert model.event_type == 'bridgeComplete'
+        assert(isinstance(model.event_time, datetime))
+        assert model.account_id == '9900000'
+        assert model.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert model.var_from == '+15555555555'
+        assert model.to == '+15555555555'
+        assert model.direction == 'inbound'
+        assert model.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert model.call_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert(isinstance(model.enqueued_time, datetime))
+        assert(isinstance(model.start_time, datetime))
+        assert(isinstance(model.answer_time, datetime))
+        assert model.tag == 'exampleTag'
+        assert model.cause == 'busy'
+        assert model.error_message == 'Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call'
+        assert model.error_id == '4642074b-7b58-478b-96e4-3a60955c6765'
 
 if __name__ == '__main__':
     unittest.main()
