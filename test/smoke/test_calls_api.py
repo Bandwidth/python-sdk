@@ -1,5 +1,5 @@
 """
-Integration test for Bandwidth's Voice Voice Calls API
+Integration test for Bandwidth's Voice Calls API
 """
 from bandwidth import ApiResponse
 from test.utils.env_variables import *
