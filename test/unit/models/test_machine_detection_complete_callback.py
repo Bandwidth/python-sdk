@@ -14,8 +14,10 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.machine_detection_complete_callback import MachineDetectionCompleteCallback
+from bandwidth.models.machine_detection_result import MachineDetectionResult
 
 class TestMachineDetectionCompleteCallback(unittest.TestCase):
     """MachineDetectionCompleteCallback unit test stubs"""
@@ -31,9 +33,6 @@ class TestMachineDetectionCompleteCallback(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `MachineDetectionCompleteCallback`
-        """
-        model = MachineDetectionCompleteCallback()
         if include_optional:
             return MachineDetectionCompleteCallback(
                 event_type = 'bridgeComplete',
@@ -49,19 +48,35 @@ class TestMachineDetectionCompleteCallback(unittest.TestCase):
                 start_time = '2022-06-17T22:19:40.375Z',
                 answer_time = '2022-06-17T22:20Z',
                 tag = 'exampleTag',
-                machine_detection_result = bandwidth.models.machine_detection_result.machineDetectionResult(
+                machine_detection_result = MachineDetectionResult(
                     value = 'answering-machine', 
                     duration = 'PT4.9891287S', )
             )
         else:
             return MachineDetectionCompleteCallback(
         )
-        """
 
     def testMachineDetectionCompleteCallback(self):
         """Test MachineDetectionCompleteCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, MachineDetectionCompleteCallback)
+        assert instance.event_type == 'bridgeComplete'
+        assert isinstance(instance.event_time, datetime)
+        assert instance.account_id == '9900000'
+        assert instance.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert instance.var_from == '+15555555555'
+        assert instance.to == '+15555555555'
+        assert instance.direction == 'inbound'
+        assert instance.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.call_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert isinstance(instance.enqueued_time, datetime)
+        assert isinstance(instance.start_time, datetime)
+        assert isinstance(instance.answer_time, datetime)
+        assert instance.tag == 'exampleTag'
+        assert isinstance(instance.machine_detection_result, MachineDetectionResult)
+        assert instance.machine_detection_result.value == 'answering-machine'
+        assert instance.machine_detection_result.duration == 'PT4.9891287S'
 
 if __name__ == '__main__':
     unittest.main()

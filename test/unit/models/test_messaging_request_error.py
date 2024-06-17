@@ -31,9 +31,6 @@ class TestMessagingRequestError(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `MessagingRequestError`
-        """
-        model = MessagingRequestError()
         if include_optional:
             return MessagingRequestError(
                 type = '',
@@ -44,12 +41,14 @@ class TestMessagingRequestError(unittest.TestCase):
                 type = '',
                 description = '',
         )
-        """
 
     def testMessagingRequestError(self):
         """Test MessagingRequestError"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, MessagingRequestError)
+        assert instance.type == ''
+        assert instance.description == ''
 
 if __name__ == '__main__':
     unittest.main()

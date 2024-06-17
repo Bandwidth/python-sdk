@@ -31,9 +31,6 @@ class TestMachineDetectionResult(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `MachineDetectionResult`
-        """
-        model = MachineDetectionResult()
         if include_optional:
             return MachineDetectionResult(
                 value = 'answering-machine',
@@ -42,12 +39,14 @@ class TestMachineDetectionResult(unittest.TestCase):
         else:
             return MachineDetectionResult(
         )
-        """
 
     def testMachineDetectionResult(self):
         """Test MachineDetectionResult"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, MachineDetectionResult)
+        assert instance.value == 'answering-machine'
+        assert instance.duration == 'PT4.9891287S'
 
 if __name__ == '__main__':
     unittest.main()

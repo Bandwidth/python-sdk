@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.list_message_item import ListMessageItem
 
@@ -31,9 +32,6 @@ class TestListMessageItem(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `ListMessageItem`
-        """
-        model = ListMessageItem()
         if include_optional:
             return ListMessageItem(
                 message_id = '1589228074636lm4k2je7j7jklbn2',
@@ -57,12 +55,29 @@ class TestListMessageItem(unittest.TestCase):
         else:
             return ListMessageItem(
         )
-        """
 
     def testListMessageItem(self):
         """Test ListMessageItem"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, ListMessageItem)
+        assert instance.message_id == '1589228074636lm4k2je7j7jklbn2'
+        assert instance.account_id == '9900000'
+        assert instance.source_tn == '+15554443333'
+        assert instance.destination_tn == '+15554442222'
+        assert instance.message_status == 'RECEIVED'
+        assert instance.message_direction == 'INBOUND'
+        assert instance.message_type == 'sms'
+        assert instance.segment_count == 1
+        assert instance.error_code == 9902
+        assert isinstance(instance.receive_time, datetime)
+        assert instance.carrier_name == 'other'
+        assert instance.message_size == 27
+        assert instance.message_length == 18
+        assert instance.attachment_count == 1
+        assert instance.recipient_count == 1
+        assert instance.campaign_class == 'T'
+        assert instance.campaign_id == 'CJEUMDK'
 
 if __name__ == '__main__':
     unittest.main()

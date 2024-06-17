@@ -31,9 +31,6 @@ class TestMessagingCodeResponse(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `MessagingCodeResponse`
-        """
-        model = MessagingCodeResponse()
         if include_optional:
             return MessagingCodeResponse(
                 message_id = '1589228074636lm4k2je7j7jklbn2'
@@ -41,12 +38,13 @@ class TestMessagingCodeResponse(unittest.TestCase):
         else:
             return MessagingCodeResponse(
         )
-        """
 
     def testMessagingCodeResponse(self):
         """Test MessagingCodeResponse"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, MessagingCodeResponse)
+        assert instance.message_id == '1589228074636lm4k2je7j7jklbn2'
 
 if __name__ == '__main__':
     unittest.main()

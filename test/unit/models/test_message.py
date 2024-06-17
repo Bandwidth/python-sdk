@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.message import Message
 
@@ -31,9 +32,6 @@ class TestMessage(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `Message`
-        """
-        model = Message()
         if include_optional:
             return Message(
                 id = '1589228074636lm4k2je7j7jklbn2',
@@ -53,12 +51,25 @@ class TestMessage(unittest.TestCase):
         else:
             return Message(
         )
-        """
 
     def testMessage(self):
         """Test Message"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, Message)
+        assert instance.id == '1589228074636lm4k2je7j7jklbn2'
+        assert instance.owner == '+15554443333'
+        assert instance.application_id == '93de2206-9669-4e07-948d-329f4b722ee2'
+        assert isinstance(instance.time, datetime)
+        assert instance.segment_count == 2
+        assert instance.direction == 'in'
+        assert instance.to == ["+15552223333"]
+        assert instance.var_from == '+15553332222'
+        assert instance.media == ["https://dev.bandwidth.com/images/bandwidth-logo.png"]
+        assert instance.text == 'Hello world'
+        assert instance.tag == 'custom tag'
+        assert instance.priority == 'default'
+        assert isinstance(instance.expiration, datetime)
 
 if __name__ == '__main__':
     unittest.main()

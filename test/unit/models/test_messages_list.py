@@ -14,8 +14,11 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.messages_list import MessagesList
+from bandwidth.models.page_info import PageInfo
+from bandwidth.models.list_message_item import ListMessageItem
 
 class TestMessagesList(unittest.TestCase):
     """MessagesList unit test stubs"""
@@ -31,19 +34,16 @@ class TestMessagesList(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `MessagesList`
-        """
-        model = MessagesList()
         if include_optional:
             return MessagesList(
                 total_count = 100,
-                page_info = bandwidth.models.page_info.PageInfo(
+                page_info = PageInfo(
                     prev_page = 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&nextPage=DLAPE902', 
                     next_page = 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&prevPage=GL83PD3C', 
                     prev_page_token = 'DLAPE902', 
                     next_page_token = 'GL83PD3C', ),
                 messages = [
-                    bandwidth.models.list_message_item.listMessageItem(
+                    ListMessageItem(
                         message_id = '1589228074636lm4k2je7j7jklbn2', 
                         account_id = '9900000', 
                         source_tn = '+15554443333', 
@@ -66,12 +66,38 @@ class TestMessagesList(unittest.TestCase):
         else:
             return MessagesList(
         )
-        """
 
     def testMessagesList(self):
         """Test MessagesList"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, MessagesList)
+        assert instance.total_count == 100
+        assert isinstance(instance.page_info, PageInfo)
+        assert instance.page_info.prev_page == 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&nextPage=DLAPE902'
+        assert instance.page_info.next_page == 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&prevPage=GL83PD3C'
+        assert instance.page_info.prev_page_token == 'DLAPE902'
+        assert instance.page_info.next_page_token == 'GL83PD3C'
+        assert isinstance(instance.messages, list)
+        assert len(instance.messages) == 1
+        assert isinstance(instance.messages[0], ListMessageItem)
+        assert instance.messages[0].message_id == '1589228074636lm4k2je7j7jklbn2'
+        assert instance.messages[0].account_id == '9900000'
+        assert instance.messages[0].source_tn == '+15554443333'
+        assert instance.messages[0].destination_tn == '+15554442222'
+        assert instance.messages[0].message_status == 'RECEIVED'
+        assert instance.messages[0].message_direction == 'INBOUND'
+        assert instance.messages[0].message_type == 'sms'
+        assert instance.messages[0].segment_count == 1
+        assert instance.messages[0].error_code == 9902
+        assert isinstance(instance.messages[0].receive_time, datetime)
+        assert instance.messages[0].carrier_name == 'other'
+        assert instance.messages[0].message_size == 27
+        assert instance.messages[0].message_length == 18
+        assert instance.messages[0].attachment_count == 1
+        assert instance.messages[0].recipient_count == 1
+        assert instance.messages[0].campaign_class == 'T'
+        assert instance.messages[0].campaign_id == 'CJEUMDK'
 
 if __name__ == '__main__':
     unittest.main()

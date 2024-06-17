@@ -28,7 +28,14 @@ class TestLookupStatusEnum(unittest.TestCase):
 
     def testLookupStatusEnum(self):
         """Test LookupStatusEnum"""
-        # inst = LookupStatusEnum()
+        in_progress = LookupStatusEnum('IN_PROGRESS')
+        complete = LookupStatusEnum('COMPLETE')
+        partial_complete = LookupStatusEnum('PARTIAL_COMPLETE')
+        failed = LookupStatusEnum('FAILED')
+        assert in_progress == 'IN_PROGRESS'
+        assert complete == 'COMPLETE'
+        assert partial_complete == 'PARTIAL_COMPLETE'
+        assert failed == 'FAILED'
 
 if __name__ == '__main__':
     unittest.main()

@@ -31,9 +31,6 @@ class TestLookupResult(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `LookupResult`
-        """
-        model = LookupResult()
         if include_optional:
             return LookupResult(
                 response_code = 0,
@@ -49,12 +46,21 @@ class TestLookupResult(unittest.TestCase):
         else:
             return LookupResult(
         )
-        """
 
     def testLookupResult(self):
         """Test LookupResult"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, LookupResult)
+        assert instance.response_code == 0
+        assert instance.message == 'NOERROR'
+        assert instance.e_164_format == '+19195551234'
+        assert instance.formatted == '(919) 555-1234'
+        assert instance.country == 'US'
+        assert instance.line_type == 'Mobile'
+        assert instance.line_provider == 'Verizon Wireless'
+        assert instance.mobile_country_code == '310'
+        assert instance.mobile_network_code == '010'
 
 if __name__ == '__main__':
     unittest.main()

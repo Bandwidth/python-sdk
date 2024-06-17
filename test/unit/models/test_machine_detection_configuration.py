@@ -31,9 +31,6 @@ class TestMachineDetectionConfiguration(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `MachineDetectionConfiguration`
-        """
-        model = MachineDetectionConfiguration()
         if include_optional:
             return MachineDetectionConfiguration(
                 mode = 'async',
@@ -55,12 +52,27 @@ class TestMachineDetectionConfiguration(unittest.TestCase):
         else:
             return MachineDetectionConfiguration(
         )
-        """
 
     def testMachineDetectionConfiguration(self):
         """Test MachineDetectionConfiguration"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, MachineDetectionConfiguration)
+        assert instance.mode == 'async'
+        assert instance.detection_timeout == 15
+        assert instance.silence_timeout == 10
+        assert instance.speech_threshold == 10
+        assert instance.speech_end_threshold == 5
+        assert instance.machine_speech_end_threshold == 5
+        assert instance.delay_result == False
+        assert instance.callback_url == 'https://myServer.example/bandwidth/webhooks/machineDetectionComplete'
+        assert instance.callback_method == 'POST'
+        assert instance.username == 'mySecretUsername'
+        assert instance.password == 'mySecretPassword1!'
+        assert instance.fallback_url == 'https://myFallbackServer.example/bandwidth/webhooks/machineDetectionComplete'
+        assert instance.fallback_method == 'POST'
+        assert instance.fallback_username == 'mySecretUsername'
+        assert instance.fallback_password == 'mySecretPassword1!'
 
 if __name__ == '__main__':
     unittest.main()

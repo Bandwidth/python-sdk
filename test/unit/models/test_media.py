@@ -31,9 +31,6 @@ class TestMedia(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `Media`
-        """
-        model = Media()
         if include_optional:
             return Media(
                 content = '',
@@ -43,12 +40,15 @@ class TestMedia(unittest.TestCase):
         else:
             return Media(
         )
-        """
 
     def testMedia(self):
         """Test Media"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, Media)
+        assert instance.content == ''
+        assert instance.content_length == 56
+        assert instance.media_name == ''
 
 if __name__ == '__main__':
     unittest.main()

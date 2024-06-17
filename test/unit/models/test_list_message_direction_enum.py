@@ -28,7 +28,10 @@ class TestListMessageDirectionEnum(unittest.TestCase):
 
     def testListMessageDirectionEnum(self):
         """Test ListMessageDirectionEnum"""
-        # inst = ListMessageDirectionEnum()
+        inbound = ListMessageDirectionEnum('INBOUND')
+        outbound = ListMessageDirectionEnum('OUTBOUND')
+        assert inbound == 'INBOUND'
+        assert outbound == 'OUTBOUND'
 
 if __name__ == '__main__':
     unittest.main()

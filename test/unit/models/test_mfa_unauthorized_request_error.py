@@ -31,9 +31,6 @@ class TestMfaUnauthorizedRequestError(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `MfaUnauthorizedRequestError`
-        """
-        model = MfaUnauthorizedRequestError()
         if include_optional:
             return MfaUnauthorizedRequestError(
                 message = 'Unauthorized'
@@ -41,12 +38,13 @@ class TestMfaUnauthorizedRequestError(unittest.TestCase):
         else:
             return MfaUnauthorizedRequestError(
         )
-        """
 
     def testMfaUnauthorizedRequestError(self):
         """Test MfaUnauthorizedRequestError"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, MfaUnauthorizedRequestError)
+        assert instance.message == 'Unauthorized'
 
 if __name__ == '__main__':
     unittest.main()
