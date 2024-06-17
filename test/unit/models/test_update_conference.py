@@ -31,9 +31,6 @@ class TestUpdateConference(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `UpdateConference`
-        """
-        model = UpdateConference()
         if include_optional:
             return UpdateConference(
                 status = 'active',
@@ -49,12 +46,21 @@ class TestUpdateConference(unittest.TestCase):
         else:
             return UpdateConference(
         )
-        """
 
     def testUpdateConference(self):
         """Test UpdateConference"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, UpdateConference)
+        assert instance.status == 'active'
+        assert instance.redirect_url == 'https://myServer.example/bandwidth/webhooks/conferenceRedirect'
+        assert instance.redirect_method == 'POST'
+        assert instance.username == 'mySecretUsername'
+        assert instance.password == 'mySecretPassword1!'
+        assert instance.redirect_fallback_url == 'https://myFallbackServer.example/bandwidth/webhooks/conferenceRedirect'
+        assert instance.redirect_fallback_method == 'POST'
+        assert instance.fallback_username == 'mySecretUsername'
+        assert instance.fallback_password == 'mySecretPassword1!'
 
 if __name__ == '__main__':
     unittest.main()

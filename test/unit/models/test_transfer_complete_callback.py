@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.transfer_complete_callback import TransferCompleteCallback
 
@@ -31,9 +32,6 @@ class TestTransferCompleteCallback(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `TransferCompleteCallback`
-        """
-        model = TransferCompleteCallback()
         if include_optional:
             return TransferCompleteCallback(
                 event_type = 'bridgeComplete',
@@ -58,12 +56,30 @@ class TestTransferCompleteCallback(unittest.TestCase):
         else:
             return TransferCompleteCallback(
         )
-        """
 
     def testTransferCompleteCallback(self):
         """Test TransferCompleteCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, TransferCompleteCallback)
+        assert instance.event_type == 'bridgeComplete'
+        assert isinstance(instance.event_time, datetime)
+        assert instance.account_id == '9900000'
+        assert instance.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert instance.var_from == '+15555555555'
+        assert instance.to == '+15555555555'
+        assert instance.direction == 'inbound'
+        assert instance.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.call_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert isinstance(instance.enqueued_time, datetime)
+        assert isinstance(instance.start_time, datetime)
+        assert isinstance(instance.answer_time, datetime)
+        assert instance.tag == 'exampleTag'
+        assert instance.transfer_caller_id == '+15555555555'
+        assert instance.transfer_to == '+15555555555'
+        assert instance.cause == 'busy'
+        assert instance.error_message == 'Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call'
+        assert instance.error_id == '4642074b-7b58-478b-96e4-3a60955c6765'
 
 if __name__ == '__main__':
     unittest.main()

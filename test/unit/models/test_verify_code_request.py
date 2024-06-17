@@ -31,9 +31,6 @@ class TestVerifyCodeRequest(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `VerifyCodeRequest`
-        """
-        model = VerifyCodeRequest()
         if include_optional:
             return VerifyCodeRequest(
                 to = '+19195551234',
@@ -47,12 +44,16 @@ class TestVerifyCodeRequest(unittest.TestCase):
                 expiration_time_in_minutes = 3,
                 code = '123456',
         )
-        """
 
     def testVerifyCodeRequest(self):
         """Test VerifyCodeRequest"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, VerifyCodeRequest)
+        assert instance.to == '+19195551234'
+        assert instance.scope == '2FA'
+        assert instance.expiration_time_in_minutes == 3
+        assert instance.code == '123456'
 
 if __name__ == '__main__':
     unittest.main()

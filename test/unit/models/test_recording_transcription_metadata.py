@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.recording_transcription_metadata import RecordingTranscriptionMetadata
 
@@ -31,9 +32,6 @@ class TestRecordingTranscriptionMetadata(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `RecordingTranscriptionMetadata`
-        """
-        model = RecordingTranscriptionMetadata()
         if include_optional:
             return RecordingTranscriptionMetadata(
                 id = 't-387bd648-18f3-4823-9d16-746bca0003c9',
@@ -44,12 +42,16 @@ class TestRecordingTranscriptionMetadata(unittest.TestCase):
         else:
             return RecordingTranscriptionMetadata(
         )
-        """
 
     def testRecordingTranscriptionMetadata(self):
         """Test RecordingTranscriptionMetadata"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, RecordingTranscriptionMetadata)
+        assert instance.id == 't-387bd648-18f3-4823-9d16-746bca0003c9'
+        assert instance.status == 'completed'
+        assert isinstance(instance.completed_time, datetime)
+        assert instance.url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/recordings/r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/transcription'
 
 if __name__ == '__main__':
     unittest.main()

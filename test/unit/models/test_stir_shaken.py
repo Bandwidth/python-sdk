@@ -31,9 +31,6 @@ class TestStirShaken(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `StirShaken`
-        """
-        model = StirShaken()
         if include_optional:
             return StirShaken(
                 verstat = 'Tn-Verification-Passed',
@@ -43,12 +40,15 @@ class TestStirShaken(unittest.TestCase):
         else:
             return StirShaken(
         )
-        """
 
     def testStirShaken(self):
         """Test StirShaken"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, StirShaken)
+        assert instance.verstat == 'Tn-Verification-Passed'
+        assert instance.attestation_indicator == 'A'
+        assert instance.originating_id == '99759086-1335-11ed-9bcf-5f7d464e91af'
 
 if __name__ == '__main__':
     unittest.main()

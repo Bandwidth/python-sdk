@@ -31,9 +31,6 @@ class TestTranscription(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `Transcription`
-        """
-        model = Transcription()
         if include_optional:
             return Transcription(
                 text = 'Nice talking to you, friend!',
@@ -42,12 +39,14 @@ class TestTranscription(unittest.TestCase):
         else:
             return Transcription(
         )
-        """
 
     def testTranscription(self):
         """Test Transcription"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, Transcription)
+        assert instance.text == 'Nice talking to you, friend!'
+        assert instance.confidence == 0.9
 
 if __name__ == '__main__':
     unittest.main()

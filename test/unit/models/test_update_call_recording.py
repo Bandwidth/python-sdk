@@ -31,9 +31,6 @@ class TestUpdateCallRecording(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `UpdateCallRecording`
-        """
-        model = UpdateCallRecording()
         if include_optional:
             return UpdateCallRecording(
                 state = 'paused'
@@ -42,12 +39,13 @@ class TestUpdateCallRecording(unittest.TestCase):
             return UpdateCallRecording(
                 state = 'paused',
         )
-        """
 
     def testUpdateCallRecording(self):
         """Test UpdateCallRecording"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, UpdateCallRecording)
+        assert instance.state == 'paused'
 
 if __name__ == '__main__':
     unittest.main()

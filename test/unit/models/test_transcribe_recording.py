@@ -31,9 +31,6 @@ class TestTranscribeRecording(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `TranscribeRecording`
-        """
-        model = TranscribeRecording()
         if include_optional:
             return TranscribeRecording(
                 callback_url = 'https://myServer.example/bandwidth/webhooks/transcriptionAvailable',
@@ -47,12 +44,19 @@ class TestTranscribeRecording(unittest.TestCase):
         else:
             return TranscribeRecording(
         )
-        """
 
     def testTranscribeRecording(self):
         """Test TranscribeRecording"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, TranscribeRecording)
+        assert instance.callback_url == 'https://myServer.example/bandwidth/webhooks/transcriptionAvailable'
+        assert instance.callback_method == 'POST'
+        assert instance.username == 'mySecretUsername'
+        assert instance.password == 'mySecretPassword1!'
+        assert instance.tag == 'exampleTag'
+        assert instance.callback_timeout == 5.5
+        assert instance.detect_language == True
 
 if __name__ == '__main__':
     unittest.main()

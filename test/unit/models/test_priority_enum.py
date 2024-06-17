@@ -28,7 +28,10 @@ class TestPriorityEnum(unittest.TestCase):
 
     def testPriorityEnum(self):
         """Test PriorityEnum"""
-        # inst = PriorityEnum()
+        default = PriorityEnum('default')
+        high = PriorityEnum('high')
+        assert default == 'default'
+        assert high == 'high'
 
 if __name__ == '__main__':
     unittest.main()

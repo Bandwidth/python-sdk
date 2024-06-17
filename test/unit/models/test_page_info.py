@@ -31,9 +31,6 @@ class TestPageInfo(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `PageInfo`
-        """
-        model = PageInfo()
         if include_optional:
             return PageInfo(
                 prev_page = 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&nextPage=DLAPE902',
@@ -44,12 +41,16 @@ class TestPageInfo(unittest.TestCase):
         else:
             return PageInfo(
         )
-        """
 
     def testPageInfo(self):
         """Test PageInfo"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, PageInfo)
+        assert instance.prev_page == 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&nextPage=DLAPE902'
+        assert instance.next_page == 'https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&prevPage=GL83PD3C'
+        assert instance.prev_page_token == 'DLAPE902'
+        assert instance.next_page_token == 'GL83PD3C'
 
 if __name__ == '__main__':
     unittest.main()

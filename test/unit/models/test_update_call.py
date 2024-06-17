@@ -31,9 +31,6 @@ class TestUpdateCall(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `UpdateCall`
-        """
-        model = UpdateCall()
         if include_optional:
             return UpdateCall(
                 state = 'active',
@@ -50,12 +47,22 @@ class TestUpdateCall(unittest.TestCase):
         else:
             return UpdateCall(
         )
-        """
 
     def testUpdateCall(self):
         """Test UpdateCall"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, UpdateCall)
+        assert instance.state == 'active'
+        assert instance.redirect_url == 'https://myServer.example/bandwidth/webhooks/redirect'
+        assert instance.redirect_method == 'POST'
+        assert instance.username == 'mySecretUsername'
+        assert instance.password == 'mySecretPassword1!'
+        assert instance.redirect_fallback_url == 'https://myFallbackServer.example/bandwidth/webhooks/redirect'
+        assert instance.redirect_fallback_method == 'POST'
+        assert instance.fallback_username == 'mySecretUsername'
+        assert instance.fallback_password == 'mySecretPassword1!'
+        assert instance.tag == 'My Custom Tag'
 
 if __name__ == '__main__':
     unittest.main()

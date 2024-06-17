@@ -16,6 +16,7 @@
 import unittest
 
 from bandwidth.models.recording_transcriptions import RecordingTranscriptions
+from bandwidth.models.transcription import Transcription
 
 class TestRecordingTranscriptions(unittest.TestCase):
     """RecordingTranscriptions unit test stubs"""
@@ -31,13 +32,10 @@ class TestRecordingTranscriptions(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `RecordingTranscriptions`
-        """
-        model = RecordingTranscriptions()
         if include_optional:
             return RecordingTranscriptions(
                 transcripts = [
-                    bandwidth.models.transcription.transcription(
+                    Transcription(
                         text = 'Nice talking to you, friend!', 
                         confidence = 0.9, )
                     ]
@@ -45,12 +43,16 @@ class TestRecordingTranscriptions(unittest.TestCase):
         else:
             return RecordingTranscriptions(
         )
-        """
 
     def testRecordingTranscriptions(self):
         """Test RecordingTranscriptions"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, RecordingTranscriptions)
+        assert len(instance.transcripts) == 1
+        assert isinstance(instance.transcripts[0], Transcription)
+        assert instance.transcripts[0].text == 'Nice talking to you, friend!'
+        assert instance.transcripts[0].confidence == 0.9
 
 if __name__ == '__main__':
     unittest.main()

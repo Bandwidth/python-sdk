@@ -31,9 +31,6 @@ class TestTnLookupRequestError(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `TnLookupRequestError`
-        """
-        model = TnLookupRequestError()
         if include_optional:
             return TnLookupRequestError(
                 message = 'example error message'
@@ -41,12 +38,13 @@ class TestTnLookupRequestError(unittest.TestCase):
         else:
             return TnLookupRequestError(
         )
-        """
 
     def testTnLookupRequestError(self):
         """Test TnLookupRequestError"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, TnLookupRequestError)
+        assert instance.message == 'example error message'
 
 if __name__ == '__main__':
     unittest.main()

@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.recording_available_callback import RecordingAvailableCallback
 
@@ -31,9 +32,6 @@ class TestRecordingAvailableCallback(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `RecordingAvailableCallback`
-        """
-        model = RecordingAvailableCallback()
         if include_optional:
             return RecordingAvailableCallback(
                 event_type = 'bridgeComplete',
@@ -62,12 +60,34 @@ class TestRecordingAvailableCallback(unittest.TestCase):
         else:
             return RecordingAvailableCallback(
         )
-        """
 
     def testRecordingAvailableCallback(self):
         """Test RecordingAvailableCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, RecordingAvailableCallback)
+        assert instance.event_type == 'bridgeComplete'
+        assert isinstance(instance.event_time, datetime)
+        assert instance.account_id == '9900000'
+        assert instance.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert instance.var_from == '+15555555555'
+        assert instance.to == '+15555555555'
+        assert instance.direction == 'inbound'
+        assert instance.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.call_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.parent_call_id == 'c-95ac8d6e-1a31c52e-b38f-4198-93c1-51633ec68f8d'
+        assert instance.recording_id == 'r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833'
+        assert instance.media_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/recordings/r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833/media'
+        assert isinstance(instance.enqueued_time, datetime)
+        assert isinstance(instance.start_time, datetime)
+        assert isinstance(instance.end_time, datetime)
+        assert instance.duration == 'PT13.67S'
+        assert instance.file_format == 'wav'
+        assert instance.channels == 1
+        assert instance.tag == 'exampleTag'
+        assert instance.status == 'completed'
+        assert instance.transfer_caller_id == '+15555555555'
+        assert instance.transfer_to == '+15555555555'
 
 if __name__ == '__main__':
     unittest.main()
