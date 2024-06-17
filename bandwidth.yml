@@ -3327,6 +3327,7 @@ components:
           $ref: '#/components/schemas/status'
         completedTime:
           type: string
+          format: date-time
           description: The time that the transcription was completed
           example: '2022-06-13T18:46:29.715Z'
         url:

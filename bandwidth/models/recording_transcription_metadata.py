@@ -18,6 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
+from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
@@ -29,7 +30,7 @@ class RecordingTranscriptionMetadata(BaseModel):
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="The unique transcription ID")
     status: Optional[StrictStr] = Field(default=None, description="The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.")
-    completed_time: Optional[StrictStr] = Field(default=None, description="The time that the transcription was completed", alias="completedTime")
+    completed_time: Optional[datetime] = Field(default=None, description="The time that the transcription was completed", alias="completedTime")
     url: Optional[StrictStr] = Field(default=None, description="The URL of the [transcription](#operation/getCallTranscription)")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "status", "completedTime", "url"]
