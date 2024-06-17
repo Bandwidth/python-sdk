@@ -7,8 +7,7 @@ Unit tests for the <Conference> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import Conference
+from bandwidth.models.bxml import Conference, Verb
 
 
 class TestConference(unittest.TestCase):
@@ -30,7 +29,10 @@ class TestConference(unittest.TestCase):
             tag = "tag",
             callback_timeout = "5",
         )
-        self.test_verb = Verb(tag="test")
+
+    def test_instance(self):
+        assert isinstance(self.conference, Conference)
+        assert isinstance(self.conference, Verb)
 
     def test_to_bxml(self):
         expected = '<Conference name="conf1" mute="true" hold="false" callIdsToCoach="example-call-id" conferenceEventUrl="example.com/eventurl" conferenceEventMethod="POST" conferenceEventFallbackUrl="backupexample.com/eventurl" conferenceEventFallbackMethod="POST" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" callbackTimeout="5" />'

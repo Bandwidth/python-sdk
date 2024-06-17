@@ -15,6 +15,9 @@ class TestResponse(unittest.TestCase):
     def setUp(self):
         self.response = Response()
 
+    def test_instance(self):
+        assert isinstance(self.response, Response)
+
     def test_response_init(self):
         """Test initializing the <Response> root
         """

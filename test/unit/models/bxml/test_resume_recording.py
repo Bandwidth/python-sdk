@@ -7,15 +7,17 @@ Unit tests for the <ResumeRecording> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import ResumeRecording
+from bandwidth.models.bxml import ResumeRecording, Verb
 
 
 class TestResumeRecording(unittest.TestCase):
 
     def setUp(self):
         self.resume_recording = ResumeRecording()
-        self.test_verb = Verb(tag="test")
+
+    def test_instance(self):
+        assert isinstance(self.resume_recording, ResumeRecording)
+        assert isinstance(self.resume_recording, Verb)
 
     def test_to_bxml(self):
         expected = '<ResumeRecording />'

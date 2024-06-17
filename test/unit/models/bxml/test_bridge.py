@@ -7,8 +7,7 @@ Unit tests for the <Bridge> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import Bridge
+from bandwidth.models.bxml import Bridge, Verb
 
 
 class TestBridge(unittest.TestCase):
@@ -19,7 +18,10 @@ class TestBridge(unittest.TestCase):
             bridge_complete_url="https://example.com",
             tag="test"
         )
-        self.test_verb = Verb(tag="test")
+
+    def test_instance(self):
+        assert isinstance(self.bridge, Bridge)
+        assert isinstance(self.bridge, Verb)
 
     def test_to_bxml(self):
         expected = '<Bridge bridgeCompleteUrl="https://example.com" tag="test">+19198675309</Bridge>'

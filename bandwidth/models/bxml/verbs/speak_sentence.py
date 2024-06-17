@@ -9,10 +9,10 @@ import re
 
 import xml.etree.ElementTree as ET
 
-from ..verb import Verb
+from ..nestable_verb import NestableVerb
 
 
-class SpeakSentence(Verb):
+class SpeakSentence(NestableVerb):
 
     def __init__(
         self, text: str, voice: str=None, 

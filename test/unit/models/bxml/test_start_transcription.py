@@ -7,7 +7,7 @@ Unit tests for the <StartTranscription> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import StartTranscription, CustomParam
+from bandwidth.models.bxml import StartTranscription, CustomParam, Verb, NestableVerb
 
 
 class TestStartTranscription(unittest.TestCase):
@@ -33,6 +33,11 @@ class TestStartTranscription(unittest.TestCase):
             stabilized=True,
             custom_params=[self.custom_param1]
         )
+
+    def test_instance(self):
+        assert isinstance(self.start_transcription, StartTranscription)
+        assert isinstance(self.start_transcription, NestableVerb)
+        assert isinstance(self.start_transcription, Verb)
 
     def test_to_bxml(self):
         expected = '<StartTranscription name="transcription1" tracks="both" transcriptionEventUrl="eventurl.com" transcriptionEventMethod="POST" username="user" password="pass" destination="testurl.com" stabilized="True"><CustomParam name="name1" value="value1" /></StartTranscription>'

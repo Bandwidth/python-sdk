@@ -9,9 +9,7 @@ Unit tests for Root and Verb base classes
 import pytest
 import unittest
 
-from bandwidth.models.bxml import Root
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import TerminalVerb
+from bandwidth.models.bxml import Root, Verb, NestableVerb
 
 
 class TestBaseClasses(unittest.TestCase):
@@ -20,8 +18,7 @@ class TestBaseClasses(unittest.TestCase):
         self.root = Root(tag="TestRoot")
         self.verb1 = Verb(tag="TestVerb1", content="test")
         self.verb2 = Verb(tag="TestVerb2")
-        self.verb3 = Verb(tag="TestVerb3")
-        self.terminal_verb = TerminalVerb(tag="TestTerminalVerb")
+        self.nestable_verb = NestableVerb(tag="TestNestableVerb")
 
     def test_root(self):
         self.root.add_verb(self.verb1)
@@ -32,13 +29,13 @@ class TestBaseClasses(unittest.TestCase):
         assert len(self.root) == 2
         assert expected_bxml == self.root.to_bxml()
 
-    def test_verb(self):
-        self.verb3.add_verb(self.verb1)
+    def test_nestable_verb(self):
+        self.nestable_verb.add_verb(self.verb1)
 
-        expected_bxml = "<TestVerb3><TestVerb1>test</TestVerb1></TestVerb3>"
-        assert type(self.verb3[0]) == Verb
-        assert len(self.verb3) == 1
-        assert expected_bxml == self.verb3.to_bxml()
+        expected_bxml = "<TestNestableVerb><TestVerb1>test</TestVerb1></TestNestableVerb>"
+        assert type(self.nestable_verb[0]) == Verb
+        assert len(self.nestable_verb) == 1
+        assert expected_bxml == self.nestable_verb.to_bxml()
 
     def test_adding_verbs_to_root_during_creation(self):
         self.root2 = Root(tag="TestRoot2", nested_verbs=[self.verb1, self.verb2])

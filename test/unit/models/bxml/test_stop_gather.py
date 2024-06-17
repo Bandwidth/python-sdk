@@ -7,15 +7,17 @@ Unit tests for the <StopGather> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import StopGather
+from bandwidth.models.bxml import StopGather, Verb
 
 
 class TestStopGather(unittest.TestCase):
 
     def setUp(self):
         self.stop_gather = StopGather()
-        self.test_verb = Verb(tag="test")
+
+    def test_instance(self):
+        assert isinstance(self.stop_gather, StopGather)
+        assert isinstance(self.stop_gather, Verb)
 
     def test_to_bxml(self):
         expected = '<StopGather />'

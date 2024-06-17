@@ -7,9 +7,7 @@ Unit tests for the <PhoneNumber> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml.verbs.transfer import Transfer
-from bandwidth.models.bxml import PhoneNumber
-from bandwidth.models.bxml import SipUri
+from bandwidth.models.bxml import Transfer, PhoneNumber, SipUri, Verb, NestableVerb
 
 
 class TestTransfer(unittest.TestCase):
@@ -30,6 +28,11 @@ class TestTransfer(unittest.TestCase):
             transfer_caller_display_name="test",
             tag = "test"
         )
+
+    def test_instance(self):
+        assert isinstance(self.transfer, Transfer)
+        assert isinstance(self.transfer, NestableVerb)
+        assert isinstance(self.transfer, Verb)
 
     def test_to_bxml(self):
         expected = '<Transfer transferCallerId="+19195554321" transferCallerDisplayName="test" callTimeout="15" tag="test"><SipUri uui="test">sip@bw.com</SipUri></Transfer>'

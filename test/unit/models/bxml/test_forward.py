@@ -7,8 +7,7 @@ Unit tests for the <Forward> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml.verbs.forward import Forward
+from bandwidth.models.bxml import Forward, Verb
 
 class TestForward(unittest.TestCase):
 
@@ -21,7 +20,10 @@ class TestForward(unittest.TestCase):
             diversion_reason="away",
             uui="93d6f3c0be5845960b744fa28015d8ede84bd1a4;encoding=base64,asdf;encoding=jwt"
         )
-        self.test_verb = Verb(tag="test")
+
+    def test_instance(self):
+        assert isinstance(self.forward, Forward)
+        assert isinstance(self.forward, Verb)
 
     def test_to_bxml(self):
         expected = '<Forward to="19195554321" from="19195554322" callTimeout="15" diversionTreatment="propagate" diversionReason="away" uui="93d6f3c0be5845960b744fa28015d8ede84bd1a4;encoding=base64,asdf;encoding=jwt" />'

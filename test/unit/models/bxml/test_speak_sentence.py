@@ -7,8 +7,7 @@ Unit tests for the <SpeakSentence> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import SpeakSentence, Response
+from bandwidth.models.bxml import SpeakSentence, Response, Verb
 
 
 class TestSpeakSentence(unittest.TestCase):
@@ -19,7 +18,9 @@ class TestSpeakSentence(unittest.TestCase):
             voice="julie"
         )
 
-        self.test_verb = Verb(tag="test")
+    def test_instance(self):
+        assert isinstance(self.speak_sentence, SpeakSentence)
+        assert isinstance(self.speak_sentence, Verb)
 
     def test_to_bxml(self):
         expected = '<SpeakSentence voice="julie">Hello. Your number is <say-as interpret-as="telephone">asdf</say-as>, lets play a game. What is 10 + 3. Press the pound key when finished.</SpeakSentence>'

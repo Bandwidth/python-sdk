@@ -7,8 +7,7 @@ Unit tests for the <StartRecording> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import StartRecording
+from bandwidth.models.bxml import StartRecording, Verb
 
 
 class TestStartRecording(unittest.TestCase):
@@ -26,8 +25,10 @@ class TestStartRecording(unittest.TestCase):
             file_format = "wav",
             multi_channel = True
         )
-        self.test_verb = Verb(tag="test")
 
+    def test_instance(self):
+        assert isinstance(self.start_recording, StartRecording)
+        assert isinstance(self.start_recording, Verb)
 
     def test_to_bxml(self):
         expected = '<StartRecording recordingAvailableUrl="example.com" recordingAvailableMethod="POST" transcribe="True" transcriptionAvailableUrl="transcription-example.com" transcriptionAvailableMethod="POST" username="user" password="pass" tag="tag" fileFormat="wav" multiChannel="True" />'

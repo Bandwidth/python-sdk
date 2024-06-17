@@ -7,8 +7,7 @@ Unit tests for the <PhoneNumber> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import PhoneNumber
+from bandwidth.models.bxml import PhoneNumber, Verb
 
 
 class TestPhoneNumber(unittest.TestCase):
@@ -20,7 +19,10 @@ class TestPhoneNumber(unittest.TestCase):
             transfer_answer_method="POST",
             tag=""
         )
-        self.test_verb = Verb(tag="test")
+
+    def test_instance(self):
+        assert isinstance(self.phone_number, PhoneNumber)
+        assert isinstance(self.phone_number, Verb)
 
     def test_to_bxml(self):
         expected = '<PhoneNumber transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="">+19195551234</PhoneNumber>'
