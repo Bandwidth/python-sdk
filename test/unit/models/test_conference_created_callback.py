@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.conference_created_callback import ConferenceCreatedCallback
 
@@ -31,9 +32,6 @@ class TestConferenceCreatedCallback(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `ConferenceCreatedCallback`
-        """
-        model = ConferenceCreatedCallback()
         if include_optional:
             return ConferenceCreatedCallback(
                 event_type = 'bridgeComplete',
@@ -45,12 +43,17 @@ class TestConferenceCreatedCallback(unittest.TestCase):
         else:
             return ConferenceCreatedCallback(
         )
-        """
 
     def testConferenceCreatedCallback(self):
         """Test ConferenceCreatedCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, ConferenceCreatedCallback)
+        assert instance.event_type == 'bridgeComplete'
+        assert isinstance(instance.event_time, datetime)
+        assert instance.conference_id == 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9'
+        assert instance.name == 'my-conference-name'
+        assert instance.tag == 'exampleTag'
 
 if __name__ == '__main__':
     unittest.main()

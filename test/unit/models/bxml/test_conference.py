@@ -34,4 +34,4 @@ class TestConference(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<Conference name="conf1" mute="true" hold="false" callIdsToCoach="example-call-id" conferenceEventUrl="example.com/eventurl" conferenceEventMethod="POST" conferenceEventFallbackUrl="backupexample.com/eventurl" conferenceEventFallbackMethod="POST" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" callbackTimeout="5" />'
-        assert(expected == self.conference.to_bxml())
+        assert expected == self.conference.to_bxml()

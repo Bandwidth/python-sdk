@@ -19,4 +19,4 @@ class TestTag(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<Tag>Test</Tag>'
-        assert(expected == self.tag.to_bxml())
+        assert expected == self.tag.to_bxml()

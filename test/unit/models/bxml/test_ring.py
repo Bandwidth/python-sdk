@@ -22,4 +22,4 @@ class TestRing(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<Ring duration="30" answerCall="True" />'
-        assert(expected == self.ring.to_bxml())
+        assert expected == self.ring.to_bxml()

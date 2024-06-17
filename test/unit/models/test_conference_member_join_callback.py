@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.conference_member_join_callback import ConferenceMemberJoinCallback
 
@@ -31,9 +32,6 @@ class TestConferenceMemberJoinCallback(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `ConferenceMemberJoinCallback`
-        """
-        model = ConferenceMemberJoinCallback()
         if include_optional:
             return ConferenceMemberJoinCallback(
                 event_type = 'bridgeComplete',
@@ -48,12 +46,20 @@ class TestConferenceMemberJoinCallback(unittest.TestCase):
         else:
             return ConferenceMemberJoinCallback(
         )
-        """
 
     def testConferenceMemberJoinCallback(self):
         """Test ConferenceMemberJoinCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, ConferenceMemberJoinCallback)
+        assert instance.event_type == 'bridgeComplete'
+        assert isinstance(instance.event_time, datetime)
+        assert instance.conference_id == 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9'
+        assert instance.name == 'my-conference-name'
+        assert instance.var_from == '+15555555555'
+        assert instance.to == '+15555555555'
+        assert instance.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.tag == 'exampleTag'
 
 if __name__ == '__main__':
     unittest.main()

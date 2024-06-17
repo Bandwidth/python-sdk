@@ -36,9 +36,9 @@ class TestStartTranscription(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<StartTranscription name="transcription1" tracks="both" transcriptionEventUrl="eventurl.com" transcriptionEventMethod="POST" username="user" password="pass" destination="testurl.com" stabilized="True"><CustomParam name="name1" value="value1" /></StartTranscription>'
-        assert(expected == self.start_transcription.to_bxml())
+        assert expected == self.start_transcription.to_bxml()
 
     def test_add_verb(self):
         expected = '<StartTranscription name="transcription1" tracks="both" transcriptionEventUrl="eventurl.com" transcriptionEventMethod="POST" username="user" password="pass" destination="testurl.com" stabilized="True"><CustomParam name="name1" value="value1" /><CustomParam name="name2" value="value2" /></StartTranscription>'
         self.start_transcription.add_verb(self.custom_param2)
-        assert(expected == self.start_transcription.to_bxml())
+        assert expected == self.start_transcription.to_bxml()

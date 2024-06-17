@@ -25,4 +25,4 @@ class TestStartGather(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<StartGather dtmfUrl="https://example.com/startgather" dtmfMethod="POST" username="user" password="pass" tag="tag" />'
-        assert(expected == self.start_gather.to_bxml())
+        assert expected == self.start_gather.to_bxml()

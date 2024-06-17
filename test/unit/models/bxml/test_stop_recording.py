@@ -19,4 +19,4 @@ class TestStopRecording(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<StopRecording />'
-        assert(expected == self.stop_recording.to_bxml())
+        assert expected == self.stop_recording.to_bxml()

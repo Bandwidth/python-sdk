@@ -31,4 +31,4 @@ class TestStartRecording(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<StartRecording recordingAvailableUrl="example.com" recordingAvailableMethod="POST" transcribe="True" transcriptionAvailableUrl="transcription-example.com" transcriptionAvailableMethod="POST" username="user" password="pass" tag="tag" fileFormat="wav" multiChannel="True" />'
-        assert(expected == self.start_recording.to_bxml())
+        assert expected == self.start_recording.to_bxml()

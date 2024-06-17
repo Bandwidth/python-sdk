@@ -14,8 +14,11 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.initiate_callback import InitiateCallback
+from bandwidth.models.diversion import Diversion
+from bandwidth.models.stir_shaken import StirShaken
 
 class TestInitiateCallback(unittest.TestCase):
     """InitiateCallback unit test stubs"""
@@ -31,9 +34,6 @@ class TestInitiateCallback(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `InitiateCallback`
-        """
-        model = InitiateCallback()
         if include_optional:
             return InitiateCallback(
                 event_type = 'bridgeComplete',
@@ -46,7 +46,7 @@ class TestInitiateCallback(unittest.TestCase):
                 call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 call_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 start_time = '2022-06-17T22:19:40.375Z',
-                diversion = bandwidth.models.diversion.diversion(
+                diversion = Diversion(
                     reason = 'unavailable', 
                     privacy = 'off', 
                     screen = 'no', 
@@ -54,7 +54,7 @@ class TestInitiateCallback(unittest.TestCase):
                     limit = '3', 
                     unknown = 'unknownValue', 
                     orig_to = '+15558884444', ),
-                stir_shaken = bandwidth.models.stir_shaken.stirShaken(
+                stir_shaken = StirShaken(
                     verstat = 'Tn-Verification-Passed', 
                     attestation_indicator = 'A', 
                     originating_id = '99759086-1335-11ed-9bcf-5f7d464e91af', )
@@ -62,12 +62,34 @@ class TestInitiateCallback(unittest.TestCase):
         else:
             return InitiateCallback(
         )
-        """
 
     def testInitiateCallback(self):
         """Test InitiateCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, InitiateCallback)
+        assert instance.event_type == 'bridgeComplete'
+        assert isinstance(instance.event_time, datetime)
+        assert instance.account_id == '9900000'
+        assert instance.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert instance.var_from == '+15555555555'
+        assert instance.to == '+15555555555'
+        assert instance.direction == 'inbound'
+        assert instance.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.call_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert isinstance(instance.start_time, datetime)
+        assert isinstance(instance.diversion, Diversion)
+        assert instance.diversion.reason == 'unavailable'
+        assert instance.diversion.privacy == 'off'
+        assert instance.diversion.screen == 'no'
+        assert instance.diversion.counter == '2'
+        assert instance.diversion.limit == '3'
+        assert instance.diversion.unknown == 'unknownValue'
+        assert instance.diversion.orig_to == '+15558884444'
+        assert isinstance(instance.stir_shaken, StirShaken)
+        assert instance.stir_shaken.verstat == 'Tn-Verification-Passed'
+        assert instance.stir_shaken.attestation_indicator == 'A'
+        assert instance.stir_shaken.originating_id == '99759086-1335-11ed-9bcf-5f7d464e91af'
 
 if __name__ == '__main__':
     unittest.main()

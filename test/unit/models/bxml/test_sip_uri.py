@@ -25,4 +25,4 @@ class TestSipUri(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<SipUri uui="abc123" transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="test">sip:1-999-123-4567@voip-provider.example.net</SipUri>'
-        assert(expected == self.sip_uri.to_bxml())
+        assert expected == self.sip_uri.to_bxml()

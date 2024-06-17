@@ -16,6 +16,7 @@
 import unittest
 
 from bandwidth.models.create_call import CreateCall
+from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration
 
 class TestCreateCall(unittest.TestCase):
     """CreateCall unit test stubs"""
@@ -31,9 +32,6 @@ class TestCreateCall(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CreateCall`
-        """
-        model = CreateCall()
         if include_optional:
             return CreateCall(
                 to = '+19195551234',
@@ -54,7 +52,7 @@ class TestCreateCall(unittest.TestCase):
                 disconnect_method = 'POST',
                 call_timeout = 30,
                 callback_timeout = 15,
-                machine_detection = bandwidth.models.machine_detection_configuration.machineDetectionConfiguration(
+                machine_detection = MachineDetectionConfiguration(
                     mode = 'async', 
                     detection_timeout = 15, 
                     silence_timeout = 10, 
@@ -80,12 +78,46 @@ class TestCreateCall(unittest.TestCase):
                 application_id = '1234-qwer-5679-tyui',
                 answer_url = 'https://www.myCallbackServer.example/webhooks/answer',
         )
-        """
 
     def testCreateCall(self):
         """Test CreateCall"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, CreateCall)
+        assert instance.to == '+19195551234'
+        assert instance.var_from == '+15555551212'
+        assert instance.privacy == False
+        assert instance.display_name == 'John Doe'
+        assert instance.uui == 'eyJhbGciOiJIUzI1NiJ9.WyJoaSJd.-znkjYyCkgz4djmHUPSXl9YrJ6Nix_XvmlwKGFh5ERM;encoding=jwt,aGVsbG8gd29ybGQ;encoding=base64'
+        assert instance.application_id == '1234-qwer-5679-tyui'
+        assert instance.answer_url == 'https://www.myCallbackServer.example/webhooks/answer'
+        assert instance.answer_method == 'POST'
+        assert instance.username == 'mySecretUsername'
+        assert instance.password == 'mySecretPassword1!'
+        assert instance.answer_fallback_url == 'https://www.myFallbackServer.example/webhooks/answer'
+        assert instance.answer_fallback_method == 'POST'
+        assert instance.fallback_username == 'mySecretUsername'
+        assert instance.fallback_password == 'mySecretPassword1!'
+        assert instance.disconnect_url == 'https://www.myCallbackServer.example/webhooks/disconnect'
+        assert instance.disconnect_method == 'POST'
+        assert instance.call_timeout == 30
+        assert instance.callback_timeout == 15
+        assert isinstance(instance.machine_detection, MachineDetectionConfiguration)
+        assert instance.machine_detection.mode == 'async'
+        assert instance.machine_detection.detection_timeout == 15
+        assert instance.machine_detection.silence_timeout == 10
+        assert instance.machine_detection.speech_threshold == 10
+        assert instance.machine_detection.speech_end_threshold == 5
+        assert instance.machine_detection.machine_speech_end_threshold == 5
+        assert instance.machine_detection.delay_result == False
+        assert instance.machine_detection.callback_url == 'https://myServer.example/bandwidth/webhooks/machineDetectionComplete'
+        assert instance.machine_detection.callback_method == 'POST'
+        assert instance.machine_detection.username == 'mySecretUsername'
+        assert instance.machine_detection.password == 'mySecretPassword1!'
+        assert instance.machine_detection.fallback_url == 'https://myFallbackServer.example/bandwidth/webhooks/machineDetectionComplete'
+        assert instance.machine_detection.fallback_method == 'POST'
+        assert instance.machine_detection.fallback_username == 'mySecretUsername'
+        assert instance.machine_detection.fallback_password == 'mySecretPassword1!'
 
 if __name__ == '__main__':
     unittest.main()

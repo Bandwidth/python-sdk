@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.conference_recording_metadata import ConferenceRecordingMetadata
 
@@ -31,9 +32,6 @@ class TestConferenceRecordingMetadata(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `ConferenceRecordingMetadata`
-        """
-        model = ConferenceRecordingMetadata()
         if include_optional:
             return ConferenceRecordingMetadata(
                 account_id = '9900000',
@@ -51,12 +49,23 @@ class TestConferenceRecordingMetadata(unittest.TestCase):
         else:
             return ConferenceRecordingMetadata(
         )
-        """
 
     def testConferenceRecordingMetadata(self):
         """Test ConferenceRecordingMetadata"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, ConferenceRecordingMetadata)
+        assert instance.account_id == '9900000'
+        assert instance.conference_id == 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9'
+        assert instance.name == 'my-conference-name'
+        assert instance.recording_id == 'r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833'
+        assert instance.duration == 'PT13.67S'
+        assert instance.channels == 1
+        assert isinstance(instance.start_time, datetime)
+        assert isinstance(instance.end_time, datetime)
+        assert instance.file_format == 'wav'
+        assert instance.status == 'completed'
+        assert instance.media_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/recordings/r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833/media'
 
 if __name__ == '__main__':
     unittest.main()

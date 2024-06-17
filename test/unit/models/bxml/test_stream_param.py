@@ -24,4 +24,4 @@ class TestStreamParam(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<StreamParam name="name1" value="value1" />'
-        assert(expected == self.stream_param.to_bxml())
+        assert expected == self.stream_param.to_bxml()

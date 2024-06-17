@@ -31,9 +31,6 @@ class TestCodeRequest(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CodeRequest`
-        """
-        model = CodeRequest()
         if include_optional:
             return CodeRequest(
                 to = '+19195551234',
@@ -51,12 +48,18 @@ class TestCodeRequest(unittest.TestCase):
                 message = 'Your temporary {NAME} {SCOPE} code is {CODE}',
                 digits = 6,
         )
-        """
 
     def testCodeRequest(self):
         """Test CodeRequest"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, CodeRequest)
+        assert instance.to == '+19195551234'
+        assert instance.var_from == '+19195554321'
+        assert instance.application_id == '66fd98ae-ac8d-a00f-7fcd-ba3280aeb9b1'
+        assert instance.scope == '2FA'
+        assert instance.message == 'Your temporary {NAME} {SCOPE} code is {CODE}'
+        assert instance.digits == 6
 
 if __name__ == '__main__':
     unittest.main()

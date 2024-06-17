@@ -31,9 +31,7 @@ class TestCallTranscription(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CallTranscription`
-        """
-        model = CallTranscription()
+        instance = CallTranscription()
         if include_optional:
             return CallTranscription(
                 detected_language = 'en-US',
@@ -44,12 +42,16 @@ class TestCallTranscription(unittest.TestCase):
         else:
             return CallTranscription(
         )
-        """
 
     def testCallTranscription(self):
         """Test CallTranscription"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, CallTranscription)
+        assert instance.detected_language == 'en-US'
+        assert instance.track == 'inbound'
+        assert instance.text == 'Hello World! This is an example.'
+        assert instance.confidence == 0.9
 
 if __name__ == '__main__':
     unittest.main()

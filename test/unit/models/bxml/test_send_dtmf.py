@@ -23,4 +23,4 @@ class TestSendDtmf(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<SendDtmf toneDuration="3" toneInterval="5">1234</SendDtmf>'
-        assert(expected == self.send_dtmf.to_bxml())
+        assert expected == self.send_dtmf.to_bxml()

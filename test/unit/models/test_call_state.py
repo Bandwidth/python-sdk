@@ -32,7 +32,6 @@ class TestCallState(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        model = CallState()
         if include_optional:
             return CallState(
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
@@ -60,27 +59,27 @@ class TestCallState(unittest.TestCase):
 
     def testCallState(self):
         """Test CallState"""
-        model = self.make_instance(True)
-        assert(model is not None)
-        assert(isinstance(model, CallState))
-        assert model.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
-        assert model.account_id == '9900000'
-        assert model.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
-        assert model.parent_call_id == 'c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
-        assert model.to == '+19195551234'
-        assert model.var_from == '+19195554321'
-        assert model.direction == 'inbound'
-        assert model.state == 'disconnected'
-        assert model.stir_shaken == {"verstat":"TN-Verification-Passed","attestationIndicator":"A","originatingId":"abc123"}
-        assert model.identity == 'eyJhbGciOiJFUzI1NiIsInBwdCI6InNoYWtlbiIsInR5cCI6InBhc3Nwb3J0IiwieDV1IjoiaHR0cHM6Ly9idy1zaGFrZW4tY2VydC1wdWIuczMuYW1hem9uYXdzLmNvbS9iYW5kd2lkdGgtc2hha2VuLWNlcnRfMjAyMzA3MTYucGVtIn0.eyJhdHRlc3QiOiJBIiwiZGVzdCI6eyJ0biI6WyIxOTg0MjgyMDI4MCJdfSwiaWF0IjoxNjU2NTM0MzM2LCJvcmlnIjp7InRuIjoiMTkxOTQ0NDI2ODMifSwib3JpZ2lkIjoiNDk0NTlhOGEtNDJmNi0zNTFjLTkzNjEtYWRmNTdhOWUwOGNhIn0.56un9sRw_uH-sbJvnUsqdevlVxbOVjn8MVlGTlBMicjaZuRRwxfiNp-C9zYCMKTTCbc-QdYPN05F61XNVN4D3w;info=<https://bw-shaken-cert-pub.s3.amazonaws.com/bandwidth-shaken-cert_20230716.pem>;alg=ES256;ppt=shaken'
-        assert(isinstance(model.enqueued_time, datetime))
-        assert(isinstance(model.start_time, datetime))
-        assert(isinstance(model.answer_time, datetime))
-        assert(isinstance(model.end_time, datetime))
-        assert model.disconnect_cause == ''
-        assert model.error_message == ''
-        assert model.error_id == ''
-        assert(isinstance(model.last_update, datetime))
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, CallState)
+        assert instance.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert instance.account_id == '9900000'
+        assert instance.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.parent_call_id == 'c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.to == '+19195551234'
+        assert instance.var_from == '+19195554321'
+        assert instance.direction == 'inbound'
+        assert instance.state == 'disconnected'
+        assert instance.stir_shaken == {"verstat":"TN-Verification-Passed","attestationIndicator":"A","originatingId":"abc123"}
+        assert instance.identity == 'eyJhbGciOiJFUzI1NiIsInBwdCI6InNoYWtlbiIsInR5cCI6InBhc3Nwb3J0IiwieDV1IjoiaHR0cHM6Ly9idy1zaGFrZW4tY2VydC1wdWIuczMuYW1hem9uYXdzLmNvbS9iYW5kd2lkdGgtc2hha2VuLWNlcnRfMjAyMzA3MTYucGVtIn0.eyJhdHRlc3QiOiJBIiwiZGVzdCI6eyJ0biI6WyIxOTg0MjgyMDI4MCJdfSwiaWF0IjoxNjU2NTM0MzM2LCJvcmlnIjp7InRuIjoiMTkxOTQ0NDI2ODMifSwib3JpZ2lkIjoiNDk0NTlhOGEtNDJmNi0zNTFjLTkzNjEtYWRmNTdhOWUwOGNhIn0.56un9sRw_uH-sbJvnUsqdevlVxbOVjn8MVlGTlBMicjaZuRRwxfiNp-C9zYCMKTTCbc-QdYPN05F61XNVN4D3w;info=<https://bw-shaken-cert-pub.s3.amazonaws.com/bandwidth-shaken-cert_20230716.pem>;alg=ES256;ppt=shaken'
+        assert isinstance(instance.enqueued_time, datetime)
+        assert isinstance(instance.start_time, datetime)
+        assert isinstance(instance.answer_time, datetime)
+        assert isinstance(instance.end_time, datetime)
+        assert instance.disconnect_cause == ''
+        assert instance.error_message == ''
+        assert instance.error_id == ''
+        assert isinstance(instance.last_update, datetime)
 
 if __name__ == '__main__':
     unittest.main()

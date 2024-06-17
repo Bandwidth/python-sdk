@@ -18,4 +18,4 @@ class TestStopTranscription(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<StopTranscription name="transcription1" />'
-        assert(expected == self.stop_transcription.to_bxml())
+        assert expected == self.stop_transcription.to_bxml()

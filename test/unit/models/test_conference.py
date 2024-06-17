@@ -14,8 +14,10 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.conference import Conference
+from bandwidth.models.conference_member import ConferenceMember
 
 class TestConference(unittest.TestCase):
     """Conference unit test stubs"""
@@ -31,9 +33,6 @@ class TestConference(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `Conference`
-        """
-        model = Conference()
         if include_optional:
             return Conference(
                 id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9',
@@ -44,7 +43,7 @@ class TestConference(unittest.TestCase):
                 conference_event_method = 'POST',
                 tag = 'my custom tag',
                 active_members = [
-                    bandwidth.models.conference_member.conferenceMember(
+                    ConferenceMember(
                         call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
                         conference_id = 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9', 
                         member_url = 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/members/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
@@ -56,12 +55,28 @@ class TestConference(unittest.TestCase):
         else:
             return Conference(
         )
-        """
 
     def testConference(self):
         """Test Conference"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, Conference)
+        assert instance.id == 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9'
+        assert instance.name == 'my-conference-name'
+        assert isinstance(instance.created_time, datetime)
+        assert isinstance(instance.completed_time, datetime)
+        assert instance.conference_event_url == 'https://myServer.example/bandwidth/webhooks/conferenceEvent'
+        assert instance.conference_event_method == 'POST'
+        assert instance.tag == 'my custom tag'
+        assert isinstance(instance.active_members, list)
+        assert len(instance.active_members) == 1
+        assert isinstance(instance.active_members[0], ConferenceMember)
+        assert instance.active_members[0].call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.active_members[0].conference_id == 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9'
+        assert instance.active_members[0].member_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/members/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.active_members[0].mute == False
+        assert instance.active_members[0].hold == False
+        assert instance.active_members[0].call_ids_to_coach == ["c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"]
 
 if __name__ == '__main__':
     unittest.main()

@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.create_call_response import CreateCallResponse
 
@@ -31,9 +32,6 @@ class TestCreateCallResponse(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CreateCallResponse`
-        """
-        model = CreateCallResponse()
         if include_optional:
             return CreateCallResponse(
                 application_id = '04e88489-df02-4e34-a0ee-27a91849555f',
@@ -70,12 +68,33 @@ class TestCreateCallResponse(unittest.TestCase):
                 answer_url = 'https://myServer.example/bandwidth/webhooks/answer',
                 disconnect_method = 'POST',
         )
-        """
 
     def testCreateCallResponse(self):
         """Test CreateCallResponse"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, CreateCallResponse)
+        assert instance.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert instance.account_id == '9900000'
+        assert instance.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.to == '+19195551234'
+        assert instance.var_from == '+19195554321'
+        assert isinstance(instance.enqueued_time, datetime)
+        assert instance.call_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.call_timeout == 30
+        assert instance.callback_timeout == 15
+        assert instance.tag == 'My custom tag value'
+        assert instance.answer_method == 'POST'
+        assert instance.answer_url == 'https://myServer.example/bandwidth/webhooks/answer'
+        assert instance.answer_fallback_method == 'POST'
+        assert instance.answer_fallback_url == 'https://myFallbackServer.example/bandwidth/webhooks/answer'
+        assert instance.disconnect_method == 'POST'
+        assert instance.disconnect_url == 'https://myServer.example/bandwidth/webhooks/disconnect'
+        assert instance.username == 'mySecretUsername'
+        assert instance.password == 'mySecretPassword1!'
+        assert instance.fallback_username == 'mySecretUsername'
+        assert instance.fallback_password == 'mySecretPassword1!'
+        assert instance.priority == 5
 
 if __name__ == '__main__':
     unittest.main()

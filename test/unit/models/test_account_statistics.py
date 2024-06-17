@@ -31,7 +31,6 @@ class TestAccountStatistics(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        model = AccountStatistics()
         if include_optional:
             return AccountStatistics(
                 current_call_queue_size = 0,
@@ -43,11 +42,11 @@ class TestAccountStatistics(unittest.TestCase):
 
     def testAccountStatistics(self):
         """Test AccountStatistics"""
-        model = self.make_instance(True)
-        assert(model is not None)
-        assert(isinstance(model, AccountStatistics))
-        assert model.current_call_queue_size == 0
-        assert model.max_call_queue_size == 900
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, AccountStatistics)
+        assert instance.current_call_queue_size == 0
+        assert instance.max_call_queue_size == 900
 
 if __name__ == '__main__':
     unittest.main()

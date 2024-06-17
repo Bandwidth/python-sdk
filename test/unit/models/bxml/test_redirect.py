@@ -19,4 +19,4 @@ class TestRedirect(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<Redirect redirectUrl="https://example.com/redirect" />'
-        assert(expected == self.redirect.to_bxml())
+        assert expected == self.redirect.to_bxml()

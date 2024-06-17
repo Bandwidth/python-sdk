@@ -31,9 +31,6 @@ class TestDiversion(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `Diversion`
-        """
-        model = Diversion()
         if include_optional:
             return Diversion(
                 reason = 'unavailable',
@@ -47,12 +44,19 @@ class TestDiversion(unittest.TestCase):
         else:
             return Diversion(
         )
-        """
 
     def testDiversion(self):
         """Test Diversion"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, Diversion)
+        assert instance.reason == 'unavailable'
+        assert instance.privacy == 'off'
+        assert instance.screen == 'no'
+        assert instance.counter == '2'
+        assert instance.limit == '3'
+        assert instance.unknown == 'unknownValue'
+        assert instance.orig_to == '+15558884444'
 
 if __name__ == '__main__':
     unittest.main()

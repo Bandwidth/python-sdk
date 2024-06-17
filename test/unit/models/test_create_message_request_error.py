@@ -16,6 +16,7 @@
 import unittest
 
 from bandwidth.models.create_message_request_error import CreateMessageRequestError
+from bandwidth.models.field_error import FieldError
 
 class TestCreateMessageRequestError(unittest.TestCase):
     """CreateMessageRequestError unit test stubs"""
@@ -31,17 +32,14 @@ class TestCreateMessageRequestError(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CreateMessageRequestError`
-        """
-        model = CreateMessageRequestError()
         if include_optional:
             return CreateMessageRequestError(
                 type = '',
                 description = '',
                 field_errors = [
-                    bandwidth.models.field_error.fieldError(
+                    FieldError(
                         field_name = 'from', 
-                        description = ''+invalid' must be replaced with a valid E164 formatted telephone number', )
+                        description = "'+invalid' must be replaced with a valid E164 formatted telephone number", )
                     ]
             )
         else:
@@ -49,12 +47,19 @@ class TestCreateMessageRequestError(unittest.TestCase):
                 type = '',
                 description = '',
         )
-        """
 
     def testCreateMessageRequestError(self):
         """Test CreateMessageRequestError"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, CreateMessageRequestError)
+        assert instance.type == ''
+        assert instance.description == ''
+        assert isinstance(instance.field_errors, list)
+        assert len(instance.field_errors) == 1
+        assert isinstance(instance.field_errors[0], FieldError)
+        assert instance.field_errors[0].field_name == 'from'
+        assert instance.field_errors[0].description == "'+invalid' must be replaced with a valid E164 formatted telephone number"
 
 if __name__ == '__main__':
     unittest.main()

@@ -19,4 +19,4 @@ class TestStopStream(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<StopStream name="conf" />'
-        assert(expected == self.stop_stream.to_bxml())
+        assert expected == self.stop_stream.to_bxml()

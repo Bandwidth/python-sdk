@@ -31,9 +31,6 @@ class TestConferenceMember(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `ConferenceMember`
-        """
-        model = ConferenceMember()
         if include_optional:
             return ConferenceMember(
                 call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
@@ -46,12 +43,18 @@ class TestConferenceMember(unittest.TestCase):
         else:
             return ConferenceMember(
         )
-        """
 
     def testConferenceMember(self):
         """Test ConferenceMember"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, ConferenceMember)
+        assert instance.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.conference_id == 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9'
+        assert instance.member_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/members/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.mute == False
+        assert instance.hold == False
+        assert instance.call_ids_to_coach == ["c-25ac29a2-1331029c-2cb0-4a07-b215-b22865662d85"]
 
 if __name__ == '__main__':
     unittest.main()

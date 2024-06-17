@@ -14,8 +14,10 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.inbound_message_callback import InboundMessageCallback
+from bandwidth.models.inbound_message_callback_message import InboundMessageCallbackMessage
 
 class TestInboundMessageCallback(unittest.TestCase):
     """InboundMessageCallback unit test stubs"""
@@ -31,16 +33,13 @@ class TestInboundMessageCallback(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `InboundMessageCallback`
-        """
-        model = InboundMessageCallback()
         if include_optional:
             return InboundMessageCallback(
                 time = '2016-09-14T18:20:16Z',
                 type = 'message-received',
                 to = '+15552223333',
                 description = 'Incoming message received',
-                message = bandwidth.models.inbound_message_callback_message.inboundMessageCallbackMessage(
+                message = InboundMessageCallbackMessage(
                     id = '1661365814859loidf7mcwd4qacn7', 
                     owner = '+15553332222', 
                     application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
@@ -48,7 +47,7 @@ class TestInboundMessageCallback(unittest.TestCase):
                     segment_count = 1, 
                     direction = 'in', 
                     to = ["+15552223333"], 
-                    from = '+15553332222', 
+                    var_from = '+15553332222', 
                     text = 'Hello world', 
                     tag = 'custom string', 
                     media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"], 
@@ -60,7 +59,7 @@ class TestInboundMessageCallback(unittest.TestCase):
                 type = 'message-received',
                 to = '+15552223333',
                 description = 'Incoming message received',
-                message = bandwidth.models.inbound_message_callback_message.inboundMessageCallbackMessage(
+                message = InboundMessageCallbackMessage(
                     id = '1661365814859loidf7mcwd4qacn7', 
                     owner = '+15553332222', 
                     application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
@@ -68,18 +67,35 @@ class TestInboundMessageCallback(unittest.TestCase):
                     segment_count = 1, 
                     direction = 'in', 
                     to = ["+15552223333"], 
-                    from = '+15553332222', 
+                    var_from = '+15553332222', 
                     text = 'Hello world', 
                     tag = 'custom string', 
                     media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"], 
                     priority = 'default', ),
         )
-        """
 
     def testInboundMessageCallback(self):
         """Test InboundMessageCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, InboundMessageCallback)
+        assert isinstance(instance.time, datetime)
+        assert instance.type == 'message-received'
+        assert instance.to == '+15552223333'
+        assert instance.description == 'Incoming message received'
+        assert isinstance(instance.message, InboundMessageCallbackMessage)
+        assert instance.message.id == '1661365814859loidf7mcwd4qacn7'
+        assert instance.message.owner == '+15553332222'
+        assert instance.message.application_id == '93de2206-9669-4e07-948d-329f4b722ee2'
+        assert isinstance(instance.message.time, datetime)
+        assert instance.message.segment_count == 1
+        assert instance.message.direction == 'in'
+        assert instance.message.to == ["+15552223333"]
+        assert instance.message.var_from == '+15553332222'
+        assert instance.message.text == 'Hello world'
+        assert instance.message.tag == 'custom string'
+        assert instance.message.media == ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"]
+        assert instance.message.priority == 'default'
 
 if __name__ == '__main__':
     unittest.main()

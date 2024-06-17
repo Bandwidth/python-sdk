@@ -31,7 +31,6 @@ class TestCallTranscriptionMetadata(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        model = CallTranscriptionMetadata()
         if include_optional:
             return CallTranscriptionMetadata(
                 transcription_id = 't-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b',
@@ -43,11 +42,11 @@ class TestCallTranscriptionMetadata(unittest.TestCase):
 
     def testCallTranscriptionMetadata(self):
         """Test CallTranscriptionMetadata"""
-        model = self.make_instance(True)
-        assert(model is not None)
-        assert(isinstance(model, CallTranscriptionMetadata))
-        assert model.transcription_id == 't-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b'
-        assert model.transcription_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-fef240ff-5cfc9091-8069-4863-a8c0-a4dcbbf1f1a4/transcriptions/t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b'
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, CallTranscriptionMetadata)
+        assert instance.transcription_id == 't-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b'
+        assert instance.transcription_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-fef240ff-5cfc9091-8069-4863-a8c0-a4dcbbf1f1a4/transcriptions/t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b'
 
 if __name__ == '__main__':
     unittest.main()

@@ -31,9 +31,6 @@ class TestCreateLookupResponse(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `CreateLookupResponse`
-        """
-        model = CreateLookupResponse()
         if include_optional:
             return CreateLookupResponse(
                 request_id = '',
@@ -42,12 +39,14 @@ class TestCreateLookupResponse(unittest.TestCase):
         else:
             return CreateLookupResponse(
         )
-        """
 
     def testCreateLookupResponse(self):
         """Test CreateLookupResponse"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, CreateLookupResponse)
+        assert instance.request_id == ''
+        assert instance.status == 'COMPLETE'
 
 if __name__ == '__main__':
     unittest.main()

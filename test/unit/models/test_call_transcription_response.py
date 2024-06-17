@@ -31,11 +31,9 @@ class TestCallTranscriptionResponse(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-
-        model = CallTranscriptionResponse()
         if include_optional:
             return CallTranscriptionResponse(
-                account_id = '920012',
+                account_id = '9900000',
                 call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 transcription_id = 't-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b',
                 tracks = [{"detectedLanguage":"en-US","track":"inbound","text":"Hello World! This is an example.","confidence":0.9}]
@@ -46,16 +44,16 @@ class TestCallTranscriptionResponse(unittest.TestCase):
 
     def testCallTranscriptionResponse(self):
         """Test CallTranscriptionResponse"""
-        model = self.make_instance(True)
-        assert(model is not None)
-        assert(isinstance(model, CallTranscriptionResponse))
-        assert model.account_id == '920012'
-        assert model.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
-        assert model.transcription_id == 't-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b'
-        assert model.tracks[0].detected_language == 'en-US'
-        assert model.tracks[0].track == 'inbound'
-        assert model.tracks[0].text == 'Hello World! This is an example.'
-        assert model.tracks[0].confidence == 0.9
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, CallTranscriptionResponse)
+        assert instance.account_id == '9900000'
+        assert instance.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.transcription_id == 't-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b'
+        assert instance.tracks[0].detected_language == 'en-US'
+        assert instance.tracks[0].track == 'inbound'
+        assert instance.tracks[0].text == 'Hello World! This is an example.'
+        assert instance.tracks[0].confidence == 0.9
 
 if __name__ == '__main__':
     unittest.main()

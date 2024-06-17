@@ -19,4 +19,4 @@ class TestStopGather(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<StopGather />'
-        assert(expected == self.stop_gather.to_bxml())
+        assert expected == self.stop_gather.to_bxml()

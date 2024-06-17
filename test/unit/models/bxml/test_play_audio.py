@@ -23,4 +23,4 @@ class TestPlayAudio(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio>'
-        assert(expected == self.play_audio.to_bxml())
+        assert expected == self.play_audio.to_bxml()

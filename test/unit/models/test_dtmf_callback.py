@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.dtmf_callback import DtmfCallback
 
@@ -31,9 +32,6 @@ class TestDtmfCallback(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `DtmfCallback`
-        """
-        model = DtmfCallback()
         if include_optional:
             return DtmfCallback(
                 event_type = 'bridgeComplete',
@@ -57,12 +55,29 @@ class TestDtmfCallback(unittest.TestCase):
         else:
             return DtmfCallback(
         )
-        """
 
     def testDtmfCallback(self):
         """Test DtmfCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(include_optional=True)
+        self.assertTrue(instance is not None)
+        self.assertTrue(isinstance(instance, DtmfCallback))
+        assert instance.event_type == 'bridgeComplete'
+        assert isinstance(instance.event_time, datetime)
+        assert instance.account_id == '9900000'
+        assert instance.application_id == '04e88489-df02-4e34-a0ee-27a91849555f'
+        assert instance.var_from == '+15555555555'
+        assert instance.to == '+15555555555'
+        assert instance.call_id == 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.direction == 'inbound'
+        assert instance.digit == '2'
+        assert instance.call_url == 'https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert isinstance(instance.enqueued_time, datetime)
+        assert isinstance(instance.start_time, datetime)
+        assert isinstance(instance.answer_time, datetime)
+        assert instance.parent_call_id == 'c-95ac8d6e-1a31c52e-b38f-4198-93c1-51633ec68f8d'
+        assert instance.transfer_caller_id == '+15555555555'
+        assert instance.transfer_to == '+15555555555'
+        assert instance.tag == 'exampleTag'
 
 if __name__ == '__main__':
     unittest.main()

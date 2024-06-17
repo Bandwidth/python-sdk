@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.conference_redirect_callback import ConferenceRedirectCallback
 
@@ -31,9 +32,6 @@ class TestConferenceRedirectCallback(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `ConferenceRedirectCallback`
-        """
-        model = ConferenceRedirectCallback()
         if include_optional:
             return ConferenceRedirectCallback(
                 event_type = 'bridgeComplete',
@@ -45,12 +43,17 @@ class TestConferenceRedirectCallback(unittest.TestCase):
         else:
             return ConferenceRedirectCallback(
         )
-        """
 
     def testConferenceRedirectCallback(self):
         """Test ConferenceRedirectCallback"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, ConferenceRedirectCallback)
+        assert instance.event_type == 'bridgeComplete'
+        assert isinstance(instance.event_time, datetime)
+        assert instance.conference_id == 'conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9'
+        assert instance.name == 'my-conference-name'
+        assert instance.tag == 'exampleTag'
 
 if __name__ == '__main__':
     unittest.main()

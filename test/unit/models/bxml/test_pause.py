@@ -19,4 +19,4 @@ class TestPause(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<Pause duration="30" />'
-        assert(expected == self.pause.to_bxml())
+        assert expected == self.pause.to_bxml()

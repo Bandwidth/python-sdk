@@ -24,4 +24,4 @@ class TestPhoneNumber(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<PhoneNumber transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="">+19195551234</PhoneNumber>'
-        assert(expected == self.phone_number.to_bxml())
+        assert expected == self.phone_number.to_bxml()

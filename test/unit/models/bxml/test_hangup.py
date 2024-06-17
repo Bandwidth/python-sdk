@@ -19,4 +19,4 @@ class TestHangup(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<Hangup />'
-        assert(expected == self.hangup.to_bxml())
+        assert expected == self.hangup.to_bxml()

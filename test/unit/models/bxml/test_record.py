@@ -20,4 +20,4 @@ class TestRecord(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<Record maxDuration="10" />'
-        assert(expected == self.record.to_bxml())
+        assert expected == self.record.to_bxml()

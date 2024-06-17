@@ -23,4 +23,4 @@ class TestBridge(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<Bridge bridgeCompleteUrl="https://example.com" tag="test">+19198675309</Bridge>'
-        assert(expected == self.bridge.to_bxml())
+        assert expected == self.bridge.to_bxml()

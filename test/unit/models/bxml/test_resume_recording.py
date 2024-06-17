@@ -19,4 +19,4 @@ class TestResumeRecording(unittest.TestCase):
 
     def test_to_bxml(self):
         expected = '<ResumeRecording />'
-        assert(expected == self.resume_recording.to_bxml())
+        assert expected == self.resume_recording.to_bxml()
