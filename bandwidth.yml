@@ -3265,7 +3265,7 @@ components:
         accountId:
           type: string
           description: The user account associated with the call.
-          example: '920012'
+          example: '9900000'
         callId:
           type: string
           description: The call id associated with the event.
@@ -4241,7 +4241,7 @@ components:
       description: >-
         The phone number used as the to field of the B-leg call, in E.164 format
         (e.g. +15555555555).
-      example: '+15555555555'
+      example: "+15555555555"
     mediaUrl:
       nullable: true
       type: string
@@ -5788,7 +5788,7 @@ components:
         answerMethod: POST
         answerUrl: https://myServer.example/bandwidth/webhooks/answer
         answerFallbackMethod: POST
-        answerFallbackUrl: https://myServer.example/bandwidth/webhooks/answerFallback
+        answerFallbackUrl: "https://myServer.example/bandwidth/webhooks/answerFallback"
         disconnectMethod: POST
         disconnectUrl: https://myServer.example/bandwidth/webhooks/disconnect
         username: mySecretUsername
