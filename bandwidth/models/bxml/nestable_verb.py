@@ -9,6 +9,7 @@ from __future__ import annotations
 import re
 from typing import Union
 import xml.etree.ElementTree as ET
+
 from .verb import Verb
 
 
