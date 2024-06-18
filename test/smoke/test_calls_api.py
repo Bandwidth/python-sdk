@@ -1,5 +1,5 @@
 """
-Integration test for Bandwidth's Voice Voice Calls API
+Integration test for Bandwidth's Voice Calls API
 """
 from bandwidth import ApiResponse
 from test.utils.env_variables import *
@@ -57,6 +57,7 @@ class CallsIntegration(unittest.TestCase):
         self.createCallBody = CreateCall(
             to=USER_NUMBER,
             var_from=BW_NUMBER,
+            privacy=True,
             application_id=BW_VOICE_APPLICATION_ID,
             answer_url=BASE_CALLBACK_URL,
             answer_method=CallbackMethodEnum("POST"),

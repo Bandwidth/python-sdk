@@ -1,5 +1,5 @@
 """
-Integration test for Bandwidth's Media API
+Integration test for Bandwidth's Messaging Media API
 """
 
 import uuid

@@ -1,5 +1,5 @@
 """
-Integration tests for Bandwidth's Voice Voice Conferences API
+Integration tests for Bandwidth's Voice Conferences API
 """
 
 from cgi import test
