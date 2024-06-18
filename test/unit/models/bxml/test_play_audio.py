@@ -7,8 +7,7 @@ Unit tests for the <PlayAudio> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import PlayAudio
+from bandwidth.models.bxml import PlayAudio, Verb
 
 class TestPlayAudio(unittest.TestCase):
 
@@ -18,8 +17,10 @@ class TestPlayAudio(unittest.TestCase):
             username="user",
             password="pass"
         )
-        self.test_verb = Verb(tag="test")
 
+    def test_instance(self):
+        assert isinstance(self.play_audio, PlayAudio)
+        assert isinstance(self.play_audio, Verb)
 
     def test_to_bxml(self):
         expected = '<PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio>'

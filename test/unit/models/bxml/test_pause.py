@@ -7,15 +7,17 @@ Unit tests for the <Pause> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import Pause
+from bandwidth.models.bxml import Pause, Verb
 
 
 class TestPause(unittest.TestCase):
 
     def setUp(self):
         self.pause = Pause(duration=30)
-        self.test_verb = Verb(tag="test")
+
+    def test_instance(self):
+        assert isinstance(self.pause, Pause)
+        assert isinstance(self.pause, Verb)
 
     def test_to_bxml(self):
         expected = '<Pause duration="30" />'

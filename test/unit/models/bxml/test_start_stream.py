@@ -7,7 +7,7 @@ Unit tests for the <StartStream> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import StartStream, StreamParam
+from bandwidth.models.bxml import StartStream, StreamParam, Verb, NestableVerb
 
 
 class TestStartStream(unittest.TestCase):
@@ -33,6 +33,11 @@ class TestStartStream(unittest.TestCase):
             username = "user",
             password = "pass"
         )
+
+    def test_instance(self):
+        assert isinstance(self.start_stream, StartStream)
+        assert isinstance(self.start_stream, NestableVerb)
+        assert isinstance(self.start_stream, Verb)
 
     def test_to_bxml(self):
         expected = '<StartStream destination="testurl.com" name="stream1" tracks="inbound" streamEventUrl="eventurl.com" streamEventMethod="POST" username="user" password="pass"><StreamParam name="name1" value="value1" /></StartStream>'

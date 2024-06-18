@@ -7,8 +7,7 @@ Unit tests for the <StartGather> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import StartGather
+from bandwidth.models.bxml import StartGather, Verb
 
 
 class TestStartGather(unittest.TestCase):
@@ -21,7 +20,10 @@ class TestStartGather(unittest.TestCase):
             password="pass",
             tag="tag"
         )
-        self.test_verb = Verb(tag="test")
+
+    def test_instance(self):
+        assert isinstance(self.start_gather, StartGather)
+        assert isinstance(self.start_gather, Verb)
 
     def test_to_bxml(self):
         expected = '<StartGather dtmfUrl="https://example.com/startgather" dtmfMethod="POST" username="user" password="pass" tag="tag" />'

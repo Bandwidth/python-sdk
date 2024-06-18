@@ -5,10 +5,10 @@ Bandwidth's PhoneNumber BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class PhoneNumber(TerminalVerb):
+class PhoneNumber(Verb):
 
     def __init__(
         self, number: str, transfer_answer_url: str=None, transfer_answer_method: str=None,

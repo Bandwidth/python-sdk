@@ -7,15 +7,17 @@ Unit tests for the <StopRecording> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml.verbs.stop_recording import StopRecording
+from bandwidth.models.bxml.verbs.stop_recording import StopRecording, Verb
 
 
 class TestStopRecording(unittest.TestCase):
 
     def setUp(self):
         self.stop_recording = StopRecording()
-        self.test_verb = Verb(tag="test")
+
+    def test_instance(self):
+        assert isinstance(self.stop_recording, StopRecording)
+        assert isinstance(self.stop_recording, Verb)
 
     def test_to_bxml(self):
         expected = '<StopRecording />'

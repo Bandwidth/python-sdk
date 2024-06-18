@@ -7,7 +7,7 @@ Unit tests for the <Gather> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import PlayAudio,SpeakSentence,Gather
+from bandwidth.models.bxml import PlayAudio, SpeakSentence, Gather, Verb, NestableVerb
 
 
 class TestGather(unittest.TestCase):
@@ -40,6 +40,11 @@ class TestGather(unittest.TestCase):
             repeat_count = 2,
             audio_verbs=[self.play_audio]
         )
+
+    def test_instance(self):
+        assert isinstance(self.gather, Gather)
+        assert isinstance(self.gather, NestableVerb)
+        assert isinstance(self.gather, Verb)
 
     def test_defaults(self):
         gather = Gather(

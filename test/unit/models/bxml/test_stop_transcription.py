@@ -7,7 +7,7 @@ Unit tests for the <StopTranscription> BXML verb
 """
 import unittest
 
-from bandwidth.models.bxml import StopTranscription
+from bandwidth.models.bxml import StopTranscription, Verb
 
 
 class TestStopTranscription(unittest.TestCase):
@@ -15,6 +15,10 @@ class TestStopTranscription(unittest.TestCase):
         self.stop_transcription = StopTranscription(
             name="transcription1"
         )
+
+    def test_instance(self):
+        assert isinstance(self.stop_transcription, StopTranscription)
+        assert isinstance(self.stop_transcription, Verb)
 
     def test_to_bxml(self):
         expected = '<StopTranscription name="transcription1" />'

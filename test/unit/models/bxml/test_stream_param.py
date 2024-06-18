@@ -7,9 +7,7 @@ Unit tests for the <StreamParam> BXML verb
 """
 import unittest
 
-
-from bandwidth.models.bxml import Verb
-from bandwidth.models.bxml import StreamParam
+from bandwidth.models.bxml import StreamParam, Verb
 
 
 class TestStreamParam(unittest.TestCase):
@@ -19,8 +17,10 @@ class TestStreamParam(unittest.TestCase):
             name="name1",
             value="value1"
         )
-        self.test_verb = Verb(tag="test")
 
+    def test_instance(self):
+        assert isinstance(self.stream_param, StreamParam)
+        assert isinstance(self.stream_param, Verb)
 
     def test_to_bxml(self):
         expected = '<StreamParam name="name1" value="value1" />'
