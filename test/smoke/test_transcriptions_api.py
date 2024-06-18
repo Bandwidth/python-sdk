@@ -3,6 +3,7 @@ Integration test for Bandwidth's Voice Transcriptions API
 """
 import unittest
 
+from bandwidth import ApiClient, Configuration
 from bandwidth.api.transcriptions_api import TranscriptionsApi
 
 
@@ -10,7 +11,14 @@ class TestTranscriptionsApi(unittest.TestCase):
     """TranscriptionsApi integration Test"""
 
     def setUp(self) -> None:
-        self.api = TranscriptionsApi()
+        configuration = Configuration(
+            username=BW_USERNAME,
+            password=BW_PASSWORD
+        )
+        api_client = ApiClient(configuration)
+
+        self.calls_api_instance = calls_api.CallsApi(api_client)
+        self.transcriptions_api_instance = transcriptions_api.TranscriptionsApi(api_client)
 
     def tearDown(self) -> None:
         pass
