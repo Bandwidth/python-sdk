@@ -14,15 +14,32 @@
 
 
 import unittest
+from datetime import datetime
 
+from hamcrest import *
+from test.utils.env_variables import *
+from bandwidth import ApiClient, Configuration
 from bandwidth.api.calls_api import CallsApi
+from bandwidth.models.create_call import CreateCall
+from bandwidth.models.create_call_response import CreateCallResponse
+from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration
+from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnum
+from bandwidth.models.callback_method_enum import CallbackMethodEnum
+
 
 
 class TestCallsApi(unittest.TestCase):
     """CallsApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = CallsApi()
+        configuration = Configuration(
+            username=BW_USERNAME,
+            password=BW_PASSWORD,
+            host='http://127.0.0.1:4010',
+            server_index='2'
+        )
+        api_client = ApiClient(configuration)
+        self.calls_api_instance = CallsApi(api_client)
 
     def tearDown(self) -> None:
         pass
@@ -32,14 +49,100 @@ class TestCallsApi(unittest.TestCase):
 
         Create Call
         """
-        pass
+        call_body = CreateCall(
+            to=USER_NUMBER,
+            var_from=BW_NUMBER,
+            application_id=BW_VOICE_APPLICATION_ID,
+            answer_url=BASE_CALLBACK_URL,
+            answer_method=CallbackMethodEnum("POST"),
+            username="mySecretUsername",
+            password="mySecretPassword1!",
+            answer_fallback_url="https://www.myFallbackServer.com/webhooks/answer",
+            answer_fallback_method=CallbackMethodEnum("POST"),
+            fallback_username="mySecretUsername",
+            fallback_password="mySecretPassword1!",
+            disconnect_url="https://myServer.com/bandwidth/webhooks/disconnectUrl",
+            disconnect_method=CallbackMethodEnum("POST"),
+            call_timeout=30.0,
+            callback_timeout=15.0,
+            machine_detection=MachineDetectionConfiguration(
+                mode=MachineDetectionModeEnum("async"),
+                detection_timeout=15.0,
+                silence_timeout=10.0,
+                speech_threshold=10.0,
+                speech_end_threshold=5.0,
+                machine_speech_end_threshold=5.0,
+                delay_result=False,
+                callback_url="https://myServer.com/bandwidth/webhooks/machineDetectionComplete",
+                callback_method=CallbackMethodEnum("POST"),
+                username="mySecretUsername",
+                password="mySecretPassword1!",
+                fallback_url="https://myFallbackServer.com/bandwidth/webhooks/machineDetectionComplete",
+                fallback_method=CallbackMethodEnum("POST"),
+                fallback_username="mySecretUsername",
+                fallback_password="mySecretPassword1!",
+            ),
+            priority=5,
+            tag="tag_example",
+        )
+        response = self.calls_api_instance.create_call(
+            BW_ACCOUNT_ID,
+            call_body
+        )
+
+        assert_that(response, instance_of(CreateCallResponse))
+        assert_that(response.application_id, has_length(36))
+        assert_that(response.account_id, has_length(7))
+        assert_that(response.call_id, has_length(47))
+        assert_that(response.to, has_length(12))
+        assert_that(response.var_from, has_length(12))
+        assert_that(response.enqueued_time, instance_of(datetime))
+        assert_that(response.call_url, starts_with("http"))
+        assert_that(response.call_timeout, greater_than(0))
+        assert_that(response.callback_timeout, greater_than(0))
+        assert_that(response.tag, instance_of(str))
+        assert_that(response.answer_method, is_in(CallbackMethodEnum))
+        assert_that(response.answer_url, starts_with("http"))
+        assert_that(response.answer_fallback_method, is_in(CallbackMethodEnum))
+        assert_that(response.answer_fallback_url, starts_with("http"))
+        assert_that(response.disconnect_method, is_in(CallbackMethodEnum))
+        assert_that(response.disconnect_url, starts_with("http"))
+        assert_that(response.username, instance_of(str))
+        assert_that(response.password, instance_of(str))
+        assert_that(response.fallback_username, instance_of(str))
+        assert_that(response.fallback_password, instance_of(str))
+        assert_that(response.priority, greater_than(0))
+
 
     def test_get_call_state(self) -> None:
         """Test case for get_call_state
 
         Get Call State Information
         """
-        pass
+        response = self.calls_api_instance.get_call_state(
+            BW_ACCOUNT_ID,
+            "c-abc123"
+        )
+
+        assert_that(response, instance_of(CallState))
+        assert_that(response.applicationId, has_length(36))
+        assert_that(response.accountId, has_length(7))
+        assert_that(response.callId, has_length(47))
+        assert_that(response.parentCallId, has_length(47))
+        assert_that(response.to, has_length(12))
+        assert_that(response.var_from, has_length(12))
+        assert_that(response.direction, is_in(CallDirectionEnum))
+        assert_that(response.state, instance_of(str))
+        assert_that(response.stirShaken, instance_of(object))
+        assert_that(response.identity, instance_of(str))
+        assert_that(response.enqueuedTime, instance_of(datetime))
+        assert_that(response.startTime, instance_of(datetime))
+        assert_that(response.answerTime, instance_of(datetime))
+        assert_that(response.endTime, instance_of(datetime))
+        assert_that(response.disconnectCause, instance_of(str))
+        assert_that(response.errorMessage, instance_of(str))
+        assert_that(response.errorId, instance_of(str))
+        assert_that(response.lastUpdate, instance_of(datetime))
 
     def test_list_calls(self) -> None:
         """Test case for list_calls
