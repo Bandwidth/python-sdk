@@ -1,4 +1,4 @@
-name: Nightly Smoke Tests
+name: Smoke Tests
 
 on:
   schedule:
@@ -13,6 +13,9 @@ on:
         options:
           - WARNING
           - DEBUG
+  pull_request:
+    paths:
+      - 'test/smoke/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
@@ -39,7 +42,7 @@ env:
 
 jobs:
   test:
-    name: Nightly Smoke Test
+    name: Smoke Test
     runs-on: ubuntu-latest
     env:
       PYTHON_VERSION: '3.12'
