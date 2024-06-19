@@ -20,6 +20,10 @@ from hamcrest import *
 from test.utils.env_variables import *
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.calls_api import CallsApi
+from bandwidth.models.call_state import CallState
+from bandwidth.models.call_state_enum import CallStateEnum
+from bandwidth.models.update_call import UpdateCall
+from bandwidth.models.call_direction_enum import CallDirectionEnum
 from bandwidth.models.create_call import CreateCall
 from bandwidth.models.create_call_response import CreateCallResponse
 from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration
@@ -36,13 +40,10 @@ class TestCallsApi(unittest.TestCase):
             username=BW_USERNAME,
             password=BW_PASSWORD,
             host='http://127.0.0.1:4010',
-            server_index='2'
+            ignore_operation_servers=True
         )
         api_client = ApiClient(configuration)
         self.calls_api_instance = CallsApi(api_client)
-
-    def tearDown(self) -> None:
-        pass
 
     def test_create_call(self) -> None:
         """Test case for create_call
@@ -85,33 +86,34 @@ class TestCallsApi(unittest.TestCase):
             priority=5,
             tag="tag_example",
         )
-        response = self.calls_api_instance.create_call(
+        response = self.calls_api_instance.create_call_with_http_info(
             BW_ACCOUNT_ID,
             call_body
         )
 
-        assert_that(response, instance_of(CreateCallResponse))
-        assert_that(response.application_id, has_length(36))
-        assert_that(response.account_id, has_length(7))
-        assert_that(response.call_id, has_length(47))
-        assert_that(response.to, has_length(12))
-        assert_that(response.var_from, has_length(12))
-        assert_that(response.enqueued_time, instance_of(datetime))
-        assert_that(response.call_url, starts_with("http"))
-        assert_that(response.call_timeout, greater_than(0))
-        assert_that(response.callback_timeout, greater_than(0))
-        assert_that(response.tag, instance_of(str))
-        assert_that(response.answer_method, is_in(CallbackMethodEnum))
-        assert_that(response.answer_url, starts_with("http"))
-        assert_that(response.answer_fallback_method, is_in(CallbackMethodEnum))
-        assert_that(response.answer_fallback_url, starts_with("http"))
-        assert_that(response.disconnect_method, is_in(CallbackMethodEnum))
-        assert_that(response.disconnect_url, starts_with("http"))
-        assert_that(response.username, instance_of(str))
-        assert_that(response.password, instance_of(str))
-        assert_that(response.fallback_username, instance_of(str))
-        assert_that(response.fallback_password, instance_of(str))
-        assert_that(response.priority, greater_than(0))
+        assert_that(response.status_code, equal_to(201))
+        assert_that(response.data, instance_of(CreateCallResponse))
+        assert_that(response.data.application_id, has_length(36))
+        assert_that(response.data.account_id, has_length(7))
+        assert_that(response.data.call_id, has_length(47))
+        assert_that(response.data.to, has_length(12))
+        assert_that(response.data.var_from, has_length(12))
+        assert_that(response.data.enqueued_time, instance_of(datetime))
+        assert_that(response.data.call_url, starts_with('http'))
+        assert_that(response.data.call_timeout, greater_than(0))
+        assert_that(response.data.callback_timeout, greater_than(0))
+        assert_that(response.data.tag, instance_of(str))
+        assert_that(response.data.answer_method, is_in(CallbackMethodEnum))
+        assert_that(response.data.answer_url, starts_with('http'))
+        assert_that(response.data.answer_fallback_method, is_in(CallbackMethodEnum))
+        assert_that(response.data.answer_fallback_url, starts_with('http'))
+        assert_that(response.data.disconnect_method, is_in(CallbackMethodEnum))
+        assert_that(response.data.disconnect_url, starts_with('http'))
+        assert_that(response.data.username, instance_of(str))
+        assert_that(response.data.password, instance_of(str))
+        assert_that(response.data.fallback_username, instance_of(str))
+        assert_that(response.data.fallback_password, instance_of(str))
+        assert_that(response.data.priority, greater_than(0))
 
 
     def test_get_call_state(self) -> None:
@@ -119,51 +121,95 @@ class TestCallsApi(unittest.TestCase):
 
         Get Call State Information
         """
-        response = self.calls_api_instance.get_call_state(
+        response = self.calls_api_instance.get_call_state_with_http_info(
             BW_ACCOUNT_ID,
             "c-abc123"
         )
 
-        assert_that(response, instance_of(CallState))
-        assert_that(response.applicationId, has_length(36))
-        assert_that(response.accountId, has_length(7))
-        assert_that(response.callId, has_length(47))
-        assert_that(response.parentCallId, has_length(47))
-        assert_that(response.to, has_length(12))
-        assert_that(response.var_from, has_length(12))
-        assert_that(response.direction, is_in(CallDirectionEnum))
-        assert_that(response.state, instance_of(str))
-        assert_that(response.stirShaken, instance_of(object))
-        assert_that(response.identity, instance_of(str))
-        assert_that(response.enqueuedTime, instance_of(datetime))
-        assert_that(response.startTime, instance_of(datetime))
-        assert_that(response.answerTime, instance_of(datetime))
-        assert_that(response.endTime, instance_of(datetime))
-        assert_that(response.disconnectCause, instance_of(str))
-        assert_that(response.errorMessage, instance_of(str))
-        assert_that(response.errorId, instance_of(str))
-        assert_that(response.lastUpdate, instance_of(datetime))
+        assert_that(response.status_code, equal_to(200))
+        assert_that(response.data, instance_of(CallState))
+        assert_that(response.data.application_id, has_length(36))
+        assert_that(response.data.account_id, has_length(7))
+        assert_that(response.data.call_id, has_length(47))
+        assert_that(response.data.parent_call_id, has_length(47))
+        assert_that(response.data.to, has_length(12))
+        assert_that(response.data.var_from, has_length(12))
+        assert_that(response.data.direction, is_in(CallDirectionEnum))
+        assert_that(response.data.state, instance_of(str))
+        assert_that(response.data.stir_shaken, instance_of(object))
+        assert_that(response.data.identity, instance_of(str))
+        assert_that(response.data.enqueued_time, instance_of(datetime))
+        assert_that(response.data.start_time, instance_of(datetime))
+        assert_that(response.data.answer_time, instance_of(datetime))
+        assert_that(response.data.end_time, instance_of(datetime))
+        assert_that(response.data.disconnect_cause, instance_of(str))
+        assert_that(response.data, has_property('error_message'))
+        assert_that(response.data, has_property('error_id'))
+        assert_that(response.data.last_update, instance_of(datetime))
 
     def test_list_calls(self) -> None:
         """Test case for list_calls
 
         Get Calls
         """
-        pass
+        response = self.calls_api_instance.list_calls_with_http_info(
+            BW_ACCOUNT_ID
+        )
+
+        assert_that(response.status_code, equal_to(200))
+        assert_that(response.data, instance_of(list))
+        assert_that(response.data[0], instance_of(CallState))
+        assert_that(response.data[0].application_id, has_length(36))
+        assert_that(response.data[0].account_id, has_length(7))
+        assert_that(response.data[0].call_id, has_length(47))
+        assert_that(response.data[0].parent_call_id, has_length(47))
+        assert_that(response.data[0].to, has_length(12))
+        assert_that(response.data[0].var_from, has_length(12))
+        assert_that(response.data[0].direction, is_in(CallDirectionEnum))
+        assert_that(response.data[0].state, instance_of(str))
+        assert_that(response.data[0].stir_shaken, instance_of(object))
+        assert_that(response.data[0].identity, instance_of(str))
+        assert_that(response.data[0].enqueued_time, instance_of(datetime))
+        assert_that(response.data[0].start_time, instance_of(datetime))
+        assert_that(response.data[0].answer_time, instance_of(datetime))
+        assert_that(response.data[0].end_time, instance_of(datetime))
+        assert_that(response.data[0].disconnect_cause, instance_of(str))
+        assert_that(response.data[0], has_property('error_message'))
+        assert_that(response.data[0], has_property('error_id'))
+        assert_that(response.data[0].last_update, instance_of(datetime))
 
     def test_update_call(self) -> None:
         """Test case for update_call
 
         Update Call
         """
-        pass
+        update_call_body = UpdateCall(
+            state=CallStateEnum("active"),
+            redirect_url="https://myServer.com/bandwidth/webhooks/redirect",
+        )
+
+        response = self.calls_api_instance.update_call_with_http_info(
+            BW_ACCOUNT_ID,
+            "c-abc123",
+            update_call_body
+        )
+
+        assert_that(response.status_code, equal_to(200))
 
     def test_update_call_bxml(self) -> None:
         """Test case for update_call_bxml
 
         Update Call BXML
         """
-        pass
+        update_call_bxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence><Pause duration="3"/></Bxml>'
+
+        response = self.calls_api_instance.update_call_bxml_with_http_info(
+            BW_ACCOUNT_ID,
+            "c-abc123",
+            update_call_bxml
+        )
+
+        assert_that(response.status_code, equal_to(204))
 
 
 if __name__ == '__main__':
