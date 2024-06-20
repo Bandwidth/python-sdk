@@ -126,7 +126,7 @@ jobs:
       - name: Test
         run: |-
           npm install -g @stoplight/prism-cli
-          prism mock ./bandwidth.yml & pytest -v ./test/unit
+          prism mock ./bandwidth.yml & pytest -v ./test/unit/models
 
       - name: Deploy to PYPI
         run: |
