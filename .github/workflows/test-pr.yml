@@ -58,4 +58,5 @@ jobs:
       - name: Test at Warning Level
         run: |
           echo "Log level: WARNING"
-          pytest -v --log-cli-level=WARNING ./test/unit
+          npm install -g @stoplight/prism-cli
+          prism mock ./bandwidth.yml & pytest -v --log-cli-level=WARNING ./test/unit
