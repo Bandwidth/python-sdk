@@ -294,7 +294,7 @@ class TestRecordings(unittest.TestCase):
         ))
 
         # Delete the transcription
-        delete_transcription_response = self.recordings_api_instance.get_recording_transcription_with_http_info(
+        delete_transcription_response = self.recordings_api_instance.delete_recording_transcription_with_http_info(
             BW_ACCOUNT_ID, call_id, recording_id)
         assert_that(delete_transcription_response.status_code, equal_to(204))  # Check response code
 

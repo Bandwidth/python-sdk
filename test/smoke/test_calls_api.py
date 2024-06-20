@@ -58,6 +58,7 @@ class CallsIntegration(unittest.TestCase):
             to=USER_NUMBER,
             var_from=BW_NUMBER,
             privacy=True,
+            display_name="Anonymous",
             application_id=BW_VOICE_APPLICATION_ID,
             answer_url=BASE_CALLBACK_URL,
             answer_method=CallbackMethodEnum("POST"),
