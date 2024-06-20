@@ -15,24 +15,37 @@
 
 import unittest
 
+from hamcrest import *
+from test.utils.env_variables import *
+from bandwidth import ApiClient, Configuration
 from bandwidth.api.statistics_api import StatisticsApi
+from bandwidth.models.account_statistics import AccountStatistics
 
 
 class TestStatisticsApi(unittest.TestCase):
     """StatisticsApi unit test stubs"""
 
     def setUp(self) -> None:
-        self.api = StatisticsApi()
-
-    def tearDown(self) -> None:
-        pass
+        configuration = Configuration(
+            username=BW_USERNAME,
+            password=BW_PASSWORD,
+            host='http://127.0.0.1:4010',
+            ignore_operation_servers=True
+        )
+        api_client = ApiClient(configuration)
+        self.statistics_api_instance = StatisticsApi(api_client)
 
     def test_get_statistics(self) -> None:
         """Test case for get_statistics
 
         Get Account Statistics
         """
-        pass
+        response = self.statistics_api_instance.get_statistics_with_http_info(BW_ACCOUNT_ID)
+
+        assert_that(response.status_code, equal_to(200))
+        assert_that(response.data, instance_of(AccountStatistics))
+        assert_that(response.data.current_call_queue_size, instance_of(int))
+        assert_that(response.data.max_call_queue_size, instance_of(int))
 
 
 if __name__ == '__main__':
