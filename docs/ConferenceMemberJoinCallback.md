@@ -30,7 +30,7 @@ print(ConferenceMemberJoinCallback.to_json())
 # convert the object into a dict
 conference_member_join_callback_dict = conference_member_join_callback_instance.to_dict()
 # create an instance of ConferenceMemberJoinCallback from a dict
-conference_member_join_callback_form_dict = conference_member_join_callback.from_dict(conference_member_join_callback_dict)
+conference_member_join_callback_from_dict = ConferenceMemberJoinCallback.from_dict(conference_member_join_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

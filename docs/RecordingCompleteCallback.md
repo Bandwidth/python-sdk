@@ -44,7 +44,7 @@ print(RecordingCompleteCallback.to_json())
 # convert the object into a dict
 recording_complete_callback_dict = recording_complete_callback_instance.to_dict()
 # create an instance of RecordingCompleteCallback from a dict
-recording_complete_callback_form_dict = recording_complete_callback.from_dict(recording_complete_callback_dict)
+recording_complete_callback_from_dict = RecordingCompleteCallback.from_dict(recording_complete_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -23,7 +23,7 @@ print(CallTranscriptionMetadata.to_json())
 # convert the object into a dict
 call_transcription_metadata_dict = call_transcription_metadata_instance.to_dict()
 # create an instance of CallTranscriptionMetadata from a dict
-call_transcription_metadata_form_dict = call_transcription_metadata.from_dict(call_transcription_metadata_dict)
+call_transcription_metadata_from_dict = CallTranscriptionMetadata.from_dict(call_transcription_metadata_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

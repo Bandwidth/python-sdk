@@ -40,7 +40,7 @@ print(GatherCallback.to_json())
 # convert the object into a dict
 gather_callback_dict = gather_callback_instance.to_dict()
 # create an instance of GatherCallback from a dict
-gather_callback_form_dict = gather_callback.from_dict(gather_callback_dict)
+gather_callback_from_dict = GatherCallback.from_dict(gather_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

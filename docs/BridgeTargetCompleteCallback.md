@@ -35,7 +35,7 @@ print(BridgeTargetCompleteCallback.to_json())
 # convert the object into a dict
 bridge_target_complete_callback_dict = bridge_target_complete_callback_instance.to_dict()
 # create an instance of BridgeTargetCompleteCallback from a dict
-bridge_target_complete_callback_form_dict = bridge_target_complete_callback.from_dict(bridge_target_complete_callback_dict)
+bridge_target_complete_callback_from_dict = BridgeTargetCompleteCallback.from_dict(bridge_target_complete_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

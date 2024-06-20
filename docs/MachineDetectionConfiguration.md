@@ -37,7 +37,7 @@ print(MachineDetectionConfiguration.to_json())
 # convert the object into a dict
 machine_detection_configuration_dict = machine_detection_configuration_instance.to_dict()
 # create an instance of MachineDetectionConfiguration from a dict
-machine_detection_configuration_form_dict = machine_detection_configuration.from_dict(machine_detection_configuration_dict)
+machine_detection_configuration_from_dict = MachineDetectionConfiguration.from_dict(machine_detection_configuration_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

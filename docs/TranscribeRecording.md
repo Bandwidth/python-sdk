@@ -28,7 +28,7 @@ print(TranscribeRecording.to_json())
 # convert the object into a dict
 transcribe_recording_dict = transcribe_recording_instance.to_dict()
 # create an instance of TranscribeRecording from a dict
-transcribe_recording_form_dict = transcribe_recording.from_dict(transcribe_recording_dict)
+transcribe_recording_from_dict = TranscribeRecording.from_dict(transcribe_recording_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

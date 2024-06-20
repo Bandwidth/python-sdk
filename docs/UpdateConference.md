@@ -30,7 +30,7 @@ print(UpdateConference.to_json())
 # convert the object into a dict
 update_conference_dict = update_conference_instance.to_dict()
 # create an instance of UpdateConference from a dict
-update_conference_form_dict = update_conference.from_dict(update_conference_dict)
+update_conference_from_dict = UpdateConference.from_dict(update_conference_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -37,7 +37,7 @@ print(TransferAnswerCallback.to_json())
 # convert the object into a dict
 transfer_answer_callback_dict = transfer_answer_callback_instance.to_dict()
 # create an instance of TransferAnswerCallback from a dict
-transfer_answer_callback_form_dict = transfer_answer_callback.from_dict(transfer_answer_callback_dict)
+transfer_answer_callback_from_dict = TransferAnswerCallback.from_dict(transfer_answer_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

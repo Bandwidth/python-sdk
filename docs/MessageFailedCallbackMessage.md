@@ -34,7 +34,7 @@ print(MessageFailedCallbackMessage.to_json())
 # convert the object into a dict
 message_failed_callback_message_dict = message_failed_callback_message_instance.to_dict()
 # create an instance of MessageFailedCallbackMessage from a dict
-message_failed_callback_message_form_dict = message_failed_callback_message.from_dict(message_failed_callback_message_dict)
+message_failed_callback_message_from_dict = MessageFailedCallbackMessage.from_dict(message_failed_callback_message_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

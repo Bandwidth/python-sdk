@@ -32,7 +32,7 @@ print(ConferenceRecordingMetadata.to_json())
 # convert the object into a dict
 conference_recording_metadata_dict = conference_recording_metadata_instance.to_dict()
 # create an instance of ConferenceRecordingMetadata from a dict
-conference_recording_metadata_form_dict = conference_recording_metadata.from_dict(conference_recording_metadata_dict)
+conference_recording_metadata_from_dict = ConferenceRecordingMetadata.from_dict(conference_recording_metadata_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

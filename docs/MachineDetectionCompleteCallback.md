@@ -36,7 +36,7 @@ print(MachineDetectionCompleteCallback.to_json())
 # convert the object into a dict
 machine_detection_complete_callback_dict = machine_detection_complete_callback_instance.to_dict()
 # create an instance of MachineDetectionCompleteCallback from a dict
-machine_detection_complete_callback_form_dict = machine_detection_complete_callback.from_dict(machine_detection_complete_callback_dict)
+machine_detection_complete_callback_from_dict = MachineDetectionCompleteCallback.from_dict(machine_detection_complete_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

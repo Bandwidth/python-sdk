@@ -27,7 +27,7 @@ print(InboundMessageCallback.to_json())
 # convert the object into a dict
 inbound_message_callback_dict = inbound_message_callback_instance.to_dict()
 # create an instance of InboundMessageCallback from a dict
-inbound_message_callback_form_dict = inbound_message_callback.from_dict(inbound_message_callback_dict)
+inbound_message_callback_from_dict = InboundMessageCallback.from_dict(inbound_message_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

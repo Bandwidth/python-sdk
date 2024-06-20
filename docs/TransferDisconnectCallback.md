@@ -42,7 +42,7 @@ print(TransferDisconnectCallback.to_json())
 # convert the object into a dict
 transfer_disconnect_callback_dict = transfer_disconnect_callback_instance.to_dict()
 # create an instance of TransferDisconnectCallback from a dict
-transfer_disconnect_callback_form_dict = transfer_disconnect_callback.from_dict(transfer_disconnect_callback_dict)
+transfer_disconnect_callback_from_dict = TransferDisconnectCallback.from_dict(transfer_disconnect_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
