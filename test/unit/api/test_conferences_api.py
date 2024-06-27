@@ -183,9 +183,7 @@ class TestConferencesApi(unittest.TestCase):
         Download Conference Recording
         """
         response = self.conferences_api_instance.download_conference_recording_with_http_info(
-            BW_ACCOUNT_ID, 'conferenceId', 'recordingId', _headers={'Accept': 'audio/wav'})
-        # might be an issue with the client, cause I think the accept header gets written to
-        # application/json no matter what
+            BW_ACCOUNT_ID, 'conferenceId', 'recordingId', _headers={'Accept': 'audio/vnd.wave'})
         
         assert_that(response.status_code, equal_to(200))
         assert_that(response.data, instance_of(bytes))
