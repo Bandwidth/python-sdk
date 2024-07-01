@@ -21,8 +21,8 @@ from bandwidth import ApiClient, Configuration
 from bandwidth.api.transcriptions_api import TranscriptionsApi
 from bandwidth.models.call_transcription_metadata import CallTranscriptionMetadata
 from bandwidth.models.call_transcription_response import CallTranscriptionResponse
-# from bandwidth.models.call_transcription_detected_language_enum import CallTranscriptionDetectedLanguageEnum
-# from bandwidth.models.call_transcription_track_enum import CallTranscriptionTrackEnum
+from bandwidth.models.call_transcription_detected_language_enum import CallTranscriptionDetectedLanguageEnum
+from bandwidth.models.call_transcription_track_enum import CallTranscriptionTrackEnum
 from bandwidth.models.call_transcription import CallTranscription
 
 
@@ -71,9 +71,9 @@ class TestTranscriptionsApi(unittest.TestCase):
         assert_that(response.data.transcription_id, instance_of(str))
         assert_that(response.data.tracks, instance_of(list))
         assert_that(response.data.tracks[0], instance_of(CallTranscription))
-        # assert_that(response.data.tracks[0].detected_language, is_in(CallTranscriptionDetectedLanguageEnum))
-        # assert_that(response.data.tracks[0].track, is_in(CallTranscriptionTrackEnum))
-        assert_that(response.data.tracks[0].text, instance_of(str))
+        assert_that(response.data.tracks[0].detected_language, is_in(CallTranscriptionDetectedLanguageEnum))
+        assert_that(response.data.tracks[0].track, is_in(CallTranscriptionTrackEnum))
+        assert_that(response.data.tracks[0].transcript, instance_of(str))
         assert_that(response.data.tracks[0].confidence, instance_of(float))
 
     def test_delete_real_time_transcription(self) -> None:
