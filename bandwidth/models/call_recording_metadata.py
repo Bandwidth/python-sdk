@@ -23,7 +23,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.call_direction_enum import CallDirectionEnum
 from bandwidth.models.file_format_enum import FileFormatEnum
-from bandwidth.models.transcription_metadata import TranscriptionMetadata
+from bandwidth.models.recording_transcription_metadata import RecordingTranscriptionMetadata
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -37,8 +37,8 @@ class CallRecordingMetadata(BaseModel):
     parent_call_id: Optional[StrictStr] = Field(default=None, description="(optional) If the event is related to the B leg of a <Transfer>, the call id of the original call leg that executed the <Transfer>. Otherwise, this field will not be present.", alias="parentCallId")
     recording_id: Optional[StrictStr] = Field(default=None, description="The unique ID of this recording", alias="recordingId")
     to: Optional[StrictStr] = Field(default=None, description="The phone number that received the call, in E.164 format (e.g. +15555555555).")
-    var_from: Optional[StrictStr] = Field(default=None, description="The provided identifier of the caller: can be a phone number in E.164 format (e.g. +15555555555) or one of Private, Restricted, Unavailable, or Anonymous.", alias="from")
-    transfer_caller_id: Optional[StrictStr] = Field(default=None, description="The phone number used as the from field of the B-leg call, in E.164 format (e.g. +15555555555) or one of Restricted, Anonymous, Private, or Unavailable.", alias="transferCallerId")
+    var_from: Optional[StrictStr] = Field(default=None, description="The provided identifier of the caller. Must be a phone number in E.164 format (e.g. +15555555555).", alias="from")
+    transfer_caller_id: Optional[StrictStr] = Field(default=None, description="The phone number used as the from field of the B-leg call, in E.164 format (e.g. +15555555555).", alias="transferCallerId")
     transfer_to: Optional[StrictStr] = Field(default=None, description="The phone number used as the to field of the B-leg call, in E.164 format (e.g. +15555555555).", alias="transferTo")
     duration: Optional[StrictStr] = Field(default=None, description="The duration of the recording in ISO-8601 format")
     direction: Optional[CallDirectionEnum] = None
@@ -48,7 +48,7 @@ class CallRecordingMetadata(BaseModel):
     file_format: Optional[FileFormatEnum] = Field(default=None, alias="fileFormat")
     status: Optional[StrictStr] = Field(default=None, description="The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.")
     media_url: Optional[StrictStr] = Field(default=None, description="The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.", alias="mediaUrl")
-    transcription: Optional[TranscriptionMetadata] = None
+    transcription: Optional[RecordingTranscriptionMetadata] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["applicationId", "accountId", "callId", "parentCallId", "recordingId", "to", "from", "transferCallerId", "transferTo", "duration", "direction", "channels", "startTime", "endTime", "fileFormat", "status", "mediaUrl", "transcription"]
 
@@ -140,7 +140,7 @@ class CallRecordingMetadata(BaseModel):
             "fileFormat": obj.get("fileFormat"),
             "status": obj.get("status"),
             "mediaUrl": obj.get("mediaUrl"),
-            "transcription": TranscriptionMetadata.from_dict(obj["transcription"]) if obj.get("transcription") is not None else None
+            "transcription": RecordingTranscriptionMetadata.from_dict(obj["transcription"]) if obj.get("transcription") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

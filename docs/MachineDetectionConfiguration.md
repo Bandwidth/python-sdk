@@ -1,6 +1,6 @@
 # MachineDetectionConfiguration
 
-The machine detection request used to perform <a href='/docs/voice/guides/machineDetection'>machine detection</a> on the call.
+The machine detection request used to perform <a href='/docs/voice/guides/machineDetection'>machine detection</a> on the call. Currently, there is an issue where decimal values are not getting processed correctly. Please use whole number values. We are working to resolve this issue. Please contact Bandwidth Support if you need more information.
 
 ## Properties
 

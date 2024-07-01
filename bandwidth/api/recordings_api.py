@@ -21,8 +21,8 @@ from pydantic import Field, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
 from bandwidth.models.call_recording_metadata import CallRecordingMetadata
+from bandwidth.models.recording_transcriptions import RecordingTranscriptions
 from bandwidth.models.transcribe_recording import TranscribeRecording
-from bandwidth.models.transcription_list import TranscriptionList
 from bandwidth.models.update_call_recording import UpdateCallRecording
 
 from bandwidth.api_client import ApiClient, RequestSerialized
@@ -41,321 +41,6 @@ class RecordingsApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
-
-
-    @validate_call
-    def delete_call_transcription(
-        self,
-        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
-        call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
-        recording_id: Annotated[StrictStr, Field(description="Programmable Voice API Recording ID.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
-    ) -> None:
-        """Delete Transcription
-
-        Deletes the specified recording's transcription.  Note: After the deletion is requested and a `204` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
-
-        :param account_id: Your Bandwidth Account ID. (required)
-        :type account_id: str
-        :param call_id: Programmable Voice API Call ID. (required)
-        :type call_id: str
-        :param recording_id: Programmable Voice API Recording ID. (required)
-        :type recording_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._delete_call_transcription_serialize(
-            account_id=account_id,
-            call_id=call_id,
-            recording_id=recording_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '204': None,
-            '400': "VoiceApiError",
-            '401': "VoiceApiError",
-            '403': "VoiceApiError",
-            '404': "VoiceApiError",
-            '405': "VoiceApiError",
-            '415': "VoiceApiError",
-            '429': "VoiceApiError",
-            '500': "VoiceApiError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def delete_call_transcription_with_http_info(
-        self,
-        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
-        call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
-        recording_id: Annotated[StrictStr, Field(description="Programmable Voice API Recording ID.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
-    ) -> ApiResponse[None]:
-        """Delete Transcription
-
-        Deletes the specified recording's transcription.  Note: After the deletion is requested and a `204` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
-
-        :param account_id: Your Bandwidth Account ID. (required)
-        :type account_id: str
-        :param call_id: Programmable Voice API Call ID. (required)
-        :type call_id: str
-        :param recording_id: Programmable Voice API Recording ID. (required)
-        :type recording_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._delete_call_transcription_serialize(
-            account_id=account_id,
-            call_id=call_id,
-            recording_id=recording_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '204': None,
-            '400': "VoiceApiError",
-            '401': "VoiceApiError",
-            '403': "VoiceApiError",
-            '404': "VoiceApiError",
-            '405': "VoiceApiError",
-            '415': "VoiceApiError",
-            '429': "VoiceApiError",
-            '500': "VoiceApiError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def delete_call_transcription_without_preload_content(
-        self,
-        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
-        call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
-        recording_id: Annotated[StrictStr, Field(description="Programmable Voice API Recording ID.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
-    ) -> RESTResponseType:
-        """Delete Transcription
-
-        Deletes the specified recording's transcription.  Note: After the deletion is requested and a `204` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
-
-        :param account_id: Your Bandwidth Account ID. (required)
-        :type account_id: str
-        :param call_id: Programmable Voice API Call ID. (required)
-        :type call_id: str
-        :param recording_id: Programmable Voice API Recording ID. (required)
-        :type recording_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._delete_call_transcription_serialize(
-            account_id=account_id,
-            call_id=call_id,
-            recording_id=recording_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '204': None,
-            '400': "VoiceApiError",
-            '401': "VoiceApiError",
-            '403': "VoiceApiError",
-            '404': "VoiceApiError",
-            '405': "VoiceApiError",
-            '415': "VoiceApiError",
-            '429': "VoiceApiError",
-            '500': "VoiceApiError",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _delete_call_transcription_serialize(
-        self,
-        account_id,
-        call_id,
-        recording_id,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _hosts = [
-            'https://voice.bandwidth.com/api/v2'
-        ]
-        _host = _hosts[_host_index]
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, str] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if account_id is not None:
-            _path_params['accountId'] = account_id
-        if call_id is not None:
-            _path_params['callId'] = call_id
-        if recording_id is not None:
-            _path_params['recordingId'] = recording_id
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-
-        # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
-
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'Basic'
-        ]
-
-        return self.api_client.param_serialize(
-            method='DELETE',
-            resource_path='/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
 
 
     @validate_call
@@ -973,6 +658,321 @@ class RecordingsApi:
         return self.api_client.param_serialize(
             method='DELETE',
             resource_path='/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def delete_recording_transcription(
+        self,
+        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
+        call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
+        recording_id: Annotated[StrictStr, Field(description="Programmable Voice API Recording ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
+    ) -> None:
+        """Delete Transcription
+
+        Deletes the specified recording's transcription.  Note: After the deletion is requested and a `204` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
+
+        :param account_id: Your Bandwidth Account ID. (required)
+        :type account_id: str
+        :param call_id: Programmable Voice API Call ID. (required)
+        :type call_id: str
+        :param recording_id: Programmable Voice API Recording ID. (required)
+        :type recording_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_recording_transcription_serialize(
+            account_id=account_id,
+            call_id=call_id,
+            recording_id=recording_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '204': None,
+            '400': "VoiceApiError",
+            '401': "VoiceApiError",
+            '403': "VoiceApiError",
+            '404': "VoiceApiError",
+            '405': "VoiceApiError",
+            '415': "VoiceApiError",
+            '429': "VoiceApiError",
+            '500': "VoiceApiError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def delete_recording_transcription_with_http_info(
+        self,
+        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
+        call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
+        recording_id: Annotated[StrictStr, Field(description="Programmable Voice API Recording ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
+    ) -> ApiResponse[None]:
+        """Delete Transcription
+
+        Deletes the specified recording's transcription.  Note: After the deletion is requested and a `204` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
+
+        :param account_id: Your Bandwidth Account ID. (required)
+        :type account_id: str
+        :param call_id: Programmable Voice API Call ID. (required)
+        :type call_id: str
+        :param recording_id: Programmable Voice API Recording ID. (required)
+        :type recording_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_recording_transcription_serialize(
+            account_id=account_id,
+            call_id=call_id,
+            recording_id=recording_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '204': None,
+            '400': "VoiceApiError",
+            '401': "VoiceApiError",
+            '403': "VoiceApiError",
+            '404': "VoiceApiError",
+            '405': "VoiceApiError",
+            '415': "VoiceApiError",
+            '429': "VoiceApiError",
+            '500': "VoiceApiError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def delete_recording_transcription_without_preload_content(
+        self,
+        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
+        call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
+        recording_id: Annotated[StrictStr, Field(description="Programmable Voice API Recording ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
+    ) -> RESTResponseType:
+        """Delete Transcription
+
+        Deletes the specified recording's transcription.  Note: After the deletion is requested and a `204` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
+
+        :param account_id: Your Bandwidth Account ID. (required)
+        :type account_id: str
+        :param call_id: Programmable Voice API Call ID. (required)
+        :type call_id: str
+        :param recording_id: Programmable Voice API Recording ID. (required)
+        :type recording_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._delete_recording_transcription_serialize(
+            account_id=account_id,
+            call_id=call_id,
+            recording_id=recording_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '204': None,
+            '400': "VoiceApiError",
+            '401': "VoiceApiError",
+            '403': "VoiceApiError",
+            '404': "VoiceApiError",
+            '405': "VoiceApiError",
+            '415': "VoiceApiError",
+            '429': "VoiceApiError",
+            '500': "VoiceApiError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _delete_recording_transcription_serialize(
+        self,
+        account_id,
+        call_id,
+        recording_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _hosts = [
+            'https://voice.bandwidth.com/api/v2'
+        ]
+        _host = _hosts[_host_index]
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, str] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if account_id is not None:
+            _path_params['accountId'] = account_id
+        if call_id is not None:
+            _path_params['callId'] = call_id
+        if recording_id is not None:
+            _path_params['recordingId'] = recording_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        _header_params['Accept'] = self.api_client.select_header_accept(
+            [
+                'application/json'
+            ]
+        )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'Basic'
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1621,7 +1621,7 @@ class RecordingsApi:
 
 
     @validate_call
-    def get_call_transcription(
+    def get_recording_transcription(
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
         call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
@@ -1638,10 +1638,10 @@ class RecordingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
-    ) -> TranscriptionList:
+    ) -> RecordingTranscriptions:
         """Get Transcription
 
-        Downloads the specified transcription.  If the transcribed recording was multi-channel, then there will be 2 transcripts. The caller/called party transcript will be the first item while [`<PlayAudio>`](/docs/voice/bxml/playAudio) and [`<SpeakSentence>`](/docs/voice/bxml/speakSentence) transcript will be the second item. During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be the first item while the B-leg transcript will be the second item.
+        Downloads the specified transcription. If the recording was multi-channel, then there will be 2 transcripts. The caller/called party transcript will be the first item while [`<PlayAudio>`](/docs/voice/bxml/playAudio) and [`<SpeakSentence>`](/docs/voice/bxml/speakSentence) transcript will be the second item. During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be the first item while the B-leg transcript will be the second item.
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
@@ -1671,7 +1671,7 @@ class RecordingsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_call_transcription_serialize(
+        _param = self._get_recording_transcription_serialize(
             account_id=account_id,
             call_id=call_id,
             recording_id=recording_id,
@@ -1682,7 +1682,7 @@ class RecordingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TranscriptionList",
+            '200': "RecordingTranscriptions",
             '400': "VoiceApiError",
             '401': "VoiceApiError",
             '403': "VoiceApiError",
@@ -1704,7 +1704,7 @@ class RecordingsApi:
 
 
     @validate_call
-    def get_call_transcription_with_http_info(
+    def get_recording_transcription_with_http_info(
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
         call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
@@ -1721,10 +1721,10 @@ class RecordingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
-    ) -> ApiResponse[TranscriptionList]:
+    ) -> ApiResponse[RecordingTranscriptions]:
         """Get Transcription
 
-        Downloads the specified transcription.  If the transcribed recording was multi-channel, then there will be 2 transcripts. The caller/called party transcript will be the first item while [`<PlayAudio>`](/docs/voice/bxml/playAudio) and [`<SpeakSentence>`](/docs/voice/bxml/speakSentence) transcript will be the second item. During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be the first item while the B-leg transcript will be the second item.
+        Downloads the specified transcription. If the recording was multi-channel, then there will be 2 transcripts. The caller/called party transcript will be the first item while [`<PlayAudio>`](/docs/voice/bxml/playAudio) and [`<SpeakSentence>`](/docs/voice/bxml/speakSentence) transcript will be the second item. During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be the first item while the B-leg transcript will be the second item.
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
@@ -1754,7 +1754,7 @@ class RecordingsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_call_transcription_serialize(
+        _param = self._get_recording_transcription_serialize(
             account_id=account_id,
             call_id=call_id,
             recording_id=recording_id,
@@ -1765,7 +1765,7 @@ class RecordingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TranscriptionList",
+            '200': "RecordingTranscriptions",
             '400': "VoiceApiError",
             '401': "VoiceApiError",
             '403': "VoiceApiError",
@@ -1787,7 +1787,7 @@ class RecordingsApi:
 
 
     @validate_call
-    def get_call_transcription_without_preload_content(
+    def get_recording_transcription_without_preload_content(
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
         call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
@@ -1807,7 +1807,7 @@ class RecordingsApi:
     ) -> RESTResponseType:
         """Get Transcription
 
-        Downloads the specified transcription.  If the transcribed recording was multi-channel, then there will be 2 transcripts. The caller/called party transcript will be the first item while [`<PlayAudio>`](/docs/voice/bxml/playAudio) and [`<SpeakSentence>`](/docs/voice/bxml/speakSentence) transcript will be the second item. During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be the first item while the B-leg transcript will be the second item.
+        Downloads the specified transcription. If the recording was multi-channel, then there will be 2 transcripts. The caller/called party transcript will be the first item while [`<PlayAudio>`](/docs/voice/bxml/playAudio) and [`<SpeakSentence>`](/docs/voice/bxml/speakSentence) transcript will be the second item. During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be the first item while the B-leg transcript will be the second item.
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
@@ -1837,7 +1837,7 @@ class RecordingsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._get_call_transcription_serialize(
+        _param = self._get_recording_transcription_serialize(
             account_id=account_id,
             call_id=call_id,
             recording_id=recording_id,
@@ -1848,7 +1848,7 @@ class RecordingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TranscriptionList",
+            '200': "RecordingTranscriptions",
             '400': "VoiceApiError",
             '401': "VoiceApiError",
             '403': "VoiceApiError",
@@ -1865,7 +1865,7 @@ class RecordingsApi:
         return response_data.response
 
 
-    def _get_call_transcription_serialize(
+    def _get_recording_transcription_serialize(
         self,
         account_id,
         call_id,
