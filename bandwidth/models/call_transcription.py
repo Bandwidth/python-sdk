@@ -18,9 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
+from bandwidth.models.call_transcription_detected_language_enum import CallTranscriptionDetectedLanguageEnum
+from bandwidth.models.call_transcription_track_enum import CallTranscriptionTrackEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,32 +30,12 @@ class CallTranscription(BaseModel):
     """
     CallTranscription
     """ # noqa: E501
-    detected_language: Optional[StrictStr] = Field(default=None, description="The detected language for this transcription.", alias="detectedLanguage")
-    track: Optional[StrictStr] = Field(default=None, description="Which `track` this transcription is derived from.")
-    text: Optional[StrictStr] = Field(default=None, description="The transcription itself.")
+    detected_language: Optional[CallTranscriptionDetectedLanguageEnum] = Field(default=None, alias="detectedLanguage")
+    track: Optional[CallTranscriptionTrackEnum] = None
+    transcript: Optional[StrictStr] = Field(default=None, description="The transcription itself.")
     confidence: Optional[Union[Annotated[float, Field(le=1, strict=True, ge=0)], Annotated[int, Field(le=1, strict=True, ge=0)]]] = Field(default=None, description="How confident the transcription engine was in transcribing the associated audio (from `0` to `1`).")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["detectedLanguage", "track", "text", "confidence"]
-
-    @field_validator('detected_language')
-    def detected_language_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['en-US', 'es-US', 'fr-FR']):
-            raise ValueError("must be one of enum values ('en-US', 'es-US', 'fr-FR')")
-        return value
-
-    @field_validator('track')
-    def track_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['inbound', 'outbound']):
-            raise ValueError("must be one of enum values ('inbound', 'outbound')")
-        return value
+    __properties: ClassVar[List[str]] = ["detectedLanguage", "track", "transcript", "confidence"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -115,7 +97,7 @@ class CallTranscription(BaseModel):
         _obj = cls.model_validate({
             "detectedLanguage": obj.get("detectedLanguage"),
             "track": obj.get("track"),
-            "text": obj.get("text"),
+            "transcript": obj.get("transcript"),
             "confidence": obj.get("confidence")
         })
         # store additional fields in additional_properties
