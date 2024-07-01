@@ -27,7 +27,7 @@ print(ConferenceCreatedCallback.to_json())
 # convert the object into a dict
 conference_created_callback_dict = conference_created_callback_instance.to_dict()
 # create an instance of ConferenceCreatedCallback from a dict
-conference_created_callback_form_dict = conference_created_callback.from_dict(conference_created_callback_dict)
+conference_created_callback_from_dict = ConferenceCreatedCallback.from_dict(conference_created_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

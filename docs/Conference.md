@@ -29,7 +29,7 @@ print(Conference.to_json())
 # convert the object into a dict
 conference_dict = conference_instance.to_dict()
 # create an instance of Conference from a dict
-conference_form_dict = conference.from_dict(conference_dict)
+conference_from_dict = Conference.from_dict(conference_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

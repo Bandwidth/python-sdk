@@ -42,7 +42,7 @@ print(CreateCall.to_json())
 # convert the object into a dict
 create_call_dict = create_call_instance.to_dict()
 # create an instance of CreateCall from a dict
-create_call_form_dict = create_call.from_dict(create_call_dict)
+create_call_from_dict = CreateCall.from_dict(create_call_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

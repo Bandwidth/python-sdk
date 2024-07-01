@@ -28,7 +28,7 @@ print(Diversion.to_json())
 # convert the object into a dict
 diversion_dict = diversion_instance.to_dict()
 # create an instance of Diversion from a dict
-diversion_form_dict = diversion.from_dict(diversion_dict)
+diversion_from_dict = Diversion.from_dict(diversion_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

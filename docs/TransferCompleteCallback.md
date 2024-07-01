@@ -40,7 +40,7 @@ print(TransferCompleteCallback.to_json())
 # convert the object into a dict
 transfer_complete_callback_dict = transfer_complete_callback_instance.to_dict()
 # create an instance of TransferCompleteCallback from a dict
-transfer_complete_callback_form_dict = transfer_complete_callback.from_dict(transfer_complete_callback_dict)
+transfer_complete_callback_from_dict = TransferCompleteCallback.from_dict(transfer_complete_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

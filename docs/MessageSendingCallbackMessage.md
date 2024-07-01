@@ -34,7 +34,7 @@ print(MessageSendingCallbackMessage.to_json())
 # convert the object into a dict
 message_sending_callback_message_dict = message_sending_callback_message_instance.to_dict()
 # create an instance of MessageSendingCallbackMessage from a dict
-message_sending_callback_message_form_dict = message_sending_callback_message.from_dict(message_sending_callback_message_dict)
+message_sending_callback_message_from_dict = MessageSendingCallbackMessage.from_dict(message_sending_callback_message_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

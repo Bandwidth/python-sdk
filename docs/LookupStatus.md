@@ -26,7 +26,7 @@ print(LookupStatus.to_json())
 # convert the object into a dict
 lookup_status_dict = lookup_status_instance.to_dict()
 # create an instance of LookupStatus from a dict
-lookup_status_form_dict = lookup_status.from_dict(lookup_status_dict)
+lookup_status_from_dict = LookupStatus.from_dict(lookup_status_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -25,7 +25,7 @@ print(CallTranscriptionResponse.to_json())
 # convert the object into a dict
 call_transcription_response_dict = call_transcription_response_instance.to_dict()
 # create an instance of CallTranscriptionResponse from a dict
-call_transcription_response_form_dict = call_transcription_response.from_dict(call_transcription_response_dict)
+call_transcription_response_from_dict = CallTranscriptionResponse.from_dict(call_transcription_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

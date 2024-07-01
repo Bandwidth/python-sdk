@@ -24,7 +24,7 @@ print(Media.to_json())
 # convert the object into a dict
 media_dict = media_instance.to_dict()
 # create an instance of Media from a dict
-media_form_dict = media.from_dict(media_dict)
+media_from_dict = Media.from_dict(media_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

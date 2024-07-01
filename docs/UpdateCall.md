@@ -31,7 +31,7 @@ print(UpdateCall.to_json())
 # convert the object into a dict
 update_call_dict = update_call_instance.to_dict()
 # create an instance of UpdateCall from a dict
-update_call_form_dict = update_call.from_dict(update_call_dict)
+update_call_from_dict = UpdateCall.from_dict(update_call_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

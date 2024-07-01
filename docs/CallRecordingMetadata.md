@@ -39,7 +39,7 @@ print(CallRecordingMetadata.to_json())
 # convert the object into a dict
 call_recording_metadata_dict = call_recording_metadata_instance.to_dict()
 # create an instance of CallRecordingMetadata from a dict
-call_recording_metadata_form_dict = call_recording_metadata.from_dict(call_recording_metadata_dict)
+call_recording_metadata_from_dict = CallRecordingMetadata.from_dict(call_recording_metadata_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

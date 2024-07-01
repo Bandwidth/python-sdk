@@ -43,7 +43,7 @@ print(TranscriptionAvailableCallback.to_json())
 # convert the object into a dict
 transcription_available_callback_dict = transcription_available_callback_instance.to_dict()
 # create an instance of TranscriptionAvailableCallback from a dict
-transcription_available_callback_form_dict = transcription_available_callback.from_dict(transcription_available_callback_dict)
+transcription_available_callback_from_dict = TranscriptionAvailableCallback.from_dict(transcription_available_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

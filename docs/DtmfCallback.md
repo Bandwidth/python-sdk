@@ -39,7 +39,7 @@ print(DtmfCallback.to_json())
 # convert the object into a dict
 dtmf_callback_dict = dtmf_callback_instance.to_dict()
 # create an instance of DtmfCallback from a dict
-dtmf_callback_form_dict = dtmf_callback.from_dict(dtmf_callback_dict)
+dtmf_callback_from_dict = DtmfCallback.from_dict(dtmf_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

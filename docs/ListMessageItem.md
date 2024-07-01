@@ -38,7 +38,7 @@ print(ListMessageItem.to_json())
 # convert the object into a dict
 list_message_item_dict = list_message_item_instance.to_dict()
 # create an instance of ListMessageItem from a dict
-list_message_item_form_dict = list_message_item.from_dict(list_message_item_dict)
+list_message_item_from_dict = ListMessageItem.from_dict(list_message_item_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

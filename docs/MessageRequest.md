@@ -29,7 +29,7 @@ print(MessageRequest.to_json())
 # convert the object into a dict
 message_request_dict = message_request_instance.to_dict()
 # create an instance of MessageRequest from a dict
-message_request_form_dict = message_request.from_dict(message_request_dict)
+message_request_from_dict = MessageRequest.from_dict(message_request_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
