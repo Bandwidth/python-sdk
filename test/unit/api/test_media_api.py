@@ -65,13 +65,13 @@ class TestMediaApi(unittest.TestCase):
         assert_that(response.data[0].content_length, instance_of(int))
         assert_that(response.data[0].media_name, instance_of(str))
 
-    @unittest.skip("Stoplight doesn't like the Accept Header") # Potentially same issue as download_conference_recording
     def test_get_media(self) -> None:
         """Test case for get_media
 
         Get Media
         """
-        response = self.media_api_instance.get_media_with_http_info(BW_ACCOUNT_ID, 'media_name.jpeg')
+        response = self.media_api_instance.get_media_with_http_info(
+            BW_ACCOUNT_ID, 'media_name.jpeg', _headers={'Accept': 'application/octet-stream'})
 
         assert_that(response.status_code, equal_to(200))
         assert_that(response.data, instance_of(bytes))
