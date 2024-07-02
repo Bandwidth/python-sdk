@@ -22,6 +22,7 @@ from bandwidth import ApiClient, Configuration
 from bandwidth.api.messages_api import MessagesApi
 from bandwidth.models.message_request import MessageRequest
 from bandwidth.models.message import Message
+from bandwidth.models.messages_list import MessagesList
 from bandwidth.models.message_direction_enum import MessageDirectionEnum
 from bandwidth.models.priority_enum import PriorityEnum
 from bandwidth.models.message_status_enum import MessageStatusEnum
@@ -82,6 +83,7 @@ class TestMessagesApi(unittest.TestCase):
         response = self.messages_api_instance.list_messages_with_http_info(BW_ACCOUNT_ID)
 
         assert_that(response.status_code, equal_to(200))
+        assert_that(response.data, instance_of(MessagesList))
         assert_that(response.data.total_count, instance_of(int))
         assert_that(response.data.page_info, instance_of(PageInfo))
         assert_that(response.data.page_info.prev_page, starts_with('http'))

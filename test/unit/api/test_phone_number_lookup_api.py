@@ -50,6 +50,7 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
 
         assert_that(response.status_code, equal_to(202))
         assert_that(response.data, instance_of(CreateLookupResponse))
+        assert_that(response.data.request_id, has_length(36))
         assert_that(response.data.status, is_in(LookupStatusEnum))
 
     def test_get_lookup_status(self) -> None:
