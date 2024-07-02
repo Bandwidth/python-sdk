@@ -5,9 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**detected_language** | **str** | The detected language for this transcription. | [optional] 
-**track** | **str** | Which &#x60;track&#x60; this transcription is derived from. | [optional] 
-**text** | **str** | The transcription itself. | [optional] 
+**detected_language** | [**CallTranscriptionDetectedLanguageEnum**](CallTranscriptionDetectedLanguageEnum.md) |  | [optional] 
+**track** | [**CallTranscriptionTrackEnum**](CallTranscriptionTrackEnum.md) |  | [optional] 
+**transcript** | **str** | The transcription itself. | [optional] 
 **confidence** | **float** | How confident the transcription engine was in transcribing the associated audio (from &#x60;0&#x60; to &#x60;1&#x60;). | [optional] 
 
 ## Example

@@ -176,14 +176,13 @@ class TestConferencesApi(unittest.TestCase):
         assert_that(response.data.status, instance_of(str))
         assert_that(response.data.media_url, starts_with('http'))
 
-    @unittest.skip("Stoplight doesn't like the Accept Header")
     def test_download_conference_recording(self) -> None:
         """Test case for download_conference_recording
 
         Download Conference Recording
         """
         response = self.conferences_api_instance.download_conference_recording_with_http_info(
-            BW_ACCOUNT_ID, 'conferenceId', 'recordingId', _headers={'Accept': 'audio/wav'})
+            BW_ACCOUNT_ID, 'conferenceId', 'recordingId', _headers={'Accept': 'audio/vnd.wave'})
         # might be an issue with the client, cause I think the accept header gets written to
         # application/json no matter what
         

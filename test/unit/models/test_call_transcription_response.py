@@ -36,7 +36,7 @@ class TestCallTranscriptionResponse(unittest.TestCase):
                 account_id = '9900000',
                 call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 transcription_id = 't-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b',
-                tracks = [{"detectedLanguage":"en-US","track":"inbound","text":"Hello World! This is an example.","confidence":0.9}]
+                tracks = [{"detectedLanguage":"en-US","track":"inbound","transcript":"Hello World! This is an example.","confidence":0.9}]
             )
         else:
             return CallTranscriptionResponse(
@@ -52,7 +52,7 @@ class TestCallTranscriptionResponse(unittest.TestCase):
         assert instance.transcription_id == 't-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b'
         assert instance.tracks[0].detected_language == 'en-US'
         assert instance.tracks[0].track == 'inbound'
-        assert instance.tracks[0].text == 'Hello World! This is an example.'
+        assert instance.tracks[0].transcript == 'Hello World! This is an example.'
         assert instance.tracks[0].confidence == 0.9
 
 if __name__ == '__main__':

@@ -2131,6 +2131,21 @@ components:
 
         and will include its result.
       example: async
+    callTranscriptionDetectedLanguageEnum:
+      type: string
+      enum:
+        - en-US
+        - es-US
+        - fr-FR
+      description: The detected language for this transcription.
+      example: en-US
+    callTranscriptionTrackEnum:
+      type: string
+      enum:
+        - inbound
+        - outbound
+      description: Which `track` this transcription is derived from.
+      example: inbound
     createCall:
       type: object
       required:
@@ -3281,27 +3296,16 @@ components:
           example:
             - detectedLanguage: en-US
               track: inbound
-              text: Hello World! This is an example.
+              transcript: Hello World! This is an example.
               confidence: 0.9
     callTranscription:
       type: object
       properties:
         detectedLanguage:
-          type: string
-          enum:
-            - en-US
-            - es-US
-            - fr-FR
-          description: The detected language for this transcription.
-          example: en-US
+          $ref: '#/components/schemas/callTranscriptionDetectedLanguageEnum'
         track:
-          type: string
-          enum:
-            - inbound
-            - outbound
-          description: Which `track` this transcription is derived from.
-          example: inbound
-        text:
+          $ref: '#/components/schemas/callTranscriptionTrackEnum'
+        transcript:
           type: string
           description: The transcription itself.
           example: Hello World! This is an example.
@@ -4241,7 +4245,7 @@ components:
       description: >-
         The phone number used as the to field of the B-leg call, in E.164 format
         (e.g. +15555555555).
-      example: "+15555555555"
+      example: '+15555555555'
     mediaUrl:
       nullable: true
       type: string
@@ -5788,7 +5792,7 @@ components:
         answerMethod: POST
         answerUrl: https://myServer.example/bandwidth/webhooks/answer
         answerFallbackMethod: POST
-        answerFallbackUrl: "https://myServer.example/bandwidth/webhooks/answerFallback"
+        answerFallbackUrl: https://myServer.example/bandwidth/webhooks/answerFallback
         disconnectMethod: POST
         disconnectUrl: https://myServer.example/bandwidth/webhooks/disconnect
         username: mySecretUsername

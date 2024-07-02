@@ -36,7 +36,7 @@ class TestCallTranscription(unittest.TestCase):
             return CallTranscription(
                 detected_language = 'en-US',
                 track = 'inbound',
-                text = 'Hello World! This is an example.',
+                transcript = 'Hello World! This is an example.',
                 confidence = 0.9
             )
         else:
@@ -50,7 +50,7 @@ class TestCallTranscription(unittest.TestCase):
         assert isinstance(instance, CallTranscription)
         assert instance.detected_language == 'en-US'
         assert instance.track == 'inbound'
-        assert instance.text == 'Hello World! This is an example.'
+        assert instance.transcript == 'Hello World! This is an example.'
         assert instance.confidence == 0.9
 
 if __name__ == '__main__':

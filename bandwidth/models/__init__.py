@@ -24,8 +24,10 @@ from bandwidth.models.call_recording_metadata import CallRecordingMetadata
 from bandwidth.models.call_state import CallState
 from bandwidth.models.call_state_enum import CallStateEnum
 from bandwidth.models.call_transcription import CallTranscription
+from bandwidth.models.call_transcription_detected_language_enum import CallTranscriptionDetectedLanguageEnum
 from bandwidth.models.call_transcription_metadata import CallTranscriptionMetadata
 from bandwidth.models.call_transcription_response import CallTranscriptionResponse
+from bandwidth.models.call_transcription_track_enum import CallTranscriptionTrackEnum
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
 from bandwidth.models.code_request import CodeRequest
 from bandwidth.models.conference import Conference

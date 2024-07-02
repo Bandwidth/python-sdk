@@ -160,14 +160,13 @@ class TestRecordingsApi(unittest.TestCase):
         assert_that(response.data.transcription.completed_time, instance_of(datetime))
         assert_that(response.data.transcription.url, starts_with('http'))
 
-    @unittest.skip("Stoplight doesn't like the Accept Header") # Accept Header
     def test_download_call_recording(self) -> None:
         """Test case for download_call_recording
 
         Download Recording
         """
         response = self.recordings_api_instance.download_call_recording_with_http_info(
-            BW_ACCOUNT_ID, self.call_id, self.recording_id)
+            BW_ACCOUNT_ID, self.call_id, self.recording_id, _headers={'Accept': 'audio/vnd.wave'})
         
         assert_that(response.status_code, equal_to(200))
         assert_that(response.data, instance_of(bytes))

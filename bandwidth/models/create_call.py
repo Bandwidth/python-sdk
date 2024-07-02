@@ -37,15 +37,15 @@ class CreateCall(BaseModel):
     uui: Optional[StrictStr] = Field(default=None, description="A comma-separated list of 'User-To-User' headers to be sent in the INVITE when calling a SIP URI. Each value must end with an 'encoding' parameter as described in <a href='https://tools.ietf.org/html/rfc7433'>RFC 7433</a>. Only 'jwt' and 'base64' encodings are allowed. The entire value cannot exceed 350 characters, including parameters and separators.")
     application_id: StrictStr = Field(description="The id of the application associated with the `from` number.", alias="applicationId")
     answer_url: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="The full URL to send the <a href='/docs/voice/webhooks/answer'>Answer</a> event to when the called party answers. This endpoint should return the first <a href='/docs/voice/bxml'>BXML document</a> to be executed in the call.  Must use `https` if specifying `username` and `password`.", alias="answerUrl")
-    answer_method: Optional[CallbackMethodEnum] = Field(default=None, alias="answerMethod")
+    answer_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="answerMethod")
     username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.")
     password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.")
     answer_fallback_url: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="A fallback url which, if provided, will be used to retry the `answer` webhook delivery in case `answerUrl` fails to respond  Must use `https` if specifying `fallbackUsername` and `fallbackPassword`.", alias="answerFallbackUrl")
-    answer_fallback_method: Optional[CallbackMethodEnum] = Field(default=None, alias="answerFallbackMethod")
+    answer_fallback_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="answerFallbackMethod")
     fallback_username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.", alias="fallbackUsername")
     fallback_password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.", alias="fallbackPassword")
     disconnect_url: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="The URL to send the <a href='/docs/voice/webhooks/disconnect'>Disconnect</a> event to when the call ends. This event does not expect a BXML response.", alias="disconnectUrl")
-    disconnect_method: Optional[CallbackMethodEnum] = Field(default=None, alias="disconnectMethod")
+    disconnect_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="disconnectMethod")
     call_timeout: Optional[Union[Annotated[float, Field(le=300, strict=True, ge=1)], Annotated[int, Field(le=300, strict=True, ge=1)]]] = Field(default=30, description="The timeout (in seconds) for the callee to answer the call after it starts ringing. If the call does not start ringing within 30s, the call will be cancelled regardless of this value.  Can be any numeric value (including decimals) between 1 and 300.", alias="callTimeout")
     callback_timeout: Optional[Union[Annotated[float, Field(le=25, strict=True, ge=1)], Annotated[int, Field(le=25, strict=True, ge=1)]]] = Field(default=15, description="This is the timeout (in seconds) to use when delivering webhooks for the call. Can be any numeric value (including decimals) between 1 and 25.", alias="callbackTimeout")
     machine_detection: Optional[MachineDetectionConfiguration] = Field(default=None, alias="machineDetection")
@@ -202,15 +202,15 @@ class CreateCall(BaseModel):
             "uui": obj.get("uui"),
             "applicationId": obj.get("applicationId"),
             "answerUrl": obj.get("answerUrl"),
-            "answerMethod": obj.get("answerMethod"),
+            "answerMethod": obj.get("answerMethod") if obj.get("answerMethod") is not None else CallbackMethodEnum.POST,
             "username": obj.get("username"),
             "password": obj.get("password"),
             "answerFallbackUrl": obj.get("answerFallbackUrl"),
-            "answerFallbackMethod": obj.get("answerFallbackMethod"),
+            "answerFallbackMethod": obj.get("answerFallbackMethod") if obj.get("answerFallbackMethod") is not None else CallbackMethodEnum.POST,
             "fallbackUsername": obj.get("fallbackUsername"),
             "fallbackPassword": obj.get("fallbackPassword"),
             "disconnectUrl": obj.get("disconnectUrl"),
-            "disconnectMethod": obj.get("disconnectMethod"),
+            "disconnectMethod": obj.get("disconnectMethod") if obj.get("disconnectMethod") is not None else CallbackMethodEnum.POST,
             "callTimeout": obj.get("callTimeout") if obj.get("callTimeout") is not None else 30,
             "callbackTimeout": obj.get("callbackTimeout") if obj.get("callbackTimeout") is not None else 15,
             "machineDetection": MachineDetectionConfiguration.from_dict(obj["machineDetection"]) if obj.get("machineDetection") is not None else None,
