@@ -35,7 +35,7 @@ class Conference(BaseModel):
     created_time: Optional[datetime] = Field(default=None, description="The time the conference was initiated, in ISO 8601 format.", alias="createdTime")
     completed_time: Optional[datetime] = Field(default=None, description="The time the conference was terminated, in ISO 8601 format.", alias="completedTime")
     conference_event_url: Optional[StrictStr] = Field(default=None, description="The URL to send the conference-related events.", alias="conferenceEventUrl")
-    conference_event_method: Optional[CallbackMethodEnum] = Field(default=None, alias="conferenceEventMethod")
+    conference_event_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="conferenceEventMethod")
     tag: Optional[StrictStr] = Field(default=None, description="The custom string attached to the conference that will be sent with callbacks.")
     active_members: Optional[List[ConferenceMember]] = Field(default=None, description="A list of active members of the conference. Omitted if this is a response to the [Get Conferences endpoint](/apis/voice#tag/Conferences/operation/listConferences).", alias="activeMembers")
     additional_properties: Dict[str, Any] = {}
@@ -136,7 +136,7 @@ class Conference(BaseModel):
             "createdTime": obj.get("createdTime"),
             "completedTime": obj.get("completedTime"),
             "conferenceEventUrl": obj.get("conferenceEventUrl"),
-            "conferenceEventMethod": obj.get("conferenceEventMethod"),
+            "conferenceEventMethod": obj.get("conferenceEventMethod") if obj.get("conferenceEventMethod") is not None else CallbackMethodEnum.POST,
             "tag": obj.get("tag"),
             "activeMembers": [ConferenceMember.from_dict(_item) for _item in obj["activeMembers"]] if obj.get("activeMembers") is not None else None
         })

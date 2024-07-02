@@ -1,12 +1,12 @@
-# MessageTypeEnum
+# CallTranscriptionTrackEnum
 
-The type of message. Either SMS or MMS.
+Which `track` this transcription is derived from.
 
 ## Enum
 
-* `SMS` (value: `'sms'`)
+* `INBOUND` (value: `'inbound'`)
 
-* `MMS` (value: `'mms'`)
+* `OUTBOUND` (value: `'outbound'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

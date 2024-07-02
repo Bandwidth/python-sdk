@@ -26,8 +26,10 @@ bandwidth/models/call_recording_metadata.py
 bandwidth/models/call_state.py
 bandwidth/models/call_state_enum.py
 bandwidth/models/call_transcription.py
+bandwidth/models/call_transcription_detected_language_enum.py
 bandwidth/models/call_transcription_metadata.py
 bandwidth/models/call_transcription_response.py
+bandwidth/models/call_transcription_track_enum.py
 bandwidth/models/callback_method_enum.py
 bandwidth/models/code_request.py
 bandwidth/models/conference.py
@@ -119,8 +121,10 @@ docs/CallRecordingMetadata.md
 docs/CallState.md
 docs/CallStateEnum.md
 docs/CallTranscription.md
+docs/CallTranscriptionDetectedLanguageEnum.md
 docs/CallTranscriptionMetadata.md
 docs/CallTranscriptionResponse.md
+docs/CallTranscriptionTrackEnum.md
 docs/CallbackMethodEnum.md
 docs/CallsApi.md
 docs/CodeRequest.md
