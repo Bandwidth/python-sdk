@@ -27,7 +27,7 @@ print(ConferenceRedirectCallback.to_json())
 # convert the object into a dict
 conference_redirect_callback_dict = conference_redirect_callback_instance.to_dict()
 # create an instance of ConferenceRedirectCallback from a dict
-conference_redirect_callback_form_dict = conference_redirect_callback.from_dict(conference_redirect_callback_dict)
+conference_redirect_callback_from_dict = ConferenceRedirectCallback.from_dict(conference_redirect_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

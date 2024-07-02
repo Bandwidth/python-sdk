@@ -5,10 +5,10 @@ Bandwidth's Redirect BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class Redirect(TerminalVerb):
+class Redirect(Verb):
 
     def __init__(
         self, redirect_url: str, redirect_method: str = None,

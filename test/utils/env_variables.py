@@ -1,5 +1,5 @@
 import os
-    
+
 try:
     BW_USERNAME = os.environ['BW_USERNAME']
     BW_PASSWORD = os.environ['BW_PASSWORD']
@@ -7,7 +7,6 @@ try:
     BW_MESSAGING_APPLICATION_ID = os.environ['BW_MESSAGING_APPLICATION_ID']
     BW_VOICE_APPLICATION_ID = os.environ['BW_VOICE_APPLICATION_ID']
     BASE_CALLBACK_URL = os.environ['BASE_CALLBACK_URL']
-    BW_NUMBER_PROVIDER = os.environ['BW_NUMBER_PROVIDER']
     BW_NUMBER = os.environ['BW_NUMBER']
     VZW_NUMBER = os.environ['VZW_NUMBER']
     ATT_NUMBER = os.environ['ATT_NUMBER']

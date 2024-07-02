@@ -5,10 +5,10 @@ Bandwidth's Custom Param BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class CustomParam(TerminalVerb):
+class CustomParam(Verb):
     def __init__(self, name: str = None, value: str = None):
         """
         Initialize a <CustomParam> verb

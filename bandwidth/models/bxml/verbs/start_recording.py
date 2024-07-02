@@ -5,10 +5,10 @@ Bandwidth's StartRecording BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class StartRecording(TerminalVerb):
+class StartRecording(Verb):
 
     def __init__(
         self, recording_available_url: str = None,

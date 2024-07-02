@@ -28,9 +28,9 @@ from typing_extensions import Self
 
 class MachineDetectionConfiguration(BaseModel):
     """
-    The machine detection request used to perform <a href='/docs/voice/guides/machineDetection'>machine detection</a> on the call.
+    The machine detection request used to perform <a href='/docs/voice/guides/machineDetection'>machine detection</a> on the call. Currently, there is an issue where decimal values are not getting processed correctly. Please use whole number values. We are working to resolve this issue. Please contact Bandwidth Support if you need more information.
     """ # noqa: E501
-    mode: Optional[MachineDetectionModeEnum] = None
+    mode: Optional[MachineDetectionModeEnum] = MachineDetectionModeEnum.ASYNC
     detection_timeout: Optional[Union[StrictFloat, StrictInt]] = Field(default=15, description="The timeout used for the whole operation, in seconds. If no result is determined in this period, a callback with a `timeout` result is sent.", alias="detectionTimeout")
     silence_timeout: Optional[Union[StrictFloat, StrictInt]] = Field(default=10, description="If no speech is detected in this period, a callback with a 'silence' result is sent.", alias="silenceTimeout")
     speech_threshold: Optional[Union[StrictFloat, StrictInt]] = Field(default=10, description="When speech has ended and a result couldn't be determined based on the audio content itself, this value is used to determine if the speaker is a machine based on the speech duration. If the length of the speech detected is greater than or equal to this threshold, the result will be 'answering-machine'. If the length of speech detected is below this threshold, the result will be 'human'.", alias="speechThreshold")
@@ -38,11 +38,11 @@ class MachineDetectionConfiguration(BaseModel):
     machine_speech_end_threshold: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="When an answering machine is detected, the amount of silence (in seconds) before assuming the message has finished playing.  If not provided it will default to the speechEndThreshold value.", alias="machineSpeechEndThreshold")
     delay_result: Optional[StrictBool] = Field(default=False, description="If set to 'true' and if an answering machine is detected, the 'answering-machine' callback will be delayed until the machine is done speaking, or an end of message tone is detected, or until the 'detectionTimeout' is exceeded. If false, the 'answering-machine' result is sent immediately.", alias="delayResult")
     callback_url: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="The URL to send the 'machineDetectionComplete' webhook when the detection is completed. Only for 'async' mode.", alias="callbackUrl")
-    callback_method: Optional[CallbackMethodEnum] = Field(default=None, alias="callbackMethod")
+    callback_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="callbackMethod")
     username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.")
     password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.")
     fallback_url: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="A fallback URL which, if provided, will be used to retry the machine detection complete webhook delivery in case `callbackUrl` fails to respond", alias="fallbackUrl")
-    fallback_method: Optional[CallbackMethodEnum] = Field(default=None, alias="fallbackMethod")
+    fallback_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="fallbackMethod")
     fallback_username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.", alias="fallbackUsername")
     fallback_password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.", alias="fallbackPassword")
     additional_properties: Dict[str, Any] = {}
@@ -176,7 +176,7 @@ class MachineDetectionConfiguration(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "mode": obj.get("mode"),
+            "mode": obj.get("mode") if obj.get("mode") is not None else MachineDetectionModeEnum.ASYNC,
             "detectionTimeout": obj.get("detectionTimeout") if obj.get("detectionTimeout") is not None else 15,
             "silenceTimeout": obj.get("silenceTimeout") if obj.get("silenceTimeout") is not None else 10,
             "speechThreshold": obj.get("speechThreshold") if obj.get("speechThreshold") is not None else 10,
@@ -184,11 +184,11 @@ class MachineDetectionConfiguration(BaseModel):
             "machineSpeechEndThreshold": obj.get("machineSpeechEndThreshold"),
             "delayResult": obj.get("delayResult") if obj.get("delayResult") is not None else False,
             "callbackUrl": obj.get("callbackUrl"),
-            "callbackMethod": obj.get("callbackMethod"),
+            "callbackMethod": obj.get("callbackMethod") if obj.get("callbackMethod") is not None else CallbackMethodEnum.POST,
             "username": obj.get("username"),
             "password": obj.get("password"),
             "fallbackUrl": obj.get("fallbackUrl"),
-            "fallbackMethod": obj.get("fallbackMethod"),
+            "fallbackMethod": obj.get("fallbackMethod") if obj.get("fallbackMethod") is not None else CallbackMethodEnum.POST,
             "fallbackUsername": obj.get("fallbackUsername"),
             "fallbackPassword": obj.get("fallbackPassword")
         })

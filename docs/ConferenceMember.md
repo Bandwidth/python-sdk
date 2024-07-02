@@ -27,7 +27,7 @@ print(ConferenceMember.to_json())
 # convert the object into a dict
 conference_member_dict = conference_member_instance.to_dict()
 # create an instance of ConferenceMember from a dict
-conference_member_form_dict = conference_member.from_dict(conference_member_dict)
+conference_member_from_dict = ConferenceMember.from_dict(conference_member_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

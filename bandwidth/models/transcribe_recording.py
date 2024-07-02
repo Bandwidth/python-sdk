@@ -30,7 +30,7 @@ class TranscribeRecording(BaseModel):
     TranscribeRecording
     """ # noqa: E501
     callback_url: Optional[StrictStr] = Field(default=None, description="The URL to send the [TranscriptionAvailable](/docs/voice/webhooks/transcriptionAvailable) event to. You should not include sensitive or personally-identifiable information in the callbackUrl field! Always use the proper username and password fields for authorization.", alias="callbackUrl")
-    callback_method: Optional[CallbackMethodEnum] = Field(default=None, alias="callbackMethod")
+    callback_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="callbackMethod")
     username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.")
     password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.")
     tag: Optional[StrictStr] = Field(default=None, description="(optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.")
@@ -128,7 +128,7 @@ class TranscribeRecording(BaseModel):
 
         _obj = cls.model_validate({
             "callbackUrl": obj.get("callbackUrl"),
-            "callbackMethod": obj.get("callbackMethod"),
+            "callbackMethod": obj.get("callbackMethod") if obj.get("callbackMethod") is not None else CallbackMethodEnum.POST,
             "username": obj.get("username"),
             "password": obj.get("password"),
             "tag": obj.get("tag"),

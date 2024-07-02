@@ -15,7 +15,7 @@ class Verb:
     """Base class for BXML verbs
     """
 
-    def __init__(self, tag: str, content: str = None, nested_verbs: list[Verb] = None):
+    def __init__(self, tag: str, content: str = None):
         """Initialize the verb model
 
         Args:
@@ -25,9 +25,6 @@ class Verb:
         """
         self._tag = tag
         self._content = content
-        self._nested_verbs = nested_verbs
-        if not self._nested_verbs:
-            self._nested_verbs = []
 
     @property
     def _attributes(self) -> Union[None, dict]:
@@ -73,9 +70,6 @@ class Verb:
         if self._content:
             root.text = self._content
         self._set_attributes(root)
-        if self._nested_verbs:
-            for verb in self._nested_verbs:
-                root.append(verb._to_etree_element())
         return root
 
     def _generate_xml(self) -> ET.ElementTree:
@@ -88,19 +82,8 @@ class Verb:
         if self._content:
             root.text = self._content
         self._set_attributes(root)
-        if self._nested_verbs:
-            for verb in self._nested_verbs:
-                root.append(verb._to_etree_element())
         dom = ET.ElementTree(root)
         return dom
-
-    def add_verb(self, verb) -> None:
-        """Add a verb to the object's nested_verbs array
-
-        Args:
-            verb (BxmlVerb): BXML verb to nest within the parent. Becomes a child xml element.
-        """
-        self._nested_verbs.append(verb)
 
     def to_bxml(self) -> str:
         """Return the serialized BXML string

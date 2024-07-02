@@ -39,7 +39,7 @@ print(CallState.to_json())
 # convert the object into a dict
 call_state_dict = call_state_instance.to_dict()
 # create an instance of CallState from a dict
-call_state_form_dict = call_state.from_dict(call_state_dict)
+call_state_from_dict = CallState.from_dict(call_state_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

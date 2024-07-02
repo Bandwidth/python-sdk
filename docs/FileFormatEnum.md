@@ -2,10 +2,11 @@
 
 The format that the recording is stored in.
 
-## Properties
+## Enum
 
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
+* `MP3` (value: `'mp3'`)
+
+* `WAV` (value: `'wav'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

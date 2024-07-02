@@ -6,12 +6,12 @@ Bandwidth's Gather BXML verb
 @copyright Bandwidth INC
 """
 from typing import Union, List
-from ..verb import Verb
+from ..nestable_verb import NestableVerb
 from .play_audio import PlayAudio
 from .speak_sentence import SpeakSentence
 
 
-class Gather(Verb):
+class Gather(NestableVerb):
 
     def __init__(
         self, audio_verbs: List[Union[PlayAudio, SpeakSentence]] = [],

@@ -24,7 +24,7 @@ print(StirShaken.to_json())
 # convert the object into a dict
 stir_shaken_dict = stir_shaken_instance.to_dict()
 # create an instance of StirShaken from a dict
-stir_shaken_form_dict = stir_shaken.from_dict(stir_shaken_dict)
+stir_shaken_from_dict = StirShaken.from_dict(stir_shaken_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

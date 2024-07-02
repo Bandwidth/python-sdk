@@ -7,11 +7,11 @@ Bandwidth's StartStream BXML verb
 """
 from typing import List
 
-from ..verb import Verb
+from ..nestable_verb import NestableVerb
 from ..verbs.stream_param import StreamParam
 
 
-class StartStream(Verb):
+class StartStream(NestableVerb):
 
     def __init__(
         self, destination: str, stream_params: List[StreamParam] = [],

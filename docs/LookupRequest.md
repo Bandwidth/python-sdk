@@ -23,7 +23,7 @@ print(LookupRequest.to_json())
 # convert the object into a dict
 lookup_request_dict = lookup_request_instance.to_dict()
 # create an instance of LookupRequest from a dict
-lookup_request_form_dict = lookup_request.from_dict(lookup_request_dict)
+lookup_request_from_dict = LookupRequest.from_dict(lookup_request_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -23,7 +23,7 @@ print(FieldError.to_json())
 # convert the object into a dict
 field_error_dict = field_error_instance.to_dict()
 # create an instance of FieldError from a dict
-field_error_form_dict = field_error.from_dict(field_error_dict)
+field_error_from_dict = FieldError.from_dict(field_error_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

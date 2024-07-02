@@ -5,10 +5,10 @@ Bandwidth's Record BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class Record(TerminalVerb):
+class Record(Verb):
 
     def __init__(
         self, record_complete_url: str=None,

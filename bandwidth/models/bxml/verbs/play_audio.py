@@ -5,10 +5,10 @@ Bandwidth's PlayAudio BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class PlayAudio(TerminalVerb):
+class PlayAudio(Verb):
 
     def __init__(
         self, audio_uri: str, 

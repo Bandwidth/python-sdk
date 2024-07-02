@@ -27,7 +27,7 @@ print(ConferenceCompletedCallback.to_json())
 # convert the object into a dict
 conference_completed_callback_dict = conference_completed_callback_instance.to_dict()
 # create an instance of ConferenceCompletedCallback from a dict
-conference_completed_callback_form_dict = conference_completed_callback.from_dict(conference_completed_callback_dict)
+conference_completed_callback_from_dict = ConferenceCompletedCallback.from_dict(conference_completed_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

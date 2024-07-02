@@ -30,13 +30,13 @@ class UpdateCall(BaseModel):
     """
     UpdateCall
     """ # noqa: E501
-    state: Optional[CallStateEnum] = None
+    state: Optional[CallStateEnum] = CallStateEnum.ACTIVE
     redirect_url: Optional[StrictStr] = Field(default=None, description="The URL to send the [Redirect](/docs/voice/bxml/redirect) event to which will provide new BXML.  Required if `state` is `active`.  Not allowed if `state` is `completed`.", alias="redirectUrl")
-    redirect_method: Optional[RedirectMethodEnum] = Field(default=None, alias="redirectMethod")
+    redirect_method: Optional[RedirectMethodEnum] = Field(default=RedirectMethodEnum.POST, alias="redirectMethod")
     username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.")
     password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.")
     redirect_fallback_url: Optional[StrictStr] = Field(default=None, description="A fallback url which, if provided, will be used to retry the redirect callback delivery in case `redirectUrl` fails to respond.", alias="redirectFallbackUrl")
-    redirect_fallback_method: Optional[RedirectMethodEnum] = Field(default=None, alias="redirectFallbackMethod")
+    redirect_fallback_method: Optional[RedirectMethodEnum] = Field(default=RedirectMethodEnum.POST, alias="redirectFallbackMethod")
     fallback_username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.", alias="fallbackUsername")
     fallback_password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.", alias="fallbackPassword")
     tag: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="A custom string that will be sent with this and all future callbacks unless overwritten by a future `tag` attribute or [`<Tag>`](/docs/voice/bxml/tag) verb, or cleared.  May be cleared by setting `tag=\"\"`.  Max length 256 characters.  Not allowed if `state` is `completed`.")
@@ -151,13 +151,13 @@ class UpdateCall(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "state": obj.get("state"),
+            "state": obj.get("state") if obj.get("state") is not None else CallStateEnum.ACTIVE,
             "redirectUrl": obj.get("redirectUrl"),
-            "redirectMethod": obj.get("redirectMethod"),
+            "redirectMethod": obj.get("redirectMethod") if obj.get("redirectMethod") is not None else RedirectMethodEnum.POST,
             "username": obj.get("username"),
             "password": obj.get("password"),
             "redirectFallbackUrl": obj.get("redirectFallbackUrl"),
-            "redirectFallbackMethod": obj.get("redirectFallbackMethod"),
+            "redirectFallbackMethod": obj.get("redirectFallbackMethod") if obj.get("redirectFallbackMethod") is not None else RedirectMethodEnum.POST,
             "fallbackUsername": obj.get("fallbackUsername"),
             "fallbackPassword": obj.get("fallbackPassword"),
             "tag": obj.get("tag")

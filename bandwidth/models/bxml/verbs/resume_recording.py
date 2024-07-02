@@ -5,10 +5,10 @@ Bandwidth's ResumeRecording BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class ResumeRecording(TerminalVerb):
+class ResumeRecording(Verb):
 
     def __init__(
         self
