@@ -69,12 +69,14 @@ jobs:
         run: |
           echo "Log level: DEBUG"
           pytest -v --log-cli-level=DEBUG
+        shell: bash
 
       - name: Test at Warning Level
         if: ${{( inputs.logLevel == null) || ( inputs.logLevel  == 'WARNING') }}
         run: |
           echo "Log level: WARNING"
           pytest -v --log-cli-level=WARNING ./test/smoke
+        shell: bash
 
   notify_for_failures:
     name: Notify for Failures
