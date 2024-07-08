@@ -42,7 +42,7 @@ class CreateCallResponse(BaseModel):
     tag: Optional[StrictStr] = Field(default=None, description="Custom tag value.")
     answer_method: Optional[CallbackMethodEnum] = Field(alias="answerMethod")
     answer_url: StrictStr = Field(description="URL to deliver the `answer` event webhook.", alias="answerUrl")
-    answer_fallback_method: Optional[CallbackMethodEnum] = Field(default=None, alias="answerFallbackMethod")
+    answer_fallback_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="answerFallbackMethod")
     answer_fallback_url: Optional[StrictStr] = Field(default=None, description="Fallback URL to deliver the `answer` event webhook.", alias="answerFallbackUrl")
     disconnect_method: Optional[CallbackMethodEnum] = Field(alias="disconnectMethod")
     disconnect_url: Optional[StrictStr] = Field(default=None, description="URL to deliver the `disconnect` event webhook.", alias="disconnectUrl")
@@ -182,11 +182,11 @@ class CreateCallResponse(BaseModel):
             "callTimeout": obj.get("callTimeout"),
             "callbackTimeout": obj.get("callbackTimeout"),
             "tag": obj.get("tag"),
-            "answerMethod": obj.get("answerMethod"),
+            "answerMethod": obj.get("answerMethod") if obj.get("answerMethod") is not None else CallbackMethodEnum.POST,
             "answerUrl": obj.get("answerUrl"),
-            "answerFallbackMethod": obj.get("answerFallbackMethod"),
+            "answerFallbackMethod": obj.get("answerFallbackMethod") if obj.get("answerFallbackMethod") is not None else CallbackMethodEnum.POST,
             "answerFallbackUrl": obj.get("answerFallbackUrl"),
-            "disconnectMethod": obj.get("disconnectMethod"),
+            "disconnectMethod": obj.get("disconnectMethod") if obj.get("disconnectMethod") is not None else CallbackMethodEnum.POST,
             "disconnectUrl": obj.get("disconnectUrl"),
             "username": obj.get("username"),
             "password": obj.get("password"),

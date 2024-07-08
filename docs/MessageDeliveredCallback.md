@@ -27,7 +27,7 @@ print(MessageDeliveredCallback.to_json())
 # convert the object into a dict
 message_delivered_callback_dict = message_delivered_callback_instance.to_dict()
 # create an instance of MessageDeliveredCallback from a dict
-message_delivered_callback_form_dict = message_delivered_callback.from_dict(message_delivered_callback_dict)
+message_delivered_callback_from_dict = MessageDeliveredCallback.from_dict(message_delivered_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

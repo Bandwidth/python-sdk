@@ -23,7 +23,7 @@ print(Transcription.to_json())
 # convert the object into a dict
 transcription_dict = transcription_instance.to_dict()
 # create an instance of Transcription from a dict
-transcription_form_dict = transcription.from_dict(transcription_dict)
+transcription_from_dict = Transcription.from_dict(transcription_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

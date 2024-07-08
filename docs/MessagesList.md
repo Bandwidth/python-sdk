@@ -24,7 +24,7 @@ print(MessagesList.to_json())
 # convert the object into a dict
 messages_list_dict = messages_list_instance.to_dict()
 # create an instance of MessagesList from a dict
-messages_list_form_dict = messages_list.from_dict(messages_list_dict)
+messages_list_from_dict = MessagesList.from_dict(messages_list_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

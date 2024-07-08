@@ -5,10 +5,10 @@ Bandwidth's SipUri BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class SipUri(TerminalVerb):
+class SipUri(Verb):
 
     def __init__(
         self, uri: str, uui: str=None, transfer_answer_url: str=None, transfer_answer_method: str=None,

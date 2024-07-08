@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
@@ -31,27 +31,28 @@ class CreateCall(BaseModel):
     CreateCall
     """ # noqa: E501
     to: StrictStr = Field(description="The destination to call (must be an E.164 formatted number (e.g. `+15555551212`) or a SIP URI (e.g. `sip:user@server.example`)).")
-    var_from: StrictStr = Field(description="A Bandwidth phone number on your account the call should come from (must be in E.164 format, like `+15555551212`, or be one of the following strings: `Restricted`, `Anonymous`, `Private`, or `Unavailable`).", alias="from")
-    display_name: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="The caller display name to use when the call is created.  May not exceed 256 characters nor contain control characters such as new lines.", alias="displayName")
+    var_from: StrictStr = Field(description="A Bandwidth phone number on your account the call should come from (must be in E.164 format, like `+15555551212`) even if `privacy` is set to true.", alias="from")
+    privacy: Optional[StrictBool] = Field(default=None, description="Hide the calling number. The `displayName` field can be used to customize the displayed name.")
+    display_name: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="The caller display name to use when the call is created.  May not exceed 256 characters nor contain control characters such as new lines. If `privacy` is true, only the following values are valid: `Restricted`, `Anonymous`, `Private`, or `Unavailable`.", alias="displayName")
     uui: Optional[StrictStr] = Field(default=None, description="A comma-separated list of 'User-To-User' headers to be sent in the INVITE when calling a SIP URI. Each value must end with an 'encoding' parameter as described in <a href='https://tools.ietf.org/html/rfc7433'>RFC 7433</a>. Only 'jwt' and 'base64' encodings are allowed. The entire value cannot exceed 350 characters, including parameters and separators.")
     application_id: StrictStr = Field(description="The id of the application associated with the `from` number.", alias="applicationId")
     answer_url: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="The full URL to send the <a href='/docs/voice/webhooks/answer'>Answer</a> event to when the called party answers. This endpoint should return the first <a href='/docs/voice/bxml'>BXML document</a> to be executed in the call.  Must use `https` if specifying `username` and `password`.", alias="answerUrl")
-    answer_method: Optional[CallbackMethodEnum] = Field(default=None, alias="answerMethod")
+    answer_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="answerMethod")
     username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.")
     password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.")
     answer_fallback_url: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="A fallback url which, if provided, will be used to retry the `answer` webhook delivery in case `answerUrl` fails to respond  Must use `https` if specifying `fallbackUsername` and `fallbackPassword`.", alias="answerFallbackUrl")
-    answer_fallback_method: Optional[CallbackMethodEnum] = Field(default=None, alias="answerFallbackMethod")
+    answer_fallback_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="answerFallbackMethod")
     fallback_username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.", alias="fallbackUsername")
     fallback_password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.", alias="fallbackPassword")
     disconnect_url: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="The URL to send the <a href='/docs/voice/webhooks/disconnect'>Disconnect</a> event to when the call ends. This event does not expect a BXML response.", alias="disconnectUrl")
-    disconnect_method: Optional[CallbackMethodEnum] = Field(default=None, alias="disconnectMethod")
+    disconnect_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="disconnectMethod")
     call_timeout: Optional[Union[Annotated[float, Field(le=300, strict=True, ge=1)], Annotated[int, Field(le=300, strict=True, ge=1)]]] = Field(default=30, description="The timeout (in seconds) for the callee to answer the call after it starts ringing. If the call does not start ringing within 30s, the call will be cancelled regardless of this value.  Can be any numeric value (including decimals) between 1 and 300.", alias="callTimeout")
     callback_timeout: Optional[Union[Annotated[float, Field(le=25, strict=True, ge=1)], Annotated[int, Field(le=25, strict=True, ge=1)]]] = Field(default=15, description="This is the timeout (in seconds) to use when delivering webhooks for the call. Can be any numeric value (including decimals) between 1 and 25.", alias="callbackTimeout")
     machine_detection: Optional[MachineDetectionConfiguration] = Field(default=None, alias="machineDetection")
     priority: Optional[Annotated[int, Field(le=5, strict=True, ge=1)]] = Field(default=5, description="The priority of this call over other calls from your account. For example, if during a call your application needs to place a new call and bridge it with the current call, you might want to create the call with priority 1 so that it will be the next call picked off your queue, ahead of other less time sensitive calls. A lower value means higher priority, so a priority 1 call takes precedence over a priority 2 call.")
     tag: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="A custom string that will be sent with all webhooks for this call unless overwritten by a future <a href='/docs/voice/bxml/tag'>`<Tag>`</a> verb or `tag` attribute on another verb, or cleared.  May be cleared by setting `tag=\"\"`  Max length 256 characters.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["to", "from", "displayName", "uui", "applicationId", "answerUrl", "answerMethod", "username", "password", "answerFallbackUrl", "answerFallbackMethod", "fallbackUsername", "fallbackPassword", "disconnectUrl", "disconnectMethod", "callTimeout", "callbackTimeout", "machineDetection", "priority", "tag"]
+    __properties: ClassVar[List[str]] = ["to", "from", "privacy", "displayName", "uui", "applicationId", "answerUrl", "answerMethod", "username", "password", "answerFallbackUrl", "answerFallbackMethod", "fallbackUsername", "fallbackPassword", "disconnectUrl", "disconnectMethod", "callTimeout", "callbackTimeout", "machineDetection", "priority", "tag"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -101,6 +102,11 @@ class CreateCall(BaseModel):
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
+
+        # set to None if privacy (nullable) is None
+        # and model_fields_set contains the field
+        if self.privacy is None and "privacy" in self.model_fields_set:
+            _dict['privacy'] = None
 
         # set to None if display_name (nullable) is None
         # and model_fields_set contains the field
@@ -191,19 +197,20 @@ class CreateCall(BaseModel):
         _obj = cls.model_validate({
             "to": obj.get("to"),
             "from": obj.get("from"),
+            "privacy": obj.get("privacy"),
             "displayName": obj.get("displayName"),
             "uui": obj.get("uui"),
             "applicationId": obj.get("applicationId"),
             "answerUrl": obj.get("answerUrl"),
-            "answerMethod": obj.get("answerMethod"),
+            "answerMethod": obj.get("answerMethod") if obj.get("answerMethod") is not None else CallbackMethodEnum.POST,
             "username": obj.get("username"),
             "password": obj.get("password"),
             "answerFallbackUrl": obj.get("answerFallbackUrl"),
-            "answerFallbackMethod": obj.get("answerFallbackMethod"),
+            "answerFallbackMethod": obj.get("answerFallbackMethod") if obj.get("answerFallbackMethod") is not None else CallbackMethodEnum.POST,
             "fallbackUsername": obj.get("fallbackUsername"),
             "fallbackPassword": obj.get("fallbackPassword"),
             "disconnectUrl": obj.get("disconnectUrl"),
-            "disconnectMethod": obj.get("disconnectMethod"),
+            "disconnectMethod": obj.get("disconnectMethod") if obj.get("disconnectMethod") is not None else CallbackMethodEnum.POST,
             "callTimeout": obj.get("callTimeout") if obj.get("callTimeout") is not None else 30,
             "callbackTimeout": obj.get("callbackTimeout") if obj.get("callbackTimeout") is not None else 15,
             "machineDetection": MachineDetectionConfiguration.from_dict(obj["machineDetection"]) if obj.get("machineDetection") is not None else None,

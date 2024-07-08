@@ -24,7 +24,7 @@ print(UpdateConferenceMember.to_json())
 # convert the object into a dict
 update_conference_member_dict = update_conference_member_instance.to_dict()
 # create an instance of UpdateConferenceMember from a dict
-update_conference_member_form_dict = update_conference_member.from_dict(update_conference_member_dict)
+update_conference_member_from_dict = UpdateConferenceMember.from_dict(update_conference_member_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

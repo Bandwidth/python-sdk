@@ -5,10 +5,10 @@ Bandwidth's Bridge BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class Bridge(TerminalVerb):
+class Bridge(Verb):
 
     def __init__(
         self, target_call: str, bridge_complete_url: str=None,

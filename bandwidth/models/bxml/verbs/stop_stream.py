@@ -5,10 +5,10 @@ Bandwidth's StopStream BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class StopStream(TerminalVerb):
+class StopStream(Verb):
 
     def __init__(
         self, name: str

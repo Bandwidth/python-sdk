@@ -5,10 +5,10 @@ Bandwidth's SendDtmf BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class SendDtmf(TerminalVerb):
+class SendDtmf(Verb):
 
     def __init__(
         self, digits: str,

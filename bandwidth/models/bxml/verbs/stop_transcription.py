@@ -5,10 +5,10 @@ Bandwidth's Stop Transcription BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class StopTranscription(TerminalVerb):
+class StopTranscription(Verb):
     def __init__(
             self,
             name: str = None,

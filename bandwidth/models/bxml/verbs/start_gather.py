@@ -5,10 +5,10 @@ Bandwidth's StartGather BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class StartGather(TerminalVerb):
+class StartGather(Verb):
 
     def __init__(
         self, dtmf_url: str, dtmf_method: str=None, username: str=None,

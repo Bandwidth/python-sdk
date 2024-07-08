@@ -24,7 +24,7 @@ print(CreateMessageRequestError.to_json())
 # convert the object into a dict
 create_message_request_error_dict = create_message_request_error_instance.to_dict()
 # create an instance of CreateMessageRequestError from a dict
-create_message_request_error_form_dict = create_message_request_error.from_dict(create_message_request_error_dict)
+create_message_request_error_from_dict = CreateMessageRequestError.from_dict(create_message_request_error_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

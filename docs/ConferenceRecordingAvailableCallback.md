@@ -36,7 +36,7 @@ print(ConferenceRecordingAvailableCallback.to_json())
 # convert the object into a dict
 conference_recording_available_callback_dict = conference_recording_available_callback_instance.to_dict()
 # create an instance of ConferenceRecordingAvailableCallback from a dict
-conference_recording_available_callback_form_dict = conference_recording_available_callback.from_dict(conference_recording_available_callback_dict)
+conference_recording_available_callback_from_dict = ConferenceRecordingAvailableCallback.from_dict(conference_recording_available_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

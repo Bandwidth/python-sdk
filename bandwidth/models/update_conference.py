@@ -30,13 +30,13 @@ class UpdateConference(BaseModel):
     """
     UpdateConference
     """ # noqa: E501
-    status: Optional[ConferenceStateEnum] = None
+    status: Optional[ConferenceStateEnum] = ConferenceStateEnum.ACTIVE
     redirect_url: Optional[StrictStr] = Field(default=None, description="The URL to send the [conferenceRedirect](/docs/voice/webhooks/conferenceRedirect) event which will provide new BXML. Not allowed if `state` is `completed`, but required if `state` is `active`.", alias="redirectUrl")
-    redirect_method: Optional[RedirectMethodEnum] = Field(default=None, alias="redirectMethod")
+    redirect_method: Optional[RedirectMethodEnum] = Field(default=RedirectMethodEnum.POST, alias="redirectMethod")
     username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.")
     password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.")
     redirect_fallback_url: Optional[StrictStr] = Field(default=None, description="A fallback url which, if provided, will be used to retry the `conferenceRedirect` webhook delivery in case `redirectUrl` fails to respond.  Not allowed if `state` is `completed`.", alias="redirectFallbackUrl")
-    redirect_fallback_method: Optional[RedirectMethodEnum] = Field(default=None, alias="redirectFallbackMethod")
+    redirect_fallback_method: Optional[RedirectMethodEnum] = Field(default=RedirectMethodEnum.POST, alias="redirectFallbackMethod")
     fallback_username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.", alias="fallbackUsername")
     fallback_password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.", alias="fallbackPassword")
     additional_properties: Dict[str, Any] = {}
@@ -145,13 +145,13 @@ class UpdateConference(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "status": obj.get("status"),
+            "status": obj.get("status") if obj.get("status") is not None else ConferenceStateEnum.ACTIVE,
             "redirectUrl": obj.get("redirectUrl"),
-            "redirectMethod": obj.get("redirectMethod"),
+            "redirectMethod": obj.get("redirectMethod") if obj.get("redirectMethod") is not None else RedirectMethodEnum.POST,
             "username": obj.get("username"),
             "password": obj.get("password"),
             "redirectFallbackUrl": obj.get("redirectFallbackUrl"),
-            "redirectFallbackMethod": obj.get("redirectFallbackMethod"),
+            "redirectFallbackMethod": obj.get("redirectFallbackMethod") if obj.get("redirectFallbackMethod") is not None else RedirectMethodEnum.POST,
             "fallbackUsername": obj.get("fallbackUsername"),
             "fallbackPassword": obj.get("fallbackPassword")
         })

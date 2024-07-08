@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **callback_url** | **str** | The URL to send the [TranscriptionAvailable](/docs/voice/webhooks/transcriptionAvailable) event to. You should not include sensitive or personally-identifiable information in the callbackUrl field! Always use the proper username and password fields for authorization. | [optional] 
-**callback_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | [optional] 
+**callback_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | [optional] [default to CallbackMethodEnum.POST]
 **username** | **str** | Basic auth username. | [optional] 
 **password** | **str** | Basic auth password. | [optional] 
 **tag** | **str** | (optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present. | [optional] 
@@ -28,7 +28,7 @@ print(TranscribeRecording.to_json())
 # convert the object into a dict
 transcribe_recording_dict = transcribe_recording_instance.to_dict()
 # create an instance of TranscribeRecording from a dict
-transcribe_recording_form_dict = transcribe_recording.from_dict(transcribe_recording_dict)
+transcribe_recording_from_dict = TranscribeRecording.from_dict(transcribe_recording_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

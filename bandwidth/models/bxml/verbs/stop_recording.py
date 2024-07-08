@@ -5,10 +5,10 @@ Bandwidth's StopRecording BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class StopRecording(TerminalVerb):
+class StopRecording(Verb):
 
     def __init__(self):
         """Initialize a <StopRecording> verb

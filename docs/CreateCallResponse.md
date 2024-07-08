@@ -15,11 +15,11 @@ Name | Type | Description | Notes
 **call_timeout** | **float** | The timeout (in seconds) for the callee to answer the call after it starts ringing. | [optional] 
 **callback_timeout** | **float** | This is the timeout (in seconds) to use when delivering webhooks for the call. | [optional] 
 **tag** | **str** | Custom tag value. | [optional] 
-**answer_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | 
+**answer_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | [default to CallbackMethodEnum.POST]
 **answer_url** | **str** | URL to deliver the &#x60;answer&#x60; event webhook. | 
-**answer_fallback_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | [optional] 
+**answer_fallback_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | [optional] [default to CallbackMethodEnum.POST]
 **answer_fallback_url** | **str** | Fallback URL to deliver the &#x60;answer&#x60; event webhook. | [optional] 
-**disconnect_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | 
+**disconnect_method** | [**CallbackMethodEnum**](CallbackMethodEnum.md) |  | [default to CallbackMethodEnum.POST]
 **disconnect_url** | **str** | URL to deliver the &#x60;disconnect&#x60; event webhook. | [optional] 
 **username** | **str** | Basic auth username. | [optional] 
 **password** | **str** | Basic auth password. | [optional] 
@@ -42,7 +42,7 @@ print(CreateCallResponse.to_json())
 # convert the object into a dict
 create_call_response_dict = create_call_response_instance.to_dict()
 # create an instance of CreateCallResponse from a dict
-create_call_response_form_dict = create_call_response.from_dict(create_call_response_dict)
+create_call_response_from_dict = CreateCallResponse.from_dict(create_call_response_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

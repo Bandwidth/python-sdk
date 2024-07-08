@@ -5,10 +5,10 @@ Bandwidth's StreamParam BXML verb
 
 @copyright Bandwidth INC
 """
-from ..terminal_verb import TerminalVerb
+from ..verb import Verb
 
 
-class StreamParam(TerminalVerb):
+class StreamParam(Verb):
 
     def __init__(
         self, name: str, value: str

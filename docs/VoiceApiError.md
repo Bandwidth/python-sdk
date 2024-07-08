@@ -24,7 +24,7 @@ print(VoiceApiError.to_json())
 # convert the object into a dict
 voice_api_error_dict = voice_api_error_instance.to_dict()
 # create an instance of VoiceApiError from a dict
-voice_api_error_form_dict = voice_api_error.from_dict(voice_api_error_dict)
+voice_api_error_from_dict = VoiceApiError.from_dict(voice_api_error_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
