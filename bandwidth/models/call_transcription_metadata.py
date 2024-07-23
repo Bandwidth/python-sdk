@@ -28,9 +28,10 @@ class CallTranscriptionMetadata(BaseModel):
     CallTranscriptionMetadata
     """ # noqa: E501
     transcription_id: Optional[StrictStr] = Field(default=None, description="The programmable voice API transcription ID.", alias="transcriptionId")
+    transcription_name: Optional[StrictStr] = Field(default=None, description="The programmable voice API transcription name. This name could be provided by the user when creating the transcription.", alias="transcriptionName")
     transcription_url: Optional[StrictStr] = Field(default=None, description="A URL that may be used to retrieve the transcription itself. This points to the [Get Call Transcription](/apis/voice/#operation/getCallTranscription) endpoint.", alias="transcriptionUrl")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["transcriptionId", "transcriptionUrl"]
+    __properties: ClassVar[List[str]] = ["transcriptionId", "transcriptionName", "transcriptionUrl"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,6 +92,7 @@ class CallTranscriptionMetadata(BaseModel):
 
         _obj = cls.model_validate({
             "transcriptionId": obj.get("transcriptionId"),
+            "transcriptionName": obj.get("transcriptionName"),
             "transcriptionUrl": obj.get("transcriptionUrl")
         })
         # store additional fields in additional_properties
