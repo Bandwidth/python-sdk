@@ -55,6 +55,7 @@ class TestTranscriptionsApi(unittest.TestCase):
         assert_that(response.data[0], instance_of(CallTranscriptionMetadata))
         assert_that(response.data[0].transcription_id, instance_of(str))
         assert_that(response.data[0].transcription_url, instance_of(str))
+        assert_that(response.data[0].transcription_name, instance_of(str))
 
     def test_get_real_time_transcription(self) -> None:
         """Test case for get_real_time_transcription

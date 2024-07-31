@@ -102,6 +102,7 @@ class TestTranscriptionsApi(unittest.TestCase):
         assert_that(response.data[0], instance_of(CallTranscriptionMetadata))
         assert_that(response.data[0].transcription_id, instance_of(str))
         assert_that(response.data[0].transcription_url, instance_of(str))
+        assert_that(response.data[0].transcription_name, instance_of(str))
 
         self.transcription_id = response.data[0].transcription_id
 
