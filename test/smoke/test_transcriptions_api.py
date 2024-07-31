@@ -73,12 +73,12 @@ class TestTranscriptionsApi(unittest.TestCase):
 
 
         time.sleep(self.SLEEP_TIME_SEC)
-        start_transcription_bxml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><StartTranscription name=\"#{$manteca_call_id}\" tracks=\"inbound\"></StartTranscription><Pause duration=\"6\"/></Response>"
+        start_transcription_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><StartTranscription name="' + self.call_id + '" tracks="inbound"></StartTranscription><Pause duration="6"/></Response>'
         start_response = self.calls_api_instance.update_call_bxml_with_http_info(
             BW_ACCOUNT_ID, self.call_id, start_transcription_bxml)
         assert_that(start_response.status_code, equal_to(204))
 
-        stop_transcription_bxml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response><StopTranscription name=\"#{$manteca_call_id}\"></StopTranscription></Response>"
+        stop_transcription_bxml = '<?xml version="1.0" encoding="UTF-8"?><Response><StopTranscription name="' + self.call_id + '"></StopTranscription></Response>'
         stop_response = self.calls_api_instance.update_call_bxml_with_http_info(
             BW_ACCOUNT_ID, self.call_id, stop_transcription_bxml)
         assert_that(stop_response.status_code, equal_to(204))
