@@ -93,6 +93,7 @@ class TestRecordingsApi(unittest.TestCase):
         assert_that(response.data[0].transcription.status, instance_of(str))
         assert_that(response.data[0].transcription.completed_time, instance_of(datetime))
         assert_that(response.data[0].transcription.url, starts_with('http'))
+        assert_that(response.data[0].recording_name, instance_of(str))
 
     def test_list_call_recordings(self) -> None:
         """Test case for list_call_recordings
@@ -126,6 +127,7 @@ class TestRecordingsApi(unittest.TestCase):
         assert_that(response.data[0].transcription.status, instance_of(str))
         assert_that(response.data[0].transcription.completed_time, instance_of(datetime))
         assert_that(response.data[0].transcription.url, starts_with('http'))
+        assert_that(response.data[0].recording_name, instance_of(str))
 
     @unittest.skip("skip due to prism error")
     def test_get_call_recording(self) -> None:
@@ -160,6 +162,7 @@ class TestRecordingsApi(unittest.TestCase):
         assert_that(response.data.transcription.status, instance_of(str))
         assert_that(response.data.transcription.completed_time, instance_of(datetime))
         assert_that(response.data.transcription.url, starts_with('http'))
+        assert_that(response.data.recording_name, instance_of(str))
 
     def test_download_call_recording(self) -> None:
         """Test case for download_call_recording

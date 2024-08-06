@@ -2802,6 +2802,8 @@ components:
           $ref: '#/components/schemas/mediaUrl'
         transcription:
           $ref: '#/components/schemas/recordingTranscriptionMetadata'
+        recordingName:
+          $ref: '#/components/schemas/recordingName'
     conference:
       type: object
       properties:
@@ -3041,6 +3043,8 @@ components:
           $ref: '#/components/schemas/status'
         mediaUrl:
           $ref: '#/components/schemas/mediaUrl'
+        recordingName:
+          $ref: '#/components/schemas/recordingName'
     machineDetectionConfiguration:
       type: object
       description: >-
@@ -4266,6 +4270,10 @@ components:
       type: string
       description: The call id associated with the event.
       example: c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+    recordingName:
+      type: string
+      description: A name to identify this recording.
+      example: my-recording-name
     callUrl:
       type: string
       description: The URL of the call associated with the event.

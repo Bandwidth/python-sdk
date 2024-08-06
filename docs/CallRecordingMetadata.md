@@ -23,6 +23,7 @@ Name | Type | Description | Notes
 **status** | **str** | The current status of the process. For recording, current possible values are &#39;processing&#39;, &#39;partial&#39;, &#39;complete&#39;, &#39;deleted&#39;, and &#39;error&#39;. For transcriptions, current possible values are &#39;none&#39;, &#39;processing&#39;, &#39;available&#39;, &#39;error&#39;, &#39;timeout&#39;, &#39;file-size-too-big&#39;, and &#39;file-size-too-small&#39;. Additional states may be added in the future, so your application must be tolerant of unknown values. | [optional] 
 **media_url** | **str** | The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded. | [optional] 
 **transcription** | [**RecordingTranscriptionMetadata**](RecordingTranscriptionMetadata.md) |  | [optional] 
+**recording_name** | **str** | A name to identify this recording. | [optional] 
 
 ## Example
 

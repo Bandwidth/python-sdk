@@ -40,8 +40,9 @@ class ConferenceRecordingMetadata(BaseModel):
     file_format: Optional[FileFormatEnum] = Field(default=None, alias="fileFormat")
     status: Optional[StrictStr] = Field(default=None, description="The current status of the process. For recording, current possible values are 'processing', 'partial', 'complete', 'deleted', and 'error'. For transcriptions, current possible values are 'none', 'processing', 'available', 'error', 'timeout', 'file-size-too-big', and 'file-size-too-small'. Additional states may be added in the future, so your application must be tolerant of unknown values.")
     media_url: Optional[StrictStr] = Field(default=None, description="The URL that can be used to download the recording. Only present if the recording is finished and may be downloaded.", alias="mediaUrl")
+    recording_name: Optional[StrictStr] = Field(default=None, description="A name to identify this recording.", alias="recordingName")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["accountId", "conferenceId", "name", "recordingId", "duration", "channels", "startTime", "endTime", "fileFormat", "status", "mediaUrl"]
+    __properties: ClassVar[List[str]] = ["accountId", "conferenceId", "name", "recordingId", "duration", "channels", "startTime", "endTime", "fileFormat", "status", "mediaUrl", "recordingName"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -116,7 +117,8 @@ class ConferenceRecordingMetadata(BaseModel):
             "endTime": obj.get("endTime"),
             "fileFormat": obj.get("fileFormat"),
             "status": obj.get("status"),
-            "mediaUrl": obj.get("mediaUrl")
+            "mediaUrl": obj.get("mediaUrl"),
+            "recordingName": obj.get("recordingName")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
