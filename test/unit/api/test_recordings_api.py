@@ -162,7 +162,7 @@ class TestRecordingsApi(unittest.TestCase):
         assert_that(response.data.transcription.status, instance_of(str))
         assert_that(response.data.transcription.completed_time, instance_of(datetime))
         assert_that(response.data.transcription.url, starts_with('http'))
-        assert_that(response.data[0].recording_name, instance_of(str))
+        assert_that(response.data.recording_name, instance_of(str))
 
     def test_download_call_recording(self) -> None:
         """Test case for download_call_recording
