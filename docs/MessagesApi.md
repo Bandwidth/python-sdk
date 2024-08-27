@@ -99,7 +99,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_messages**
-> MessagesList list_messages(account_id, message_id=message_id, source_tn=source_tn, destination_tn=destination_tn, message_status=message_status, message_direction=message_direction, carrier_name=carrier_name, message_type=message_type, error_code=error_code, from_date_time=from_date_time, to_date_time=to_date_time, campaign_id=campaign_id, sort=sort, page_token=page_token, limit=limit, limit_total_count=limit_total_count)
+> MessagesList list_messages(account_id, message_id=message_id, source_tn=source_tn, destination_tn=destination_tn, message_status=message_status, message_direction=message_direction, carrier_name=carrier_name, message_type=message_type, error_code=error_code, from_date_time=from_date_time, to_date_time=to_date_time, campaign_id=campaign_id, sort=sort, page_token=page_token, limit=limit, limit_total_count=limit_total_count, region=region)
 
 List Messages
 
@@ -115,6 +115,7 @@ from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnu
 from bandwidth.models.message_status_enum import MessageStatusEnum
 from bandwidth.models.message_type_enum import MessageTypeEnum
 from bandwidth.models.messages_list import MessagesList
+from bandwidth.models.region import Region
 from bandwidth.rest import ApiException
 from pprint import pprint
 
@@ -155,10 +156,11 @@ with bandwidth.ApiClient(configuration) as api_client:
     page_token = 'gdEewhcJLQRB5' # str | A base64 encoded value used for pagination of results. (optional)
     limit = 50 # int | The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000. (optional)
     limit_total_count = true # bool | When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results. (optional)
+    region = US # Region | The region to search in. One of US or EU. (optional) (default to US)
 
     try:
         # List Messages
-        api_response = api_instance.list_messages(account_id, message_id=message_id, source_tn=source_tn, destination_tn=destination_tn, message_status=message_status, message_direction=message_direction, carrier_name=carrier_name, message_type=message_type, error_code=error_code, from_date_time=from_date_time, to_date_time=to_date_time, campaign_id=campaign_id, sort=sort, page_token=page_token, limit=limit, limit_total_count=limit_total_count)
+        api_response = api_instance.list_messages(account_id, message_id=message_id, source_tn=source_tn, destination_tn=destination_tn, message_status=message_status, message_direction=message_direction, carrier_name=carrier_name, message_type=message_type, error_code=error_code, from_date_time=from_date_time, to_date_time=to_date_time, campaign_id=campaign_id, sort=sort, page_token=page_token, limit=limit, limit_total_count=limit_total_count, region=region)
         print("The response of MessagesApi->list_messages:\n")
         pprint(api_response)
     except Exception as e:
@@ -188,6 +190,7 @@ Name | Type | Description  | Notes
  **page_token** | **str**| A base64 encoded value used for pagination of results. | [optional] 
  **limit** | **int**| The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000. | [optional] 
  **limit_total_count** | **bool**| When set to true, the response&#39;s totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results. | [optional] 
+ **region** | [**Region**](.md)| The region to search in. One of US or EU. | [optional] [default to US]
 
 ### Return type
 

@@ -26,6 +26,7 @@ from bandwidth.models.message_request import MessageRequest
 from bandwidth.models.message_status_enum import MessageStatusEnum
 from bandwidth.models.message_type_enum import MessageTypeEnum
 from bandwidth.models.messages_list import MessagesList
+from bandwidth.models.region import Region
 
 from bandwidth.api_client import ApiClient, RequestSerialized
 from bandwidth.api_response import ApiResponse
@@ -378,6 +379,7 @@ class MessagesApi:
         page_token: Annotated[Optional[StrictStr], Field(description="A base64 encoded value used for pagination of results.")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.")] = None,
         limit_total_count: Annotated[Optional[StrictBool], Field(description="When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.")] = None,
+        region: Annotated[Optional[Region], Field(description="The region to search in. One of US or EU.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -427,6 +429,8 @@ class MessagesApi:
         :type limit: int
         :param limit_total_count: When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.
         :type limit_total_count: bool
+        :param region: The region to search in. One of US or EU.
+        :type region: Region
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -466,6 +470,7 @@ class MessagesApi:
             page_token=page_token,
             limit=limit,
             limit_total_count=limit_total_count,
+            region=region,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -512,6 +517,7 @@ class MessagesApi:
         page_token: Annotated[Optional[StrictStr], Field(description="A base64 encoded value used for pagination of results.")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.")] = None,
         limit_total_count: Annotated[Optional[StrictBool], Field(description="When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.")] = None,
+        region: Annotated[Optional[Region], Field(description="The region to search in. One of US or EU.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -561,6 +567,8 @@ class MessagesApi:
         :type limit: int
         :param limit_total_count: When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.
         :type limit_total_count: bool
+        :param region: The region to search in. One of US or EU.
+        :type region: Region
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -600,6 +608,7 @@ class MessagesApi:
             page_token=page_token,
             limit=limit,
             limit_total_count=limit_total_count,
+            region=region,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -646,6 +655,7 @@ class MessagesApi:
         page_token: Annotated[Optional[StrictStr], Field(description="A base64 encoded value used for pagination of results.")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.")] = None,
         limit_total_count: Annotated[Optional[StrictBool], Field(description="When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.")] = None,
+        region: Annotated[Optional[Region], Field(description="The region to search in. One of US or EU.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -695,6 +705,8 @@ class MessagesApi:
         :type limit: int
         :param limit_total_count: When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.
         :type limit_total_count: bool
+        :param region: The region to search in. One of US or EU.
+        :type region: Region
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -734,6 +746,7 @@ class MessagesApi:
             page_token=page_token,
             limit=limit,
             limit_total_count=limit_total_count,
+            region=region,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -775,6 +788,7 @@ class MessagesApi:
         page_token,
         limit,
         limit_total_count,
+        region,
         _request_auth,
         _content_type,
         _headers,
@@ -859,6 +873,10 @@ class MessagesApi:
         if limit_total_count is not None:
             
             _query_params.append(('limitTotalCount', limit_total_count))
+            
+        if region is not None:
+            
+            _query_params.append(('region', region.value))
             
         # process the header parameters
         # process the form parameters

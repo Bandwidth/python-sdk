@@ -93,6 +93,7 @@ bandwidth/models/recording_transcription_metadata.py
 bandwidth/models/recording_transcriptions.py
 bandwidth/models/redirect_callback.py
 bandwidth/models/redirect_method_enum.py
+bandwidth/models/region.py
 bandwidth/models/stir_shaken.py
 bandwidth/models/tag.py
 bandwidth/models/tn_lookup_request_error.py
@@ -195,6 +196,7 @@ docs/RecordingTranscriptions.md
 docs/RecordingsApi.md
 docs/RedirectCallback.md
 docs/RedirectMethodEnum.md
+docs/Region.md
 docs/StatisticsApi.md
 docs/StirShaken.md
 docs/Tag.md

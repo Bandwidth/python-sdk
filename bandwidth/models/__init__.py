@@ -91,6 +91,7 @@ from bandwidth.models.recording_transcription_metadata import RecordingTranscrip
 from bandwidth.models.recording_transcriptions import RecordingTranscriptions
 from bandwidth.models.redirect_callback import RedirectCallback
 from bandwidth.models.redirect_method_enum import RedirectMethodEnum
+from bandwidth.models.region import Region
 from bandwidth.models.stir_shaken import StirShaken
 from bandwidth.models.tag import Tag
 from bandwidth.models.tn_lookup_request_error import TnLookupRequestError

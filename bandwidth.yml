@@ -181,6 +181,7 @@ paths:
         - $ref: '#/components/parameters/pageToken'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/limitTotalCount'
+        - $ref: '#/components/parameters/region'
       responses:
         '200':
           $ref: '#/components/responses/listMessagesResponse'
@@ -377,7 +378,7 @@ paths:
         $ref: '#/components/requestBodies/updateCallRequest'
       responses:
         '200':
-          description: Call was successfully modified.
+          $ref: '#/components/responses/updateCallResponse'
         '400':
           $ref: '#/components/responses/voiceBadRequestError'
         '401':
@@ -777,7 +778,7 @@ paths:
         $ref: '#/components/requestBodies/updateCallRecordingRequest'
       responses:
         '200':
-          description: Recording state was successfully modified.
+          $ref: '#/components/responses/updateRecordingResponse'
         '400':
           $ref: '#/components/responses/voiceBadRequestError'
         '401':
@@ -1324,7 +1325,7 @@ paths:
         '403':
           $ref: '#/components/responses/tnLookupForbiddenError'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/tnLookupNotFoundError'
         '429':
           $ref: '#/components/responses/tnLookupTooManyRequestsError'
         '500':
@@ -1376,6 +1377,13 @@ components:
         - sms
         - mms
       example: sms
+    region:
+      type: string
+      enum:
+        - US
+        - EU
+      example: US
+      default: US
     fieldError:
       type: object
       properties:
@@ -2919,6 +2927,7 @@ components:
           $ref: '#/components/schemas/conferenceId'
         memberUrl:
           type: string
+          format: uri
           description: >-
             A URL that may be used to retrieve information about or update
 
@@ -4276,6 +4285,7 @@ components:
       example: my-recording-name
     callUrl:
       type: string
+      format: uri
       description: The URL of the call associated with the event.
       example: >-
         https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
@@ -4735,7 +4745,7 @@ components:
           schema:
             $ref: '#/components/schemas/messagingRequestError'
     createCallResponse:
-      description: Call Successfully Created
+      description: Created
       headers:
         Location:
           description: The URL for further interactions with this call
@@ -4749,13 +4759,15 @@ components:
             createCall Response:
               $ref: '#/components/examples/createCallResponseExample'
     getCallStateResponse:
-      description: Call found
+      description: OK
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/callState'
+    updateCallResponse:
+      description: OK
     listCallsResponse:
-      description: Calls retrieved successfully
+      description: OK
       content:
         application/json:
           schema:
@@ -4763,13 +4775,15 @@ components:
             items:
               $ref: '#/components/schemas/callState'
     getStatisticsResponse:
-      description: Statistics Found
+      description: OK
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/accountStatistics'
+    updateRecordingResponse:
+      description: OK
     listCallRecordingsResponse:
-      description: Recordings retrieved successfully
+      description: OK
       content:
         application/json:
           schema:
@@ -4777,13 +4791,13 @@ components:
             items:
               $ref: '#/components/schemas/callRecordingMetadata'
     getCallRecordingResponse:
-      description: Recording found
+      description: OK
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/callRecordingMetadata'
     downloadRecordingMediaResponse:
-      description: Media found
+      description: OK
       content:
         audio/vnd.wave:
           schema:
@@ -4794,27 +4808,27 @@ components:
             type: string
             format: binary
     getRecordingTranscriptionResponse:
-      description: Transcription found.
+      description: OK
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/recordingTranscriptions'
     listTranscriptionsResponse:
-      description: Transcription found.
+      description: OK
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/callTranscriptionMetadataList'
     getCallTranscriptionResponse:
-      description: Transcription found.
+      description: OK
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/callTranscriptionResponse'
     deleteCallTranscriptionResponse:
-      description: Transcription data was deleted.
+      description: No Content
     listConferencesResponse:
-      description: Conferences retrieved successfully
+      description: OK
       content:
         application/json:
           schema:
@@ -4825,19 +4839,19 @@ components:
             listConferences Response:
               $ref: '#/components/examples/listConferencesResponseExample'
     getConferenceResponse:
-      description: Conferences retrieved successfully
+      description: OK
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/conference'
     getConferenceMemberResponse:
-      description: Conference member found
+      description: OK
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/conferenceMember'
     listConferenceRecordingsResponse:
-      description: Conference recordings retrieved successfully
+      description: OK
       content:
         application/json:
           schema:
@@ -4845,7 +4859,7 @@ components:
             items:
               $ref: '#/components/schemas/conferenceRecordingMetadata'
     getConferenceRecordingResponse:
-      description: Conference recording found
+      description: OK
       content:
         application/json:
           schema:
@@ -5068,6 +5082,8 @@ components:
               summary: Example Unsupported Media Type Error
               value:
                 message: Content-Type must be application/json.
+    tnLookupNotFoundError:
+      description: Not Found
     tnLookupTooManyRequestsError:
       description: Too Many Requests
       content:
@@ -5283,6 +5299,12 @@ components:
       example: true
       schema:
         type: boolean
+    region:
+      name: region
+      in: query
+      description: The region to search in. One of US or EU.
+      schema:
+        $ref: '#/components/schemas/region'
     callId:
       name: callId
       in: path
