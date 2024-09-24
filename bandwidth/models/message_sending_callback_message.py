@@ -41,7 +41,7 @@ class MessageSendingCallbackMessage(BaseModel):
     text: StrictStr
     tag: Optional[StrictStr] = None
     media: List[StrictStr]
-    priority: PriorityEnum
+    priority: Optional[PriorityEnum] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority"]
 
