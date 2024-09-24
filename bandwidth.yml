@@ -1862,7 +1862,6 @@ components:
         - from
         - text
         - media
-        - priority
     messageDeliveredCallback:
       description: Message Delivered Callback
       type: object
@@ -2035,7 +2034,6 @@ components:
         - from
         - text
         - tag
-        - priority
     callbackMethodEnum:
       type: string
       nullable: true

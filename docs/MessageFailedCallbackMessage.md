@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **text** | **str** |  | 
 **tag** | **str** |  | 
 **media** | **List[str]** |  | [optional] 
-**priority** | [**PriorityEnum**](PriorityEnum.md) |  | 
+**priority** | [**PriorityEnum**](PriorityEnum.md) |  | [optional] 
 
 ## Example
 

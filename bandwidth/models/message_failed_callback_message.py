@@ -41,7 +41,7 @@ class MessageFailedCallbackMessage(BaseModel):
     text: StrictStr
     tag: StrictStr
     media: Optional[List[StrictStr]] = None
-    priority: PriorityEnum
+    priority: Optional[PriorityEnum] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority"]
 
