@@ -1068,7 +1068,7 @@ class CallsApi:
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
         call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
-        update_call: Annotated[UpdateCall, Field(description="JSON object containing information to redirect an existing call to a new BXML document")],
+        update_call: Annotated[UpdateCall, Field(description="JSON or BXML object containing information to redirect an existing call to a new BXML document")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1090,7 +1090,7 @@ class CallsApi:
         :type account_id: str
         :param call_id: Programmable Voice API Call ID. (required)
         :type call_id: str
-        :param update_call: JSON object containing information to redirect an existing call to a new BXML document (required)
+        :param update_call: JSON or BXML object containing information to redirect an existing call to a new BXML document (required)
         :type update_call: UpdateCall
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1152,7 +1152,7 @@ class CallsApi:
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
         call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
-        update_call: Annotated[UpdateCall, Field(description="JSON object containing information to redirect an existing call to a new BXML document")],
+        update_call: Annotated[UpdateCall, Field(description="JSON or BXML object containing information to redirect an existing call to a new BXML document")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1174,7 +1174,7 @@ class CallsApi:
         :type account_id: str
         :param call_id: Programmable Voice API Call ID. (required)
         :type call_id: str
-        :param update_call: JSON object containing information to redirect an existing call to a new BXML document (required)
+        :param update_call: JSON or BXML object containing information to redirect an existing call to a new BXML document (required)
         :type update_call: UpdateCall
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1236,7 +1236,7 @@ class CallsApi:
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
         call_id: Annotated[StrictStr, Field(description="Programmable Voice API Call ID.")],
-        update_call: Annotated[UpdateCall, Field(description="JSON object containing information to redirect an existing call to a new BXML document")],
+        update_call: Annotated[UpdateCall, Field(description="JSON or BXML object containing information to redirect an existing call to a new BXML document")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1258,7 +1258,7 @@ class CallsApi:
         :type account_id: str
         :param call_id: Programmable Voice API Call ID. (required)
         :type call_id: str
-        :param update_call: JSON object containing information to redirect an existing call to a new BXML document (required)
+        :param update_call: JSON or BXML object containing information to redirect an existing call to a new BXML document (required)
         :type update_call: UpdateCall
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1365,7 +1365,8 @@ class CallsApi:
             _default_content_type = (
                 self.api_client.select_header_content_type(
                     [
-                        'application/json'
+                        'application/json', 
+                        'application/xml'
                     ]
                 )
             )

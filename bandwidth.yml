@@ -5658,13 +5658,32 @@ components:
             $ref: '#/components/schemas/createCall'
     updateCallRequest:
       description: >-
-        JSON object containing information to redirect an existing call to a new
-        BXML document
+        JSON or BXML object containing information to redirect an existing call
+        to a new BXML document
       required: true
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/updateCall'
+        application/xml:
+          schema:
+            type: string
+            description: A valid BXML document to replace the call's current BXML.
+          examples:
+            speakSentence:
+              summary: Speak Sentence
+              value: |-
+                <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+                <Bxml>
+                  <SpeakSentence>This is a test sentence.</SpeakSentence>
+                </Bxml>
+            redirectUrl:
+              summary: Redirect
+              value: |-
+                <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+                <Bxml>
+                  <Redirect redirectUrl="https://test.example" redirectMethod="GET"/>
+                </Bxml>
     updateCallBxmlRequest:
       required: true
       content:

@@ -331,7 +331,7 @@ with bandwidth.ApiClient(configuration) as api_client:
     api_instance = bandwidth.CallsApi(api_client)
     account_id = '9900000' # str | Your Bandwidth Account ID.
     call_id = 'c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | Programmable Voice API Call ID.
-    update_call = bandwidth.UpdateCall() # UpdateCall | JSON object containing information to redirect an existing call to a new BXML document
+    update_call = bandwidth.UpdateCall() # UpdateCall | JSON or BXML object containing information to redirect an existing call to a new BXML document
 
     try:
         # Update Call
@@ -349,7 +349,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| Your Bandwidth Account ID. | 
  **call_id** | **str**| Programmable Voice API Call ID. | 
- **update_call** | [**UpdateCall**](UpdateCall.md)| JSON object containing information to redirect an existing call to a new BXML document | 
+ **update_call** | [**UpdateCall**](UpdateCall.md)| JSON or BXML object containing information to redirect an existing call to a new BXML document | 
 
 ### Return type
 
@@ -361,7 +361,7 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: application/json, application/xml
  - **Accept**: application/json
 
 ### HTTP response details
