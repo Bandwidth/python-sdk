@@ -49,6 +49,13 @@ jobs:
         with:
           ref: feature/openapi-generator-sdk
 
+      - name: Build SDK
+        uses: Bandwidth/generate-sdk-action@v4.0.0
+        with:
+          openapi-generator-version: 7.7.0
+          language: python
+          additional-properties: --additional-properties=packageVersion=$RELEASE_VERSION
+
       - name: Install Packages
         run: |
           pip install -r requirements.txt
