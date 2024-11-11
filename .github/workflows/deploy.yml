@@ -109,7 +109,7 @@ jobs:
         run: |
           re=[0-9]+\.[0-9]+\.[0-9]+
           if ! [[ $RELEASE_VERSION =~ $re ]]; then
-            echo 'Tag does not match expected regex pattern for beta releases (v[0-9]+.[0-9]+.[0-9]+b[0-9]+)'
+            echo 'Tag does not match expected regex pattern for releases (v[0-9]+.[0-9]+.[0-9]+b[0-9]+)'
             echo $RELEASE_VERSION
             echo 'Please update your tag to match the expected regex pattern'
             exit 1
@@ -117,6 +117,13 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Build SDK
+        uses: Bandwidth/generate-sdk-action@v4.0.0
+        with:
+          openapi-generator-version: 7.7.0
+          language: python
+          additional-properties: --additional-properties=packageVersion=$RELEASE_VERSION
 
       - name: Install Packages
         run: |-
