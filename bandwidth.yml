@@ -2202,8 +2202,8 @@ components:
             parameter as described in <a
             href='https://tools.ietf.org/html/rfc7433'>RFC
 
-            7433</a>. Only 'jwt' and 'base64' encodings are allowed. The entire
-            value
+            7433</a>. Only 'jwt', 'base64' and 'hex' encodings are allowed. The
+            entire value
 
             cannot exceed 350 characters, including parameters and separators.
         applicationId:
