@@ -31,6 +31,7 @@ bandwidth/models/call_transcription_metadata.py
 bandwidth/models/call_transcription_response.py
 bandwidth/models/call_transcription_track_enum.py
 bandwidth/models/callback_method_enum.py
+bandwidth/models/callback_type_enum.py
 bandwidth/models/code_request.py
 bandwidth/models/conference.py
 bandwidth/models/conference_completed_callback.py
@@ -53,8 +54,6 @@ bandwidth/models/dtmf_callback.py
 bandwidth/models/field_error.py
 bandwidth/models/file_format_enum.py
 bandwidth/models/gather_callback.py
-bandwidth/models/inbound_message_callback.py
-bandwidth/models/inbound_message_callback_message.py
 bandwidth/models/initiate_callback.py
 bandwidth/models/list_message_direction_enum.py
 bandwidth/models/list_message_item.py
@@ -68,14 +67,10 @@ bandwidth/models/machine_detection_mode_enum.py
 bandwidth/models/machine_detection_result.py
 bandwidth/models/media.py
 bandwidth/models/message.py
-bandwidth/models/message_delivered_callback.py
-bandwidth/models/message_delivered_callback_message.py
+bandwidth/models/message_callback.py
+bandwidth/models/message_callback_message.py
 bandwidth/models/message_direction_enum.py
-bandwidth/models/message_failed_callback.py
-bandwidth/models/message_failed_callback_message.py
 bandwidth/models/message_request.py
-bandwidth/models/message_sending_callback.py
-bandwidth/models/message_sending_callback_message.py
 bandwidth/models/message_status_enum.py
 bandwidth/models/message_type_enum.py
 bandwidth/models/messages_list.py
@@ -126,6 +121,7 @@ docs/CallTranscriptionMetadata.md
 docs/CallTranscriptionResponse.md
 docs/CallTranscriptionTrackEnum.md
 docs/CallbackMethodEnum.md
+docs/CallbackTypeEnum.md
 docs/CallsApi.md
 docs/CodeRequest.md
 docs/Conference.md
@@ -150,8 +146,6 @@ docs/DtmfCallback.md
 docs/FieldError.md
 docs/FileFormatEnum.md
 docs/GatherCallback.md
-docs/InboundMessageCallback.md
-docs/InboundMessageCallbackMessage.md
 docs/InitiateCallback.md
 docs/ListMessageDirectionEnum.md
 docs/ListMessageItem.md
@@ -167,14 +161,10 @@ docs/MachineDetectionResult.md
 docs/Media.md
 docs/MediaApi.md
 docs/Message.md
-docs/MessageDeliveredCallback.md
-docs/MessageDeliveredCallbackMessage.md
+docs/MessageCallback.md
+docs/MessageCallbackMessage.md
 docs/MessageDirectionEnum.md
-docs/MessageFailedCallback.md
-docs/MessageFailedCallbackMessage.md
 docs/MessageRequest.md
-docs/MessageSendingCallback.md
-docs/MessageSendingCallbackMessage.md
 docs/MessageStatusEnum.md
 docs/MessageTypeEnum.md
 docs/MessagesApi.md

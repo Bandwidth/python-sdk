@@ -230,8 +230,6 @@ paths:
         '500':
           $ref: '#/components/responses/messagingInternalServerError'
       callbacks:
-        inboundCallback:
-          $ref: '#/components/callbacks/inboundCallback'
         statusCallback:
           $ref: '#/components/callbacks/statusCallback'
     servers: *ref_0
@@ -1332,6 +1330,21 @@ paths:
     servers: *ref_3
 components:
   schemas:
+    callbackTypeEnum:
+      type: string
+      enum:
+        - message-received
+        - message-sending
+        - message-delivered
+        - message-failed
+      description: >
+        Indicates the type of the callback:
+
+        - `message-received` for inbound callbacks.
+
+        - One of `message-sending`, `message-delivered`, `message-failed` for
+        status callbacks.
+      example: message-delivered
     priorityEnum:
       type: string
       description: |-
@@ -1344,7 +1357,7 @@ components:
       example: default
     messageStatusEnum:
       type: string
-      description: >-
+      description: >
         The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED
         DELIVERED ACCEPTED UNDELIVERED.
       enum:
@@ -1574,10 +1587,10 @@ components:
           type: string
           format: date-time
           description: The datetime stamp of the message in ISO 8601
-          example: 2022-09-14T18:20:16.000Z
+          example: 2024-12-02T20:15:57.278Z
         segmentCount:
           type: integer
-          description: >-
+          description: >
             The number of segments the original message from the user is broken
             into before sending over to carrier networks.
           example: 2
@@ -1600,7 +1613,7 @@ components:
           type: array
           items:
             type: string
-          description: >-
+          description: >
             The list of media URLs sent in the message. Including a `filename`
             field in the `Content-Disposition` header of the media linked with a
             URL will set the displayed file name. This is a best practice to
@@ -1647,7 +1660,7 @@ components:
             type: string
         from:
           type: string
-          description: >-
+          description: >
             Either an alphanumeric sender ID or the sender's Bandwidth phone
             number in E.164 format, which must be hosted within Bandwidth and
             linked to the account that is generating the message. 
@@ -1668,7 +1681,7 @@ components:
             type: string
             format: uri
             maxLength: 4096
-          description: >-
+          description: >
             A list of URLs to include as media attachments as part of the
             message.
 
@@ -1687,7 +1700,7 @@ components:
         expiration:
           type: string
           format: date-time
-          description: >-
+          description: >
             A string with the date/time value that the message will
             automatically expire by. This must be a valid RFC-3339 value, e.g.,
             2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a
@@ -1695,288 +1708,38 @@ components:
 
             Not supported on MMS.
           example: '2021-02-01T11:29:18-05:00'
-    inboundMessageCallback:
-      description: Inbound Message Callback
+    messageCallback:
+      description: Message Callback Schema
       type: object
       properties:
         time:
           type: string
           format: date-time
-          example: 2016-09-14T18:20:16.000Z
+          example: 2024-12-02T20:15:57.278Z
         type:
-          type: string
-          example: message-received
+          $ref: '#/components/schemas/callbackTypeEnum'
         to:
           type: string
           example: '+15552223333'
         description:
           type: string
-          example: Incoming message received
-        message:
-          $ref: '#/components/schemas/inboundMessageCallbackMessage'
-      required:
-        - time
-        - type
-        - to
-        - description
-        - message
-    inboundMessageCallbackMessage:
-      description: Inbound Message Callback Message Schema
-      type: object
-      properties:
-        id:
-          type: string
-          example: 1661365814859loidf7mcwd4qacn7
-        owner:
-          type: string
-          example: '+15553332222'
-        applicationId:
-          type: string
-          example: 93de2206-9669-4e07-948d-329f4b722ee2
-        time:
-          type: string
-          format: date-time
-          example: 2016-09-14T18:20:16.000Z
-        segmentCount:
-          type: integer
-          example: 1
-        direction:
-          $ref: '#/components/schemas/messageDirectionEnum'
-        to:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-          example:
-            - '+15552223333'
-        from:
-          type: string
-          example: '+15553332222'
-        text:
-          type: string
-          example: Hello world
-        tag:
-          type: string
-          example: custom string
-        media:
-          type: array
-          items:
-            type: string
-            format: uri
-          example:
-            - https://dev.bandwidth.com/images/bandwidth-logo.png
-            - https://dev.bandwidth.com/images/github_logo.png
-        priority:
-          $ref: '#/components/schemas/priorityEnum'
-      required:
-        - id
-        - owner
-        - applicationId
-        - time
-        - segmentCount
-        - direction
-        - to
-        - from
-        - text
-    messageSendingCallback:
-      type: object
-      description: Message Sending Callback
-      properties:
-        time:
-          type: string
-          format: date-time
-          example: 2016-09-14T18:20:16.000Z
-        type:
-          type: string
-          example: message-sending
-        to:
-          type: string
-          example: '+15552223333'
-        description:
-          type: string
-          example: Message is sending to carrier
-        message:
-          $ref: '#/components/schemas/messageSendingCallbackMessage'
-      required:
-        - time
-        - type
-        - to
-        - description
-        - message
-    messageSendingCallbackMessage:
-      description: Message Sending Callback Message Schema
-      type: object
-      properties:
-        id:
-          type: string
-          example: 1661365814859loidf7mcwd4qacn7
-        owner:
-          type: string
-          example: '+15553332222'
-        applicationId:
-          type: string
-          example: 93de2206-9669-4e07-948d-329f4b722ee2
-        time:
-          type: string
-          format: date-time
-          example: 2016-09-14T18:20:16.000Z
-        segmentCount:
-          type: integer
-          example: 1
-        direction:
-          $ref: '#/components/schemas/messageDirectionEnum'
-        to:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-          example:
-            - '+15552223333'
-        from:
-          type: string
-          example: '+15553332222'
-        text:
-          type: string
-          example: Hello world
-        tag:
-          type: string
-          example: custom string
-        media:
-          type: array
-          items:
-            type: string
-            format: uri
-          example:
-            - https://dev.bandwidth.com/images/bandwidth-logo.png
-            - https://dev.bandwidth.com/images/github_logo.png
-        priority:
-          $ref: '#/components/schemas/priorityEnum'
-      required:
-        - id
-        - owner
-        - applicationId
-        - time
-        - segmentCount
-        - direction
-        - to
-        - from
-        - text
-        - media
-    messageDeliveredCallback:
-      description: Message Delivered Callback
-      type: object
-      properties:
-        time:
-          type: string
-          format: date-time
-          example: 2016-09-14T18:20:16.000Z
-        type:
-          type: string
-          example: message-delivered
-        to:
-          type: string
-          example: '+15552223333'
-        description:
-          type: string
-          example: Message delivered to carrier.
-        message:
-          $ref: '#/components/schemas/messageDeliveredCallbackMessage'
-      required:
-        - time
-        - type
-        - to
-        - description
-        - message
-    messageDeliveredCallbackMessage:
-      description: Message Delivered Callback Message Schema
-      type: object
-      properties:
-        id:
-          type: string
-          example: 1661365814859loidf7mcwd4qacn7
-        owner:
-          type: string
-          example: '+15553332222'
-        applicationId:
-          type: string
-          example: 93de2206-9669-4e07-948d-329f4b722ee2
-        time:
-          type: string
-          format: date-time
-          example: 2016-09-14T18:20:16.000Z
-        segmentCount:
-          type: integer
-          example: 1
-        direction:
-          $ref: '#/components/schemas/messageDirectionEnum'
-        to:
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-          example:
-            - '+15552223333'
-        from:
-          type: string
-          example: '+15553332222'
-        text:
-          type: string
-          example: Hello world
-        tag:
-          type: string
-          example: custom string
-        media:
-          type: array
-          items:
-            type: string
-            format: uri
-          example:
-            - https://dev.bandwidth.com/images/bandwidth-logo.png
-            - https://dev.bandwidth.com/images/github_logo.png
-        priority:
-          $ref: '#/components/schemas/priorityEnum'
-      required:
-        - id
-        - owner
-        - applicationId
-        - time
-        - segmentCount
-        - direction
-        - to
-        - from
-        - text
-        - tag
-    messageFailedCallback:
-      description: Message Failed Callback
-      type: object
-      properties:
-        time:
-          type: string
-          format: date-time
-          example: 2016-09-14T18:20:16.000Z
-        type:
-          type: string
-          example: message-failed
-        to:
-          type: string
-          example: '+15552223333'
-        description:
-          type: string
+          description: A detailed description of the event described by the callback.
           example: rejected-unallocated-from-number
         message:
-          $ref: '#/components/schemas/messageFailedCallbackMessage'
+          $ref: '#/components/schemas/messageCallbackMessage'
         errorCode:
           type: integer
-          example: 9902
+          description: Optional error code, applicable only when type is `message-failed`.
+          nullable: true
+          example: 4405
       required:
         - time
         - type
         - to
         - description
         - message
-        - errorCode
-    messageFailedCallbackMessage:
-      description: Message Failed Callback Message Schema
+    messageCallbackMessage:
+      description: Message payload schema within a MessageCallback
       type: object
       properties:
         id:
@@ -1991,7 +1754,7 @@ components:
         time:
           type: string
           format: date-time
-          example: 2016-09-14T18:20:16.000Z
+          example: 2024-12-02T20:15:57.666Z
         segmentCount:
           type: integer
           example: 1
@@ -2015,6 +1778,8 @@ components:
           example: custom string
         media:
           type: array
+          description: Optional media, applicable only for mms
+          nullable: true
           items:
             type: string
             format: uri
@@ -2033,7 +1798,6 @@ components:
         - to
         - from
         - text
-        - tag
     callbackMethodEnum:
       type: string
       nullable: true
@@ -5127,7 +4891,7 @@ components:
       name: Cache-Control
       style: simple
       explode: false
-      description: >-
+      description: >
         General-header field is used to specify directives that MUST be obeyed
         by all caching mechanisms along the request/response chain.
       example: no-cache
@@ -5145,7 +4909,7 @@ components:
       in: query
       name: messageId
       required: false
-      description: >-
+      description: >
         The ID of the message to search for. Special characters need to be
         encoded using URL encoding. Message IDs could come in different formats,
         e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and
@@ -5158,7 +4922,7 @@ components:
       in: query
       name: sourceTn
       required: false
-      description: >-
+      description: >
         The phone number that sent the message. Accepted values are: a single
         full phone number a comma separated list of full phone numbers (maximum
         of 10) or a single partial phone number (minimum of 5 characters e.g.
@@ -5170,7 +4934,7 @@ components:
       in: query
       name: destinationTn
       required: false
-      description: >-
+      description: >
         The phone number that received the message. Accepted values are: a
         single full phone number a comma separated list of full phone numbers
         (maximum of 10) or a single partial phone number (minimum of 5
@@ -5182,7 +4946,7 @@ components:
       in: query
       name: messageStatus
       required: false
-      description: >-
+      description: >
         The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED
         DELIVERED ACCEPTED UNDELIVERED.
       schema:
@@ -5198,7 +4962,7 @@ components:
       in: query
       name: carrierName
       required: false
-      description: >-
+      description: >
         The name of the carrier used for this message. Possible values include
         but are not limited to Verizon and TMobile. Special characters need to
         be encoded using URL encoding (i.e. AT&T should be passed as AT%26T).
@@ -5224,7 +4988,7 @@ components:
       in: query
       name: fromDateTime
       required: false
-      description: >-
+      description: >
         The start of the date range to search in ISO 8601 format. Uses the
         message receive time. The date range to search in is currently 14 days.
       example: 2022-09-14T18:20:16.000Z
@@ -5234,7 +4998,7 @@ components:
       in: query
       name: toDateTime
       required: false
-      description: >-
+      description: >
         The end of the date range to search in ISO 8601 format. Uses the message
         receive time. The date range to search in is currently 14 days.
       example: 2022-09-14T18:20:16.000Z
@@ -5270,7 +5034,7 @@ components:
       in: query
       name: limit
       required: false
-      description: >-
+      description: >
         The maximum records requested in search result. Default 100. The sum of
         limit and after cannot be more than 10000.
       schema:
@@ -5463,339 +5227,147 @@ components:
         type: string
       description: The phone number lookup request ID from Bandwidth.
       example: 004223a0-8b17-41b1-bf81-20732adf5590
-  requestBodies:
-    createMessageRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/messageRequest'
-      required: true
-    uploadMediaRequest:
-      content:
-        application/json:
-          schema:
-            type: string
-            format: binary
-        application/ogg:
-          schema:
-            type: string
-            format: binary
-        application/pdf:
-          schema:
-            type: string
-            format: binary
-        application/rtf:
-          schema:
-            type: string
-            format: binary
-        application/zip:
-          schema:
-            type: string
-            format: binary
-        application/x-tar:
-          schema:
-            type: string
-            format: binary
-        application/xml:
-          schema:
-            type: string
-            format: binary
-        application/gzip:
-          schema:
-            type: string
-            format: binary
-        application/x-bzip2:
-          schema:
-            type: string
-            format: binary
-        application/x-gzip:
-          schema:
-            type: string
-            format: binary
-        application/smil:
-          schema:
-            type: string
-            format: binary
-        application/javascript:
-          schema:
-            type: string
-            format: binary
-        audio/mp4:
-          schema:
-            type: string
-            format: binary
-        audio/mpeg:
-          schema:
-            type: string
-            format: binary
-        audio/ogg:
-          schema:
-            type: string
-            format: binary
-        audio/flac:
-          schema:
-            type: string
-            format: binary
-        audio/webm:
-          schema:
-            type: string
-            format: binary
-        audio/wav:
-          schema:
-            type: string
-            format: binary
-        audio/amr:
-          schema:
-            type: string
-            format: binary
-        audio/3gpp:
-          schema:
-            type: string
-            format: binary
-        image/bmp:
-          schema:
-            type: string
-            format: binary
-        image/gif:
-          schema:
-            type: string
-            format: binary
-        image/jpeg:
-          schema:
-            type: string
-            format: binary
-        image/pjpeg:
-          schema:
-            type: string
-            format: binary
-        image/png:
-          schema:
-            type: string
-            format: binary
-        image/svg+xml:
-          schema:
-            type: string
-            format: binary
-        image/tiff:
-          schema:
-            type: string
-            format: binary
-        image/webp:
-          schema:
-            type: string
-            format: binary
-        image/x-icon:
-          schema:
-            type: string
-            format: binary
-        text/css:
-          schema:
-            type: string
-            format: binary
-        text/csv:
-          schema:
-            type: string
-            format: binary
-        text/calendar:
-          schema:
-            type: string
-            format: binary
-        text/plain:
-          schema:
-            type: string
-            format: binary
-        text/javascript:
-          schema:
-            type: string
-            format: binary
-        text/vcard:
-          schema:
-            type: string
-            format: binary
-        text/vnd.wap.wml:
-          schema:
-            type: string
-            format: binary
-        text/xml:
-          schema:
-            type: string
-            format: binary
-        video/avi:
-          schema:
-            type: string
-            format: binary
-        video/mp4:
-          schema:
-            type: string
-            format: binary
-        video/mpeg:
-          schema:
-            type: string
-            format: binary
-        video/ogg:
-          schema:
-            type: string
-            format: binary
-        video/quicktime:
-          schema:
-            type: string
-            format: binary
-        video/webm:
-          schema:
-            type: string
-            format: binary
-        video/x-ms-wmv:
-          schema:
-            type: string
-            format: binary
-      required: true
-    createCallRequest:
-      description: JSON object containing information to create an outbound call
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/createCall'
-    updateCallRequest:
-      description: >-
-        JSON object containing information to redirect an existing call to a new
-        BXML document
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/updateCall'
-    updateCallBxmlRequest:
-      required: true
-      content:
-        application/xml:
-          schema:
-            type: string
-            description: A valid BXML document to replace the call's current BXML.
-          examples:
-            speakSentence:
-              summary: Speak Sentence
-              value: |-
-                <?xml version=\"1.0\" encoding=\"UTF-8\"?>
-                <Bxml>
-                  <SpeakSentence>This is a test sentence.</SpeakSentence>
-                </Bxml>
-            redirectUrl:
-              summary: Redirect
-              value: |-
-                <?xml version=\"1.0\" encoding=\"UTF-8\"?>
-                <Bxml>
-                  <Redirect redirectUrl="https://test.example" redirectMethod="GET"/>
-                </Bxml>
-    updateCallRecordingRequest:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/updateCallRecording'
-    transcribeRecordingRequest:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/transcribeRecording'
-    updateConferenceRequest:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/updateConference'
-    updateConferenceBxmlRequest:
-      required: true
-      content:
-        application/xml:
-          schema:
-            type: string
-            description: A valid BXML document to replace the call's current BXML.
-          examples:
-            stopRecording:
-              summary: Stop Recording
-              value: |-
-                <?xml version="1.0" encoding="UTF-8"?>
-                <Bxml>
-                    <StopRecording/>
-                </Bxml>
-    updateConferenceMemberRequest:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/updateConferenceMember'
-    codeRequest:
-      description: MFA code request body.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/codeRequest'
-    codeVerify:
-      description: MFA code verify request body.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/verifyCodeRequest'
-    createLookupRequest:
-      description: Phone number lookup request.
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/lookupRequest'
-          examples:
-            singleNumberRequestExample:
-              $ref: '#/components/examples/singleNumberRequestExample'
-            multipleNumberRequestExample:
-              $ref: '#/components/examples/multipleNumberRequestExample'
-  securitySchemes:
-    Basic:
-      type: http
-      scheme: basic
-      description: >-
-        Basic authentication is a simple authentication scheme built into the
-        HTTP protocol. To use it, send your HTTP requests with an
-        `Authorization` header that contains the word `Basic` followed by a
-        space and a Base64-encoded string `username:password`.
-
-
-        - Example: `Authorization: Basic ZGVtbZpwQDU1dzByZA==`
-  callbacks:
-    inboundCallback:
-      '{inboundCallbackUrl}':
-        post:
-          requestBody:
-            required: true
-            description: Inbound Message Callback Payload
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/inboundMessageCallback'
-          responses:
-            '200':
-              description: OK
-    statusCallback:
-      '{statusCallbackUrl}':
-        post:
-          requestBody:
-            required: true
-            description: Status Callback Payload
-            content:
-              application/json:
-                schema:
-                  type: object
-                  oneOf:
-                    - $ref: '#/components/schemas/messageSendingCallback'
-                    - $ref: '#/components/schemas/messageDeliveredCallback'
-                    - $ref: '#/components/schemas/messageFailedCallback'
-          responses:
-            '200':
-              description: OK
   examples:
+    smsMessageReceivedCallbackExample:
+      summary: An example of a sms message-received callback body.
+      value:
+        time: '2025-01-06T15:43:35.502180Z'
+        type: message-received
+        to: '+12345678902'
+        description: Incoming message received
+        message:
+          id: 14762070468292kw2fuqty55yp2b2
+          owner: '+12345678902'
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          time: '2025-01-06T15:43:34.000000Z'
+          segmentCount: 1
+          direction: in
+          to:
+            - '+12345678902'
+          from: '+12345678901'
+          text: Hey, check out this SMS!
+    mmsMessageReceivedCallbackExample:
+      summary: An example of a mms message-received callback body.
+      value:
+        time: '2024-09-14T18:20:45.160744Z'
+        type: message-received
+        to: '+12345678902'
+        description: Incoming message received
+        message:
+          id: 14762070468292kw2fuqty55yp2b2
+          owner: '+12345678902'
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          time: '2024-09-14T18:20:45.160744Z'
+          segmentCount: 1
+          direction: in
+          to:
+            - '+12345678902'
+            - '+12345678903'
+          from: '+12345678901'
+          text: Hey, check out the MMS!
+          media:
+            - >-
+              https://messaging.bandwidth.com/api/v2/users/9900902/media/14762070468292kw2fuqty55yp2b2/0/bw.png
+    messageSendingCallbackExample:
+      summary: An example of a message-sending callback body.
+      value:
+        time: '2024-06-25T18:42:36.979456Z'
+        type: message-sending
+        to: '+15554443333'
+        description: Message is sending to carrier.
+        message:
+          id: 1593110555875xo7watq5px6rbe5d
+          owner: '+15552221111'
+          applicationId: cfd4fb83-7531-4acc-b471-42d0bb76a65c
+          time: '2024-06-25T18:42:35.876906Z'
+          segmentCount: 1
+          direction: out
+          to:
+            - '+15554443333'
+          from: '+15552221111'
+          text: ''
+          media:
+            - https://dev.bandwidth.com/images/bandwidth-logo.png
+          tag: your tag here
+    smsMessageDeliveredCallbackExample:
+      summary: An example of a sms message-delivered callback body.
+      value:
+        type: message-delivered
+        time: '2024-09-14T18:20:11.160744Z'
+        description: Message delivered to carrier.
+        to: '+12345678902'
+        message:
+          id: 14762070468292kw2fuqty55yp2b2
+          time: '2024-09-14T18:20:11.160744Z'
+          to:
+            - '+12345678902'
+          from: '+12345678901'
+          text: ''
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          owner: '+12345678902'
+          direction: out
+          segmentCount: 1
+    mmsMessageDeliveredCallbackExample:
+      summary: An example of a mms message-delivered callback body.
+      value:
+        type: message-delivered
+        time: '2024-09-14T18:20:24.160544Z'
+        description: Message delivered to carrier.
+        to: '+12345678902'
+        message:
+          id: 14762070468292kw2fuqty55yp2b2
+          time: '2024-09-14T18:20:24.160544Z'
+          to:
+            - '+12345678902'
+          from: '+12345678901'
+          text: ''
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          owner: '+12345678902'
+          direction: out
+          segmentCount: 1
+          media:
+            - https://dev.bandwidth.com/images/bandwidth-logo.png
+    groupMmsMessageDeliveredCallbackExample:
+      summary: An example of a group mms message-delivered callback body.
+      value:
+        type: message-delivered
+        time: '2024-09-14T18:20:17.160544Z'
+        description: Message delivered to carrier.
+        to: '+12345678902'
+        message:
+          id: 14762070468292kw2fuqty55yp2b2
+          time: '2024-09-14T18:20:17.160544Z'
+          to:
+            - '+12345678902'
+            - '+12345678903'
+          from: '+12345678901'
+          text: ''
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          owner: '+12345678902'
+          direction: out
+          segmentCount: 1
+    messageFailedCallbackExample:
+      summary: An example of a message-failed callback body.
+      value:
+        type: message-failed
+        time: '2024-12-18T16:51:27.704450Z'
+        description: forbidden to country
+        to: '+52345678903'
+        errorCode: 4432
+        message:
+          id: 14762070468292kw2fuqty55yp2b2
+          time: '2024-12-18T16:51:27.704450Z'
+          to:
+            - '+12345678902'
+            - '+52345678903'
+          from: '+12345678901'
+          text: ''
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          media:
+            - https://dev.bandwidth.com/images/bandwidth-logo.png
+          owner: '+12345678901'
+          direction: out
+          segmentCount: 1
     createCallResponseExample:
       summary: Example of a createCall Response
       value:
@@ -5966,3 +5538,378 @@ components:
             E.164 Format: '+19195550000'
             Formatted: (919) 555-0000
             Country: US
+  requestBodies:
+    createMessageRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/messageRequest'
+      required: true
+    uploadMediaRequest:
+      content:
+        application/json:
+          schema:
+            type: string
+            format: binary
+        application/ogg:
+          schema:
+            type: string
+            format: binary
+        application/pdf:
+          schema:
+            type: string
+            format: binary
+        application/rtf:
+          schema:
+            type: string
+            format: binary
+        application/zip:
+          schema:
+            type: string
+            format: binary
+        application/x-tar:
+          schema:
+            type: string
+            format: binary
+        application/xml:
+          schema:
+            type: string
+            format: binary
+        application/gzip:
+          schema:
+            type: string
+            format: binary
+        application/x-bzip2:
+          schema:
+            type: string
+            format: binary
+        application/x-gzip:
+          schema:
+            type: string
+            format: binary
+        application/smil:
+          schema:
+            type: string
+            format: binary
+        application/javascript:
+          schema:
+            type: string
+            format: binary
+        audio/mp4:
+          schema:
+            type: string
+            format: binary
+        audio/mpeg:
+          schema:
+            type: string
+            format: binary
+        audio/ogg:
+          schema:
+            type: string
+            format: binary
+        audio/flac:
+          schema:
+            type: string
+            format: binary
+        audio/webm:
+          schema:
+            type: string
+            format: binary
+        audio/wav:
+          schema:
+            type: string
+            format: binary
+        audio/amr:
+          schema:
+            type: string
+            format: binary
+        audio/3gpp:
+          schema:
+            type: string
+            format: binary
+        image/bmp:
+          schema:
+            type: string
+            format: binary
+        image/gif:
+          schema:
+            type: string
+            format: binary
+        image/heic:
+          schema:
+            type: string
+            format: binary
+        image/heif:
+          schema:
+            type: string
+            format: binary
+        image/jpeg:
+          schema:
+            type: string
+            format: binary
+        image/pjpeg:
+          schema:
+            type: string
+            format: binary
+        image/png:
+          schema:
+            type: string
+            format: binary
+        image/svg+xml:
+          schema:
+            type: string
+            format: binary
+        image/tiff:
+          schema:
+            type: string
+            format: binary
+        image/webp:
+          schema:
+            type: string
+            format: binary
+        image/x-icon:
+          schema:
+            type: string
+            format: binary
+        text/css:
+          schema:
+            type: string
+            format: binary
+        text/csv:
+          schema:
+            type: string
+            format: binary
+        text/calendar:
+          schema:
+            type: string
+            format: binary
+        text/html:
+          schema:
+            type: string
+            format: binary
+        text/plain:
+          schema:
+            type: string
+            format: binary
+        text/javascript:
+          schema:
+            type: string
+            format: binary
+        text/vcard:
+          schema:
+            type: string
+            format: binary
+        text/vnd.wap.wml:
+          schema:
+            type: string
+            format: binary
+        text/xml:
+          schema:
+            type: string
+            format: binary
+        video/avi:
+          schema:
+            type: string
+            format: binary
+        video/mp4:
+          schema:
+            type: string
+            format: binary
+        video/mpeg:
+          schema:
+            type: string
+            format: binary
+        video/ogg:
+          schema:
+            type: string
+            format: binary
+        video/quicktime:
+          schema:
+            type: string
+            format: binary
+        video/webm:
+          schema:
+            type: string
+            format: binary
+        video/x-ms-wmv:
+          schema:
+            type: string
+            format: binary
+        video/x-flv:
+          schema:
+            type: string
+            format: binary
+      required: true
+    createCallRequest:
+      description: JSON object containing information to create an outbound call
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/createCall'
+    updateCallRequest:
+      description: >-
+        JSON object containing information to redirect an existing call to a new
+        BXML document
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/updateCall'
+    updateCallBxmlRequest:
+      required: true
+      content:
+        application/xml:
+          schema:
+            type: string
+            description: A valid BXML document to replace the call's current BXML.
+          examples:
+            speakSentence:
+              summary: Speak Sentence
+              value: |-
+                <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+                <Bxml>
+                  <SpeakSentence>This is a test sentence.</SpeakSentence>
+                </Bxml>
+            redirectUrl:
+              summary: Redirect
+              value: |-
+                <?xml version=\"1.0\" encoding=\"UTF-8\"?>
+                <Bxml>
+                  <Redirect redirectUrl="https://test.example" redirectMethod="GET"/>
+                </Bxml>
+    updateCallRecordingRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/updateCallRecording'
+    transcribeRecordingRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/transcribeRecording'
+    updateConferenceRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/updateConference'
+    updateConferenceBxmlRequest:
+      required: true
+      content:
+        application/xml:
+          schema:
+            type: string
+            description: A valid BXML document to replace the call's current BXML.
+          examples:
+            stopRecording:
+              summary: Stop Recording
+              value: |-
+                <?xml version="1.0" encoding="UTF-8"?>
+                <Bxml>
+                    <StopRecording/>
+                </Bxml>
+    updateConferenceMemberRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/updateConferenceMember'
+    codeRequest:
+      description: MFA code request body.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/codeRequest'
+    codeVerify:
+      description: MFA code verify request body.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/verifyCodeRequest'
+    createLookupRequest:
+      description: Phone number lookup request.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/lookupRequest'
+          examples:
+            singleNumberRequestExample:
+              $ref: '#/components/examples/singleNumberRequestExample'
+            multipleNumberRequestExample:
+              $ref: '#/components/examples/multipleNumberRequestExample'
+  securitySchemes:
+    Basic:
+      type: http
+      scheme: basic
+      description: >-
+        Basic authentication is a simple authentication scheme built into the
+        HTTP protocol. To use it, send your HTTP requests with an
+        `Authorization` header that contains the word `Basic` followed by a
+        space and a Base64-encoded string `username:password`.
+
+
+        - Example: `Authorization: Basic ZGVtbZpwQDU1dzByZA==`
+  callbacks:
+    inboundCallback:
+      '{inboundCallbackUrl}':
+        post:
+          requestBody:
+            required: true
+            description: >
+              <p>This Inbound Message Webhook is an envelope containing a
+              received (MO) message to your message-enabled Bandwidth telephone
+              number. The payload type will always indicate "message-received".
+
+              </p><p>Please visit <a
+              href='/docs/messaging/webhooks/'>Webhooks</a></p>
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/messageCallback'
+                examples:
+                  smsMessageReceivedCallback:
+                    $ref: '#/components/examples/smsMessageReceivedCallbackExample'
+                  mmsMessageReceivedCallback:
+                    $ref: '#/components/examples/mmsMessageReceivedCallbackExample'
+          responses:
+            '200':
+              description: OK
+    statusCallback:
+      '{statusCallbackUrl}':
+        post:
+          requestBody:
+            required: true
+            description: >
+              <p>This Outbound Message Webhook is an envelope containing status
+              information regarding a message sent (MT) from your
+              message-enabled Bandwidth telephone number. The payload type will
+              be one of "message-sending", "message-delivered", or
+              "message-failed".
+
+              </p><p>Please visit <a
+              href='/docs/messaging/webhooks/'>Webhooks</a></p>
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/messageCallback'
+                examples:
+                  messageSendingCallback:
+                    $ref: '#/components/examples/messageSendingCallbackExample'
+                  smsMessageDeliveredCallback:
+                    $ref: '#/components/examples/smsMessageDeliveredCallbackExample'
+                  mmsMessageDeliveredCallback:
+                    $ref: '#/components/examples/mmsMessageDeliveredCallbackExample'
+                  groupMmsMessageDeliveredCallback:
+                    $ref: >-
+                      #/components/examples/groupMmsMessageDeliveredCallbackExample
+                  messageFailedCallback:
+                    $ref: '#/components/examples/messageFailedCallbackExample'
+          responses:
+            '200':
+              description: OK

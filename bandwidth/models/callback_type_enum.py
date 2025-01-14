@@ -19,26 +19,22 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class MessageStatusEnum(str, Enum):
+class CallbackTypeEnum(str, Enum):
     """
-    The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED. 
+    Indicates the type of the callback: - `message-received` for inbound callbacks. - One of `message-sending`, `message-delivered`, `message-failed` for status callbacks. 
     """
 
     """
     allowed enum values
     """
-    RECEIVED = 'RECEIVED'
-    QUEUED = 'QUEUED'
-    SENDING = 'SENDING'
-    SENT = 'SENT'
-    FAILED = 'FAILED'
-    DELIVERED = 'DELIVERED'
-    ACCEPTED = 'ACCEPTED'
-    UNDELIVERED = 'UNDELIVERED'
+    MESSAGE_MINUS_RECEIVED = 'message-received'
+    MESSAGE_MINUS_SENDING = 'message-sending'
+    MESSAGE_MINUS_DELIVERED = 'message-delivered'
+    MESSAGE_MINUS_FAILED = 'message-failed'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of MessageStatusEnum from a JSON string"""
+        """Create an instance of CallbackTypeEnum from a JSON string"""
         return cls(json.loads(json_str))
 
 

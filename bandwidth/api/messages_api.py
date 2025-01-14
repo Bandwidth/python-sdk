@@ -363,20 +363,20 @@ class MessagesApi:
     def list_messages(
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
-        message_id: Annotated[Optional[StrictStr], Field(description="The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter.")] = None,
-        source_tn: Annotated[Optional[StrictStr], Field(description="The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').")] = None,
-        destination_tn: Annotated[Optional[StrictStr], Field(description="The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').")] = None,
-        message_status: Annotated[Optional[MessageStatusEnum], Field(description="The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED.")] = None,
+        message_id: Annotated[Optional[StrictStr], Field(description="The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter. ")] = None,
+        source_tn: Annotated[Optional[StrictStr], Field(description="The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). ")] = None,
+        destination_tn: Annotated[Optional[StrictStr], Field(description="The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). ")] = None,
+        message_status: Annotated[Optional[MessageStatusEnum], Field(description="The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED. ")] = None,
         message_direction: Annotated[Optional[ListMessageDirectionEnum], Field(description="The direction of the message. One of INBOUND OUTBOUND.")] = None,
-        carrier_name: Annotated[Optional[StrictStr], Field(description="The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T).")] = None,
+        carrier_name: Annotated[Optional[StrictStr], Field(description="The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T). ")] = None,
         message_type: Annotated[Optional[MessageTypeEnum], Field(description="The type of message. Either sms or mms.")] = None,
         error_code: Annotated[Optional[StrictInt], Field(description="The error code of the message.")] = None,
-        from_date_time: Annotated[Optional[StrictStr], Field(description="The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
-        to_date_time: Annotated[Optional[StrictStr], Field(description="The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
+        from_date_time: Annotated[Optional[StrictStr], Field(description="The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. ")] = None,
+        to_date_time: Annotated[Optional[StrictStr], Field(description="The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. ")] = None,
         campaign_id: Annotated[Optional[StrictStr], Field(description="The campaign ID of the message.")] = None,
         sort: Annotated[Optional[StrictStr], Field(description="The field and direction to sort by combined with a colon. Direction is either asc or desc.")] = None,
         page_token: Annotated[Optional[StrictStr], Field(description="A base64 encoded value used for pagination of results.")] = None,
-        limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000. ")] = None,
         limit_total_count: Annotated[Optional[StrictBool], Field(description="When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.")] = None,
         _request_timeout: Union[
             None,
@@ -397,25 +397,25 @@ class MessagesApi:
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
-        :param message_id: The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter.
+        :param message_id: The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter. 
         :type message_id: str
-        :param source_tn: The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').
+        :param source_tn: The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). 
         :type source_tn: str
-        :param destination_tn: The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').
+        :param destination_tn: The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). 
         :type destination_tn: str
-        :param message_status: The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED.
+        :param message_status: The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED. 
         :type message_status: MessageStatusEnum
         :param message_direction: The direction of the message. One of INBOUND OUTBOUND.
         :type message_direction: ListMessageDirectionEnum
-        :param carrier_name: The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T).
+        :param carrier_name: The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T). 
         :type carrier_name: str
         :param message_type: The type of message. Either sms or mms.
         :type message_type: MessageTypeEnum
         :param error_code: The error code of the message.
         :type error_code: int
-        :param from_date_time: The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.
+        :param from_date_time: The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. 
         :type from_date_time: str
-        :param to_date_time: The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.
+        :param to_date_time: The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. 
         :type to_date_time: str
         :param campaign_id: The campaign ID of the message.
         :type campaign_id: str
@@ -423,7 +423,7 @@ class MessagesApi:
         :type sort: str
         :param page_token: A base64 encoded value used for pagination of results.
         :type page_token: str
-        :param limit: The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.
+        :param limit: The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000. 
         :type limit: int
         :param limit_total_count: When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.
         :type limit_total_count: bool
@@ -497,20 +497,20 @@ class MessagesApi:
     def list_messages_with_http_info(
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
-        message_id: Annotated[Optional[StrictStr], Field(description="The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter.")] = None,
-        source_tn: Annotated[Optional[StrictStr], Field(description="The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').")] = None,
-        destination_tn: Annotated[Optional[StrictStr], Field(description="The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').")] = None,
-        message_status: Annotated[Optional[MessageStatusEnum], Field(description="The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED.")] = None,
+        message_id: Annotated[Optional[StrictStr], Field(description="The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter. ")] = None,
+        source_tn: Annotated[Optional[StrictStr], Field(description="The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). ")] = None,
+        destination_tn: Annotated[Optional[StrictStr], Field(description="The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). ")] = None,
+        message_status: Annotated[Optional[MessageStatusEnum], Field(description="The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED. ")] = None,
         message_direction: Annotated[Optional[ListMessageDirectionEnum], Field(description="The direction of the message. One of INBOUND OUTBOUND.")] = None,
-        carrier_name: Annotated[Optional[StrictStr], Field(description="The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T).")] = None,
+        carrier_name: Annotated[Optional[StrictStr], Field(description="The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T). ")] = None,
         message_type: Annotated[Optional[MessageTypeEnum], Field(description="The type of message. Either sms or mms.")] = None,
         error_code: Annotated[Optional[StrictInt], Field(description="The error code of the message.")] = None,
-        from_date_time: Annotated[Optional[StrictStr], Field(description="The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
-        to_date_time: Annotated[Optional[StrictStr], Field(description="The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
+        from_date_time: Annotated[Optional[StrictStr], Field(description="The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. ")] = None,
+        to_date_time: Annotated[Optional[StrictStr], Field(description="The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. ")] = None,
         campaign_id: Annotated[Optional[StrictStr], Field(description="The campaign ID of the message.")] = None,
         sort: Annotated[Optional[StrictStr], Field(description="The field and direction to sort by combined with a colon. Direction is either asc or desc.")] = None,
         page_token: Annotated[Optional[StrictStr], Field(description="A base64 encoded value used for pagination of results.")] = None,
-        limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000. ")] = None,
         limit_total_count: Annotated[Optional[StrictBool], Field(description="When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.")] = None,
         _request_timeout: Union[
             None,
@@ -531,25 +531,25 @@ class MessagesApi:
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
-        :param message_id: The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter.
+        :param message_id: The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter. 
         :type message_id: str
-        :param source_tn: The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').
+        :param source_tn: The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). 
         :type source_tn: str
-        :param destination_tn: The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').
+        :param destination_tn: The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). 
         :type destination_tn: str
-        :param message_status: The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED.
+        :param message_status: The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED. 
         :type message_status: MessageStatusEnum
         :param message_direction: The direction of the message. One of INBOUND OUTBOUND.
         :type message_direction: ListMessageDirectionEnum
-        :param carrier_name: The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T).
+        :param carrier_name: The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T). 
         :type carrier_name: str
         :param message_type: The type of message. Either sms or mms.
         :type message_type: MessageTypeEnum
         :param error_code: The error code of the message.
         :type error_code: int
-        :param from_date_time: The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.
+        :param from_date_time: The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. 
         :type from_date_time: str
-        :param to_date_time: The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.
+        :param to_date_time: The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. 
         :type to_date_time: str
         :param campaign_id: The campaign ID of the message.
         :type campaign_id: str
@@ -557,7 +557,7 @@ class MessagesApi:
         :type sort: str
         :param page_token: A base64 encoded value used for pagination of results.
         :type page_token: str
-        :param limit: The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.
+        :param limit: The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000. 
         :type limit: int
         :param limit_total_count: When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.
         :type limit_total_count: bool
@@ -631,20 +631,20 @@ class MessagesApi:
     def list_messages_without_preload_content(
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
-        message_id: Annotated[Optional[StrictStr], Field(description="The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter.")] = None,
-        source_tn: Annotated[Optional[StrictStr], Field(description="The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').")] = None,
-        destination_tn: Annotated[Optional[StrictStr], Field(description="The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').")] = None,
-        message_status: Annotated[Optional[MessageStatusEnum], Field(description="The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED.")] = None,
+        message_id: Annotated[Optional[StrictStr], Field(description="The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter. ")] = None,
+        source_tn: Annotated[Optional[StrictStr], Field(description="The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). ")] = None,
+        destination_tn: Annotated[Optional[StrictStr], Field(description="The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). ")] = None,
+        message_status: Annotated[Optional[MessageStatusEnum], Field(description="The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED. ")] = None,
         message_direction: Annotated[Optional[ListMessageDirectionEnum], Field(description="The direction of the message. One of INBOUND OUTBOUND.")] = None,
-        carrier_name: Annotated[Optional[StrictStr], Field(description="The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T).")] = None,
+        carrier_name: Annotated[Optional[StrictStr], Field(description="The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T). ")] = None,
         message_type: Annotated[Optional[MessageTypeEnum], Field(description="The type of message. Either sms or mms.")] = None,
         error_code: Annotated[Optional[StrictInt], Field(description="The error code of the message.")] = None,
-        from_date_time: Annotated[Optional[StrictStr], Field(description="The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
-        to_date_time: Annotated[Optional[StrictStr], Field(description="The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
+        from_date_time: Annotated[Optional[StrictStr], Field(description="The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. ")] = None,
+        to_date_time: Annotated[Optional[StrictStr], Field(description="The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. ")] = None,
         campaign_id: Annotated[Optional[StrictStr], Field(description="The campaign ID of the message.")] = None,
         sort: Annotated[Optional[StrictStr], Field(description="The field and direction to sort by combined with a colon. Direction is either asc or desc.")] = None,
         page_token: Annotated[Optional[StrictStr], Field(description="A base64 encoded value used for pagination of results.")] = None,
-        limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.")] = None,
+        limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000. ")] = None,
         limit_total_count: Annotated[Optional[StrictBool], Field(description="When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.")] = None,
         _request_timeout: Union[
             None,
@@ -665,25 +665,25 @@ class MessagesApi:
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
-        :param message_id: The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter.
+        :param message_id: The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter. 
         :type message_id: str
-        :param source_tn: The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').
+        :param source_tn: The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). 
         :type source_tn: str
-        :param destination_tn: The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919').
+        :param destination_tn: The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). 
         :type destination_tn: str
-        :param message_status: The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED.
+        :param message_status: The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED. 
         :type message_status: MessageStatusEnum
         :param message_direction: The direction of the message. One of INBOUND OUTBOUND.
         :type message_direction: ListMessageDirectionEnum
-        :param carrier_name: The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T).
+        :param carrier_name: The name of the carrier used for this message. Possible values include but are not limited to Verizon and TMobile. Special characters need to be encoded using URL encoding (i.e. AT&T should be passed as AT%26T). 
         :type carrier_name: str
         :param message_type: The type of message. Either sms or mms.
         :type message_type: MessageTypeEnum
         :param error_code: The error code of the message.
         :type error_code: int
-        :param from_date_time: The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.
+        :param from_date_time: The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. 
         :type from_date_time: str
-        :param to_date_time: The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.
+        :param to_date_time: The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. 
         :type to_date_time: str
         :param campaign_id: The campaign ID of the message.
         :type campaign_id: str
@@ -691,7 +691,7 @@ class MessagesApi:
         :type sort: str
         :param page_token: A base64 encoded value used for pagination of results.
         :type page_token: str
-        :param limit: The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.
+        :param limit: The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000. 
         :type limit: int
         :param limit_total_count: When set to true, the response's totalCount field will have a maximum value of 10,000. When set to false, or excluded, this will give an accurate totalCount of all messages that match the provided filters. If you are experiencing latency, try using this parameter to limit your results.
         :type limit_total_count: bool
