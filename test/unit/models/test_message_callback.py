@@ -14,8 +14,10 @@
 
 
 import unittest
+from datetime import datetime
 
 from bandwidth.models.message_callback import MessageCallback
+from bandwidth.models.message_callback_message import MessageCallbackMessage
 
 class TestMessageCallback(unittest.TestCase):
     """MessageCallback unit test stubs"""
@@ -37,7 +39,7 @@ class TestMessageCallback(unittest.TestCase):
                 type = 'message-delivered',
                 to = '+15552223333',
                 description = 'rejected-unallocated-from-number',
-                message = bandwidth.models.message_callback_message.messageCallbackMessage(
+                message = MessageCallbackMessage(
                     id = '1661365814859loidf7mcwd4qacn7', 
                     owner = '+15553332222', 
                     application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
@@ -58,7 +60,7 @@ class TestMessageCallback(unittest.TestCase):
                 type = 'message-delivered',
                 to = '+15552223333',
                 description = 'rejected-unallocated-from-number',
-                message = bandwidth.models.message_callback_message.messageCallbackMessage(
+                message = MessageCallbackMessage(
                     id = '1661365814859loidf7mcwd4qacn7', 
                     owner = '+15553332222', 
                     application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
