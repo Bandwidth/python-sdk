@@ -14,13 +14,11 @@
 
 
 import unittest
-from datetime import datetime
 
-from bandwidth.models.message_sending_callback import MessageSendingCallback
-from bandwidth.models.message_sending_callback_message import MessageSendingCallbackMessage
+from bandwidth.models.message_callback import MessageCallback
 
-class TestMessageSendingCallback(unittest.TestCase):
-    """MessageSendingCallback unit test stubs"""
+class TestMessageCallback(unittest.TestCase):
+    """MessageCallback unit test stubs"""
 
     def setUp(self):
         pass
@@ -28,62 +26,63 @@ class TestMessageSendingCallback(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> MessageSendingCallback:
-        """Test MessageSendingCallback
+    def make_instance(self, include_optional) -> MessageCallback:
+        """Test MessageCallback
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         if include_optional:
-            return MessageSendingCallback(
-                time = '2016-09-14T18:20:16Z',
-                type = 'message-sending',
+            return MessageCallback(
+                time = '2024-12-02T20:15:57.278Z',
+                type = 'message-delivered',
                 to = '+15552223333',
-                description = 'Message is sending to carrier',
-                message = MessageSendingCallbackMessage(
+                description = 'rejected-unallocated-from-number',
+                message = bandwidth.models.message_callback_message.messageCallbackMessage(
                     id = '1661365814859loidf7mcwd4qacn7', 
                     owner = '+15553332222', 
                     application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
-                    time = '2016-09-14T18:20:16Z', 
+                    time = '2024-12-02T20:15:57.666Z', 
                     segment_count = 1, 
                     direction = 'in', 
                     to = ["+15552223333"], 
-                    var_from = '+15553332222', 
+                    from = '+15553332222', 
                     text = 'Hello world', 
                     tag = 'custom string', 
                     media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"], 
-                    priority = 'default', )
+                    priority = 'default', ),
+                error_code = 4405
             )
         else:
-            return MessageSendingCallback(
-                time = '2016-09-14T18:20:16Z',
-                type = 'message-sending',
+            return MessageCallback(
+                time = '2024-12-02T20:15:57.278Z',
+                type = 'message-delivered',
                 to = '+15552223333',
-                description = 'Message is sending to carrier',
-                message = MessageSendingCallbackMessage(
+                description = 'rejected-unallocated-from-number',
+                message = bandwidth.models.message_callback_message.messageCallbackMessage(
                     id = '1661365814859loidf7mcwd4qacn7', 
                     owner = '+15553332222', 
                     application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
-                    time = '2016-09-14T18:20:16Z', 
+                    time = '2024-12-02T20:15:57.666Z', 
                     segment_count = 1, 
                     direction = 'in', 
                     to = ["+15552223333"], 
-                    var_from = '+15553332222', 
+                    from = '+15553332222', 
                     text = 'Hello world', 
                     tag = 'custom string', 
                     media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"], 
                     priority = 'default', ),
         )
 
-    def testMessageSendingCallback(self):
-        """Test MessageSendingCallback"""
+    def testMessageCallback(self):
+        """Test MessageCallback"""
         instance = self.make_instance(True)
         assert instance is not None
-        assert isinstance(instance, MessageSendingCallback)
+        assert isinstance(instance, MessageCallback)
         assert isinstance(instance.time, datetime)
-        assert instance.type == 'message-sending'
+        assert instance.type == 'message-delivered'
         assert instance.to == '+15552223333'
-        assert instance.description == 'Message is sending to carrier'
-        assert isinstance(instance.message, MessageSendingCallbackMessage)
+        assert instance.description == 'rejected-unallocated-from-number'
+        assert isinstance(instance.message, MessageCallbackMessage)
         assert instance.message.id == '1661365814859loidf7mcwd4qacn7'
         assert instance.message.owner == '+15553332222'
         assert instance.message.application_id == '93de2206-9669-4e07-948d-329f4b722ee2'

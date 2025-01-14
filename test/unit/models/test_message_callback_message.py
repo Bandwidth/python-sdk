@@ -14,12 +14,11 @@
 
 
 import unittest
-from datetime import datetime
 
-from bandwidth.models.message_sending_callback_message import MessageSendingCallbackMessage
+from bandwidth.models.message_callback_message import MessageCallbackMessage
 
-class TestMessageSendingCallbackMessage(unittest.TestCase):
-    """MessageSendingCallbackMessage unit test stubs"""
+class TestMessageCallbackMessage(unittest.TestCase):
+    """MessageCallbackMessage unit test stubs"""
 
     def setUp(self):
         pass
@@ -27,17 +26,17 @@ class TestMessageSendingCallbackMessage(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> MessageSendingCallbackMessage:
-        """Test MessageSendingCallbackMessage
+    def make_instance(self, include_optional) -> MessageCallbackMessage:
+        """Test MessageCallbackMessage
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         if include_optional:
-            return MessageSendingCallbackMessage(
+            return MessageCallbackMessage(
                 id = '1661365814859loidf7mcwd4qacn7',
                 owner = '+15553332222',
                 application_id = '93de2206-9669-4e07-948d-329f4b722ee2',
-                time = '2016-09-14T18:20:16Z',
+                time = '2024-12-02T20:15:57.666Z',
                 segment_count = 1,
                 direction = 'in',
                 to = ["+15552223333"],
@@ -48,25 +47,23 @@ class TestMessageSendingCallbackMessage(unittest.TestCase):
                 priority = 'default'
             )
         else:
-            return MessageSendingCallbackMessage(
+            return MessageCallbackMessage(
                 id = '1661365814859loidf7mcwd4qacn7',
                 owner = '+15553332222',
                 application_id = '93de2206-9669-4e07-948d-329f4b722ee2',
-                time = '2016-09-14T18:20:16Z',
+                time = '2024-12-02T20:15:57.666Z',
                 segment_count = 1,
                 direction = 'in',
                 to = ["+15552223333"],
                 var_from = '+15553332222',
                 text = 'Hello world',
-                media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
-                priority = 'default',
         )
 
-    def testMessageSendingCallbackMessage(self):
-        """Test MessageSendingCallbackMessage"""
+    def testMessageCallbackMessage(self):
+        """Test MessageCallbackMessage"""
         instance = self.make_instance(True)
         assert instance is not None
-        assert isinstance(instance, MessageSendingCallbackMessage)
+        assert isinstance(instance, MessageCallbackMessage)
         assert instance.id == '1661365814859loidf7mcwd4qacn7'
         assert instance.owner == '+15553332222'
         assert instance.application_id == '93de2206-9669-4e07-948d-329f4b722ee2'
