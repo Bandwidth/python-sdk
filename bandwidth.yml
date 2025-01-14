@@ -1357,7 +1357,7 @@ components:
       example: default
     messageStatusEnum:
       type: string
-      description: >
+      description: >-
         The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED
         DELIVERED ACCEPTED UNDELIVERED.
       enum:
@@ -1590,7 +1590,7 @@ components:
           example: 2024-12-02T20:15:57.278Z
         segmentCount:
           type: integer
-          description: >
+          description: >-
             The number of segments the original message from the user is broken
             into before sending over to carrier networks.
           example: 2
@@ -1613,7 +1613,7 @@ components:
           type: array
           items:
             type: string
-          description: >
+          description: >-
             The list of media URLs sent in the message. Including a `filename`
             field in the `Content-Disposition` header of the media linked with a
             URL will set the displayed file name. This is a best practice to
@@ -1660,7 +1660,7 @@ components:
             type: string
         from:
           type: string
-          description: >
+          description: >-
             Either an alphanumeric sender ID or the sender's Bandwidth phone
             number in E.164 format, which must be hosted within Bandwidth and
             linked to the account that is generating the message. 
@@ -1681,7 +1681,7 @@ components:
             type: string
             format: uri
             maxLength: 4096
-          description: >
+          description: >-
             A list of URLs to include as media attachments as part of the
             message.
 
@@ -1700,7 +1700,7 @@ components:
         expiration:
           type: string
           format: date-time
-          description: >
+          description: >-
             A string with the date/time value that the message will
             automatically expire by. This must be a valid RFC-3339 value, e.g.,
             2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a
@@ -4891,7 +4891,7 @@ components:
       name: Cache-Control
       style: simple
       explode: false
-      description: >
+      description: >-
         General-header field is used to specify directives that MUST be obeyed
         by all caching mechanisms along the request/response chain.
       example: no-cache
@@ -4909,7 +4909,7 @@ components:
       in: query
       name: messageId
       required: false
-      description: >
+      description: >-
         The ID of the message to search for. Special characters need to be
         encoded using URL encoding. Message IDs could come in different formats,
         e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and
@@ -4922,7 +4922,7 @@ components:
       in: query
       name: sourceTn
       required: false
-      description: >
+      description: >-
         The phone number that sent the message. Accepted values are: a single
         full phone number a comma separated list of full phone numbers (maximum
         of 10) or a single partial phone number (minimum of 5 characters e.g.
@@ -4934,7 +4934,7 @@ components:
       in: query
       name: destinationTn
       required: false
-      description: >
+      description: >-
         The phone number that received the message. Accepted values are: a
         single full phone number a comma separated list of full phone numbers
         (maximum of 10) or a single partial phone number (minimum of 5
@@ -4946,7 +4946,7 @@ components:
       in: query
       name: messageStatus
       required: false
-      description: >
+      description: >-
         The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED
         DELIVERED ACCEPTED UNDELIVERED.
       schema:
@@ -4962,7 +4962,7 @@ components:
       in: query
       name: carrierName
       required: false
-      description: >
+      description: >-
         The name of the carrier used for this message. Possible values include
         but are not limited to Verizon and TMobile. Special characters need to
         be encoded using URL encoding (i.e. AT&T should be passed as AT%26T).
@@ -4988,7 +4988,7 @@ components:
       in: query
       name: fromDateTime
       required: false
-      description: >
+      description: >-
         The start of the date range to search in ISO 8601 format. Uses the
         message receive time. The date range to search in is currently 14 days.
       example: 2022-09-14T18:20:16.000Z
@@ -4998,7 +4998,7 @@ components:
       in: query
       name: toDateTime
       required: false
-      description: >
+      description: >-
         The end of the date range to search in ISO 8601 format. Uses the message
         receive time. The date range to search in is currently 14 days.
       example: 2022-09-14T18:20:16.000Z
@@ -5034,7 +5034,7 @@ components:
       in: query
       name: limit
       required: false
-      description: >
+      description: >-
         The maximum records requested in search result. Default 100. The sum of
         limit and after cannot be more than 10000.
       schema:

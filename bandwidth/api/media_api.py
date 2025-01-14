@@ -951,7 +951,7 @@ class MediaApi:
         media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
         body: Union[StrictBytes, StrictStr],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
-        cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. ")] = None,
+        cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -977,7 +977,7 @@ class MediaApi:
         :type body: bytearray
         :param content_type: The media type of the entity-body.
         :type content_type: str
-        :param cache_control: General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. 
+        :param cache_control: General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
         :type cache_control: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1042,7 +1042,7 @@ class MediaApi:
         media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
         body: Union[StrictBytes, StrictStr],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
-        cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. ")] = None,
+        cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1068,7 +1068,7 @@ class MediaApi:
         :type body: bytearray
         :param content_type: The media type of the entity-body.
         :type content_type: str
-        :param cache_control: General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. 
+        :param cache_control: General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
         :type cache_control: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1133,7 +1133,7 @@ class MediaApi:
         media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
         body: Union[StrictBytes, StrictStr],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
-        cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. ")] = None,
+        cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1159,7 +1159,7 @@ class MediaApi:
         :type body: bytearray
         :param content_type: The media type of the entity-body.
         :type content_type: str
-        :param cache_control: General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. 
+        :param cache_control: General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
         :type cache_control: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class MessageStatusEnum(str, Enum):
     """
-    The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED. 
+    The status of the message. One of RECEIVED QUEUED SENDING SENT FAILED DELIVERED ACCEPTED UNDELIVERED.
     """
 
     """

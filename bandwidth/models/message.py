@@ -34,11 +34,11 @@ class Message(BaseModel):
     owner: Optional[StrictStr] = Field(default=None, description="The Bandwidth phone number associated with the message.")
     application_id: Optional[StrictStr] = Field(default=None, description="The application ID associated with the message.", alias="applicationId")
     time: Optional[datetime] = Field(default=None, description="The datetime stamp of the message in ISO 8601")
-    segment_count: Optional[StrictInt] = Field(default=None, description="The number of segments the original message from the user is broken into before sending over to carrier networks. ", alias="segmentCount")
+    segment_count: Optional[StrictInt] = Field(default=None, description="The number of segments the original message from the user is broken into before sending over to carrier networks.", alias="segmentCount")
     direction: Optional[MessageDirectionEnum] = None
     to: Optional[List[StrictStr]] = Field(default=None, description="The phone number recipients of the message.")
     var_from: Optional[StrictStr] = Field(default=None, description="The phone number the message was sent from.", alias="from")
-    media: Optional[List[StrictStr]] = Field(default=None, description="The list of media URLs sent in the message. Including a `filename` field in the `Content-Disposition` header of the media linked with a URL will set the displayed file name. This is a best practice to ensure that your media has a readable file name. ")
+    media: Optional[List[StrictStr]] = Field(default=None, description="The list of media URLs sent in the message. Including a `filename` field in the `Content-Disposition` header of the media linked with a URL will set the displayed file name. This is a best practice to ensure that your media has a readable file name.")
     text: Optional[StrictStr] = Field(default=None, description="The contents of the message.")
     tag: Optional[StrictStr] = Field(default=None, description="The custom string set by the user.")
     priority: Optional[PriorityEnum] = None

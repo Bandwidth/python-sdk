@@ -314,7 +314,7 @@ with bandwidth.ApiClient(configuration) as api_client:
     media_id = '14762070468292kw2fuqty55yp2b2/0/bw.png' # str | Media ID to retrieve.
     body = None # bytearray | 
     content_type = 'audio/wav' # str | The media type of the entity-body. (optional)
-    cache_control = 'no-cache' # str | General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.  (optional)
+    cache_control = 'no-cache' # str | General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. (optional)
 
     try:
         # Upload Media
@@ -334,7 +334,7 @@ Name | Type | Description  | Notes
  **media_id** | **str**| Media ID to retrieve. | 
  **body** | **bytearray**|  | 
  **content_type** | **str**| The media type of the entity-body. | [optional] 
- **cache_control** | **str**| General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.  | [optional] 
+ **cache_control** | **str**| General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. | [optional] 
 
 ### Return type
 
