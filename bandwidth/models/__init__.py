@@ -29,6 +29,7 @@ from bandwidth.models.call_transcription_metadata import CallTranscriptionMetada
 from bandwidth.models.call_transcription_response import CallTranscriptionResponse
 from bandwidth.models.call_transcription_track_enum import CallTranscriptionTrackEnum
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
+from bandwidth.models.callback_type_enum import CallbackTypeEnum
 from bandwidth.models.code_request import CodeRequest
 from bandwidth.models.conference import Conference
 from bandwidth.models.conference_completed_callback import ConferenceCompletedCallback
@@ -51,8 +52,6 @@ from bandwidth.models.dtmf_callback import DtmfCallback
 from bandwidth.models.field_error import FieldError
 from bandwidth.models.file_format_enum import FileFormatEnum
 from bandwidth.models.gather_callback import GatherCallback
-from bandwidth.models.inbound_message_callback import InboundMessageCallback
-from bandwidth.models.inbound_message_callback_message import InboundMessageCallbackMessage
 from bandwidth.models.initiate_callback import InitiateCallback
 from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.models.list_message_item import ListMessageItem
@@ -66,14 +65,10 @@ from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnu
 from bandwidth.models.machine_detection_result import MachineDetectionResult
 from bandwidth.models.media import Media
 from bandwidth.models.message import Message
-from bandwidth.models.message_delivered_callback import MessageDeliveredCallback
-from bandwidth.models.message_delivered_callback_message import MessageDeliveredCallbackMessage
+from bandwidth.models.message_callback import MessageCallback
+from bandwidth.models.message_callback_message import MessageCallbackMessage
 from bandwidth.models.message_direction_enum import MessageDirectionEnum
-from bandwidth.models.message_failed_callback import MessageFailedCallback
-from bandwidth.models.message_failed_callback_message import MessageFailedCallbackMessage
 from bandwidth.models.message_request import MessageRequest
-from bandwidth.models.message_sending_callback import MessageSendingCallback
-from bandwidth.models.message_sending_callback_message import MessageSendingCallbackMessage
 from bandwidth.models.message_status_enum import MessageStatusEnum
 from bandwidth.models.message_type_enum import MessageTypeEnum
 from bandwidth.models.messages_list import MessagesList

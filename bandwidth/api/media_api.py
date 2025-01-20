@@ -1300,6 +1300,8 @@ class MediaApi:
                         'audio/3gpp', 
                         'image/bmp', 
                         'image/gif', 
+                        'image/heic', 
+                        'image/heif', 
                         'image/jpeg', 
                         'image/pjpeg', 
                         'image/png', 
@@ -1310,6 +1312,7 @@ class MediaApi:
                         'text/css', 
                         'text/csv', 
                         'text/calendar', 
+                        'text/html', 
                         'text/plain', 
                         'text/javascript', 
                         'text/vcard', 
@@ -1321,7 +1324,8 @@ class MediaApi:
                         'video/ogg', 
                         'video/quicktime', 
                         'video/webm', 
-                        'video/x-ms-wmv'
+                        'video/x-ms-wmv', 
+                        'video/x-flv'
                     ]
                 )
             )

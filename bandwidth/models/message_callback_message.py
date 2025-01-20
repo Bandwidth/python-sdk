@@ -19,23 +19,31 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List
-from bandwidth.models.message_sending_callback_message import MessageSendingCallbackMessage
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from bandwidth.models.message_direction_enum import MessageDirectionEnum
+from bandwidth.models.priority_enum import PriorityEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
-class MessageSendingCallback(BaseModel):
+class MessageCallbackMessage(BaseModel):
     """
-    Message Sending Callback
+    Message payload schema within a MessageCallback
     """ # noqa: E501
+    id: StrictStr
+    owner: StrictStr
+    application_id: StrictStr = Field(alias="applicationId")
     time: datetime
-    type: StrictStr
-    to: StrictStr
-    description: StrictStr
-    message: MessageSendingCallbackMessage
+    segment_count: StrictInt = Field(alias="segmentCount")
+    direction: MessageDirectionEnum
+    to: List[StrictStr]
+    var_from: StrictStr = Field(alias="from")
+    text: StrictStr
+    tag: Optional[StrictStr] = None
+    media: Optional[List[StrictStr]] = Field(default=None, description="Optional media, applicable only for mms")
+    priority: Optional[PriorityEnum] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["time", "type", "to", "description", "message"]
+    __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,7 +63,7 @@ class MessageSendingCallback(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of MessageSendingCallback from a JSON string"""
+        """Create an instance of MessageCallbackMessage from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,19 +86,21 @@ class MessageSendingCallback(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of message
-        if self.message:
-            _dict['message'] = self.message.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if media (nullable) is None
+        # and model_fields_set contains the field
+        if self.media is None and "media" in self.model_fields_set:
+            _dict['media'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of MessageSendingCallback from a dict"""
+        """Create an instance of MessageCallbackMessage from a dict"""
         if obj is None:
             return None
 
@@ -98,11 +108,18 @@ class MessageSendingCallback(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "id": obj.get("id"),
+            "owner": obj.get("owner"),
+            "applicationId": obj.get("applicationId"),
             "time": obj.get("time"),
-            "type": obj.get("type"),
+            "segmentCount": obj.get("segmentCount"),
+            "direction": obj.get("direction"),
             "to": obj.get("to"),
-            "description": obj.get("description"),
-            "message": MessageSendingCallbackMessage.from_dict(obj["message"]) if obj.get("message") is not None else None
+            "from": obj.get("from"),
+            "text": obj.get("text"),
+            "tag": obj.get("tag"),
+            "media": obj.get("media"),
+            "priority": obj.get("priority")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

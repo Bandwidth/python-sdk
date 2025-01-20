@@ -21,29 +21,23 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from bandwidth.models.message_direction_enum import MessageDirectionEnum
-from bandwidth.models.priority_enum import PriorityEnum
+from bandwidth.models.callback_type_enum import CallbackTypeEnum
+from bandwidth.models.message_callback_message import MessageCallbackMessage
 from typing import Optional, Set
 from typing_extensions import Self
 
-class InboundMessageCallbackMessage(BaseModel):
+class MessageCallback(BaseModel):
     """
-    Inbound Message Callback Message Schema
+    Message Callback Schema
     """ # noqa: E501
-    id: StrictStr
-    owner: StrictStr
-    application_id: StrictStr = Field(alias="applicationId")
     time: datetime
-    segment_count: StrictInt = Field(alias="segmentCount")
-    direction: MessageDirectionEnum
-    to: List[StrictStr]
-    var_from: StrictStr = Field(alias="from")
-    text: StrictStr
-    tag: Optional[StrictStr] = None
-    media: Optional[List[StrictStr]] = None
-    priority: Optional[PriorityEnum] = None
+    type: CallbackTypeEnum
+    to: StrictStr
+    description: StrictStr = Field(description="A detailed description of the event described by the callback.")
+    message: MessageCallbackMessage
+    error_code: Optional[StrictInt] = Field(default=None, description="Optional error code, applicable only when type is `message-failed`.", alias="errorCode")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority"]
+    __properties: ClassVar[List[str]] = ["time", "type", "to", "description", "message", "errorCode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -63,7 +57,7 @@ class InboundMessageCallbackMessage(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of InboundMessageCallbackMessage from a JSON string"""
+        """Create an instance of MessageCallback from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,16 +80,24 @@ class InboundMessageCallbackMessage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of message
+        if self.message:
+            _dict['message'] = self.message.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if error_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.error_code is None and "error_code" in self.model_fields_set:
+            _dict['errorCode'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of InboundMessageCallbackMessage from a dict"""
+        """Create an instance of MessageCallback from a dict"""
         if obj is None:
             return None
 
@@ -103,18 +105,12 @@ class InboundMessageCallbackMessage(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "owner": obj.get("owner"),
-            "applicationId": obj.get("applicationId"),
             "time": obj.get("time"),
-            "segmentCount": obj.get("segmentCount"),
-            "direction": obj.get("direction"),
+            "type": obj.get("type"),
             "to": obj.get("to"),
-            "from": obj.get("from"),
-            "text": obj.get("text"),
-            "tag": obj.get("tag"),
-            "media": obj.get("media"),
-            "priority": obj.get("priority")
+            "description": obj.get("description"),
+            "message": MessageCallbackMessage.from_dict(obj["message"]) if obj.get("message") is not None else None,
+            "errorCode": obj.get("errorCode")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
