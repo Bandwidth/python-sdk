@@ -3,6 +3,10 @@ name: Smoke Tests
 on:
   schedule:
     - cron: "0 4 * * *"
+  pull_request:
+    paths:
+      - 'test/smoke/**'
+      - ".github/workflows/test-smoke.yml"
   workflow_dispatch:
     inputs:
       logLevel:
@@ -13,43 +17,76 @@ on:
         options:
           - WARNING
           - DEBUG
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'test/smoke/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
 env:
-  BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
+  PYTHON_VERSION: '3.12'
+  OPERATING_SYSTEM: ubuntu
   BW_USERNAME: ${{ secrets.BW_USERNAME }}
   BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
   BW_USERNAME_FORBIDDEN: ${{ secrets.BW_USERNAME_FORBIDDEN }}
   BW_PASSWORD_FORBIDDEN: ${{ secrets.BW_PASSWORD_FORBIDDEN }}
-  BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
-  BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
-  BW_NUMBER: ${{ secrets.BW_NUMBER }}
   USER_NUMBER: ${{ secrets.USER_NUMBER }}
   VZW_NUMBER: ${{ secrets.VZW_NUMBER }}
   ATT_NUMBER: ${{ secrets.ATT_NUMBER }}
   T_MOBILE_NUMBER: ${{ secrets.T_MOBILE_NUMBER }}
   BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
-  MANTECA_ACTIVE_NUMBER: ${{ secrets.MANTECA_ACTIVE_NUMBER }}
-  MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_IDLE_NUMBER }}
   MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
-  MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
 
 jobs:
   test:
     name: Smoke Test
     runs-on: ubuntu-latest
     env:
-      PYTHON_VERSION: '3.12'
-      OPERATING_SYSTEM: ubuntu
+      BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
+      BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
+      BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
+      BW_NUMBER: ${{ secrets.BW_NUMBER }}
+      MANTECA_ACTIVE_NUMBER: ${{ secrets.MANTECA_ACTIVE_NUMBER }}
+      MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_IDLE_NUMBER }}
+      MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Packages
+        run: |
+          pip install -r requirements.txt
+          pip install -r test-requirements.txt
+
+      - name: Test at Debug Level
+        if: ${{ inputs.logLevel == 'DEBUG' }}
+        run: |
+          echo "Log level: DEBUG"
+          pytest -v --log-cli-level=DEBUG
+        shell: bash
+
+      - name: Test at Warning Level
+        if: ${{( inputs.logLevel == null) || ( inputs.logLevel  == 'WARNING') }}
+        run: |
+          echo "Log level: WARNING"
+          pytest -v --log-cli-level=WARNING ./test/smoke
+        shell: bash
+
+  test_up:
+    name: Smoke Test UP Account
+    runs-on: ubuntu-latest
+    env:
+      BW_ACCOUNT_ID: ${{ secrets.BW_UP_ACCOUNT_ID }}
+      BW_VOICE_APPLICATION_ID: ${{ secrets.BW_UP_VOICE_APPLICATION_ID }}
+      BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_UP_MESSAGING_APPLICATION_ID }}
+      BW_NUMBER: ${{ secrets.BW_UP_NUMBER }}
+      MANTECA_ACTIVE_NUMBER: ${{ secrets.MANTECA_UP_ACTIVE_NUMBER }}
+      MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_UP_IDLE_NUMBER }}
+      MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_UP_APPLICATION_ID }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -80,7 +117,7 @@ jobs:
 
   notify_for_failures:
     name: Notify for Failures
-    needs: [test]
+    needs: [test, test_up]
     if: failure()
     runs-on: ubuntu-latest
     steps:
