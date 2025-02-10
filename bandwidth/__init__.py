@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.0.0-dev"
+__version__ = "1.0.0"
 
 # import apis into sdk package
 from bandwidth.api.calls_api import CallsApi
