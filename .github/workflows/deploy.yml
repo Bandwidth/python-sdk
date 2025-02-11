@@ -70,7 +70,7 @@ jobs:
 
       - name: Deploy to PYPI
         run: |
-          pip install packaging
+          pip install packaging==24.2
           pip install twine
           pip install wheel
           python setup.py sdist bdist_wheel
