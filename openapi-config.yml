@@ -1,4 +1,4 @@
-projectName: bandwidth-sdk
+projectName: bandwidth_sdk
 packageName: bandwidth
 packageUrl: 'https://dev.bandwidth.com/sdks/python'
 disallowAdditionalPropertiesIfNotPresent: false

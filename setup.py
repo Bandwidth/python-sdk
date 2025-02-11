@@ -17,7 +17,7 @@ import os
 import sys
 from setuptools import setup, find_packages  # noqa: H301
 
-NAME = "bandwidth-sdk"
+NAME = "bandwidth_sdk"
 VERSION = os.environ['RELEASE_VERSION']
 
 with open('README.md', 'r', encoding='utf-8') as fh:
