@@ -78,7 +78,7 @@ jobs:
         env:
           PYPI_API_KEY: ${{ secrets.PYPI_API_KEY }}
 
-      - uses: Bandwidth/build-notify-slack-action@v2.0.0
+      - uses: Bandwidth/build-notify-slack-action@v2
         if: always()
         with:
           job-status: ${{ job.status }}
