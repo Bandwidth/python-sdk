@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.0.0"
+__version__ = "1.0.0-dev"
 
 # import apis into sdk package
 from bandwidth.api.calls_api import CallsApi
@@ -26,6 +26,7 @@ from bandwidth.api.messages_api import MessagesApi
 from bandwidth.api.phone_number_lookup_api import PhoneNumberLookupApi
 from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.api.statistics_api import StatisticsApi
+from bandwidth.api.toll_free_verification_api import TollFreeVerificationApi
 from bandwidth.api.transcriptions_api import TranscriptionsApi
 
 # import ApiClient
@@ -41,6 +42,8 @@ from bandwidth.exceptions import ApiException
 
 # import models into sdk package
 from bandwidth.models.account_statistics import AccountStatistics
+from bandwidth.models.additional_denial_reason import AdditionalDenialReason
+from bandwidth.models.address import Address
 from bandwidth.models.answer_callback import AnswerCallback
 from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback
 from bandwidth.models.bridge_target_complete_callback import BridgeTargetCompleteCallback
@@ -66,6 +69,7 @@ from bandwidth.models.conference_recording_available_callback import ConferenceR
 from bandwidth.models.conference_recording_metadata import ConferenceRecordingMetadata
 from bandwidth.models.conference_redirect_callback import ConferenceRedirectCallback
 from bandwidth.models.conference_state_enum import ConferenceStateEnum
+from bandwidth.models.contact import Contact
 from bandwidth.models.create_call import CreateCall
 from bandwidth.models.create_call_response import CreateCallResponse
 from bandwidth.models.create_lookup_response import CreateLookupResponse
@@ -74,10 +78,13 @@ from bandwidth.models.deferred_result import DeferredResult
 from bandwidth.models.disconnect_callback import DisconnectCallback
 from bandwidth.models.diversion import Diversion
 from bandwidth.models.dtmf_callback import DtmfCallback
+from bandwidth.models.error import Error
+from bandwidth.models.failure_webhook import FailureWebhook
 from bandwidth.models.field_error import FieldError
 from bandwidth.models.file_format_enum import FileFormatEnum
 from bandwidth.models.gather_callback import GatherCallback
 from bandwidth.models.initiate_callback import InitiateCallback
+from bandwidth.models.links_object import LinksObject
 from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.models.list_message_item import ListMessageItem
 from bandwidth.models.lookup_request import LookupRequest
@@ -102,6 +109,7 @@ from bandwidth.models.messaging_request_error import MessagingRequestError
 from bandwidth.models.mfa_forbidden_request_error import MfaForbiddenRequestError
 from bandwidth.models.mfa_request_error import MfaRequestError
 from bandwidth.models.mfa_unauthorized_request_error import MfaUnauthorizedRequestError
+from bandwidth.models.opt_in_workflow import OptInWorkflow
 from bandwidth.models.page_info import PageInfo
 from bandwidth.models.priority_enum import PriorityEnum
 from bandwidth.models.recording_available_callback import RecordingAvailableCallback
@@ -113,6 +121,14 @@ from bandwidth.models.redirect_callback import RedirectCallback
 from bandwidth.models.redirect_method_enum import RedirectMethodEnum
 from bandwidth.models.stir_shaken import StirShaken
 from bandwidth.models.tag import Tag
+from bandwidth.models.telephone_number import TelephoneNumber
+from bandwidth.models.tfv_basic_authentication import TfvBasicAuthentication
+from bandwidth.models.tfv_callback_status_enum import TfvCallbackStatusEnum
+from bandwidth.models.tfv_error import TfvError
+from bandwidth.models.tfv_status import TfvStatus
+from bandwidth.models.tfv_status_enum import TfvStatusEnum
+from bandwidth.models.tfv_submission_info import TfvSubmissionInfo
+from bandwidth.models.tfv_submission_wrapper import TfvSubmissionWrapper
 from bandwidth.models.tn_lookup_request_error import TnLookupRequestError
 from bandwidth.models.transcribe_recording import TranscribeRecording
 from bandwidth.models.transcription import Transcription
@@ -124,7 +140,16 @@ from bandwidth.models.update_call import UpdateCall
 from bandwidth.models.update_call_recording import UpdateCallRecording
 from bandwidth.models.update_conference import UpdateConference
 from bandwidth.models.update_conference_member import UpdateConferenceMember
+from bandwidth.models.verification_denial_webhook import VerificationDenialWebhook
+from bandwidth.models.verification_request import VerificationRequest
+from bandwidth.models.verification_update_request import VerificationUpdateRequest
+from bandwidth.models.verification_webhook import VerificationWebhook
 from bandwidth.models.verify_code_request import VerifyCodeRequest
 from bandwidth.models.verify_code_response import VerifyCodeResponse
 from bandwidth.models.voice_api_error import VoiceApiError
 from bandwidth.models.voice_code_response import VoiceCodeResponse
+from bandwidth.models.webhook_subscription import WebhookSubscription
+from bandwidth.models.webhook_subscription_basic_authentication import WebhookSubscriptionBasicAuthentication
+from bandwidth.models.webhook_subscription_request_schema import WebhookSubscriptionRequestSchema
+from bandwidth.models.webhook_subscription_type_enum import WebhookSubscriptionTypeEnum
+from bandwidth.models.webhook_subscriptions_list_body import WebhookSubscriptionsListBody

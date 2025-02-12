@@ -9,5 +9,6 @@ from bandwidth.api.messages_api import MessagesApi
 from bandwidth.api.phone_number_lookup_api import PhoneNumberLookupApi
 from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.api.statistics_api import StatisticsApi
+from bandwidth.api.toll_free_verification_api import TollFreeVerificationApi
 from bandwidth.api.transcriptions_api import TranscriptionsApi
 
