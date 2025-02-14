@@ -58,7 +58,7 @@ class TestDtmfCallback(unittest.TestCase):
 
     def testDtmfCallback(self):
         """Test DtmfCallback"""
-        instance = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
         self.assertTrue(instance is not None)
         self.assertTrue(isinstance(instance, DtmfCallback))
         assert instance.event_type == 'bridgeComplete'
