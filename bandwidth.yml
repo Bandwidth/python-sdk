@@ -19,6 +19,7 @@ tags:
   - name: Transcriptions
   - name: MFA
   - name: Phone Number Lookup
+  - name: Toll-Free Verification
 paths:
   /users/{accountId}/media:
     get:
@@ -1328,6 +1329,270 @@ paths:
         '500':
           $ref: '#/components/responses/tnLookupInternalServerError'
     servers: *ref_3
+  /accounts/{accountId}/tollFreeVerification:
+    post:
+      tags:
+        - Toll-Free Verification
+      summary: Request Toll-Free Verification
+      description: Submit a request for verification of a toll-free phone number.
+      operationId: requestTollFreeVerification
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      requestBody:
+        $ref: '#/components/requestBodies/requestTollFreeVerificationRequest'
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          $ref: '#/components/responses/tfvPostBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/tfvUnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/tfvForbiddenResponse'
+        '405':
+          $ref: '#/components/responses/tfvNotAllowedResponse'
+        '429':
+          $ref: '#/components/responses/tfvTooManyRequestsResponse'
+        '500':
+          $ref: '#/components/responses/tfvServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/tfvServiceUnavailableResponse'
+      callbacks:
+        tfVerificationStatus:
+          $ref: '#/components/callbacks/tfVerificationStatus'
+    servers: &ref_4
+      - url: https://api.bandwidth.com/api/v2
+        description: Production
+  /accounts/{accountId}/phoneNumbers/{phoneNumber}/tollFreeVerification:
+    get:
+      tags:
+        - Toll-Free Verification
+      summary: Get Toll-Free Verification Status
+      description: >-
+        Gets the verification status for a phone number that is provisioned to
+        your account.
+
+        Submission information will be appended to the response if it is
+        available.
+      operationId: getTollFreeVerificationStatus
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/tfPhoneNumberPathParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/getTollFreeVerificationStatusResponse'
+        '400':
+          $ref: '#/components/responses/tfvBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/tfvUnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/tfvForbiddenResponse'
+        '404':
+          $ref: '#/components/responses/tfvNotFoundResponse'
+        '405':
+          $ref: '#/components/responses/tfvNotAllowedResponse'
+        '429':
+          $ref: '#/components/responses/tfvTooManyRequestsResponse'
+        '500':
+          $ref: '#/components/responses/tfvServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/tfvServiceUnavailableResponse'
+    put:
+      tags:
+        - Toll-Free Verification
+      summary: Update Toll-Free Verification Request
+      description: >-
+        Updates a toll-free verification request.
+
+        Submissions are only eligible for resubmission for 7 days within being
+        processed and if resubmission is allowed (resubmitAllowed field is
+        true).
+      operationId: updateTollFreeVerificationRequest
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/tfPhoneNumberPathParam'
+      requestBody:
+        $ref: '#/components/requestBodies/updateTollFreeVerificationRequestRequest'
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          $ref: '#/components/responses/tfvPostBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/tfvUnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/tfvForbiddenResponse'
+        '405':
+          $ref: '#/components/responses/tfvNotAllowedResponse'
+        '429':
+          $ref: '#/components/responses/tfvTooManyRequestsResponse'
+        '500':
+          $ref: '#/components/responses/tfvServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/tfvServiceUnavailableResponse'
+      callbacks:
+        tfVerificationStatus:
+          $ref: '#/components/callbacks/tfVerificationStatus'
+    servers: *ref_4
+  /accounts/{accountId}/tollFreeVerification/webhooks/subscriptions:
+    get:
+      tags:
+        - Toll-Free Verification
+      summary: List Webhook Subscriptions
+      description: >-
+        Lists all webhook subscriptions that are registered to receive status
+        updates for the toll-free verification requests submitted under this
+        account (password will not be returned through this API
+
+        If `basicAuthentication` is defined, the `password` property of that
+        object will be null).
+      operationId: listWebhookSubscriptions
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      responses:
+        '200':
+          $ref: '#/components/responses/listWebhookSubscriptionsResponse'
+        '400':
+          $ref: '#/components/responses/tfvPostBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/tfvUnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/tfvForbiddenResponse'
+        '405':
+          $ref: '#/components/responses/tfvNotAllowedResponse'
+        '429':
+          $ref: '#/components/responses/tfvTooManyRequestsResponse'
+        '500':
+          $ref: '#/components/responses/tfvServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/tfvServiceUnavailableResponse'
+    post:
+      tags:
+        - Toll-Free Verification
+      summary: Create Webhook Subscription
+      description: >-
+        Create a new webhook subscription (this webhook will be called for every
+        update on every submission).
+
+        In addition to a `callbackUrl`, this subscription can provide optional
+        HTTP basic authentication credentials (a username and a password).
+
+        The returned subscription object will contain an ID that can be used to
+        modify or delete the subscription at a later time.
+      operationId: createWebhookSubscription
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      requestBody:
+        $ref: '#/components/requestBodies/webhookSubscriptionRequest'
+      responses:
+        '201':
+          $ref: '#/components/responses/createWebhookSubscriptionResponse'
+        '400':
+          $ref: '#/components/responses/tfvBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/tfvUnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/tfvForbiddenResponse'
+        '404':
+          $ref: '#/components/responses/tfvNotFoundResponse'
+        '405':
+          $ref: '#/components/responses/tfvNotAllowedResponse'
+        '429':
+          $ref: '#/components/responses/tfvTooManyRequestsResponse'
+        '500':
+          $ref: '#/components/responses/tfvServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/tfvServiceUnavailableResponse'
+    servers: *ref_4
+  /accounts/{accountId}/tollFreeVerification/webhooks/subscriptions/{id}:
+    delete:
+      tags:
+        - Toll-Free Verification
+      summary: Delete Webhook Subscription
+      description: Delete a webhook subscription by ID.
+      operationId: deleteWebhookSubscription
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/webhookSubscriptionIdPathParam'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/tfvBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/tfvUnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/tfvForbiddenResponse'
+        '404':
+          $ref: '#/components/responses/tfvNotFoundResponse'
+        '405':
+          $ref: '#/components/responses/tfvNotAllowedResponse'
+        '429':
+          $ref: '#/components/responses/tfvTooManyRequestsResponse'
+        '500':
+          $ref: '#/components/responses/tfvServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/tfvServiceUnavailableResponse'
+    put:
+      tags:
+        - Toll-Free Verification
+      summary: Update Webhook Subscription
+      description: >-
+        Update an existing webhook subscription (`callbackUrl` and
+        `basicAuthentication` can be updated).
+      operationId: updateWebhookSubscription
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/webhookSubscriptionIdPathParam'
+      requestBody:
+        $ref: '#/components/requestBodies/webhookSubscriptionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/updateWebhookSubscriptionResponse'
+        '400':
+          $ref: '#/components/responses/tfvBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/tfvUnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/tfvForbiddenResponse'
+        '404':
+          $ref: '#/components/responses/tfvNotFoundResponse'
+        '405':
+          $ref: '#/components/responses/tfvNotAllowedResponse'
+        '429':
+          $ref: '#/components/responses/tfvTooManyRequestsResponse'
+        '500':
+          $ref: '#/components/responses/tfvServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/tfvServiceUnavailableResponse'
+    servers: *ref_4
+  /tollFreeVerification/useCases:
+    get:
+      tags:
+        - Toll-Free Verification
+      summary: List Toll-Free Use Cases
+      description: Lists valid toll-free use cases.
+      operationId: listTollFreeUseCases
+      responses:
+        '200':
+          $ref: '#/components/responses/listTollFreeUseCasesResponse'
+        '400':
+          $ref: '#/components/responses/tfvBadRequestResponse'
+        '401':
+          $ref: '#/components/responses/tfvUnauthorizedResponse'
+        '403':
+          $ref: '#/components/responses/tfvForbiddenResponse'
+        '404':
+          $ref: '#/components/responses/tfvNotFoundResponse'
+        '405':
+          $ref: '#/components/responses/tfvNotAllowedResponse'
+        '429':
+          $ref: '#/components/responses/tfvTooManyRequestsResponse'
+        '500':
+          $ref: '#/components/responses/tfvServerErrorResponse'
+        '503':
+          $ref: '#/components/responses/tfvServiceUnavailableResponse'
+    servers: *ref_4
 components:
   schemas:
     callbackTypeEnum:
@@ -4410,6 +4675,640 @@ components:
           type: string
           description: A description of what validation error occurred.
           example: example error message
+    accountId1:
+      type: string
+      description: User's account ID.
+      example: '1234567'
+    tfPhoneNumber:
+      type: string
+      description: Toll-free telephone number in E.164 format.
+      minLength: 12
+      maxLength: 12
+      nullable: false
+      pattern: ^\+1(800|833|844|855|866|877|888)[2-9]\d{6}$
+      example: '+18005555555'
+    tfvWebhookErrors:
+      type: array
+      description: Details of the errors that were encountered when processing the request.
+      items:
+        type: string
+        example: 'optInWorkflowImageURLs: Entries must be a valid array of objects.'
+    tfvCallbackStatusEnum:
+      type: string
+      enum:
+        - VERIFIED
+        - UNVERIFIED
+      example: VERIFIED
+    tfvUnverifiedStatus:
+      type: string
+      default: UNVERIFIED
+      example: UNVERIFIED
+    declineReasonDescription:
+      type: string
+      description: Explanation for why a verification request was declined.
+      nullable: false
+      example: >-
+        Invalid Information - Can't Validate URL - Website is not accessible /
+        not available
+    denialStatusCode:
+      description: Reason code for denial.
+      type: integer
+      example: 511
+    resubmitAllowed:
+      description: >-
+        Whether a Toll-Free Verification request qualifies for resubmission via
+        PUT.
+      example: true
+      type: boolean
+    additionalDenialReason:
+      properties:
+        statusCode:
+          $ref: '#/components/schemas/denialStatusCode'
+        reason:
+          $ref: '#/components/schemas/declineReasonDescription'
+        resubmitAllowed:
+          $ref: '#/components/schemas/resubmitAllowed'
+      required:
+        - statusCode
+        - reason
+        - resubmitAllowed
+      type: object
+    internalTicketNumber:
+      type: string
+      format: uuid
+      description: >-
+        Unique identifier (UUID) generated by Bandwidth to assist in tracking
+        the verification status of a toll-free number - included in all webhook
+        payloads.
+      example: acde070d-8c4c-4f0d-9d8a-162843c10333
+    internalTicketNumberForWebhook:
+      type: string
+      format: uuid
+      description: >-
+        Unique identifier (UUID) generated by Bandwidth to assist in tracking
+        the verification status of a toll-free number.
+      example: acde070d-8c4c-4f0d-9d8a-162843c10333
+    businessContactPhoneNumber:
+      description: Contact telephone number
+      type: string
+      minLength: 1
+      maxLength: 500
+      nullable: false
+      example: '+19192654500'
+    verificationRequest:
+      type: object
+      required:
+        - businessAddress
+        - businessContact
+        - messageVolume
+        - phoneNumbers
+        - useCase
+        - useCaseSummary
+        - productionMessageContent
+        - optInWorkflow
+      properties:
+        businessAddress:
+          $ref: '#/components/schemas/address'
+        businessContact:
+          $ref: '#/components/schemas/contact'
+        messageVolume:
+          type: integer
+          description: Estimated monthly volume of messages from the toll-free number.
+          minimum: 10
+          maximum: 10000000
+          example: 10000
+        phoneNumbers:
+          type: array
+          minItems: 1
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/tfPhoneNumber'
+        useCase:
+          $ref: '#/components/schemas/useCase'
+        useCaseSummary:
+          type: string
+          description: A general idea of the use case and customer.
+          minLength: 1
+          maxLength: 500
+          nullable: false
+        productionMessageContent:
+          type: string
+          description: Example of message content.
+          minLength: 1
+          maxLength: 500
+          nullable: false
+        optInWorkflow:
+          $ref: '#/components/schemas/optInWorkflow'
+        additionalInformation:
+          type: string
+          description: Any additional information.
+          minLength: 0
+          maxLength: 500
+          nullable: true
+        isvReseller:
+          $ref: '#/components/schemas/isvReseller'
+    verificationUpdateRequest:
+      type: object
+      required:
+        - businessAddress
+        - businessContact
+        - messageVolume
+        - useCase
+        - useCaseSummary
+        - productionMessageContent
+        - optInWorkflow
+      properties:
+        businessAddress:
+          $ref: '#/components/schemas/address'
+        businessContact:
+          $ref: '#/components/schemas/contact'
+        messageVolume:
+          type: integer
+          description: Estimated monthly volume of messages from the toll-free number.
+          minimum: 10
+          maximum: 10000000
+          example: 10000
+        useCase:
+          $ref: '#/components/schemas/useCase'
+        useCaseSummary:
+          type: string
+          description: A general idea of the use case and customer.
+          minLength: 0
+          maxLength: 500
+          nullable: false
+        productionMessageContent:
+          type: string
+          description: Example of message content.
+          minLength: 0
+          maxLength: 500
+          nullable: false
+        optInWorkflow:
+          $ref: '#/components/schemas/optInWorkflow'
+        additionalInformation:
+          type: string
+          description: Any additional information.
+          minLength: 0
+          maxLength: 500
+          nullable: true
+        isvReseller:
+          $ref: '#/components/schemas/isvReseller'
+    tfvBasicAuthentication:
+      type: object
+      properties:
+        username:
+          type: string
+          maxLength: 100
+        password:
+          type: string
+          maxLength: 200
+      required:
+        - username
+        - password
+    webhookSubscriptionRequestSchema:
+      type: object
+      properties:
+        basicAuthentication:
+          $ref: '#/components/schemas/tfvBasicAuthentication'
+        callbackUrl:
+          $ref: '#/components/schemas/webhookUrl'
+        sharedSecretKey:
+          $ref: '#/components/schemas/sharedSecretKey'
+      required:
+        - callbackUrl
+    failureWebhook:
+      type: object
+      properties:
+        accountId:
+          $ref: '#/components/schemas/accountId1'
+        phoneNumber:
+          $ref: '#/components/schemas/tfPhoneNumber'
+        errorCode:
+          type: string
+          description: >-
+            An error code indicating what error was encountered. This code can
+            be interpreted as an HTTP status code in regards to the error that
+            was encountered.
+          example: '400'
+        errorDescription:
+          type: string
+          description: A description of the error that was encountered.
+          example: cannot process request.
+        errors:
+          $ref: '#/components/schemas/tfvWebhookErrors'
+        internalTicketNumber:
+          $ref: '#/components/schemas/internalTicketNumberForWebhook'
+    verificationDenialWebhook:
+      type: object
+      properties:
+        accountId:
+          $ref: '#/components/schemas/accountId1'
+        additionalDenialReasons:
+          description: >-
+            An optional list of denial reasons in addition to
+            declineReasonDescription when multiple reasons apply.
+          items:
+            $ref: '#/components/schemas/additionalDenialReason'
+          example:
+            - statusCode: 512
+              reason: Reason A
+              resubmitAllowed: true
+            - statusCode: 513
+              reason: Reason B
+              resubmitAllowed: true
+          type: array
+        declineReasonDescription:
+          $ref: '#/components/schemas/declineReasonDescription'
+        denialStatusCode:
+          $ref: '#/components/schemas/denialStatusCode'
+        internalTicketNumber:
+          $ref: '#/components/schemas/internalTicketNumberForWebhook'
+        phoneNumber:
+          $ref: '#/components/schemas/tfPhoneNumber'
+        resubmitAllowed:
+          $ref: '#/components/schemas/resubmitAllowed'
+        status:
+          $ref: '#/components/schemas/tfvUnverifiedStatus'
+    verificationWebhook:
+      type: object
+      properties:
+        accountId:
+          $ref: '#/components/schemas/accountId1'
+        phoneNumber:
+          $ref: '#/components/schemas/tfPhoneNumber'
+        status:
+          $ref: '#/components/schemas/tfvCallbackStatusEnum'
+        internalTicketNumber:
+          $ref: '#/components/schemas/internalTicketNumberForWebhook'
+    tfvSubmissionWrapper:
+      type: object
+      properties:
+        submission:
+          $ref: '#/components/schemas/verificationUpdateRequest'
+    address:
+      type: object
+      nullable: false
+      required:
+        - name
+        - addr1
+        - city
+        - state
+        - zip
+        - url
+      properties:
+        name:
+          type: string
+          description: The name of the business using the toll-free number.
+          minLength: 1
+          maxLength: 500
+          nullable: false
+          example: Bandwidth Inc.
+        addr1:
+          type: string
+          description: The address of the business using the toll-free number.
+          minLength: 1
+          maxLength: 500
+          nullable: false
+          example: 2230 Bandmate Way
+        addr2:
+          type: string
+          description: The address of the business using the toll-free number.
+          minLength: 0
+          maxLength: 500
+          nullable: true
+        city:
+          type: string
+          description: The city of the business using the toll-free number.
+          minLength: 1
+          maxLength: 500
+          nullable: false
+          example: Raleigh
+        state:
+          type: string
+          description: The state of the business using the toll-free number.
+          minLength: 1
+          maxLength: 500
+          nullable: false
+          example: NC
+        zip:
+          type: string
+          description: The zip of the business using the toll-free number.
+          nullable: false
+          example: '27606'
+          pattern: '[- A-Za-z0-9]{0,500}'
+        url:
+          type: string
+          format: url
+          description: The website of the business using the toll-free number.
+          minLength: 1
+          maxLength: 500
+          nullable: false
+          example: https://www.example.com/path/to/resource
+    optInWorkflow:
+      type: object
+      nullable: false
+      required:
+        - description
+        - imageUrls
+      properties:
+        description:
+          type: string
+          minLength: 1
+          maxLength: 500
+          nullable: false
+          example: Opt In Flow
+        imageUrls:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 500
+            nullable: false
+            example: https://www.example.com/path/to/resource
+            pattern: >-
+              ^$|(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,253}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)
+    isvReseller:
+      type: string
+      description: ISV name.
+      minLength: 0
+      maxLength: 500
+      nullable: true
+      example: Test ISV
+    contact:
+      type: object
+      nullable: false
+      required:
+        - firstName
+        - lastName
+        - email
+        - phoneNumber
+      properties:
+        firstName:
+          type: string
+          description: The first name of the business contact using the toll-free number.
+          minLength: 1
+          maxLength: 500
+          nullable: false
+          example: John
+        lastName:
+          type: string
+          description: The last name of the business contact using the toll-free number.
+          minLength: 1
+          maxLength: 500
+          nullable: false
+          example: Doe
+        email:
+          $ref: '#/components/schemas/email'
+        phoneNumber:
+          $ref: '#/components/schemas/businessContactPhoneNumber'
+    email:
+      type: string
+      format: email
+      minLength: 0
+      maxLength: 500
+      nullable: false
+      pattern: >-
+        ^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$
+      example: foo@bar.com
+    useCases:
+      type: array
+      items:
+        type: string
+      example:
+        - 2FA
+        - App Notifications
+        - Appointments
+        - Auctions
+        - Auto Repair Services
+        - Bank Transfers
+        - Billing
+        - Booking Confirmations
+        - Business Updates
+        - COVID-19 Alerts
+    useCase:
+      type: string
+      description: The category of the use case.
+      minLength: 0
+      maxLength: 500
+      example: 2FA
+    webhookSubscriptionsListBody:
+      description: >-
+        A list of all webhook subscriptions registered for this account ID for
+        this particular feature (unpaginated).
+      type: object
+      required:
+        - data
+      properties:
+        links:
+          $ref: '#/components/schemas/linksObject'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+        data:
+          items:
+            $ref: '#/components/schemas/webhookSubscription'
+          type: array
+    linksObject:
+      type: object
+      properties:
+        first:
+          description: The first (or only) page of results matching the query.
+          type: string
+        next:
+          description: >-
+            If more results exist than specified by 'size', this link returns
+            the next page of 'size' results.
+          type: string
+        previous:
+          description: >-
+            If the results are more than one page, this link returns the
+            previous page of 'size' results.
+          type: string
+        last:
+          description: >-
+            If more results exist than specified by 'size', this link return the
+            last page of result.
+          type: string
+    error:
+      type: object
+      properties:
+        code:
+          type: integer
+        description:
+          type: string
+        telephoneNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/telephoneNumber'
+    telephoneNumber:
+      type: object
+      properties:
+        telephoneNumber:
+          description: Simple Telephone Number.
+          type: string
+    webhookSubscriptionTypeEnum:
+      type: string
+      enum:
+        - TOLLFREE_VERIFICATION_STATUS
+        - MESSAGING_PORTOUT_APPROVAL_STATUS
+      example: TOLLFREE_VERIFICATION_STATUS
+    webhookSubscription:
+      description: >-
+        Information about a webhook that Bandwidth should send upon the
+        completion of event customer has subscribed to.
+      type: object
+      required:
+        - callbackUrl
+      properties:
+        id:
+          type: string
+          example: 7hICGStfAfeGxEq3N0lQwO
+        accountId:
+          type: string
+          example: '1234567'
+        callbackUrl:
+          $ref: '#/components/schemas/webhookUrl'
+        type:
+          $ref: '#/components/schemas/webhookSubscriptionTypeEnum'
+        basicAuthentication:
+          description: >-
+            Basic authentication credentials are not required, but if present,
+            both username and password must be provided.
+          type: object
+          required:
+            - username
+            - password
+          properties:
+            username:
+              type: string
+              maxLength: 100
+            password:
+              type: string
+              maxLength: 200
+        createdDate:
+          type: string
+          format: date-time
+          example: '2023-05-15T13:56:39.965Z'
+        modifiedDate:
+          type: string
+          format: date-time
+          example: '2023-05-15T13:56:39.965Z'
+    webhookUrl:
+      description: >-
+        Callback URL to receive status updates from Bandwidth. When a webhook
+        subscription is registered with Bandwidth under a given account ID, it
+        will be used to send status updates for all requests submitted under
+        that account ID.
+      type: string
+      format: url
+      minLength: 0
+      maxLength: 2000
+      nullable: true
+      example: https://www.example.com/path/to/resource
+      pattern: >-
+        ^$|(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,253}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)
+    tfvError:
+      description: A generic error object.
+      properties:
+        type:
+          type: string
+          example: Error Type
+        description:
+          type: string
+          example: Error Message
+        errors:
+          type: object
+          description: >-
+            Each key of this errors object refers to a field of the submitted
+            object (using dot notation for nested objects), with the field being
+            a key to an array of one or more errors for that field.
+          example:
+            field: error message
+      type: object
+    tfvStatus:
+      type: object
+      properties:
+        phoneNumber:
+          $ref: '#/components/schemas/tfPhoneNumber'
+        status:
+          $ref: '#/components/schemas/tfvStatusEnum'
+        internalTicketNumber:
+          $ref: '#/components/schemas/internalTicketNumber'
+        declineReasonDescription:
+          $ref: '#/components/schemas/declineReasonDescription'
+        resubmitAllowed:
+          $ref: '#/components/schemas/resubmitAllowed'
+        createdDateTime:
+          type: string
+          description: Date and time the verification request was created.
+          format: date-time
+          example: '2021-06-08T06:45:13.0Z'
+        modifiedDateTime:
+          type: string
+          description: Date and time the verification request was last modified.
+          format: date-time
+          example: '2021-06-08T06:45:13.0Z'
+        submission:
+          $ref: '#/components/schemas/tfvSubmissionInfo'
+    tfvSubmissionInfo:
+      type: object
+      properties:
+        businessAddress:
+          $ref: '#/components/schemas/address'
+        businessContact:
+          $ref: '#/components/schemas/contact'
+        messageVolume:
+          type: integer
+          description: Estimated monthly volume of messages from the toll-free number.
+          minimum: 10
+          maximum: 10000000
+          example: 10000
+        useCase:
+          $ref: '#/components/schemas/useCase'
+        useCaseSummary:
+          type: string
+          description: A general idea of the use case and customer.
+          minLength: 0
+          maxLength: 500
+          nullable: false
+          example: Text summarizing the use case for the toll-free number
+        productionMessageContent:
+          type: string
+          description: Example of message content.
+          minLength: 0
+          maxLength: 500
+          nullable: false
+          example: Production message content
+        optInWorkflow:
+          $ref: '#/components/schemas/optInWorkflow'
+        additionalInformation:
+          type: string
+          description: Any additional information.
+          minLength: 0
+          maxLength: 500
+          nullable: true
+          example: Any additional information
+        isvReseller:
+          $ref: '#/components/schemas/isvReseller'
+    tfvStatusEnum:
+      type: string
+      enum:
+        - VERIFIED
+        - UNVERIFIED
+        - PENDING
+        - PARTIALLY_VERIFIED
+        - INVALID_STATUS
+      example: VERIFIED
+    sharedSecretKey:
+      description: >-
+        An ASCII string submitted by the user as a shared secret key for
+        generating an HMAC header for callbacks.
+      example: This is my $3cret
+      maxLength: 64
+      minLength: 16
+      nullable: true
+      pattern: ^[ -~]{16,64}$
+      type: string
   responses:
     createMessageResponse:
       description: Accepted
@@ -4860,6 +5759,120 @@ components:
               summary: Example Internal Server Error Error
               value:
                 message: Request has not been passed further.
+    getTollFreeVerificationStatusResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvStatus'
+    listWebhookSubscriptionsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/webhookSubscriptionsListBody'
+    createWebhookSubscriptionResponse:
+      description: Created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/webhookSubscription'
+    updateWebhookSubscriptionResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/webhookSubscription'
+    listTollFreeUseCasesResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/useCases'
+    tfvBadRequestResponse:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvError'
+          example:
+            description: Cannot process request.
+            type: bad request
+    tfvPostBadRequestResponse:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvError'
+          example:
+            description: cannot process request.
+            errors:
+              businessName: Business name is required.
+              businessContactEmail: Business contact email is not a valid email address.
+              optInWorkflowImageURLs: Entries must be a valid array of objects.
+    tfvUnauthorizedResponse:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvError'
+          example:
+            description: Client is providing incorrect or invalid credentials.
+            type: unauthorized
+    tfvForbiddenResponse:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvError'
+          example:
+            description: Client is not authorized for the action.
+            type: forbidden
+    tfvNotFoundResponse:
+      description: Cannot find the requested resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvError'
+          example:
+            description: Cannot find the requested resource.
+            type: Not Found
+    tfvNotAllowedResponse:
+      description: Method Not Allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvError'
+          example:
+            description: Method is not allowed.
+            type: Method Not Allowed
+    tfvTooManyRequestsResponse:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvError'
+          example:
+            description: Throttling error. Too many requests.
+            type: Too Many Requests
+    tfvServerErrorResponse:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvError'
+          example:
+            description: Internal Server Error.
+            type: Internal Server Error
+    tfvServiceUnavailableResponse:
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvError'
+          example:
+            description: Service Unavailable Error.
+            type: Service Unavailable
   parameters:
     accountId:
       in: path
@@ -5227,6 +6240,22 @@ components:
         type: string
       description: The phone number lookup request ID from Bandwidth.
       example: 004223a0-8b17-41b1-bf81-20732adf5590
+    tfPhoneNumberPathParam:
+      in: path
+      name: phoneNumber
+      required: true
+      schema:
+        $ref: '#/components/schemas/tfPhoneNumber'
+      description: Valid Toll-Free telephone number in E.164 format.
+      example: '+18885555555'
+    webhookSubscriptionIdPathParam:
+      in: path
+      name: id
+      required: true
+      schema:
+        type: string
+      description: Webhook subscription ID
+      example: 7bt57JcsVYJrN9K1OcV1Nu
   examples:
     smsMessageReceivedCallbackExample:
       summary: An example of a sms message-received callback body.
@@ -5843,6 +6872,39 @@ components:
               $ref: '#/components/examples/singleNumberRequestExample'
             multipleNumberRequestExample:
               $ref: '#/components/examples/multipleNumberRequestExample'
+    requestTollFreeVerificationRequest:
+      description: Request for verification of a toll-free phone number.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/verificationRequest'
+    updateTollFreeVerificationRequestRequest:
+      description: Update a request for verification of a toll-free phone number.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvSubmissionWrapper'
+    verificationWebhookRequest:
+      description: Verification callback status of a toll-free phone number.
+      required: true
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/verificationWebhook'
+              - $ref: '#/components/schemas/verificationDenialWebhook'
+              - $ref: '#/components/schemas/failureWebhook'
+    webhookSubscriptionRequest:
+      description: >-
+        Information about a webhook that Bandwidth should send upon the
+        completion of event customer is trying to subscribe to.
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/webhookSubscriptionRequestSchema'
   securitySchemes:
     Basic:
       type: http
@@ -5913,3 +6975,43 @@ components:
           responses:
             '200':
               description: OK
+    tfVerificationStatus:
+      your_url.com/webhookService:
+        post:
+          summary: TFV status updates sent to customer's webhook URL.
+          description: >-
+            Unique webhook URL provided by customers to which Bandwidth sends a
+            POST request to notify customer regarding TFV status updates.
+          operationId: tfvRequest
+          parameters:
+            - description: >-
+                64-character lowercase hexidecimal HMAC calculated with a shared
+                secret key, the canonicalized request body, and SHA256. It is
+                only included when a shared secret key is set through webhook
+                subscription.
+              example: ca7b9e9816c90d336f5dca529e733354b81535c7af027b81878ac98afb2dbaa2
+              in: header
+              name: x-bandwidth-signature-hmac-sha256
+              schema:
+                type: string
+          requestBody:
+            $ref: '#/components/requestBodies/verificationWebhookRequest'
+          responses:
+            '204':
+              description: No Content
+            '400':
+              $ref: '#/components/responses/tfvBadRequestResponse'
+            '401':
+              $ref: '#/components/responses/tfvUnauthorizedResponse'
+            '403':
+              $ref: '#/components/responses/tfvForbiddenResponse'
+            '404':
+              $ref: '#/components/responses/tfvNotFoundResponse'
+            '405':
+              $ref: '#/components/responses/tfvNotAllowedResponse'
+            '429':
+              $ref: '#/components/responses/tfvTooManyRequestsResponse'
+            '500':
+              $ref: '#/components/responses/tfvServerErrorResponse'
+            '503':
+              $ref: '#/components/responses/tfvServiceUnavailableResponse'
