@@ -94,9 +94,9 @@ class VerificationDenialWebhook(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in additional_denial_reasons (list)
         _items = []
         if self.additional_denial_reasons:
-            for _item in self.additional_denial_reasons:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_additional_denial_reasons in self.additional_denial_reasons:
+                if _item_additional_denial_reasons:
+                    _items.append(_item_additional_denial_reasons.to_dict())
             _dict['additionalDenialReasons'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:

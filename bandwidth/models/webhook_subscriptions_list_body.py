@@ -83,16 +83,16 @@ class WebhookSubscriptionsListBody(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in errors (list)
         _items = []
         if self.errors:
-            for _item in self.errors:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_errors in self.errors:
+                if _item_errors:
+                    _items.append(_item_errors.to_dict())
             _dict['errors'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in data (list)
         _items = []
         if self.data:
-            for _item in self.data:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_data in self.data:
+                if _item_data:
+                    _items.append(_item_data.to_dict())
             _dict['data'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
