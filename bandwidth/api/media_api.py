@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictBytes, StrictStr
-from typing import List, Optional, Union
+from typing import List, Optional, Tuple, Union
 from typing_extensions import Annotated
 from bandwidth.models.media import Media
 
@@ -295,7 +295,9 @@ class MediaApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -596,7 +598,9 @@ class MediaApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -898,7 +902,9 @@ class MediaApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -949,7 +955,7 @@ class MediaApi:
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
         media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
-        body: Union[StrictBytes, StrictStr],
+        body: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
         cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
         _request_timeout: Union[
@@ -1040,7 +1046,7 @@ class MediaApi:
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
         media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
-        body: Union[StrictBytes, StrictStr],
+        body: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
         cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
         _request_timeout: Union[
@@ -1131,7 +1137,7 @@ class MediaApi:
         self,
         account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
         media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
-        body: Union[StrictBytes, StrictStr],
+        body: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
         cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
         _request_timeout: Union[
@@ -1238,7 +1244,9 @@ class MediaApi:
         _query_params: List[Tuple[str, str]] = []
         _header_params: Dict[str, Optional[str]] = _headers or {}
         _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
         _body_params: Optional[bytes] = None
 
         # process the path parameters
@@ -1259,6 +1267,9 @@ class MediaApi:
             if isinstance(body, str):
                 with open(body, "rb") as _fp:
                     _body_params = _fp.read()
+            elif isinstance(body, tuple):
+                # drop the filename from the tuple
+                _body_params = body[1]
             else:
                 _body_params = body
 

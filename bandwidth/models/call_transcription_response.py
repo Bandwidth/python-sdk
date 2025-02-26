@@ -79,9 +79,9 @@ class CallTranscriptionResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in tracks (list)
         _items = []
         if self.tracks:
-            for _item in self.tracks:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_tracks in self.tracks:
+                if _item_tracks:
+                    _items.append(_item_tracks.to_dict())
             _dict['tracks'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:

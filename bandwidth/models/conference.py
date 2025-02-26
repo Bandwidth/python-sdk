@@ -85,9 +85,9 @@ class Conference(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in active_members (list)
         _items = []
         if self.active_members:
-            for _item in self.active_members:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_active_members in self.active_members:
+                if _item_active_members:
+                    _items.append(_item_active_members.to_dict())
             _dict['activeMembers'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:

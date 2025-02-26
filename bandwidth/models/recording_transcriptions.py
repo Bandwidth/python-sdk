@@ -76,9 +76,9 @@ class RecordingTranscriptions(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in transcripts (list)
         _items = []
         if self.transcripts:
-            for _item in self.transcripts:
-                if _item:
-                    _items.append(_item.to_dict())
+            for _item_transcripts in self.transcripts:
+                if _item_transcripts:
+                    _items.append(_item_transcripts.to_dict())
             _dict['transcripts'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
