@@ -88,6 +88,7 @@ class TestMedia(unittest.TestCase):
 
         logging.debug(api_response_with_http_info)
         assert_that(api_response_with_http_info.status_code, equal_to(200))
+        assert_that(api_response_with_http_info.headers["Content-Type"], equal_to("image/jpeg"))
 
         api_response = self.api_instance.get_media(
             self.account_id, self.media_id)
