@@ -1,0 +1,28 @@
+name: Update Code Snippets
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  update_code_snippets:
+    name: Repository Dispatch to Update Code Snippets
+    runs-on: ${{ fromJSON(vars.SWI_GLORG_UBUNTU_2204) }}
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Get Github Token from Vault
+        uses: Bandwidth/vault-provider-action@v1
+        with:
+          export-github-pat: true
+
+      - name: Send Repository Dispatch Event
+        uses: Bandwidth/repository-dispatch-action@v2.0.0
+        with:
+          token: ${{ env.GITHUB_ACCESS_TOKEN }}
+          repository: api-specs
+          event-type: SnippetsUpdate
+          client-payload: '{"language": "python"}'
