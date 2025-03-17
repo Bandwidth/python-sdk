@@ -57,7 +57,8 @@ class TestInitiateCallback(unittest.TestCase):
                 stir_shaken = StirShaken(
                     verstat = 'Tn-Verification-Passed', 
                     attestation_indicator = 'A', 
-                    originating_id = '99759086-1335-11ed-9bcf-5f7d464e91af', )
+                    originating_id = '99759086-1335-11ed-9bcf-5f7d464e91af', ),
+                uui='bXktdXVp'
             )
         else:
             return InitiateCallback(
@@ -90,6 +91,7 @@ class TestInitiateCallback(unittest.TestCase):
         assert instance.stir_shaken.verstat == 'Tn-Verification-Passed'
         assert instance.stir_shaken.attestation_indicator == 'A'
         assert instance.stir_shaken.originating_id == '99759086-1335-11ed-9bcf-5f7d464e91af'
+        assert instance.uui == 'bXktdXVp'
 
 if __name__ == '__main__':
     unittest.main()

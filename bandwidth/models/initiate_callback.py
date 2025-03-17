@@ -21,6 +21,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from bandwidth.models.call_direction_enum import CallDirectionEnum
 from bandwidth.models.diversion import Diversion
 from bandwidth.models.stir_shaken import StirShaken
@@ -43,8 +44,9 @@ class InitiateCallback(BaseModel):
     start_time: Optional[datetime] = Field(default=None, description="Time the call was started, in ISO 8601 format.", alias="startTime")
     diversion: Optional[Diversion] = None
     stir_shaken: Optional[StirShaken] = Field(default=None, alias="stirShaken")
+    uui: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="The value of the `User-To-User` header to send within the initial `INVITE`. Must include the encoding parameter as specified in RFC 7433. Only `base64`, `jwt` and `hex` encoding are currently allowed. This value, including the encoding specifier, may not exceed 256 characters.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["eventType", "eventTime", "accountId", "applicationId", "from", "to", "direction", "callId", "callUrl", "startTime", "diversion", "stirShaken"]
+    __properties: ClassVar[List[str]] = ["eventType", "eventTime", "accountId", "applicationId", "from", "to", "direction", "callId", "callUrl", "startTime", "diversion", "stirShaken", "uui"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -121,7 +123,8 @@ class InitiateCallback(BaseModel):
             "callUrl": obj.get("callUrl"),
             "startTime": obj.get("startTime"),
             "diversion": Diversion.from_dict(obj["diversion"]) if obj.get("diversion") is not None else None,
-            "stirShaken": StirShaken.from_dict(obj["stirShaken"]) if obj.get("stirShaken") is not None else None
+            "stirShaken": StirShaken.from_dict(obj["stirShaken"]) if obj.get("stirShaken") is not None else None,
+            "uui": obj.get("uui")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

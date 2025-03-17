@@ -3801,6 +3801,8 @@ components:
           $ref: '#/components/schemas/diversion'
         stirShaken:
           $ref: '#/components/schemas/stirShaken'
+        uui:
+          $ref: '#/components/schemas/uui'
     machineDetectionCompleteCallback:
       type: object
       description: >-
@@ -4435,6 +4437,15 @@ components:
           type: string
           description: (optional) A unique origination identifier.
           example: 99759086-1335-11ed-9bcf-5f7d464e91af
+    uui:
+      type: string
+      description: >-
+        The value of the `User-To-User` header to send within the initial
+        `INVITE`. Must include the encoding parameter as specified in RFC 7433.
+        Only `base64`, `jwt` and `hex` encoding are currently allowed. This
+        value, including the encoding specifier, may not exceed 256 characters.
+      example: bXktdXVp
+      maxLength: 256
     codeRequest:
       type: object
       properties:
