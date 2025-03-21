@@ -7,6 +7,7 @@ Unit tests for the <StartStream> BXML verb
 """
 import unittest
 
+from bandwidth.models.streaming_mode_enum import StreamingModeEnum
 from bandwidth.models.bxml import StartStream, StreamParam, Verb, NestableVerb
 
 
@@ -46,4 +47,9 @@ class TestStartStream(unittest.TestCase):
     def test_add_verb(self):
         expected = '<StartStream destination="testurl.com" name="stream1" tracks="inbound" streamEventUrl="eventurl.com" streamEventMethod="POST" username="user" password="pass"><StreamParam name="name1" value="value1" /><StreamParam name="name2" value="value2" /></StartStream>'
         self.start_stream.add_verb(self.stream_param2)
+        assert expected == self.start_stream.to_bxml()
+
+    def test_bidirectional(self):
+        self.start_stream.mode = StreamingModeEnum.BIDIRECTIONAL
+        expected = '<StartStream destination="testurl.com" name="stream1" mode="bidirectional" tracks="inbound" streamEventUrl="eventurl.com" streamEventMethod="POST" username="user" password="pass"><StreamParam name="name1" value="value1" /></StartStream>'
         assert expected == self.start_stream.to_bxml()
