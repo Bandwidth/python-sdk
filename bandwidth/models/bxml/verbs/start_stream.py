@@ -9,14 +9,13 @@ from typing import List
 
 from ..nestable_verb import NestableVerb
 from ..verbs.stream_param import StreamParam
-from ...streaming_mode_enum import StreamingModeEnum
 
 
 class StartStream(NestableVerb):
 
     def __init__(
         self, destination: str, stream_params: List[StreamParam] = [],
-        name: str=None, mode: StreamingModeEnum=None, tracks: str=None,
+        name: str=None, mode: str=None, tracks: str=None,
         stream_event_url: str=None,
         stream_event_method: str=None,
         username: str=None, password: str=None,
@@ -56,7 +55,7 @@ class StartStream(NestableVerb):
         return {
             "destination": self.destination,
             "name": self.name,
-            "mode": self.mode.value if self.mode else None,
+            "mode": self.mode,
             "tracks": self.tracks,
             "streamEventUrl": self.stream_event_url,
             "streamEventMethod": self.stream_event_method,
