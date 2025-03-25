@@ -1641,12 +1641,14 @@ components:
       enum:
         - INBOUND
         - OUTBOUND
+      example: INBOUND
     messageDirectionEnum:
       type: string
       description: The direction of the message. One of in out.
       enum:
         - in
         - out
+      example: in
     messageTypeEnum:
       type: string
       description: The type of message. Either SMS or MMS.
@@ -4797,17 +4799,9 @@ components:
         useCase:
           $ref: '#/components/schemas/useCase'
         useCaseSummary:
-          type: string
-          description: A general idea of the use case and customer.
-          minLength: 1
-          maxLength: 500
-          nullable: false
+          $ref: '#/components/schemas/useCaseSummary'
         productionMessageContent:
-          type: string
-          description: Example of message content.
-          minLength: 1
-          maxLength: 500
-          nullable: false
+          $ref: '#/components/schemas/productionMessageContent'
         optInWorkflow:
           $ref: '#/components/schemas/optInWorkflow'
         additionalInformation:
@@ -4816,6 +4810,7 @@ components:
           minLength: 0
           maxLength: 500
           nullable: true
+          example: Any additional information
         isvReseller:
           $ref: '#/components/schemas/isvReseller'
     verificationUpdateRequest:
@@ -4842,25 +4837,13 @@ components:
         useCase:
           $ref: '#/components/schemas/useCase'
         useCaseSummary:
-          type: string
-          description: A general idea of the use case and customer.
-          minLength: 0
-          maxLength: 500
-          nullable: false
+          $ref: '#/components/schemas/useCaseSummary'
         productionMessageContent:
-          type: string
-          description: Example of message content.
-          minLength: 0
-          maxLength: 500
-          nullable: false
+          $ref: '#/components/schemas/productionMessageContent'
         optInWorkflow:
           $ref: '#/components/schemas/optInWorkflow'
         additionalInformation:
-          type: string
-          description: Any additional information.
-          minLength: 0
-          maxLength: 500
-          nullable: true
+          $ref: '#/components/schemas/additionalInformation'
         isvReseller:
           $ref: '#/components/schemas/isvReseller'
     tfvBasicAuthentication:
@@ -4869,9 +4852,11 @@ components:
         username:
           type: string
           maxLength: 100
+          example: username
         password:
           type: string
           maxLength: 200
+          example: password
       required:
         - username
         - password
@@ -4986,6 +4971,7 @@ components:
           minLength: 0
           maxLength: 500
           nullable: true
+          example: 2230 Bandmate Way
         city:
           type: string
           description: The city of the business using the toll-free number.
@@ -5014,6 +5000,12 @@ components:
           maxLength: 500
           nullable: false
           example: https://www.example.com/path/to/resource
+    additionalInformation:
+      type: string
+      description: Any additional information.
+      minLength: 0
+      maxLength: 500
+      nullable: true
     optInWorkflow:
       type: object
       nullable: false
@@ -5101,6 +5093,20 @@ components:
       minLength: 0
       maxLength: 500
       example: 2FA
+    useCaseSummary:
+      type: string
+      description: A general idea of the use case and customer.
+      minLength: 0
+      maxLength: 500
+      nullable: false
+      example: Text summarizing the use case for the toll-free number
+    productionMessageContent:
+      type: string
+      description: Example of message content.
+      minLength: 0
+      maxLength: 500
+      nullable: false
+      example: Production message content
     webhookSubscriptionsListBody:
       description: >-
         A list of all webhook subscriptions registered for this account ID for
@@ -5277,28 +5283,13 @@ components:
         useCase:
           $ref: '#/components/schemas/useCase'
         useCaseSummary:
-          type: string
-          description: A general idea of the use case and customer.
-          minLength: 0
-          maxLength: 500
-          nullable: false
-          example: Text summarizing the use case for the toll-free number
+          $ref: '#/components/schemas/useCaseSummary'
         productionMessageContent:
-          type: string
-          description: Example of message content.
-          minLength: 0
-          maxLength: 500
-          nullable: false
-          example: Production message content
+          $ref: '#/components/schemas/productionMessageContent'
         optInWorkflow:
           $ref: '#/components/schemas/optInWorkflow'
         additionalInformation:
-          type: string
-          description: Any additional information.
-          minLength: 0
-          maxLength: 500
-          nullable: true
-          example: Any additional information
+          $ref: '#/components/schemas/additionalInformation'
         isvReseller:
           $ref: '#/components/schemas/isvReseller'
     tfvStatusEnum:
@@ -6235,6 +6226,7 @@ components:
         Not intended for explicit use. To use pagination, follow the links in
         the `Link` header of the response, as indicated in the endpoint
         description.
+      example: eyJwYWdlVG9rZW4iOiJ0b2tlbiJ9
     disconnectCause:
       name: disconnectCause
       in: query
