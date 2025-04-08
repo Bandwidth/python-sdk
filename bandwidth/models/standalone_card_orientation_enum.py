@@ -19,20 +19,20 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class PriorityEnum(str, Enum):
+class StandaloneCardOrientationEnum(str, Enum):
     """
-    The priority specified by the user.
+    StandaloneCardOrientationEnum
     """
 
     """
     allowed enum values
     """
-    DEFAULT = 'default'
-    HIGH = 'high'
+    HORIZONTAL = 'HORIZONTAL'
+    VERTICAL = 'VERTICAL'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of PriorityEnum from a JSON string"""
+        """Create an instance of StandaloneCardOrientationEnum from a JSON string"""
         return cls(json.loads(json_str))
 
 

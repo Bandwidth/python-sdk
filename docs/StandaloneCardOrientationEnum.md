@@ -1,12 +1,11 @@
-# PriorityEnum
+# StandaloneCardOrientationEnum
 
-The priority specified by the user.
 
 ## Enum
 
-* `DEFAULT` (value: `'default'`)
+* `HORIZONTAL` (value: `'HORIZONTAL'`)
 
-* `HIGH` (value: `'high'`)
+* `VERTICAL` (value: `'VERTICAL'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

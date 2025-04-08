@@ -42,7 +42,7 @@ class Message(BaseModel):
     text: Optional[StrictStr] = Field(default=None, description="The contents of the message.")
     tag: Optional[StrictStr] = Field(default=None, description="The custom string set by the user.")
     priority: Optional[PriorityEnum] = None
-    expiration: Optional[datetime] = Field(default=None, description="The expiration date-time set by the user.")
+    expiration: Optional[datetime] = Field(default=None, description="A string with the date/time value that the message will automatically expire by. This must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a date-time in the future.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "media", "text", "tag", "priority", "expiration"]
 

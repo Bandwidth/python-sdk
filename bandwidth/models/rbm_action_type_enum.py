@@ -19,20 +19,24 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class PriorityEnum(str, Enum):
+class RbmActionTypeEnum(str, Enum):
     """
-    The priority specified by the user.
+    RbmActionTypeEnum
     """
 
     """
     allowed enum values
     """
-    DEFAULT = 'default'
-    HIGH = 'high'
+    REPLY = 'REPLY'
+    DIAL_PHONE = 'DIAL_PHONE'
+    SHOW_LOCATION = 'SHOW_LOCATION'
+    CREATE_CALENDAR_EVENT = 'CREATE_CALENDAR_EVENT'
+    OPEN_URL = 'OPEN_URL'
+    REQUEST_LOCATION = 'REQUEST_LOCATION'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of PriorityEnum from a JSON string"""
+        """Create an instance of RbmActionTypeEnum from a JSON string"""
         return cls(json.loads(json_str))
 
 
