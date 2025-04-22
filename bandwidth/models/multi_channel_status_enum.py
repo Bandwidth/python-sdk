@@ -19,20 +19,22 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class PriorityEnum(str, Enum):
+class MultiChannelStatusEnum(str, Enum):
     """
-    The priority specified by the user.
+    MultiChannelStatusEnum
     """
 
     """
     allowed enum values
     """
-    DEFAULT = 'default'
-    HIGH = 'high'
+    QUEUED = 'QUEUED'
+    SENDING = 'SENDING'
+    DELIVERED = 'DELIVERED'
+    FAILED = 'FAILED'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of PriorityEnum from a JSON string"""
+        """Create an instance of MultiChannelStatusEnum from a JSON string"""
         return cls(json.loads(json_str))
 
 

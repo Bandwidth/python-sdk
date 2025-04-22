@@ -18,28 +18,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, ClassVar, Dict, List, Union
 from typing_extensions import Annotated
-from bandwidth.models.priority_enum import PriorityEnum
+from bandwidth.models.rbm_action_type_enum import RbmActionTypeEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
-class MessageRequest(BaseModel):
+class RbmActionOpenUrl(BaseModel):
     """
-    MessageRequest
+    RbmActionOpenUrl
     """ # noqa: E501
-    application_id: StrictStr = Field(description="The ID of the Application your from number is associated with in the Bandwidth Phone Number Dashboard.", alias="applicationId")
-    to: List[StrictStr] = Field(description="The phone number(s) the message should be sent to in E164 format.")
-    var_from: StrictStr = Field(description="Either an alphanumeric sender ID or the sender's Bandwidth phone number in E.164 format, which must be hosted within Bandwidth and linked to the account that is generating the message.  Alphanumeric Sender IDs can contain up to 11 characters, upper-case letters A-Z, lower-case letters a-z, numbers 0-9, space, hyphen -, plus +, underscore _ and ampersand &. Alphanumeric Sender IDs must contain at least one letter.", alias="from")
-    text: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="The contents of the text message. Must be 2048 characters or less.")
-    media: Optional[List[Annotated[str, Field(strict=True, max_length=4096)]]] = Field(default=None, description="A list of URLs to include as media attachments as part of the message. Each URL can be at most 4096 characters.")
-    tag: Optional[StrictStr] = Field(default=None, description="A custom string that will be included in callback events of the message. Max 1024 characters.")
-    priority: Optional[PriorityEnum] = None
-    expiration: Optional[datetime] = Field(default=None, description="A string with the date/time value that the message will automatically expire by. This must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a date-time in the future.")
+    type: RbmActionTypeEnum
+    text: Annotated[str, Field(strict=True, max_length=25)] = Field(description="Displayed text for user to click")
+    post_back_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postBackData")
+    url: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="The URL to open in browser.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["applicationId", "to", "from", "text", "media", "tag", "priority", "expiration"]
+    __properties: ClassVar[List[str]] = ["type", "text", "postBackData", "url"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -59,7 +54,7 @@ class MessageRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of MessageRequest from a JSON string"""
+        """Create an instance of RbmActionOpenUrl from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -91,7 +86,7 @@ class MessageRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of MessageRequest from a dict"""
+        """Create an instance of RbmActionOpenUrl from a dict"""
         if obj is None:
             return None
 
@@ -99,14 +94,10 @@ class MessageRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "applicationId": obj.get("applicationId"),
-            "to": obj.get("to"),
-            "from": obj.get("from"),
+            "type": obj.get("type"),
             "text": obj.get("text"),
-            "media": obj.get("media"),
-            "tag": obj.get("tag"),
-            "priority": obj.get("priority"),
-            "expiration": obj.get("expiration")
+            "postBackData": obj.get("postBackData"),
+            "url": obj.get("url")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

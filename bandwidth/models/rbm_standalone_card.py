@@ -18,28 +18,26 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from bandwidth.models.priority_enum import PriorityEnum
+from bandwidth.models.multi_channel_action import MultiChannelAction
+from bandwidth.models.rbm_card_content import RbmCardContent
+from bandwidth.models.standalone_card_orientation_enum import StandaloneCardOrientationEnum
+from bandwidth.models.thumbnail_alignment_enum import ThumbnailAlignmentEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
-class MessageRequest(BaseModel):
+class RbmStandaloneCard(BaseModel):
     """
-    MessageRequest
+    RbmStandaloneCard
     """ # noqa: E501
-    application_id: StrictStr = Field(description="The ID of the Application your from number is associated with in the Bandwidth Phone Number Dashboard.", alias="applicationId")
-    to: List[StrictStr] = Field(description="The phone number(s) the message should be sent to in E164 format.")
-    var_from: StrictStr = Field(description="Either an alphanumeric sender ID or the sender's Bandwidth phone number in E.164 format, which must be hosted within Bandwidth and linked to the account that is generating the message.  Alphanumeric Sender IDs can contain up to 11 characters, upper-case letters A-Z, lower-case letters a-z, numbers 0-9, space, hyphen -, plus +, underscore _ and ampersand &. Alphanumeric Sender IDs must contain at least one letter.", alias="from")
-    text: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="The contents of the text message. Must be 2048 characters or less.")
-    media: Optional[List[Annotated[str, Field(strict=True, max_length=4096)]]] = Field(default=None, description="A list of URLs to include as media attachments as part of the message. Each URL can be at most 4096 characters.")
-    tag: Optional[StrictStr] = Field(default=None, description="A custom string that will be included in callback events of the message. Max 1024 characters.")
-    priority: Optional[PriorityEnum] = None
-    expiration: Optional[datetime] = Field(default=None, description="A string with the date/time value that the message will automatically expire by. This must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a date-time in the future.")
+    orientation: StandaloneCardOrientationEnum
+    thumbnail_image_alignment: ThumbnailAlignmentEnum = Field(alias="thumbnailImageAlignment")
+    card_content: RbmCardContent = Field(alias="cardContent")
+    suggestions: Optional[Annotated[List[MultiChannelAction], Field(max_length=11)]] = Field(default=None, description="An array of suggested actions for the recipient.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["applicationId", "to", "from", "text", "media", "tag", "priority", "expiration"]
+    __properties: ClassVar[List[str]] = ["orientation", "thumbnailImageAlignment", "cardContent", "suggestions"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -59,7 +57,7 @@ class MessageRequest(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of MessageRequest from a JSON string"""
+        """Create an instance of RbmStandaloneCard from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -82,6 +80,16 @@ class MessageRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of card_content
+        if self.card_content:
+            _dict['cardContent'] = self.card_content.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in suggestions (list)
+        _items = []
+        if self.suggestions:
+            for _item_suggestions in self.suggestions:
+                if _item_suggestions:
+                    _items.append(_item_suggestions.to_dict())
+            _dict['suggestions'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -91,7 +99,7 @@ class MessageRequest(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of MessageRequest from a dict"""
+        """Create an instance of RbmStandaloneCard from a dict"""
         if obj is None:
             return None
 
@@ -99,14 +107,10 @@ class MessageRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "applicationId": obj.get("applicationId"),
-            "to": obj.get("to"),
-            "from": obj.get("from"),
-            "text": obj.get("text"),
-            "media": obj.get("media"),
-            "tag": obj.get("tag"),
-            "priority": obj.get("priority"),
-            "expiration": obj.get("expiration")
+            "orientation": obj.get("orientation"),
+            "thumbnailImageAlignment": obj.get("thumbnailImageAlignment"),
+            "cardContent": RbmCardContent.from_dict(obj["cardContent"]) if obj.get("cardContent") is not None else None,
+            "suggestions": [MultiChannelAction.from_dict(_item) for _item in obj["suggestions"]] if obj.get("suggestions") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

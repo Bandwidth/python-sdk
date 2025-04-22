@@ -1,12 +1,14 @@
-# PriorityEnum
+# RbmMediaHeightEnum
 
-The priority specified by the user.
+The height of the media.
 
 ## Enum
 
-* `DEFAULT` (value: `'default'`)
+* `SHORT` (value: `'SHORT'`)
 
-* `HIGH` (value: `'high'`)
+* `MEDIUM` (value: `'MEDIUM'`)
+
+* `TALL` (value: `'TALL'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

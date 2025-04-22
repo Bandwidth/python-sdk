@@ -1,12 +1,14 @@
-# PriorityEnum
+# MultiChannelMessageChannelEnum
 
-The priority specified by the user.
+The channel of the multi-channel message.
 
 ## Enum
 
-* `DEFAULT` (value: `'default'`)
+* `RBM` (value: `'RBM'`)
 
-* `HIGH` (value: `'high'`)
+* `SMS` (value: `'SMS'`)
+
+* `MMS` (value: `'MMS'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

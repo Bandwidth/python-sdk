@@ -19,20 +19,21 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class PriorityEnum(str, Enum):
+class MultiChannelMessageChannelEnum(str, Enum):
     """
-    The priority specified by the user.
+    The channel of the multi-channel message.
     """
 
     """
     allowed enum values
     """
-    DEFAULT = 'default'
-    HIGH = 'high'
+    RBM = 'RBM'
+    SMS = 'SMS'
+    MMS = 'MMS'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of PriorityEnum from a JSON string"""
+        """Create an instance of MultiChannelMessageChannelEnum from a JSON string"""
         return cls(json.loads(json_str))
 
 
