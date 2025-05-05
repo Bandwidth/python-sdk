@@ -14,7 +14,8 @@ class PhoneNumber(Verb):
         self, number: str, transfer_answer_url: str=None, transfer_answer_method: str=None,
         transfer_answer_fallback_url: str=None, transfer_answer_fallback_method: str=None,
         transfer_disconnect_url: str=None, transfer_disconnect_method: str=None, username: str=None,
-        password: str=None, fallback_username: str=None, fallback_password: str=None, tag: str=None
+        password: str=None, fallback_username: str=None, fallback_password: str=None, tag: str=None,
+        uui: str=None
     ):
         """Initialize a <PhoneNumber> verb
 
@@ -31,6 +32,7 @@ class PhoneNumber(Verb):
             fallback_username (str, optional): The username to send in the HTTP request to transferAnswerFallbackUrl. Defaults to None.
             fallback_password (str, optional): The password to send in the HTTP request to transferAnswerFallbackUrl. Defaults to None.
             tag (str, optional):  A custom string that will be sent with these and all future callbacks unless overwritten by a future tag attribute or cleared. May be cleared by setting tag="" Max length 256 characters. Defaults to None.
+            uui (str, optional):  A comma-separated list of 'User-To-User' headers to be sent in the INVITE. The entire value cannot exceed 350 characters, including parameters and separators. Defaults to None.
         """
         self.number = number
         self.transfer_answer_url = transfer_answer_url
@@ -44,6 +46,7 @@ class PhoneNumber(Verb):
         self.fallback_username = fallback_username
         self.fallback_password = fallback_password
         self.tag = tag
+        self.uui = uui
         super().__init__(
             tag="PhoneNumber",
             content=self.number
@@ -62,5 +65,6 @@ class PhoneNumber(Verb):
             "password": self.password,
             "fallbackUsername": self.fallback_username,
             "fallbackPassword": self.fallback_password,
-            "tag": self.tag
+            "tag": self.tag,
+            "uui": self.uui
         }
