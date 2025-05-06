@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from bandwidth.models.address import Address
@@ -41,8 +41,11 @@ class VerificationRequest(BaseModel):
     opt_in_workflow: OptInWorkflow = Field(alias="optInWorkflow")
     additional_information: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="Any additional information.", alias="additionalInformation")
     isv_reseller: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="ISV name.", alias="isvReseller")
+    privacy_policy_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request privacy policy URL. (Not Available Until 5/28/2025)", alias="privacyPolicyUrl")
+    terms_and_conditions_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request terms and conditions policy URL. (Not Available Until 5/28/2025)", alias="termsAndConditionsUrl")
+    business_dba: Optional[StrictStr] = Field(default=None, description="The company 'Doing Business As'. (Not Available Until 5/28/2025)", alias="businessDBA")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "phoneNumbers", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller"]
+    __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "phoneNumbers", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller", "privacyPolicyUrl", "termsAndConditionsUrl", "businessDBA"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -130,7 +133,10 @@ class VerificationRequest(BaseModel):
             "productionMessageContent": obj.get("productionMessageContent"),
             "optInWorkflow": OptInWorkflow.from_dict(obj["optInWorkflow"]) if obj.get("optInWorkflow") is not None else None,
             "additionalInformation": obj.get("additionalInformation"),
-            "isvReseller": obj.get("isvReseller")
+            "isvReseller": obj.get("isvReseller"),
+            "privacyPolicyUrl": obj.get("privacyPolicyUrl"),
+            "termsAndConditionsUrl": obj.get("termsAndConditionsUrl"),
+            "businessDBA": obj.get("businessDBA")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

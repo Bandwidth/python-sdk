@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class PriorityEnum(str, Enum):
     """
-    The priority specified by the user.  Not supported on MMS.
+    The priority specified by the user.
     """
 
     """

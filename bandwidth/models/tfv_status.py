@@ -39,8 +39,10 @@ class TfvStatus(BaseModel):
     created_date_time: Optional[datetime] = Field(default=None, description="Date and time the verification request was created.", alias="createdDateTime")
     modified_date_time: Optional[datetime] = Field(default=None, description="Date and time the verification request was last modified.", alias="modifiedDateTime")
     submission: Optional[TfvSubmissionInfo] = None
+    blocked: Optional[StrictBool] = Field(default=None, description="Whether a Toll-Free Verification is blocked. This attribute will only be defined when the number is blocked. (Not Available Until 5/28/2025)")
+    blocked_reason: Optional[StrictStr] = Field(default=None, description="The reason why the Toll-Free Verification is blocked. This attribute will only be defined when the number is blocked. (Not Available Until 5/28/2025)", alias="blockedReason")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["phoneNumber", "status", "internalTicketNumber", "declineReasonDescription", "resubmitAllowed", "createdDateTime", "modifiedDateTime", "submission"]
+    __properties: ClassVar[List[str]] = ["phoneNumber", "status", "internalTicketNumber", "declineReasonDescription", "resubmitAllowed", "createdDateTime", "modifiedDateTime", "submission", "blocked", "blockedReason"]
 
     @field_validator('phone_number')
     def phone_number_validate_regular_expression(cls, value):
@@ -120,7 +122,9 @@ class TfvStatus(BaseModel):
             "resubmitAllowed": obj.get("resubmitAllowed"),
             "createdDateTime": obj.get("createdDateTime"),
             "modifiedDateTime": obj.get("modifiedDateTime"),
-            "submission": TfvSubmissionInfo.from_dict(obj["submission"]) if obj.get("submission") is not None else None
+            "submission": TfvSubmissionInfo.from_dict(obj["submission"]) if obj.get("submission") is not None else None,
+            "blocked": obj.get("blocked"),
+            "blockedReason": obj.get("blockedReason")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
