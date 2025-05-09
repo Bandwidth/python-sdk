@@ -14,6 +14,9 @@ Name | Type | Description | Notes
 **opt_in_workflow** | [**OptInWorkflow**](OptInWorkflow.md) |  | [optional] 
 **additional_information** | **str** | Any additional information. | [optional] 
 **isv_reseller** | **str** | ISV name. | [optional] 
+**privacy_policy_url** | **str** | The Toll-Free Verification request privacy policy URL. (Not Available Until 5/28/2025) | [optional] 
+**terms_and_conditions_url** | **str** | The Toll-Free Verification request terms and conditions policy URL. (Not Available Until 5/28/2025) | [optional] 
+**business_dba** | **str** | The company &#39;Doing Business As&#39;. (Not Available Until 5/28/2025) | [optional] 
 
 ## Example
 

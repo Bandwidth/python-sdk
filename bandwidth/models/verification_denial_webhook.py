@@ -37,8 +37,10 @@ class VerificationDenialWebhook(BaseModel):
     phone_number: Optional[Annotated[str, Field(min_length=12, strict=True, max_length=12)]] = Field(default=None, description="Toll-free telephone number in E.164 format.", alias="phoneNumber")
     resubmit_allowed: Optional[StrictBool] = Field(default=None, description="Whether a Toll-Free Verification request qualifies for resubmission via PUT.", alias="resubmitAllowed")
     status: Optional[StrictStr] = 'UNVERIFIED'
+    blocked: Optional[StrictBool] = Field(default=None, description="Whether a Toll-Free Verification is blocked. This attribute will only be defined when the number is blocked. (Not Available Until 5/28/2025)")
+    blocked_reason: Optional[StrictStr] = Field(default=None, description="The reason why the Toll-Free Verification is blocked. This attribute will only be defined when the number is blocked. (Not Available Until 5/28/2025)", alias="blockedReason")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["accountId", "additionalDenialReasons", "declineReasonDescription", "denialStatusCode", "internalTicketNumber", "phoneNumber", "resubmitAllowed", "status"]
+    __properties: ClassVar[List[str]] = ["accountId", "additionalDenialReasons", "declineReasonDescription", "denialStatusCode", "internalTicketNumber", "phoneNumber", "resubmitAllowed", "status", "blocked", "blockedReason"]
 
     @field_validator('phone_number')
     def phone_number_validate_regular_expression(cls, value):
@@ -122,7 +124,9 @@ class VerificationDenialWebhook(BaseModel):
             "internalTicketNumber": obj.get("internalTicketNumber"),
             "phoneNumber": obj.get("phoneNumber"),
             "resubmitAllowed": obj.get("resubmitAllowed"),
-            "status": obj.get("status") if obj.get("status") is not None else 'UNVERIFIED'
+            "status": obj.get("status") if obj.get("status") is not None else 'UNVERIFIED',
+            "blocked": obj.get("blocked"),
+            "blockedReason": obj.get("blockedReason")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -40,7 +40,9 @@ class TestVerificationDenialWebhook(unittest.TestCase):
                 internal_ticket_number = 'acde070d-8c4c-4f0d-9d8a-162843c10333',
                 phone_number = '+18005555555',
                 resubmit_allowed = True,
-                status = 'UNVERIFIED'
+                status = 'UNVERIFIED',
+                blocked = True,
+                blocked_reason = 'Blocked Reason'
             )
         else:
             return VerificationDenialWebhook(
@@ -66,6 +68,8 @@ class TestVerificationDenialWebhook(unittest.TestCase):
         assert instance.phone_number == '+18005555555'
         assert instance.resubmit_allowed == True
         assert instance.status == 'UNVERIFIED'
+        assert instance.blocked == True
+        assert instance.blocked_reason == 'Blocked Reason'
 
 if __name__ == '__main__':
     unittest.main()
