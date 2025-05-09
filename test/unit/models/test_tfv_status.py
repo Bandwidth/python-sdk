@@ -69,7 +69,13 @@ class TestTfvStatus(unittest.TestCase):
                             'https://www.example.com/path/to/resource'
                             ], ), 
                     additional_information = 'Any additional information', 
-                    isv_reseller = 'Test ISV', )
+                    isv_reseller = 'Test ISV',
+                    privacy_policy_url = 'https://www.example.com/path/to/resource',
+                    terms_and_conditions_url = 'https://www.example.com/path/to/resource',
+                    business_dba = 'Bandwidth Inc.'
+                ),
+                blocked = False,
+                blocked_reason = 'Blocked Reason'
             )
         else:
             return TfvStatus(
@@ -112,7 +118,12 @@ class TestTfvStatus(unittest.TestCase):
         assert instance.submission.opt_in_workflow.image_urls[0] == 'https://www.example.com/path/to/resource'
         assert instance.submission.additional_information == 'Any additional information'
         assert instance.submission.isv_reseller == 'Test ISV'
+        assert instance.submission.privacy_policy_url == 'https://www.example.com/path/to/resource'
+        assert instance.submission.terms_and_conditions_url == 'https://www.example.com/path/to/resource'
+        assert instance.submission.business_dba == 'Bandwidth Inc.'
         assert instance.submission.additional_information == 'Any additional information'
+        assert instance.blocked == False
+        assert instance.blocked_reason == 'Blocked Reason'
 
 
 if __name__ == '__main__':

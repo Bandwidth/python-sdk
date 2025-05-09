@@ -59,7 +59,10 @@ class TestVerificationUpdateRequest(unittest.TestCase):
                         'https://www.example.com/path/to/resource'
                         ], ),
                 additional_information = '',
-                isv_reseller = 'Test ISV'
+                isv_reseller = 'Test ISV',
+                privacy_policy_url = 'https://www.example.com/path/to/resource',
+                terms_and_conditions_url = 'https://www.example.com/path/to/resource',
+                business_dba = 'Bandwidth Inc.'
             )
         else:
             return VerificationUpdateRequest(
@@ -116,6 +119,9 @@ class TestVerificationUpdateRequest(unittest.TestCase):
         assert instance.opt_in_workflow.image_urls[0] == 'https://www.example.com/path/to/resource'
         assert instance.additional_information == ''
         assert instance.isv_reseller == 'Test ISV'
+        assert instance.privacy_policy_url == 'https://www.example.com/path/to/resource'
+        assert instance.terms_and_conditions_url == 'https://www.example.com/path/to/resource'
+        assert instance.business_dba == 'Bandwidth Inc.'
 
 if __name__ == '__main__':
     unittest.main()
