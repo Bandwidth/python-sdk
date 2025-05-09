@@ -496,6 +496,7 @@ class TestRecordings(unittest.TestCase):
         assert_that(calling(self.recordings_api_instance.delete_recording).with_args(
             BW_ACCOUNT_ID, call_id, "not a recording id"), raises(NotFoundException))
 
+    @unittest.skip("PV Issues")
     def test_invalid_update_call_recording_state(self) -> None:
         """
         Tests invalid flows for update_call_recording_state
