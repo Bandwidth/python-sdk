@@ -5228,6 +5228,35 @@ components:
         PUT.
       example: true
       type: boolean
+    blocked:
+      description: >-
+        Whether a Toll-Free Verification is blocked. This attribute will only be
+        defined when the number is blocked. (Not Available Until 5/28/2025)
+      example: true
+      type: boolean
+    blockedReason:
+      description: >-
+        The reason why the Toll-Free Verification is blocked. This attribute
+        will only be defined when the number is blocked. (Not Available Until
+        5/28/2025)
+      example: Toll-free number was used to send spam messages
+      type: string
+    privacyPolicyUrl:
+      description: >-
+        The Toll-Free Verification request privacy policy URL. (Not Available
+        Until 5/28/2025)
+      example: http://your-company.com/privacyPolicyUrl.pdf
+      type: string
+    termsAndConditionsUrl:
+      description: >-
+        The Toll-Free Verification request terms and conditions policy URL. (Not
+        Available Until 5/28/2025)
+      example: http://your-company.com/termsAndConditionsUrl.pdf
+      type: string
+    businessDBA:
+      description: The company 'Doing Business As'. (Not Available Until 5/28/2025)
+      example: SecondCompany Name
+      type: string
     additionalDenialReason:
       properties:
         statusCode:
@@ -5308,6 +5337,12 @@ components:
           example: Any additional information
         isvReseller:
           $ref: '#/components/schemas/isvReseller'
+        privacyPolicyUrl:
+          $ref: '#/components/schemas/privacyPolicyUrl'
+        termsAndConditionsUrl:
+          $ref: '#/components/schemas/termsAndConditionsUrl'
+        businessDBA:
+          $ref: '#/components/schemas/businessDBA'
     verificationUpdateRequest:
       type: object
       required:
@@ -5341,6 +5376,12 @@ components:
           $ref: '#/components/schemas/additionalInformation'
         isvReseller:
           $ref: '#/components/schemas/isvReseller'
+        privacyPolicyUrl:
+          $ref: '#/components/schemas/privacyPolicyUrl'
+        termsAndConditionsUrl:
+          $ref: '#/components/schemas/termsAndConditionsUrl'
+        businessDBA:
+          $ref: '#/components/schemas/businessDBA'
     tfvBasicAuthentication:
       type: object
       properties:
@@ -5419,6 +5460,10 @@ components:
           $ref: '#/components/schemas/resubmitAllowed'
         status:
           $ref: '#/components/schemas/tfvUnverifiedStatus'
+        blocked:
+          $ref: '#/components/schemas/blocked'
+        blockedReason:
+          $ref: '#/components/schemas/blockedReason'
     verificationWebhook:
       type: object
       properties:
@@ -5501,6 +5546,7 @@ components:
       minLength: 0
       maxLength: 500
       nullable: true
+      example: Any additional information
     optInWorkflow:
       type: object
       nullable: false
@@ -5762,6 +5808,10 @@ components:
           example: '2021-06-08T06:45:13.0Z'
         submission:
           $ref: '#/components/schemas/tfvSubmissionInfo'
+        blocked:
+          $ref: '#/components/schemas/blocked'
+        blockedReason:
+          $ref: '#/components/schemas/blockedReason'
     tfvSubmissionInfo:
       type: object
       properties:
@@ -5787,6 +5837,12 @@ components:
           $ref: '#/components/schemas/additionalInformation'
         isvReseller:
           $ref: '#/components/schemas/isvReseller'
+        privacyPolicyUrl:
+          $ref: '#/components/schemas/privacyPolicyUrl'
+        termsAndConditionsUrl:
+          $ref: '#/components/schemas/termsAndConditionsUrl'
+        businessDBA:
+          $ref: '#/components/schemas/businessDBA'
     tfvStatusEnum:
       type: string
       enum:
