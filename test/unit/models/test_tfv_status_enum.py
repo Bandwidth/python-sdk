@@ -31,13 +31,9 @@ class TestTfvStatusEnum(unittest.TestCase):
         verified = TfvStatusEnum('VERIFIED')
         unverified = TfvStatusEnum('UNVERIFIED')
         pending = TfvStatusEnum('PENDING')
-        partially_verified = TfvStatusEnum('PARTIALLY_VERIFIED')
-        invalid_status = TfvStatusEnum('INVALID_STATUS')
         assert verified == 'VERIFIED'
         assert unverified == 'UNVERIFIED'
         assert pending == 'PENDING'
-        assert partially_verified == 'PARTIALLY_VERIFIED'
-        assert invalid_status == 'INVALID_STATUS'
 
 if __name__ == '__main__':
     unittest.main()

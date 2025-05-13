@@ -52,7 +52,8 @@ class TestMessageCallback(unittest.TestCase):
                     tag = 'custom string', 
                     media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"], 
                     priority = 'default', ),
-                error_code = 4405
+                error_code = 4405,
+                carrier_name = "AT&T"
             )
         else:
             return MessageCallback(
@@ -97,6 +98,8 @@ class TestMessageCallback(unittest.TestCase):
         assert instance.message.tag == 'custom string'
         assert instance.message.media == ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"]
         assert instance.message.priority == 'default'
+        assert instance.error_code == 4405
+        assert instance.carrier_name == "AT&T"
 
 if __name__ == '__main__':
     unittest.main()
