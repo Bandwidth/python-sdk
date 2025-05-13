@@ -36,8 +36,9 @@ class MessageCallback(BaseModel):
     description: StrictStr = Field(description="A detailed description of the event described by the callback.")
     message: MessageCallbackMessage
     error_code: Optional[StrictInt] = Field(default=None, description="Optional error code, applicable only when type is `message-failed`.", alias="errorCode")
+    carrier_name: Optional[StrictStr] = Field(default=None, description="The name of the Authorized Message Provider (AMP) that handled this message. In the US, this is the carrier that the message was sent to.", alias="carrierName")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["time", "type", "to", "description", "message", "errorCode"]
+    __properties: ClassVar[List[str]] = ["time", "type", "to", "description", "message", "errorCode", "carrierName"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,6 +94,11 @@ class MessageCallback(BaseModel):
         if self.error_code is None and "error_code" in self.model_fields_set:
             _dict['errorCode'] = None
 
+        # set to None if carrier_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.carrier_name is None and "carrier_name" in self.model_fields_set:
+            _dict['carrierName'] = None
+
         return _dict
 
     @classmethod
@@ -110,7 +116,8 @@ class MessageCallback(BaseModel):
             "to": obj.get("to"),
             "description": obj.get("description"),
             "message": MessageCallbackMessage.from_dict(obj["message"]) if obj.get("message") is not None else None,
-            "errorCode": obj.get("errorCode")
+            "errorCode": obj.get("errorCode"),
+            "carrierName": obj.get("carrierName")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

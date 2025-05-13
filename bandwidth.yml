@@ -2494,6 +2494,14 @@ components:
           description: Optional error code, applicable only when type is `message-failed`.
           nullable: true
           example: 4405
+        carrierName:
+          type: string
+          description: >-
+            The name of the Authorized Message Provider (AMP) that handled this
+            message. In the US, this is the carrier that the message was sent
+            to.
+          nullable: true
+          example: AT&T
       required:
         - time
         - type
@@ -5849,8 +5857,6 @@ components:
         - VERIFIED
         - UNVERIFIED
         - PENDING
-        - PARTIALLY_VERIFIED
-        - INVALID_STATUS
       example: VERIFIED
     sharedSecretKey:
       description: >-

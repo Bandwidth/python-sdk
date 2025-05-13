@@ -30,8 +30,6 @@ class TfvStatusEnum(str, Enum):
     VERIFIED = 'VERIFIED'
     UNVERIFIED = 'UNVERIFIED'
     PENDING = 'PENDING'
-    PARTIALLY_VERIFIED = 'PARTIALLY_VERIFIED'
-    INVALID_STATUS = 'INVALID_STATUS'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
