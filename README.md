@@ -153,6 +153,7 @@ Class | Method | HTTP request | Description
  - [AdditionalDenialReason](docs/AdditionalDenialReason.md)
  - [Address](docs/Address.md)
  - [AnswerCallback](docs/AnswerCallback.md)
+ - [BlockedWebhook](docs/BlockedWebhook.md)
  - [BridgeCompleteCallback](docs/BridgeCompleteCallback.md)
  - [BridgeTargetCompleteCallback](docs/BridgeTargetCompleteCallback.md)
  - [CallDirectionEnum](docs/CallDirectionEnum.md)

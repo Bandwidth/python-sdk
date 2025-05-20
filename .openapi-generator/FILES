@@ -23,6 +23,7 @@ bandwidth/models/account_statistics.py
 bandwidth/models/additional_denial_reason.py
 bandwidth/models/address.py
 bandwidth/models/answer_callback.py
+bandwidth/models/blocked_webhook.py
 bandwidth/models/bridge_complete_callback.py
 bandwidth/models/bridge_target_complete_callback.py
 bandwidth/models/call_direction_enum.py
@@ -169,6 +170,7 @@ docs/AccountStatistics.md
 docs/AdditionalDenialReason.md
 docs/Address.md
 docs/AnswerCallback.md
+docs/BlockedWebhook.md
 docs/BridgeCompleteCallback.md
 docs/BridgeTargetCompleteCallback.md
 docs/CallDirectionEnum.md
