@@ -46,6 +46,7 @@ from bandwidth.models.account_statistics import AccountStatistics
 from bandwidth.models.additional_denial_reason import AdditionalDenialReason
 from bandwidth.models.address import Address
 from bandwidth.models.answer_callback import AnswerCallback
+from bandwidth.models.blocked_webhook import BlockedWebhook
 from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback
 from bandwidth.models.bridge_target_complete_callback import BridgeTargetCompleteCallback
 from bandwidth.models.call_direction_enum import CallDirectionEnum

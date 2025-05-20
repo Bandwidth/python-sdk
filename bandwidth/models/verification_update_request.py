@@ -42,9 +42,9 @@ class VerificationUpdateRequest(BaseModel):
     isv_reseller: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="ISV name.", alias="isvReseller")
     privacy_policy_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request privacy policy URL. (Not Available Until 5/28/2025)", alias="privacyPolicyUrl")
     terms_and_conditions_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request terms and conditions policy URL. (Not Available Until 5/28/2025)", alias="termsAndConditionsUrl")
-    business_dba: Optional[StrictStr] = Field(default=None, description="The company 'Doing Business As'. (Not Available Until 5/28/2025)", alias="businessDBA")
+    business_dba: Optional[StrictStr] = Field(default=None, description="The company 'Doing Business As'. (Not Available Until 5/28/2025)", alias="businessDba")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller", "privacyPolicyUrl", "termsAndConditionsUrl", "businessDBA"]
+    __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller", "privacyPolicyUrl", "termsAndConditionsUrl", "businessDba"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -134,7 +134,7 @@ class VerificationUpdateRequest(BaseModel):
             "isvReseller": obj.get("isvReseller"),
             "privacyPolicyUrl": obj.get("privacyPolicyUrl"),
             "termsAndConditionsUrl": obj.get("termsAndConditionsUrl"),
-            "businessDBA": obj.get("businessDBA")
+            "businessDba": obj.get("businessDba")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
