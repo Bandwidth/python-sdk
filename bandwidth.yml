@@ -5253,17 +5253,17 @@ components:
       description: >-
         The Toll-Free Verification request privacy policy URL. (Not Available
         Until 5/28/2025)
-      example: http://your-company.com/privacyPolicyUrl.pdf
+      example: http://your-company.com/privacyPolicy
       type: string
     termsAndConditionsUrl:
       description: >-
         The Toll-Free Verification request terms and conditions policy URL. (Not
         Available Until 5/28/2025)
-      example: http://your-company.com/termsAndConditionsUrl.pdf
+      example: http://your-company.com/termsAndConditions
       type: string
-    businessDBA:
+    businessDba:
       description: The company 'Doing Business As'. (Not Available Until 5/28/2025)
-      example: SecondCompany Name
+      example: Another Company Name Inc.
       type: string
     additionalDenialReason:
       properties:
@@ -5349,8 +5349,8 @@ components:
           $ref: '#/components/schemas/privacyPolicyUrl'
         termsAndConditionsUrl:
           $ref: '#/components/schemas/termsAndConditionsUrl'
-        businessDBA:
-          $ref: '#/components/schemas/businessDBA'
+        businessDba:
+          $ref: '#/components/schemas/businessDba'
     verificationUpdateRequest:
       type: object
       required:
@@ -5388,8 +5388,8 @@ components:
           $ref: '#/components/schemas/privacyPolicyUrl'
         termsAndConditionsUrl:
           $ref: '#/components/schemas/termsAndConditionsUrl'
-        businessDBA:
-          $ref: '#/components/schemas/businessDBA'
+        businessDba:
+          $ref: '#/components/schemas/businessDba'
     tfvBasicAuthentication:
       type: object
       properties:
@@ -5483,6 +5483,21 @@ components:
           $ref: '#/components/schemas/tfvCallbackStatusEnum'
         internalTicketNumber:
           $ref: '#/components/schemas/internalTicketNumberForWebhook'
+    blockedWebhook:
+      type: object
+      properties:
+        accountId:
+          $ref: '#/components/schemas/accountId1'
+        phoneNumber:
+          $ref: '#/components/schemas/tfPhoneNumber'
+        status:
+          $ref: '#/components/schemas/tfvCallbackStatusEnum'
+        internalTicketNumber:
+          $ref: '#/components/schemas/internalTicketNumberForWebhook'
+        blocked:
+          $ref: '#/components/schemas/blocked'
+        blockedReason:
+          $ref: '#/components/schemas/blockedReason'
     tfvSubmissionWrapper:
       type: object
       properties:
@@ -5849,8 +5864,8 @@ components:
           $ref: '#/components/schemas/privacyPolicyUrl'
         termsAndConditionsUrl:
           $ref: '#/components/schemas/termsAndConditionsUrl'
-        businessDBA:
-          $ref: '#/components/schemas/businessDBA'
+        businessDba:
+          $ref: '#/components/schemas/businessDba'
     tfvStatusEnum:
       type: string
       enum:
@@ -7468,6 +7483,7 @@ components:
               - $ref: '#/components/schemas/verificationWebhook'
               - $ref: '#/components/schemas/verificationDenialWebhook'
               - $ref: '#/components/schemas/failureWebhook'
+              - $ref: '#/components/schemas/blockedWebhook'
     webhookSubscriptionRequest:
       description: >-
         Information about a webhook that Bandwidth should send upon the
