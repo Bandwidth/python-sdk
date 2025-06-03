@@ -39,8 +39,8 @@ class TfvStatus(BaseModel):
     created_date_time: Optional[datetime] = Field(default=None, description="Date and time the verification request was created.", alias="createdDateTime")
     modified_date_time: Optional[datetime] = Field(default=None, description="Date and time the verification request was last modified.", alias="modifiedDateTime")
     submission: Optional[TfvSubmissionInfo] = None
-    blocked: Optional[StrictBool] = Field(default=None, description="Whether a Toll-Free Verification is blocked. This attribute will only be defined when the number is blocked. (Not Available Until 5/28/2025)")
-    blocked_reason: Optional[StrictStr] = Field(default=None, description="The reason why the Toll-Free Verification is blocked. This attribute will only be defined when the number is blocked. (Not Available Until 5/28/2025)", alias="blockedReason")
+    blocked: Optional[StrictBool] = Field(default=None, description="Whether a Toll-Free Verification is blocked. This attribute will only be defined when the number is blocked.")
+    blocked_reason: Optional[StrictStr] = Field(default=None, description="The reason why the Toll-Free Verification is blocked. This attribute will only be defined when the number is blocked.", alias="blockedReason")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["phoneNumber", "status", "internalTicketNumber", "declineReasonDescription", "resubmitAllowed", "createdDateTime", "modifiedDateTime", "submission", "blocked", "blockedReason"]
 

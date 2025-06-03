@@ -40,9 +40,9 @@ class TfvSubmissionInfo(BaseModel):
     opt_in_workflow: Optional[OptInWorkflow] = Field(default=None, alias="optInWorkflow")
     additional_information: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="Any additional information.", alias="additionalInformation")
     isv_reseller: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="ISV name.", alias="isvReseller")
-    privacy_policy_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request privacy policy URL. (Not Available Until 5/28/2025)", alias="privacyPolicyUrl")
-    terms_and_conditions_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request terms and conditions policy URL. (Not Available Until 5/28/2025)", alias="termsAndConditionsUrl")
-    business_dba: Optional[StrictStr] = Field(default=None, description="The company 'Doing Business As'. (Not Available Until 5/28/2025)", alias="businessDba")
+    privacy_policy_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request privacy policy URL.", alias="privacyPolicyUrl")
+    terms_and_conditions_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request terms and conditions policy URL.", alias="termsAndConditionsUrl")
+    business_dba: Optional[StrictStr] = Field(default=None, description="The company 'Doing Business As'.", alias="businessDba")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller", "privacyPolicyUrl", "termsAndConditionsUrl", "businessDba"]
 
