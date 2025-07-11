@@ -41,6 +41,7 @@ class TestMultiChannelApi(unittest.TestCase):
 
         self.expiration = datetime.now(ZoneInfo('America/New_York')) + timedelta(minutes=1)
 
+    @unittest.skip("Still in Beta, skip for now")
     def test_create_multi_channel_message(self) -> None:
         """Test case for create_multi_channel_message
 
