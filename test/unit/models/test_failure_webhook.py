@@ -36,7 +36,7 @@ class TestFailureWebhook(unittest.TestCase):
                 account_id = '1234567',
                 phone_number = '+18005555555',
                 error_code = '400',
-                error_description = 'cannot process request.',
+                error_message = 'cannot process request.',
                 errors = [
                     'optInWorkflowImageURLs: Entries must be a valid array of objects.'
                     ],
@@ -54,7 +54,7 @@ class TestFailureWebhook(unittest.TestCase):
         assert instance.account_id == '1234567'
         assert instance.phone_number == '+18005555555'
         assert instance.error_code == '400'
-        assert instance.error_description == 'cannot process request.'
+        assert instance.error_message == 'cannot process request.'
         assert isinstance(instance.errors, list)
         assert len(instance.errors) == 1
         assert instance.errors[0] == 'optInWorkflowImageURLs: Entries must be a valid array of objects.'
