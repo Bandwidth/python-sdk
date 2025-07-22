@@ -5424,7 +5424,7 @@ components:
             be interpreted as an HTTP status code in regards to the error that
             was encountered.
           example: '400'
-        errorDescription:
+        errorMessage:
           type: string
           description: A description of the error that was encountered.
           example: cannot process request.
