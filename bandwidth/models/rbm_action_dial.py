@@ -31,10 +31,10 @@ class RbmActionDial(BaseModel):
     """ # noqa: E501
     type: RbmActionTypeEnum
     text: Annotated[str, Field(strict=True, max_length=25)] = Field(description="Displayed text for user to click")
-    post_back_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postBackData")
+    postback_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
     phone_number: StrictStr = Field(description="The phone number to dial. Must be E164 format.", alias="phoneNumber")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "text", "postBackData", "phoneNumber"]
+    __properties: ClassVar[List[str]] = ["type", "text", "postbackData", "phoneNumber"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,7 +96,7 @@ class RbmActionDial(BaseModel):
         _obj = cls.model_validate({
             "type": obj.get("type"),
             "text": obj.get("text"),
-            "postBackData": obj.get("postBackData"),
+            "postbackData": obj.get("postbackData"),
             "phoneNumber": obj.get("phoneNumber")
         })
         # store additional fields in additional_properties

@@ -31,12 +31,12 @@ class RbmActionViewLocation(BaseModel):
     """ # noqa: E501
     type: RbmActionTypeEnum
     text: Annotated[str, Field(strict=True, max_length=25)] = Field(description="Displayed text for user to click")
-    post_back_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postBackData")
+    postback_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
     latitude: StrictStr = Field(description="The latitude of the location.")
     longitude: StrictStr = Field(description="The longitude of the location.")
     label: Optional[Annotated[str, Field(strict=True, max_length=100)]] = Field(default=None, description="The label of the location.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "text", "postBackData", "latitude", "longitude", "label"]
+    __properties: ClassVar[List[str]] = ["type", "text", "postbackData", "latitude", "longitude", "label"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -98,7 +98,7 @@ class RbmActionViewLocation(BaseModel):
         _obj = cls.model_validate({
             "type": obj.get("type"),
             "text": obj.get("text"),
-            "postBackData": obj.get("postBackData"),
+            "postbackData": obj.get("postbackData"),
             "latitude": obj.get("latitude"),
             "longitude": obj.get("longitude"),
             "label": obj.get("label")

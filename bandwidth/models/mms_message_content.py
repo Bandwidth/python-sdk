@@ -21,6 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
+from bandwidth.models.mms_message_content_file import MmsMessageContentFile
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +30,7 @@ class MmsMessageContent(BaseModel):
     MmsMessageContent
     """ # noqa: E501
     text: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="The contents of the text message. Must be 2048 characters or less.")
-    media: Optional[List[Annotated[str, Field(strict=True, max_length=4096)]]] = Field(default=None, description="A list of URLs to include as media attachments as part of the message. Each URL can be at most 4096 characters.")
+    media: Optional[List[MmsMessageContentFile]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["text", "media"]
 
@@ -74,6 +75,13 @@ class MmsMessageContent(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in media (list)
+        _items = []
+        if self.media:
+            for _item_media in self.media:
+                if _item_media:
+                    _items.append(_item_media.to_dict())
+            _dict['media'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -92,7 +100,7 @@ class MmsMessageContent(BaseModel):
 
         _obj = cls.model_validate({
             "text": obj.get("text"),
-            "media": obj.get("media")
+            "media": [MmsMessageContentFile.from_dict(_item) for _item in obj["media"]] if obj.get("media") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -32,13 +32,13 @@ class MultiChannelActionCalendarEvent(BaseModel):
     """ # noqa: E501
     type: RbmActionTypeEnum
     text: Annotated[str, Field(strict=True, max_length=25)] = Field(description="Displayed text for user to click")
-    post_back_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postBackData")
+    postback_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
     title: Annotated[str, Field(strict=True, max_length=100)] = Field(description="The title of the event.")
     start_time: datetime = Field(description="The start time of the event.", alias="startTime")
     end_time: datetime = Field(description="The end time of the event.", alias="endTime")
     description: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The description of the event.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "text", "postBackData", "title", "startTime", "endTime", "description"]
+    __properties: ClassVar[List[str]] = ["type", "text", "postbackData", "title", "startTime", "endTime", "description"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -100,7 +100,7 @@ class MultiChannelActionCalendarEvent(BaseModel):
         _obj = cls.model_validate({
             "type": obj.get("type"),
             "text": obj.get("text"),
-            "postBackData": obj.get("postBackData"),
+            "postbackData": obj.get("postbackData"),
             "title": obj.get("title"),
             "startTime": obj.get("startTime"),
             "endTime": obj.get("endTime"),

@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | [**RbmActionTypeEnum**](RbmActionTypeEnum.md) |  | 
 **text** | **str** | Displayed text for user to click | 
-**post_back_data** | **bytearray** | Base64 payload the customer receives when the reply is clicked. | 
+**postback_data** | **bytearray** | Base64 payload the customer receives when the reply is clicked. | 
 **phone_number** | **str** | The phone number to dial. Must be E164 format. | 
 **latitude** | **float** | The latitude of the location. | 
 **longitude** | **float** | The longitude of the location. | 

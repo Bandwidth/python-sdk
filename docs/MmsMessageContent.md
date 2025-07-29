@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **text** | **str** | The contents of the text message. Must be 2048 characters or less. | [optional] 
-**media** | **List[str]** | A list of URLs to include as media attachments as part of the message. Each URL can be at most 4096 characters. | [optional] 
+**media** | [**List[MmsMessageContentFile]**](MmsMessageContentFile.md) |  | [optional] 
 
 ## Example
 

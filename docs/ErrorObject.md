@@ -5,8 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**code** | **str** |  | [optional] 
-**message** | **str** |  | [optional] 
+**type** | **str** | A concise summary of the error used for categorization. | 
+**description** | **str** | A detailed explanation of the error. | 
+**source** | [**ErrorSource**](ErrorSource.md) |  | 
 
 ## Example
 

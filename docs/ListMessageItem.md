@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **message_status** | [**MessageStatusEnum**](MessageStatusEnum.md) |  | [optional] 
 **message_direction** | [**ListMessageDirectionEnum**](ListMessageDirectionEnum.md) |  | [optional] 
 **message_type** | [**MessageTypeEnum**](MessageTypeEnum.md) |  | [optional] 
-**segment_count** | **int** | The number of segments the message was sent as. | [optional] 
+**segment_count** | **int** | The number of segments the user&#39;s message is broken into before sending over carrier networks. | [optional] 
 **error_code** | **int** | The numeric error code of the message. | [optional] 
 **receive_time** | **datetime** | The ISO 8601 datetime of the message. | [optional] 
 **carrier_name** | **str** | The name of the carrier. Not currently supported for MMS coming soon. | [optional] 

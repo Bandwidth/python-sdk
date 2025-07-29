@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **text** | **str** | The contents of the text message. Must be 2048 characters or less. | 
 **suggestions** | [**List[MultiChannelAction]**](MultiChannelAction.md) | An array of suggested actions for the recipient. | [optional] 
-**media** | **List[str]** | A list of URLs to include as media attachments as part of the message. Each URL can be at most 4096 characters. | 
+**media** | [**List[MmsMessageContentFile]**](MmsMessageContentFile.md) |  | 
 **orientation** | [**StandaloneCardOrientationEnum**](StandaloneCardOrientationEnum.md) |  | 
 **thumbnail_image_alignment** | [**ThumbnailAlignmentEnum**](ThumbnailAlignmentEnum.md) |  | 
 **card_content** | [**RbmCardContent**](RbmCardContent.md) |  | 

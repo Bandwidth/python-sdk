@@ -38,7 +38,7 @@ class ListMessageItem(BaseModel):
     message_status: Optional[MessageStatusEnum] = Field(default=None, alias="messageStatus")
     message_direction: Optional[ListMessageDirectionEnum] = Field(default=None, alias="messageDirection")
     message_type: Optional[MessageTypeEnum] = Field(default=None, alias="messageType")
-    segment_count: Optional[StrictInt] = Field(default=None, description="The number of segments the message was sent as.", alias="segmentCount")
+    segment_count: Optional[StrictInt] = Field(default=None, description="The number of segments the user's message is broken into before sending over carrier networks.", alias="segmentCount")
     error_code: Optional[StrictInt] = Field(default=None, description="The numeric error code of the message.", alias="errorCode")
     receive_time: Optional[datetime] = Field(default=None, description="The ISO 8601 datetime of the message.", alias="receiveTime")
     carrier_name: Optional[StrictStr] = Field(default=None, description="The name of the carrier. Not currently supported for MMS coming soon.", alias="carrierName")

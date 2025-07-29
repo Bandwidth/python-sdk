@@ -31,9 +31,9 @@ class RbmActionBase(BaseModel):
     """ # noqa: E501
     type: RbmActionTypeEnum
     text: Annotated[str, Field(strict=True, max_length=25)] = Field(description="Displayed text for user to click")
-    post_back_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postBackData")
+    postback_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "text", "postBackData"]
+    __properties: ClassVar[List[str]] = ["type", "text", "postbackData"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,7 +95,7 @@ class RbmActionBase(BaseModel):
         _obj = cls.model_validate({
             "type": obj.get("type"),
             "text": obj.get("text"),
-            "postBackData": obj.get("postBackData")
+            "postbackData": obj.get("postbackData")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
