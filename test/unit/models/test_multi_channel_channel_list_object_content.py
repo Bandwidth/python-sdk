@@ -27,6 +27,7 @@ from bandwidth.models.rbm_card_content_media import RbmCardContentMedia
 from bandwidth.models.rbm_standalone_card import RbmStandaloneCard
 from bandwidth.models.rbm_card_content import RbmCardContent
 from bandwidth.models.rbm_message_content_file import RbmMessageContentFile
+from bandwidth.models.mms_message_content_file import MmsMessageContentFile
 
 
 class TestMultiChannelChannelListObjectContent(unittest.TestCase):
@@ -54,7 +55,7 @@ class TestMultiChannelChannelListObjectContent(unittest.TestCase):
                     RbmActionBase(
                         type = 'REPLY',
                         text = 'Hello world',
-                        post_back_data = '[B@32298473'
+                        postback_data = '[B@32298473'
                     )
                 )
             ]
@@ -82,7 +83,7 @@ class TestMultiChannelChannelListObjectContent(unittest.TestCase):
                             RbmActionBase(
                                 type = 'REPLY',
                                 text = 'Hello world',
-                                post_back_data = '[B@32298473'
+                                postback_data = '[B@32298473'
                             )
                         )
                     ]
@@ -92,7 +93,7 @@ class TestMultiChannelChannelListObjectContent(unittest.TestCase):
                         RbmActionBase(
                             type = 'REPLY',
                             text = 'Hello world',
-                            post_back_data = '[B@32298473'
+                            postback_data = '[B@32298473'
                         )
                     )
                 ]
@@ -103,7 +104,7 @@ class TestMultiChannelChannelListObjectContent(unittest.TestCase):
         ))
         model_mms_message_content = MultiChannelChannelListObjectContent(MmsMessageContent(
             text = 'Hello world',
-            media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"]
+            media = [MmsMessageContentFile(fileUrl="https://image.com/image.png")]
         ))
 
         assert model_rbm_message_content_text is not None

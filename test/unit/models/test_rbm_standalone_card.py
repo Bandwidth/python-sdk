@@ -52,7 +52,7 @@ class TestRbmStandaloneCard(unittest.TestCase):
                             RbmActionBase(
                                 type = 'REPLY',
                                 text = 'Hello world',
-                                post_back_data = '[B@32298473'
+                                postback_data = '[B@32298473'
                             )
                         )
                     ]
@@ -62,7 +62,7 @@ class TestRbmStandaloneCard(unittest.TestCase):
                         RbmActionBase(
                             type = 'REPLY',
                             text = 'Hello world',
-                            post_back_data = '[B@32298473'
+                            postback_data = '[B@32298473'
                         )
                     )
                 ]
@@ -80,7 +80,7 @@ class TestRbmStandaloneCard(unittest.TestCase):
                         RbmActionBase(
                             type = 'REPLY',
                             text = 'Hello world',
-                            post_back_data = '[B@32298473'
+                            postback_data = '[B@32298473'
                         )
                     )
                 ]

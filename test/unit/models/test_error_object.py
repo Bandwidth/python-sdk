@@ -16,6 +16,7 @@
 import unittest
 
 from bandwidth.models.error_object import ErrorObject
+from bandwidth.models.error_source import ErrorSource
 
 class TestErrorObject(unittest.TestCase):
     """ErrorObject unit test stubs"""
@@ -33,8 +34,14 @@ class TestErrorObject(unittest.TestCase):
             optional params are included """
         if include_optional:
             return ErrorObject(
-                code = 'code',
-                message = 'message'
+                type = 'type',
+                description = 'description',
+                source = ErrorSource(
+                    parameter = 'parameter',
+                    var_field = 'var_field',
+                    header = 'header',
+                    reference = 'reference'
+                )
             )
         else:
             return ErrorObject(
@@ -45,8 +52,13 @@ class TestErrorObject(unittest.TestCase):
         instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, ErrorObject)
-        assert instance.code == 'code'
-        assert instance.message == 'message'
+        assert instance.type == 'type'
+        assert instance.description == 'description'
+        assert isinstance(instance.source, ErrorSource)
+        assert instance.source.parameter == 'parameter'
+        assert instance.source.var_field == 'var_field'
+        assert instance.source.header == 'header'
+        assert instance.source.reference == 'reference'
 
 if __name__ == '__main__':
     unittest.main()

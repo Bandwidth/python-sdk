@@ -35,14 +35,14 @@ class TestRbmActionDial(unittest.TestCase):
             return RbmActionDial(
                 type = 'REPLY',
                 text = 'Hello world',
-                post_back_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
+                postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
                 phone_number = '+15552223333'
             )
         else:
             return RbmActionDial(
                 type = 'REPLY',
                 text = 'Hello world',
-                post_back_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
+                postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
                 phone_number = '+15552223333',
         )
 
@@ -53,7 +53,7 @@ class TestRbmActionDial(unittest.TestCase):
         assert isinstance(instance, RbmActionDial)
         assert instance.type == 'REPLY'
         assert instance.text == 'Hello world'
-        assert instance.post_back_data == 'U0dWc2JHOGdkMjl5YkdRPQ=='
+        assert instance.postback_data == 'U0dWc2JHOGdkMjl5YkdRPQ=='
         assert instance.phone_number == '+15552223333'
 
 if __name__ == '__main__':

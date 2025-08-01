@@ -36,7 +36,7 @@ class TestMultiChannelActionCalendarEvent(unittest.TestCase):
             return MultiChannelActionCalendarEvent(
                 type = 'REPLY',
                 text = 'Hello world',
-                post_back_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
+                postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
                 title = 'Meeting with John',
                 start_time = '2022-09-14T18:20:16Z',
                 end_time = '2022-09-14T18:20:16Z',
@@ -46,7 +46,7 @@ class TestMultiChannelActionCalendarEvent(unittest.TestCase):
             return MultiChannelActionCalendarEvent(
                 type = 'REPLY',
                 text = 'Hello world',
-                post_back_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
+                postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
                 title = 'Meeting with John',
                 start_time = '2022-09-14T18:20:16Z',
                 end_time = '2022-09-14T18:20:16Z',
@@ -59,7 +59,7 @@ class TestMultiChannelActionCalendarEvent(unittest.TestCase):
         assert isinstance(instance, MultiChannelActionCalendarEvent)
         assert instance.type == 'REPLY'
         assert instance.text == 'Hello world'
-        assert instance.post_back_data == 'U0dWc2JHOGdkMjl5YkdRPQ=='
+        assert instance.postback_data == 'U0dWc2JHOGdkMjl5YkdRPQ=='
         assert instance.title == 'Meeting with John'
         assert isinstance(instance.start_time, datetime)
         assert isinstance(instance.end_time, datetime)
