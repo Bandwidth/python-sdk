@@ -135,6 +135,15 @@ class TestTollFreeVerificationApi(unittest.TestCase):
         assert_that(response.data.created_date_time, instance_of(datetime))
         assert_that(response.data.modified_date_time, instance_of(datetime))
 
+    def test_delete_verification_request(self) -> None:
+        """Test case for delete_verification_request
+
+        Delete Verification Request
+        """
+        response = self.tfv_api_instance.delete_verification_request_with_http_info(BW_ACCOUNT_ID, self.tf_phone_number)
+
+        assert_that(response.status_code, equal_to(204))
+
     def test_list_toll_free_use_cases(self) -> None:
         """Test case for list_toll_free_use_cases
 
