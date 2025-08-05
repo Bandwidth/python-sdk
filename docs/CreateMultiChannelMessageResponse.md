@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **links** | [**List[Link]**](Link.md) |  | [optional] 
-**data** | [**MultiChannelMessageData**](MultiChannelMessageData.md) |  | [optional] 
+**data** | [**MultiChannelMessageResponseData**](MultiChannelMessageResponseData.md) |  | [optional] 
 **errors** | [**List[ErrorObject]**](ErrorObject.md) |  | [optional] 
 
 ## Example

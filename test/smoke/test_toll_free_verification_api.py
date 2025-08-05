@@ -54,6 +54,13 @@ class TestTollFreeVerificationApi(unittest.TestCase):
         """
         pass
 
+    def test_delete_verification_request(self) -> None:
+        """Test case for delete_verification_request
+
+        Delete Verification Request
+        """
+        pass
+
     def test_list_toll_free_use_cases(self) -> None:
         """Test case for list_toll_free_use_cases
 

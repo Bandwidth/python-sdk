@@ -99,14 +99,15 @@ class MultiChannelApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "CreateMultiChannelMessageResponse",
-            '400': "CreateMessageRequestError",
-            '401': "MessagingRequestError",
-            '403': "MessagingRequestError",
-            '404': "MessagingRequestError",
-            '406': "MessagingRequestError",
-            '415': "MessagingRequestError",
-            '429': "MessagingRequestError",
-            '500': "MessagingRequestError",
+            '400': "MultiChannelError",
+            '401': "MultiChannelError",
+            '403': "MultiChannelError",
+            '404': "MultiChannelError",
+            '405': "MultiChannelError",
+            '406': None,
+            '415': "MultiChannelError",
+            '429': "MultiChannelError",
+            '500': "MultiChannelError",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -178,14 +179,15 @@ class MultiChannelApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "CreateMultiChannelMessageResponse",
-            '400': "CreateMessageRequestError",
-            '401': "MessagingRequestError",
-            '403': "MessagingRequestError",
-            '404': "MessagingRequestError",
-            '406': "MessagingRequestError",
-            '415': "MessagingRequestError",
-            '429': "MessagingRequestError",
-            '500': "MessagingRequestError",
+            '400': "MultiChannelError",
+            '401': "MultiChannelError",
+            '403': "MultiChannelError",
+            '404': "MultiChannelError",
+            '405': "MultiChannelError",
+            '406': None,
+            '415': "MultiChannelError",
+            '429': "MultiChannelError",
+            '500': "MultiChannelError",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -257,14 +259,15 @@ class MultiChannelApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '202': "CreateMultiChannelMessageResponse",
-            '400': "CreateMessageRequestError",
-            '401': "MessagingRequestError",
-            '403': "MessagingRequestError",
-            '404': "MessagingRequestError",
-            '406': "MessagingRequestError",
-            '415': "MessagingRequestError",
-            '429': "MessagingRequestError",
-            '500': "MessagingRequestError",
+            '400': "MultiChannelError",
+            '401': "MultiChannelError",
+            '403': "MultiChannelError",
+            '404': "MultiChannelError",
+            '405': "MultiChannelError",
+            '406': None,
+            '415': "MultiChannelError",
+            '429': "MultiChannelError",
+            '500': "MultiChannelError",
         }
         response_data = self.api_client.call_api(
             *_param,

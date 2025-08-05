@@ -1,6 +1,6 @@
 # PriorityEnum
 
-The priority specified by the user.
+Specifies the message's sending priority with respect to other messages in your account. For best results and optimal throughput, reserve the 'high' priority setting for critical messages only.
 
 ## Enum
 

@@ -16,6 +16,7 @@
 import unittest
 
 from bandwidth.models.mms_message_content import MmsMessageContent
+from bandwidth.models.mms_message_content_file import MmsMessageContentFile
 
 class TestMmsMessageContent(unittest.TestCase):
     """MmsMessageContent unit test stubs"""
@@ -34,7 +35,7 @@ class TestMmsMessageContent(unittest.TestCase):
         if include_optional:
             return MmsMessageContent(
                 text = 'Hello world',
-                media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"]
+                media = [MmsMessageContentFile(fileUrl="https://image.com/image.png")]
             )
         else:
             return MmsMessageContent(
@@ -46,7 +47,7 @@ class TestMmsMessageContent(unittest.TestCase):
         assert instance is not None
         assert isinstance(instance, MmsMessageContent)
         assert instance.text == 'Hello world'
-        assert instance.media == ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"]
+        assert instance.media == [MmsMessageContentFile(fileUrl="https://image.com/image.png")]
 
 if __name__ == '__main__':
     unittest.main()

@@ -22,7 +22,7 @@ from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.error_object import ErrorObject
 from bandwidth.models.link import Link
-from bandwidth.models.multi_channel_message_data import MultiChannelMessageData
+from bandwidth.models.multi_channel_message_response_data import MultiChannelMessageResponseData
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -31,7 +31,7 @@ class CreateMultiChannelMessageResponse(BaseModel):
     CreateMultiChannelMessageResponse
     """ # noqa: E501
     links: Optional[List[Link]] = None
-    data: Optional[MultiChannelMessageData] = None
+    data: Optional[MultiChannelMessageResponseData] = None
     errors: Optional[List[ErrorObject]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["links", "data", "errors"]
@@ -112,7 +112,7 @@ class CreateMultiChannelMessageResponse(BaseModel):
 
         _obj = cls.model_validate({
             "links": [Link.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
-            "data": MultiChannelMessageData.from_dict(obj["data"]) if obj.get("data") is not None else None,
+            "data": MultiChannelMessageResponseData.from_dict(obj["data"]) if obj.get("data") is not None else None,
             "errors": [ErrorObject.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
         })
         # store additional fields in additional_properties

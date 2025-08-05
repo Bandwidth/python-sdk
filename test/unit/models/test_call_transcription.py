@@ -31,7 +31,6 @@ class TestCallTranscription(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        instance = CallTranscription()
         if include_optional:
             return CallTranscription(
                 detected_language = 'en-US',

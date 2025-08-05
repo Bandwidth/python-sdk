@@ -35,7 +35,7 @@ class TestRbmActionViewLocation(unittest.TestCase):
             return RbmActionViewLocation(
                 type = 'REPLY',
                 text = 'Hello world',
-                post_back_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
+                postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
                 latitude = '37.7749',
                 longitude = '-122.4194',
                 label = 'San Francisco'
@@ -44,7 +44,7 @@ class TestRbmActionViewLocation(unittest.TestCase):
             return RbmActionViewLocation(
                 type = 'REPLY',
                 text = 'Hello world',
-                post_back_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
+                postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
                 latitude = '37.7749',
                 longitude = '-122.4194',
         )
@@ -56,7 +56,7 @@ class TestRbmActionViewLocation(unittest.TestCase):
         assert isinstance(instance, RbmActionViewLocation)
         assert instance.type == 'REPLY'
         assert instance.text == 'Hello world'
-        assert instance.post_back_data == 'U0dWc2JHOGdkMjl5YkdRPQ=='
+        assert instance.postback_data == 'U0dWc2JHOGdkMjl5YkdRPQ=='
         assert instance.latitude == '37.7749'
         assert instance.longitude == '-122.4194'
         assert instance.label == 'San Francisco'

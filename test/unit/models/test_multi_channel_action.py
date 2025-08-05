@@ -42,18 +42,18 @@ class TestMultiChannelAction(unittest.TestCase):
         model_rbm_action_base = MultiChannelAction(RbmActionBase(
             type='REPLY',
             text='Hello world',
-            post_back_data='[B@32298473'
+            postback_data='[B@32298473'
         ))
         model_rbm_action_dial = MultiChannelAction(RbmActionDial(
             type='DIAL_PHONE',
             text='Hello world',
-            post_back_data='[B@32298473',
+            postback_data='[B@32298473',
             phone_number='1234567890'
         ))
         model_rbm_action_view_location = MultiChannelAction(RbmActionViewLocation(
             type='SHOW_LOCATION',
             text='Hello world',
-            post_back_data='[B@32298473',
+            postback_data='[B@32298473',
             latitude='37.7749',
             longitude='-122.4194',
             label='San Francisco'
@@ -61,7 +61,7 @@ class TestMultiChannelAction(unittest.TestCase):
         model_multi_channel_action_calendar_event = MultiChannelAction(MultiChannelActionCalendarEvent(
             type = 'CREATE_CALENDAR_EVENT',
             text = 'Hello world',
-            post_back_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
+            postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
             title = 'Meeting with John',
             start_time = '2022-09-14T18:20:16Z',
             end_time = '2022-09-14T18:20:16Z',
@@ -70,7 +70,7 @@ class TestMultiChannelAction(unittest.TestCase):
         model_rbm_action_open_url = MultiChannelAction(RbmActionOpenUrl(
             type='OPEN_URL',
             text='Hello world',
-            post_back_data='[B@32298473',
+            postback_data='[B@32298473',
             url='https://www.example.com'
         ))
 

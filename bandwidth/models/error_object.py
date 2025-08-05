@@ -18,8 +18,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
+from bandwidth.models.error_source import ErrorSource
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,10 +28,11 @@ class ErrorObject(BaseModel):
     """
     ErrorObject
     """ # noqa: E501
-    code: Optional[StrictStr] = None
-    message: Optional[StrictStr] = None
+    type: StrictStr = Field(description="A concise summary of the error used for categorization.")
+    description: StrictStr = Field(description="A detailed explanation of the error.")
+    source: ErrorSource
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["code", "message"]
+    __properties: ClassVar[List[str]] = ["type", "description", "source"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -73,6 +75,9 @@ class ErrorObject(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of source
+        if self.source:
+            _dict['source'] = self.source.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -90,8 +95,9 @@ class ErrorObject(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "code": obj.get("code"),
-            "message": obj.get("message")
+            "type": obj.get("type"),
+            "description": obj.get("description"),
+            "source": ErrorSource.from_dict(obj["source"]) if obj.get("source") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

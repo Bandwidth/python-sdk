@@ -35,14 +35,14 @@ class TestRbmActionOpenUrl(unittest.TestCase):
             return RbmActionOpenUrl(
                 type = 'REPLY',
                 text = 'Hello world',
-                post_back_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
+                postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
                 url = 'https://dev.bandwidth.com'
             )
         else:
             return RbmActionOpenUrl(
                 type = 'REPLY',
                 text = 'Hello world',
-                post_back_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
+                postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
                 url = 'https://dev.bandwidth.com',
         )
 
@@ -53,7 +53,7 @@ class TestRbmActionOpenUrl(unittest.TestCase):
         assert isinstance(instance, RbmActionOpenUrl)
         assert instance.type == 'REPLY'
         assert instance.text == 'Hello world'
-        assert instance.post_back_data == 'U0dWc2JHOGdkMjl5YkdRPQ=='
+        assert instance.postback_data == 'U0dWc2JHOGdkMjl5YkdRPQ=='
         assert instance.url == 'https://dev.bandwidth.com'
 
 if __name__ == '__main__':
