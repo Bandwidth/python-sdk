@@ -248,7 +248,7 @@ class ConferencesIntegration(unittest.TestCase):
             BW_ACCOUNT_ID, call_id, update_call
         )
 
-    @unittest.skip("PV Issues")
+    # @unittest.skip("PV Issues")
     def test_conference_recordings(self) -> None:
         """
         Tests a successful flow of creating a call with a recording.
@@ -260,6 +260,8 @@ class ConferencesIntegration(unittest.TestCase):
 
         answer_url = MANTECA_BASE_URL + "bxml/joinConferencePause"
         (test_id, call_id, conference_id) = self.create_conference(answer_url)
+
+        print(test_id, call_id, conference_id)
 
         list_conferences_response = self.conference_api_instance.list_conferences(
             BW_ACCOUNT_ID)
