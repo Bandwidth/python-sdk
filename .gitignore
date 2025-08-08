@@ -77,3 +77,6 @@ target/
 
 # Test Fixtures
 test/fixtures/
+
+# Local testing
+.env
