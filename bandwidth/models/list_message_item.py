@@ -48,8 +48,13 @@ class ListMessageItem(BaseModel):
     recipient_count: Optional[StrictInt] = Field(default=None, description="The number of recipients the message has.", alias="recipientCount")
     campaign_class: Optional[StrictStr] = Field(default=None, description="The campaign class of the message if it has one.", alias="campaignClass")
     campaign_id: Optional[StrictStr] = Field(default=None, description="The campaign ID of the message if it has one.", alias="campaignId")
+    bw_latency: Optional[StrictInt] = Field(default=None, description="The Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled.", alias="bwLatency")
+    calling_number_country_a3: Optional[StrictStr] = Field(default=None, description="The A3 country code of the calling number.", alias="callingNumberCountryA3")
+    called_number_country_a3: Optional[StrictStr] = Field(default=None, description="The A3 country code of the called number.", alias="calledNumberCountryA3")
+    product: Optional[StrictStr] = Field(default=None, description="The messaging product associated with the message.")
+    location: Optional[StrictStr] = Field(default=None, description="The location ID associated with this message.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["messageId", "accountId", "sourceTn", "destinationTn", "messageStatus", "messageDirection", "messageType", "segmentCount", "errorCode", "receiveTime", "carrierName", "messageSize", "messageLength", "attachmentCount", "recipientCount", "campaignClass", "campaignId"]
+    __properties: ClassVar[List[str]] = ["messageId", "accountId", "sourceTn", "destinationTn", "messageStatus", "messageDirection", "messageType", "segmentCount", "errorCode", "receiveTime", "carrierName", "messageSize", "messageLength", "attachmentCount", "recipientCount", "campaignClass", "campaignId", "bwLatency", "callingNumberCountryA3", "calledNumberCountryA3", "product", "location"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -127,6 +132,31 @@ class ListMessageItem(BaseModel):
         if self.campaign_id is None and "campaign_id" in self.model_fields_set:
             _dict['campaignId'] = None
 
+        # set to None if bw_latency (nullable) is None
+        # and model_fields_set contains the field
+        if self.bw_latency is None and "bw_latency" in self.model_fields_set:
+            _dict['bwLatency'] = None
+
+        # set to None if calling_number_country_a3 (nullable) is None
+        # and model_fields_set contains the field
+        if self.calling_number_country_a3 is None and "calling_number_country_a3" in self.model_fields_set:
+            _dict['callingNumberCountryA3'] = None
+
+        # set to None if called_number_country_a3 (nullable) is None
+        # and model_fields_set contains the field
+        if self.called_number_country_a3 is None and "called_number_country_a3" in self.model_fields_set:
+            _dict['calledNumberCountryA3'] = None
+
+        # set to None if product (nullable) is None
+        # and model_fields_set contains the field
+        if self.product is None and "product" in self.model_fields_set:
+            _dict['product'] = None
+
+        # set to None if location (nullable) is None
+        # and model_fields_set contains the field
+        if self.location is None and "location" in self.model_fields_set:
+            _dict['location'] = None
+
         return _dict
 
     @classmethod
@@ -155,7 +185,12 @@ class ListMessageItem(BaseModel):
             "attachmentCount": obj.get("attachmentCount"),
             "recipientCount": obj.get("recipientCount"),
             "campaignClass": obj.get("campaignClass"),
-            "campaignId": obj.get("campaignId")
+            "campaignId": obj.get("campaignId"),
+            "bwLatency": obj.get("bwLatency"),
+            "callingNumberCountryA3": obj.get("callingNumberCountryA3"),
+            "calledNumberCountryA3": obj.get("calledNumberCountryA3"),
+            "product": obj.get("product"),
+            "location": obj.get("location")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

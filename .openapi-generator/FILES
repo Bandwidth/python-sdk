@@ -108,6 +108,7 @@ bandwidth/models/multi_channel_message_response_data_channel_list_inner.py
 bandwidth/models/opt_in_workflow.py
 bandwidth/models/page_info.py
 bandwidth/models/priority_enum.py
+bandwidth/models/product_type_enum.py
 bandwidth/models/rbm_action_base.py
 bandwidth/models/rbm_action_dial.py
 bandwidth/models/rbm_action_open_url.py
@@ -268,6 +269,7 @@ docs/OptInWorkflow.md
 docs/PageInfo.md
 docs/PhoneNumberLookupApi.md
 docs/PriorityEnum.md
+docs/ProductTypeEnum.md
 docs/RbmActionBase.md
 docs/RbmActionDial.md
 docs/RbmActionOpenUrl.md

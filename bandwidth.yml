@@ -179,6 +179,16 @@ paths:
         - $ref: '#/components/parameters/fromDateTime'
         - $ref: '#/components/parameters/toDateTime'
         - $ref: '#/components/parameters/campaignId'
+        - $ref: '#/components/parameters/fromBwLatency'
+        - $ref: '#/components/parameters/bwQueued'
+        - $ref: '#/components/parameters/product'
+        - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/callingNumberCountryA3'
+        - $ref: '#/components/parameters/calledNumberCountryA3'
+        - $ref: '#/components/parameters/fromSegmentCount'
+        - $ref: '#/components/parameters/toSegmentCount'
+        - $ref: '#/components/parameters/fromMessageSize'
+        - $ref: '#/components/parameters/toMessageSize'
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/pageToken'
         - $ref: '#/components/parameters/limit'
@@ -1716,7 +1726,22 @@ components:
       enum:
         - sms
         - mms
+        - rcs
       example: sms
+    productTypeEnum:
+      type: string
+      description: The type of product associated with the message.
+      enum:
+        - LOCAL_A2P
+        - P2P
+        - SHORT_CODE_REACH
+        - TOLL_FREE
+        - HOSTED_SHORT_CODE
+        - ALPHA_NUMERIC
+        - RBM_MEDIA
+        - RBM_RICH
+        - RBM_CONVERSATIONAL
+      example: P2P
     fieldError:
       type: object
       properties:
@@ -1819,6 +1844,33 @@ components:
           description: The campaign ID of the message if it has one.
           nullable: true
           example: CJEUMDK
+        bwLatency:
+          type: integer
+          description: >-
+            The Bandwidth latency of the message in seconds. Only available for
+            accounts with the Advanced Quality Metrics feature enabled.
+          nullable: true
+          example: 20
+        callingNumberCountryA3:
+          type: string
+          description: The A3 country code of the calling number.
+          nullable: true
+          example: USA
+        calledNumberCountryA3:
+          type: string
+          description: The A3 country code of the called number.
+          nullable: true
+          example: USA
+        product:
+          type: string
+          description: The messaging product associated with the message.
+          nullable: true
+          example: P2P
+        location:
+          type: string
+          description: The location ID associated with this message.
+          nullable: true
+          example: 123ID
     pageInfo:
       title: PageInfo
       type: object
@@ -6940,6 +6992,90 @@ components:
       example: CJEUMDK
       schema:
         type: string
+    fromBwLatency:
+      in: query
+      name: fromBwLatency
+      required: false
+      description: >-
+        The minimum Bandwidth latency of the message in seconds. Only available
+        for accounts with the Advanced Quality Metrics feature enabled.
+      example: 5
+      schema:
+        type: integer
+    bwQueued:
+      in: query
+      name: bwQueued
+      required: false
+      description: >-
+        A boolean value indicating whether the message is queued in the
+        Bandwidth network.
+      example: true
+      schema:
+        type: boolean
+    product:
+      in: query
+      name: product
+      required: false
+      description: Messaging product associated with the message.
+      example: P2P
+      schema:
+        $ref: '#/components/schemas/productTypeEnum'
+    location:
+      in: query
+      name: location
+      required: false
+      description: Location Id associated with the message.
+      example: 123ABC
+      schema:
+        type: string
+    callingNumberCountryA3:
+      in: query
+      name: callingNumberCountryA3
+      required: false
+      description: Calling number country in A3 format.
+      example: USA
+      schema:
+        type: string
+    calledNumberCountryA3:
+      in: query
+      name: calledNumberCountryA3
+      required: false
+      description: Called number country in A3 format.
+      example: USA
+      schema:
+        type: string
+    fromSegmentCount:
+      in: query
+      name: fromSegmentCount
+      required: false
+      description: Segment count (start range).
+      example: 1
+      schema:
+        type: integer
+    toSegmentCount:
+      in: query
+      name: toSegmentCount
+      required: false
+      description: Segment count (end range).
+      example: 3
+      schema:
+        type: integer
+    fromMessageSize:
+      in: query
+      name: fromMessageSize
+      required: false
+      description: Message size (start range).
+      example: 100
+      schema:
+        type: integer
+    toMessageSize:
+      in: query
+      name: toMessageSize
+      required: false
+      description: Message size (end range).
+      example: 120
+      schema:
+        type: integer
     sort:
       in: query
       name: sort
