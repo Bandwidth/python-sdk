@@ -270,16 +270,12 @@ class ConferencesIntegration(unittest.TestCase):
             BW_ACCOUNT_ID, conference_id, updateBxmlBody)
         assert_that(update_conference_bxml_response.status_code, 204)
 
-        max_attempts = 5
-        list_conference_recordings_response: ApiResponse = None
-        for _ in range(max_attempts):
-            list_conference_recordings_response: ApiResponse = self.conference_api_instance.list_conference_recordings_with_http_info(
-                BW_ACCOUNT_ID, conference_id)
-            if list_conference_recordings_response.status_code == 200:
-                break
-            time.sleep(self.TEST_SLEEP_LONG)
-        else:
-            raise AssertionError(f"Conference recordings not available. Response:{list_conference_recordings_response.data}")
+        # Sleep 15 seconds to ensure recording exists
+        time.sleep(15)
+
+        list_conference_recordings_response: ApiResponse = self.conference_api_instance.list_conference_recordings_with_http_info(
+            BW_ACCOUNT_ID, conference_id)
+        assert_that(list_conference_recordings_response.status_code, 200)
 
         conference_recordings = list_conference_recordings_response.data
         assert_that(len(conference_recordings), greater_than(0))
