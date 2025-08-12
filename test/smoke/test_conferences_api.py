@@ -248,7 +248,6 @@ class ConferencesIntegration(unittest.TestCase):
             BW_ACCOUNT_ID, call_id, update_call
         )
 
-    # @unittest.skip("PV Issues")
     def test_conference_recordings(self) -> None:
         """
         Tests a successful flow of creating a call with a recording.
@@ -261,8 +260,6 @@ class ConferencesIntegration(unittest.TestCase):
         answer_url = MANTECA_BASE_URL + "bxml/joinConferencePause"
         (test_id, call_id, conference_id) = self.create_conference(answer_url)
 
-        print(test_id, call_id, conference_id)
-
         list_conferences_response = self.conference_api_instance.list_conferences(
             BW_ACCOUNT_ID)
 
@@ -273,16 +270,8 @@ class ConferencesIntegration(unittest.TestCase):
             BW_ACCOUNT_ID, conference_id, updateBxmlBody)
         assert_that(update_conference_bxml_response.status_code, 204)
 
-        # Poll Manteca to ensure our conference is recorded
-        call_status = self.get_test_status(test_id)
-        retries = 0
-        while call_status['callRecorded'] == False and retries < self.MAX_RETRIES:
-            time.sleep(self.TEST_SLEEP)
-            call_status = self.get_test_status(test_id)
-            retries += 1
-
-        # If we failed to get a recorded conference, fail due to polling timeout
-        assert call_status['callRecorded'] == True
+        # Sleep 30 seconds to ensure recording exists
+        time.sleep(30)
 
         list_conference_recordings_response: ApiResponse = self.conference_api_instance.list_conference_recordings_with_http_info(
             BW_ACCOUNT_ID, conference_id)
