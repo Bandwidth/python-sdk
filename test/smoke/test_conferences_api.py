@@ -271,6 +271,7 @@ class ConferencesIntegration(unittest.TestCase):
         assert_that(update_conference_bxml_response.status_code, 204)
 
         max_attempts = 5
+        list_conference_recordings_response: ApiResponse = None
         for _ in range(max_attempts):
             list_conference_recordings_response: ApiResponse = self.conference_api_instance.list_conference_recordings_with_http_info(
                 BW_ACCOUNT_ID, conference_id)
