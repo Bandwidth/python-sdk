@@ -22,6 +22,8 @@ from bandwidth.models.answer_callback import AnswerCallback
 from bandwidth.models.blocked_webhook import BlockedWebhook
 from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback
 from bandwidth.models.bridge_target_complete_callback import BridgeTargetCompleteCallback
+from bandwidth.models.business_entity_type_enum import BusinessEntityTypeEnum
+from bandwidth.models.business_registration_type_enum import BusinessRegistrationTypeEnum
 from bandwidth.models.call_direction_enum import CallDirectionEnum
 from bandwidth.models.call_recording_metadata import CallRecordingMetadata
 from bandwidth.models.call_state import CallState
@@ -104,6 +106,7 @@ from bandwidth.models.multi_channel_message_response_data_channel_list_inner imp
 from bandwidth.models.opt_in_workflow import OptInWorkflow
 from bandwidth.models.page_info import PageInfo
 from bandwidth.models.priority_enum import PriorityEnum
+from bandwidth.models.product_type_enum import ProductTypeEnum
 from bandwidth.models.rbm_action_base import RbmActionBase
 from bandwidth.models.rbm_action_dial import RbmActionDial
 from bandwidth.models.rbm_action_open_url import RbmActionOpenUrl

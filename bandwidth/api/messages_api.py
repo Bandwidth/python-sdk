@@ -26,6 +26,7 @@ from bandwidth.models.message_request import MessageRequest
 from bandwidth.models.message_status_enum import MessageStatusEnum
 from bandwidth.models.message_type_enum import MessageTypeEnum
 from bandwidth.models.messages_list import MessagesList
+from bandwidth.models.product_type_enum import ProductTypeEnum
 
 from bandwidth.api_client import ApiClient, RequestSerialized
 from bandwidth.api_response import ApiResponse
@@ -379,6 +380,18 @@ class MessagesApi:
         from_date_time: Annotated[Optional[StrictStr], Field(description="The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
         to_date_time: Annotated[Optional[StrictStr], Field(description="The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
         campaign_id: Annotated[Optional[StrictStr], Field(description="The campaign ID of the message.")] = None,
+        from_bw_latency: Annotated[Optional[StrictInt], Field(description="The minimum Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        bw_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the Bandwidth network.")] = None,
+        product: Annotated[Optional[ProductTypeEnum], Field(description="Messaging product associated with the message.")] = None,
+        location: Annotated[Optional[StrictStr], Field(description="Location Id associated with the message.")] = None,
+        carrier_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        from_carrier_latency: Annotated[Optional[StrictInt], Field(description="The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        calling_number_country_a3: Annotated[Optional[StrictStr], Field(description="Calling number country in A3 format.")] = None,
+        called_number_country_a3: Annotated[Optional[StrictStr], Field(description="Called number country in A3 format.")] = None,
+        from_segment_count: Annotated[Optional[StrictInt], Field(description="Segment count (start range).")] = None,
+        to_segment_count: Annotated[Optional[StrictInt], Field(description="Segment count (end range).")] = None,
+        from_message_size: Annotated[Optional[StrictInt], Field(description="Message size (start range).")] = None,
+        to_message_size: Annotated[Optional[StrictInt], Field(description="Message size (end range).")] = None,
         sort: Annotated[Optional[StrictStr], Field(description="The field and direction to sort by combined with a colon. Direction is either asc or desc.")] = None,
         page_token: Annotated[Optional[StrictStr], Field(description="A base64 encoded value used for pagination of results.")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.")] = None,
@@ -424,6 +437,30 @@ class MessagesApi:
         :type to_date_time: str
         :param campaign_id: The campaign ID of the message.
         :type campaign_id: str
+        :param from_bw_latency: The minimum Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled.
+        :type from_bw_latency: int
+        :param bw_queued: A boolean value indicating whether the message is queued in the Bandwidth network.
+        :type bw_queued: bool
+        :param product: Messaging product associated with the message.
+        :type product: ProductTypeEnum
+        :param location: Location Id associated with the message.
+        :type location: str
+        :param carrier_queued: A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type carrier_queued: bool
+        :param from_carrier_latency: The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type from_carrier_latency: int
+        :param calling_number_country_a3: Calling number country in A3 format.
+        :type calling_number_country_a3: str
+        :param called_number_country_a3: Called number country in A3 format.
+        :type called_number_country_a3: str
+        :param from_segment_count: Segment count (start range).
+        :type from_segment_count: int
+        :param to_segment_count: Segment count (end range).
+        :type to_segment_count: int
+        :param from_message_size: Message size (start range).
+        :type from_message_size: int
+        :param to_message_size: Message size (end range).
+        :type to_message_size: int
         :param sort: The field and direction to sort by combined with a colon. Direction is either asc or desc.
         :type sort: str
         :param page_token: A base64 encoded value used for pagination of results.
@@ -467,6 +504,18 @@ class MessagesApi:
             from_date_time=from_date_time,
             to_date_time=to_date_time,
             campaign_id=campaign_id,
+            from_bw_latency=from_bw_latency,
+            bw_queued=bw_queued,
+            product=product,
+            location=location,
+            carrier_queued=carrier_queued,
+            from_carrier_latency=from_carrier_latency,
+            calling_number_country_a3=calling_number_country_a3,
+            called_number_country_a3=called_number_country_a3,
+            from_segment_count=from_segment_count,
+            to_segment_count=to_segment_count,
+            from_message_size=from_message_size,
+            to_message_size=to_message_size,
             sort=sort,
             page_token=page_token,
             limit=limit,
@@ -513,6 +562,18 @@ class MessagesApi:
         from_date_time: Annotated[Optional[StrictStr], Field(description="The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
         to_date_time: Annotated[Optional[StrictStr], Field(description="The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
         campaign_id: Annotated[Optional[StrictStr], Field(description="The campaign ID of the message.")] = None,
+        from_bw_latency: Annotated[Optional[StrictInt], Field(description="The minimum Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        bw_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the Bandwidth network.")] = None,
+        product: Annotated[Optional[ProductTypeEnum], Field(description="Messaging product associated with the message.")] = None,
+        location: Annotated[Optional[StrictStr], Field(description="Location Id associated with the message.")] = None,
+        carrier_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        from_carrier_latency: Annotated[Optional[StrictInt], Field(description="The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        calling_number_country_a3: Annotated[Optional[StrictStr], Field(description="Calling number country in A3 format.")] = None,
+        called_number_country_a3: Annotated[Optional[StrictStr], Field(description="Called number country in A3 format.")] = None,
+        from_segment_count: Annotated[Optional[StrictInt], Field(description="Segment count (start range).")] = None,
+        to_segment_count: Annotated[Optional[StrictInt], Field(description="Segment count (end range).")] = None,
+        from_message_size: Annotated[Optional[StrictInt], Field(description="Message size (start range).")] = None,
+        to_message_size: Annotated[Optional[StrictInt], Field(description="Message size (end range).")] = None,
         sort: Annotated[Optional[StrictStr], Field(description="The field and direction to sort by combined with a colon. Direction is either asc or desc.")] = None,
         page_token: Annotated[Optional[StrictStr], Field(description="A base64 encoded value used for pagination of results.")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.")] = None,
@@ -558,6 +619,30 @@ class MessagesApi:
         :type to_date_time: str
         :param campaign_id: The campaign ID of the message.
         :type campaign_id: str
+        :param from_bw_latency: The minimum Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled.
+        :type from_bw_latency: int
+        :param bw_queued: A boolean value indicating whether the message is queued in the Bandwidth network.
+        :type bw_queued: bool
+        :param product: Messaging product associated with the message.
+        :type product: ProductTypeEnum
+        :param location: Location Id associated with the message.
+        :type location: str
+        :param carrier_queued: A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type carrier_queued: bool
+        :param from_carrier_latency: The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type from_carrier_latency: int
+        :param calling_number_country_a3: Calling number country in A3 format.
+        :type calling_number_country_a3: str
+        :param called_number_country_a3: Called number country in A3 format.
+        :type called_number_country_a3: str
+        :param from_segment_count: Segment count (start range).
+        :type from_segment_count: int
+        :param to_segment_count: Segment count (end range).
+        :type to_segment_count: int
+        :param from_message_size: Message size (start range).
+        :type from_message_size: int
+        :param to_message_size: Message size (end range).
+        :type to_message_size: int
         :param sort: The field and direction to sort by combined with a colon. Direction is either asc or desc.
         :type sort: str
         :param page_token: A base64 encoded value used for pagination of results.
@@ -601,6 +686,18 @@ class MessagesApi:
             from_date_time=from_date_time,
             to_date_time=to_date_time,
             campaign_id=campaign_id,
+            from_bw_latency=from_bw_latency,
+            bw_queued=bw_queued,
+            product=product,
+            location=location,
+            carrier_queued=carrier_queued,
+            from_carrier_latency=from_carrier_latency,
+            calling_number_country_a3=calling_number_country_a3,
+            called_number_country_a3=called_number_country_a3,
+            from_segment_count=from_segment_count,
+            to_segment_count=to_segment_count,
+            from_message_size=from_message_size,
+            to_message_size=to_message_size,
             sort=sort,
             page_token=page_token,
             limit=limit,
@@ -647,6 +744,18 @@ class MessagesApi:
         from_date_time: Annotated[Optional[StrictStr], Field(description="The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
         to_date_time: Annotated[Optional[StrictStr], Field(description="The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days.")] = None,
         campaign_id: Annotated[Optional[StrictStr], Field(description="The campaign ID of the message.")] = None,
+        from_bw_latency: Annotated[Optional[StrictInt], Field(description="The minimum Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        bw_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the Bandwidth network.")] = None,
+        product: Annotated[Optional[ProductTypeEnum], Field(description="Messaging product associated with the message.")] = None,
+        location: Annotated[Optional[StrictStr], Field(description="Location Id associated with the message.")] = None,
+        carrier_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        from_carrier_latency: Annotated[Optional[StrictInt], Field(description="The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        calling_number_country_a3: Annotated[Optional[StrictStr], Field(description="Calling number country in A3 format.")] = None,
+        called_number_country_a3: Annotated[Optional[StrictStr], Field(description="Called number country in A3 format.")] = None,
+        from_segment_count: Annotated[Optional[StrictInt], Field(description="Segment count (start range).")] = None,
+        to_segment_count: Annotated[Optional[StrictInt], Field(description="Segment count (end range).")] = None,
+        from_message_size: Annotated[Optional[StrictInt], Field(description="Message size (start range).")] = None,
+        to_message_size: Annotated[Optional[StrictInt], Field(description="Message size (end range).")] = None,
         sort: Annotated[Optional[StrictStr], Field(description="The field and direction to sort by combined with a colon. Direction is either asc or desc.")] = None,
         page_token: Annotated[Optional[StrictStr], Field(description="A base64 encoded value used for pagination of results.")] = None,
         limit: Annotated[Optional[StrictInt], Field(description="The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000.")] = None,
@@ -692,6 +801,30 @@ class MessagesApi:
         :type to_date_time: str
         :param campaign_id: The campaign ID of the message.
         :type campaign_id: str
+        :param from_bw_latency: The minimum Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled.
+        :type from_bw_latency: int
+        :param bw_queued: A boolean value indicating whether the message is queued in the Bandwidth network.
+        :type bw_queued: bool
+        :param product: Messaging product associated with the message.
+        :type product: ProductTypeEnum
+        :param location: Location Id associated with the message.
+        :type location: str
+        :param carrier_queued: A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type carrier_queued: bool
+        :param from_carrier_latency: The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type from_carrier_latency: int
+        :param calling_number_country_a3: Calling number country in A3 format.
+        :type calling_number_country_a3: str
+        :param called_number_country_a3: Called number country in A3 format.
+        :type called_number_country_a3: str
+        :param from_segment_count: Segment count (start range).
+        :type from_segment_count: int
+        :param to_segment_count: Segment count (end range).
+        :type to_segment_count: int
+        :param from_message_size: Message size (start range).
+        :type from_message_size: int
+        :param to_message_size: Message size (end range).
+        :type to_message_size: int
         :param sort: The field and direction to sort by combined with a colon. Direction is either asc or desc.
         :type sort: str
         :param page_token: A base64 encoded value used for pagination of results.
@@ -735,6 +868,18 @@ class MessagesApi:
             from_date_time=from_date_time,
             to_date_time=to_date_time,
             campaign_id=campaign_id,
+            from_bw_latency=from_bw_latency,
+            bw_queued=bw_queued,
+            product=product,
+            location=location,
+            carrier_queued=carrier_queued,
+            from_carrier_latency=from_carrier_latency,
+            calling_number_country_a3=calling_number_country_a3,
+            called_number_country_a3=called_number_country_a3,
+            from_segment_count=from_segment_count,
+            to_segment_count=to_segment_count,
+            from_message_size=from_message_size,
+            to_message_size=to_message_size,
             sort=sort,
             page_token=page_token,
             limit=limit,
@@ -776,6 +921,18 @@ class MessagesApi:
         from_date_time,
         to_date_time,
         campaign_id,
+        from_bw_latency,
+        bw_queued,
+        product,
+        location,
+        carrier_queued,
+        from_carrier_latency,
+        calling_number_country_a3,
+        called_number_country_a3,
+        from_segment_count,
+        to_segment_count,
+        from_message_size,
+        to_message_size,
         sort,
         page_token,
         limit,
@@ -850,6 +1007,54 @@ class MessagesApi:
         if campaign_id is not None:
             
             _query_params.append(('campaignId', campaign_id))
+            
+        if from_bw_latency is not None:
+            
+            _query_params.append(('fromBwLatency', from_bw_latency))
+            
+        if bw_queued is not None:
+            
+            _query_params.append(('bwQueued', bw_queued))
+            
+        if product is not None:
+            
+            _query_params.append(('product', product.value))
+            
+        if location is not None:
+            
+            _query_params.append(('location', location))
+            
+        if carrier_queued is not None:
+            
+            _query_params.append(('carrierQueued', carrier_queued))
+            
+        if from_carrier_latency is not None:
+            
+            _query_params.append(('fromCarrierLatency', from_carrier_latency))
+            
+        if calling_number_country_a3 is not None:
+            
+            _query_params.append(('callingNumberCountryA3', calling_number_country_a3))
+            
+        if called_number_country_a3 is not None:
+            
+            _query_params.append(('calledNumberCountryA3', called_number_country_a3))
+            
+        if from_segment_count is not None:
+            
+            _query_params.append(('fromSegmentCount', from_segment_count))
+            
+        if to_segment_count is not None:
+            
+            _query_params.append(('toSegmentCount', to_segment_count))
+            
+        if from_message_size is not None:
+            
+            _query_params.append(('fromMessageSize', from_message_size))
+            
+        if to_message_size is not None:
+            
+            _query_params.append(('toMessageSize', to_message_size))
             
         if sort is not None:
             

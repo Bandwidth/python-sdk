@@ -19,21 +19,27 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class MessageTypeEnum(str, Enum):
+class ProductTypeEnum(str, Enum):
     """
-    The type of message. Either SMS or MMS.
+    The type of product associated with the message.
     """
 
     """
     allowed enum values
     """
-    SMS = 'sms'
-    MMS = 'mms'
-    RCS = 'rcs'
+    LOCAL_A2_P = 'LOCAL_A2P'
+    P2P = 'P2P'
+    SHORT_CODE_REACH = 'SHORT_CODE_REACH'
+    TOLL_FREE = 'TOLL_FREE'
+    HOSTED_SHORT_CODE = 'HOSTED_SHORT_CODE'
+    ALPHA_NUMERIC = 'ALPHA_NUMERIC'
+    RBM_MEDIA = 'RBM_MEDIA'
+    RBM_RICH = 'RBM_RICH'
+    RBM_CONVERSATIONAL = 'RBM_CONVERSATIONAL'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of MessageTypeEnum from a JSON string"""
+        """Create an instance of ProductTypeEnum from a JSON string"""
         return cls(json.loads(json_str))
 
 

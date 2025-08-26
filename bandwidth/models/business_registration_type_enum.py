@@ -19,21 +19,20 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class MessageTypeEnum(str, Enum):
+class BusinessRegistrationTypeEnum(str, Enum):
     """
-    The type of message. Either SMS or MMS.
+    The type of business registration number. Optional until early 2026; required if `businessRegistrationNumber` is provided. Available starting October 1st, 2025.
     """
 
     """
     allowed enum values
     """
-    SMS = 'sms'
-    MMS = 'mms'
-    RCS = 'rcs'
+    EIN = 'EIN'
+    CBN = 'CBN'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of MessageTypeEnum from a JSON string"""
+        """Create an instance of BusinessRegistrationTypeEnum from a JSON string"""
         return cls(json.loads(json_str))
 
 
