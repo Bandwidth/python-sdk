@@ -31,8 +31,8 @@ class StartTranscription(NestableVerb):
         :param transcription_event_method: The HTTP method to use for the request to transcriptionEventUrl. GET or POST. Default value is POST.
         :param username: The username to send in the HTTP request to transcriptionEventUrl. If specified, the transcriptionEventUrl must be TLS-encrypted (i.e., https).
         :param password: The password to send in the HTTP request to transcriptionEventUrl. If specified, the transcriptionEventUrl must be TLS-encrypted (i.e., https).
-        :param destination:  A websocket URI to send the transcription to. A transcription of the specified tracks will be sent via websocket to this URL as a series of JSON messages. See below for more details on the websocket packet format.
-        :param stabilized:  A websocket URI to send the transcription to. A transcription of the specified tracks will be sent via websocket to this URL as a series of JSON messages. See below for more details on the websocket packet format.
+        :param destination: A websocket URI to send the transcription to. A transcription of the specified tracks will be sent via websocket to this URL as a series of JSON messages. See below for more details on the websocket packet format.
+        :param stabilized: A websocket URI to send the transcription to. A transcription of the specified tracks will be sent via websocket to this URL as a series of JSON messages. See below for more details on the websocket packet format.
         :param custom_params: These elements define optional user specified parameters that will be sent to the destination URL when the real-time transcription is first started.
         """
         self.name = name
