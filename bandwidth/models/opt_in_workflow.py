@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
@@ -30,8 +30,9 @@ class OptInWorkflow(BaseModel):
     """ # noqa: E501
     description: Annotated[str, Field(min_length=1, strict=True, max_length=500)]
     image_urls: List[Annotated[str, Field(min_length=1, strict=True, max_length=500)]] = Field(alias="imageUrls")
+    confirmation_response: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, alias="confirmationResponse")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["description", "imageUrls"]
+    __properties: ClassVar[List[str]] = ["description", "imageUrls", "confirmationResponse"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -79,6 +80,11 @@ class OptInWorkflow(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if confirmation_response (nullable) is None
+        # and model_fields_set contains the field
+        if self.confirmation_response is None and "confirmation_response" in self.model_fields_set:
+            _dict['confirmationResponse'] = None
+
         return _dict
 
     @classmethod
@@ -92,7 +98,8 @@ class OptInWorkflow(BaseModel):
 
         _obj = cls.model_validate({
             "description": obj.get("description"),
-            "imageUrls": obj.get("imageUrls")
+            "imageUrls": obj.get("imageUrls"),
+            "confirmationResponse": obj.get("confirmationResponse")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

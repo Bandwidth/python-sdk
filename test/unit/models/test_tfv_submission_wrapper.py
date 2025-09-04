@@ -59,7 +59,8 @@ class TestTfvSubmissionWrapper(unittest.TestCase):
                         description = 'Opt In Flow', 
                         image_urls = [
                             'https://www.example.com/path/to/resource'
-                            ], ), 
+                        ],
+                        confirmation_response = 'Thank you for opting in!', ),
                     additional_information = 'Any additional information', 
                     isv_reseller = 'Test ISV', )
             )
@@ -95,6 +96,7 @@ class TestTfvSubmissionWrapper(unittest.TestCase):
         assert isinstance(instance.submission.opt_in_workflow.image_urls, list)
         assert len(instance.submission.opt_in_workflow.image_urls) == 1
         assert instance.submission.opt_in_workflow.image_urls[0] == 'https://www.example.com/path/to/resource'
+        assert instance.submission.opt_in_workflow.confirmation_response == 'Thank you for opting in!'
         assert instance.submission.additional_information == 'Any additional information'
         assert instance.submission.isv_reseller == 'Test ISV'
 

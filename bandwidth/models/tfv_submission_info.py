@@ -22,6 +22,8 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from bandwidth.models.address import Address
+from bandwidth.models.business_entity_type_enum import BusinessEntityTypeEnum
+from bandwidth.models.business_registration_type_enum import BusinessRegistrationTypeEnum
 from bandwidth.models.contact import Contact
 from bandwidth.models.opt_in_workflow import OptInWorkflow
 from typing import Optional, Set
@@ -43,8 +45,11 @@ class TfvSubmissionInfo(BaseModel):
     privacy_policy_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request privacy policy URL.", alias="privacyPolicyUrl")
     terms_and_conditions_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request terms and conditions policy URL.", alias="termsAndConditionsUrl")
     business_dba: Optional[StrictStr] = Field(default=None, description="The company 'Doing Business As'.", alias="businessDba")
+    business_registration_number: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="US Federal Tax ID Number (EIN) or Canada Business Number (CBN). Optional until early 2026. If a value is provided for this field, a value must be provided for `businessRegistrationType` and `businessEntityType`. Available starting October 1st, 2025.", alias="businessRegistrationNumber")
+    business_registration_type: Optional[BusinessRegistrationTypeEnum] = Field(default=None, alias="businessRegistrationType")
+    business_entity_type: Optional[BusinessEntityTypeEnum] = Field(default=None, alias="businessEntityType")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller", "privacyPolicyUrl", "termsAndConditionsUrl", "businessDba"]
+    __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller", "privacyPolicyUrl", "termsAndConditionsUrl", "businessDba", "businessRegistrationNumber", "businessRegistrationType", "businessEntityType"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -111,6 +116,21 @@ class TfvSubmissionInfo(BaseModel):
         if self.isv_reseller is None and "isv_reseller" in self.model_fields_set:
             _dict['isvReseller'] = None
 
+        # set to None if business_registration_number (nullable) is None
+        # and model_fields_set contains the field
+        if self.business_registration_number is None and "business_registration_number" in self.model_fields_set:
+            _dict['businessRegistrationNumber'] = None
+
+        # set to None if business_registration_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.business_registration_type is None and "business_registration_type" in self.model_fields_set:
+            _dict['businessRegistrationType'] = None
+
+        # set to None if business_entity_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.business_entity_type is None and "business_entity_type" in self.model_fields_set:
+            _dict['businessEntityType'] = None
+
         return _dict
 
     @classmethod
@@ -134,7 +154,10 @@ class TfvSubmissionInfo(BaseModel):
             "isvReseller": obj.get("isvReseller"),
             "privacyPolicyUrl": obj.get("privacyPolicyUrl"),
             "termsAndConditionsUrl": obj.get("termsAndConditionsUrl"),
-            "businessDba": obj.get("businessDba")
+            "businessDba": obj.get("businessDba"),
+            "businessRegistrationNumber": obj.get("businessRegistrationNumber"),
+            "businessRegistrationType": obj.get("businessRegistrationType"),
+            "businessEntityType": obj.get("businessEntityType")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

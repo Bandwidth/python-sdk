@@ -183,6 +183,8 @@ paths:
         - $ref: '#/components/parameters/bwQueued'
         - $ref: '#/components/parameters/product'
         - $ref: '#/components/parameters/location'
+        - $ref: '#/components/parameters/carrierQueued'
+        - $ref: '#/components/parameters/fromCarrierLatency'
         - $ref: '#/components/parameters/callingNumberCountryA3'
         - $ref: '#/components/parameters/calledNumberCountryA3'
         - $ref: '#/components/parameters/fromSegmentCount'
@@ -1849,6 +1851,14 @@ components:
           description: >-
             The Bandwidth latency of the message in seconds. Only available for
             accounts with the Advanced Quality Metrics feature enabled.
+          nullable: true
+          example: 20
+        carrierLatency:
+          type: integer
+          description: >-
+            The carrier latency of the message in seconds. Only available for
+            OUTBOUND messages from accounts with the Advanced Quality Metrics
+            feature enabled.
           nullable: true
           example: 20
         callingNumberCountryA3:
@@ -5530,6 +5540,50 @@ components:
       description: The company 'Doing Business As'.
       example: Another Company Name Inc.
       type: string
+    businessRegistrationNumber:
+      type: string
+      description: >-
+        US Federal Tax ID Number (EIN) or Canada Business Number (CBN). Optional
+        until early 2026. If a value is provided for this field, a value must be
+        provided for `businessRegistrationType` and `businessEntityType`.
+        Available starting October 1st, 2025.
+      nullable: true
+      maxLength: 500
+      example: 12-3456789
+    businessRegistrationTypeEnum:
+      type: string
+      description: >-
+        The type of business registration number. Optional until early 2026;
+        required if `businessRegistrationNumber` is provided. Available starting
+        October 1st, 2025.
+      enum:
+        - EIN
+        - CBN
+      nullable: true
+    businessEntityTypeEnum:
+      type: string
+      description: >-
+        The type of registered business. If no option is applicable, please
+        provide "SOLE_PROPRIETOR" as a value. Optional until early 2026;
+        required if `businessRegistrationNumber` is provided. Available starting
+        October 1st, 2025.
+      enum:
+        - SOLE_PROPRIETOR
+        - PRIVATE_PROFIT
+        - PUBLIC_PROFIT
+        - NON_PROFIT
+        - GOVERNMENT
+      nullable: true
+    helpMessageResponse:
+      type: string
+      description: A message that gets sent to users requesting help.
+      nullable: true
+      maxLength: 500
+      example: Please contact support for assistance.
+    ageGatedContent:
+      type: boolean
+      description: Indicates whether the content is age-gated.
+      example: false
     additionalDenialReason:
       properties:
         statusCode:
@@ -5616,6 +5670,16 @@ components:
           $ref: '#/components/schemas/termsAndConditionsUrl'
         businessDba:
           $ref: '#/components/schemas/businessDba'
+        businessRegistrationNumber:
+          $ref: '#/components/schemas/businessRegistrationNumber'
+        businessRegistrationType:
+          $ref: '#/components/schemas/businessRegistrationTypeEnum'
+        businessEntityType:
+          $ref: '#/components/schemas/businessEntityTypeEnum'
+        helpMessageResponse:
+          $ref: '#/components/schemas/helpMessageResponse'
+        ageGatedContent:
+          $ref: '#/components/schemas/ageGatedContent'
     verificationUpdateRequest:
       type: object
       required:
@@ -5655,6 +5719,16 @@ components:
           $ref: '#/components/schemas/termsAndConditionsUrl'
         businessDba:
           $ref: '#/components/schemas/businessDba'
+        businessRegistrationNumber:
+          $ref: '#/components/schemas/businessRegistrationNumber'
+        businessRegistrationType:
+          $ref: '#/components/schemas/businessRegistrationTypeEnum'
+        businessEntityType:
+          $ref: '#/components/schemas/businessEntityTypeEnum'
+        helpMessageResponse:
+          $ref: '#/components/schemas/helpMessageResponse'
+        ageGatedContent:
+          $ref: '#/components/schemas/ageGatedContent'
     tfvBasicAuthentication:
       type: object
       properties:
@@ -5858,6 +5932,12 @@ components:
             example: https://www.example.com/path/to/resource
             pattern: >-
               ^$|(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,253}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)
+        confirmationResponse:
+          type: string
+          minLength: 0
+          maxLength: 500
+          nullable: true
+          example: Thank you for opting in!
     isvReseller:
       type: string
       description: ISV name.
@@ -6131,6 +6211,22 @@ components:
           $ref: '#/components/schemas/termsAndConditionsUrl'
         businessDba:
           $ref: '#/components/schemas/businessDba'
+        businessRegistrationNumber:
+          $ref: '#/components/schemas/businessRegistrationNumber'
+          description: >-
+            US Federal Tax ID Number (EIN) or Canada Business Number (CBN).
+            Available starting October 1st, 2025.
+        businessRegistrationType:
+          $ref: '#/components/schemas/businessRegistrationTypeEnum'
+          description: >-
+            The type of business registration number. Available starting October
+            1st, 2025.
+        businessEntityType:
+          $ref: '#/components/schemas/businessEntityTypeEnum'
+          description: >-
+            The type of registered business. If no option is applicable, please
+            provide "SOLE_PROPRIETOR" as a value. Available starting October
+            1st, 2025.
     tfvStatusEnum:
       type: string
       enum:
@@ -7028,6 +7124,28 @@ components:
       example: 123ABC
       schema:
         type: string
+    carrierQueued:
+      in: query
+      name: carrierQueued
+      required: false
+      description: >-
+        A boolean value indicating whether the message is queued in the carrier
+        network. Only available for OUTBOUND messages from accounts with the
+        Advanced Quality Metrics feature enabled.
+      example: true
+      schema:
+        type: boolean
+    fromCarrierLatency:
+      in: query
+      name: fromCarrierLatency
+      required: false
+      description: >-
+        The minimum carrier latency of the message in seconds. Only available
+        for OUTBOUND messages from accounts with the Advanced Quality Metrics
+        feature enabled.
+      example: 50
+      schema:
+        type: integer
     callingNumberCountryA3:
       in: query
       name: callingNumberCountryA3

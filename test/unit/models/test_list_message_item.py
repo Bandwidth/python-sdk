@@ -52,6 +52,7 @@ class TestListMessageItem(unittest.TestCase):
                 campaign_class = 'T',
                 campaign_id = 'CJEUMDK',
                 bw_latency = 20,
+                carrier_latency = 20,
                 calling_number_country_a3 = 'USA',
                 called_number_country_a3 = 'USA',
                 product = 'P2P',
@@ -84,6 +85,7 @@ class TestListMessageItem(unittest.TestCase):
         assert instance.campaign_class == 'T'
         assert instance.campaign_id == 'CJEUMDK'
         assert instance.bw_latency == 20
+        assert instance.carrier_latency == 20
         assert instance.calling_number_country_a3 == 'USA'
         assert instance.called_number_country_a3 == 'USA'
         assert instance.product == 'P2P'

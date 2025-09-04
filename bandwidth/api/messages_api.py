@@ -27,6 +27,7 @@ from bandwidth.models.message_status_enum import MessageStatusEnum
 from bandwidth.models.message_type_enum import MessageTypeEnum
 from bandwidth.models.messages_list import MessagesList
 from bandwidth.models.product_type_enum import ProductTypeEnum
+from bandwidth.models.product_type_enum import ProductTypeEnum
 
 from bandwidth.api_client import ApiClient, RequestSerialized
 from bandwidth.api_response import ApiResponse
@@ -384,6 +385,8 @@ class MessagesApi:
         bw_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the Bandwidth network.")] = None,
         product: Annotated[Optional[ProductTypeEnum], Field(description="Messaging product associated with the message.")] = None,
         location: Annotated[Optional[StrictStr], Field(description="Location Id associated with the message.")] = None,
+        carrier_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        from_carrier_latency: Annotated[Optional[StrictInt], Field(description="The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
         calling_number_country_a3: Annotated[Optional[StrictStr], Field(description="Calling number country in A3 format.")] = None,
         called_number_country_a3: Annotated[Optional[StrictStr], Field(description="Called number country in A3 format.")] = None,
         from_segment_count: Annotated[Optional[StrictInt], Field(description="Segment count (start range).")] = None,
@@ -443,6 +446,10 @@ class MessagesApi:
         :type product: ProductTypeEnum
         :param location: Location Id associated with the message.
         :type location: str
+        :param carrier_queued: A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type carrier_queued: bool
+        :param from_carrier_latency: The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type from_carrier_latency: int
         :param calling_number_country_a3: Calling number country in A3 format.
         :type calling_number_country_a3: str
         :param called_number_country_a3: Called number country in A3 format.
@@ -502,6 +509,8 @@ class MessagesApi:
             bw_queued=bw_queued,
             product=product,
             location=location,
+            carrier_queued=carrier_queued,
+            from_carrier_latency=from_carrier_latency,
             calling_number_country_a3=calling_number_country_a3,
             called_number_country_a3=called_number_country_a3,
             from_segment_count=from_segment_count,
@@ -558,6 +567,8 @@ class MessagesApi:
         bw_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the Bandwidth network.")] = None,
         product: Annotated[Optional[ProductTypeEnum], Field(description="Messaging product associated with the message.")] = None,
         location: Annotated[Optional[StrictStr], Field(description="Location Id associated with the message.")] = None,
+        carrier_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        from_carrier_latency: Annotated[Optional[StrictInt], Field(description="The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
         calling_number_country_a3: Annotated[Optional[StrictStr], Field(description="Calling number country in A3 format.")] = None,
         called_number_country_a3: Annotated[Optional[StrictStr], Field(description="Called number country in A3 format.")] = None,
         from_segment_count: Annotated[Optional[StrictInt], Field(description="Segment count (start range).")] = None,
@@ -617,6 +628,10 @@ class MessagesApi:
         :type product: ProductTypeEnum
         :param location: Location Id associated with the message.
         :type location: str
+        :param carrier_queued: A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type carrier_queued: bool
+        :param from_carrier_latency: The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type from_carrier_latency: int
         :param calling_number_country_a3: Calling number country in A3 format.
         :type calling_number_country_a3: str
         :param called_number_country_a3: Called number country in A3 format.
@@ -676,6 +691,8 @@ class MessagesApi:
             bw_queued=bw_queued,
             product=product,
             location=location,
+            carrier_queued=carrier_queued,
+            from_carrier_latency=from_carrier_latency,
             calling_number_country_a3=calling_number_country_a3,
             called_number_country_a3=called_number_country_a3,
             from_segment_count=from_segment_count,
@@ -732,6 +749,8 @@ class MessagesApi:
         bw_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the Bandwidth network.")] = None,
         product: Annotated[Optional[ProductTypeEnum], Field(description="Messaging product associated with the message.")] = None,
         location: Annotated[Optional[StrictStr], Field(description="Location Id associated with the message.")] = None,
+        carrier_queued: Annotated[Optional[StrictBool], Field(description="A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
+        from_carrier_latency: Annotated[Optional[StrictInt], Field(description="The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.")] = None,
         calling_number_country_a3: Annotated[Optional[StrictStr], Field(description="Calling number country in A3 format.")] = None,
         called_number_country_a3: Annotated[Optional[StrictStr], Field(description="Called number country in A3 format.")] = None,
         from_segment_count: Annotated[Optional[StrictInt], Field(description="Segment count (start range).")] = None,
@@ -791,6 +810,10 @@ class MessagesApi:
         :type product: ProductTypeEnum
         :param location: Location Id associated with the message.
         :type location: str
+        :param carrier_queued: A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type carrier_queued: bool
+        :param from_carrier_latency: The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.
+        :type from_carrier_latency: int
         :param calling_number_country_a3: Calling number country in A3 format.
         :type calling_number_country_a3: str
         :param called_number_country_a3: Called number country in A3 format.
@@ -850,6 +873,8 @@ class MessagesApi:
             bw_queued=bw_queued,
             product=product,
             location=location,
+            carrier_queued=carrier_queued,
+            from_carrier_latency=from_carrier_latency,
             calling_number_country_a3=calling_number_country_a3,
             called_number_country_a3=called_number_country_a3,
             from_segment_count=from_segment_count,
@@ -901,6 +926,8 @@ class MessagesApi:
         bw_queued,
         product,
         location,
+        carrier_queued,
+        from_carrier_latency,
         calling_number_country_a3,
         called_number_country_a3,
         from_segment_count,
@@ -997,6 +1024,14 @@ class MessagesApi:
         if location is not None:
             
             _query_params.append(('location', location))
+            
+        if carrier_queued is not None:
+            
+            _query_params.append(('carrierQueued', carrier_queued))
+            
+        if from_carrier_latency is not None:
+            
+            _query_params.append(('fromCarrierLatency', from_carrier_latency))
             
         if calling_number_country_a3 is not None:
             

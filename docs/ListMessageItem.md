@@ -23,6 +23,7 @@ Name | Type | Description | Notes
 **campaign_class** | **str** | The campaign class of the message if it has one. | [optional] 
 **campaign_id** | **str** | The campaign ID of the message if it has one. | [optional] 
 **bw_latency** | **int** | The Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled. | [optional] 
+**carrier_latency** | **int** | The carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled. | [optional] 
 **calling_number_country_a3** | **str** | The A3 country code of the calling number. | [optional] 
 **called_number_country_a3** | **str** | The A3 country code of the called number. | [optional] 
 **product** | **str** | The messaging product associated with the message. | [optional] 

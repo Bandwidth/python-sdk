@@ -49,12 +49,13 @@ class ListMessageItem(BaseModel):
     campaign_class: Optional[StrictStr] = Field(default=None, description="The campaign class of the message if it has one.", alias="campaignClass")
     campaign_id: Optional[StrictStr] = Field(default=None, description="The campaign ID of the message if it has one.", alias="campaignId")
     bw_latency: Optional[StrictInt] = Field(default=None, description="The Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled.", alias="bwLatency")
+    carrier_latency: Optional[StrictInt] = Field(default=None, description="The carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled.", alias="carrierLatency")
     calling_number_country_a3: Optional[StrictStr] = Field(default=None, description="The A3 country code of the calling number.", alias="callingNumberCountryA3")
     called_number_country_a3: Optional[StrictStr] = Field(default=None, description="The A3 country code of the called number.", alias="calledNumberCountryA3")
     product: Optional[StrictStr] = Field(default=None, description="The messaging product associated with the message.")
     location: Optional[StrictStr] = Field(default=None, description="The location ID associated with this message.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["messageId", "accountId", "sourceTn", "destinationTn", "messageStatus", "messageDirection", "messageType", "segmentCount", "errorCode", "receiveTime", "carrierName", "messageSize", "messageLength", "attachmentCount", "recipientCount", "campaignClass", "campaignId", "bwLatency", "callingNumberCountryA3", "calledNumberCountryA3", "product", "location"]
+    __properties: ClassVar[List[str]] = ["messageId", "accountId", "sourceTn", "destinationTn", "messageStatus", "messageDirection", "messageType", "segmentCount", "errorCode", "receiveTime", "carrierName", "messageSize", "messageLength", "attachmentCount", "recipientCount", "campaignClass", "campaignId", "bwLatency", "carrierLatency", "callingNumberCountryA3", "calledNumberCountryA3", "product", "location"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -137,6 +138,11 @@ class ListMessageItem(BaseModel):
         if self.bw_latency is None and "bw_latency" in self.model_fields_set:
             _dict['bwLatency'] = None
 
+        # set to None if carrier_latency (nullable) is None
+        # and model_fields_set contains the field
+        if self.carrier_latency is None and "carrier_latency" in self.model_fields_set:
+            _dict['carrierLatency'] = None
+
         # set to None if calling_number_country_a3 (nullable) is None
         # and model_fields_set contains the field
         if self.calling_number_country_a3 is None and "calling_number_country_a3" in self.model_fields_set:
@@ -187,6 +193,7 @@ class ListMessageItem(BaseModel):
             "campaignClass": obj.get("campaignClass"),
             "campaignId": obj.get("campaignId"),
             "bwLatency": obj.get("bwLatency"),
+            "carrierLatency": obj.get("carrierLatency"),
             "callingNumberCountryA3": obj.get("callingNumberCountryA3"),
             "calledNumberCountryA3": obj.get("calledNumberCountryA3"),
             "product": obj.get("product"),
