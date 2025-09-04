@@ -30,8 +30,10 @@ class TestMessageTypeEnum(unittest.TestCase):
         """Test MessageTypeEnum"""
         sms = MessageTypeEnum('sms')
         mms = MessageTypeEnum('mms')
+        rcs = MessageTypeEnum('rcs')
         assert sms == 'sms'
         assert mms == 'mms'
+        assert rcs == 'rcs'
 
 if __name__ == '__main__':
     unittest.main()

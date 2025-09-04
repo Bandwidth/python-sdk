@@ -117,6 +117,7 @@ from bandwidth.models.message_status_enum import MessageStatusEnum
 from bandwidth.models.message_type_enum import MessageTypeEnum
 from bandwidth.models.messages_list import MessagesList
 from bandwidth.models.product_type_enum import ProductTypeEnum
+from bandwidth.models.product_type_enum import ProductTypeEnum
 from bandwidth.rest import ApiException
 from pprint import pprint
 
