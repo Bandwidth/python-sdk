@@ -84,7 +84,8 @@ class TestTollFreeVerificationApi(unittest.TestCase):
             'productionMessageContent': 'productionMessageContent',
             'optInWorkflow': OptInWorkflow(
                 description='description',
-                image_urls=['https://example.com']
+                image_urls=['https://example.com'],
+                confirmation_response='confirmationResponse'
             ),
             'additionalInformation': 'additionalInformation',
             'isvReseller': 'isvReseller'

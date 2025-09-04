@@ -67,12 +67,16 @@ class TestTfvStatus(unittest.TestCase):
                         description = 'Opt In Flow', 
                         image_urls = [
                             'https://www.example.com/path/to/resource'
-                            ], ), 
+                        ],
+                        confirmation_response = 'Thank you for opting in!', ),
                     additional_information = 'Any additional information', 
                     isv_reseller = 'Test ISV',
                     privacy_policy_url = 'https://www.example.com/path/to/resource',
                     terms_and_conditions_url = 'https://www.example.com/path/to/resource',
-                    business_dba = 'Bandwidth Inc.'
+                    business_dba = 'Bandwidth Inc.',
+                    business_registration_number = '12-3456789',
+                    business_registration_type = 'EIN',
+                    business_entity_type = 'SOLE_PROPRIETOR'
                 ),
                 blocked = False,
                 blocked_reason = 'Blocked Reason'
@@ -116,11 +120,15 @@ class TestTfvStatus(unittest.TestCase):
         assert isinstance(instance.submission.opt_in_workflow.image_urls, list)
         assert len(instance.submission.opt_in_workflow.image_urls) == 1
         assert instance.submission.opt_in_workflow.image_urls[0] == 'https://www.example.com/path/to/resource'
+        assert instance.submission.opt_in_workflow.confirmation_response == 'Thank you for opting in!'
         assert instance.submission.additional_information == 'Any additional information'
         assert instance.submission.isv_reseller == 'Test ISV'
         assert instance.submission.privacy_policy_url == 'https://www.example.com/path/to/resource'
         assert instance.submission.terms_and_conditions_url == 'https://www.example.com/path/to/resource'
         assert instance.submission.business_dba == 'Bandwidth Inc.'
+        assert instance.submission.business_registration_number == '12-3456789'
+        assert instance.submission.business_registration_type == 'EIN'
+        assert instance.submission.business_entity_type == 'SOLE_PROPRIETOR'
         assert instance.submission.additional_information == 'Any additional information'
         assert instance.blocked == False
         assert instance.blocked_reason == 'Blocked Reason'
