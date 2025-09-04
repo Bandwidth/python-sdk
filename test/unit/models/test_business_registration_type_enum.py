@@ -29,9 +29,9 @@ class TestBusinessRegistrationTypeEnum(unittest.TestCase):
     def testBusinessRegistrationTypeEnum(self):
         """Test BusinessRegistrationTypeEnum"""
         ein = BusinessRegistrationTypeEnum('EIN')
-        cbn = BusinessRegistrationTypeEnum('CBM')
+        cbn = BusinessRegistrationTypeEnum('CBN')
         assert ein == 'EIN'
-        assert cbn == 'CBM'
+        assert cbn == 'CBN'
 
 
 
