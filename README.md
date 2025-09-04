@@ -239,6 +239,7 @@ Class | Method | HTTP request | Description
  - [OptInWorkflow](docs/OptInWorkflow.md)
  - [PageInfo](docs/PageInfo.md)
  - [PriorityEnum](docs/PriorityEnum.md)
+ - [ProductTypeEnum](docs/ProductTypeEnum.md)
  - [RbmActionBase](docs/RbmActionBase.md)
  - [RbmActionDial](docs/RbmActionDial.md)
  - [RbmActionOpenUrl](docs/RbmActionOpenUrl.md)

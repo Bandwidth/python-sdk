@@ -134,7 +134,8 @@ class TestMessagesApi(unittest.TestCase):
             'message_status', instance_of(MessageStatusEnum),
             'message_type', instance_of(MessageTypeEnum),
             'segment_count', greater_than(0),
-            'source_tn', matches_regexp('^\\+[1-9]\\d{1,14}$')
+            'source_tn', matches_regexp('^\\+[1-9]\\d{1,14}$'),
+            'calling_number_country_a3', equal_to('USA')
         ))
         assert_that(message.receive_time, instance_of(datetime))
 

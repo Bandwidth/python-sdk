@@ -131,6 +131,7 @@ from bandwidth.models.multi_channel_message_response_data_channel_list_inner imp
 from bandwidth.models.opt_in_workflow import OptInWorkflow
 from bandwidth.models.page_info import PageInfo
 from bandwidth.models.priority_enum import PriorityEnum
+from bandwidth.models.product_type_enum import ProductTypeEnum
 from bandwidth.models.rbm_action_base import RbmActionBase
 from bandwidth.models.rbm_action_dial import RbmActionDial
 from bandwidth.models.rbm_action_open_url import RbmActionOpenUrl
