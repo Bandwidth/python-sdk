@@ -108,6 +108,11 @@ class TestMessagesApi(unittest.TestCase):
         assert_that(response.data.messages[0].recipient_count, instance_of(int))
         assert_that(response.data.messages[0].campaign_class, instance_of(str))
         assert_that(response.data.messages[0].campaign_id, instance_of(str))
+        assert_that(response.data.messages[0].bw_latency, instance_of(int))
+        assert_that(response.data.messages[0].calling_number_country_a3, instance_of(str))
+        assert_that(response.data.messages[0].called_number_country_a3, instance_of(str))
+        assert_that(response.data.messages[0].product, instance_of(str))
+        assert_that(response.data.messages[0].location, instance_of(str))
 
 
 if __name__ == '__main__':
