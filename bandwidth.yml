@@ -1157,9 +1157,9 @@ paths:
     get:
       tags:
         - Transcriptions
-      summary: Enumerate transcriptions made with StartTranscription
+      summary: List Real-time Transcriptions
       description: >-
-        Enumerates the transcriptions created on this call via
+        List the transcriptions created on this call via
         [startTranscription](/docs/voice/bxml/startTranscription).
       operationId: listRealTimeTranscriptions
       parameters:
@@ -1189,7 +1189,7 @@ paths:
     get:
       tags:
         - Transcriptions
-      summary: Retrieve a specific transcription
+      summary: Get Real-time Transcription
       description: >-
         Retrieve the specified transcription that was created on this call via
         [startTranscription](/docs/voice/bxml/startTranscription).
@@ -1220,7 +1220,7 @@ paths:
     delete:
       tags:
         - Transcriptions
-      summary: Delete a specific transcription
+      summary: Delete Real-time Transcription
       description: >-
         Delete the specified transcription that was created on this call via
         [startTranscription](/docs/voice/bxml/startTranscription).
@@ -1929,7 +1929,7 @@ components:
       required:
         - type
         - description
-    messageId:
+    id:
       type: string
       description: The ID of the message.
       example: 1589228074636lm4k2je7j7jklbn2
@@ -2549,8 +2549,8 @@ components:
       description: The data returned in a multichannel message response.
       type: object
       properties:
-        messageId:
-          $ref: '#/components/schemas/messageId'
+        id:
+          $ref: '#/components/schemas/id'
         time:
           description: The time the message was received by the Bandwidth API.
           type: string
@@ -2586,7 +2586,7 @@ components:
         expiration:
           $ref: '#/components/schemas/expiration'
       required:
-        - messageId
+        - id
         - time
         - direction
         - to
@@ -3738,11 +3738,12 @@ components:
             the state of this conference member. This is the URL of this
             member's
 
-            [Get Conference Member](/apis/voice/#operation/getConferenceMember)
+            [Get Conference
+            Member](/apis/voice-apis/voice/#tag/Conferences/operation/getConferenceMember)
             endpoint
 
             and [Modify Conference
-            Member](/apis/voice/#operation/updateConferenceMember)
+            Member](/apis/voice-apis/voice/#tag/Conferences/operation/updateConferenceMember)
 
             endpoint.
           example: >-
@@ -4094,7 +4095,7 @@ components:
             points to the
 
             [Get Call
-            Transcription](/apis/voice/#operation/getCallTranscription)
+            Transcription](/apis/voice-apis/voice/#tag/Transcriptions/operation/getRealTimeTranscription)
             endpoint.
           example: >-
             https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-fef240ff-5cfc9091-8069-4863-a8c0-a4dcbbf1f1a4/transcriptions/t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b

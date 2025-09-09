@@ -143,9 +143,9 @@ Class | Method | HTTP request | Description
 *TollFreeVerificationApi* | [**request_toll_free_verification**](docs/TollFreeVerificationApi.md#request_toll_free_verification) | **POST** /accounts/{accountId}/tollFreeVerification | Request Toll-Free Verification
 *TollFreeVerificationApi* | [**update_toll_free_verification_request**](docs/TollFreeVerificationApi.md#update_toll_free_verification_request) | **PUT** /accounts/{accountId}/phoneNumbers/{phoneNumber}/tollFreeVerification | Update Toll-Free Verification Request
 *TollFreeVerificationApi* | [**update_webhook_subscription**](docs/TollFreeVerificationApi.md#update_webhook_subscription) | **PUT** /accounts/{accountId}/tollFreeVerification/webhooks/subscriptions/{id} | Update Webhook Subscription
-*TranscriptionsApi* | [**delete_real_time_transcription**](docs/TranscriptionsApi.md#delete_real_time_transcription) | **DELETE** /accounts/{accountId}/calls/{callId}/transcriptions/{transcriptionId} | Delete a specific transcription
-*TranscriptionsApi* | [**get_real_time_transcription**](docs/TranscriptionsApi.md#get_real_time_transcription) | **GET** /accounts/{accountId}/calls/{callId}/transcriptions/{transcriptionId} | Retrieve a specific transcription
-*TranscriptionsApi* | [**list_real_time_transcriptions**](docs/TranscriptionsApi.md#list_real_time_transcriptions) | **GET** /accounts/{accountId}/calls/{callId}/transcriptions | Enumerate transcriptions made with StartTranscription
+*TranscriptionsApi* | [**delete_real_time_transcription**](docs/TranscriptionsApi.md#delete_real_time_transcription) | **DELETE** /accounts/{accountId}/calls/{callId}/transcriptions/{transcriptionId} | Delete Real-time Transcription
+*TranscriptionsApi* | [**get_real_time_transcription**](docs/TranscriptionsApi.md#get_real_time_transcription) | **GET** /accounts/{accountId}/calls/{callId}/transcriptions/{transcriptionId} | Get Real-time Transcription
+*TranscriptionsApi* | [**list_real_time_transcriptions**](docs/TranscriptionsApi.md#list_real_time_transcriptions) | **GET** /accounts/{accountId}/calls/{callId}/transcriptions | List Real-time Transcriptions
 
 
 ## Documentation For Models
