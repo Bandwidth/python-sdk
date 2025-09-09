@@ -32,7 +32,7 @@ class MultiChannelMessageResponseData(BaseModel):
     """
     The data returned in a multichannel message response.
     """ # noqa: E501
-    message_id: StrictStr = Field(description="The ID of the message.", alias="messageId")
+    id: StrictStr = Field(description="The ID of the message.")
     time: datetime = Field(description="The time the message was received by the Bandwidth API.")
     direction: MessageDirectionEnum
     to: List[StrictStr] = Field(description="The destination phone number(s) of the message, in E164 format.")
@@ -41,7 +41,7 @@ class MultiChannelMessageResponseData(BaseModel):
     priority: Optional[PriorityEnum] = None
     expiration: Optional[datetime] = Field(default=None, description="A string with the date/time value that the message will automatically expire by. This must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a date-time in the future.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["messageId", "time", "direction", "to", "channelList", "tag", "priority", "expiration"]
+    __properties: ClassVar[List[str]] = ["id", "time", "direction", "to", "channelList", "tag", "priority", "expiration"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -108,7 +108,7 @@ class MultiChannelMessageResponseData(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "messageId": obj.get("messageId"),
+            "id": obj.get("id"),
             "time": obj.get("time"),
             "direction": obj.get("direction"),
             "to": obj.get("to"),

@@ -6,7 +6,7 @@ The data returned in a multichannel message response.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**message_id** | **str** | The ID of the message. | 
+**id** | **str** | The ID of the message. | 
 **time** | **datetime** | The time the message was received by the Bandwidth API. | 
 **direction** | [**MessageDirectionEnum**](MessageDirectionEnum.md) |  | 
 **to** | **List[str]** | The destination phone number(s) of the message, in E164 format. | 

@@ -29,7 +29,7 @@ class CallTranscriptionMetadata(BaseModel):
     """ # noqa: E501
     transcription_id: Optional[StrictStr] = Field(default=None, description="The programmable voice API transcription ID.", alias="transcriptionId")
     transcription_name: Optional[StrictStr] = Field(default=None, description="The programmable voice API transcription name. This name could be provided by the user when creating the transcription.", alias="transcriptionName")
-    transcription_url: Optional[StrictStr] = Field(default=None, description="A URL that may be used to retrieve the transcription itself. This points to the [Get Call Transcription](/apis/voice/#operation/getCallTranscription) endpoint.", alias="transcriptionUrl")
+    transcription_url: Optional[StrictStr] = Field(default=None, description="A URL that may be used to retrieve the transcription itself. This points to the [Get Call Transcription](/apis/voice-apis/voice/#tag/Transcriptions/operation/getRealTimeTranscription) endpoint.", alias="transcriptionUrl")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["transcriptionId", "transcriptionName", "transcriptionUrl"]
 

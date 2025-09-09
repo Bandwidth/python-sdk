@@ -36,7 +36,7 @@ class TestMultiChannelMessageResponseData(unittest.TestCase):
             optional params are included """
         if include_optional:
             return MultiChannelMessageResponseData(
-                message_id = '1589228074636lm4k2je7j7jklbn2',
+                id = '1589228074636lm4k2je7j7jklbn2',
                 time = '2025-01-01T18:20:16Z',
                 direction = 'in',
                 to = ["+15554443333"],
@@ -54,7 +54,7 @@ class TestMultiChannelMessageResponseData(unittest.TestCase):
             )
         else:
             return MultiChannelMessageResponseData(
-                message_id = '1589228074636lm4k2je7j7jklbn2',
+                id = '1589228074636lm4k2je7j7jklbn2',
                 time = '2025-01-01T18:20:16Z',
                 direction = 'in',
                 to = ["+15554443333"],
@@ -66,7 +66,7 @@ class TestMultiChannelMessageResponseData(unittest.TestCase):
         instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, MultiChannelMessageResponseData)
-        assert instance.message_id == '1589228074636lm4k2je7j7jklbn2'
+        assert instance.id == '1589228074636lm4k2je7j7jklbn2'
         assert isinstance(instance.time, datetime)
         assert instance.direction == 'in'
         assert instance.to == ["+15554443333"]
