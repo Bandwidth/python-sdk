@@ -3357,7 +3357,7 @@ components:
 
             | verstat | (optional) The verification status indicating whether
             the verification was successful or not. Possible values are
-            `TN-Verification-Passed` or `TN-Verification-Failed`. |
+            `TN-Validation-Passed` or `TN-Validation-Failed`. |
 
             | attestationIndicator | (optional) The attestation level verified
             by Bandwidth. Possible values are `A` (full), `B` (partial) or `C`
@@ -3375,7 +3375,7 @@ components:
           additionalProperties:
             type: string
           example:
-            verstat: TN-Verification-Passed
+            verstat: TN-Validation-Passed
             attestationIndicator: A
             originatingId: abc123
         identity:
@@ -5211,8 +5211,8 @@ components:
           description: >-
             (optional) The verification status indicating whether the
             verification was successful or not. Possible values are
-            TN-Verification-Passed and TN-Verification-Failed.
-          example: Tn-Verification-Passed
+            TN-Validation-Passed and TN-Validation-Failed.
+          example: Tn-Validation-Passed
         attestationIndicator:
           type: string
           description: >-
