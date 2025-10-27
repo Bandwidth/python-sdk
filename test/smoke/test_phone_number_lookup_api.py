@@ -29,8 +29,8 @@ class TestPhoneNumberLookupIntegration(unittest.TestCase):
 
     def setUp(self) -> None:
         configuration = bandwidth.Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+            client_id=BW_USERNAME,
+            client_secret=BW_PASSWORD
         )
         api_client = bandwidth.ApiClient(configuration)
         self.api_instance = phone_number_lookup_api.PhoneNumberLookupApi(api_client)
