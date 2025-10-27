@@ -1330,6 +1330,7 @@ paths:
     servers: *ref_2
   /accounts/{accountId}/tnlookup:
     post:
+      deprecated: true
       summary: Create Lookup
       description: Create a Phone Number Lookup Request.
       operationId: createLookup
@@ -1359,6 +1360,7 @@ paths:
         description: Production
   /accounts/{accountId}/tnlookup/{requestId}:
     get:
+      deprecated: true
       summary: Get Lookup Request Status
       description: Get an existing Phone Number Lookup Request.
       operationId: getLookupStatus

@@ -59,7 +59,7 @@ class PhoneNumberLookupApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> CreateLookupResponse:
-        """Create Lookup
+        """(Deprecated) Create Lookup
 
         Create a Phone Number Lookup Request.
 
@@ -88,6 +88,7 @@ class PhoneNumberLookupApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("POST /accounts/{accountId}/tnlookup is deprecated.", DeprecationWarning)
 
         _param = self._create_lookup_serialize(
             account_id=account_id,
@@ -136,7 +137,7 @@ class PhoneNumberLookupApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> ApiResponse[CreateLookupResponse]:
-        """Create Lookup
+        """(Deprecated) Create Lookup
 
         Create a Phone Number Lookup Request.
 
@@ -165,6 +166,7 @@ class PhoneNumberLookupApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("POST /accounts/{accountId}/tnlookup is deprecated.", DeprecationWarning)
 
         _param = self._create_lookup_serialize(
             account_id=account_id,
@@ -213,7 +215,7 @@ class PhoneNumberLookupApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> RESTResponseType:
-        """Create Lookup
+        """(Deprecated) Create Lookup
 
         Create a Phone Number Lookup Request.
 
@@ -242,6 +244,7 @@ class PhoneNumberLookupApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("POST /accounts/{accountId}/tnlookup is deprecated.", DeprecationWarning)
 
         _param = self._create_lookup_serialize(
             account_id=account_id,
@@ -369,7 +372,7 @@ class PhoneNumberLookupApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> LookupStatus:
-        """Get Lookup Request Status
+        """(Deprecated) Get Lookup Request Status
 
         Get an existing Phone Number Lookup Request.
 
@@ -398,6 +401,7 @@ class PhoneNumberLookupApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /accounts/{accountId}/tnlookup/{requestId} is deprecated.", DeprecationWarning)
 
         _param = self._get_lookup_status_serialize(
             account_id=account_id,
@@ -446,7 +450,7 @@ class PhoneNumberLookupApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> ApiResponse[LookupStatus]:
-        """Get Lookup Request Status
+        """(Deprecated) Get Lookup Request Status
 
         Get an existing Phone Number Lookup Request.
 
@@ -475,6 +479,7 @@ class PhoneNumberLookupApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /accounts/{accountId}/tnlookup/{requestId} is deprecated.", DeprecationWarning)
 
         _param = self._get_lookup_status_serialize(
             account_id=account_id,
@@ -523,7 +528,7 @@ class PhoneNumberLookupApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> RESTResponseType:
-        """Get Lookup Request Status
+        """(Deprecated) Get Lookup Request Status
 
         Get an existing Phone Number Lookup Request.
 
@@ -552,6 +557,7 @@ class PhoneNumberLookupApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("GET /accounts/{accountId}/tnlookup/{requestId} is deprecated.", DeprecationWarning)
 
         _param = self._get_lookup_status_serialize(
             account_id=account_id,
