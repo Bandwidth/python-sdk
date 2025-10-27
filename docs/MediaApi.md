@@ -15,11 +15,16 @@ Method | HTTP request | Description
 
 Delete Media
 
-Deletes a media file from Bandwidth API server. Make sure you don't have any application scripts still using the media before you delete.  If you accidentally delete a media file you can immediately upload a new file with the same name.
+Deletes a media file from Bandwidth API server. Make sure you don't have
+any application scripts still using the media before you delete.
+
+If you accidentally delete a media file you can immediately upload a new
+file with the same name.
 
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -42,6 +47,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -73,7 +80,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -106,6 +113,7 @@ Downloads a media file you previously uploaded.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -128,6 +136,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -161,7 +171,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -194,6 +204,7 @@ Gets a list of your media files. No query parameters are supported.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -217,6 +228,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -250,7 +263,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -278,11 +291,16 @@ Name | Type | Description  | Notes
 
 Upload Media
 
-Upload a file. You may add headers to the request in order to provide some control to your media file.  If a file is uploaded with the same name as a file that already exists under this account, the previous file will be overwritten.  A list of supported media types can be found [here](https://support.bandwidth.com/hc/en-us/articles/360014128994-What-MMS-file-types-are-supported-).
+Upload a file. You may add headers to the request in order to provide some control to your media file.
+
+If a file is uploaded with the same name as a file that already exists under this account, the previous file will be overwritten.
+
+A list of supported media types can be found [here](https://support.bandwidth.com/hc/en-us/articles/360014128994-What-MMS-file-types-are-supported-).
 
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -305,6 +323,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -342,7 +362,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

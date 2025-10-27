@@ -26,8 +26,8 @@ class TestTollFreeVerificationApi(unittest.TestCase):
 
     def setUp(self) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+            client_id=BW_USERNAME,
+            client_secret=BW_PASSWORD
         )
         self.api_client = ApiClient(configuration)
         self.api_instance = TollFreeVerificationApi(self.api_client)
