@@ -9,6 +9,7 @@ info:
   version: 1.0.0
 security:
   - Basic: []
+  - OAuth2: []
 tags:
   - name: Messages
   - name: Media
@@ -8097,6 +8098,12 @@ components:
 
 
         - Example: `Authorization: Basic ZGVtbZpwQDU1dzByZA==`
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.bandwidth.com/api/v1/oauth2/token
+          scopes: {}
   callbacks:
     inboundCallback:
       '{inboundCallbackUrl}':
