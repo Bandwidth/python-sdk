@@ -28,12 +28,9 @@ class TestInboundCallbackTypeEnum(unittest.TestCase):
 
     def testInboundCallbackTypeEnum(self):
         """Test InboundCallbackTypeEnum"""
-        message_received = InboundCallbackTypeEnum('message-received')
-        request_location_response = InboundCallbackTypeEnum('request-location-response')
-        suggestion_response = InboundCallbackTypeEnum('suggestion-response')
-        assert message_received == 'message-received'
-        assert request_location_response == 'request-location-response'
-        assert suggestion_response == 'suggestion-response'
+        assert InboundCallbackTypeEnum('message-received') == 'message-received'
+        assert InboundCallbackTypeEnum('request-location-response') == 'request-location-response'
+        assert InboundCallbackTypeEnum('suggestion-response') == 'suggestion-response'
 
 if __name__ == '__main__':
     unittest.main()

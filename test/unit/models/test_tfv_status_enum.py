@@ -28,12 +28,9 @@ class TestTfvStatusEnum(unittest.TestCase):
 
     def testTfvStatusEnum(self):
         """Test TfvStatusEnum"""
-        verified = TfvStatusEnum('VERIFIED')
-        unverified = TfvStatusEnum('UNVERIFIED')
-        pending = TfvStatusEnum('PENDING')
-        assert verified == 'VERIFIED'
-        assert unverified == 'UNVERIFIED'
-        assert pending == 'PENDING'
+        assert TfvStatusEnum('VERIFIED') == 'VERIFIED'
+        assert TfvStatusEnum('UNVERIFIED') == 'UNVERIFIED'
+        assert TfvStatusEnum('PENDING') == 'PENDING'
 
 if __name__ == '__main__':
     unittest.main()

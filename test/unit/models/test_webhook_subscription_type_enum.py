@@ -28,10 +28,8 @@ class TestWebhookSubscriptionTypeEnum(unittest.TestCase):
 
     def testWebhookSubscriptionTypeEnum(self):
         """Test WebhookSubscriptionTypeEnum"""
-        tvs = WebhookSubscriptionTypeEnum('TOLLFREE_VERIFICATION_STATUS')
-        mpas = WebhookSubscriptionTypeEnum('MESSAGING_PORTOUT_APPROVAL_STATUS')
-        assert tvs == 'TOLLFREE_VERIFICATION_STATUS'
-        assert mpas == 'MESSAGING_PORTOUT_APPROVAL_STATUS'
+        assert WebhookSubscriptionTypeEnum('TOLLFREE_VERIFICATION_STATUS') == 'TOLLFREE_VERIFICATION_STATUS'
+        assert WebhookSubscriptionTypeEnum('MESSAGING_PORTOUT_APPROVAL_STATUS') == 'MESSAGING_PORTOUT_APPROVAL_STATUS'
 
 if __name__ == '__main__':
     unittest.main()

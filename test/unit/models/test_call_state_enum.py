@@ -28,10 +28,8 @@ class TestCallStateEnum(unittest.TestCase):
 
     def testCallStateEnum(self):
         """Test CallStateEnum"""
-        active = CallStateEnum('active')
-        completed = CallStateEnum('completed')
-        assert active == 'active'
-        assert completed == 'completed'
+        assert CallStateEnum('active') == 'active'
+        assert CallStateEnum('completed') == 'completed'
 
 if __name__ == '__main__':
     unittest.main()
