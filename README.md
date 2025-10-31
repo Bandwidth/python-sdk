@@ -73,6 +73,8 @@ configuration = bandwidth.Configuration(
     password = os.environ["PASSWORD"]
 )
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -121,8 +123,9 @@ Class | Method | HTTP request | Description
 *MessagesApi* | [**create_message**](docs/MessagesApi.md#create_message) | **POST** /users/{accountId}/messages | Create Message
 *MessagesApi* | [**list_messages**](docs/MessagesApi.md#list_messages) | **GET** /users/{accountId}/messages | List Messages
 *MultiChannelApi* | [**create_multi_channel_message**](docs/MultiChannelApi.md#create_multi_channel_message) | **POST** /users/{accountId}/messages/multiChannel | Create Multi-Channel Message
-*PhoneNumberLookupApi* | [**create_lookup**](docs/PhoneNumberLookupApi.md#create_lookup) | **POST** /accounts/{accountId}/tnlookup | Create Lookup
-*PhoneNumberLookupApi* | [**get_lookup_status**](docs/PhoneNumberLookupApi.md#get_lookup_status) | **GET** /accounts/{accountId}/tnlookup/{requestId} | Get Lookup Request Status
+*PhoneNumberLookupApi* | [**create_async_bulk_lookup**](docs/PhoneNumberLookupApi.md#create_async_bulk_lookup) | **POST** /accounts/{accountId}/phoneNumberLookup/bulk | Create Asynchronous Bulk Number Lookup
+*PhoneNumberLookupApi* | [**create_sync_lookup**](docs/PhoneNumberLookupApi.md#create_sync_lookup) | **POST** /accounts/{accountId}/phoneNumberLookup | Create Synchronous Number Lookup
+*PhoneNumberLookupApi* | [**get_async_bulk_lookup**](docs/PhoneNumberLookupApi.md#get_async_bulk_lookup) | **GET** /accounts/{accountId}/phoneNumberLookup/bulk/{requestId} | Get Asynchronous Bulk Number Lookup
 *RecordingsApi* | [**delete_recording**](docs/RecordingsApi.md#delete_recording) | **DELETE** /accounts/{accountId}/calls/{callId}/recordings/{recordingId} | Delete Recording
 *RecordingsApi* | [**delete_recording_media**](docs/RecordingsApi.md#delete_recording_media) | **DELETE** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/media | Delete Recording Media
 *RecordingsApi* | [**delete_recording_transcription**](docs/RecordingsApi.md#delete_recording_transcription) | **DELETE** /accounts/{accountId}/calls/{callId}/recordings/{recordingId}/transcription | Delete Transcription
@@ -154,6 +157,7 @@ Class | Method | HTTP request | Description
  - [AdditionalDenialReason](docs/AdditionalDenialReason.md)
  - [Address](docs/Address.md)
  - [AnswerCallback](docs/AnswerCallback.md)
+ - [AsyncLookupRequest](docs/AsyncLookupRequest.md)
  - [BlockedWebhook](docs/BlockedWebhook.md)
  - [BridgeCompleteCallback](docs/BridgeCompleteCallback.md)
  - [BridgeTargetCompleteCallback](docs/BridgeTargetCompleteCallback.md)
@@ -172,6 +176,7 @@ Class | Method | HTTP request | Description
  - [CallbackMethodEnum](docs/CallbackMethodEnum.md)
  - [CardWidthEnum](docs/CardWidthEnum.md)
  - [CodeRequest](docs/CodeRequest.md)
+ - [CompletedLookupStatusEnum](docs/CompletedLookupStatusEnum.md)
  - [Conference](docs/Conference.md)
  - [ConferenceCompletedCallback](docs/ConferenceCompletedCallback.md)
  - [ConferenceCreatedCallback](docs/ConferenceCreatedCallback.md)
@@ -183,11 +188,15 @@ Class | Method | HTTP request | Description
  - [ConferenceRedirectCallback](docs/ConferenceRedirectCallback.md)
  - [ConferenceStateEnum](docs/ConferenceStateEnum.md)
  - [Contact](docs/Contact.md)
+ - [CreateAsyncBulkLookupResponse](docs/CreateAsyncBulkLookupResponse.md)
+ - [CreateAsyncBulkLookupResponseData](docs/CreateAsyncBulkLookupResponseData.md)
  - [CreateCall](docs/CreateCall.md)
  - [CreateCallResponse](docs/CreateCallResponse.md)
- - [CreateLookupResponse](docs/CreateLookupResponse.md)
  - [CreateMessageRequestError](docs/CreateMessageRequestError.md)
  - [CreateMultiChannelMessageResponse](docs/CreateMultiChannelMessageResponse.md)
+ - [CreateSyncLookupResponse](docs/CreateSyncLookupResponse.md)
+ - [CreateSyncLookupResponseData](docs/CreateSyncLookupResponseData.md)
+ - [DeactivationEventEnum](docs/DeactivationEventEnum.md)
  - [DisconnectCallback](docs/DisconnectCallback.md)
  - [Diversion](docs/Diversion.md)
  - [DtmfCallback](docs/DtmfCallback.md)
@@ -198,18 +207,24 @@ Class | Method | HTTP request | Description
  - [FieldError](docs/FieldError.md)
  - [FileFormatEnum](docs/FileFormatEnum.md)
  - [GatherCallback](docs/GatherCallback.md)
+ - [GetAsyncBulkLookupResponse](docs/GetAsyncBulkLookupResponse.md)
+ - [GetAsyncBulkLookupResponseData](docs/GetAsyncBulkLookupResponseData.md)
+ - [InProgressLookupStatusEnum](docs/InProgressLookupStatusEnum.md)
  - [InboundCallback](docs/InboundCallback.md)
  - [InboundCallbackMessage](docs/InboundCallbackMessage.md)
  - [InboundCallbackTypeEnum](docs/InboundCallbackTypeEnum.md)
  - [InitiateCallback](docs/InitiateCallback.md)
+ - [LatestMessageDeliveryStatusEnum](docs/LatestMessageDeliveryStatusEnum.md)
+ - [LineTypeEnum](docs/LineTypeEnum.md)
  - [Link](docs/Link.md)
+ - [LinkSchema](docs/LinkSchema.md)
  - [LinksObject](docs/LinksObject.md)
  - [ListMessageDirectionEnum](docs/ListMessageDirectionEnum.md)
  - [ListMessageItem](docs/ListMessageItem.md)
- - [LookupRequest](docs/LookupRequest.md)
+ - [LookupErrorResponse](docs/LookupErrorResponse.md)
+ - [LookupErrorSchema](docs/LookupErrorSchema.md)
+ - [LookupErrorSchemaMeta](docs/LookupErrorSchemaMeta.md)
  - [LookupResult](docs/LookupResult.md)
- - [LookupStatus](docs/LookupStatus.md)
- - [LookupStatusEnum](docs/LookupStatusEnum.md)
  - [MachineDetectionCompleteCallback](docs/MachineDetectionCompleteCallback.md)
  - [MachineDetectionConfiguration](docs/MachineDetectionConfiguration.md)
  - [MachineDetectionModeEnum](docs/MachineDetectionModeEnum.md)
@@ -271,6 +286,7 @@ Class | Method | HTTP request | Description
  - [StatusCallbackMessage](docs/StatusCallbackMessage.md)
  - [StatusCallbackTypeEnum](docs/StatusCallbackTypeEnum.md)
  - [StirShaken](docs/StirShaken.md)
+ - [SyncLookupRequest](docs/SyncLookupRequest.md)
  - [TelephoneNumber](docs/TelephoneNumber.md)
  - [TfvBasicAuthentication](docs/TfvBasicAuthentication.md)
  - [TfvCallbackStatusEnum](docs/TfvCallbackStatusEnum.md)
@@ -280,7 +296,6 @@ Class | Method | HTTP request | Description
  - [TfvSubmissionInfo](docs/TfvSubmissionInfo.md)
  - [TfvSubmissionWrapper](docs/TfvSubmissionWrapper.md)
  - [ThumbnailAlignmentEnum](docs/ThumbnailAlignmentEnum.md)
- - [TnLookupRequestError](docs/TnLookupRequestError.md)
  - [TranscribeRecording](docs/TranscribeRecording.md)
  - [Transcription](docs/Transcription.md)
  - [TranscriptionAvailableCallback](docs/TranscriptionAvailableCallback.md)
@@ -315,6 +330,14 @@ Authentication schemes defined for the API:
 ### Basic
 
 - **Type**: HTTP basic authentication
+
+<a id="OAuth2"></a>
+### OAuth2
+
+- **Type**: OAuth
+- **Flow**: application
+- **Authorization URL**: 
+- **Scopes**: N/A
 
 
 ## Author

@@ -18,18 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+from typing import Any, ClassVar, Dict, List
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class TnLookupRequestError(BaseModel):
+class SyncLookupRequest(BaseModel):
     """
-    TnLookupRequestError
+    SyncLookupRequest
     """ # noqa: E501
-    message: Optional[StrictStr] = Field(default=None, description="A description of what validation error occurred.")
+    phone_numbers: List[Annotated[str, Field(strict=True)]] = Field(description="Telephone numbers in E.164 format.", alias="phoneNumbers")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["message"]
+    __properties: ClassVar[List[str]] = ["phoneNumbers"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +50,7 @@ class TnLookupRequestError(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of TnLookupRequestError from a JSON string"""
+        """Create an instance of SyncLookupRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,7 +82,7 @@ class TnLookupRequestError(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of TnLookupRequestError from a dict"""
+        """Create an instance of SyncLookupRequest from a dict"""
         if obj is None:
             return None
 
@@ -89,7 +90,7 @@ class TnLookupRequestError(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "message": obj.get("message")
+            "phoneNumbers": obj.get("phoneNumbers")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

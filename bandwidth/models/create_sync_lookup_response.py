@@ -18,23 +18,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from bandwidth.models.lookup_result import LookupResult
-from bandwidth.models.lookup_status_enum import LookupStatusEnum
+from bandwidth.models.create_sync_lookup_response_data import CreateSyncLookupResponseData
+from bandwidth.models.link_schema import LinkSchema
+from bandwidth.models.lookup_error_schema import LookupErrorSchema
 from typing import Optional, Set
 from typing_extensions import Self
 
-class LookupStatus(BaseModel):
+class CreateSyncLookupResponse(BaseModel):
     """
-    If requestId exists, the result for that request is returned. See the Examples for details on the various responses that you can receive. Generally, if you see a Response Code of 0 in a result for a TN, information will be available for it.  Any other Response Code will indicate no information was available for the TN.
+    CreateSyncLookupResponse
     """ # noqa: E501
-    request_id: Optional[StrictStr] = Field(default=None, description="The requestId.", alias="requestId")
-    status: Optional[LookupStatusEnum] = None
-    result: Optional[List[LookupResult]] = Field(default=None, description="The carrier information results for the specified telephone number.")
-    failed_telephone_numbers: Optional[List[StrictStr]] = Field(default=None, description="The telephone numbers whose lookup failed.", alias="failedTelephoneNumbers")
+    links: Optional[List[LinkSchema]] = None
+    data: Optional[CreateSyncLookupResponseData] = None
+    errors: Optional[List[LookupErrorSchema]] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["requestId", "status", "result", "failedTelephoneNumbers"]
+    __properties: ClassVar[List[str]] = ["links", "data", "errors"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +54,7 @@ class LookupStatus(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of LookupStatus from a JSON string"""
+        """Create an instance of CreateSyncLookupResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,13 +77,23 @@ class LookupStatus(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in result (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in links (list)
         _items = []
-        if self.result:
-            for _item_result in self.result:
-                if _item_result:
-                    _items.append(_item_result.to_dict())
-            _dict['result'] = _items
+        if self.links:
+            for _item_links in self.links:
+                if _item_links:
+                    _items.append(_item_links.to_dict())
+            _dict['links'] = _items
+        # override the default output from pydantic by calling `to_dict()` of data
+        if self.data:
+            _dict['data'] = self.data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in errors (list)
+        _items = []
+        if self.errors:
+            for _item_errors in self.errors:
+                if _item_errors:
+                    _items.append(_item_errors.to_dict())
+            _dict['errors'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -93,7 +103,7 @@ class LookupStatus(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of LookupStatus from a dict"""
+        """Create an instance of CreateSyncLookupResponse from a dict"""
         if obj is None:
             return None
 
@@ -101,10 +111,9 @@ class LookupStatus(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "requestId": obj.get("requestId"),
-            "status": obj.get("status"),
-            "result": [LookupResult.from_dict(_item) for _item in obj["result"]] if obj.get("result") is not None else None,
-            "failedTelephoneNumbers": obj.get("failedTelephoneNumbers")
+            "links": [LinkSchema.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
+            "data": CreateSyncLookupResponseData.from_dict(obj["data"]) if obj.get("data") is not None else None,
+            "errors": [LookupErrorSchema.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
