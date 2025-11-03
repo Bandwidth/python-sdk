@@ -84,7 +84,6 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
         assert_that(response.status_code, equal_to(200))
         assert_that(response.data, is_not(none()))
         assert_that(response.data, instance_of(GetAsyncBulkLookupResponse))
-        print(response.data)
         assert_that(response.data.links, is_not(none()))
         assert_that(response.data.links[0], instance_of(LinkSchema))
         assert_that(response.data.links[0].rel, instance_of(str))
