@@ -90,7 +90,7 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
         assert_that(response.data.links[0].href, instance_of(str))
         assert_that(response.data.links[0].method, instance_of(str))
         assert_that(response.data.data, is_not(none()))
-        assert_that(response.data.data.request_id, instance_of(UUID))
+        assert_that(response.data.data.request_id, equal_to(request_id))
         assert_that(response.data.data.status, instance_of(InProgressLookupStatusEnum))
         assert_that(response.data.data.status, equal_to(InProgressLookupStatusEnum('COMPLETE')))
         assert_that(response.data.data.results, instance_of(list))
