@@ -104,6 +104,7 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
         assert_that(response.data.data.results[0], instance_of(LookupResult))
         assert_that(response.data.data.results[0].phone_number, instance_of(str))
         assert_that(response.data.data.results[0].line_type, instance_of(LineTypeEnum))
+        assert_that(response.data.data.results[0].line_type, equal_to(LineTypeEnum('MOBILE')))
         assert_that(response.data.data.results[0].messaging_provider, instance_of(str))
         assert_that(response.data.data.results[0].voice_provider, instance_of(str))
         assert_that(response.data.data.results[0].country_code_a3, instance_of(str))
