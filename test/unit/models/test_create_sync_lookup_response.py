@@ -15,6 +15,7 @@
 
 import unittest
 from datetime import date
+from uuid import UUID
 
 from bandwidth.models.create_sync_lookup_response import CreateSyncLookupResponse
 from bandwidth.models.create_sync_lookup_response_data import CreateSyncLookupResponseData
@@ -40,7 +41,7 @@ class TestCreateSyncLookupResponse(unittest.TestCase):
             return CreateSyncLookupResponse(
                 links = [],
                 data = CreateSyncLookupResponseData(
-                    request_id = '004223a0-8b17-41b1-bf81-20732adf5590', 
+                    request_id = UUID('004223a0-8b17-41b1-bf81-20732adf5590'), 
                     status = 'COMPLETE', 
                     results = [
                         LookupResult(
@@ -79,7 +80,7 @@ class TestCreateSyncLookupResponse(unittest.TestCase):
         assert isinstance(instance, CreateSyncLookupResponse)
         assert instance.links is not None
         assert isinstance(instance.data, CreateSyncLookupResponseData)
-        assert instance.data.request_id == '004223a0-8b17-41b1-bf81-20732adf5590'
+        assert instance.data.request_id == UUID('004223a0-8b17-41b1-bf81-20732adf5590')
         assert instance.data.status == 'COMPLETE'
         assert instance.data.results is not None
         assert isinstance(instance.data.results, list)

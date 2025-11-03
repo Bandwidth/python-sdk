@@ -14,6 +14,7 @@
 
 
 import unittest
+from uuid import UUID
 
 from bandwidth.models.create_async_bulk_lookup_response_data import CreateAsyncBulkLookupResponseData
 from bandwidth.models.in_progress_lookup_status_enum import InProgressLookupStatusEnum
@@ -34,7 +35,7 @@ class TestCreateAsyncBulkLookupResponseData(unittest.TestCase):
             optional params are included """
         if include_optional:
             return CreateAsyncBulkLookupResponseData(
-                request_id = '004223a0-8b17-41b1-bf81-20732adf5590',
+                request_id = UUID('004223a0-8b17-41b1-bf81-20732adf5590'),
                 status = InProgressLookupStatusEnum('COMPLETE')
             )
         else:
@@ -46,7 +47,7 @@ class TestCreateAsyncBulkLookupResponseData(unittest.TestCase):
         instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, CreateAsyncBulkLookupResponseData)
-        assert instance.request_id == '004223a0-8b17-41b1-bf81-20732adf5590'
+        assert instance.request_id == UUID('004223a0-8b17-41b1-bf81-20732adf5590')
         assert instance.status == InProgressLookupStatusEnum('COMPLETE')
 
 if __name__ == '__main__':

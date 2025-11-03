@@ -16,7 +16,11 @@ Method | HTTP request | Description
 
 Create Call
 
-Creates an outbound phone call.  All calls are initially queued. Your outbound calls will initiated at a specific dequeueing rate, enabling your application to \"fire and forget\" when creating calls. Queued calls may not be modified until they are dequeued and placed, but may be removed from your queue on demand.  <b>Please note:</b> Calls submitted to your queue will be placed approximately in order, but exact ordering is not guaranteed.
+Creates an outbound phone call.
+
+All calls are initially queued. Your outbound calls will initiated at a specific dequeueing rate, enabling your application to "fire and forget" when creating calls. Queued calls may not be modified until they are dequeued and placed, but may be removed from your queue on demand.
+
+<b>Please note:</b> Calls submitted to your queue will be placed approximately in order, but exact ordering is not guaranteed.
 
 ### Example
 
@@ -109,7 +113,9 @@ Name | Type | Description  | Notes
 
 Get Call State Information
 
-Retrieve the current state of a specific call. This information is near-realtime, so it may take a few minutes for your call to be accessible using this endpoint.  **Note**: Call information is kept for 7 days after the calls are hung up. If you attempt to retrieve information for a call that is older than 7 days, you will get an HTTP 404 response.
+Retrieve the current state of a specific call. This information is near-realtime, so it may take a few minutes for your call to be accessible using this endpoint.
+
+**Note**: Call information is kept for 7 days after the calls are hung up. If you attempt to retrieve information for a call that is older than 7 days, you will get an HTTP 404 response.
 
 ### Example
 
@@ -201,7 +207,10 @@ Name | Type | Description  | Notes
 
 Get Calls
 
-Returns a max of 10000 calls, sorted by `createdTime` from oldest to newest.  **NOTE:** If the number of calls in the account is bigger than `pageSize`, a `Link` header (with format `<{url}>; rel=\"next\"`) will be returned in the response. The url can be used to retrieve the next page of call records. Also, call information is kept for 7 days after the calls are hung up. If you attempt to retrieve information for a call that is older than 7 days, you will get an empty array [] in response.
+Returns a max of 10000 calls, sorted by `createdTime` from oldest to newest.
+
+**NOTE:** If the number of calls in the account is bigger than `pageSize`, a `Link` header (with format `<{url}>; rel="next"`) will be returned in the response. The url can be used to retrieve the next page of call records.
+Also, call information is kept for 7 days after the calls are hung up. If you attempt to retrieve information for a call that is older than 7 days, you will get an empty array [] in response.
 
 ### Example
 

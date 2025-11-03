@@ -15,6 +15,7 @@
 
 import unittest
 from datetime import date
+from uuid import UUID
 
 from bandwidth.models.get_async_bulk_lookup_response_data import GetAsyncBulkLookupResponseData
 from bandwidth.models.lookup_result import LookupResult
@@ -35,7 +36,7 @@ class TestGetAsyncBulkLookupResponseData(unittest.TestCase):
             optional params are included """
         if include_optional:
             return GetAsyncBulkLookupResponseData(
-                request_id = '004223a0-8b17-41b1-bf81-20732adf5590',
+                request_id = UUID('004223a0-8b17-41b1-bf81-20732adf5590'),
                 status = 'COMPLETE',
                 results = [
                     LookupResult(
@@ -61,7 +62,7 @@ class TestGetAsyncBulkLookupResponseData(unittest.TestCase):
         instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, GetAsyncBulkLookupResponseData)
-        assert instance.request_id == '004223a0-8b17-41b1-bf81-20732adf5590'
+        assert instance.request_id == UUID('004223a0-8b17-41b1-bf81-20732adf5590')
         assert instance.status == 'COMPLETE'
         assert len(instance.results) == 1
         result = instance.results[0]

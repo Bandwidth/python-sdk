@@ -14,6 +14,7 @@
 
 
 import unittest
+from uuid import UUID
 
 from bandwidth.models.verification_webhook import VerificationWebhook
 
@@ -36,7 +37,7 @@ class TestVerificationWebhook(unittest.TestCase):
                 account_id = '1234567',
                 phone_number = '+18005555555',
                 status = 'VERIFIED',
-                internal_ticket_number = 'acde070d-8c4c-4f0d-9d8a-162843c10333'
+                internal_ticket_number = UUID('acde070d-8c4c-4f0d-9d8a-162843c10333')
             )
         else:
             return VerificationWebhook(
@@ -50,7 +51,7 @@ class TestVerificationWebhook(unittest.TestCase):
         assert instance.account_id == '1234567'
         assert instance.phone_number == '+18005555555'
         assert instance.status == 'VERIFIED'
-        assert instance.internal_ticket_number == 'acde070d-8c4c-4f0d-9d8a-162843c10333'
+        assert instance.internal_ticket_number == UUID('acde070d-8c4c-4f0d-9d8a-162843c10333')
 
 if __name__ == '__main__':
     unittest.main()

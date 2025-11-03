@@ -485,7 +485,9 @@ Name | Type | Description  | Notes
 
 Get Conferences
 
-Returns a max of 1000 conferences, sorted by `createdTime` from oldest to newest.  **NOTE:** If the number of conferences in the account is bigger than `pageSize`, a `Link` header (with format `<{url}>; rel=\"next\"`) will be returned in the response. The url can be used to retrieve the next page of conference records.
+Returns a max of 1000 conferences, sorted by `createdTime` from oldest to newest.
+
+**NOTE:** If the number of conferences in the account is bigger than `pageSize`, a `Link` header (with format `<{url}>; rel="next"`) will be returned in the response. The url can be used to retrieve the next page of conference records.
 
 ### Example
 

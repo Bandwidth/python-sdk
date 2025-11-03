@@ -14,6 +14,7 @@
 
 
 import unittest
+from uuid import UUID
 
 from bandwidth.models.failure_webhook import FailureWebhook
 
@@ -40,7 +41,7 @@ class TestFailureWebhook(unittest.TestCase):
                 errors = [
                     'optInWorkflowImageURLs: Entries must be a valid array of objects.'
                     ],
-                internal_ticket_number = 'acde070d-8c4c-4f0d-9d8a-162843c10333'
+                internal_ticket_number = UUID('acde070d-8c4c-4f0d-9d8a-162843c10333')
             )
         else:
             return FailureWebhook(
@@ -58,7 +59,7 @@ class TestFailureWebhook(unittest.TestCase):
         assert isinstance(instance.errors, list)
         assert len(instance.errors) == 1
         assert instance.errors[0] == 'optInWorkflowImageURLs: Entries must be a valid array of objects.'
-        assert instance.internal_ticket_number == 'acde070d-8c4c-4f0d-9d8a-162843c10333'
+        assert instance.internal_ticket_number == UUID('acde070d-8c4c-4f0d-9d8a-162843c10333')
 
 if __name__ == '__main__':
     unittest.main()

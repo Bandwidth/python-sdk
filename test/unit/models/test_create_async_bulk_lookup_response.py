@@ -14,6 +14,7 @@
 
 
 import unittest
+from uuid import UUID
 
 from bandwidth.models.create_async_bulk_lookup_response import CreateAsyncBulkLookupResponse
 from bandwidth.models.create_async_bulk_lookup_response_data import CreateAsyncBulkLookupResponseData
@@ -45,7 +46,7 @@ class TestCreateAsyncBulkLookupResponse(unittest.TestCase):
                         method = 'GET', )
                     ],
                 data = CreateAsyncBulkLookupResponseData(
-                    request_id = '004223a0-8b17-41b1-bf81-20732adf5590', 
+                    request_id = UUID('004223a0-8b17-41b1-bf81-20732adf5590'), 
                     status = InProgressLookupStatusEnum('COMPLETE'), ),
                 errors = [
                     LookupErrorSchema(
@@ -74,7 +75,7 @@ class TestCreateAsyncBulkLookupResponse(unittest.TestCase):
         assert instance.links[0].method == 'GET'
         assert instance.data is not None
         assert isinstance(instance.data, CreateAsyncBulkLookupResponseData)
-        assert instance.data.request_id == '004223a0-8b17-41b1-bf81-20732adf5590'
+        assert instance.data.request_id == UUID('004223a0-8b17-41b1-bf81-20732adf5590')
         assert instance.data.status == InProgressLookupStatusEnum('COMPLETE')
         assert instance.errors is not None
         assert isinstance(instance.errors[0], LookupErrorSchema)

@@ -15,6 +15,7 @@
 
 import unittest
 from datetime import date
+from uuid import UUID
 
 from hamcrest import *
 from bandwidth import ApiClient, Configuration
@@ -71,7 +72,7 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
         assert_that(response.data.links[0].method, instance_of(str))
         assert_that(response.data.data, is_not(none()))
         assert_that(response.data.data, instance_of(CreateAsyncBulkLookupResponseData))
-        assert_that(response.data.data.request_id, instance_of(str))
+        assert_that(response.data.data.request_id, instance_of(UUID))
         assert_that(response.data.data.status, equal_to(InProgressLookupStatusEnum('IN_PROGRESS')))
         assert_that(response.data.errors, is_not(none()))
         assert_that(response.data.errors, instance_of(list))
@@ -96,7 +97,7 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
         assert_that(response.data.links[0].href, instance_of(str))
         assert_that(response.data.links[0].method, instance_of(str))
         assert_that(response.data.data, is_not(none()))
-        assert_that(response.data.data.request_id, instance_of(str))
+        assert_that(response.data.data.request_id, instance_of(UUID))
         assert_that(response.data.data.status, instance_of(CompletedLookupStatusEnum))
         assert_that(response.data.data.status, equal_to(CompletedLookupStatusEnum('COMPLETE')))
         assert_that(response.data.data.results, instance_of(list))
@@ -118,7 +119,7 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
 
         Get Asynchronous Bulk Number Lookup
         """
-        request_id = '123e4567-e89b-12d3-a456-426614174000'
+        request_id = UUID('123e4567-e89b-12d3-a456-426614174000')
 
         response = self.api.get_async_bulk_lookup_with_http_info(BW_ACCOUNT_ID, request_id)
         assert_that(response, is_not(none()))
@@ -131,7 +132,7 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
         assert_that(response.data.links[0].href, instance_of(str))
         assert_that(response.data.links[0].method, instance_of(str))
         assert_that(response.data.data, is_not(none()))
-        assert_that(response.data.data.request_id, instance_of(str))
+        assert_that(response.data.data.request_id, instance_of(UUID))
         assert_that(response.data.data.status, instance_of(InProgressLookupStatusEnum))
         assert_that(response.data.data.status, equal_to(InProgressLookupStatusEnum('COMPLETE')))
         assert_that(response.data.data.results, instance_of(list))
