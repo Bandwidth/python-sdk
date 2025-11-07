@@ -25,7 +25,6 @@ Downloads the specified recording file.
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -48,8 +47,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -85,7 +82,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -118,7 +115,6 @@ Returns information about the specified conference.
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -142,8 +138,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -177,7 +171,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -210,7 +204,6 @@ Returns information about the specified conference member.
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -234,8 +227,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -271,7 +262,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -304,7 +295,6 @@ Returns metadata for the specified recording.
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -328,8 +318,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -365,7 +353,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -398,7 +386,6 @@ Returns a (potentially empty) list of metadata for the recordings that took plac
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -422,8 +409,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -457,7 +442,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -492,7 +477,6 @@ Returns a max of 1000 conferences, sorted by `createdTime` from oldest to newest
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -516,8 +500,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -559,7 +541,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -592,7 +574,6 @@ Update the conference state.
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -616,8 +597,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -651,7 +630,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -684,7 +663,6 @@ Update the conference BXML document.
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -707,8 +685,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -745,7 +721,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -778,7 +754,6 @@ Updates settings for a particular conference member.
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -802,8 +777,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -839,7 +812,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 

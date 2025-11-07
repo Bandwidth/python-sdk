@@ -19,7 +19,6 @@ Send an MFA code via text message (SMS).
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -44,8 +43,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -79,7 +76,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -108,7 +105,6 @@ Send an MFA Code via a phone call.
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -133,8 +129,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -168,7 +162,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -197,7 +191,6 @@ Verify a previously sent MFA code.
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -222,8 +215,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -257,7 +248,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 

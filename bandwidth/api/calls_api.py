@@ -338,8 +338,7 @@ class CallsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
-            'OAuth2'
+            'Basic'
         ]
 
         return self.api_client.param_serialize(
@@ -642,8 +641,7 @@ class CallsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
-            'OAuth2'
+            'Basic'
         ]
 
         return self.api_client.param_serialize(
@@ -1050,8 +1048,7 @@ class CallsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
-            'OAuth2'
+            'Basic'
         ]
 
         return self.api_client.param_serialize(
@@ -1385,8 +1382,7 @@ class CallsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
-            'OAuth2'
+            'Basic'
         ]
 
         return self.api_client.param_serialize(
@@ -1720,8 +1716,7 @@ class CallsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
-            'OAuth2'
+            'Basic'
         ]
 
         return self.api_client.param_serialize(

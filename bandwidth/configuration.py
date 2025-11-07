@@ -115,7 +115,6 @@ AuthSettings = TypedDict(
     "AuthSettings",
     {
         "Basic": BasicAuthSetting,
-        "OAuth2": OAuth2AuthSetting,
     },
     total=False,
 )
@@ -520,13 +519,6 @@ conf = bandwidth.Configuration(
                 'in': 'header',
                 'key': 'Authorization',
                 'value': self.get_basic_auth_token()
-            }
-        if self.access_token is not None:
-            auth['OAuth2'] = {
-                'type': 'oauth2',
-                'in': 'header',
-                'key': 'Authorization',
-                'value': 'Bearer ' + self.access_token
             }
         return auth
 

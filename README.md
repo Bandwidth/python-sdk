@@ -73,8 +73,6 @@ configuration = bandwidth.Configuration(
     password = os.environ["PASSWORD"]
 )
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
-
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -330,14 +328,6 @@ Authentication schemes defined for the API:
 ### Basic
 
 - **Type**: HTTP basic authentication
-
-<a id="OAuth2"></a>
-### OAuth2
-
-- **Type**: OAuth
-- **Flow**: application
-- **Authorization URL**: 
-- **Scopes**: N/A
 
 
 ## Author

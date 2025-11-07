@@ -25,7 +25,6 @@ All calls are initially queued. Your outbound calls will initiated at a specific
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -50,8 +49,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -85,7 +82,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -120,7 +117,6 @@ Retrieve the current state of a specific call. This information is near-realtime
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -144,8 +140,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -179,7 +173,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -215,7 +209,6 @@ Also, call information is kept for 7 days after the calls are hung up. If you at
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -239,8 +232,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -286,7 +277,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -319,7 +310,6 @@ Interrupts and redirects a call to a different URL that should return a BXML doc
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -343,8 +333,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -378,7 +366,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
@@ -412,7 +400,6 @@ Interrupts and replaces an active call's BXML document.
 ### Example
 
 * Basic Authentication (Basic):
-* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -435,8 +422,6 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -473,7 +458,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[Basic](../README.md#Basic)
 
 ### HTTP request headers
 
