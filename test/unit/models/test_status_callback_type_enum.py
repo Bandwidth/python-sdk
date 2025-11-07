@@ -28,14 +28,10 @@ class TestStatusCallbackTypeEnum(unittest.TestCase):
 
     def testStatusCallbackTypeEnum(self):
         """Test StatusCallbackTypeEnum"""
-        message_sending = StatusCallbackTypeEnum('message-sending')
-        message_delivered = StatusCallbackTypeEnum('message-delivered')
-        message_failed = StatusCallbackTypeEnum('message-failed')
-        message_read = StatusCallbackTypeEnum('message-read')
-        assert message_sending == 'message-sending'
-        assert message_delivered == 'message-delivered'
-        assert message_failed == 'message-failed'
-        assert message_read == 'message-read'
+        assert StatusCallbackTypeEnum('message-sending') == 'message-sending'
+        assert StatusCallbackTypeEnum('message-delivered') == 'message-delivered'
+        assert StatusCallbackTypeEnum('message-failed') == 'message-failed'
+        assert StatusCallbackTypeEnum('message-read') == 'message-read'
 
 if __name__ == '__main__':
     unittest.main()

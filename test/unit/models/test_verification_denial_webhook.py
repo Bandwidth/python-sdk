@@ -14,6 +14,7 @@
 
 
 import unittest
+from uuid import UUID
 
 from bandwidth.models.verification_denial_webhook import VerificationDenialWebhook
 
@@ -37,7 +38,7 @@ class TestVerificationDenialWebhook(unittest.TestCase):
                 additional_denial_reasons = [{"statusCode":512,"reason":"Reason A","resubmitAllowed":True},{"statusCode":513,"reason":"Reason B","resubmitAllowed":True}],
                 decline_reason_description = 'Invalid Information - Can\'t Validate URL - Website is not accessible / not available',
                 denial_status_code = 511,
-                internal_ticket_number = 'acde070d-8c4c-4f0d-9d8a-162843c10333',
+                internal_ticket_number = UUID('acde070d-8c4c-4f0d-9d8a-162843c10333'),
                 phone_number = '+18005555555',
                 resubmit_allowed = True,
                 status = 'UNVERIFIED',
@@ -64,7 +65,7 @@ class TestVerificationDenialWebhook(unittest.TestCase):
         assert instance.additional_denial_reasons[1].resubmit_allowed == True
         assert instance.decline_reason_description == 'Invalid Information - Can\'t Validate URL - Website is not accessible / not available'
         assert instance.denial_status_code == 511
-        assert instance.internal_ticket_number == 'acde070d-8c4c-4f0d-9d8a-162843c10333'
+        assert instance.internal_ticket_number == UUID('acde070d-8c4c-4f0d-9d8a-162843c10333')
         assert instance.phone_number == '+18005555555'
         assert instance.resubmit_allowed == True
         assert instance.status == 'UNVERIFIED'

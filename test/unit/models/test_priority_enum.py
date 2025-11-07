@@ -30,8 +30,8 @@ class TestPriorityEnum(unittest.TestCase):
         """Test PriorityEnum"""
         default = PriorityEnum('default')
         high = PriorityEnum('high')
-        assert default == 'default'
-        assert high == 'high'
+        assert PriorityEnum('default') == 'default'
+        assert PriorityEnum('high') == 'high'
 
 if __name__ == '__main__':
     unittest.main()

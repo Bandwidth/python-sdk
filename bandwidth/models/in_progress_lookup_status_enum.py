@@ -19,9 +19,9 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class LookupStatusEnum(str, Enum):
+class InProgressLookupStatusEnum(str, Enum):
     """
-    The status of the request (IN_PROGRESS, COMPLETE, PARTIAL_COMPLETE, or FAILED).
+    InProgressLookupStatusEnum
     """
 
     """
@@ -34,7 +34,7 @@ class LookupStatusEnum(str, Enum):
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of LookupStatusEnum from a JSON string"""
+        """Create an instance of InProgressLookupStatusEnum from a JSON string"""
         return cls(json.loads(json_str))
 
 

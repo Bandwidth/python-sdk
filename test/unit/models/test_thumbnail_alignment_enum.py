@@ -28,10 +28,8 @@ class TestThumbnailAlignmentEnum(unittest.TestCase):
 
     def testThumbnailAlignmentEnum(self):
         """Test ThumbnailAlignmentEnum"""
-        left = ThumbnailAlignmentEnum('LEFT')
-        right = ThumbnailAlignmentEnum('RIGHT')
-        assert left == 'LEFT'
-        assert right == 'RIGHT'
+        assert ThumbnailAlignmentEnum('LEFT') == 'LEFT'
+        assert ThumbnailAlignmentEnum('RIGHT') == 'RIGHT'
 
 if __name__ == '__main__':
     unittest.main()

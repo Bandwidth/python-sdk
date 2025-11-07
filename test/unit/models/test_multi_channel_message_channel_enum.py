@@ -28,12 +28,9 @@ class TestMultiChannelMessageChannelEnum(unittest.TestCase):
 
     def testMultiChannelMessageChannelEnum(self):
         """Test MultiChannelMessageChannelEnum"""
-        rbm = MultiChannelMessageChannelEnum('RBM')
-        sms = MultiChannelMessageChannelEnum('SMS')
-        mms = MultiChannelMessageChannelEnum('MMS')
-        assert rbm == 'RBM'
-        assert sms == 'SMS'
-        assert mms == 'MMS'
+        assert MultiChannelMessageChannelEnum('RBM') == 'RBM'
+        assert MultiChannelMessageChannelEnum('SMS') == 'SMS'
+        assert MultiChannelMessageChannelEnum('MMS') == 'MMS'
 
 if __name__ == '__main__':
     unittest.main()
