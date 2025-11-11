@@ -23,6 +23,8 @@ jobs:
       ATT_NUMBER: ${{ secrets.ATT_NUMBER }}
       T_MOBILE_NUMBER: ${{ secrets.T_MOBILE_NUMBER }}
       BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
+      PYTHON_VERSION: 3.12
+      OPERATING_SYSTEM: ubuntu-latest
       MANTECA_ACTIVE_NUMBER: ${{ secrets.MANTECA_ACTIVE_NUMBER }}
       MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_IDLE_NUMBER }}
       MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
@@ -57,6 +59,11 @@ jobs:
           openapi-generator-version: ${{ env.OPENAPI_GENERATOR_VERSION }}
           language: python
           additional-properties: --additional-properties=packageVersion=$RELEASE_VERSION
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
       - name: Install Packages and Test
         run: |
