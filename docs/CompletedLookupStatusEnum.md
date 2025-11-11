@@ -1,10 +1,7 @@
-# LookupStatusEnum
+# CompletedLookupStatusEnum
 
-The status of the request (IN_PROGRESS, COMPLETE, PARTIAL_COMPLETE, or FAILED).
 
 ## Enum
-
-* `IN_PROGRESS` (value: `'IN_PROGRESS'`)
 
 * `COMPLETE` (value: `'COMPLETE'`)
 

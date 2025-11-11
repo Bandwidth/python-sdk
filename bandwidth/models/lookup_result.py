@@ -18,8 +18,12 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from datetime import date
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from bandwidth.models.deactivation_event_enum import DeactivationEventEnum
+from bandwidth.models.latest_message_delivery_status_enum import LatestMessageDeliveryStatusEnum
+from bandwidth.models.line_type_enum import LineTypeEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,17 +31,19 @@ class LookupResult(BaseModel):
     """
     Carrier information results for the specified telephone number.
     """ # noqa: E501
-    response_code: Optional[StrictInt] = Field(default=None, description="Our vendor's response code.", alias="Response Code")
-    message: Optional[StrictStr] = Field(default=None, description="Message associated with the response code.", alias="Message")
-    e_164_format: Optional[StrictStr] = Field(default=None, description="The telephone number in E.164 format.", alias="E.164 Format")
-    formatted: Optional[StrictStr] = Field(default=None, description="The formatted version of the telephone number.", alias="Formatted")
-    country: Optional[StrictStr] = Field(default=None, description="The country of the telephone number.", alias="Country")
-    line_type: Optional[StrictStr] = Field(default=None, description="The line type of the telephone number.", alias="Line Type")
-    line_provider: Optional[StrictStr] = Field(default=None, description="The messaging service provider of the telephone number.", alias="Line Provider")
-    mobile_country_code: Optional[StrictStr] = Field(default=None, description="The first half of the Home Network Identity (HNI).", alias="Mobile Country Code")
-    mobile_network_code: Optional[StrictStr] = Field(default=None, description="The second half of the HNI.", alias="Mobile Network Code")
+    phone_number: Optional[StrictStr] = Field(default=None, description="The telephone number in E.164 format.", alias="phoneNumber")
+    line_type: Optional[LineTypeEnum] = Field(default=None, alias="lineType")
+    messaging_provider: Optional[StrictStr] = Field(default=None, description="The messaging service provider of the telephone number.", alias="messagingProvider")
+    voice_provider: Optional[StrictStr] = Field(default=None, description="The voice service provider of the telephone number.", alias="voiceProvider")
+    country_code_a3: Optional[StrictStr] = Field(default=None, description="The country code of the telephone number in ISO 3166-1 alpha-3 format.", alias="countryCodeA3")
+    deactivation_reporter: Optional[StrictStr] = Field(default=None, description="[DNI-Only](#section/DNI-Only). The carrier that reported a deactivation event for this phone number. ", alias="deactivationReporter")
+    deactivation_date: Optional[StrictStr] = Field(default=None, description="[DNI-Only](#section/DNI-Only). The datetime the carrier reported a deactivation event.", alias="deactivationDate")
+    deactivation_event: Optional[DeactivationEventEnum] = Field(default=None, alias="deactivationEvent")
+    latest_message_delivery_status: Optional[LatestMessageDeliveryStatusEnum] = Field(default=None, alias="latestMessageDeliveryStatus")
+    initial_message_delivery_status_date: Optional[date] = Field(default=None, description="[DNI-Only](#section/DNI-Only). The date the phone number entered the status described in `latestMessageDeliveryStatus`.  Think of this as the \"start time\" for that status. Value resets every time the `latestMessageDeliveryStatus` changes.", alias="initialMessageDeliveryStatusDate")
+    latest_message_delivery_status_date: Optional[date] = Field(default=None, description="[DNI-Only](#section/DNI-Only). The date bandwidth last received delivery status information for this phone number.  Use this field to understand how up-to-date the `latestMessageDeliveryStatus` is. Value resets every time the `latestMessageDeliveryStatus` changes.", alias="latestMessageDeliveryStatusDate")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["Response Code", "Message", "E.164 Format", "Formatted", "Country", "Line Type", "Line Provider", "Mobile Country Code", "Mobile Network Code"]
+    __properties: ClassVar[List[str]] = ["phoneNumber", "lineType", "messagingProvider", "voiceProvider", "countryCodeA3", "deactivationReporter", "deactivationDate", "deactivationEvent", "latestMessageDeliveryStatus", "initialMessageDeliveryStatusDate", "latestMessageDeliveryStatusDate"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,15 +103,17 @@ class LookupResult(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "Response Code": obj.get("Response Code"),
-            "Message": obj.get("Message"),
-            "E.164 Format": obj.get("E.164 Format"),
-            "Formatted": obj.get("Formatted"),
-            "Country": obj.get("Country"),
-            "Line Type": obj.get("Line Type"),
-            "Line Provider": obj.get("Line Provider"),
-            "Mobile Country Code": obj.get("Mobile Country Code"),
-            "Mobile Network Code": obj.get("Mobile Network Code")
+            "phoneNumber": obj.get("phoneNumber"),
+            "lineType": obj.get("lineType"),
+            "messagingProvider": obj.get("messagingProvider"),
+            "voiceProvider": obj.get("voiceProvider"),
+            "countryCodeA3": obj.get("countryCodeA3"),
+            "deactivationReporter": obj.get("deactivationReporter"),
+            "deactivationDate": obj.get("deactivationDate"),
+            "deactivationEvent": obj.get("deactivationEvent"),
+            "latestMessageDeliveryStatus": obj.get("latestMessageDeliveryStatus"),
+            "initialMessageDeliveryStatusDate": obj.get("initialMessageDeliveryStatusDate"),
+            "latestMessageDeliveryStatusDate": obj.get("latestMessageDeliveryStatusDate")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

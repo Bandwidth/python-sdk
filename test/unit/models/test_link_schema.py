@@ -15,10 +15,10 @@
 
 import unittest
 
-from bandwidth.models.lookup_request import LookupRequest
+from bandwidth.models.link_schema import LinkSchema
 
-class TestLookupRequest(unittest.TestCase):
-    """LookupRequest unit test stubs"""
+class TestLinkSchema(unittest.TestCase):
+    """LinkSchema unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,30 +26,29 @@ class TestLookupRequest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> LookupRequest:
-        """Test LookupRequest
+    def make_instance(self, include_optional) -> LinkSchema:
+        """Test LinkSchema
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         if include_optional:
-            return LookupRequest(
-                tns = [
-                    ''
-                    ]
+            return LinkSchema(
+                href = '/relative/uri',
+                rel = 'aRelatedResource',
+                method = 'GET'
             )
         else:
-            return LookupRequest(
-                tns = [
-                    ''
-                    ],
+            return LinkSchema(
         )
 
-    def testLookupRequest(self):
-        """Test LookupRequest"""
+    def testLinkSchema(self):
+        """Test LinkSchema"""
         instance = self.make_instance(True)
         assert instance is not None
-        assert isinstance(instance, LookupRequest)
-        assert instance.tns == ['']
+        assert isinstance(instance, LinkSchema)
+        assert instance.href == '/relative/uri'
+        assert instance.rel == 'aRelatedResource'
+        assert instance.method == 'GET'
 
 if __name__ == '__main__':
     unittest.main()

@@ -21,7 +21,9 @@ Method | HTTP request | Description
 
 Delete Recording
 
-Delete the recording information, media and transcription.  Note: After the deletion is requested and a `204` is returned, neither the recording metadata nor the actual media nor its transcription will be accessible anymore. However, the media of the specified recording is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
+Delete the recording information, media and transcription.
+
+Note: After the deletion is requested and a `204` is returned, neither the recording metadata nor the actual media nor its transcription will be accessible anymore. However, the media of the specified recording is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
 
 ### Example
 
@@ -203,7 +205,9 @@ void (empty response body)
 
 Delete Transcription
 
-Deletes the specified recording's transcription.  Note: After the deletion is requested and a `204` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
+Deletes the specified recording's transcription.
+
+Note: After the deletion is requested and a `204` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
 
 ### Example
 
@@ -481,7 +485,10 @@ Name | Type | Description  | Notes
 
 Get Transcription
 
-Downloads the specified transcription. If the recording was multi-channel, then there will be 2 transcripts. The caller/called party transcript will be the first item while [`<PlayAudio>`](/docs/voice/bxml/playAudio) and [`<SpeakSentence>`](/docs/voice/bxml/speakSentence) transcript will be the second item. During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be the first item while the B-leg transcript will be the second item.
+Downloads the specified transcription.
+If the recording was multi-channel, then there will be 2 transcripts.
+The caller/called party transcript will be the first item while [`<PlayAudio>`](/docs/voice/bxml/playAudio) and [`<SpeakSentence>`](/docs/voice/bxml/speakSentence) transcript will be the second item.
+During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be the first item while the B-leg transcript will be the second item.
 
 ### Example
 
@@ -575,7 +582,10 @@ Name | Type | Description  | Notes
 
 Get Call Recordings
 
-Returns a list of metadata for the recordings associated with the specified account. The list can be filtered by the optional from, to, minStartTime, and maxStartTime arguments. The list is capped at 1000 entries and may be empty if no recordings match the specified criteria.
+Returns a list of metadata for the recordings associated with the
+specified account. The list can be filtered by the optional from, to, minStartTime,
+and maxStartTime arguments. The list is capped at 1000 entries and may be
+empty if no recordings match the specified criteria.
 
 ### Example
 
@@ -673,7 +683,8 @@ Name | Type | Description  | Notes
 
 List Call Recordings
 
-Returns a (potentially empty) list of metadata for the recordings that took place during the specified call.
+Returns a (potentially empty) list of metadata for the recordings
+that took place during the specified call.
 
 ### Example
 
@@ -765,7 +776,9 @@ Name | Type | Description  | Notes
 
 Create Transcription Request
 
-Generate the transcription for a specific recording. Transcription can succeed only for recordings of length greater than 500 milliseconds and less than 4 hours.
+Generate the transcription for a specific recording. Transcription
+can succeed only for recordings of length greater than 500 milliseconds and
+less than 4 hours.
 
 ### Example
 

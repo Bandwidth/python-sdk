@@ -28,10 +28,8 @@ class TestFileFormatEnum(unittest.TestCase):
 
     def testFileFormatEnum(self):
         """Test FileFormatEnum"""
-        wav = FileFormatEnum('wav')
-        mp3 = FileFormatEnum('mp3')
-        assert wav == 'wav'
-        assert mp3 == 'mp3'
+        assert FileFormatEnum('wav') == 'wav'
+        assert FileFormatEnum('mp3') == 'mp3'
 
 if __name__ == '__main__':
     unittest.main()

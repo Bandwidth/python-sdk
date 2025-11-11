@@ -15,7 +15,11 @@ Method | HTTP request | Description
 
 Delete Media
 
-Deletes a media file from Bandwidth API server. Make sure you don't have any application scripts still using the media before you delete.  If you accidentally delete a media file you can immediately upload a new file with the same name.
+Deletes a media file from Bandwidth API server. Make sure you don't have
+any application scripts still using the media before you delete.
+
+If you accidentally delete a media file you can immediately upload a new
+file with the same name.
 
 ### Example
 
@@ -287,7 +291,11 @@ Name | Type | Description  | Notes
 
 Upload Media
 
-Upload a file. You may add headers to the request in order to provide some control to your media file.  If a file is uploaded with the same name as a file that already exists under this account, the previous file will be overwritten.  A list of supported media types can be found [here](https://support.bandwidth.com/hc/en-us/articles/360014128994-What-MMS-file-types-are-supported-).
+Upload a file. You may add headers to the request in order to provide some control to your media file.
+
+If a file is uploaded with the same name as a file that already exists under this account, the previous file will be overwritten.
+
+A list of supported media types can be found [here](https://support.bandwidth.com/hc/en-us/articles/360014128994-What-MMS-file-types-are-supported-).
 
 ### Example
 

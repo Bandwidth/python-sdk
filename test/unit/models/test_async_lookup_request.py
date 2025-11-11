@@ -15,10 +15,10 @@
 
 import unittest
 
-from bandwidth.models.tn_lookup_request_error import TnLookupRequestError
+from bandwidth.models.async_lookup_request import AsyncLookupRequest
 
-class TestTnLookupRequestError(unittest.TestCase):
-    """TnLookupRequestError unit test stubs"""
+class TestAsyncLookupRequest(unittest.TestCase):
+    """AsyncLookupRequest unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,25 +26,30 @@ class TestTnLookupRequestError(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> TnLookupRequestError:
-        """Test TnLookupRequestError
+    def make_instance(self, include_optional) -> AsyncLookupRequest:
+        """Test AsyncLookupRequest
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         if include_optional:
-            return TnLookupRequestError(
-                message = 'example error message'
+            return AsyncLookupRequest(
+                phone_numbers = [
+                    '+680728880015'
+                    ]
             )
         else:
-            return TnLookupRequestError(
+            return AsyncLookupRequest(
+                phone_numbers = [
+                    '+680728880015'
+                    ],
         )
 
-    def testTnLookupRequestError(self):
-        """Test TnLookupRequestError"""
+    def testAsyncLookupRequest(self):
+        """Test AsyncLookupRequest"""
         instance = self.make_instance(True)
         assert instance is not None
-        assert isinstance(instance, TnLookupRequestError)
-        assert instance.message == 'example error message'
+        assert isinstance(instance, AsyncLookupRequest)
+        assert instance.phone_numbers == ['+680728880015']
 
 if __name__ == '__main__':
     unittest.main()

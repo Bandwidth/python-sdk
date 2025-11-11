@@ -15,10 +15,10 @@
 
 import unittest
 
-from bandwidth.models.create_lookup_response import CreateLookupResponse
+from bandwidth.models.sync_lookup_request import SyncLookupRequest
 
-class TestCreateLookupResponse(unittest.TestCase):
-    """CreateLookupResponse unit test stubs"""
+class TestSyncLookupRequest(unittest.TestCase):
+    """SyncLookupRequest unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,27 +26,30 @@ class TestCreateLookupResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateLookupResponse:
-        """Test CreateLookupResponse
+    def make_instance(self, include_optional) -> SyncLookupRequest:
+        """Test SyncLookupRequest
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         if include_optional:
-            return CreateLookupResponse(
-                request_id = '',
-                status = 'COMPLETE'
+            return SyncLookupRequest(
+                phone_numbers = [
+                    '+680728880015'
+                    ]
             )
         else:
-            return CreateLookupResponse(
+            return SyncLookupRequest(
+                phone_numbers = [
+                    '+680728880015'
+                    ],
         )
 
-    def testCreateLookupResponse(self):
-        """Test CreateLookupResponse"""
+    def testSyncLookupRequest(self):
+        """Test SyncLookupRequest"""
         instance = self.make_instance(True)
         assert instance is not None
-        assert isinstance(instance, CreateLookupResponse)
-        assert instance.request_id == ''
-        assert instance.status == 'COMPLETE'
+        assert isinstance(instance, SyncLookupRequest)
+        assert instance.phone_numbers == ['+680728880015']
 
 if __name__ == '__main__':
     unittest.main()

@@ -28,24 +28,15 @@ class TestProductTypeEnum(unittest.TestCase):
 
     def testProductTypeEnum(self):
         """Test ProductTypeEnum"""
-        local_a2p = ProductTypeEnum('LOCAL_A2P')
-        p2p = ProductTypeEnum('P2P')
-        short_code_reach = ProductTypeEnum('SHORT_CODE_REACH')
-        toll_free = ProductTypeEnum('TOLL_FREE')
-        hosted_short_code = ProductTypeEnum('HOSTED_SHORT_CODE')
-        alpha_numeric = ProductTypeEnum('ALPHA_NUMERIC')
-        rbm_media = ProductTypeEnum('RBM_MEDIA')
-        rbm_rich = ProductTypeEnum('RBM_RICH')
-        rbm_conversational = ProductTypeEnum('RBM_CONVERSATIONAL')
-        assert local_a2p == 'LOCAL_A2P'
-        assert p2p == 'P2P'
-        assert short_code_reach == 'SHORT_CODE_REACH'
-        assert toll_free == 'TOLL_FREE'
-        assert hosted_short_code == 'HOSTED_SHORT_CODE'
-        assert alpha_numeric == 'ALPHA_NUMERIC'
-        assert rbm_media == 'RBM_MEDIA'
-        assert rbm_rich == 'RBM_RICH'
-        assert rbm_conversational == 'RBM_CONVERSATIONAL'
+        assert ProductTypeEnum('LOCAL_A2P') == 'LOCAL_A2P'
+        assert ProductTypeEnum('P2P') == 'P2P'
+        assert ProductTypeEnum('SHORT_CODE_REACH') == 'SHORT_CODE_REACH'
+        assert ProductTypeEnum('TOLL_FREE') == 'TOLL_FREE'
+        assert ProductTypeEnum('HOSTED_SHORT_CODE') == 'HOSTED_SHORT_CODE'
+        assert ProductTypeEnum('ALPHA_NUMERIC') == 'ALPHA_NUMERIC'
+        assert ProductTypeEnum('RBM_MEDIA') == 'RBM_MEDIA'
+        assert ProductTypeEnum('RBM_RICH') == 'RBM_RICH'
+        assert ProductTypeEnum('RBM_CONVERSATIONAL') == 'RBM_CONVERSATIONAL'
 
 if __name__ == '__main__':
     unittest.main()

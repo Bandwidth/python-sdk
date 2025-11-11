@@ -18,18 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from bandwidth.models.lookup_status_enum import LookupStatusEnum
+from uuid import UUID
+from bandwidth.models.in_progress_lookup_status_enum import InProgressLookupStatusEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateLookupResponse(BaseModel):
+class CreateAsyncBulkLookupResponseData(BaseModel):
     """
-    The request has been accepted for processing but not yet finished and in a terminal state (COMPLETE, PARTIAL_COMPLETE, or FAILED).
+    The phone number lookup response data
     """ # noqa: E501
-    request_id: Optional[StrictStr] = Field(default=None, description="The phone number lookup request ID from Bandwidth.", alias="requestId")
-    status: Optional[LookupStatusEnum] = None
+    request_id: Optional[UUID] = Field(default=None, description="The phone number lookup request ID from Bandwidth.", alias="requestId")
+    status: Optional[InProgressLookupStatusEnum] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["requestId", "status"]
 
@@ -51,7 +52,7 @@ class CreateLookupResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateLookupResponse from a JSON string"""
+        """Create an instance of CreateAsyncBulkLookupResponseData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,7 +84,7 @@ class CreateLookupResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateLookupResponse from a dict"""
+        """Create an instance of CreateAsyncBulkLookupResponseData from a dict"""
         if obj is None:
             return None
 

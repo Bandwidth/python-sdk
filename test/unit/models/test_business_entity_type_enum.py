@@ -28,16 +28,11 @@ class TestBusinessEntityTypeEnum(unittest.TestCase):
 
     def testBusinessEntityTypeEnum(self):
         """Test BusinessEntityTypeEnum"""
-        sole_proprietor = BusinessEntityTypeEnum('SOLE_PROPRIETOR')
-        private_profit = BusinessEntityTypeEnum('PRIVATE_PROFIT')
-        public_profit = BusinessEntityTypeEnum('PUBLIC_PROFIT')
-        non_profit = BusinessEntityTypeEnum('NON_PROFIT')
-        government = BusinessEntityTypeEnum('GOVERNMENT')
-        assert sole_proprietor == 'SOLE_PROPRIETOR'
-        assert private_profit == 'PRIVATE_PROFIT'
-        assert public_profit == 'PUBLIC_PROFIT'
-        assert non_profit == 'NON_PROFIT'
-        assert government == 'GOVERNMENT'
+        assert BusinessEntityTypeEnum('SOLE_PROPRIETOR') == 'SOLE_PROPRIETOR'
+        assert BusinessEntityTypeEnum('PRIVATE_PROFIT') == 'PRIVATE_PROFIT'
+        assert BusinessEntityTypeEnum('PUBLIC_PROFIT') == 'PUBLIC_PROFIT'
+        assert BusinessEntityTypeEnum('NON_PROFIT') == 'NON_PROFIT'
+        assert BusinessEntityTypeEnum('GOVERNMENT') == 'GOVERNMENT'
 
 
 if __name__ == '__main__':

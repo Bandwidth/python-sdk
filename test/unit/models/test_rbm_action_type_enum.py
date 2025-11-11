@@ -28,18 +28,12 @@ class TestRbmActionTypeEnum(unittest.TestCase):
 
     def testRbmActionTypeEnum(self):
         """Test RbmActionTypeEnum"""
-        reply = RbmActionTypeEnum('REPLY')
-        dial_phone = RbmActionTypeEnum('DIAL_PHONE')
-        show_location = RbmActionTypeEnum('SHOW_LOCATION')
-        create_calendar_event = RbmActionTypeEnum('CREATE_CALENDAR_EVENT')
-        open_url = RbmActionTypeEnum('OPEN_URL')
-        request_location = RbmActionTypeEnum('REQUEST_LOCATION')
-        assert reply == 'REPLY'
-        assert dial_phone == 'DIAL_PHONE'
-        assert show_location == 'SHOW_LOCATION'
-        assert create_calendar_event == 'CREATE_CALENDAR_EVENT'
-        assert open_url == 'OPEN_URL'
-        assert request_location == 'REQUEST_LOCATION'
+        assert RbmActionTypeEnum('REPLY') == 'REPLY'
+        assert RbmActionTypeEnum('DIAL_PHONE') == 'DIAL_PHONE'
+        assert RbmActionTypeEnum('SHOW_LOCATION') == 'SHOW_LOCATION'
+        assert RbmActionTypeEnum('CREATE_CALENDAR_EVENT') == 'CREATE_CALENDAR_EVENT'
+        assert RbmActionTypeEnum('OPEN_URL') == 'OPEN_URL'
+        assert RbmActionTypeEnum('REQUEST_LOCATION') == 'REQUEST_LOCATION'
 
 if __name__ == '__main__':
     unittest.main()
