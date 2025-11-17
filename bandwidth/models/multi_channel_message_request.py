@@ -22,7 +22,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from bandwidth.models.multi_channel_channel_list_object import MultiChannelChannelListObject
+from bandwidth.models.multi_channel_channel_list_request_object import MultiChannelChannelListRequestObject
 from bandwidth.models.priority_enum import PriorityEnum
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,7 +32,7 @@ class MultiChannelMessageRequest(BaseModel):
     Multi-Channel Message Request
     """ # noqa: E501
     to: StrictStr = Field(description="The phone number the message should be sent to in E164 format.")
-    channel_list: Annotated[List[MultiChannelChannelListObject], Field(max_length=4)] = Field(description="A list of message bodies. The messages will be attempted in the order they are listed. Once a message sends successfully, the others will be ignored.", alias="channelList")
+    channel_list: Annotated[List[MultiChannelChannelListRequestObject], Field(max_length=4)] = Field(description="A list of message bodies. The messages will be attempted in the order they are listed. Once a message sends successfully, the others will be ignored.", alias="channelList")
     tag: Optional[StrictStr] = Field(default=None, description="A custom string that will be included in callback events of the message. Max 1024 characters.")
     priority: Optional[PriorityEnum] = None
     expiration: Optional[datetime] = Field(default=None, description="A string with the date/time value that the message will automatically expire by. This must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a date-time in the future.")
@@ -105,7 +105,7 @@ class MultiChannelMessageRequest(BaseModel):
 
         _obj = cls.model_validate({
             "to": obj.get("to"),
-            "channelList": [MultiChannelChannelListObject.from_dict(_item) for _item in obj["channelList"]] if obj.get("channelList") is not None else None,
+            "channelList": [MultiChannelChannelListRequestObject.from_dict(_item) for _item in obj["channelList"]] if obj.get("channelList") is not None else None,
             "tag": obj.get("tag"),
             "priority": obj.get("priority"),
             "expiration": obj.get("expiration")

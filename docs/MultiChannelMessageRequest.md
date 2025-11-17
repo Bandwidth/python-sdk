@@ -7,7 +7,7 @@ Multi-Channel Message Request
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **to** | **str** | The phone number the message should be sent to in E164 format. | 
-**channel_list** | [**List[MultiChannelChannelListObject]**](MultiChannelChannelListObject.md) | A list of message bodies. The messages will be attempted in the order they are listed. Once a message sends successfully, the others will be ignored. | 
+**channel_list** | [**List[MultiChannelChannelListRequestObject]**](MultiChannelChannelListRequestObject.md) | A list of message bodies. The messages will be attempted in the order they are listed. Once a message sends successfully, the others will be ignored. | 
 **tag** | **str** | A custom string that will be included in callback events of the message. Max 1024 characters. | [optional] 
 **priority** | [**PriorityEnum**](PriorityEnum.md) |  | [optional] 
 **expiration** | **datetime** | A string with the date/time value that the message will automatically expire by. This must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a date-time in the future. | [optional] 

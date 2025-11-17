@@ -18,30 +18,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
-from bandwidth.models.message_direction_enum import MessageDirectionEnum
-from bandwidth.models.multi_channel_channel_list_response_object import MultiChannelChannelListResponseObject
-from bandwidth.models.priority_enum import PriorityEnum
+from typing import Any, ClassVar, Dict, List
+from bandwidth.models.mms_message_content import MmsMessageContent
+from bandwidth.models.multi_channel_message_channel_enum import MultiChannelMessageChannelEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
-class MultiChannelMessageResponseData(BaseModel):
+class MultiChannelChannelListMMSResponseObject(BaseModel):
     """
-    The data returned in a multichannel message response.
+    MultiChannelChannelListMMSResponseObject
     """ # noqa: E501
-    id: StrictStr = Field(description="The ID of the message.")
-    time: datetime = Field(description="The time the message was received by the Bandwidth API.")
-    direction: MessageDirectionEnum
-    to: List[StrictStr] = Field(description="The destination phone number(s) of the message, in E164 format.")
-    channel_list: Annotated[List[MultiChannelChannelListResponseObject], Field(max_length=4)] = Field(description="A list of message bodies. The messages will be attempted in the order they are listed. Once a message sends successfully, the others will be ignored.", alias="channelList")
-    tag: Optional[StrictStr] = Field(default=None, description="A custom string that will be included in callback events of the message. Max 1024 characters.")
-    priority: Optional[PriorityEnum] = None
-    expiration: Optional[datetime] = Field(default=None, description="A string with the date/time value that the message will automatically expire by. This must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. Must be a date-time in the future.")
+    var_from: StrictStr = Field(description="The sender ID of the message. This could be an alphanumeric sender ID.", alias="from")
+    application_id: StrictStr = Field(description="The ID of the Application your from number or senderId is associated with in the Bandwidth Phone Number Dashboard.", alias="applicationId")
+    channel: MultiChannelMessageChannelEnum
+    content: MmsMessageContent
+    owner: StrictStr = Field(description="The Bandwidth senderId associated with the message. Identical to 'from'.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "time", "direction", "to", "channelList", "tag", "priority", "expiration"]
+    __properties: ClassVar[List[str]] = ["from", "applicationId", "channel", "content", "owner"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +55,7 @@ class MultiChannelMessageResponseData(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of MultiChannelMessageResponseData from a JSON string"""
+        """Create an instance of MultiChannelChannelListMMSResponseObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -84,13 +78,9 @@ class MultiChannelMessageResponseData(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in channel_list (list)
-        _items = []
-        if self.channel_list:
-            for _item_channel_list in self.channel_list:
-                if _item_channel_list:
-                    _items.append(_item_channel_list.to_dict())
-            _dict['channelList'] = _items
+        # override the default output from pydantic by calling `to_dict()` of content
+        if self.content:
+            _dict['content'] = self.content.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -100,7 +90,7 @@ class MultiChannelMessageResponseData(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of MultiChannelMessageResponseData from a dict"""
+        """Create an instance of MultiChannelChannelListMMSResponseObject from a dict"""
         if obj is None:
             return None
 
@@ -108,14 +98,11 @@ class MultiChannelMessageResponseData(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "time": obj.get("time"),
-            "direction": obj.get("direction"),
-            "to": obj.get("to"),
-            "channelList": [MultiChannelChannelListResponseObject.from_dict(_item) for _item in obj["channelList"]] if obj.get("channelList") is not None else None,
-            "tag": obj.get("tag"),
-            "priority": obj.get("priority"),
-            "expiration": obj.get("expiration")
+            "from": obj.get("from"),
+            "applicationId": obj.get("applicationId"),
+            "channel": obj.get("channel"),
+            "content": MmsMessageContent.from_dict(obj["content"]) if obj.get("content") is not None else None,
+            "owner": obj.get("owner")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
