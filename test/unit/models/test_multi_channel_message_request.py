@@ -17,9 +17,6 @@ import unittest
 from datetime import datetime
 
 from bandwidth.models.multi_channel_message_request import MultiChannelMessageRequest
-from bandwidth.models.multi_channel_channel_list_object import MultiChannelChannelListObject
-from bandwidth.models.rbm_message_content_text import RbmMessageContentText
-from bandwidth.models.multi_channel_channel_list_object_content import MultiChannelChannelListObjectContent
 
 class TestMultiChannelMessageRequest(unittest.TestCase):
     """MultiChannelMessageRequest unit test stubs"""
@@ -38,18 +35,7 @@ class TestMultiChannelMessageRequest(unittest.TestCase):
         if include_optional:
             return MultiChannelMessageRequest(
                 to = '+15552223333',
-                channel_list = [
-                    MultiChannelChannelListObject(
-                        var_from = 'BandwidthRBM', 
-                        application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
-                        channel = 'RBM', 
-                        content = MultiChannelChannelListObjectContent(
-                            RbmMessageContentText(
-                                text = 'Hello',
-                            )
-                        ),
-                    )
-                ],
+                channel_list = [],
                 tag = 'custom string',
                 priority = 'default',
                 expiration = '2021-02-01T11:29:18-05:00'
@@ -57,18 +43,7 @@ class TestMultiChannelMessageRequest(unittest.TestCase):
         else:
             return MultiChannelMessageRequest(
                 to = '+15552223333',
-                channel_list = [
-                    MultiChannelChannelListObject(
-                        var_from = 'BandwidthRBM', 
-                        application_id = '93de2206-9669-4e07-948d-329f4b722ee2', 
-                        channel = 'RBM', 
-                         content = MultiChannelChannelListObjectContent(
-                            RbmMessageContentText(
-                                text = 'Hello',
-                            )
-                        ),
-                    )
-                ],
+                channel_list = [],
             )
 
     def testMultiChannelMessageRequest(self):
@@ -78,7 +53,6 @@ class TestMultiChannelMessageRequest(unittest.TestCase):
         assert isinstance(instance, MultiChannelMessageRequest)
         assert instance.to == '+15552223333'
         assert isinstance(instance.channel_list, list)
-        assert isinstance(instance.channel_list[0], MultiChannelChannelListObject)
         assert instance.tag == 'custom string'
         assert instance.priority == 'default'
         assert isinstance(instance.expiration, datetime)

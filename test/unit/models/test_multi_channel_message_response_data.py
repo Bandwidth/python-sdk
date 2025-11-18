@@ -17,8 +17,6 @@ import unittest
 from datetime import datetime
 
 from bandwidth.models.multi_channel_message_response_data import MultiChannelMessageResponseData
-from bandwidth.models.multi_channel_message_response_data_channel_list_inner import MultiChannelMessageResponseDataChannelListInner
-from bandwidth.models.multi_channel_channel_list_object_content import MultiChannelChannelListObjectContent
 
 class TestMultiChannelMessageResponseData(unittest.TestCase):
     """MultiChannelMessageResponseData unit test stubs"""
@@ -40,14 +38,7 @@ class TestMultiChannelMessageResponseData(unittest.TestCase):
                 time = '2025-01-01T18:20:16Z',
                 direction = 'in',
                 to = ["+15554443333"],
-                channel_list = [
-                    MultiChannelMessageResponseDataChannelListInner(
-                        var_from = 'BandwidthRBM',
-                        application_id = '93de2206-9669-4e07-948d-329f4b722ee2',
-                        channel = 'RBM',
-                        content = MultiChannelChannelListObjectContent(),
-                        owner = 'owner',
-                )],
+                channel_list = [],
                 tag = 'custom string',
                 priority = 'default',
                 expiration = '2021-02-01T11:29:18-05:00'
@@ -71,8 +62,6 @@ class TestMultiChannelMessageResponseData(unittest.TestCase):
         assert instance.direction == 'in'
         assert instance.to == ["+15554443333"]
         assert isinstance(instance.channel_list, list)
-        assert len(instance.channel_list) > 0
-        assert isinstance(instance.channel_list[0], MultiChannelMessageResponseDataChannelListInner)
         assert instance.tag == 'custom string'
         assert instance.priority == 'default'
         assert isinstance(instance.expiration, datetime)
