@@ -30,8 +30,8 @@ class CallsIntegration(unittest.TestCase):
 
     def setUp(self):
         configuration = bandwidth.Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD,
+            client_id=BW_USERNAME,
+            client_secret=BW_PASSWORD,
         )
         api_client = bandwidth.ApiClient(configuration)
         self.calls_api_instance = calls_api.CallsApi(api_client)
