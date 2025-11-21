@@ -550,8 +550,6 @@ conf = bandwidth.Configuration(
             self.temp_access_token_expires_at = now + body['expires_in']
             return self.temp_access_token
 
-        return 'token'
-
     def auth_settings(self)-> AuthSettings:
         """Gets Auth Settings dict for api client.
 
