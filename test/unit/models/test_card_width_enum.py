@@ -28,10 +28,8 @@ class TestCardWidthEnum(unittest.TestCase):
 
     def testCardWidthEnum(self):
         """Test CardWidthEnum"""
-        small = CardWidthEnum('SMALL')
-        medium = CardWidthEnum('MEDIUM')
-        assert small == 'SMALL'
-        assert medium == 'MEDIUM'
+        assert CardWidthEnum('SMALL') == 'SMALL'
+        assert CardWidthEnum('MEDIUM') == 'MEDIUM'
 
 if __name__ == '__main__':
     unittest.main()

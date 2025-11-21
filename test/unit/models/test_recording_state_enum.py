@@ -28,10 +28,8 @@ class TestRecordingStateEnum(unittest.TestCase):
 
     def testRecordingStateEnum(self):
         """Test RecordingStateEnum"""
-        paused = RecordingStateEnum('paused')
-        recording = RecordingStateEnum('recording')
-        assert paused == 'paused'
-        assert recording == 'recording'
+        assert RecordingStateEnum('paused') == 'paused'
+        assert RecordingStateEnum('recording') == 'recording'
 
 if __name__ == '__main__':
     unittest.main()

@@ -6,6 +6,7 @@ authors = [
   {name = "Bandwidth",email = "letstalk@bandwidth.com"},
 ]
 readme = "README.md"
+repository = "https://github.com/bandwidth/python-sdk"
 keywords = ["OpenAPI", "OpenAPI-Generator", "Bandwidth"]
 requires-python = ">=3.9"
 

@@ -14,17 +14,21 @@
 
 
 import unittest
+from datetime import datetime
 
 from hamcrest import *
 from test.utils.env_variables import *
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.multi_channel_api import MultiChannelApi
 from bandwidth.models.multi_channel_message_request import MultiChannelMessageRequest
-from bandwidth.models.multi_channel_channel_list_object import MultiChannelChannelListObject
+from bandwidth.models.multi_channel_channel_list_request_object import MultiChannelChannelListRequestObject
+from bandwidth.models.multi_channel_channel_list_sms_object import MultiChannelChannelListSMSObject
 from bandwidth.models.sms_message_content import SmsMessageContent
 from bandwidth.models.multi_channel_message_channel_enum import MultiChannelMessageChannelEnum
-from bandwidth.models.multi_channel_channel_list_object_content import MultiChannelChannelListObjectContent
-
+from bandwidth.models.create_multi_channel_message_response import CreateMultiChannelMessageResponse
+from bandwidth.models.multi_channel_message_response_data import MultiChannelMessageResponseData
+from bandwidth.models.priority_enum import PriorityEnum
+from bandwidth.models.multi_channel_channel_list_response_object import MultiChannelChannelListResponseObject
 
 class TestMultiChannelApi(unittest.TestCase):
     """MultiChannelApi unit test stubs"""
@@ -39,23 +43,23 @@ class TestMultiChannelApi(unittest.TestCase):
         api_client = ApiClient(configuration)
         self.multi_channel_api_instance = MultiChannelApi(api_client)
 
-    @unittest.skip("skip because prism can't handle a oneOf with differing required fields")
     def test_create_multi_channel_message(self) -> None:
         """Test case for create_multi_channel_message
 
         Create Multi-Channel Message
         """
 
-        channel_list_item = MultiChannelChannelListObject(
-            var_from = BW_NUMBER,
-            application_id = BW_MESSAGING_APPLICATION_ID,
-            channel = MultiChannelMessageChannelEnum('SMS'),
-            content = MultiChannelChannelListObjectContent(
-                SmsMessageContent(
+        channel_list_item = MultiChannelChannelListRequestObject(
+            MultiChannelChannelListSMSObject(
+                var_from = BW_NUMBER,
+                application_id = BW_MESSAGING_APPLICATION_ID,
+                channel = MultiChannelMessageChannelEnum.SMS,
+                content = SmsMessageContent(
                     text = 'Hello, this is a test message.',
                 )
             )
         )
+
         multi_channel_message_request = MultiChannelMessageRequest(
             to = USER_NUMBER,
             channel_list = [channel_list_item],
@@ -66,6 +70,21 @@ class TestMultiChannelApi(unittest.TestCase):
 
         response = self.multi_channel_api_instance.create_multi_channel_message_with_http_info(BW_ACCOUNT_ID, multi_channel_message_request)        
         assert_that(response.status_code, equal_to(202))
+        assert_that(response.data, is_not(none()))
+        assert_that(response.data, instance_of(CreateMultiChannelMessageResponse))
+        assert_that(response.data.links, is_not(none()))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.data, is_not(none()))
+        assert_that(response.data.data, instance_of(MultiChannelMessageResponseData))
+        assert_that(response.data.data.id, instance_of(str))
+        assert_that(response.data.data.time, instance_of(datetime))
+        assert_that(response.data.data.direction, instance_of(str))
+        assert_that(response.data.data.to, instance_of(list))
+        assert_that(response.data.data.channel_list, instance_of(list))
+        assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))
+        assert_that(response.data.data.tag, instance_of(str))
+        assert_that(response.data.data.priority, instance_of(PriorityEnum))
+        assert_that(response.data.data.expiration, instance_of(datetime))
 
 if __name__ == '__main__':
     unittest.main()

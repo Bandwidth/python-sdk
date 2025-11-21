@@ -28,10 +28,8 @@ class TestTfvCallbackStatusEnum(unittest.TestCase):
 
     def testTfvCallbackStatusEnum(self):
         """Test TfvCallbackStatusEnum"""
-        verified = TfvCallbackStatusEnum('VERIFIED')
-        unverified = TfvCallbackStatusEnum('UNVERIFIED')
-        assert verified == 'VERIFIED'
-        assert unverified == 'UNVERIFIED'
+        assert TfvCallbackStatusEnum('VERIFIED') == 'VERIFIED'
+        assert TfvCallbackStatusEnum('UNVERIFIED') == 'UNVERIFIED'
 
 if __name__ == '__main__':
     unittest.main()

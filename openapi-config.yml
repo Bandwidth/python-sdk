@@ -1,5 +1,7 @@
 projectName: bandwidth_sdk
 packageName: bandwidth
 packageUrl: 'https://dev.bandwidth.com/sdks/python'
+gitUserId: bandwidth
+gitRepoId: python-sdk
 disallowAdditionalPropertiesIfNotPresent: false
 templateDir: custom_templates

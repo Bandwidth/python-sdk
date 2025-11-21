@@ -28,10 +28,8 @@ class TestStandaloneCardOrientationEnum(unittest.TestCase):
 
     def testStandaloneCardOrientationEnum(self):
         """Test StandaloneCardOrientationEnum"""
-        horizontal = StandaloneCardOrientationEnum('HORIZONTAL')
-        vertical = StandaloneCardOrientationEnum('VERTICAL')
-        assert horizontal == 'HORIZONTAL'
-        assert vertical == 'VERTICAL'
+        assert StandaloneCardOrientationEnum('HORIZONTAL') == 'HORIZONTAL'
+        assert StandaloneCardOrientationEnum('VERTICAL') == 'VERTICAL'
 
 if __name__ == '__main__':
     unittest.main()

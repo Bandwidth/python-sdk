@@ -43,6 +43,7 @@ __all__ = [
     "AdditionalDenialReason",
     "Address",
     "AnswerCallback",
+    "AsyncLookupRequest",
     "BlockedWebhook",
     "BridgeCompleteCallback",
     "BridgeTargetCompleteCallback",
@@ -61,6 +62,7 @@ __all__ = [
     "CallbackMethodEnum",
     "CardWidthEnum",
     "CodeRequest",
+    "CompletedLookupStatusEnum",
     "Conference",
     "ConferenceCompletedCallback",
     "ConferenceCreatedCallback",
@@ -72,11 +74,15 @@ __all__ = [
     "ConferenceRedirectCallback",
     "ConferenceStateEnum",
     "Contact",
+    "CreateAsyncBulkLookupResponse",
+    "CreateAsyncBulkLookupResponseData",
     "CreateCall",
     "CreateCallResponse",
-    "CreateLookupResponse",
     "CreateMessageRequestError",
     "CreateMultiChannelMessageResponse",
+    "CreateSyncLookupResponse",
+    "CreateSyncLookupResponseData",
+    "DeactivationEventEnum",
     "DisconnectCallback",
     "Diversion",
     "DtmfCallback",
@@ -87,18 +93,24 @@ __all__ = [
     "FieldError",
     "FileFormatEnum",
     "GatherCallback",
+    "GetAsyncBulkLookupResponse",
+    "GetAsyncBulkLookupResponseData",
+    "InProgressLookupStatusEnum",
     "InboundCallback",
     "InboundCallbackMessage",
     "InboundCallbackTypeEnum",
     "InitiateCallback",
+    "LatestMessageDeliveryStatusEnum",
+    "LineTypeEnum",
     "Link",
+    "LinkSchema",
     "LinksObject",
     "ListMessageDirectionEnum",
     "ListMessageItem",
-    "LookupRequest",
+    "LookupErrorResponse",
+    "LookupErrorSchema",
+    "LookupErrorSchemaMeta",
     "LookupResult",
-    "LookupStatus",
-    "LookupStatusEnum",
     "MachineDetectionCompleteCallback",
     "MachineDetectionConfiguration",
     "MachineDetectionModeEnum",
@@ -119,14 +131,22 @@ __all__ = [
     "MmsMessageContentFile",
     "MultiChannelAction",
     "MultiChannelActionCalendarEvent",
-    "MultiChannelChannelListObject",
-    "MultiChannelChannelListObjectContent",
+    "MultiChannelChannelListMMSObject",
+    "MultiChannelChannelListMMSResponseObject",
+    "MultiChannelChannelListObjectBase",
+    "MultiChannelChannelListOwnerObject",
+    "MultiChannelChannelListRBMObject",
+    "MultiChannelChannelListRBMObjectAllOfContent",
+    "MultiChannelChannelListRBMResponseObject",
+    "MultiChannelChannelListRequestObject",
+    "MultiChannelChannelListResponseObject",
+    "MultiChannelChannelListSMSObject",
+    "MultiChannelChannelListSMSResponseObject",
     "MultiChannelError",
     "MultiChannelMessageChannelEnum",
     "MultiChannelMessageContent",
     "MultiChannelMessageRequest",
     "MultiChannelMessageResponseData",
-    "MultiChannelMessageResponseDataChannelListInner",
     "OptInWorkflow",
     "PageInfo",
     "PriorityEnum",
@@ -160,6 +180,7 @@ __all__ = [
     "StatusCallbackMessage",
     "StatusCallbackTypeEnum",
     "StirShaken",
+    "SyncLookupRequest",
     "TelephoneNumber",
     "TfvBasicAuthentication",
     "TfvCallbackStatusEnum",
@@ -169,7 +190,6 @@ __all__ = [
     "TfvSubmissionInfo",
     "TfvSubmissionWrapper",
     "ThumbnailAlignmentEnum",
-    "TnLookupRequestError",
     "TranscribeRecording",
     "Transcription",
     "TranscriptionAvailableCallback",
@@ -224,6 +244,7 @@ from bandwidth.models.account_statistics import AccountStatistics as AccountStat
 from bandwidth.models.additional_denial_reason import AdditionalDenialReason as AdditionalDenialReason
 from bandwidth.models.address import Address as Address
 from bandwidth.models.answer_callback import AnswerCallback as AnswerCallback
+from bandwidth.models.async_lookup_request import AsyncLookupRequest as AsyncLookupRequest
 from bandwidth.models.blocked_webhook import BlockedWebhook as BlockedWebhook
 from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback as BridgeCompleteCallback
 from bandwidth.models.bridge_target_complete_callback import BridgeTargetCompleteCallback as BridgeTargetCompleteCallback
@@ -242,6 +263,7 @@ from bandwidth.models.callback import Callback as Callback
 from bandwidth.models.callback_method_enum import CallbackMethodEnum as CallbackMethodEnum
 from bandwidth.models.card_width_enum import CardWidthEnum as CardWidthEnum
 from bandwidth.models.code_request import CodeRequest as CodeRequest
+from bandwidth.models.completed_lookup_status_enum import CompletedLookupStatusEnum as CompletedLookupStatusEnum
 from bandwidth.models.conference import Conference as Conference
 from bandwidth.models.conference_completed_callback import ConferenceCompletedCallback as ConferenceCompletedCallback
 from bandwidth.models.conference_created_callback import ConferenceCreatedCallback as ConferenceCreatedCallback
@@ -253,11 +275,15 @@ from bandwidth.models.conference_recording_metadata import ConferenceRecordingMe
 from bandwidth.models.conference_redirect_callback import ConferenceRedirectCallback as ConferenceRedirectCallback
 from bandwidth.models.conference_state_enum import ConferenceStateEnum as ConferenceStateEnum
 from bandwidth.models.contact import Contact as Contact
+from bandwidth.models.create_async_bulk_lookup_response import CreateAsyncBulkLookupResponse as CreateAsyncBulkLookupResponse
+from bandwidth.models.create_async_bulk_lookup_response_data import CreateAsyncBulkLookupResponseData as CreateAsyncBulkLookupResponseData
 from bandwidth.models.create_call import CreateCall as CreateCall
 from bandwidth.models.create_call_response import CreateCallResponse as CreateCallResponse
-from bandwidth.models.create_lookup_response import CreateLookupResponse as CreateLookupResponse
 from bandwidth.models.create_message_request_error import CreateMessageRequestError as CreateMessageRequestError
 from bandwidth.models.create_multi_channel_message_response import CreateMultiChannelMessageResponse as CreateMultiChannelMessageResponse
+from bandwidth.models.create_sync_lookup_response import CreateSyncLookupResponse as CreateSyncLookupResponse
+from bandwidth.models.create_sync_lookup_response_data import CreateSyncLookupResponseData as CreateSyncLookupResponseData
+from bandwidth.models.deactivation_event_enum import DeactivationEventEnum as DeactivationEventEnum
 from bandwidth.models.disconnect_callback import DisconnectCallback as DisconnectCallback
 from bandwidth.models.diversion import Diversion as Diversion
 from bandwidth.models.dtmf_callback import DtmfCallback as DtmfCallback
@@ -268,18 +294,24 @@ from bandwidth.models.failure_webhook import FailureWebhook as FailureWebhook
 from bandwidth.models.field_error import FieldError as FieldError
 from bandwidth.models.file_format_enum import FileFormatEnum as FileFormatEnum
 from bandwidth.models.gather_callback import GatherCallback as GatherCallback
+from bandwidth.models.get_async_bulk_lookup_response import GetAsyncBulkLookupResponse as GetAsyncBulkLookupResponse
+from bandwidth.models.get_async_bulk_lookup_response_data import GetAsyncBulkLookupResponseData as GetAsyncBulkLookupResponseData
+from bandwidth.models.in_progress_lookup_status_enum import InProgressLookupStatusEnum as InProgressLookupStatusEnum
 from bandwidth.models.inbound_callback import InboundCallback as InboundCallback
 from bandwidth.models.inbound_callback_message import InboundCallbackMessage as InboundCallbackMessage
 from bandwidth.models.inbound_callback_type_enum import InboundCallbackTypeEnum as InboundCallbackTypeEnum
 from bandwidth.models.initiate_callback import InitiateCallback as InitiateCallback
+from bandwidth.models.latest_message_delivery_status_enum import LatestMessageDeliveryStatusEnum as LatestMessageDeliveryStatusEnum
+from bandwidth.models.line_type_enum import LineTypeEnum as LineTypeEnum
 from bandwidth.models.link import Link as Link
+from bandwidth.models.link_schema import LinkSchema as LinkSchema
 from bandwidth.models.links_object import LinksObject as LinksObject
 from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum as ListMessageDirectionEnum
 from bandwidth.models.list_message_item import ListMessageItem as ListMessageItem
-from bandwidth.models.lookup_request import LookupRequest as LookupRequest
+from bandwidth.models.lookup_error_response import LookupErrorResponse as LookupErrorResponse
+from bandwidth.models.lookup_error_schema import LookupErrorSchema as LookupErrorSchema
+from bandwidth.models.lookup_error_schema_meta import LookupErrorSchemaMeta as LookupErrorSchemaMeta
 from bandwidth.models.lookup_result import LookupResult as LookupResult
-from bandwidth.models.lookup_status import LookupStatus as LookupStatus
-from bandwidth.models.lookup_status_enum import LookupStatusEnum as LookupStatusEnum
 from bandwidth.models.machine_detection_complete_callback import MachineDetectionCompleteCallback as MachineDetectionCompleteCallback
 from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration as MachineDetectionConfiguration
 from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnum as MachineDetectionModeEnum
@@ -300,14 +332,22 @@ from bandwidth.models.mms_message_content import MmsMessageContent as MmsMessage
 from bandwidth.models.mms_message_content_file import MmsMessageContentFile as MmsMessageContentFile
 from bandwidth.models.multi_channel_action import MultiChannelAction as MultiChannelAction
 from bandwidth.models.multi_channel_action_calendar_event import MultiChannelActionCalendarEvent as MultiChannelActionCalendarEvent
-from bandwidth.models.multi_channel_channel_list_object import MultiChannelChannelListObject as MultiChannelChannelListObject
-from bandwidth.models.multi_channel_channel_list_object_content import MultiChannelChannelListObjectContent as MultiChannelChannelListObjectContent
+from bandwidth.models.multi_channel_channel_list_mms_object import MultiChannelChannelListMMSObject as MultiChannelChannelListMMSObject
+from bandwidth.models.multi_channel_channel_list_mms_response_object import MultiChannelChannelListMMSResponseObject as MultiChannelChannelListMMSResponseObject
+from bandwidth.models.multi_channel_channel_list_object_base import MultiChannelChannelListObjectBase as MultiChannelChannelListObjectBase
+from bandwidth.models.multi_channel_channel_list_owner_object import MultiChannelChannelListOwnerObject as MultiChannelChannelListOwnerObject
+from bandwidth.models.multi_channel_channel_list_rbm_object import MultiChannelChannelListRBMObject as MultiChannelChannelListRBMObject
+from bandwidth.models.multi_channel_channel_list_rbm_object_all_of_content import MultiChannelChannelListRBMObjectAllOfContent as MultiChannelChannelListRBMObjectAllOfContent
+from bandwidth.models.multi_channel_channel_list_rbm_response_object import MultiChannelChannelListRBMResponseObject as MultiChannelChannelListRBMResponseObject
+from bandwidth.models.multi_channel_channel_list_request_object import MultiChannelChannelListRequestObject as MultiChannelChannelListRequestObject
+from bandwidth.models.multi_channel_channel_list_response_object import MultiChannelChannelListResponseObject as MultiChannelChannelListResponseObject
+from bandwidth.models.multi_channel_channel_list_sms_object import MultiChannelChannelListSMSObject as MultiChannelChannelListSMSObject
+from bandwidth.models.multi_channel_channel_list_sms_response_object import MultiChannelChannelListSMSResponseObject as MultiChannelChannelListSMSResponseObject
 from bandwidth.models.multi_channel_error import MultiChannelError as MultiChannelError
 from bandwidth.models.multi_channel_message_channel_enum import MultiChannelMessageChannelEnum as MultiChannelMessageChannelEnum
 from bandwidth.models.multi_channel_message_content import MultiChannelMessageContent as MultiChannelMessageContent
 from bandwidth.models.multi_channel_message_request import MultiChannelMessageRequest as MultiChannelMessageRequest
 from bandwidth.models.multi_channel_message_response_data import MultiChannelMessageResponseData as MultiChannelMessageResponseData
-from bandwidth.models.multi_channel_message_response_data_channel_list_inner import MultiChannelMessageResponseDataChannelListInner as MultiChannelMessageResponseDataChannelListInner
 from bandwidth.models.opt_in_workflow import OptInWorkflow as OptInWorkflow
 from bandwidth.models.page_info import PageInfo as PageInfo
 from bandwidth.models.priority_enum import PriorityEnum as PriorityEnum
@@ -341,6 +381,7 @@ from bandwidth.models.status_callback import StatusCallback as StatusCallback
 from bandwidth.models.status_callback_message import StatusCallbackMessage as StatusCallbackMessage
 from bandwidth.models.status_callback_type_enum import StatusCallbackTypeEnum as StatusCallbackTypeEnum
 from bandwidth.models.stir_shaken import StirShaken as StirShaken
+from bandwidth.models.sync_lookup_request import SyncLookupRequest as SyncLookupRequest
 from bandwidth.models.telephone_number import TelephoneNumber as TelephoneNumber
 from bandwidth.models.tfv_basic_authentication import TfvBasicAuthentication as TfvBasicAuthentication
 from bandwidth.models.tfv_callback_status_enum import TfvCallbackStatusEnum as TfvCallbackStatusEnum
@@ -350,7 +391,6 @@ from bandwidth.models.tfv_status_enum import TfvStatusEnum as TfvStatusEnum
 from bandwidth.models.tfv_submission_info import TfvSubmissionInfo as TfvSubmissionInfo
 from bandwidth.models.tfv_submission_wrapper import TfvSubmissionWrapper as TfvSubmissionWrapper
 from bandwidth.models.thumbnail_alignment_enum import ThumbnailAlignmentEnum as ThumbnailAlignmentEnum
-from bandwidth.models.tn_lookup_request_error import TnLookupRequestError as TnLookupRequestError
 from bandwidth.models.transcribe_recording import TranscribeRecording as TranscribeRecording
 from bandwidth.models.transcription import Transcription as Transcription
 from bandwidth.models.transcription_available_callback import TranscriptionAvailableCallback as TranscriptionAvailableCallback

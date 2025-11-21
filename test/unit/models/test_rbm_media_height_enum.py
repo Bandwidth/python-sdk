@@ -28,12 +28,9 @@ class TestRbmMediaHeightEnum(unittest.TestCase):
 
     def testRbmMediaHeightEnum(self):
         """Test RbmMediaHeightEnum"""
-        short = RbmMediaHeightEnum('SHORT')
-        medium = RbmMediaHeightEnum('MEDIUM')
-        tall = RbmMediaHeightEnum('TALL')
-        assert short == 'SHORT'
-        assert medium == 'MEDIUM'
-        assert tall == 'TALL'
+        assert RbmMediaHeightEnum('SHORT') == 'SHORT'
+        assert RbmMediaHeightEnum('MEDIUM') == 'MEDIUM'
+        assert RbmMediaHeightEnum('TALL') == 'TALL'
 
 if __name__ == '__main__':
     unittest.main()

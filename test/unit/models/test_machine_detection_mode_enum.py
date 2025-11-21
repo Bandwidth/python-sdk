@@ -28,10 +28,8 @@ class TestMachineDetectionModeEnum(unittest.TestCase):
 
     def testMachineDetectionModeEnum(self):
         """Test MachineDetectionModeEnum"""
-        sync = MachineDetectionModeEnum('sync')
-        async_ = MachineDetectionModeEnum('async')
-        assert sync == 'sync'
-        assert async_ == 'async'
+        assert MachineDetectionModeEnum('sync') == 'sync'
+        assert MachineDetectionModeEnum('async') == 'async'
 
 if __name__ == '__main__':
     unittest.main()

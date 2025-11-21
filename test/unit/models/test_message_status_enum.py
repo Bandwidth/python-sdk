@@ -28,22 +28,14 @@ class TestMessageStatusEnum(unittest.TestCase):
 
     def testMessageStatusEnum(self):
         """Test MessageStatusEnum"""
-        received = MessageStatusEnum('RECEIVED')
-        queued = MessageStatusEnum('QUEUED')
-        sending = MessageStatusEnum('SENDING')
-        sent = MessageStatusEnum('SENT')
-        failed = MessageStatusEnum('FAILED')
-        delivered = MessageStatusEnum('DELIVERED')
-        accepted = MessageStatusEnum('ACCEPTED')
-        undelivered = MessageStatusEnum('UNDELIVERED')
-        assert received == 'RECEIVED'
-        assert queued == 'QUEUED'
-        assert sending == 'SENDING'
-        assert sent == 'SENT'
-        assert failed == 'FAILED'
-        assert delivered == 'DELIVERED'
-        assert accepted == 'ACCEPTED'
-        assert undelivered == 'UNDELIVERED'
+        assert MessageStatusEnum('RECEIVED') == 'RECEIVED'
+        assert MessageStatusEnum('QUEUED') == 'QUEUED'
+        assert MessageStatusEnum('SENDING') == 'SENDING'
+        assert MessageStatusEnum('SENT') == 'SENT'
+        assert MessageStatusEnum('FAILED') == 'FAILED'
+        assert MessageStatusEnum('DELIVERED') == 'DELIVERED'
+        assert MessageStatusEnum('ACCEPTED') == 'ACCEPTED'
+        assert MessageStatusEnum('UNDELIVERED') == 'UNDELIVERED'
 
 if __name__ == '__main__':
     unittest.main()

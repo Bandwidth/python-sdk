@@ -6,15 +6,17 @@ Carrier information results for the specified telephone number.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**response_code** | **int** | Our vendor&#39;s response code. | [optional] 
-**message** | **str** | Message associated with the response code. | [optional] 
-**e_164_format** | **str** | The telephone number in E.164 format. | [optional] 
-**formatted** | **str** | The formatted version of the telephone number. | [optional] 
-**country** | **str** | The country of the telephone number. | [optional] 
-**line_type** | **str** | The line type of the telephone number. | [optional] 
-**line_provider** | **str** | The messaging service provider of the telephone number. | [optional] 
-**mobile_country_code** | **str** | The first half of the Home Network Identity (HNI). | [optional] 
-**mobile_network_code** | **str** | The second half of the HNI. | [optional] 
+**phone_number** | **str** | The telephone number in E.164 format. | [optional] 
+**line_type** | [**LineTypeEnum**](LineTypeEnum.md) |  | [optional] 
+**messaging_provider** | **str** | The messaging service provider of the telephone number. | [optional] 
+**voice_provider** | **str** | The voice service provider of the telephone number. | [optional] 
+**country_code_a3** | **str** | The country code of the telephone number in ISO 3166-1 alpha-3 format. | [optional] 
+**deactivation_reporter** | **str** | [DNI-Only](#section/DNI-Only). The carrier that reported a deactivation event for this phone number.  | [optional] 
+**deactivation_date** | **str** | [DNI-Only](#section/DNI-Only). The datetime the carrier reported a deactivation event. | [optional] 
+**deactivation_event** | [**DeactivationEventEnum**](DeactivationEventEnum.md) |  | [optional] 
+**latest_message_delivery_status** | [**LatestMessageDeliveryStatusEnum**](LatestMessageDeliveryStatusEnum.md) |  | [optional] 
+**initial_message_delivery_status_date** | **date** | [DNI-Only](#section/DNI-Only). The date the phone number entered the status described in &#x60;latestMessageDeliveryStatus&#x60;.  Think of this as the \&quot;start time\&quot; for that status. Value resets every time the &#x60;latestMessageDeliveryStatus&#x60; changes. | [optional] 
+**latest_message_delivery_status_date** | **date** | [DNI-Only](#section/DNI-Only). The date bandwidth last received delivery status information for this phone number.  Use this field to understand how up-to-date the &#x60;latestMessageDeliveryStatus&#x60; is. Value resets every time the &#x60;latestMessageDeliveryStatus&#x60; changes. | [optional] 
 
 ## Example
 

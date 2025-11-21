@@ -28,10 +28,8 @@ class TestCallbackMethodEnum(unittest.TestCase):
 
     def testCallbackMethodEnum(self):
         """Test CallbackMethodEnum"""
-        post = CallbackMethodEnum('POST')
-        get = CallbackMethodEnum('GET')
-        assert post == 'POST'
-        assert get == 'GET'
+        assert CallbackMethodEnum('POST') == 'POST'
+        assert CallbackMethodEnum('GET') == 'GET'
 
 if __name__ == '__main__':
     unittest.main()
