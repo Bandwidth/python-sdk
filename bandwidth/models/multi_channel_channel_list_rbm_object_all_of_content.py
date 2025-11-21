@@ -18,18 +18,16 @@ import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
 from typing import Any, List, Optional
-from bandwidth.models.mms_message_content import MmsMessageContent
 from bandwidth.models.rbm_message_content_rich_card import RbmMessageContentRichCard
 from bandwidth.models.rbm_message_content_text import RbmMessageContentText
 from bandwidth.models.rbm_message_media import RbmMessageMedia
-from bandwidth.models.sms_message_content import SmsMessageContent
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-MULTICHANNELCHANNELLISTOBJECTCONTENT_ONE_OF_SCHEMAS = ["MmsMessageContent", "RbmMessageContentRichCard", "RbmMessageContentText", "RbmMessageMedia", "SmsMessageContent"]
+MULTICHANNELCHANNELLISTRBMOBJECTALLOFCONTENT_ONE_OF_SCHEMAS = ["RbmMessageContentRichCard", "RbmMessageContentText", "RbmMessageMedia"]
 
-class MultiChannelChannelListObjectContent(BaseModel):
+class MultiChannelChannelListRBMObjectAllOfContent(BaseModel):
     """
     The content of the message.
     """
@@ -39,12 +37,8 @@ class MultiChannelChannelListObjectContent(BaseModel):
     oneof_schema_2_validator: Optional[RbmMessageMedia] = None
     # data type: RbmMessageContentRichCard
     oneof_schema_3_validator: Optional[RbmMessageContentRichCard] = None
-    # data type: SmsMessageContent
-    oneof_schema_4_validator: Optional[SmsMessageContent] = None
-    # data type: MmsMessageContent
-    oneof_schema_5_validator: Optional[MmsMessageContent] = None
-    actual_instance: Optional[Union[MmsMessageContent, RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia, SmsMessageContent]] = None
-    one_of_schemas: Set[str] = { "MmsMessageContent", "RbmMessageContentRichCard", "RbmMessageContentText", "RbmMessageMedia", "SmsMessageContent" }
+    actual_instance: Optional[Union[RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia]] = None
+    one_of_schemas: Set[str] = { "RbmMessageContentRichCard", "RbmMessageContentText", "RbmMessageMedia" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -64,7 +58,7 @@ class MultiChannelChannelListObjectContent(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_oneof(cls, v):
-        instance = MultiChannelChannelListObjectContent.model_construct()
+        instance = MultiChannelChannelListRBMObjectAllOfContent.model_construct()
         error_messages = []
         match = 0
         # validate data type: RbmMessageContentText
@@ -82,22 +76,12 @@ class MultiChannelChannelListObjectContent(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `RbmMessageContentRichCard`")
         else:
             match += 1
-        # validate data type: SmsMessageContent
-        if not isinstance(v, SmsMessageContent):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `SmsMessageContent`")
-        else:
-            match += 1
-        # validate data type: MmsMessageContent
-        if not isinstance(v, MmsMessageContent):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `MmsMessageContent`")
-        else:
-            match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in MultiChannelChannelListObjectContent with oneOf schemas: MmsMessageContent, RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia, SmsMessageContent. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in MultiChannelChannelListRBMObjectAllOfContent with oneOf schemas: RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in MultiChannelChannelListObjectContent with oneOf schemas: MmsMessageContent, RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia, SmsMessageContent. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in MultiChannelChannelListRBMObjectAllOfContent with oneOf schemas: RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -130,25 +114,13 @@ class MultiChannelChannelListObjectContent(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
-        # deserialize data into SmsMessageContent
-        try:
-            instance.actual_instance = SmsMessageContent.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into MmsMessageContent
-        try:
-            instance.actual_instance = MmsMessageContent.from_json(json_str)
-            match += 1
-        except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into MultiChannelChannelListObjectContent with oneOf schemas: MmsMessageContent, RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia, SmsMessageContent. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into MultiChannelChannelListRBMObjectAllOfContent with oneOf schemas: RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into MultiChannelChannelListObjectContent with oneOf schemas: MmsMessageContent, RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia, SmsMessageContent. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into MultiChannelChannelListRBMObjectAllOfContent with oneOf schemas: RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -162,7 +134,7 @@ class MultiChannelChannelListObjectContent(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], MmsMessageContent, RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia, SmsMessageContent]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], RbmMessageContentRichCard, RbmMessageContentText, RbmMessageMedia]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

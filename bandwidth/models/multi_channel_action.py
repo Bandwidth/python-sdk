@@ -14,43 +14,48 @@
 
 
 from __future__ import annotations
+from inspect import getfullargspec
 import json
 import pprint
+import re  # noqa: F401
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
-from typing import Any, List, Optional
+from typing import Optional
 from bandwidth.models.multi_channel_action_calendar_event import MultiChannelActionCalendarEvent
 from bandwidth.models.rbm_action_base import RbmActionBase
 from bandwidth.models.rbm_action_dial import RbmActionDial
 from bandwidth.models.rbm_action_open_url import RbmActionOpenUrl
 from bandwidth.models.rbm_action_view_location import RbmActionViewLocation
-from pydantic import StrictStr, Field
-from typing import Union, List, Set, Optional, Dict
+from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
 from typing_extensions import Literal, Self
+from pydantic import Field
 
-MULTICHANNELACTION_ONE_OF_SCHEMAS = ["MultiChannelActionCalendarEvent", "RbmActionBase", "RbmActionDial", "RbmActionOpenUrl", "RbmActionViewLocation"]
+MULTICHANNELACTION_ANY_OF_SCHEMAS = ["MultiChannelActionCalendarEvent", "RbmActionBase", "RbmActionDial", "RbmActionOpenUrl", "RbmActionViewLocation"]
 
 class MultiChannelAction(BaseModel):
     """
     MultiChannelAction
     """
+
     # data type: RbmActionBase
-    oneof_schema_1_validator: Optional[RbmActionBase] = None
+    anyof_schema_1_validator: Optional[RbmActionBase] = None
     # data type: RbmActionDial
-    oneof_schema_2_validator: Optional[RbmActionDial] = None
+    anyof_schema_2_validator: Optional[RbmActionDial] = None
     # data type: RbmActionViewLocation
-    oneof_schema_3_validator: Optional[RbmActionViewLocation] = None
+    anyof_schema_3_validator: Optional[RbmActionViewLocation] = None
     # data type: MultiChannelActionCalendarEvent
-    oneof_schema_4_validator: Optional[MultiChannelActionCalendarEvent] = None
+    anyof_schema_4_validator: Optional[MultiChannelActionCalendarEvent] = None
     # data type: RbmActionOpenUrl
-    oneof_schema_5_validator: Optional[RbmActionOpenUrl] = None
-    actual_instance: Optional[Union[MultiChannelActionCalendarEvent, RbmActionBase, RbmActionDial, RbmActionOpenUrl, RbmActionViewLocation]] = None
-    one_of_schemas: Set[str] = { "MultiChannelActionCalendarEvent", "RbmActionBase", "RbmActionDial", "RbmActionOpenUrl", "RbmActionViewLocation" }
+    anyof_schema_5_validator: Optional[RbmActionOpenUrl] = None
+    if TYPE_CHECKING:
+        actual_instance: Optional[Union[MultiChannelActionCalendarEvent, RbmActionBase, RbmActionDial, RbmActionOpenUrl, RbmActionViewLocation]] = None
+    else:
+        actual_instance: Any = None
+    any_of_schemas: Set[str] = { "MultiChannelActionCalendarEvent", "RbmActionBase", "RbmActionDial", "RbmActionOpenUrl", "RbmActionViewLocation" }
 
-    model_config = ConfigDict(
-        validate_assignment=True,
-        protected_namespaces=(),
-    )
-
+    model_config = {
+        "validate_assignment": True,
+        "protected_namespaces": (),
+    }
 
     discriminator_value_class_map: Dict[str, str] = {
     }
@@ -66,46 +71,47 @@ class MultiChannelAction(BaseModel):
             super().__init__(**kwargs)
 
     @field_validator('actual_instance')
-    def actual_instance_must_validate_oneof(cls, v):
+    def actual_instance_must_validate_anyof(cls, v):
         instance = MultiChannelAction.model_construct()
         error_messages = []
-        match = 0
         # validate data type: RbmActionBase
         if not isinstance(v, RbmActionBase):
             error_messages.append(f"Error! Input type `{type(v)}` is not `RbmActionBase`")
         else:
-            match += 1
+            return v
+
         # validate data type: RbmActionDial
         if not isinstance(v, RbmActionDial):
             error_messages.append(f"Error! Input type `{type(v)}` is not `RbmActionDial`")
         else:
-            match += 1
+            return v
+
         # validate data type: RbmActionViewLocation
         if not isinstance(v, RbmActionViewLocation):
             error_messages.append(f"Error! Input type `{type(v)}` is not `RbmActionViewLocation`")
         else:
-            match += 1
+            return v
+
         # validate data type: MultiChannelActionCalendarEvent
         if not isinstance(v, MultiChannelActionCalendarEvent):
             error_messages.append(f"Error! Input type `{type(v)}` is not `MultiChannelActionCalendarEvent`")
         else:
-            match += 1
+            return v
+
         # validate data type: RbmActionOpenUrl
         if not isinstance(v, RbmActionOpenUrl):
             error_messages.append(f"Error! Input type `{type(v)}` is not `RbmActionOpenUrl`")
         else:
-            match += 1
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in MultiChannelAction with oneOf schemas: MultiChannelActionCalendarEvent, RbmActionBase, RbmActionDial, RbmActionOpenUrl, RbmActionViewLocation. Details: " + ", ".join(error_messages))
-        elif match == 0:
+            return v
+
+        if error_messages:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in MultiChannelAction with oneOf schemas: MultiChannelActionCalendarEvent, RbmActionBase, RbmActionDial, RbmActionOpenUrl, RbmActionViewLocation. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in MultiChannelAction with anyOf schemas: MultiChannelActionCalendarEvent, RbmActionBase, RbmActionDial, RbmActionOpenUrl, RbmActionViewLocation. Details: " + ", ".join(error_messages))
         else:
             return v
 
     @classmethod
-    def from_dict(cls, obj: Union[str, Dict[str, Any]]) -> Self:
+    def from_dict(cls, obj: Dict[str, Any]) -> Self:
         return cls.from_json(json.dumps(obj))
 
     @classmethod
@@ -113,45 +119,40 @@ class MultiChannelAction(BaseModel):
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
         error_messages = []
-        match = 0
-
-        # deserialize data into RbmActionBase
+        # anyof_schema_1_validator: Optional[RbmActionBase] = None
         try:
             instance.actual_instance = RbmActionBase.from_json(json_str)
-            match += 1
+            return instance
         except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into RbmActionDial
+             error_messages.append(str(e))
+        # anyof_schema_2_validator: Optional[RbmActionDial] = None
         try:
             instance.actual_instance = RbmActionDial.from_json(json_str)
-            match += 1
+            return instance
         except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into RbmActionViewLocation
+             error_messages.append(str(e))
+        # anyof_schema_3_validator: Optional[RbmActionViewLocation] = None
         try:
             instance.actual_instance = RbmActionViewLocation.from_json(json_str)
-            match += 1
+            return instance
         except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into MultiChannelActionCalendarEvent
+             error_messages.append(str(e))
+        # anyof_schema_4_validator: Optional[MultiChannelActionCalendarEvent] = None
         try:
             instance.actual_instance = MultiChannelActionCalendarEvent.from_json(json_str)
-            match += 1
+            return instance
         except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
-        # deserialize data into RbmActionOpenUrl
+             error_messages.append(str(e))
+        # anyof_schema_5_validator: Optional[RbmActionOpenUrl] = None
         try:
             instance.actual_instance = RbmActionOpenUrl.from_json(json_str)
-            match += 1
+            return instance
         except (ValidationError, ValueError) as e:
-            error_messages.append(str(e))
+             error_messages.append(str(e))
 
-        if match > 1:
-            # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into MultiChannelAction with oneOf schemas: MultiChannelActionCalendarEvent, RbmActionBase, RbmActionDial, RbmActionOpenUrl, RbmActionViewLocation. Details: " + ", ".join(error_messages))
-        elif match == 0:
+        if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into MultiChannelAction with oneOf schemas: MultiChannelActionCalendarEvent, RbmActionBase, RbmActionDial, RbmActionOpenUrl, RbmActionViewLocation. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into MultiChannelAction with anyOf schemas: MultiChannelActionCalendarEvent, RbmActionBase, RbmActionDial, RbmActionOpenUrl, RbmActionViewLocation. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -173,7 +174,6 @@ class MultiChannelAction(BaseModel):
         if hasattr(self.actual_instance, "to_dict") and callable(self.actual_instance.to_dict):
             return self.actual_instance.to_dict()
         else:
-            # primitive type
             return self.actual_instance
 
     def to_str(self) -> str:

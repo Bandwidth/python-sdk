@@ -20,19 +20,19 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
-from bandwidth.models.multi_channel_channel_list_object_content import MultiChannelChannelListObjectContent
 from bandwidth.models.multi_channel_message_channel_enum import MultiChannelMessageChannelEnum
+from bandwidth.models.sms_message_content import SmsMessageContent
 from typing import Optional, Set
 from typing_extensions import Self
 
-class MultiChannelMessageResponseDataChannelListInner(BaseModel):
+class MultiChannelChannelListSMSResponseObject(BaseModel):
     """
-    MultiChannelMessageResponseDataChannelListInner
+    MultiChannelChannelListSMSResponseObject
     """ # noqa: E501
     var_from: StrictStr = Field(description="The sender ID of the message. This could be an alphanumeric sender ID.", alias="from")
     application_id: StrictStr = Field(description="The ID of the Application your from number or senderId is associated with in the Bandwidth Phone Number Dashboard.", alias="applicationId")
     channel: MultiChannelMessageChannelEnum
-    content: MultiChannelChannelListObjectContent
+    content: SmsMessageContent
     owner: StrictStr = Field(description="The Bandwidth senderId associated with the message. Identical to 'from'.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["from", "applicationId", "channel", "content", "owner"]
@@ -55,7 +55,7 @@ class MultiChannelMessageResponseDataChannelListInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of MultiChannelMessageResponseDataChannelListInner from a JSON string"""
+        """Create an instance of MultiChannelChannelListSMSResponseObject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -90,7 +90,7 @@ class MultiChannelMessageResponseDataChannelListInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of MultiChannelMessageResponseDataChannelListInner from a dict"""
+        """Create an instance of MultiChannelChannelListSMSResponseObject from a dict"""
         if obj is None:
             return None
 
@@ -101,7 +101,7 @@ class MultiChannelMessageResponseDataChannelListInner(BaseModel):
             "from": obj.get("from"),
             "applicationId": obj.get("applicationId"),
             "channel": obj.get("channel"),
-            "content": MultiChannelChannelListObjectContent.from_dict(obj["content"]) if obj.get("content") is not None else None,
+            "content": SmsMessageContent.from_dict(obj["content"]) if obj.get("content") is not None else None,
             "owner": obj.get("owner")
         })
         # store additional fields in additional_properties

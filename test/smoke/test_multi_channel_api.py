@@ -22,11 +22,25 @@ from test.utils.env_variables import *
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.multi_channel_api import MultiChannelApi
 from bandwidth.models.multi_channel_message_request import MultiChannelMessageRequest
-from bandwidth.models.multi_channel_channel_list_object import MultiChannelChannelListObject
 from bandwidth.models.multi_channel_message_channel_enum import MultiChannelMessageChannelEnum
+from bandwidth.models.multi_channel_channel_list_request_object import MultiChannelChannelListRequestObject
+from bandwidth.models.multi_channel_channel_list_sms_response_object import MultiChannelChannelListSMSResponseObject
+from bandwidth.models.multi_channel_channel_list_sms_object import MultiChannelChannelListSMSObject
+from bandwidth.models.sms_message_content import SmsMessageContent
+from bandwidth.models.create_multi_channel_message_response import CreateMultiChannelMessageResponse
+from bandwidth.models.multi_channel_message_response_data import MultiChannelMessageResponseData
+from bandwidth.models.priority_enum import PriorityEnum
+from bandwidth.models.multi_channel_channel_list_response_object import MultiChannelChannelListResponseObject
+from bandwidth.models.multi_channel_channel_list_mms_object import MultiChannelChannelListMMSObject
+from bandwidth.models.mms_message_content import MmsMessageContent
+from bandwidth.models.mms_message_content_file import MmsMessageContentFile
+from bandwidth.models.multi_channel_channel_list_rbm_object import MultiChannelChannelListRBMObject
+from bandwidth.models.multi_channel_channel_list_rbm_object_all_of_content import MultiChannelChannelListRBMObjectAllOfContent
 from bandwidth.models.rbm_message_content_text import RbmMessageContentText
-from bandwidth.models.multi_channel_channel_list_object_content import MultiChannelChannelListObjectContent
-
+from bandwidth.models.multi_channel_action import MultiChannelAction
+from bandwidth.models.rbm_action_dial import RbmActionDial
+from bandwidth.models.rbm_action_type_enum import RbmActionTypeEnum
+from bandwidth.models.multi_channel_channel_list_rbm_response_object import MultiChannelChannelListRBMResponseObject
 
 class TestMultiChannelApi(unittest.TestCase):
     """MultiChannelApi unit test stubs"""
@@ -41,36 +55,208 @@ class TestMultiChannelApi(unittest.TestCase):
 
         self.expiration = datetime.now(ZoneInfo('America/New_York')) + timedelta(minutes=1)
 
-    @unittest.skip("Still in Beta, skip for now")
-    def test_create_multi_channel_message(self) -> None:
+    def test_create_multi_channel_sms_message(self) -> None:
         """Test case for create_multi_channel_message
 
         Create Multi-Channel Message
         """
 
-        channel_list_item = MultiChannelChannelListObject(
-            var_from = BW_NUMBER,
-            application_id = BW_MESSAGING_APPLICATION_ID,
-            channel = MultiChannelMessageChannelEnum('RBM'),
-            content = MultiChannelChannelListObjectContent(
-                RbmMessageContentText(
+        channel_list_item = MultiChannelChannelListRequestObject(
+            MultiChannelChannelListSMSObject(
+                var_from = BW_NUMBER,
+                application_id = BW_MESSAGING_APPLICATION_ID,
+                channel = MultiChannelMessageChannelEnum.SMS,
+                content = SmsMessageContent(
                     text = 'Hello, this is a test message.',
                 )
             )
         )
+
         multi_channel_message_request = MultiChannelMessageRequest(
             to = USER_NUMBER,
             channel_list = [channel_list_item],
             tag = 'tag',
             priority = 'high',
-            expiration = self.expiration
+            expiration = self.expiration.isoformat(),
         )
 
         response = self.multi_channel_api_instance.create_multi_channel_message_with_http_info(
             BW_ACCOUNT_ID,
             multi_channel_message_request
-        )        
+        )
+
         assert_that(response.status_code, equal_to(202))
+        assert_that(response.data, is_not(none()))
+        assert_that(response.data, instance_of(CreateMultiChannelMessageResponse))
+        assert_that(response.data.links, is_not(none()))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.data, is_not(none()))
+        assert_that(response.data.data, instance_of(MultiChannelMessageResponseData))
+        assert_that(response.data.data.id, instance_of(str))
+        assert_that(response.data.data.time, instance_of(datetime))
+        assert_that(response.data.data.direction, instance_of(str))
+        assert_that(response.data.data.to, instance_of(list))
+        assert_that(response.data.data.tag, instance_of(str))
+        assert_that(response.data.data.priority, instance_of(PriorityEnum))
+        assert_that(response.data.data.expiration, instance_of(datetime))
+        assert_that(response.data.data.channel_list, instance_of(list))
+        assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))
+
+        # skip below for now because python doesn't respect discriminator field properly
+
+        # assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListSMSResponseObject))
+        # sms_object = response.data.data.channel_list[0].actual_instance
+        # assert_that(sms_object.var_from, equal_to(BW_NUMBER))
+        # assert_that(sms_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
+        # assert_that(sms_object.channel, equal_to(MultiChannelMessageChannelEnum.SMS))
+        # assert_that(sms_object.content, is_not(none()))
+        # assert_that(sms_object.content, instance_of(SmsMessageContent))
+        # assert_that(sms_object.content.text, equal_to('Hello, this is a test message.'))
+        # assert_that(sms_object.owner, equal_to(BW_NUMBER))
+
+    def test_create_multi_channel_mms_message(self) -> None:
+        """Test case for create_multi_channel_message
+
+        Create Multi-Channel Message
+        """
+
+        channel_list_item = MultiChannelChannelListRequestObject(
+            MultiChannelChannelListMMSObject(
+                var_from = BW_NUMBER,
+                application_id = BW_MESSAGING_APPLICATION_ID,
+                channel = MultiChannelMessageChannelEnum.MMS,
+                content = MmsMessageContent(
+                    text = 'Hello, this is a test message.',
+                    media = [MmsMessageContentFile(fileUrl="https://image.com/image.png")]
+                )
+            )
+        )
+
+        multi_channel_message_request = MultiChannelMessageRequest(
+            to = USER_NUMBER,
+            channel_list = [channel_list_item],
+            tag = 'tag',
+            priority = 'high',
+            expiration = self.expiration.isoformat(),
+        )
+
+        response = self.multi_channel_api_instance.create_multi_channel_message_with_http_info(
+            BW_ACCOUNT_ID,
+            multi_channel_message_request
+        )
+
+        assert_that(response.status_code, equal_to(202))
+        assert_that(response.data, is_not(none()))
+        assert_that(response.data, instance_of(CreateMultiChannelMessageResponse))
+        assert_that(response.data.links, is_not(none()))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.data, is_not(none()))
+        assert_that(response.data.data, instance_of(MultiChannelMessageResponseData))
+        assert_that(response.data.data.id, instance_of(str))
+        assert_that(response.data.data.time, instance_of(datetime))
+        assert_that(response.data.data.direction, instance_of(str))
+        assert_that(response.data.data.to, instance_of(list))
+        assert_that(response.data.data.tag, instance_of(str))
+        assert_that(response.data.data.priority, instance_of(PriorityEnum))
+        assert_that(response.data.data.expiration, instance_of(datetime))
+        assert_that(response.data.data.channel_list, instance_of(list))
+        assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))
+
+        # skip below for now because python doesn't respect discriminator field properly
+        
+        # assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListMMSResponseObject))
+        # mms_object = response.data.data.channel_list[0].actual_instance
+        # assert_that(mms_object.var_from, equal_to(BW_NUMBER))
+        # assert_that(mms_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
+        # assert_that(mms_object.channel, equal_to(MultiChannelMessageChannelEnum.MMS))
+        # assert_that(mms_object.content, is_not(none()))
+        # assert_that(mms_object.content, instance_of(MmsMessageContent))
+        # assert_that(mms_object.content.text, equal_to('Hello, this is a test message.'))
+        # assert_that(len(mms_object.content.media), equal_to(1))
+        # assert_that(mms_object.content.media[0].file_url, equal_to("https://image.com/image.png"))
+        # assert_that(mms_object.owner, equal_to(BW_NUMBER))
+
+    def test_create_multi_channel_rbm_message(self) -> None:
+        """Test case for create_multi_channel_message
+
+        Create Multi-Channel Message
+        """
+
+        channel_list_item = MultiChannelChannelListRequestObject(
+            MultiChannelChannelListRBMObject(
+                var_from = BW_NUMBER,
+                application_id = BW_MESSAGING_APPLICATION_ID,
+                channel = MultiChannelMessageChannelEnum.RBM,
+                content = MultiChannelChannelListRBMObjectAllOfContent(
+                    RbmMessageContentText(
+                        text = 'Hello, this is a test message.',
+                        suggestions=[
+                            MultiChannelAction(RbmActionDial(
+                                type=RbmActionTypeEnum.DIAL_PHONE,
+                                text="Call Us",
+                                postback_data='U0dWc2JHOGdkMjl5YkdRPQ==',
+                                phone_number=BW_NUMBER
+                            ))
+                        ]
+                    )
+                    
+                )
+            )
+        )
+
+        multi_channel_message_request = MultiChannelMessageRequest(
+            to = USER_NUMBER,
+            channel_list = [channel_list_item],
+            tag = 'tag',
+            priority = 'high',
+            expiration = self.expiration.isoformat(),
+        )
+
+        response = self.multi_channel_api_instance.create_multi_channel_message_with_http_info(
+            BW_ACCOUNT_ID,
+            multi_channel_message_request
+        )
+
+        assert_that(response.status_code, equal_to(202))
+        assert_that(response.data, is_not(none()))
+        assert_that(response.data, instance_of(CreateMultiChannelMessageResponse))
+        assert_that(response.data.links, is_not(none()))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.data, is_not(none()))
+        assert_that(response.data.data, instance_of(MultiChannelMessageResponseData))
+        assert_that(response.data.data.id, instance_of(str))
+        assert_that(response.data.data.time, instance_of(datetime))
+        assert_that(response.data.data.direction, instance_of(str))
+        assert_that(response.data.data.to, instance_of(list))
+        assert_that(response.data.data.tag, instance_of(str))
+        assert_that(response.data.data.priority, instance_of(PriorityEnum))
+        assert_that(response.data.data.expiration, instance_of(datetime))
+        assert_that(response.data.data.channel_list, instance_of(list))
+        assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))     
+
+        # skip below for now because python doesn't respect discriminator field properly
+
+        # assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListRBMResponseObject))
+        # rbm_object = response.data.data.channel_list[0].actual_instance
+        # assert_that(rbm_object.var_from, equal_to(BW_NUMBER))
+        # assert_that(rbm_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
+        # assert_that(rbm_object.channel, equal_to(MultiChannelMessageChannelEnum.RBM))
+        # assert_that(rbm_object.content, is_not(none()))
+        # assert_that(rbm_object.content, instance_of(MultiChannelChannelListRBMObjectAllOfContent))
+        # assert_that(rbm_object.content.actual_instance, instance_of(RbmMessageContentText))
+        # assert_that(rbm_object.content.actual_instance.text, equal_to('Hello, this is a test message.'))
+        # assert_that(rbm_object.content.actual_instance.suggestions, is_not(none()))
+        # assert_that(rbm_object.content.actual_instance.suggestions, instance_of(list))
+        # assert_that(len(rbm_object.content.actual_instance.suggestions), equal_to(1))
+        # assert_that(rbm_object.content.actual_instance.suggestions[0], instance_of(MultiChannelAction))
+        # action = rbm_object.content.actual_instance.suggestions[0]
+        # assert_that(action.actual_instance, instance_of(RbmActionDial))
+        # dial_action = action.actual_instance
+        # assert_that(dial_action.type, equal_to(RbmActionTypeEnum.DIAL_PHONE))
+        # assert_that(dial_action.text, equal_to("Call Us"))
+        # assert_that(dial_action.postback_data, equal_to('U0dWc2JHOGdkMjl5YkdRPQ=='))
+        # assert_that(dial_action.phone_number, equal_to(BW_NUMBER))
+        # assert_that(rbm_object.owner, equal_to(BW_NUMBER))
 
 if __name__ == '__main__':
     unittest.main()

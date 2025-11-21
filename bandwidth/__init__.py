@@ -131,14 +131,22 @@ __all__ = [
     "MmsMessageContentFile",
     "MultiChannelAction",
     "MultiChannelActionCalendarEvent",
-    "MultiChannelChannelListObject",
-    "MultiChannelChannelListObjectContent",
+    "MultiChannelChannelListMMSObject",
+    "MultiChannelChannelListMMSResponseObject",
+    "MultiChannelChannelListObjectBase",
+    "MultiChannelChannelListOwnerObject",
+    "MultiChannelChannelListRBMObject",
+    "MultiChannelChannelListRBMObjectAllOfContent",
+    "MultiChannelChannelListRBMResponseObject",
+    "MultiChannelChannelListRequestObject",
+    "MultiChannelChannelListResponseObject",
+    "MultiChannelChannelListSMSObject",
+    "MultiChannelChannelListSMSResponseObject",
     "MultiChannelError",
     "MultiChannelMessageChannelEnum",
     "MultiChannelMessageContent",
     "MultiChannelMessageRequest",
     "MultiChannelMessageResponseData",
-    "MultiChannelMessageResponseDataChannelListInner",
     "OptInWorkflow",
     "PageInfo",
     "PriorityEnum",
@@ -324,14 +332,22 @@ from bandwidth.models.mms_message_content import MmsMessageContent as MmsMessage
 from bandwidth.models.mms_message_content_file import MmsMessageContentFile as MmsMessageContentFile
 from bandwidth.models.multi_channel_action import MultiChannelAction as MultiChannelAction
 from bandwidth.models.multi_channel_action_calendar_event import MultiChannelActionCalendarEvent as MultiChannelActionCalendarEvent
-from bandwidth.models.multi_channel_channel_list_object import MultiChannelChannelListObject as MultiChannelChannelListObject
-from bandwidth.models.multi_channel_channel_list_object_content import MultiChannelChannelListObjectContent as MultiChannelChannelListObjectContent
+from bandwidth.models.multi_channel_channel_list_mms_object import MultiChannelChannelListMMSObject as MultiChannelChannelListMMSObject
+from bandwidth.models.multi_channel_channel_list_mms_response_object import MultiChannelChannelListMMSResponseObject as MultiChannelChannelListMMSResponseObject
+from bandwidth.models.multi_channel_channel_list_object_base import MultiChannelChannelListObjectBase as MultiChannelChannelListObjectBase
+from bandwidth.models.multi_channel_channel_list_owner_object import MultiChannelChannelListOwnerObject as MultiChannelChannelListOwnerObject
+from bandwidth.models.multi_channel_channel_list_rbm_object import MultiChannelChannelListRBMObject as MultiChannelChannelListRBMObject
+from bandwidth.models.multi_channel_channel_list_rbm_object_all_of_content import MultiChannelChannelListRBMObjectAllOfContent as MultiChannelChannelListRBMObjectAllOfContent
+from bandwidth.models.multi_channel_channel_list_rbm_response_object import MultiChannelChannelListRBMResponseObject as MultiChannelChannelListRBMResponseObject
+from bandwidth.models.multi_channel_channel_list_request_object import MultiChannelChannelListRequestObject as MultiChannelChannelListRequestObject
+from bandwidth.models.multi_channel_channel_list_response_object import MultiChannelChannelListResponseObject as MultiChannelChannelListResponseObject
+from bandwidth.models.multi_channel_channel_list_sms_object import MultiChannelChannelListSMSObject as MultiChannelChannelListSMSObject
+from bandwidth.models.multi_channel_channel_list_sms_response_object import MultiChannelChannelListSMSResponseObject as MultiChannelChannelListSMSResponseObject
 from bandwidth.models.multi_channel_error import MultiChannelError as MultiChannelError
 from bandwidth.models.multi_channel_message_channel_enum import MultiChannelMessageChannelEnum as MultiChannelMessageChannelEnum
 from bandwidth.models.multi_channel_message_content import MultiChannelMessageContent as MultiChannelMessageContent
 from bandwidth.models.multi_channel_message_request import MultiChannelMessageRequest as MultiChannelMessageRequest
 from bandwidth.models.multi_channel_message_response_data import MultiChannelMessageResponseData as MultiChannelMessageResponseData
-from bandwidth.models.multi_channel_message_response_data_channel_list_inner import MultiChannelMessageResponseDataChannelListInner as MultiChannelMessageResponseDataChannelListInner
 from bandwidth.models.opt_in_workflow import OptInWorkflow as OptInWorkflow
 from bandwidth.models.page_info import PageInfo as PageInfo
 from bandwidth.models.priority_enum import PriorityEnum as PriorityEnum
