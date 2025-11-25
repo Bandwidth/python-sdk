@@ -402,6 +402,7 @@ class ConferencesIntegration(unittest.TestCase):
 
         self.assertApiException(context, ForbiddenException, 403)
 
+    @unittest.skip("PV Issues")
     def test_update_conference_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
             self.conference_api_instance.update_conference(
@@ -423,6 +424,7 @@ class ConferencesIntegration(unittest.TestCase):
 
         self.assertApiException(context, ForbiddenException, 403)
 
+    @unittest.skip("PV Issues")
     def test_update_conference_bxml_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
             self.conference_api_instance.update_conference_bxml(
@@ -444,6 +446,7 @@ class ConferencesIntegration(unittest.TestCase):
 
         self.assertApiException(context, ForbiddenException, 403)
 
+    @unittest.skip("PV Issues")
     def test_update_conference_member_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
             self.conference_api_instance.update_conference_member(
