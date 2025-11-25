@@ -40,7 +40,7 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
     """PhoneNumberLookupApi unit test stubs"""
 
     def setUp(self) -> None:
-        configuration = bandwidth.Configuration(
+        configuration = Configuration(
             client_id=BW_USERNAME,
             client_secret=BW_PASSWORD
         )
