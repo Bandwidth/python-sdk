@@ -525,8 +525,12 @@ conf = bandwidth.Configuration(
         return urllib3.util.make_headers(
             basic_auth=username + ':' + password
         ).get('authorization')
-    
+
     def get_access_token(self) -> str:
+        """Gets HTTP bearer authentication header (string).
+
+        :return: The token for bearer HTTP authentication.
+        """
         now = int(time.time())
         print(f"now: {now}, exp: {self.temp_access_token}, token: {self.temp_access_token_expires_at}")
         if self.temp_access_token and self.temp_access_token_expires_at > now + 60:

@@ -3,6 +3,8 @@
 {{>partial_header}}
 
 
+import time
+import base64
 import copy
 import http.client as httplib
 import logging
@@ -11,7 +13,7 @@ from logging import FileHandler
 import multiprocessing
 {{/async}}
 import sys
-from typing import Any, Callable, ClassVar, Dict, List, Literal, Optional, TypedDict, Union
+from typing import Any, ClassVar, Dict, List, Literal, Optional, TypedDict, Union
 from typing_extensions import NotRequired, Self
 
 import urllib3
@@ -167,11 +169,8 @@ class Configuration:
     :param username: Username for HTTP basic authentication.
     :param password: Password for HTTP basic authentication.
     :param access_token: Access token.
-    :param get_access_token: Function to return a string access token.
-        The function takes any arguments.
-        If a function is provided, it will be called every time
-        an access token is required (i.e. for each request).
-        This is useful for refreshing expired tokens.
+    :param client_id: Client ID for OAuth2 authentication.
+    :param client_secret: Client Secret for OAuth2 authentication.
 {{#hasHttpSignatureMethods}}
     :param signing_info: Configuration parameters for the HTTP signature security scheme.
         Must be an instance of {{{packageName}}}.signing.HttpSigningConfiguration
@@ -191,6 +190,8 @@ class Configuration:
     :param retries: Number of retries for API requests.
     :param ca_cert_data: verify the peer using concatenated CA certificate data
       in PEM (str) or DER (bytes) format.
+    :param cert_file: the path to a client certificate file, for mTLS.
+    :param key_file: the path to a client key file, for mTLS. 
 
 {{#hasAuthMethods}}
     :Example:
@@ -287,7 +288,8 @@ conf = {{{packageName}}}.Configuration(
         username: Optional[str]=None,
         password: Optional[str]=None,
         access_token: Optional[str]=None,
-        get_access_token: Optional[Callable[..., str]]=None,
+        client_id: Optional[str]=None,
+        client_secret: Optional[str]=None,
 {{#hasHttpSignatureMethods}}
         signing_info: Optional[HttpSigningConfiguration]=None,
 {{/hasHttpSignatureMethods}}
@@ -299,6 +301,8 @@ conf = {{{packageName}}}.Configuration(
         ssl_ca_cert: Optional[str]=None,
         retries: Optional[int] = None,
         ca_cert_data: Optional[Union[str, bytes]] = None,
+        cert_file: Optional[str]=None,
+        key_file: Optional[str]=None,
         *,
         debug: Optional[bool] = None,
     ) -> None:
@@ -344,8 +348,17 @@ conf = {{{packageName}}}.Configuration(
         self.access_token = access_token
         """Access token
         """
-        self.get_access_token = get_access_token
-        """Function to return a string access token.
+        self.client_id = client_id
+        """Client ID for OAuth2 authentication
+        """
+        self.client_secret = client_secret
+        """Client Secret for OAuth2 authentication
+        """
+        self.temp_access_token = None
+        """Temporary access token for OAuth2
+        """
+        self.temp_access_token_expires_at = 0
+        """Expiration time of the temporary access token
         """
 {{#hasHttpSignatureMethods}}
         if signing_info is not None:
@@ -390,10 +403,10 @@ conf = {{{packageName}}}.Configuration(
         """Set this to verify the peer using PEM (str) or DER (bytes)
            certificate data.
         """
-        self.cert_file = None
+        self.cert_file = cert_file
         """client certificate file
         """
-        self.key_file = None
+        self.key_file = key_file
         """client key file
         """
         self.assert_hostname = None
@@ -624,6 +637,34 @@ conf = {{{packageName}}}.Configuration(
             basic_auth=username + ':' + password
         ).get('authorization')
 
+    def get_access_token(self) -> str:
+        """Gets HTTP bearer authentication header (string).
+
+        :return: The token for bearer HTTP authentication.
+        """
+        now = int(time.time())
+        print(f"now: {now}, exp: {self.temp_access_token}, token: {self.temp_access_token_expires_at}")
+        if self.temp_access_token and self.temp_access_token_expires_at > now + 60:
+            return self.temp_access_token
+        else:
+            print("Fetching new access token")
+            _bytes = f"{self.client_id}:{self.client_secret}".encode('utf-8')
+            _encoded_string = base64.b64encode(_bytes).decode('utf-8')
+            auth_header = f"Basic {_encoded_string}"
+            resp = urllib3.request(
+                'POST',
+                'https://id.bandwidth.com/api/v1/oauth2/token',
+                headers={
+                    'Authorization': auth_header,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body='grant_type=client_credentials'
+            )
+            body = resp.json()
+            self.temp_access_token = body['access_token']
+            self.temp_access_token_expires_at = now + body['expires_in']
+            return self.temp_access_token
+
     def auth_settings(self)-> AuthSettings:
         """Gets Auth Settings dict for api client.
 
@@ -677,14 +718,14 @@ conf = {{{packageName}}}.Configuration(
 {{/isBasic}}
 {{#isOAuth}}
         if self.access_token is not None:
-            auth['{{name}}'] = {
+            auth['OAuth2'] = {
                 'type': 'oauth2',
                 'in': 'header',
                 'key': 'Authorization',
                 'value': 'Bearer ' + self.access_token
             }
-        if self.get_access_token is not None:
-            auth['{{name}}'] = {
+        if self.client_id is not None and self.client_secret is not None:
+            auth['OAuth2'] = {
                 'type': 'oauth2',
                 'in': 'header',
                 'key': 'Authorization',
