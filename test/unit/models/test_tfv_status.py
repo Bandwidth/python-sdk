@@ -15,6 +15,7 @@
 
 import unittest
 from datetime import datetime
+from uuid import UUID
 
 from bandwidth.models.tfv_status import TfvStatus
 from bandwidth.models.tfv_submission_info import TfvSubmissionInfo
@@ -40,7 +41,7 @@ class TestTfvStatus(unittest.TestCase):
             return TfvStatus(
                 phone_number = '+18005555555',
                 status = 'VERIFIED',
-                internal_ticket_number = 'acde070d-8c4c-4f0d-9d8a-162843c10333',
+                internal_ticket_number = UUID('acde070d-8c4c-4f0d-9d8a-162843c10333'),
                 decline_reason_description = 'Invalid Information - Can\'t Validate URL - Website is not accessible / not available',
                 resubmit_allowed = True,
                 created_date_time = '2021-06-08T06:45:13Z',
@@ -67,12 +68,16 @@ class TestTfvStatus(unittest.TestCase):
                         description = 'Opt In Flow', 
                         image_urls = [
                             'https://www.example.com/path/to/resource'
-                            ], ), 
+                        ],
+                        confirmation_response = 'Thank you for opting in!', ),
                     additional_information = 'Any additional information', 
                     isv_reseller = 'Test ISV',
                     privacy_policy_url = 'https://www.example.com/path/to/resource',
                     terms_and_conditions_url = 'https://www.example.com/path/to/resource',
-                    business_dba = 'Bandwidth Inc.'
+                    business_dba = 'Bandwidth Inc.',
+                    business_registration_number = '12-3456789',
+                    business_registration_type = 'EIN',
+                    business_entity_type = 'SOLE_PROPRIETOR'
                 ),
                 blocked = False,
                 blocked_reason = 'Blocked Reason'
@@ -88,7 +93,7 @@ class TestTfvStatus(unittest.TestCase):
         assert isinstance(instance, TfvStatus)
         assert instance.phone_number == '+18005555555'
         assert instance.status == 'VERIFIED'
-        assert instance.internal_ticket_number == 'acde070d-8c4c-4f0d-9d8a-162843c10333'
+        assert instance.internal_ticket_number == UUID('acde070d-8c4c-4f0d-9d8a-162843c10333')
         assert instance.decline_reason_description == 'Invalid Information - Can\'t Validate URL - Website is not accessible / not available'
         assert instance.resubmit_allowed == True
         assert isinstance(instance.created_date_time, datetime)
@@ -116,11 +121,15 @@ class TestTfvStatus(unittest.TestCase):
         assert isinstance(instance.submission.opt_in_workflow.image_urls, list)
         assert len(instance.submission.opt_in_workflow.image_urls) == 1
         assert instance.submission.opt_in_workflow.image_urls[0] == 'https://www.example.com/path/to/resource'
+        assert instance.submission.opt_in_workflow.confirmation_response == 'Thank you for opting in!'
         assert instance.submission.additional_information == 'Any additional information'
         assert instance.submission.isv_reseller == 'Test ISV'
         assert instance.submission.privacy_policy_url == 'https://www.example.com/path/to/resource'
         assert instance.submission.terms_and_conditions_url == 'https://www.example.com/path/to/resource'
         assert instance.submission.business_dba == 'Bandwidth Inc.'
+        assert instance.submission.business_registration_number == '12-3456789'
+        assert instance.submission.business_registration_type == 'EIN'
+        assert instance.submission.business_entity_type == 'SOLE_PROPRIETOR'
         assert instance.submission.additional_information == 'Any additional information'
         assert instance.blocked == False
         assert instance.blocked_reason == 'Blocked Reason'

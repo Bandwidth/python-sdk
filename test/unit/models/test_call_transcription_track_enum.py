@@ -28,10 +28,8 @@ class TestCallTranscriptionTrackEnum(unittest.TestCase):
 
     def testCallTranscriptionTrackEnum(self):
         """Test CallTranscriptionTrackEnum"""
-        inbound = CallTranscriptionTrackEnum('inbound')
-        outbound = CallTranscriptionTrackEnum('outbound')
-        assert inbound == 'inbound'
-        assert outbound == 'outbound'
+        assert CallTranscriptionTrackEnum('inbound') == 'inbound'
+        assert CallTranscriptionTrackEnum('outbound') == 'outbound'
 
 if __name__ == '__main__':
     unittest.main()

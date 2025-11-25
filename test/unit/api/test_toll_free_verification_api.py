@@ -15,6 +15,7 @@
 
 import unittest
 from datetime import datetime
+from uuid import UUID
 
 from hamcrest import *
 from test.utils.env_variables import *
@@ -84,7 +85,8 @@ class TestTollFreeVerificationApi(unittest.TestCase):
             'productionMessageContent': 'productionMessageContent',
             'optInWorkflow': OptInWorkflow(
                 description='description',
-                image_urls=['https://example.com']
+                image_urls=['https://example.com'],
+                confirmation_response='confirmationResponse'
             ),
             'additionalInformation': 'additionalInformation',
             'isvReseller': 'isvReseller'
@@ -129,7 +131,7 @@ class TestTollFreeVerificationApi(unittest.TestCase):
         assert_that(response.data, instance_of(TfvStatus))
         assert_that(response.data.phone_number, instance_of(str))
         assert_that(response.data.status, is_in(TfvStatusEnum))
-        assert_that(response.data.internal_ticket_number, instance_of(str))
+        assert_that(response.data.internal_ticket_number, instance_of(UUID))
         assert_that(response.data.decline_reason_description, instance_of(str))
         assert_that(response.data.resubmit_allowed, instance_of(bool))
         assert_that(response.data.created_date_time, instance_of(datetime))

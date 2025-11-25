@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **description** | **str** |  | 
 **image_urls** | **List[str]** |  | 
+**confirmation_response** | **str** |  | [optional] 
 
 ## Example
 

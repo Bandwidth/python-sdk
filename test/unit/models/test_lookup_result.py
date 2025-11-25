@@ -14,6 +14,7 @@
 
 
 import unittest
+from datetime import date
 
 from bandwidth.models.lookup_result import LookupResult
 
@@ -33,16 +34,17 @@ class TestLookupResult(unittest.TestCase):
             optional params are included """
         if include_optional:
             return LookupResult(
-                response_code = 0,
-                message = 'NOERROR',
-                e_164_format = '+19195551234',
-                formatted = '(919) 555-1234',
-                country = 'US',
-                line_type = 'Mobile',
-                line_provider = 'Verizon Wireless',
-                mobile_country_code = '310',
-                mobile_network_code = '010'
-            )
+                phone_number = '+10072904498', 
+                line_type = 'MOBILE', 
+                messaging_provider = 'Verizon Wireless', 
+                voice_provider = 'Verizon Wireless', 
+                country_code_a3 = 'USA', 
+                deactivation_reporter = '', 
+                deactivation_date = '2025-06-20 18:35', 
+                deactivation_event = 'DEACTIVATED', 
+                latest_message_delivery_status = 'ACTIVE', 
+                initial_message_delivery_status_date = '2025-06-20', 
+                latest_message_delivery_status_date = '2025-06-20', )
         else:
             return LookupResult(
         )
@@ -52,15 +54,17 @@ class TestLookupResult(unittest.TestCase):
         instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, LookupResult)
-        assert instance.response_code == 0
-        assert instance.message == 'NOERROR'
-        assert instance.e_164_format == '+19195551234'
-        assert instance.formatted == '(919) 555-1234'
-        assert instance.country == 'US'
-        assert instance.line_type == 'Mobile'
-        assert instance.line_provider == 'Verizon Wireless'
-        assert instance.mobile_country_code == '310'
-        assert instance.mobile_network_code == '010'
+        assert instance.phone_number == '+10072904498'
+        assert instance.line_type == 'MOBILE'
+        assert instance.messaging_provider == 'Verizon Wireless'
+        assert instance.voice_provider == 'Verizon Wireless'
+        assert instance.country_code_a3 == 'USA'
+        assert instance.deactivation_reporter == ''
+        assert instance.deactivation_date == '2025-06-20 18:35'
+        assert instance.deactivation_event == 'DEACTIVATED'
+        assert instance.latest_message_delivery_status == 'ACTIVE'
+        assert isinstance(instance.initial_message_delivery_status_date, date)
+        assert isinstance(instance.latest_message_delivery_status_date, date)
 
 if __name__ == '__main__':
     unittest.main()

@@ -60,7 +60,7 @@ class TranscriptionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> None:
-        """Delete a specific transcription
+        """Delete Real-time Transcription
 
         Delete the specified transcription that was created on this call via [startTranscription](/docs/voice/bxml/startTranscription).  Note: After the deletion is requested and a `200` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
 
@@ -143,7 +143,7 @@ class TranscriptionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> ApiResponse[None]:
-        """Delete a specific transcription
+        """Delete Real-time Transcription
 
         Delete the specified transcription that was created on this call via [startTranscription](/docs/voice/bxml/startTranscription).  Note: After the deletion is requested and a `200` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
 
@@ -226,7 +226,7 @@ class TranscriptionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> RESTResponseType:
-        """Delete a specific transcription
+        """Delete Real-time Transcription
 
         Delete the specified transcription that was created on this call via [startTranscription](/docs/voice/bxml/startTranscription).  Note: After the deletion is requested and a `200` is returned, the transcription will not be accessible anymore. However, it is not deleted immediately. This deletion process, while transparent and irreversible, can take an additional 24 to 48 hours.
 
@@ -378,7 +378,7 @@ class TranscriptionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> CallTranscriptionResponse:
-        """Retrieve a specific transcription
+        """Get Real-time Transcription
 
         Retrieve the specified transcription that was created on this call via [startTranscription](/docs/voice/bxml/startTranscription).
 
@@ -461,7 +461,7 @@ class TranscriptionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> ApiResponse[CallTranscriptionResponse]:
-        """Retrieve a specific transcription
+        """Get Real-time Transcription
 
         Retrieve the specified transcription that was created on this call via [startTranscription](/docs/voice/bxml/startTranscription).
 
@@ -544,7 +544,7 @@ class TranscriptionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> RESTResponseType:
-        """Retrieve a specific transcription
+        """Get Real-time Transcription
 
         Retrieve the specified transcription that was created on this call via [startTranscription](/docs/voice/bxml/startTranscription).
 
@@ -695,9 +695,9 @@ class TranscriptionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> List[CallTranscriptionMetadata]:
-        """Enumerate transcriptions made with StartTranscription
+        """List Real-time Transcriptions
 
-        Enumerates the transcriptions created on this call via [startTranscription](/docs/voice/bxml/startTranscription).
+        List the transcriptions created on this call via [startTranscription](/docs/voice/bxml/startTranscription).
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
@@ -774,9 +774,9 @@ class TranscriptionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> ApiResponse[List[CallTranscriptionMetadata]]:
-        """Enumerate transcriptions made with StartTranscription
+        """List Real-time Transcriptions
 
-        Enumerates the transcriptions created on this call via [startTranscription](/docs/voice/bxml/startTranscription).
+        List the transcriptions created on this call via [startTranscription](/docs/voice/bxml/startTranscription).
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
@@ -853,9 +853,9 @@ class TranscriptionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=1)] = 0,
     ) -> RESTResponseType:
-        """Enumerate transcriptions made with StartTranscription
+        """List Real-time Transcriptions
 
-        Enumerates the transcriptions created on this call via [startTranscription](/docs/voice/bxml/startTranscription).
+        List the transcriptions created on this call via [startTranscription](/docs/voice/bxml/startTranscription).
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str

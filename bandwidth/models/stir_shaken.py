@@ -27,7 +27,7 @@ class StirShaken(BaseModel):
     """
     StirShaken
     """ # noqa: E501
-    verstat: Optional[StrictStr] = Field(default=None, description="(optional) The verification status indicating whether the verification was successful or not. Possible values are TN-Verification-Passed and TN-Verification-Failed.")
+    verstat: Optional[StrictStr] = Field(default=None, description="(optional) The verification status indicating whether the verification was successful or not. Possible values are TN-Validation-Passed and TN-Validation-Failed.")
     attestation_indicator: Optional[StrictStr] = Field(default=None, description="(optional) The attestation level verified by Bandwidth. Possible values are A (full), B (partial) or C (gateway).", alias="attestationIndicator")
     originating_id: Optional[StrictStr] = Field(default=None, description="(optional) A unique origination identifier.", alias="originatingId")
     additional_properties: Dict[str, Any] = {}

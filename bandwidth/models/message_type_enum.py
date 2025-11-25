@@ -29,6 +29,7 @@ class MessageTypeEnum(str, Enum):
     """
     SMS = 'sms'
     MMS = 'mms'
+    RCS = 'rcs'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

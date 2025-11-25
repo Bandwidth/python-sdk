@@ -60,12 +60,18 @@ class TestVerificationRequest(unittest.TestCase):
                     description = 'Opt In Flow', 
                     image_urls = [
                         'https://www.example.com/path/to/resource'
-                        ], ),
+                    ],
+                    confirmation_response = 'Thank you for opting in!', ),
                 additional_information = '',
                 isv_reseller = 'Test ISV',
                 privacy_policy_url = 'https://www.example.com/path/to/resource',
                 terms_and_conditions_url = 'https://www.example.com/path/to/resource',
-                business_dba = 'Bandwidth Inc.'
+                business_dba = 'Bandwidth Inc.',
+                business_registration_number = '12-3456789',
+                business_registration_type = 'EIN',
+                business_entity_type = 'SOLE_PROPRIETOR',
+                help_message_response = 'Please contact support for assistance.',
+                age_gated_content = False
             )
         else:
             return VerificationRequest(
@@ -93,7 +99,8 @@ class TestVerificationRequest(unittest.TestCase):
                     description = 'Opt In Flow', 
                     image_urls = [
                         'https://www.example.com/path/to/resource'
-                        ], ),
+                    ],
+                    confirmation_response = 'Thank you for opting in!', ),
         )
 
     def testVerificationRequest(self):
@@ -126,11 +133,17 @@ class TestVerificationRequest(unittest.TestCase):
         assert isinstance(instance.opt_in_workflow.image_urls, list)
         assert len(instance.opt_in_workflow.image_urls) == 1
         assert instance.opt_in_workflow.image_urls[0] == 'https://www.example.com/path/to/resource'
+        assert instance.opt_in_workflow.confirmation_response == 'Thank you for opting in!'
         assert instance.additional_information == ''
         assert instance.isv_reseller == 'Test ISV'
         assert instance.privacy_policy_url == 'https://www.example.com/path/to/resource'
         assert instance.terms_and_conditions_url == 'https://www.example.com/path/to/resource'
         assert instance.business_dba == 'Bandwidth Inc.'
+        assert instance.business_registration_number == '12-3456789'
+        assert instance.business_registration_type == 'EIN'
+        assert instance.business_entity_type == 'SOLE_PROPRIETOR'
+        assert instance.help_message_response == 'Please contact support for assistance.'
+        assert instance.age_gated_content == False
 
 if __name__ == '__main__':
     unittest.main()

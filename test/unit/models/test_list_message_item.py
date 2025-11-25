@@ -50,7 +50,13 @@ class TestListMessageItem(unittest.TestCase):
                 attachment_count = 1,
                 recipient_count = 1,
                 campaign_class = 'T',
-                campaign_id = 'CJEUMDK'
+                campaign_id = 'CJEUMDK',
+                bw_latency = 20,
+                carrier_latency = 20,
+                calling_number_country_a3 = 'USA',
+                called_number_country_a3 = 'USA',
+                product = 'P2P',
+                location = '123ID'
             )
         else:
             return ListMessageItem(
@@ -78,6 +84,12 @@ class TestListMessageItem(unittest.TestCase):
         assert instance.recipient_count == 1
         assert instance.campaign_class == 'T'
         assert instance.campaign_id == 'CJEUMDK'
+        assert instance.bw_latency == 20
+        assert instance.carrier_latency == 20
+        assert instance.calling_number_country_a3 == 'USA'
+        assert instance.called_number_country_a3 == 'USA'
+        assert instance.product == 'P2P'
+        assert instance.location == '123ID'
 
 if __name__ == '__main__':
     unittest.main()

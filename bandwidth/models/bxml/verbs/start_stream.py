@@ -14,8 +14,8 @@ from ..verbs.stream_param import StreamParam
 class StartStream(NestableVerb):
 
     def __init__(
-        self, destination: str, destination_username: str,
-        destination_password: str, stream_params: List[StreamParam] = [],
+        self, destination: str, destination_username: str=None,
+        destination_password: str=None, stream_params: List[StreamParam] = [],
         name: str=None, mode: str=None, tracks: str=None,
         stream_event_url: str=None,
         stream_event_method: str=None,
@@ -59,8 +59,8 @@ class StartStream(NestableVerb):
     def _attributes(self):
         return {
             "destination": self.destination,
-            "destination_username": self.destination_username,
-            "destination_password": self.destination_password,
+            "destinationUsername": self.destination_username,
+            "destinationPassword": self.destination_password,
             "name": self.name,
             "mode": self.mode,
             "tracks": self.tracks,

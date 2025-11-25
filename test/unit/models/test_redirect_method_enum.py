@@ -28,10 +28,8 @@ class TestRedirectMethodEnum(unittest.TestCase):
 
     def testRedirectMethodEnum(self):
         """Test RedirectMethodEnum"""
-        get = RedirectMethodEnum('GET')
-        post = RedirectMethodEnum('POST')
-        assert get == 'GET'
-        assert post == 'POST'
+        assert RedirectMethodEnum('GET') == 'GET'
+        assert RedirectMethodEnum('POST') == 'POST'
 
 if __name__ == '__main__':
     unittest.main()

@@ -100,7 +100,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_messages**
-> MessagesList list_messages(account_id, message_id=message_id, source_tn=source_tn, destination_tn=destination_tn, message_status=message_status, message_direction=message_direction, carrier_name=carrier_name, message_type=message_type, error_code=error_code, from_date_time=from_date_time, to_date_time=to_date_time, campaign_id=campaign_id, sort=sort, page_token=page_token, limit=limit, limit_total_count=limit_total_count)
+> MessagesList list_messages(account_id, message_id=message_id, source_tn=source_tn, destination_tn=destination_tn, message_status=message_status, message_direction=message_direction, carrier_name=carrier_name, message_type=message_type, error_code=error_code, from_date_time=from_date_time, to_date_time=to_date_time, campaign_id=campaign_id, from_bw_latency=from_bw_latency, bw_queued=bw_queued, product=product, location=location, carrier_queued=carrier_queued, from_carrier_latency=from_carrier_latency, calling_number_country_a3=calling_number_country_a3, called_number_country_a3=called_number_country_a3, from_segment_count=from_segment_count, to_segment_count=to_segment_count, from_message_size=from_message_size, to_message_size=to_message_size, sort=sort, page_token=page_token, limit=limit, limit_total_count=limit_total_count)
 
 List Messages
 
@@ -116,6 +116,7 @@ from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnu
 from bandwidth.models.message_status_enum import MessageStatusEnum
 from bandwidth.models.message_type_enum import MessageTypeEnum
 from bandwidth.models.messages_list import MessagesList
+from bandwidth.models.product_type_enum import ProductTypeEnum
 from bandwidth.rest import ApiException
 from pprint import pprint
 
@@ -152,6 +153,18 @@ with bandwidth.ApiClient(configuration) as api_client:
     from_date_time = '2022-09-14T18:20:16.000Z' # str | The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. (optional)
     to_date_time = '2022-09-14T18:20:16.000Z' # str | The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. (optional)
     campaign_id = 'CJEUMDK' # str | The campaign ID of the message. (optional)
+    from_bw_latency = 5 # int | The minimum Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled. (optional)
+    bw_queued = true # bool | A boolean value indicating whether the message is queued in the Bandwidth network. (optional)
+    product = bandwidth.ProductTypeEnum() # ProductTypeEnum | Messaging product associated with the message. (optional)
+    location = '123ABC' # str | Location Id associated with the message. (optional)
+    carrier_queued = true # bool | A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled. (optional)
+    from_carrier_latency = 50 # int | The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled. (optional)
+    calling_number_country_a3 = 'USA' # str | Calling number country in A3 format. (optional)
+    called_number_country_a3 = 'USA' # str | Called number country in A3 format. (optional)
+    from_segment_count = 1 # int | Segment count (start range). (optional)
+    to_segment_count = 3 # int | Segment count (end range). (optional)
+    from_message_size = 100 # int | Message size (start range). (optional)
+    to_message_size = 120 # int | Message size (end range). (optional)
     sort = 'sourceTn:desc' # str | The field and direction to sort by combined with a colon. Direction is either asc or desc. (optional)
     page_token = 'gdEewhcJLQRB5' # str | A base64 encoded value used for pagination of results. (optional)
     limit = 50 # int | The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000. (optional)
@@ -159,7 +172,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
     try:
         # List Messages
-        api_response = api_instance.list_messages(account_id, message_id=message_id, source_tn=source_tn, destination_tn=destination_tn, message_status=message_status, message_direction=message_direction, carrier_name=carrier_name, message_type=message_type, error_code=error_code, from_date_time=from_date_time, to_date_time=to_date_time, campaign_id=campaign_id, sort=sort, page_token=page_token, limit=limit, limit_total_count=limit_total_count)
+        api_response = api_instance.list_messages(account_id, message_id=message_id, source_tn=source_tn, destination_tn=destination_tn, message_status=message_status, message_direction=message_direction, carrier_name=carrier_name, message_type=message_type, error_code=error_code, from_date_time=from_date_time, to_date_time=to_date_time, campaign_id=campaign_id, from_bw_latency=from_bw_latency, bw_queued=bw_queued, product=product, location=location, carrier_queued=carrier_queued, from_carrier_latency=from_carrier_latency, calling_number_country_a3=calling_number_country_a3, called_number_country_a3=called_number_country_a3, from_segment_count=from_segment_count, to_segment_count=to_segment_count, from_message_size=from_message_size, to_message_size=to_message_size, sort=sort, page_token=page_token, limit=limit, limit_total_count=limit_total_count)
         print("The response of MessagesApi->list_messages:\n")
         pprint(api_response)
     except Exception as e:
@@ -185,6 +198,18 @@ Name | Type | Description  | Notes
  **from_date_time** | **str**| The start of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. | [optional] 
  **to_date_time** | **str**| The end of the date range to search in ISO 8601 format. Uses the message receive time. The date range to search in is currently 14 days. | [optional] 
  **campaign_id** | **str**| The campaign ID of the message. | [optional] 
+ **from_bw_latency** | **int**| The minimum Bandwidth latency of the message in seconds. Only available for accounts with the Advanced Quality Metrics feature enabled. | [optional] 
+ **bw_queued** | **bool**| A boolean value indicating whether the message is queued in the Bandwidth network. | [optional] 
+ **product** | [**ProductTypeEnum**](.md)| Messaging product associated with the message. | [optional] 
+ **location** | **str**| Location Id associated with the message. | [optional] 
+ **carrier_queued** | **bool**| A boolean value indicating whether the message is queued in the carrier network. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled. | [optional] 
+ **from_carrier_latency** | **int**| The minimum carrier latency of the message in seconds. Only available for OUTBOUND messages from accounts with the Advanced Quality Metrics feature enabled. | [optional] 
+ **calling_number_country_a3** | **str**| Calling number country in A3 format. | [optional] 
+ **called_number_country_a3** | **str**| Called number country in A3 format. | [optional] 
+ **from_segment_count** | **int**| Segment count (start range). | [optional] 
+ **to_segment_count** | **int**| Segment count (end range). | [optional] 
+ **from_message_size** | **int**| Message size (start range). | [optional] 
+ **to_message_size** | **int**| Message size (end range). | [optional] 
  **sort** | **str**| The field and direction to sort by combined with a colon. Direction is either asc or desc. | [optional] 
  **page_token** | **str**| A base64 encoded value used for pagination of results. | [optional] 
  **limit** | **int**| The maximum records requested in search result. Default 100. The sum of limit and after cannot be more than 10000. | [optional] 

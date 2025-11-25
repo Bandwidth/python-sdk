@@ -36,14 +36,16 @@ class TestOptInWorkflow(unittest.TestCase):
                 description = 'Opt In Flow',
                 image_urls = [
                     'https://www.example.com/path/to/resource'
-                    ]
+                ],
+                confirmation_response = 'Thank you for opting in!'
             )
         else:
             return OptInWorkflow(
                 description = 'Opt In Flow',
                 image_urls = [
                     'https://www.example.com/path/to/resource'
-                    ],
+                ],
+                confirmation_response = 'Thank you for opting in!'
         )
 
     def testOptInWorkflow(self):
@@ -55,6 +57,7 @@ class TestOptInWorkflow(unittest.TestCase):
         assert isinstance(instance.image_urls, list)
         assert len(instance.image_urls) == 1
         assert instance.image_urls[0] == 'https://www.example.com/path/to/resource'
+        assert instance.confirmation_response == 'Thank you for opting in!'
 
 if __name__ == '__main__':
     unittest.main()

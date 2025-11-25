@@ -28,12 +28,9 @@ class TestCallTranscriptionDetectedLanguageEnum(unittest.TestCase):
 
     def testCallTranscriptionDetectedLanguageEnum(self):
         """Test CallTranscriptionDetectedLanguageEnum"""
-        enus = CallTranscriptionDetectedLanguageEnum('en-US')
-        esus = CallTranscriptionDetectedLanguageEnum('es-US')
-        frfr = CallTranscriptionDetectedLanguageEnum('fr-FR')
-        assert enus == 'en-US'
-        assert esus == 'es-US'
-        assert frfr == 'fr-FR'
+        assert CallTranscriptionDetectedLanguageEnum('en-US') == 'en-US'
+        assert CallTranscriptionDetectedLanguageEnum('es-US') == 'es-US'
+        assert CallTranscriptionDetectedLanguageEnum('fr-FR') == 'fr-FR'
 
 if __name__ == '__main__':
     unittest.main()

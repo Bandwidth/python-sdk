@@ -28,10 +28,8 @@ class TestCallDirectionEnum(unittest.TestCase):
 
     def testCallDirectionEnum(self):
         """Test CallDirectionEnum"""
-        inbound = CallDirectionEnum('inbound')
-        outbound = CallDirectionEnum('outbound')
-        assert inbound == 'inbound'
-        assert outbound == 'outbound'
+        assert CallDirectionEnum('inbound') == 'inbound'
+        assert CallDirectionEnum('outbound') == 'outbound'
 
 
 if __name__ == '__main__':
