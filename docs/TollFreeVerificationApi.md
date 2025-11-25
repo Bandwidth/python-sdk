@@ -20,13 +20,12 @@ Method | HTTP request | Description
 
 Create Webhook Subscription
 
-Create a new webhook subscription (this webhook will be called for every update on every submission).
-In addition to a `callbackUrl`, this subscription can provide optional HTTP basic authentication credentials (a username and a password).
-The returned subscription object will contain an ID that can be used to modify or delete the subscription at a later time.
+Create a new webhook subscription (this webhook will be called for every update on every submission). In addition to a `callbackUrl`, this subscription can provide optional HTTP basic authentication credentials (a username and a password). The returned subscription object will contain an ID that can be used to modify or delete the subscription at a later time.
 
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -51,6 +50,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -84,7 +85,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -117,6 +118,7 @@ Delete a toll-free verification submission for a toll-free number.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -139,6 +141,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -170,7 +174,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -203,6 +207,7 @@ Delete a webhook subscription by ID.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -225,6 +230,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -256,7 +263,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -284,12 +291,12 @@ void (empty response body)
 
 Get Toll-Free Verification Status
 
-Gets the verification status for a phone number that is provisioned to your account.
-Submission information will be appended to the response if it is available.
+Gets the verification status for a phone number that is provisioned to your account. Submission information will be appended to the response if it is available.
 
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -313,6 +320,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -346,7 +355,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -379,6 +388,7 @@ Lists valid toll-free use cases.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -401,6 +411,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -428,7 +440,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -456,12 +468,12 @@ This endpoint does not need any parameter.
 
 List Webhook Subscriptions
 
-Lists all webhook subscriptions that are registered to receive status updates for the toll-free verification requests submitted under this account (password will not be returned through this API
-If `basicAuthentication` is defined, the `password` property of that object will be null).
+Lists all webhook subscriptions that are registered to receive status updates for the toll-free verification requests submitted under this account (password will not be returned through this API If `basicAuthentication` is defined, the `password` property of that object will be null).
 
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -485,6 +497,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -516,7 +530,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -548,6 +562,7 @@ Submit a request for verification of a toll-free phone number.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -571,6 +586,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -602,7 +619,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -629,12 +646,12 @@ void (empty response body)
 
 Update Toll-Free Verification Request
 
-Updates a toll-free verification request.
-Submissions are only eligible for resubmission for 7 days within being processed and if resubmission is allowed (resubmitAllowed field is true).
+Updates a toll-free verification request. Submissions are only eligible for resubmission for 7 days within being processed and if resubmission is allowed (resubmitAllowed field is true).
 
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -658,6 +675,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -691,7 +710,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -723,6 +742,7 @@ Update an existing webhook subscription (`callbackUrl` and `basicAuthentication`
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -747,6 +767,8 @@ configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
 )
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -782,7 +804,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

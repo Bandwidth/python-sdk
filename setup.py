@@ -12,6 +12,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import os
 import sys
 from setuptools import setup, find_packages  # noqa: H301

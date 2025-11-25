@@ -19,7 +19,6 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
 from typing_extensions import Annotated
-from uuid import UUID
 from bandwidth.models.async_lookup_request import AsyncLookupRequest
 from bandwidth.models.create_async_bulk_lookup_response import CreateAsyncBulkLookupResponse
 from bandwidth.models.create_sync_lookup_response import CreateSyncLookupResponse
@@ -315,7 +314,8 @@ class PhoneNumberLookupApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic'
+            'Basic', 
+            'OAuth2'
         ]
 
         return self.api_client.param_serialize(
@@ -607,7 +607,8 @@ class PhoneNumberLookupApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic'
+            'Basic', 
+            'OAuth2'
         ]
 
         return self.api_client.param_serialize(
@@ -632,7 +633,7 @@ class PhoneNumberLookupApi:
     def get_async_bulk_lookup(
         self,
         account_id: StrictStr,
-        request_id: UUID,
+        request_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -703,7 +704,7 @@ class PhoneNumberLookupApi:
     def get_async_bulk_lookup_with_http_info(
         self,
         account_id: StrictStr,
-        request_id: UUID,
+        request_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -774,7 +775,7 @@ class PhoneNumberLookupApi:
     def get_async_bulk_lookup_without_preload_content(
         self,
         account_id: StrictStr,
-        request_id: UUID,
+        request_id: StrictStr,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -886,7 +887,8 @@ class PhoneNumberLookupApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic'
+            'Basic', 
+            'OAuth2'
         ]
 
         return self.api_client.param_serialize(

@@ -18,9 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from uuid import UUID
 from bandwidth.models.in_progress_lookup_status_enum import InProgressLookupStatusEnum
 from bandwidth.models.lookup_result import LookupResult
 from typing import Optional, Set
@@ -30,7 +29,7 @@ class GetAsyncBulkLookupResponseData(BaseModel):
     """
     The phone number lookup response data
     """ # noqa: E501
-    request_id: Optional[UUID] = Field(default=None, description="The phone number lookup request ID from Bandwidth.", alias="requestId")
+    request_id: Optional[StrictStr] = Field(default=None, description="The phone number lookup request ID from Bandwidth.", alias="requestId")
     status: Optional[InProgressLookupStatusEnum] = None
     results: Optional[List[LookupResult]] = Field(default=None, description="The carrier information results for the specified telephone number.")
     additional_properties: Dict[str, Any] = {}
