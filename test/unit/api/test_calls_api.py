@@ -37,8 +37,8 @@ class TestCallsApi(unittest.TestCase):
 
     def setUp(self) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD,
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET,
             host='http://127.0.0.1:4010',
             ignore_operation_servers=True
         )

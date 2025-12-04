@@ -8,7 +8,7 @@ import unittest
 import logging
 from random import randint
 
-import bandwidth
+from bandwidth import ApiClient, Configuration
 from bandwidth.api import mfa_api
 from bandwidth.models.code_request import CodeRequest
 from bandwidth.models.messaging_code_response import MessagingCodeResponse
@@ -26,11 +26,11 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        configuration = bandwidth.Configuration(
+        configuration = Configuration(
             username=BW_USERNAME,
             password=BW_PASSWORD
         )
-        api_client = bandwidth.ApiClient(configuration)
+        api_client = ApiClient(configuration)
         self.api_instance = mfa_api.MFAApi(api_client)
         self.account_id = BW_ACCOUNT_ID
         self.messaging_code_request = CodeRequest(
@@ -137,7 +137,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     def testUnauthorizedRequest(self) -> None:
         """Validate an unauthorized (401) request
         """
-        unauthorized_api_client = bandwidth.ApiClient()
+        unauthorized_api_client = ApiClient()
         unauthorized_api_instance = mfa_api.MFAApi(unauthorized_api_client)
 
         with self.assertRaises(UnauthorizedException) as context:
@@ -150,12 +150,12 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     def testForbiddenRequest(self) -> None:
         """Validate a forbidden (403) request
         """
-        configuration = bandwidth.Configuration(
+        configuration = Configuration(
             username=FORBIDDEN_USERNAME,
             # password=FORBIDDEN_PASSWORD,
             password='bad_password'
         )
-        forbidden_api_client = bandwidth.ApiClient(configuration)
+        forbidden_api_client = ApiClient(configuration)
         forbidden_api_instance = mfa_api.MFAApi(forbidden_api_client)
 
         with self.assertRaises(ForbiddenException) as context:

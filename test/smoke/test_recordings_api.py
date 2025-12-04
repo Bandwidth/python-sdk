@@ -7,10 +7,9 @@ import unittest
 import time
 import json
 
-import bandwidth
 from hamcrest import *
 
-from bandwidth import ApiResponse
+from bandwidth import ApiClient, ApiResponse, Configuration
 from bandwidth.api.recordings_api import RecordingsApi
 from bandwidth.configuration import Configuration
 from bandwidth.exceptions import ForbiddenException, NotFoundException, UnauthorizedException
@@ -66,11 +65,11 @@ class TestRecordings(unittest.TestCase):
         Set up for our tests by creating the CallsApi and RecordingsApi instances
         for testing.
         """
-        configuration = bandwidth.Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+        configuration = Configuration(
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
-        api_client = bandwidth.ApiClient(configuration)
+        api_client = ApiClient(configuration)
 
         # Two Valid API Clients
         self.calls_api_instance = CallsApi(api_client)
@@ -78,7 +77,7 @@ class TestRecordings(unittest.TestCase):
 
         # Unauthorized Recordings API Client
         self.unauthorized_recordings_api_instance = RecordingsApi(
-            api_client=bandwidth.ApiClient(Configuration.get_default_copy())
+            api_client=ApiClient(Configuration.get_default_copy())
         )
 
         # Rest client for interacting with Manteca

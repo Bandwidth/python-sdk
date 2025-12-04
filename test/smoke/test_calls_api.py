@@ -10,7 +10,7 @@ import datetime
 
 from hamcrest import assert_that, has_properties, not_none, instance_of
 
-import bandwidth
+from bandwidth import ApiClient, ApiResponse, Configuration
 from bandwidth.api import calls_api
 from bandwidth.models.create_call import CreateCall
 from bandwidth.models.create_call_response import CreateCallResponse
@@ -20,7 +20,6 @@ from bandwidth.models.machine_detection_configuration import MachineDetectionCon
 from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnum
 from bandwidth.models.call_state_enum import CallStateEnum
 from bandwidth.models.redirect_method_enum import RedirectMethodEnum
-from bandwidth.models.call_state import CallState
 from bandwidth.models.update_call import UpdateCall
 from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException, NotFoundException
 
@@ -29,29 +28,29 @@ class CallsIntegration(unittest.TestCase):
     """Voice Calls API integration test"""
 
     def setUp(self):
-        configuration = bandwidth.Configuration(
-            client_id=BW_USERNAME,
-            client_secret=BW_PASSWORD,
+        configuration = Configuration(
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
-        api_client = bandwidth.ApiClient(configuration)
+        api_client = ApiClient(configuration)
         self.calls_api_instance = calls_api.CallsApi(api_client)
 
         # Unauthorized API Client
 
-        unauthorizedConfiguration = bandwidth.Configuration(
+        unauthorizedConfiguration = Configuration(
              username='bad_username',
              password='bad_password'
         )
-        unauthorized_api_client = bandwidth.ApiClient(unauthorizedConfiguration)
+        unauthorized_api_client = ApiClient(unauthorizedConfiguration)
         self.unauthorized_api_instance = calls_api.CallsApi(unauthorized_api_client)
 
         # Forbidden API Client
 
-        forbiddenConfiguration = bandwidth.Configuration(
+        forbiddenConfiguration = Configuration(
             username=FORBIDDEN_USERNAME,
             password=FORBIDDEN_PASSWORD
         )
-        forbidden_api_client = bandwidth.ApiClient(forbiddenConfiguration)
+        forbidden_api_client = ApiClient(forbiddenConfiguration)
         self.forbidden_api_instance = calls_api.CallsApi(forbidden_api_client)
         self.account_id = BW_ACCOUNT_ID
         self.createCallBody = CreateCall(

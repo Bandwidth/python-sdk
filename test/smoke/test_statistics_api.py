@@ -17,8 +17,8 @@ class TestStatisticsApi(unittest.TestCase):
 
     def setUp(self):
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
         self.api_client = ApiClient(configuration)
         self.api_instance = StatisticsApi(self.api_client)

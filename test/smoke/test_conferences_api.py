@@ -2,20 +2,17 @@
 Integration tests for Bandwidth's Voice Conferences API
 """
 
-from cgi import test
 import json
 import time
-from typing import Dict, List, Tuple
+from typing import Dict,  Tuple
 import unittest
 
 from hamcrest import assert_that, has_properties, not_none, instance_of, greater_than
 
-import bandwidth
-from bandwidth import ApiResponse
+from bandwidth import ApiClient, ApiResponse, Configuration
 from bandwidth.api import calls_api
 from bandwidth.models.create_call import CreateCall
 from bandwidth.models.create_call_response import CreateCallResponse
-from bandwidth.models.call_state import CallState
 from bandwidth.models.call_state_enum import CallStateEnum
 from bandwidth.models.update_call import UpdateCall
 from bandwidth.models.redirect_method_enum import RedirectMethodEnum
@@ -41,32 +38,32 @@ class ConferencesIntegration(unittest.TestCase):
         Set up for our tests by creating the CallsApi and ConferencesApi instances
         for testing as well as the unauthorized and forbidden credentials for the 4xx tests.
         """
-        configuration = bandwidth.Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+        configuration = Configuration(
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
-        api_client = bandwidth.ApiClient(configuration)
+        api_client = ApiClient(configuration)
 
         self.calls_api_instance = calls_api.CallsApi(api_client)
         self.conference_api_instance = conferences_api.ConferencesApi(api_client)
 
-        unauthorizedConfiguration = bandwidth.Configuration(
+        unauthorizedConfiguration = Configuration(
             username='bad_username',
             password='bad_password'
         )
-        unauthorized_api_client = bandwidth.ApiClient(unauthorizedConfiguration)
+        unauthorized_api_client = ApiClient(unauthorizedConfiguration)
         self.unauthorized_api_instance = conferences_api.ConferencesApi(unauthorized_api_client)
 
-        forbiddenConfiguration = bandwidth.Configuration(
+        forbiddenConfiguration = Configuration(
             username=FORBIDDEN_USERNAME,
             password=FORBIDDEN_PASSWORD
         )
-        forbidden_api_client = bandwidth.ApiClient(forbiddenConfiguration)
+        forbidden_api_client = ApiClient(forbiddenConfiguration)
         self.forbidden_api_instance = conferences_api.ConferencesApi(forbidden_api_client)
 
         # Rest client for interacting with Manteca
-        self.rest_client = RESTClientObject(bandwidth.Configuration.get_default_copy())
-        configuration = bandwidth.Configuration(
+        self.rest_client = RESTClientObject(Configuration.get_default_copy())
+        configuration = Configuration(
             username=BW_USERNAME,
             password=BW_PASSWORD,
         )

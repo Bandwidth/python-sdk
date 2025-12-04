@@ -542,7 +542,7 @@ conf = bandwidth.Configuration(
             auth_header = f"Basic {_encoded_string}"
             resp = urllib3.request(
                 'POST',
-                'https://id.bandwidth.com/api/v1/oauth2/token',
+                'https://api.bandwidth.com/api/v1/oauth2/token',
                 headers={
                     'Authorization': auth_header,
                     'Content-Type': 'application/x-www-form-urlencoded',

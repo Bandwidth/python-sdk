@@ -10,7 +10,7 @@ from datetime import datetime
 import bandwidth
 from hamcrest import *
 
-from bandwidth import ApiResponse
+from bandwidth import ApiClient, ApiResponse, Configuration
 from bandwidth.api import messages_api
 from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.models.list_message_item import ListMessageItem
@@ -29,16 +29,16 @@ class TestMessagesApi(unittest.TestCase):
 
     def setUp(self):
         # API Client
-        configuration = bandwidth.Configuration(
-            client_id=BW_USERNAME,
-            client_secret=BW_PASSWORD,
+        configuration = Configuration(
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
-        api_client = bandwidth.ApiClient(configuration)
+        api_client = ApiClient(configuration)
         self.api_instance = messages_api.MessagesApi(api_client)
         self.account_id = BW_ACCOUNT_ID
 
         # Unauthorized API Client
-        self.unauthorized_api_client = bandwidth.ApiClient()
+        self.unauthorized_api_client = ApiClient()
         self.unauthorized_api_instance = messages_api.MessagesApi(self.unauthorized_api_client)
 
         # Message Properties

@@ -9,11 +9,11 @@ import logging
 
 from bandwidth import ApiResponse
 
-import bandwidth
+from bandwidth import ApiClient, ApiResponse, Configuration
 from hamcrest import *
 from bandwidth.api import media_api
 from bandwidth.models.media import Media
-from bandwidth.exceptions import ApiException, NotFoundException
+from bandwidth.exceptions import NotFoundException
 from test.utils.env_variables import *
 
 
@@ -22,11 +22,11 @@ class TestMedia(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        configuration = bandwidth.Configuration(
+        configuration = Configuration(
             username=BW_USERNAME,
             password=BW_PASSWORD
         )
-        self.api_client = bandwidth.ApiClient(configuration)
+        self.api_client = ApiClient(configuration)
         self.api_instance = media_api.MediaApi(self.api_client)
         self.account_id = BW_ACCOUNT_ID
         self.media_path = "./test/fixtures/"

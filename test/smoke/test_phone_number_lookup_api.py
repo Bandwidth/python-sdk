@@ -31,7 +31,6 @@ from bandwidth.models.create_sync_lookup_response import CreateSyncLookupRespons
 from bandwidth.models.completed_lookup_status_enum import CompletedLookupStatusEnum
 from bandwidth.models.lookup_result import LookupResult
 from bandwidth.models.line_type_enum import LineTypeEnum
-from bandwidth.models.latest_message_delivery_status_enum import LatestMessageDeliveryStatusEnum
 from bandwidth.models.get_async_bulk_lookup_response import GetAsyncBulkLookupResponse
 
 from test.utils.env_variables import *
@@ -41,8 +40,8 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
 
     def setUp(self) -> None:
         configuration = Configuration(
-            client_id=BW_USERNAME,
-            client_secret=BW_PASSWORD
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
         api_client = ApiClient(configuration)
         self.api = PhoneNumberLookupApi(api_client)

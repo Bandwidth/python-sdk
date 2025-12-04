@@ -6,10 +6,10 @@ import time
 
 from hamcrest import *
 from bandwidth import ApiClient, Configuration
-from bandwidth.rest import RESTClientObject, RESTResponse
+from bandwidth.rest import RESTClientObject
 from bandwidth.api.transcriptions_api import TranscriptionsApi
 from bandwidth.api.calls_api import CallsApi
-from bandwidth.models import CreateCall, CallTranscriptionMetadata, CallTranscriptionResponse, CallTranscription
+from bandwidth.models import CreateCall, CreateCallResponse, CallTranscriptionMetadata, CallTranscriptionResponse, CallTranscription
 from test.utils.env_variables import *
 
 
@@ -18,8 +18,8 @@ class TestTranscriptionsApi(unittest.TestCase):
 
     def setUp(self) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
         api_client = ApiClient(configuration)
 
