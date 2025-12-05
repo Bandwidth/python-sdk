@@ -25,7 +25,8 @@ from bandwidth.models.account_statistics import AccountStatistics
 class TestStatisticsApi(unittest.TestCase):
     """StatisticsApi unit test stubs"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
             client_id=BW_CLIENT_ID,
             client_secret=BW_CLIENT_SECRET,
@@ -33,7 +34,7 @@ class TestStatisticsApi(unittest.TestCase):
             ignore_operation_servers=True
         )
         api_client = ApiClient(configuration)
-        self.statistics_api_instance = StatisticsApi(api_client)
+        cls.statistics_api_instance = StatisticsApi(api_client)
 
     def test_get_statistics(self) -> None:
         """Test case for get_statistics

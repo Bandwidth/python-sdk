@@ -35,7 +35,8 @@ from bandwidth.models.callback_method_enum import CallbackMethodEnum
 class TestCallsApi(unittest.TestCase):
     """CallsApi unit test stubs"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
             client_id=BW_CLIENT_ID,
             client_secret=BW_CLIENT_SECRET,
@@ -43,7 +44,7 @@ class TestCallsApi(unittest.TestCase):
             ignore_operation_servers=True
         )
         api_client = ApiClient(configuration)
-        self.calls_api_instance = CallsApi(api_client)
+        cls.calls_api_instance = CallsApi(api_client)
 
     def test_create_call(self) -> None:
         """Test case for create_call
