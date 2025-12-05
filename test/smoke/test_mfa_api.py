@@ -25,15 +25,16 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     """Multi-Factor Authentication API integration Test
     """
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
             username=BW_USERNAME,
             password=BW_PASSWORD
         )
         api_client = ApiClient(configuration)
-        self.api_instance = mfa_api.MFAApi(api_client)
-        self.account_id = BW_ACCOUNT_ID
-        self.messaging_code_request = CodeRequest(
+        cls.api_instance = mfa_api.MFAApi(api_client)
+        cls.account_id = BW_ACCOUNT_ID
+        cls.messaging_code_request = CodeRequest(
             to=USER_NUMBER,
             var_from=BW_NUMBER,
             application_id=BW_MESSAGING_APPLICATION_ID,
@@ -41,7 +42,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             message="Your temporary {NAME} {SCOPE} code is {CODE}",
             digits=6,
         )
-        self.voice_code_request = CodeRequest(
+        cls.voice_code_request = CodeRequest(
             to=USER_NUMBER,
             var_from=BW_NUMBER,
             application_id=BW_VOICE_APPLICATION_ID,
@@ -49,7 +50,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             message="Your temporary {NAME} {SCOPE} code is {CODE}",
             digits=6,
         )
-        self.bad_code_request = CodeRequest(
+        cls.bad_code_request = CodeRequest(
             to=USER_NUMBER,
             var_from=BW_NUMBER,
             application_id='not_an_application_id',

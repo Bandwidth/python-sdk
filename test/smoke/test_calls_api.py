@@ -27,13 +27,14 @@ from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenE
 class CallsIntegration(unittest.TestCase):
     """Voice Calls API integration test"""
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         configuration = Configuration(
             client_id=BW_CLIENT_ID,
             client_secret=BW_CLIENT_SECRET
         )
         api_client = ApiClient(configuration)
-        self.calls_api_instance = calls_api.CallsApi(api_client)
+        cls.calls_api_instance = calls_api.CallsApi(api_client)
 
         # Unauthorized API Client
 
@@ -42,7 +43,7 @@ class CallsIntegration(unittest.TestCase):
              password='bad_password'
         )
         unauthorized_api_client = ApiClient(unauthorizedConfiguration)
-        self.unauthorized_api_instance = calls_api.CallsApi(unauthorized_api_client)
+        cls.unauthorized_api_instance = calls_api.CallsApi(unauthorized_api_client)
 
         # Forbidden API Client
 
@@ -51,9 +52,9 @@ class CallsIntegration(unittest.TestCase):
             password=FORBIDDEN_PASSWORD
         )
         forbidden_api_client = ApiClient(forbiddenConfiguration)
-        self.forbidden_api_instance = calls_api.CallsApi(forbidden_api_client)
-        self.account_id = BW_ACCOUNT_ID
-        self.createCallBody = CreateCall(
+        cls.forbidden_api_instance = calls_api.CallsApi(forbidden_api_client)
+        cls.account_id = BW_ACCOUNT_ID
+        cls.createCallBody = CreateCall(
             to=USER_NUMBER,
             var_from=BW_NUMBER,
             privacy=True,
@@ -91,17 +92,18 @@ class CallsIntegration(unittest.TestCase):
             priority=5,
             tag="tag_example",
         )
-        self.testCallBody = CreateCall(to=USER_NUMBER, var_from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=BASE_CALLBACK_URL)
-        self.testMantecaCallBody = CreateCall(to=MANTECA_IDLE_NUMBER, var_from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=MANTECA_BASE_URL + "/bxml/pause")
-        self.updateStateCompleted = UpdateCall(state=CallStateEnum("completed"))
-        self.testCallId = "Call-Id"
-        self.testBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence><Pause duration="3"/></Bxml>'
-        self.callIdArray = []
-        self.TEST_SLEEP = 5
-        self.TEST_SLEEP_LONG = 15
+        cls.testCallBody = CreateCall(to=USER_NUMBER, var_from=BW_NUMBER, application_id=BW_VOICE_APPLICATION_ID, answer_url=BASE_CALLBACK_URL)
+        cls.testMantecaCallBody = CreateCall(to=MANTECA_IDLE_NUMBER, var_from=MANTECA_ACTIVE_NUMBER, application_id=MANTECA_APPLICATION_ID, answer_url=MANTECA_BASE_URL + "/bxml/pause")
+        cls.updateStateCompleted = UpdateCall(state=CallStateEnum("completed"))
+        cls.testCallId = "Call-Id"
+        cls.testBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence><Pause duration="3"/></Bxml>'
+        cls.callIdArray = []
+        cls.TEST_SLEEP = 5
+        cls.TEST_SLEEP_LONG = 15
 
-    def tearDown(self):
-        callCleanup(self)
+    @classmethod
+    def tearDownClass(cls):
+        callCleanup(cls)
 
     def assertApiException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
         """Validates that common API exceptions, (401, 403, and 404) are properly formatted

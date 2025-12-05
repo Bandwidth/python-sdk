@@ -24,14 +24,15 @@ from bandwidth.api.toll_free_verification_api import TollFreeVerificationApi
 class TestTollFreeVerificationApi(unittest.TestCase):
     """TollFreeVerificationApi unit test stubs"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
             client_id=BW_CLIENT_ID,
             client_secret=BW_CLIENT_SECRET
         )
-        self.api_client = ApiClient(configuration)
-        self.api_instance = TollFreeVerificationApi(self.api_client)
-        self.account_id = BW_ACCOUNT_ID
+        cls.api_client = ApiClient(configuration)
+        cls.api_instance = TollFreeVerificationApi(cls.api_client)
+        cls.account_id = BW_ACCOUNT_ID
 
     def test_create_webhook_subscription(self) -> None:
         """Test case for create_webhook_subscription

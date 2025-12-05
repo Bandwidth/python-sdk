@@ -44,15 +44,16 @@ from bandwidth.models.multi_channel_channel_list_rbm_response_object import Mult
 class TestMultiChannelApi(unittest.TestCase):
     """MultiChannelApi unit test stubs"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
             username=BW_USERNAME,
             password=BW_PASSWORD,
         )
         api_client = ApiClient(configuration)
-        self.multi_channel_api_instance = MultiChannelApi(api_client)
+        cls.multi_channel_api_instance = MultiChannelApi(api_client)
 
-        self.expiration = datetime.now(ZoneInfo('America/New_York')) + timedelta(minutes=1)
+        cls.expiration = datetime.now(ZoneInfo('America/New_York')) + timedelta(minutes=1)
 
     def test_create_multi_channel_sms_message(self) -> None:
         """Test case for create_multi_channel_message

@@ -33,7 +33,8 @@ class ConferencesIntegration(unittest.TestCase):
     Voice Conferences API integration test
     """
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         """
         Set up for our tests by creating the CallsApi and ConferencesApi instances
         for testing as well as the unauthorized and forbidden credentials for the 4xx tests.
@@ -44,33 +45,33 @@ class ConferencesIntegration(unittest.TestCase):
         )
         api_client = ApiClient(configuration)
 
-        self.calls_api_instance = calls_api.CallsApi(api_client)
-        self.conference_api_instance = conferences_api.ConferencesApi(api_client)
+        cls.calls_api_instance = calls_api.CallsApi(api_client)
+        cls.conference_api_instance = conferences_api.ConferencesApi(api_client)
 
         unauthorizedConfiguration = Configuration(
             username='bad_username',
             password='bad_password'
         )
         unauthorized_api_client = ApiClient(unauthorizedConfiguration)
-        self.unauthorized_api_instance = conferences_api.ConferencesApi(unauthorized_api_client)
+        cls.unauthorized_api_instance = conferences_api.ConferencesApi(unauthorized_api_client)
 
         forbiddenConfiguration = Configuration(
             username=FORBIDDEN_USERNAME,
             password=FORBIDDEN_PASSWORD
         )
         forbidden_api_client = ApiClient(forbiddenConfiguration)
-        self.forbidden_api_instance = conferences_api.ConferencesApi(forbidden_api_client)
+        cls.forbidden_api_instance = conferences_api.ConferencesApi(forbidden_api_client)
 
         # Rest client for interacting with Manteca
-        self.rest_client = RESTClientObject(Configuration.get_default_copy())
+        cls.rest_client = RESTClientObject(Configuration.get_default_copy())
         configuration = Configuration(
             username=BW_USERNAME,
             password=BW_PASSWORD,
         )
 
-        self.account_id = BW_ACCOUNT_ID
-        self.callIdArray = []
-        self.testUpdateConf = UpdateConference(
+        cls.account_id = BW_ACCOUNT_ID
+        cls.callIdArray = []
+        cls.testUpdateConf = UpdateConference(
             state=ConferenceStateEnum("active"),
             redirect_url=MANTECA_BASE_URL + "/bxml/pause",
             redirect_method=RedirectMethodEnum("POST"),
@@ -82,17 +83,18 @@ class ConferencesIntegration(unittest.TestCase):
             fallback_password="mySecretPassword1!",
             tag="My Custom Tag",
         )
-        self.testUpdateBxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is test BXML.</SpeakSentence></Bxml>'
-        self.testUpdateMember = UpdateConferenceMember(mute=False)
-        self.testConfId = "Conf-id"
-        self.testMemberId = "Member-Id"
-        self.testRecordId = "Recording-Id"
-        self.TEST_SLEEP = 3
-        self.TEST_SLEEP_LONG = 10
-        self.MAX_RETRIES = 40
+        cls.testUpdateBxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is test BXML.</SpeakSentence></Bxml>'
+        cls.testUpdateMember = UpdateConferenceMember(mute=False)
+        cls.testConfId = "Conf-id"
+        cls.testMemberId = "Member-Id"
+        cls.testRecordId = "Recording-Id"
+        cls.TEST_SLEEP = 3
+        cls.TEST_SLEEP_LONG = 10
+        cls.MAX_RETRIES = 40
 
-    def tearDown(self):
-        callCleanup(self)
+    @classmethod
+    def tearDownClass(cls):
+        callCleanup(cls)
 
     def assertApiException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
         """Validates that common API exceptions, (401, 403, and 404) are properly formatted

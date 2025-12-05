@@ -16,25 +16,26 @@ from test.utils.env_variables import *
 class TestTranscriptionsApi(unittest.TestCase):
     """TranscriptionsApi integration Test"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
             client_id=BW_CLIENT_ID,
             client_secret=BW_CLIENT_SECRET
         )
         api_client = ApiClient(configuration)
 
-        self.calls_api_instance = CallsApi(api_client)
-        self.transcriptions_api_instance = TranscriptionsApi(api_client)
+        cls.calls_api_instance = CallsApi(api_client)
+        cls.transcriptions_api_instance = TranscriptionsApi(api_client)
 
         # Rest client for interacting with Manteca
-        self.rest_client = RESTClientObject(Configuration.get_default_copy())
+        cls.rest_client = RESTClientObject(Configuration.get_default_copy())
 
         # Call ID Array
-        self.callIdArray = []
-        self.SLEEP_TIME_SEC = 3
+        cls.callIdArray = []
+        cls.SLEEP_TIME_SEC = 3
 
         # Transcription ID
-        self.transcription_id: str
+        cls.transcription_id: str
 
     def create_call_transcription(self) -> None:
 

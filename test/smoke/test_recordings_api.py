@@ -60,7 +60,8 @@ class TestRecordings(unittest.TestCase):
     Integration tests for the Recordings API.
     """
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         """
         Set up for our tests by creating the CallsApi and RecordingsApi instances
         for testing.
@@ -72,22 +73,23 @@ class TestRecordings(unittest.TestCase):
         api_client = ApiClient(configuration)
 
         # Two Valid API Clients
-        self.calls_api_instance = CallsApi(api_client)
-        self.recordings_api_instance = RecordingsApi(api_client)
+        cls.calls_api_instance = CallsApi(api_client)
+        cls.recordings_api_instance = RecordingsApi(api_client)
 
         # Unauthorized Recordings API Client
-        self.unauthorized_recordings_api_instance = RecordingsApi(
+        cls.unauthorized_recordings_api_instance = RecordingsApi(
             api_client=ApiClient(Configuration.get_default_copy())
         )
 
         # Rest client for interacting with Manteca
-        self.rest_client = RESTClientObject(Configuration.get_default_copy())
+        cls.rest_client = RESTClientObject(Configuration.get_default_copy())
 
         # Call ID Array
-        self.callIdArray = []
+        cls.callIdArray = []
 
-    def tearDown(self):
-        callCleanup(self)
+    @classmethod
+    def tearDownClass(cls):
+        callCleanup(cls)
 
     def create_and_validate_call(self, answer_url: str) -> Tuple[str, str]:
         """
