@@ -24,6 +24,7 @@ file with the same name.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -45,6 +46,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -77,7 +84,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -110,6 +117,7 @@ Downloads a media file you previously uploaded.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -131,6 +139,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -165,7 +179,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -198,6 +212,7 @@ Gets a list of your media files. No query parameters are supported.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -220,6 +235,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -254,7 +275,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -291,6 +312,7 @@ A list of supported media types can be found [here](https://support.bandwidth.co
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -312,6 +334,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -350,7 +378,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

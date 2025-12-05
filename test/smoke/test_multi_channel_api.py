@@ -24,7 +24,6 @@ from bandwidth.api.multi_channel_api import MultiChannelApi
 from bandwidth.models.multi_channel_message_request import MultiChannelMessageRequest
 from bandwidth.models.multi_channel_message_channel_enum import MultiChannelMessageChannelEnum
 from bandwidth.models.multi_channel_channel_list_request_object import MultiChannelChannelListRequestObject
-from bandwidth.models.multi_channel_channel_list_sms_response_object import MultiChannelChannelListSMSResponseObject
 from bandwidth.models.multi_channel_channel_list_sms_object import MultiChannelChannelListSMSObject
 from bandwidth.models.sms_message_content import SmsMessageContent
 from bandwidth.models.create_multi_channel_message_response import CreateMultiChannelMessageResponse
@@ -45,15 +44,16 @@ from bandwidth.models.multi_channel_channel_list_rbm_response_object import Mult
 class TestMultiChannelApi(unittest.TestCase):
     """MultiChannelApi unit test stubs"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
             username=BW_USERNAME,
             password=BW_PASSWORD,
         )
         api_client = ApiClient(configuration)
-        self.multi_channel_api_instance = MultiChannelApi(api_client)
+        cls.multi_channel_api_instance = MultiChannelApi(api_client)
 
-        self.expiration = datetime.now(ZoneInfo('America/New_York')) + timedelta(minutes=1)
+        cls.expiration = datetime.now(ZoneInfo('America/New_York')) + timedelta(minutes=1)
 
     def test_create_multi_channel_sms_message(self) -> None:
         """Test case for create_multi_channel_message

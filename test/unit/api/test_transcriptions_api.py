@@ -29,18 +29,19 @@ from bandwidth.models.call_transcription import CallTranscription
 class TestTranscriptionsApi(unittest.TestCase):
     """TranscriptionsApi unit test stubs"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD,
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET,
             host='http://127.0.0.1:4010',
             ignore_operation_servers=True
         )
         api_client = ApiClient(configuration)
-        self.transcriptions_api_instance = TranscriptionsApi(api_client)
+        cls.transcriptions_api_instance = TranscriptionsApi(api_client)
 
-        self.call_id = "c-abc123"
-        self.transcription_id = "t-abc123"
+        cls.call_id = "c-abc123"
+        cls.transcription_id = "t-abc123"
 
     def test_list_real_time_transcriptions(self) -> None:
         """Test case for list_real_time_transcriptions

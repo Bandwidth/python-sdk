@@ -18,6 +18,7 @@ Endpoint for sending text messages and picture messages using V2 messaging.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -41,6 +42,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -75,7 +82,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -109,6 +116,7 @@ Returns a list of messages based on query parameters.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -135,6 +143,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -221,7 +235,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

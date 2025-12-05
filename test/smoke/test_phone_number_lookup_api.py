@@ -31,7 +31,6 @@ from bandwidth.models.create_sync_lookup_response import CreateSyncLookupRespons
 from bandwidth.models.completed_lookup_status_enum import CompletedLookupStatusEnum
 from bandwidth.models.lookup_result import LookupResult
 from bandwidth.models.line_type_enum import LineTypeEnum
-from bandwidth.models.latest_message_delivery_status_enum import LatestMessageDeliveryStatusEnum
 from bandwidth.models.get_async_bulk_lookup_response import GetAsyncBulkLookupResponse
 
 from test.utils.env_variables import *
@@ -39,18 +38,16 @@ from test.utils.env_variables import *
 class TestPhoneNumberLookupApi(unittest.TestCase):
     """PhoneNumberLookupApi unit test stubs"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
         api_client = ApiClient(configuration)
-        self.api = PhoneNumberLookupApi(api_client)
+        cls.api = PhoneNumberLookupApi(api_client)
 
-        self.phone_numbers = [BW_NUMBER, USER_NUMBER]
-
-    def tearDown(self) -> None:
-        pass
+        cls.phone_numbers = [BW_NUMBER, USER_NUMBER]
 
     def test_create_get_async_bulk_lookup(self) -> None:
         """Test case for create_async_bulk_lookup

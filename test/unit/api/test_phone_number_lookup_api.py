@@ -38,18 +38,16 @@ from test.utils.env_variables import *
 class TestPhoneNumberLookupApi(unittest.TestCase):
     """PhoneNumberLookupApi unit test stubs"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD,
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET,
             host='http://127.0.0.1:4010',
             ignore_operation_servers=True
         )
         api_client = ApiClient(configuration)
-        self.api = PhoneNumberLookupApi(api_client)
-
-    def tearDown(self) -> None:
-        pass
+        cls.api = PhoneNumberLookupApi(api_client)
 
     def test_create_async_bulk_lookup(self) -> None:
         """Test case for create_async_bulk_lookup

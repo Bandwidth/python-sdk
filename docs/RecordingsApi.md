@@ -28,6 +28,7 @@ Note: After the deletion is requested and a `204` is returned, neither the recor
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -49,6 +50,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -83,7 +90,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -116,6 +123,7 @@ Deletes the specified recording's media.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -137,6 +145,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -171,7 +185,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -206,6 +220,7 @@ Note: After the deletion is requested and a `204` is returned, the transcription
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -227,6 +242,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -261,7 +282,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -294,6 +315,7 @@ Downloads the specified recording.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -315,6 +337,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -351,7 +379,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -384,6 +412,7 @@ Returns metadata for the specified recording.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -406,6 +435,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -442,7 +477,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -478,6 +513,7 @@ During a [`<Transfer>`](/docs/voice/bxml/transfer) the A-leg transcript will be 
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -500,6 +536,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -536,7 +578,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -572,6 +614,7 @@ empty if no recordings match the specified criteria.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -594,6 +637,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -634,7 +683,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -668,6 +717,7 @@ that took place during the specified call.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -690,6 +740,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -724,7 +780,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -759,6 +815,7 @@ less than 4 hours.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -781,6 +838,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -817,7 +880,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -850,6 +913,7 @@ Pause or resume a recording on an active phone call.
 ### Example
 
 * Basic Authentication (Basic):
+* OAuth Authentication (OAuth2):
 
 ```python
 import bandwidth
@@ -872,6 +936,12 @@ configuration = bandwidth.Configuration(
 configuration = bandwidth.Configuration(
     username = os.environ["USERNAME"],
     password = os.environ["PASSWORD"]
+)
+
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
 )
 
 # Enter a context with an instance of the API client
@@ -906,7 +976,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic)
+[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
