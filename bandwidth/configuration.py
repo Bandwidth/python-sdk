@@ -532,7 +532,7 @@ conf = bandwidth.Configuration(
         :return: The token for bearer HTTP authentication.
         """
         now = int(time.time())
-        print(f"now: {now}, exp: {self.temp_access_token}, token: {self.temp_access_token_expires_at}")
+        print(f"now: {now}, exp: {self.temp_access_token_expires_at}, token: {self.temp_access_token}")
         if self.temp_access_token and self.temp_access_token_expires_at > now + 60:
             return self.temp_access_token
         else:
