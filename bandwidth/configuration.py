@@ -267,7 +267,7 @@ conf = bandwidth.Configuration(
         self.temp_access_token = None
         """Temporary access token for OAuth2
         """
-        self.temp_access_token_expires_at = 0
+        self.temp_access_token_expiration = 0
         """Expiration time of the temporary access token
         """
         self.logger = {}
@@ -532,7 +532,7 @@ conf = bandwidth.Configuration(
         :return: The token for bearer HTTP authentication.
         """
         now = int(time.time())
-        if self.temp_access_token and self.temp_access_token_expires_at > now + 60:
+        if self.temp_access_token and self.temp_access_token_expiration > now + 60:
             return self.temp_access_token
         else:
             print("Fetching new access token")
@@ -550,7 +550,7 @@ conf = bandwidth.Configuration(
             )
             body = resp.json()
             self.temp_access_token = body['access_token']
-            self.temp_access_token_expires_at = now + body['expires_in']
+            self.temp_access_token_expiration = now + body['expires_in']
             return self.temp_access_token
 
     def auth_settings(self)-> AuthSettings:
