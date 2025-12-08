@@ -535,7 +535,6 @@ conf = bandwidth.Configuration(
         if self.temp_access_token and self.temp_access_token_expiration > now + 60:
             return self.temp_access_token
         else:
-            print("Fetching new access token")
             _bytes = f"{self.client_id}:{self.client_secret}".encode('utf-8')
             _encoded_string = base64.b64encode(_bytes).decode('utf-8')
             auth_header = f"Basic {_encoded_string}"
