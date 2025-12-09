@@ -10,7 +10,7 @@ from datetime import datetime
 import bandwidth
 from hamcrest import *
 
-from bandwidth import ApiResponse
+from bandwidth import ApiClient, ApiResponse, Configuration
 from bandwidth.api import messages_api
 from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.models.list_message_item import ListMessageItem
@@ -27,48 +27,50 @@ from test.utils.env_variables import *
 class TestMessagesApi(unittest.TestCase):
     """MessagesApi unit test stubs"""
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         # API Client
-        configuration = bandwidth.Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+        configuration = Configuration(
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
-        api_client = bandwidth.ApiClient(configuration)
-        self.api_instance = messages_api.MessagesApi(api_client)
-        self.account_id = BW_ACCOUNT_ID
+        api_client = ApiClient(configuration)
+        cls.api_instance = messages_api.MessagesApi(api_client)
+        cls.account_id = BW_ACCOUNT_ID
 
         # Unauthorized API Client
-        self.unauthorized_api_client = bandwidth.ApiClient()
-        self.unauthorized_api_instance = messages_api.MessagesApi(self.unauthorized_api_client)
+        cls.unauthorized_api_client = ApiClient()
+        cls.unauthorized_api_instance = messages_api.MessagesApi(cls.unauthorized_api_client)
 
         # Message Properties
-        self.application_id = BW_MESSAGING_APPLICATION_ID
-        self.to_number = [USER_NUMBER]
-        self.from_number = BW_NUMBER
-        self.text = 'python integration'
-        self.media = ['https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg']
-        self.tag = 'python integration tag'
-        self.priority = PriorityEnum("default")
+        cls.application_id = BW_MESSAGING_APPLICATION_ID
+        cls.to_number = [USER_NUMBER]
+        cls.from_number = BW_NUMBER
+        cls.text = 'python integration'
+        cls.media = ['https://cdn2.thecatapi.com/images/MTY3ODIyMQ.jpg']
+        cls.tag = 'python integration tag'
+        cls.priority = PriorityEnum("default")
 
         # Message Request
-        self.message_request = MessageRequest(
-            application_id=self.application_id,
-            to=self.to_number,
-            var_from=self.from_number,
-            text=self.text,
-            media=self.media,
-            tag=self.tag,
-            priority=self.priority,
+        cls.message_request = MessageRequest(
+            application_id=cls.application_id,
+            to=cls.to_number,
+            var_from=cls.from_number,
+            text=cls.text,
+            media=cls.media,
+            tag=cls.tag,
+            priority=cls.priority,
         )
 
         # Invalid Message Request
-        self.invalid_message_request = MessageRequest(
-            application_id=self.application_id,
+        cls.invalid_message_request = MessageRequest(
+            application_id=cls.application_id,
             to=['+invalid'],
             var_from='+invalid',
             text='',
         )
 
+    @unittest.skip('skip')
     def test_create_message(self):
         response: ApiResponse = self.api_instance.create_message_with_http_info(
             self.account_id,

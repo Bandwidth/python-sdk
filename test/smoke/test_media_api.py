@@ -9,11 +9,11 @@ import logging
 
 from bandwidth import ApiResponse
 
-import bandwidth
+from bandwidth import ApiClient, ApiResponse, Configuration
 from hamcrest import *
 from bandwidth.api import media_api
 from bandwidth.models.media import Media
-from bandwidth.exceptions import ApiException, NotFoundException
+from bandwidth.exceptions import NotFoundException
 from test.utils.env_variables import *
 
 
@@ -21,19 +21,20 @@ class TestMedia(unittest.TestCase):
     """Media API integration Test
     """
 
-    def setUp(self) -> None:
-        configuration = bandwidth.Configuration(
+    @classmethod
+    def setUpClass(cls) -> None:
+        configuration = Configuration(
             username=BW_USERNAME,
             password=BW_PASSWORD
         )
-        self.api_client = bandwidth.ApiClient(configuration)
-        self.api_instance = media_api.MediaApi(self.api_client)
-        self.account_id = BW_ACCOUNT_ID
-        self.media_path = "./test/fixtures/"
-        self.media_file = "python_cat.jpeg"
-        self.media_id = PYTHON_VERSION + "_" + RUNNER_OS + "_" + str(uuid.uuid4()) + "_" + self.media_file
-        self.download_file_path = "cat_download.jpeg"
-        self.original_file = open(self.media_path + self.media_file, "rb")
+        cls.api_client = ApiClient(configuration)
+        cls.api_instance = media_api.MediaApi(cls.api_client)
+        cls.account_id = BW_ACCOUNT_ID
+        cls.media_path = "./test/fixtures/"
+        cls.media_file = "python_cat.jpeg"
+        cls.media_id = PYTHON_VERSION + "_" + RUNNER_OS + "_" + str(uuid.uuid4()) + "_" + cls.media_file
+        cls.download_file_path = "cat_download.jpeg"
+        cls.original_file = open(cls.media_path + cls.media_file, "rb")
 
     def uploadMedia(self) -> None:
         """Test uploading media

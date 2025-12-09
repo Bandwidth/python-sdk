@@ -3,6 +3,8 @@ import os
 try:
     BW_USERNAME = os.environ['BW_USERNAME']
     BW_PASSWORD = os.environ['BW_PASSWORD']
+    BW_CLIENT_ID = os.environ['BW_CLIENT_ID']
+    BW_CLIENT_SECRET = os.environ['BW_CLIENT_SECRET']
     BW_ACCOUNT_ID = os.environ['BW_ACCOUNT_ID']
     BW_MESSAGING_APPLICATION_ID = os.environ['BW_MESSAGING_APPLICATION_ID']
     BW_VOICE_APPLICATION_ID = os.environ['BW_VOICE_APPLICATION_ID']

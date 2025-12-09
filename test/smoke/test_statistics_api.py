@@ -15,14 +15,15 @@ class TestStatisticsApi(unittest.TestCase):
     """StatisticsApi integration Test
     """
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
-        self.api_client = ApiClient(configuration)
-        self.api_instance = StatisticsApi(self.api_client)
-        self.account_id = BW_ACCOUNT_ID
+        cls.api_client = ApiClient(configuration)
+        cls.api_instance = StatisticsApi(cls.api_client)
+        cls.account_id = BW_ACCOUNT_ID
 
     def test_get_statistics(self):
         api_response_with_http_info = self.api_instance.get_statistics_with_http_info(self.account_id)
