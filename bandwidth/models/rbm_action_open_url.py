@@ -19,9 +19,11 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from bandwidth.models.rbm_action_type_enum import RbmActionTypeEnum
+from bandwidth.models.rbm_open_url_enum import RbmOpenUrlEnum
+from bandwidth.models.rbm_veb_view_enum import RbmVebViewEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,8 +35,10 @@ class RbmActionOpenUrl(BaseModel):
     text: Annotated[str, Field(strict=True, max_length=25)] = Field(description="Displayed text for user to click")
     postback_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
     url: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="The URL to open in browser.")
+    application: Optional[RbmOpenUrlEnum] = None
+    webview_view_mode: Optional[RbmVebViewEnum] = Field(default=None, alias="webviewViewMode")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["type", "text", "postbackData", "url"]
+    __properties: ClassVar[List[str]] = ["type", "text", "postbackData", "url", "application", "webviewViewMode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,7 +101,9 @@ class RbmActionOpenUrl(BaseModel):
             "type": obj.get("type"),
             "text": obj.get("text"),
             "postbackData": obj.get("postbackData"),
-            "url": obj.get("url")
+            "url": obj.get("url"),
+            "application": obj.get("application"),
+            "webviewViewMode": obj.get("webviewViewMode")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

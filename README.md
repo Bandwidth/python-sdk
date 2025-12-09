@@ -73,6 +73,8 @@ configuration = bandwidth.Configuration(
     password = os.environ["PASSWORD"]
 )
 
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
 
 # Enter a context with an instance of the API client
 with bandwidth.ApiClient(configuration) as api_client:
@@ -277,8 +279,10 @@ Class | Method | HTTP request | Description
  - [RbmMessageContentRichCard](docs/RbmMessageContentRichCard.md)
  - [RbmMessageContentText](docs/RbmMessageContentText.md)
  - [RbmMessageMedia](docs/RbmMessageMedia.md)
+ - [RbmOpenUrlEnum](docs/RbmOpenUrlEnum.md)
  - [RbmStandaloneCard](docs/RbmStandaloneCard.md)
  - [RbmSuggestionResponse](docs/RbmSuggestionResponse.md)
+ - [RbmVebViewEnum](docs/RbmVebViewEnum.md)
  - [RecordingAvailableCallback](docs/RecordingAvailableCallback.md)
  - [RecordingCompleteCallback](docs/RecordingCompleteCallback.md)
  - [RecordingStateEnum](docs/RecordingStateEnum.md)
@@ -336,6 +340,14 @@ Authentication schemes defined for the API:
 ### Basic
 
 - **Type**: HTTP basic authentication
+
+<a id="OAuth2"></a>
+### OAuth2
+
+- **Type**: OAuth
+- **Flow**: application
+- **Authorization URL**: 
+- **Scopes**: N/A
 
 
 ## Author

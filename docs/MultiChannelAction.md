@@ -17,6 +17,8 @@ Name | Type | Description | Notes
 **end_time** | **datetime** | The end time of the event. | 
 **description** | **str** | The description of the event. | [optional] 
 **url** | **str** | The URL to open in browser. | 
+**application** | [**RbmOpenUrlEnum**](RbmOpenUrlEnum.md) |  | [optional] 
+**webview_view_mode** | [**RbmVebViewEnum**](RbmVebViewEnum.md) |  | [optional] 
 
 ## Example
 
