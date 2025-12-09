@@ -16,6 +16,9 @@
 import unittest
 
 from bandwidth.models.rbm_action_open_url import RbmActionOpenUrl
+from bandwidth.models.rbm_action_type_enum import RbmActionTypeEnum
+from bandwidth.models.rbm_open_url_enum import RbmOpenUrlEnum
+from bandwidth.models.rbm_veb_view_enum import RbmVebViewEnum
 
 class TestRbmActionOpenUrl(unittest.TestCase):
     """RbmActionOpenUrl unit test stubs"""
@@ -33,10 +36,12 @@ class TestRbmActionOpenUrl(unittest.TestCase):
             optional params are included """
         if include_optional:
             return RbmActionOpenUrl(
-                type = 'REPLY',
+                type = RbmActionTypeEnum.REPLY,
                 text = 'Hello world',
                 postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
-                url = 'https://dev.bandwidth.com'
+                url = 'https://dev.bandwidth.com',
+                application=RbmOpenUrlEnum.BROWSER,
+                webview_view_mode=RbmVebViewEnum.FULL,
             )
         else:
             return RbmActionOpenUrl(
@@ -55,6 +60,8 @@ class TestRbmActionOpenUrl(unittest.TestCase):
         assert instance.text == 'Hello world'
         assert instance.postback_data == 'U0dWc2JHOGdkMjl5YkdRPQ=='
         assert instance.url == 'https://dev.bandwidth.com'
+        assert instance.application == 'BROWSER'
+        assert instance.webview_view_mode == 'FULL'
 
 if __name__ == '__main__':
     unittest.main()
