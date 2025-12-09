@@ -8,6 +8,7 @@ info:
     email: letstalk@bandwidth.com
   version: 1.0.0
 security:
+  - OAuth2: []
   - Basic: []
   - OAuth2: []
 tags:

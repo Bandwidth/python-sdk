@@ -73,7 +73,11 @@ configuration = bandwidth.Configuration(
     password = os.environ["PASSWORD"]
 )
 
-configuration.access_token = os.environ["ACCESS_TOKEN"]
+# Configure your client ID and secret for OAuth
+configuration = bandwidth.Configuration(
+    client_id = os.environ["CLIENT_ID"],
+    client_secret = os.environ["CLIENT_SECRET"]
+)
 
 
 # Enter a context with an instance of the API client

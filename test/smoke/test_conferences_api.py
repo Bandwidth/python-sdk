@@ -2,20 +2,17 @@
 Integration tests for Bandwidth's Voice Conferences API
 """
 
-from cgi import test
 import json
 import time
-from typing import Dict, List, Tuple
+from typing import Dict,  Tuple
 import unittest
 
 from hamcrest import assert_that, has_properties, not_none, instance_of, greater_than
 
-import bandwidth
-from bandwidth import ApiResponse
+from bandwidth import ApiClient, ApiResponse, Configuration
 from bandwidth.api import calls_api
 from bandwidth.models.create_call import CreateCall
 from bandwidth.models.create_call_response import CreateCallResponse
-from bandwidth.models.call_state import CallState
 from bandwidth.models.call_state_enum import CallStateEnum
 from bandwidth.models.update_call import UpdateCall
 from bandwidth.models.redirect_method_enum import RedirectMethodEnum
@@ -36,44 +33,45 @@ class ConferencesIntegration(unittest.TestCase):
     Voice Conferences API integration test
     """
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         """
         Set up for our tests by creating the CallsApi and ConferencesApi instances
         for testing as well as the unauthorized and forbidden credentials for the 4xx tests.
         """
-        configuration = bandwidth.Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+        configuration = Configuration(
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
-        api_client = bandwidth.ApiClient(configuration)
+        api_client = ApiClient(configuration)
 
-        self.calls_api_instance = calls_api.CallsApi(api_client)
-        self.conference_api_instance = conferences_api.ConferencesApi(api_client)
+        cls.calls_api_instance = calls_api.CallsApi(api_client)
+        cls.conference_api_instance = conferences_api.ConferencesApi(api_client)
 
-        unauthorizedConfiguration = bandwidth.Configuration(
+        unauthorizedConfiguration = Configuration(
             username='bad_username',
             password='bad_password'
         )
-        unauthorized_api_client = bandwidth.ApiClient(unauthorizedConfiguration)
-        self.unauthorized_api_instance = conferences_api.ConferencesApi(unauthorized_api_client)
+        unauthorized_api_client = ApiClient(unauthorizedConfiguration)
+        cls.unauthorized_api_instance = conferences_api.ConferencesApi(unauthorized_api_client)
 
-        forbiddenConfiguration = bandwidth.Configuration(
+        forbiddenConfiguration = Configuration(
             username=FORBIDDEN_USERNAME,
             password=FORBIDDEN_PASSWORD
         )
-        forbidden_api_client = bandwidth.ApiClient(forbiddenConfiguration)
-        self.forbidden_api_instance = conferences_api.ConferencesApi(forbidden_api_client)
+        forbidden_api_client = ApiClient(forbiddenConfiguration)
+        cls.forbidden_api_instance = conferences_api.ConferencesApi(forbidden_api_client)
 
         # Rest client for interacting with Manteca
-        self.rest_client = RESTClientObject(bandwidth.Configuration.get_default_copy())
-        configuration = bandwidth.Configuration(
+        cls.rest_client = RESTClientObject(Configuration.get_default_copy())
+        configuration = Configuration(
             username=BW_USERNAME,
             password=BW_PASSWORD,
         )
 
-        self.account_id = BW_ACCOUNT_ID
-        self.callIdArray = []
-        self.testUpdateConf = UpdateConference(
+        cls.account_id = BW_ACCOUNT_ID
+        cls.callIdArray = []
+        cls.testUpdateConf = UpdateConference(
             state=ConferenceStateEnum("active"),
             redirect_url=MANTECA_BASE_URL + "/bxml/pause",
             redirect_method=RedirectMethodEnum("POST"),
@@ -85,17 +83,18 @@ class ConferencesIntegration(unittest.TestCase):
             fallback_password="mySecretPassword1!",
             tag="My Custom Tag",
         )
-        self.testUpdateBxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is test BXML.</SpeakSentence></Bxml>'
-        self.testUpdateMember = UpdateConferenceMember(mute=False)
-        self.testConfId = "Conf-id"
-        self.testMemberId = "Member-Id"
-        self.testRecordId = "Recording-Id"
-        self.TEST_SLEEP = 3
-        self.TEST_SLEEP_LONG = 10
-        self.MAX_RETRIES = 40
+        cls.testUpdateBxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is test BXML.</SpeakSentence></Bxml>'
+        cls.testUpdateMember = UpdateConferenceMember(mute=False)
+        cls.testConfId = "Conf-id"
+        cls.testMemberId = "Member-Id"
+        cls.testRecordId = "Recording-Id"
+        cls.TEST_SLEEP = 3
+        cls.TEST_SLEEP_LONG = 10
+        cls.MAX_RETRIES = 40
 
-    def tearDown(self):
-        callCleanup(self)
+    @classmethod
+    def tearDownClass(cls):
+        callCleanup(cls)
 
     def assertApiException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
         """Validates that common API exceptions, (401, 403, and 404) are properly formatted
