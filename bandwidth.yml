@@ -8,7 +8,6 @@ info:
     email: letstalk@bandwidth.com
   version: 1.0.0
 security:
-  - OAuth2: []
   - Basic: []
   - OAuth2: []
 tags:
@@ -2393,7 +2392,7 @@ components:
         - BROWSER
         - WEBVIEW
       example: WEBVIEW
-    rbmVebViewEnum:
+    rbmWebViewEnum:
       type: string
       description: >-
         Defines the layout of the WebView on a mobile device. It must be defined
@@ -2515,7 +2514,7 @@ components:
             application:
               $ref: '#/components/schemas/rbmOpenUrlEnum'
             webviewViewMode:
-              $ref: '#/components/schemas/rbmVebViewEnum'
+              $ref: '#/components/schemas/rbmWebViewEnum'
           required:
             - url
     multiChannelFullActions:

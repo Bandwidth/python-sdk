@@ -148,7 +148,7 @@ bandwidth/models/rbm_message_media.py
 bandwidth/models/rbm_open_url_enum.py
 bandwidth/models/rbm_standalone_card.py
 bandwidth/models/rbm_suggestion_response.py
-bandwidth/models/rbm_veb_view_enum.py
+bandwidth/models/rbm_web_view_enum.py
 bandwidth/models/recording_available_callback.py
 bandwidth/models/recording_complete_callback.py
 bandwidth/models/recording_state_enum.py
@@ -333,7 +333,7 @@ docs/RbmMessageMedia.md
 docs/RbmOpenUrlEnum.md
 docs/RbmStandaloneCard.md
 docs/RbmSuggestionResponse.md
-docs/RbmVebViewEnum.md
+docs/RbmWebViewEnum.md
 docs/RecordingAvailableCallback.md
 docs/RecordingCompleteCallback.md
 docs/RecordingStateEnum.md

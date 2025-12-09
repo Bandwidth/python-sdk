@@ -19,7 +19,7 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class RbmVebViewEnum(str, Enum):
+class RbmWebViewEnum(str, Enum):
     """
     Defines the layout of the WebView on a mobile device. It must be defined when application is set to `WEBVIEW` - `FULL` WebView takes the full screen.  - `HALF` WebView takes half of the screen. - `TALL` WebView takes three-quarters of the screen.
     """
@@ -33,7 +33,7 @@ class RbmVebViewEnum(str, Enum):
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of RbmVebViewEnum from a JSON string"""
+        """Create an instance of RbmWebViewEnum from a JSON string"""
         return cls(json.loads(json_str))
 
 

@@ -18,7 +18,7 @@ import unittest
 from bandwidth.models.rbm_action_open_url import RbmActionOpenUrl
 from bandwidth.models.rbm_action_type_enum import RbmActionTypeEnum
 from bandwidth.models.rbm_open_url_enum import RbmOpenUrlEnum
-from bandwidth.models.rbm_veb_view_enum import RbmVebViewEnum
+from bandwidth.models.rbm_web_view_enum import RbmWebViewEnum
 
 class TestRbmActionOpenUrl(unittest.TestCase):
     """RbmActionOpenUrl unit test stubs"""
@@ -41,7 +41,7 @@ class TestRbmActionOpenUrl(unittest.TestCase):
                 postback_data = 'U0dWc2JHOGdkMjl5YkdRPQ==',
                 url = 'https://dev.bandwidth.com',
                 application=RbmOpenUrlEnum.BROWSER,
-                webview_view_mode=RbmVebViewEnum.FULL,
+                webview_view_mode=RbmWebViewEnum.FULL,
             )
         else:
             return RbmActionOpenUrl(

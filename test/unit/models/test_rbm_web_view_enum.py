@@ -15,10 +15,10 @@
 
 import unittest
 
-from bandwidth.models.rbm_veb_view_enum import RbmVebViewEnum
+from bandwidth.models.rbm_web_view_enum import RbmWebViewEnum
 
-class TestRbmVebViewEnum(unittest.TestCase):
-    """RbmVebViewEnum unit test stubs"""
+class TestRbmWebViewEnum(unittest.TestCase):
+    """RbmWebViewEnum unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,11 +26,11 @@ class TestRbmVebViewEnum(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testRbmVebViewEnum(self):
-        """Test RbmVebViewEnum"""
-        assert RbmVebViewEnum('FULL') == 'FULL'
-        assert RbmVebViewEnum('HALF') == 'HALF'
-        assert RbmVebViewEnum('TALL') == 'TALL'
+    def testRbmWebViewEnum(self):
+        """Test RbmWebViewEnum"""
+        assert RbmWebViewEnum('FULL') == 'FULL'
+        assert RbmWebViewEnum('HALF') == 'HALF'
+        assert RbmWebViewEnum('TALL') == 'TALL'
 
 if __name__ == '__main__':
     unittest.main()

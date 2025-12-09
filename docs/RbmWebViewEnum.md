@@ -1,4 +1,4 @@
-# RbmVebViewEnum
+# RbmWebViewEnum
 
 Defines the layout of the WebView on a mobile device. It must be defined when application is set to `WEBVIEW` - `FULL` WebView takes the full screen.  - `HALF` WebView takes half of the screen. - `TALL` WebView takes three-quarters of the screen.
 

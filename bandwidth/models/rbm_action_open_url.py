@@ -23,7 +23,7 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from bandwidth.models.rbm_action_type_enum import RbmActionTypeEnum
 from bandwidth.models.rbm_open_url_enum import RbmOpenUrlEnum
-from bandwidth.models.rbm_veb_view_enum import RbmVebViewEnum
+from bandwidth.models.rbm_web_view_enum import RbmWebViewEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -36,7 +36,7 @@ class RbmActionOpenUrl(BaseModel):
     postback_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
     url: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="The URL to open in browser.")
     application: Optional[RbmOpenUrlEnum] = None
-    webview_view_mode: Optional[RbmVebViewEnum] = Field(default=None, alias="webviewViewMode")
+    webview_view_mode: Optional[RbmWebViewEnum] = Field(default=None, alias="webviewViewMode")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["type", "text", "postbackData", "url", "application", "webviewViewMode"]
 
