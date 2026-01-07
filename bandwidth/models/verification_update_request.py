@@ -50,8 +50,9 @@ class VerificationUpdateRequest(BaseModel):
     business_entity_type: Optional[BusinessEntityTypeEnum] = Field(default=None, alias="businessEntityType")
     help_message_response: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="A message that gets sent to users requesting help.", alias="helpMessageResponse")
     age_gated_content: Optional[StrictBool] = Field(default=None, description="Indicates whether the content is age-gated.", alias="ageGatedContent")
+    cv_token: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="The token provided by Campaign Verify to validate your political use case. Only required for 527 political organizations. If you are not a 527 political organization, this field should be omitted. If you pass an empty string, it will be passed along and potentially rejected.", alias="cvToken")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller", "privacyPolicyUrl", "termsAndConditionsUrl", "businessDba", "businessRegistrationNumber", "businessRegistrationType", "businessEntityType", "helpMessageResponse", "ageGatedContent"]
+    __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller", "privacyPolicyUrl", "termsAndConditionsUrl", "businessDba", "businessRegistrationNumber", "businessRegistrationType", "businessEntityType", "helpMessageResponse", "ageGatedContent", "cvToken"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -138,6 +139,11 @@ class VerificationUpdateRequest(BaseModel):
         if self.help_message_response is None and "help_message_response" in self.model_fields_set:
             _dict['helpMessageResponse'] = None
 
+        # set to None if cv_token (nullable) is None
+        # and model_fields_set contains the field
+        if self.cv_token is None and "cv_token" in self.model_fields_set:
+            _dict['cvToken'] = None
+
         return _dict
 
     @classmethod
@@ -166,7 +172,8 @@ class VerificationUpdateRequest(BaseModel):
             "businessRegistrationType": obj.get("businessRegistrationType"),
             "businessEntityType": obj.get("businessEntityType"),
             "helpMessageResponse": obj.get("helpMessageResponse"),
-            "ageGatedContent": obj.get("ageGatedContent")
+            "ageGatedContent": obj.get("ageGatedContent"),
+            "cvToken": obj.get("cvToken")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

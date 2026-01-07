@@ -80,7 +80,8 @@ class TestTfvStatus(unittest.TestCase):
                     business_entity_type = 'SOLE_PROPRIETOR'
                 ),
                 blocked = False,
-                blocked_reason = 'Blocked Reason'
+                blocked_reason = 'Blocked Reason',
+                cv_token = 'cvToken'
             )
         else:
             return TfvStatus(
@@ -133,6 +134,7 @@ class TestTfvStatus(unittest.TestCase):
         assert instance.submission.additional_information == 'Any additional information'
         assert instance.blocked == False
         assert instance.blocked_reason == 'Blocked Reason'
+        assert instance.cv_token == 'cvToken'
 
 
 if __name__ == '__main__':

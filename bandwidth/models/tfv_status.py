@@ -42,8 +42,9 @@ class TfvStatus(BaseModel):
     submission: Optional[TfvSubmissionInfo] = None
     blocked: Optional[StrictBool] = Field(default=None, description="Whether a Toll-Free Verification is blocked. This attribute will only be defined when the number is blocked.")
     blocked_reason: Optional[StrictStr] = Field(default=None, description="The reason why the Toll-Free Verification is blocked. This attribute will only be defined when the number is blocked.", alias="blockedReason")
+    cv_token: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="The token provided by Campaign Verify to validate your political use case. Only required for 527 political organizations. If you are not a 527 political organization, this field should be omitted. If you pass an empty string, it will be passed along and potentially rejected.", alias="cvToken")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["phoneNumber", "status", "internalTicketNumber", "declineReasonDescription", "resubmitAllowed", "createdDateTime", "modifiedDateTime", "submission", "blocked", "blockedReason"]
+    __properties: ClassVar[List[str]] = ["phoneNumber", "status", "internalTicketNumber", "declineReasonDescription", "resubmitAllowed", "createdDateTime", "modifiedDateTime", "submission", "blocked", "blockedReason", "cvToken"]
 
     @field_validator('phone_number')
     def phone_number_validate_regular_expression(cls, value):
@@ -104,6 +105,11 @@ class TfvStatus(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if cv_token (nullable) is None
+        # and model_fields_set contains the field
+        if self.cv_token is None and "cv_token" in self.model_fields_set:
+            _dict['cvToken'] = None
+
         return _dict
 
     @classmethod
@@ -125,7 +131,8 @@ class TfvStatus(BaseModel):
             "modifiedDateTime": obj.get("modifiedDateTime"),
             "submission": TfvSubmissionInfo.from_dict(obj["submission"]) if obj.get("submission") is not None else None,
             "blocked": obj.get("blocked"),
-            "blockedReason": obj.get("blockedReason")
+            "blockedReason": obj.get("blockedReason"),
+            "cvToken": obj.get("cvToken")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

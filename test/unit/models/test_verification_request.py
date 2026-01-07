@@ -71,7 +71,8 @@ class TestVerificationRequest(unittest.TestCase):
                 business_registration_type = 'EIN',
                 business_entity_type = 'SOLE_PROPRIETOR',
                 help_message_response = 'Please contact support for assistance.',
-                age_gated_content = False
+                age_gated_content = False,
+                cv_token = 'cvToken'
             )
         else:
             return VerificationRequest(
@@ -144,6 +145,7 @@ class TestVerificationRequest(unittest.TestCase):
         assert instance.business_entity_type == 'SOLE_PROPRIETOR'
         assert instance.help_message_response == 'Please contact support for assistance.'
         assert instance.age_gated_content == False
+        assert instance.cv_token == 'cvToken'
 
 if __name__ == '__main__':
     unittest.main()
