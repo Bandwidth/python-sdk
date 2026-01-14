@@ -34,18 +34,19 @@ from bandwidth.models.transcribe_recording import TranscribeRecording
 class TestRecordingsApi(unittest.TestCase):
     """RecordingsApi unit test stubs"""
 
-    def setUp(self) -> None:
+    @classmethod
+    def setUpClass(cls) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD,
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET,
             host='http://127.0.0.1:4010',
             ignore_operation_servers=True
         )
         api_client = ApiClient(configuration)
-        self.recordings_api_instance = RecordingsApi(api_client)
+        cls.recordings_api_instance = RecordingsApi(api_client)
 
-        self.call_id = "c-1234"
-        self.recording_id = "r-1234"
+        cls.call_id = "c-1234"
+        cls.recording_id = "r-1234"
 
     def test_update_call_recording_state(self) -> None:
         """Test case for update_call_recording_state

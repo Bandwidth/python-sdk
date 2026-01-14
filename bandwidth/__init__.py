@@ -165,8 +165,10 @@ __all__ = [
     "RbmMessageContentRichCard",
     "RbmMessageContentText",
     "RbmMessageMedia",
+    "RbmOpenUrlEnum",
     "RbmStandaloneCard",
     "RbmSuggestionResponse",
+    "RbmWebViewEnum",
     "RecordingAvailableCallback",
     "RecordingCompleteCallback",
     "RecordingStateEnum",
@@ -366,8 +368,10 @@ from bandwidth.models.rbm_message_content_file import RbmMessageContentFile as R
 from bandwidth.models.rbm_message_content_rich_card import RbmMessageContentRichCard as RbmMessageContentRichCard
 from bandwidth.models.rbm_message_content_text import RbmMessageContentText as RbmMessageContentText
 from bandwidth.models.rbm_message_media import RbmMessageMedia as RbmMessageMedia
+from bandwidth.models.rbm_open_url_enum import RbmOpenUrlEnum as RbmOpenUrlEnum
 from bandwidth.models.rbm_standalone_card import RbmStandaloneCard as RbmStandaloneCard
 from bandwidth.models.rbm_suggestion_response import RbmSuggestionResponse as RbmSuggestionResponse
+from bandwidth.models.rbm_web_view_enum import RbmWebViewEnum as RbmWebViewEnum
 from bandwidth.models.recording_available_callback import RecordingAvailableCallback as RecordingAvailableCallback
 from bandwidth.models.recording_complete_callback import RecordingCompleteCallback as RecordingCompleteCallback
 from bandwidth.models.recording_state_enum import RecordingStateEnum as RecordingStateEnum

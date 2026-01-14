@@ -306,7 +306,8 @@ class StatisticsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic'
+            'Basic', 
+            'OAuth2'
         ]
 
         return self.api_client.param_serialize(
