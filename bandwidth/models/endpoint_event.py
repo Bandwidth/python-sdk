@@ -34,8 +34,8 @@ class EndpointEvent(BaseModel):
     An event that occurred on an endpoint.
     """ # noqa: E501
     endpoint_id: StrictStr = Field(description="The unique ID of the endpoint.", alias="endpointId")
-    type: EndpointTypeEnum
-    status: EndpointStatusEnum
+    type: Optional[EndpointTypeEnum] = None
+    status: Optional[EndpointStatusEnum] = None
     creation_timestamp: datetime = Field(description="The time the endpoint was created. In ISO-8601 format.", alias="creationTimestamp")
     expiration_timestamp: datetime = Field(description="The time the endpoint token will expire. In ISO-8601 format. Tokens last 24 hours.", alias="expirationTimestamp")
     tag: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="A tag for the endpoint.")
@@ -105,22 +105,27 @@ class EndpointEvent(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
+        _dict = {
             "endpointId": obj.get("endpointId"),
-            "type": obj.get("type"),
-            "status": obj.get("status"),
             "creationTimestamp": obj.get("creationTimestamp"),
             "expirationTimestamp": obj.get("expirationTimestamp"),
-            "tag": obj.get("tag"),
             "eventTime": obj.get("eventTime"),
-            "eventType": obj.get("eventType"),
-            "device": Device.from_dict(obj["device"]) if obj.get("device") is not None else None
-        })
+            "eventType": obj.get("eventType")
+        }
+        # Only add optional fields if they're present
+        if "type" in obj and obj.get("type") is not None:
+            _dict["type"] = obj.get("type")
+        if "status" in obj and obj.get("status") is not None:
+            _dict["status"] = obj.get("status")
+        if "tag" in obj:
+            _dict["tag"] = obj.get("tag")
+        if "device" in obj and obj.get("device") is not None:
+            _dict["device"] = Device.from_dict(obj["device"])
+
+        _obj = cls.model_validate(_dict)
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
-
-

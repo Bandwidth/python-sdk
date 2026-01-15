@@ -29,9 +29,9 @@ class ErrorResponse(BaseModel):
     """
     ErrorResponse
     """ # noqa: E501
-    links: List[Link]
-    data: Optional[Dict[str, Any]]
-    errors: List[Error]
+    links: Optional[List[Link]] = None
+    data: Optional[Dict[str, Any]] = None
+    errors: Optional[List[Error]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["links", "data", "errors"]
 
@@ -111,16 +111,18 @@ class ErrorResponse(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "links": [Link.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
-            "data": obj.get("data"),
-            "errors": [Error.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
-        })
+        _dict = {}
+        if "links" in obj and obj.get("links") is not None:
+            _dict["links"] = [Link.from_dict(_item) for _item in obj["links"]]
+        if "data" in obj:
+            _dict["data"] = obj.get("data")
+        if "errors" in obj and obj.get("errors") is not None:
+            _dict["errors"] = [Error.from_dict(_item) for _item in obj["errors"]]
+
+        _obj = cls.model_validate(_dict)
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
-
-
