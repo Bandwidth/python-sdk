@@ -150,20 +150,21 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.data.data, instance_of(list))
         assert_that(response.data.errors, instance_of(list))
 
-    def test_update_endpoint_bxml(self) -> None:
-        """Test case for update_endpoint_bxml
-
-        Update Endpoint BXML
-        """
-        update_bxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response for endpoint</SpeakSentence><Pause duration="3"/></Bxml>'
-
-        response = self.endpoints_api_instance.update_endpoint_bxml_with_http_info(
-            BW_ACCOUNT_ID,
-            "ep-abc123",
-            update_bxml
-        )
-
-        assert_that(response.status_code, equal_to(204))
+    # Endpoint BXML not ready yet - commented out
+    # def test_update_endpoint_bxml(self) -> None:
+    #     """Test case for update_endpoint_bxml
+    #
+    #     Update Endpoint BXML
+    #     """
+    #     update_bxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response for endpoint</SpeakSentence><Pause duration="3"/></Bxml>'
+    #
+    #     response = self.endpoints_api_instance.update_endpoint_bxml_with_http_info(
+    #         BW_ACCOUNT_ID,
+    #         "ep-abc123",
+    #         update_bxml
+    #     )
+    #
+    #     assert_that(response.status_code, equal_to(204))
 
     def test_create_endpoint_minimal(self) -> None:
         """Test case for create_endpoint with minimal required fields
