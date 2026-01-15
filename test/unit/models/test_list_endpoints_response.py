@@ -45,8 +45,9 @@ class TestListEndpointsResponse(unittest.TestCase):
                     Link(href='https://api.bandwidth.com/endpoints?page=2', rel='next')
                 ],
                 page=Page(
-                    total_count=100,
                     page_size=10,
+                    total_elements=100,
+                    total_pages=10,
                     page_number=1
                 ),
                 data=[
@@ -93,7 +94,8 @@ class TestListEndpointsResponse(unittest.TestCase):
         assert isinstance(instance.links, list)
         assert len(instance.links) == 2
         assert isinstance(instance.page, Page)
-        assert instance.page.total_count == 100
+        assert instance.page.total_elements == 100
+        assert instance.page.page_size == 10
         assert isinstance(instance.data, list)
         assert len(instance.data) == 2
         assert isinstance(instance.data[0], Endpoints)

@@ -49,8 +49,8 @@ class TestEndpointsApi(unittest.TestCase):
         Create Endpoint
         """
         endpoint_body = CreateWebRtcConnectionRequest(
-            type=EndpointTypeEnum("webrtc"),
-            direction=EndpointDirectionEnum("inbound"),
+            type=EndpointTypeEnum.WEBRTC,
+            direction=EndpointDirectionEnum.INBOUND,
             event_callback_url="https://myServer.com/bandwidth/webhooks/endpoint",
             event_fallback_url="https://myFallbackServer.com/bandwidth/webhooks/endpoint",
             tag="test-endpoint",
@@ -120,8 +120,8 @@ class TestEndpointsApi(unittest.TestCase):
         """
         response = self.endpoints_api_instance.list_endpoints_with_http_info(
             BW_ACCOUNT_ID,
-            type=EndpointTypeEnum("webrtc"),
-            status=EndpointStatusEnum("active"),
+            type=EndpointTypeEnum.WEBRTC,
+            status=EndpointStatusEnum.CONNECTED,
             limit=100
         )
 
@@ -171,8 +171,8 @@ class TestEndpointsApi(unittest.TestCase):
         Create Endpoint with Minimal Fields
         """
         endpoint_body = CreateWebRtcConnectionRequest(
-            type=EndpointTypeEnum("webrtc"),
-            direction=EndpointDirectionEnum("outbound")
+            type=EndpointTypeEnum.WEBRTC,
+            direction=EndpointDirectionEnum.OUTBOUND
         )
         response = self.endpoints_api_instance.create_endpoint_with_http_info(
             BW_ACCOUNT_ID,
@@ -188,8 +188,8 @@ class TestEndpointsApi(unittest.TestCase):
         Create SIP Endpoint
         """
         endpoint_body = CreateWebRtcConnectionRequest(
-            type=EndpointTypeEnum("sip"),
-            direction=EndpointDirectionEnum("bidirectional"),
+            type=EndpointTypeEnum.WEBRTC,
+            direction=EndpointDirectionEnum.BIDIRECTIONAL,
             event_callback_url="https://myServer.com/bandwidth/webhooks/sip-endpoint",
             tag="sip-test-endpoint"
         )
