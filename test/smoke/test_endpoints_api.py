@@ -25,8 +25,8 @@ class TestEndpointsApi(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         configuration = Configuration(
-            client_id=BW_CLIENT_ID,
-            client_secret=BW_CLIENT_SECRET
+            username=BW_USERNAME,
+            password=BW_PASSWORD
         )
         api_client = ApiClient(configuration)
         cls.endpoints_api_instance = EndpointsApi(api_client)
