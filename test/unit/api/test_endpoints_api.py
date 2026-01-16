@@ -150,7 +150,7 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.data.data, instance_of(list))
         assert_that(response.data.errors, instance_of(list))
 
-    # Endpoint BXML not ready yet - commented out
+    # TODO: Endpoint BXML not ready yet - commented out
     # def test_update_endpoint_bxml(self) -> None:
     #     """Test case for update_endpoint_bxml
     #
