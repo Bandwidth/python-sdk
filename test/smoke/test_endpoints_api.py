@@ -128,6 +128,7 @@ class TestEndpointsApi(unittest.TestCase):
             self.account_id,
             create_request
         )
+
         endpoint_id = create_response.data.endpoint_id
         self.endpoint_id_array.append(endpoint_id)
 
