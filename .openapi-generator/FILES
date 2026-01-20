@@ -62,6 +62,7 @@ bandwidth/models/create_message_request_error.py
 bandwidth/models/create_multi_channel_message_response.py
 bandwidth/models/create_sync_lookup_response.py
 bandwidth/models/create_sync_lookup_response_data.py
+bandwidth/models/custom_too_many_requests_error.py
 bandwidth/models/deactivation_event_enum.py
 bandwidth/models/disconnect_callback.py
 bandwidth/models/diversion.py
@@ -242,6 +243,7 @@ docs/CreateMessageRequestError.md
 docs/CreateMultiChannelMessageResponse.md
 docs/CreateSyncLookupResponse.md
 docs/CreateSyncLookupResponseData.md
+docs/CustomTooManyRequestsError.md
 docs/DeactivationEventEnum.md
 docs/DisconnectCallback.md
 docs/Diversion.md
