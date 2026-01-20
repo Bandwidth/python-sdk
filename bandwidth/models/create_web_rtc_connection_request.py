@@ -76,6 +76,7 @@ class CreateWebRtcConnectionRequest(BaseModel):
         ])
 
         _dict = self.model_dump(
+            mode='json',
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
@@ -110,5 +111,3 @@ class CreateWebRtcConnectionRequest(BaseModel):
                 _obj.additional_properties[_key] = obj.get(_key)
 
         return _obj
-
-
