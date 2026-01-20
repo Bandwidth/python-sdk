@@ -79,7 +79,6 @@ class Endpoint(BaseModel):
         ])
 
         _dict = self.model_dump(
-            mode='json',
             by_alias=True,
             exclude=excluded_fields,
             exclude_none=True,
