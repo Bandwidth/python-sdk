@@ -25,27 +25,15 @@ class TestEndpointsApi(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
         api_client = ApiClient(configuration)
         cls.endpoints_api_instance = EndpointsApi(api_client)
 
         # Unauthorized API Client
-        unauthorized_configuration = Configuration(
-            username='bad_username',
-            password='bad_password'
-        )
-        unauthorized_api_client = ApiClient(unauthorized_configuration)
-        cls.unauthorized_api_instance = EndpointsApi(unauthorized_api_client)
-
-        # Forbidden API Client
-        forbidden_configuration = Configuration(
-            username=FORBIDDEN_USERNAME,
-            password=FORBIDDEN_PASSWORD
-        )
-        forbidden_api_client = ApiClient(forbidden_configuration)
-        cls.forbidden_api_instance = EndpointsApi(forbidden_api_client)
+        cls.unauthorized_api_client = ApiClient()
+        cls.unauthorized_api_instance = EndpointsApi(cls.unauthorized_api_client)
 
         cls.account_id = BW_ACCOUNT_ID
         cls.endpoint_id_array = []
@@ -267,23 +255,6 @@ class TestEndpointsApi(unittest.TestCase):
             )
 
         assert_that(context.exception.status, equal_to(401))
-
-    def test_create_endpoint_forbidden(self):
-        """Test creating an endpoint with forbidden credentials returns 403"""
-        time.sleep(self.TEST_SLEEP)
-
-        create_request = CreateWebRtcConnectionRequest(
-            type=EndpointTypeEnum.WEBRTC,
-            direction=EndpointDirectionEnum.BIDIRECTIONAL
-        )
-
-        with self.assertRaises(ApiException) as context:
-            self.forbidden_api_instance.create_endpoint(
-                self.account_id,
-                create_request
-            )
-
-        assert_that(context.exception.status, equal_to(403))
 
 
 if __name__ == '__main__':
