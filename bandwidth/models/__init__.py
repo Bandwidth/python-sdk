@@ -57,7 +57,6 @@ from bandwidth.models.create_message_request_error import CreateMessageRequestEr
 from bandwidth.models.create_multi_channel_message_response import CreateMultiChannelMessageResponse
 from bandwidth.models.create_sync_lookup_response import CreateSyncLookupResponse
 from bandwidth.models.create_sync_lookup_response_data import CreateSyncLookupResponseData
-from bandwidth.models.custom_too_many_requests_error import CustomTooManyRequestsError
 from bandwidth.models.deactivation_event_enum import DeactivationEventEnum
 from bandwidth.models.disconnect_callback import DisconnectCallback
 from bandwidth.models.diversion import Diversion

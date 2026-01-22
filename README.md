@@ -200,7 +200,6 @@ Class | Method | HTTP request | Description
  - [CreateMultiChannelMessageResponse](docs/CreateMultiChannelMessageResponse.md)
  - [CreateSyncLookupResponse](docs/CreateSyncLookupResponse.md)
  - [CreateSyncLookupResponseData](docs/CreateSyncLookupResponseData.md)
- - [CustomTooManyRequestsError](docs/CustomTooManyRequestsError.md)
  - [DeactivationEventEnum](docs/DeactivationEventEnum.md)
  - [DisconnectCallback](docs/DisconnectCallback.md)
  - [Diversion](docs/Diversion.md)

@@ -535,7 +535,7 @@ class MessagesApi:
             '404': "MessagingRequestError",
             '405': "MessagingRequestError",
             '415': "MessagingRequestError",
-            '429': "CustomTooManyRequestsError",
+            '429': "MessagingRequestError",
             '500': "MessagingRequestError",
         }
         response_data = self.api_client.call_api(
@@ -718,7 +718,7 @@ class MessagesApi:
             '404': "MessagingRequestError",
             '405': "MessagingRequestError",
             '415': "MessagingRequestError",
-            '429': "CustomTooManyRequestsError",
+            '429': "MessagingRequestError",
             '500': "MessagingRequestError",
         }
         response_data = self.api_client.call_api(
@@ -901,7 +901,7 @@ class MessagesApi:
             '404': "MessagingRequestError",
             '405': "MessagingRequestError",
             '415': "MessagingRequestError",
-            '429': "CustomTooManyRequestsError",
+            '429': "MessagingRequestError",
             '500': "MessagingRequestError",
         }
         response_data = self.api_client.call_api(

@@ -218,7 +218,7 @@ paths:
         '415':
           $ref: '#/components/responses/messagingInvalidMediaTypeError'
         '429':
-          $ref: '#/components/responses/customTooManyRequestsError'
+          $ref: '#/components/responses/listMessagesTooManyRequestsError'
         '500':
           $ref: '#/components/responses/messagingInternalServerError'
     post:
@@ -2954,21 +2954,6 @@ components:
         - direction
         - to
         - from
-    customTooManyRequestsError:
-      title: CustomTooManyRequestsError
-      type: object
-      properties:
-        type:
-          type: string
-          example: rate_limit_exceeded
-        description:
-          type: string
-          example: >-
-            Rate limit exceeded. Wait for Retry-After time before sending
-            another request.
-      required:
-        - type
-        - description
     callbackMethodEnum:
       type: string
       nullable: true
@@ -6775,7 +6760,7 @@ components:
               - type: internal-server-error
                 description: Internal server error. No further information available
                 source: {}
-    customTooManyRequestsError:
+    listMessagesTooManyRequestsError:
       description: Too Many Requests
       headers:
         Retry-After:
@@ -6786,7 +6771,10 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/customTooManyRequestsError'
+            $ref: "#/components/schemas/messagingRequestError"
+          example:
+            type: rate_limit_exceeded
+            description: Rate limit exceeded. Wait for Retry-After time before sending another request.
     createCallResponse:
       description: Created
       headers:
