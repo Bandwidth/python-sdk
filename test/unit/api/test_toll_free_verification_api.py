@@ -36,6 +36,9 @@ from bandwidth.models.contact import Contact
 from bandwidth.models.opt_in_workflow import OptInWorkflow
 from bandwidth.models.verification_request import VerificationRequest
 from bandwidth.models.tfv_submission_wrapper import TfvSubmissionWrapper
+from bandwidth.models.tfv_submission_info import TfvSubmissionInfo
+from bandwidth.models.business_registration_type_enum import BusinessRegistrationTypeEnum
+from bandwidth.models.business_entity_type_enum import BusinessEntityTypeEnum
 
 
 class TestTollFreeVerificationApi(unittest.TestCase):
@@ -90,7 +93,16 @@ class TestTollFreeVerificationApi(unittest.TestCase):
                 confirmation_response='confirmationResponse'
             ),
             'additionalInformation': 'additionalInformation',
-            'isvReseller': 'isvReseller'
+            'isvReseller': 'isvReseller',
+            'privacyPolicyUrl': 'https://example.com',
+            'termsAndConditionsUrl': 'https://example.com',
+            'businessDba': 'businessDba',
+            'businessRegistrationNumber': 'businessRegistrationNumber',
+            'businessRegistrationType': BusinessRegistrationTypeEnum.EIN,
+            'businessEntityType': BusinessEntityTypeEnum.NON_PROFIT,
+            'helpMessageResponse': 'helpMessageResponse',
+            'ageGatedContent': True,
+            'cvToken': 'cvToken'
         }
 
     def test_create_webhook_subscription(self) -> None:
@@ -137,6 +149,10 @@ class TestTollFreeVerificationApi(unittest.TestCase):
         assert_that(response.data.resubmit_allowed, instance_of(bool))
         assert_that(response.data.created_date_time, instance_of(datetime))
         assert_that(response.data.modified_date_time, instance_of(datetime))
+        assert_that(response.data.submission, instance_of(TfvSubmissionInfo))
+        assert_that(response.data.blocked, instance_of(bool))
+        assert_that(response.data.blocked_reason, instance_of(str))
+        assert_that(response.data.cv_token, instance_of(str))
 
     def test_delete_verification_request(self) -> None:
         """Test case for delete_verification_request
