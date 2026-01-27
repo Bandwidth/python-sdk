@@ -58,10 +58,10 @@ class TestMultiChannelChannelListRBMObjectAllOfContent(unittest.TestCase):
                 ]
         ))
         media = MultiChannelChannelListRBMObjectAllOfContent(RbmMessageMedia(
-            media = RbmMessageContentFile(
+            media = [RbmMessageContentFile(
                     file_url = 'https://dev.bandwidth.com/images/bandwidth-logo.png',
                     thumbnail_url = 'https://dev.bandwidth.com/images/bandwidth-logo.png'
-                ),
+                )],
                 suggestions = [
                     MultiChannelAction(
                         RbmActionBase(
