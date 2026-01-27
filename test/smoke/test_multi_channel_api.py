@@ -40,6 +40,17 @@ from bandwidth.models.multi_channel_action import MultiChannelAction
 from bandwidth.models.rbm_action_dial import RbmActionDial
 from bandwidth.models.rbm_action_type_enum import RbmActionTypeEnum
 from bandwidth.models.multi_channel_channel_list_rbm_response_object import MultiChannelChannelListRBMResponseObject
+from bandwidth.models.rbm_message_media import RbmMessageMedia
+from bandwidth.models.rbm_message_content_file import RbmMessageContentFile
+from bandwidth.models.rbm_message_content_rich_card import RbmMessageContentRichCard
+from bandwidth.models.rbm_standalone_card import RbmStandaloneCard
+from bandwidth.models.standalone_card_orientation_enum import StandaloneCardOrientationEnum
+from bandwidth.models.thumbnail_alignment_enum import ThumbnailAlignmentEnum
+from bandwidth.models.rbm_card_content import RbmCardContent
+from bandwidth.models.rbm_card_content_media import RbmCardContentMedia
+from bandwidth.models.rbm_media_height_enum import RbmMediaHeightEnum
+from bandwidth.models.rbm_message_carousel_card import RbmMessageCarouselCard
+from bandwidth.models.card_width_enum import CardWidthEnum
 
 class TestMultiChannelApi(unittest.TestCase):
     """MultiChannelApi unit test stubs"""
@@ -63,21 +74,21 @@ class TestMultiChannelApi(unittest.TestCase):
 
         channel_list_item = MultiChannelChannelListRequestObject(
             MultiChannelChannelListSMSObject(
-                var_from = BW_NUMBER,
-                application_id = BW_MESSAGING_APPLICATION_ID,
-                channel = MultiChannelMessageChannelEnum.SMS,
-                content = SmsMessageContent(
-                    text = 'Hello, this is a test message.',
+                var_from=BW_NUMBER,
+                application_id=BW_MESSAGING_APPLICATION_ID,
+                channel=MultiChannelMessageChannelEnum.SMS,
+                content=SmsMessageContent(
+                    text='Hello, this is a test message.',
                 )
             )
         )
 
         multi_channel_message_request = MultiChannelMessageRequest(
-            to = USER_NUMBER,
-            channel_list = [channel_list_item],
-            tag = 'tag',
-            priority = 'high',
-            expiration = self.expiration.isoformat(),
+            to=USER_NUMBER,
+            channel_list=[channel_list_item],
+            tag='tag',
+            priority='high',
+            expiration=self.expiration.isoformat(),
         )
 
         response = self.multi_channel_api_instance.create_multi_channel_message_with_http_info(
@@ -122,22 +133,22 @@ class TestMultiChannelApi(unittest.TestCase):
 
         channel_list_item = MultiChannelChannelListRequestObject(
             MultiChannelChannelListMMSObject(
-                var_from = BW_NUMBER,
-                application_id = BW_MESSAGING_APPLICATION_ID,
-                channel = MultiChannelMessageChannelEnum.MMS,
-                content = MmsMessageContent(
-                    text = 'Hello, this is a test message.',
-                    media = [MmsMessageContentFile(fileUrl="https://image.com/image.png")]
+                var_from=BW_NUMBER,
+                application_id=BW_MESSAGING_APPLICATION_ID,
+                channel=MultiChannelMessageChannelEnum.MMS,
+                content=MmsMessageContent(
+                    text='Hello, this is a test message.',
+                    media=[MmsMessageContentFile(fileUrl="https://image.com/image.png")]
                 )
             )
         )
 
         multi_channel_message_request = MultiChannelMessageRequest(
-            to = USER_NUMBER,
-            channel_list = [channel_list_item],
-            tag = 'tag',
-            priority = 'high',
-            expiration = self.expiration.isoformat(),
+            to=USER_NUMBER,
+            channel_list=[channel_list_item],
+            tag='tag',
+            priority='high',
+            expiration=self.expiration.isoformat(),
         )
 
         response = self.multi_channel_api_instance.create_multi_channel_message_with_http_info(
@@ -176,20 +187,20 @@ class TestMultiChannelApi(unittest.TestCase):
         # assert_that(mms_object.content.media[0].file_url, equal_to("https://image.com/image.png"))
         # assert_that(mms_object.owner, equal_to(BW_NUMBER))
 
-    def test_create_multi_channel_rbm_message(self) -> None:
+    def test_create_multi_channel_rbm_text_message(self) -> None:
         """Test case for create_multi_channel_message
 
-        Create Multi-Channel Message
+        Create Multi-Channel Text Message
         """
 
         channel_list_item = MultiChannelChannelListRequestObject(
             MultiChannelChannelListRBMObject(
-                var_from = BW_NUMBER,
-                application_id = BW_MESSAGING_APPLICATION_ID,
-                channel = MultiChannelMessageChannelEnum.RBM,
-                content = MultiChannelChannelListRBMObjectAllOfContent(
+                var_from=BW_NUMBER,
+                application_id=BW_MESSAGING_APPLICATION_ID,
+                channel=MultiChannelMessageChannelEnum.RBM,
+                content=MultiChannelChannelListRBMObjectAllOfContent(
                     RbmMessageContentText(
-                        text = 'Hello, this is a test message.',
+                        text='Hello, this is a test message.',
                         suggestions=[
                             MultiChannelAction(RbmActionDial(
                                 type=RbmActionTypeEnum.DIAL_PHONE,
@@ -205,11 +216,11 @@ class TestMultiChannelApi(unittest.TestCase):
         )
 
         multi_channel_message_request = MultiChannelMessageRequest(
-            to = USER_NUMBER,
-            channel_list = [channel_list_item],
-            tag = 'tag',
-            priority = 'high',
-            expiration = self.expiration.isoformat(),
+            to=USER_NUMBER,
+            channel_list=[channel_list_item],
+            tag='tag',
+            priority='high',
+            expiration=self.expiration.isoformat(),
         )
 
         response = self.multi_channel_api_instance.create_multi_channel_message_with_http_info(
@@ -233,30 +244,312 @@ class TestMultiChannelApi(unittest.TestCase):
         assert_that(response.data.data.expiration, instance_of(datetime))
         assert_that(response.data.data.channel_list, instance_of(list))
         assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))     
+        assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListRBMResponseObject))
+        rbm_object = response.data.data.channel_list[0].actual_instance
+        assert_that(rbm_object.var_from, equal_to(BW_NUMBER))
+        assert_that(rbm_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
+        assert_that(rbm_object.channel, equal_to(MultiChannelMessageChannelEnum.RBM))
+        assert_that(rbm_object.owner, equal_to(BW_NUMBER))
+        assert_that(rbm_object.content, is_not(none()))
+        assert_that(rbm_object.content, instance_of(MultiChannelChannelListRBMObjectAllOfContent))
+        assert_that(rbm_object.content.actual_instance, instance_of(RbmMessageContentText))
+        rbm_content = rbm_object.content.actual_instance
+        assert_that(rbm_content.text, equal_to('Hello, this is a test message.'))
+        assert_that(rbm_content.suggestions, is_not(none()))
+        assert_that(rbm_content.suggestions, instance_of(list))
+        assert_that(len(rbm_content.suggestions), equal_to(1))
+        assert_that(rbm_content.suggestions[0], instance_of(MultiChannelAction))
 
         # skip below for now because python doesn't respect discriminator field properly
-
-        # assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListRBMResponseObject))
-        # rbm_object = response.data.data.channel_list[0].actual_instance
-        # assert_that(rbm_object.var_from, equal_to(BW_NUMBER))
-        # assert_that(rbm_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
-        # assert_that(rbm_object.channel, equal_to(MultiChannelMessageChannelEnum.RBM))
-        # assert_that(rbm_object.content, is_not(none()))
-        # assert_that(rbm_object.content, instance_of(MultiChannelChannelListRBMObjectAllOfContent))
-        # assert_that(rbm_object.content.actual_instance, instance_of(RbmMessageContentText))
-        # assert_that(rbm_object.content.actual_instance.text, equal_to('Hello, this is a test message.'))
-        # assert_that(rbm_object.content.actual_instance.suggestions, is_not(none()))
-        # assert_that(rbm_object.content.actual_instance.suggestions, instance_of(list))
-        # assert_that(len(rbm_object.content.actual_instance.suggestions), equal_to(1))
-        # assert_that(rbm_object.content.actual_instance.suggestions[0], instance_of(MultiChannelAction))
-        # action = rbm_object.content.actual_instance.suggestions[0]
+        # action = rbm_content.suggestions[0]
         # assert_that(action.actual_instance, instance_of(RbmActionDial))
         # dial_action = action.actual_instance
         # assert_that(dial_action.type, equal_to(RbmActionTypeEnum.DIAL_PHONE))
         # assert_that(dial_action.text, equal_to("Call Us"))
         # assert_that(dial_action.postback_data, equal_to('U0dWc2JHOGdkMjl5YkdRPQ=='))
         # assert_that(dial_action.phone_number, equal_to(BW_NUMBER))
-        # assert_that(rbm_object.owner, equal_to(BW_NUMBER))
+
+    def test_create_multi_channel_rbm_media_message(self) -> None:
+        """Test case for create_multi_channel_message
+
+        Create Multi-Channel Media Message
+        """
+
+        channel_list_item = MultiChannelChannelListRequestObject(
+            MultiChannelChannelListRBMObject(
+                var_from=BW_NUMBER,
+                application_id=BW_MESSAGING_APPLICATION_ID,
+                channel=MultiChannelMessageChannelEnum.RBM,
+                content=MultiChannelChannelListRBMObjectAllOfContent(
+                    RbmMessageMedia(
+                        media=[RbmMessageContentFile(
+                            file_url="https://image.com/image.png",
+                            thumbnail_url="https://image.com/thumbnail.png",
+                        )],
+                        suggestions=[
+                            MultiChannelAction(RbmActionDial(
+                                type=RbmActionTypeEnum.DIAL_PHONE,
+                                text="Call Us",
+                                postback_data='U0dWc2JHOGdkMjl5YkdRPQ==',
+                                phone_number=BW_NUMBER
+                            ))
+                        ]
+                    )
+                    
+                )
+            )
+        )
+
+        multi_channel_message_request = MultiChannelMessageRequest(
+            to=USER_NUMBER,
+            channel_list=[channel_list_item],
+            tag='tag',
+            priority='high',
+            expiration=self.expiration.isoformat(),
+        )
+
+        response = self.multi_channel_api_instance.create_multi_channel_message_with_http_info(
+            BW_ACCOUNT_ID,
+            multi_channel_message_request
+        )
+
+        assert_that(response.status_code, equal_to(202))
+        assert_that(response.data, is_not(none()))
+        assert_that(response.data, instance_of(CreateMultiChannelMessageResponse))
+        assert_that(response.data.links, is_not(none()))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.data, is_not(none()))
+        assert_that(response.data.data, instance_of(MultiChannelMessageResponseData))
+        assert_that(response.data.data.id, instance_of(str))
+        assert_that(response.data.data.time, instance_of(datetime))
+        assert_that(response.data.data.direction, instance_of(str))
+        assert_that(response.data.data.to, instance_of(list))
+        assert_that(response.data.data.tag, instance_of(str))
+        assert_that(response.data.data.priority, instance_of(PriorityEnum))
+        assert_that(response.data.data.expiration, instance_of(datetime))
+        assert_that(response.data.data.channel_list, instance_of(list))
+        assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))     
+        assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListRBMResponseObject))
+        rbm_object = response.data.data.channel_list[0].actual_instance
+        assert_that(rbm_object.var_from, equal_to(BW_NUMBER))
+        assert_that(rbm_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
+        assert_that(rbm_object.channel, equal_to(MultiChannelMessageChannelEnum.RBM))
+        assert_that(rbm_object.owner, equal_to(BW_NUMBER))
+        assert_that(rbm_object.content, is_not(none()))
+        assert_that(rbm_object.content, instance_of(MultiChannelChannelListRBMObjectAllOfContent))
+        assert_that(rbm_object.content.actual_instance, instance_of(RbmMessageMedia))
+        rbm_content = rbm_object.content.actual_instance
+        assert_that(len(rbm_content.media), equal_to(1))
+        assert_that(rbm_content.media[0].file_url, instance_of(str))
+        assert_that(rbm_content.media[0].thumbnail_url, instance_of(str))
+        assert_that(rbm_content.suggestions, is_not(none()))
+        assert_that(rbm_content.suggestions, instance_of(list))
+        assert_that(len(rbm_content.suggestions), equal_to(1))
+        assert_that(rbm_content.suggestions[0], instance_of(MultiChannelAction))
+
+        # skip below for now because python doesn't respect discriminator field properly
+        # action = rbm_content.suggestions[0]
+        # assert_that(action.actual_instance, instance_of(RbmActionDial))
+        # dial_action = action.actual_instance
+        # assert_that(dial_action.type, equal_to(RbmActionTypeEnum.DIAL_PHONE))
+        # assert_that(dial_action.text, equal_to("Call Us"))
+        # assert_that(dial_action.postback_data, equal_to('U0dWc2JHOGdkMjl5YkdRPQ=='))
+        # assert_that(dial_action.phone_number, equal_to(BW_NUMBER))
+
+    def test_create_multi_channel_rbm_rich_standalone_message(self) -> None:
+        """Test case for create_multi_channel_message
+
+        Create Multi-Channel Standalone Rich Card Message
+        """
+
+        channel_list_item = MultiChannelChannelListRequestObject(
+            MultiChannelChannelListRBMObject(
+                var_from=BW_NUMBER,
+                application_id=BW_MESSAGING_APPLICATION_ID,
+                channel=MultiChannelMessageChannelEnum.RBM,
+                content=MultiChannelChannelListRBMObjectAllOfContent(
+                    RbmMessageContentRichCard(
+                        RbmStandaloneCard(
+                            orientation=StandaloneCardOrientationEnum.HORIZONTAL,
+                            thumbnail_image_alignment=ThumbnailAlignmentEnum.LEFT,
+                            card_content=RbmCardContent(
+                                title="Welcome to our service",
+                                description="We are glad to have you here.",
+                                media=RbmCardContentMedia(
+                                    file_url="https://image.com/image.png",
+                                    thumbnail_url="https://image.com/thumbnail.png",
+                                    height=RbmMediaHeightEnum.TALL
+                                ),
+                                suggestions=[
+                                    MultiChannelAction(RbmActionDial(
+                                        type=RbmActionTypeEnum.DIAL_PHONE,
+                                        text="Call Us",
+                                        postback_data='U0dWc2JHOGdkMjl5YkdRPQ==',
+                                        phone_number=BW_NUMBER
+                                    ))
+                                ]
+                            )
+                        )
+                    )
+                )
+            )
+        )
+
+        multi_channel_message_request = MultiChannelMessageRequest(
+            to=USER_NUMBER,
+            channel_list=[channel_list_item],
+            tag='tag',
+            priority='high',
+            expiration=self.expiration.isoformat(),
+        )
+
+        response = self.multi_channel_api_instance.create_multi_channel_message_with_http_info(
+            BW_ACCOUNT_ID,
+            multi_channel_message_request
+        )
+
+        assert_that(response.status_code, equal_to(202))
+        assert_that(response.data, is_not(none()))
+        assert_that(response.data, instance_of(CreateMultiChannelMessageResponse))
+        assert_that(response.data.links, is_not(none()))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.data, is_not(none()))
+        assert_that(response.data.data, instance_of(MultiChannelMessageResponseData))
+        assert_that(response.data.data.id, instance_of(str))
+        assert_that(response.data.data.time, instance_of(datetime))
+        assert_that(response.data.data.direction, instance_of(str))
+        assert_that(response.data.data.to, instance_of(list))
+        assert_that(response.data.data.tag, instance_of(str))
+        assert_that(response.data.data.priority, instance_of(PriorityEnum))
+        assert_that(response.data.data.expiration, instance_of(datetime))
+        assert_that(response.data.data.channel_list, instance_of(list))
+        assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))     
+        assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListRBMResponseObject))
+        rbm_object = response.data.data.channel_list[0].actual_instance
+        assert_that(rbm_object.var_from, equal_to(BW_NUMBER))
+        assert_that(rbm_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
+        assert_that(rbm_object.channel, equal_to(MultiChannelMessageChannelEnum.RBM))
+        assert_that(rbm_object.owner, equal_to(BW_NUMBER))
+        assert_that(rbm_object.content, is_not(none()))
+        assert_that(rbm_object.content, instance_of(MultiChannelChannelListRBMObjectAllOfContent))
+        assert_that(rbm_object.content.actual_instance.actual_instance, instance_of(RbmStandaloneCard))
+        rbm_content = rbm_object.content.actual_instance.actual_instance
+        assert_that(rbm_content.orientation, equal_to(StandaloneCardOrientationEnum.HORIZONTAL))
+        assert_that(rbm_content.thumbnail_image_alignment, equal_to(ThumbnailAlignmentEnum.LEFT))
+        assert_that(rbm_content.card_content, is_not(none()))
+        assert_that(rbm_content.card_content, instance_of(RbmCardContent))
+        assert_that(rbm_content.card_content.title, equal_to("Welcome to our service"))
+        assert_that(rbm_content.card_content.description, equal_to("We are glad to have you here."))
+        assert_that(rbm_content.card_content.media, is_not(none()))
+        assert_that(rbm_content.card_content.media, instance_of(RbmCardContentMedia))
+        assert_that(rbm_content.card_content.media.file_url, instance_of(str))
+        assert_that(rbm_content.card_content.media.thumbnail_url, instance_of(str))
+        assert_that(rbm_content.card_content.media.height, equal_to(RbmMediaHeightEnum.TALL))
+        assert_that(rbm_content.card_content.suggestions, is_not(none()))
+        assert_that(rbm_content.card_content.suggestions, instance_of(list))
+        assert_that(len(rbm_content.card_content.suggestions), equal_to(1))
+        assert_that(rbm_content.card_content.suggestions[0], instance_of(MultiChannelAction))
+
+    def test_create_multi_channel_rbm_rich_carousel_message(self) -> None:
+        """Test case for create_multi_channel_message
+
+        Create Multi-Channel Carousel Rich Card Message
+        """
+
+        channel_list_item = MultiChannelChannelListRequestObject(
+            MultiChannelChannelListRBMObject(
+                var_from=BW_NUMBER,
+                application_id=BW_MESSAGING_APPLICATION_ID,
+                channel=MultiChannelMessageChannelEnum.RBM,
+                content=MultiChannelChannelListRBMObjectAllOfContent(
+                    RbmMessageContentRichCard(
+                        RbmMessageCarouselCard(
+                            card_width=CardWidthEnum.MEDIUM,
+                            card_contents=[
+                                RbmCardContent(
+                                    title="Card 1 Title",
+                                    description="We are glad to have you here.",
+                                    media=RbmCardContentMedia(
+                                        file_url="https://image.com/image.png",
+                                        thumbnail_url="https://image.com/thumbnail.png",
+                                        height=RbmMediaHeightEnum.TALL
+                                    ),
+                                    suggestions=[
+                                        MultiChannelAction(RbmActionDial(
+                                            type=RbmActionTypeEnum.DIAL_PHONE,
+                                            text="Call Us",
+                                            postback_data='U0dWc2JHOGdkMjl5YkdRPQ==',
+                                            phone_number=BW_NUMBER
+                                        ))
+                                    ]
+                                ),
+                                RbmCardContent(
+                                    title="Card 2 Title"
+                                )
+                            ]
+                        )
+                    )
+                )
+            )
+        )
+
+        multi_channel_message_request = MultiChannelMessageRequest(
+            to=USER_NUMBER,
+            channel_list=[channel_list_item],
+            tag='tag',
+            priority='high',
+            expiration=self.expiration.isoformat(),
+        )
+
+        response = self.multi_channel_api_instance.create_multi_channel_message_with_http_info(
+            BW_ACCOUNT_ID,
+            multi_channel_message_request
+        )
+
+        assert_that(response.status_code, equal_to(202))
+        assert_that(response.data, is_not(none()))
+        assert_that(response.data, instance_of(CreateMultiChannelMessageResponse))
+        assert_that(response.data.links, is_not(none()))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.data, is_not(none()))
+        assert_that(response.data.data, instance_of(MultiChannelMessageResponseData))
+        assert_that(response.data.data.id, instance_of(str))
+        assert_that(response.data.data.time, instance_of(datetime))
+        assert_that(response.data.data.direction, instance_of(str))
+        assert_that(response.data.data.to, instance_of(list))
+        assert_that(response.data.data.tag, instance_of(str))
+        assert_that(response.data.data.priority, instance_of(PriorityEnum))
+        assert_that(response.data.data.expiration, instance_of(datetime))
+        assert_that(response.data.data.channel_list, instance_of(list))
+        assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))     
+        assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListRBMResponseObject))
+        rbm_object = response.data.data.channel_list[0].actual_instance
+        assert_that(rbm_object.var_from, equal_to(BW_NUMBER))
+        assert_that(rbm_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
+        assert_that(rbm_object.channel, equal_to(MultiChannelMessageChannelEnum.RBM))
+        assert_that(rbm_object.owner, equal_to(BW_NUMBER))
+        assert_that(rbm_object.content, is_not(none()))
+        assert_that(rbm_object.content, instance_of(MultiChannelChannelListRBMObjectAllOfContent))
+        assert_that(rbm_object.content.actual_instance.actual_instance, instance_of(RbmMessageCarouselCard))
+        rbm_content = rbm_object.content.actual_instance.actual_instance
+        assert_that(rbm_content.card_width, equal_to(CardWidthEnum.MEDIUM))
+        assert_that(rbm_content.card_contents, is_not(none()))
+        assert_that(rbm_content.card_contents, instance_of(list))
+        assert_that(len(rbm_content.card_contents), equal_to(2))
+        assert_that(rbm_content.card_contents[0], instance_of(RbmCardContent))
+        assert_that(rbm_content.card_contents[0].title, equal_to("Card 1 Title"))
+        assert_that(rbm_content.card_contents[0].description, equal_to("We are glad to have you here."))
+        assert_that(rbm_content.card_contents[0].media, is_not(none()))
+        assert_that(rbm_content.card_contents[0].media, instance_of(RbmCardContentMedia))
+        assert_that(rbm_content.card_contents[0].media.file_url, instance_of(str))
+        assert_that(rbm_content.card_contents[0].media.thumbnail_url, instance_of(str))
+        assert_that(rbm_content.card_contents[0].media.height, equal_to(RbmMediaHeightEnum.TALL))
+        assert_that(rbm_content.card_contents[0].suggestions, is_not(none()))
+        assert_that(rbm_content.card_contents[0].suggestions, instance_of(list))
+        assert_that(len(rbm_content.card_contents[0].suggestions), equal_to(1))
+        assert_that(rbm_content.card_contents[0].suggestions[0], instance_of(MultiChannelAction))
+        assert_that(rbm_content.card_contents[1], instance_of(RbmCardContent))
+        assert_that(rbm_content.card_contents[1].title, equal_to("Card 2 Title"))
 
 if __name__ == '__main__':
     unittest.main()
