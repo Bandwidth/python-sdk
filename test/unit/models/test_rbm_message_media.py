@@ -36,10 +36,10 @@ class TestRbmMessageMedia(unittest.TestCase):
             optional params are included """
         if include_optional:
             return RbmMessageMedia(
-                media = RbmMessageContentFile(
+                media = [RbmMessageContentFile(
                     file_url = 'https://dev.bandwidth.com/images/bandwidth-logo.png',
                     thumbnail_url = 'https://dev.bandwidth.com/images/bandwidth-logo.png'
-                ),
+                )],
                 suggestions = [
                     MultiChannelAction(
                         RbmActionBase(
@@ -64,7 +64,8 @@ class TestRbmMessageMedia(unittest.TestCase):
         assert instance is not None
         assert isinstance(instance, RbmMessageMedia)
         assert instance.media is not None
-        assert isinstance(instance.media, RbmMessageContentFile)
+        assert isinstance(instance.media, list)
+        assert isinstance(instance.media[0], RbmMessageContentFile)
         assert instance.suggestions is not None
         assert isinstance(instance.suggestions, list)
 

@@ -15,7 +15,6 @@
 
 import unittest
 from datetime import datetime
-from uuid import UUID
 
 from bandwidth.models.tfv_status import TfvStatus
 from bandwidth.models.tfv_submission_info import TfvSubmissionInfo
@@ -41,7 +40,7 @@ class TestTfvStatus(unittest.TestCase):
             return TfvStatus(
                 phone_number = '+18005555555',
                 status = 'VERIFIED',
-                internal_ticket_number = UUID('acde070d-8c4c-4f0d-9d8a-162843c10333'),
+                internal_ticket_number = 'acde070d-8c4c-4f0d-9d8a-162843c10333',
                 decline_reason_description = 'Invalid Information - Can\'t Validate URL - Website is not accessible / not available',
                 resubmit_allowed = True,
                 created_date_time = '2021-06-08T06:45:13Z',
@@ -94,7 +93,7 @@ class TestTfvStatus(unittest.TestCase):
         assert isinstance(instance, TfvStatus)
         assert instance.phone_number == '+18005555555'
         assert instance.status == 'VERIFIED'
-        assert instance.internal_ticket_number == UUID('acde070d-8c4c-4f0d-9d8a-162843c10333')
+        assert instance.internal_ticket_number == 'acde070d-8c4c-4f0d-9d8a-162843c10333'
         assert instance.decline_reason_description == 'Invalid Information - Can\'t Validate URL - Website is not accessible / not available'
         assert instance.resubmit_allowed == True
         assert isinstance(instance.created_date_time, datetime)

@@ -57,7 +57,17 @@ class MultiChannelAction(BaseModel):
         "protected_namespaces": (),
     }
 
-    discriminator_value_class_map: Dict[str, str] = {
+    # Discriminator's property name (OpenAPI v3)
+    __openapi_discriminator_name__ = 'type'
+
+    # Discriminator's mapping (OpenAPI v3)
+    __discriminator_value_class_map__ = {
+        'CREATE_CALENDAR_EVENT': 'MultiChannelActionCalendarEvent',
+        'DIAL_PHONE': 'RbmActionDial',
+        'OPEN_URL': 'RbmActionOpenUrl',
+        'REPLY': 'RbmActionBase',
+        'REQUEST_LOCATION': 'RbmActionBase',
+        'SHOW_LOCATION': 'RbmActionViewLocation'
     }
 
     def __init__(self, *args, **kwargs) -> None:
@@ -118,6 +128,20 @@ class MultiChannelAction(BaseModel):
     def from_json(cls, json_str: str) -> Self:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
+
+        # Try to deserialize using the discriminator
+        json_obj = json.loads(json_str)
+        discriminator_value = json_obj.get(cls.__openapi_discriminator_name__)
+        
+        if discriminator_value and discriminator_value in cls.__discriminator_value_class_map__:
+            class_name = cls.__discriminator_value_class_map__[discriminator_value]
+            target_class = globals()[class_name]
+            try:
+                instance.actual_instance = target_class.from_json(json_str)
+                return instance
+            except (ValidationError, ValueError) as e:
+                raise ValueError(f"Failed to deserialize using discriminator '{discriminator_value}' -> {class_name}: {str(e)}")
+
         error_messages = []
         # anyof_schema_1_validator: Optional[RbmActionBase] = None
         try:
