@@ -30,6 +30,8 @@ from bandwidth.models.create_multi_channel_message_response import CreateMultiCh
 from bandwidth.models.multi_channel_message_response_data import MultiChannelMessageResponseData
 from bandwidth.models.priority_enum import PriorityEnum
 from bandwidth.models.multi_channel_channel_list_response_object import MultiChannelChannelListResponseObject
+from bandwidth.models.multi_channel_channel_list_mms_response_object import MultiChannelChannelListMMSResponseObject
+from bandwidth.models.multi_channel_channel_list_sms_response_object import MultiChannelChannelListSMSResponseObject
 from bandwidth.models.multi_channel_channel_list_mms_object import MultiChannelChannelListMMSObject
 from bandwidth.models.mms_message_content import MmsMessageContent
 from bandwidth.models.mms_message_content_file import MmsMessageContentFile
@@ -112,18 +114,15 @@ class TestMultiChannelApi(unittest.TestCase):
         assert_that(response.data.data.expiration, instance_of(datetime))
         assert_that(response.data.data.channel_list, instance_of(list))
         assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))
-
-        # skip below for now because python doesn't respect discriminator field properly
-
-        # assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListSMSResponseObject))
-        # sms_object = response.data.data.channel_list[0].actual_instance
-        # assert_that(sms_object.var_from, equal_to(BW_NUMBER))
-        # assert_that(sms_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
-        # assert_that(sms_object.channel, equal_to(MultiChannelMessageChannelEnum.SMS))
-        # assert_that(sms_object.content, is_not(none()))
-        # assert_that(sms_object.content, instance_of(SmsMessageContent))
-        # assert_that(sms_object.content.text, equal_to('Hello, this is a test message.'))
-        # assert_that(sms_object.owner, equal_to(BW_NUMBER))
+        assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListSMSResponseObject))
+        sms_object = response.data.data.channel_list[0].actual_instance
+        assert_that(sms_object.var_from, equal_to(BW_NUMBER))
+        assert_that(sms_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
+        assert_that(sms_object.channel, equal_to(MultiChannelMessageChannelEnum.SMS))
+        assert_that(sms_object.content, is_not(none()))
+        assert_that(sms_object.content, instance_of(SmsMessageContent))
+        assert_that(sms_object.content.text, equal_to('Hello, this is a test message.'))
+        assert_that(sms_object.owner, equal_to(BW_NUMBER))
 
     def test_create_multi_channel_mms_message(self) -> None:
         """Test case for create_multi_channel_message
@@ -171,21 +170,18 @@ class TestMultiChannelApi(unittest.TestCase):
         assert_that(response.data.data.priority, instance_of(PriorityEnum))
         assert_that(response.data.data.expiration, instance_of(datetime))
         assert_that(response.data.data.channel_list, instance_of(list))
-        assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))
-
-        # skip below for now because python doesn't respect discriminator field properly
-        
-        # assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListMMSResponseObject))
-        # mms_object = response.data.data.channel_list[0].actual_instance
-        # assert_that(mms_object.var_from, equal_to(BW_NUMBER))
-        # assert_that(mms_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
-        # assert_that(mms_object.channel, equal_to(MultiChannelMessageChannelEnum.MMS))
-        # assert_that(mms_object.content, is_not(none()))
-        # assert_that(mms_object.content, instance_of(MmsMessageContent))
-        # assert_that(mms_object.content.text, equal_to('Hello, this is a test message.'))
-        # assert_that(len(mms_object.content.media), equal_to(1))
-        # assert_that(mms_object.content.media[0].file_url, equal_to("https://image.com/image.png"))
-        # assert_that(mms_object.owner, equal_to(BW_NUMBER))
+        assert_that(response.data.data.channel_list[0], instance_of(MultiChannelChannelListResponseObject))        
+        assert_that(response.data.data.channel_list[0].actual_instance, instance_of(MultiChannelChannelListMMSResponseObject))
+        mms_object = response.data.data.channel_list[0].actual_instance
+        assert_that(mms_object.var_from, equal_to(BW_NUMBER))
+        assert_that(mms_object.application_id, equal_to(BW_MESSAGING_APPLICATION_ID))
+        assert_that(mms_object.channel, equal_to(MultiChannelMessageChannelEnum.MMS))
+        assert_that(mms_object.content, is_not(none()))
+        assert_that(mms_object.content, instance_of(MmsMessageContent))
+        assert_that(mms_object.content.text, equal_to('Hello, this is a test message.'))
+        assert_that(len(mms_object.content.media), equal_to(1))
+        assert_that(mms_object.content.media[0].file_url, equal_to("https://image.com/image.png"))
+        assert_that(mms_object.owner, equal_to(BW_NUMBER))
 
     def test_create_multi_channel_rbm_text_message(self) -> None:
         """Test case for create_multi_channel_message
