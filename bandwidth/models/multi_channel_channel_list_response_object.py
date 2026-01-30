@@ -51,10 +51,10 @@ class MultiChannelChannelListResponseObject(BaseModel):
         "protected_namespaces": (),
     }
 
-    # Discriminator's property name (OpenAPI v3) - stored as class variable
+    # Discriminator's property name (OpenAPI v3)
     __openapi_discriminator_name__ = 'channel'
 
-    # Discriminator's mapping (OpenAPI v3) - stored as class variable
+    # Discriminator's mapping (OpenAPI v3)
     __discriminator_value_class_map__ = {
         'MMS': 'MultiChannelChannelListMMSResponseObject',
         'RBM': 'MultiChannelChannelListRBMResponseObject',
@@ -107,8 +107,9 @@ class MultiChannelChannelListResponseObject(BaseModel):
     def from_json(cls, json_str: str) -> Self:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
-        json_obj = json.loads(json_str)
 
+        # Try to deserialize using the discriminator
+        json_obj = json.loads(json_str)
         discriminator_value = json_obj.get(cls.__openapi_discriminator_name__)
         
         if discriminator_value and discriminator_value in cls.__discriminator_value_class_map__:
@@ -119,8 +120,7 @@ class MultiChannelChannelListResponseObject(BaseModel):
                 return instance
             except (ValidationError, ValueError) as e:
                 raise ValueError(f"Failed to deserialize using discriminator '{discriminator_value}' -> {class_name}: {str(e)}")
-        
-        # Fallback: try all schemas if discriminator not found or failed
+
         error_messages = []
         # anyof_schema_1_validator: Optional[MultiChannelChannelListRBMResponseObject] = None
         try:
