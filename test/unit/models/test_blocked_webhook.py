@@ -14,7 +14,6 @@
 
 
 import unittest
-from uuid import UUID
 
 from bandwidth.models.blocked_webhook import BlockedWebhook
 
@@ -39,7 +38,7 @@ class TestBlockedWebhook(unittest.TestCase):
                 account_id = '1234567',
                 phone_number = '+18005555555',
                 status = 'VERIFIED',
-                internal_ticket_number = UUID('acde070d-8c4c-4f0d-9d8a-162843c10333'),
+                internal_ticket_number = 'acde070d-8c4c-4f0d-9d8a-162843c10333',
                 blocked = True,
                 blocked_reason = 'Toll-free number was used to send spam messages'
             )
@@ -55,7 +54,7 @@ class TestBlockedWebhook(unittest.TestCase):
         assert instance.account_id == '1234567'
         assert instance.phone_number == '+18005555555'
         assert instance.status == 'VERIFIED'
-        assert instance.internal_ticket_number == UUID('acde070d-8c4c-4f0d-9d8a-162843c10333')
+        assert instance.internal_ticket_number == 'acde070d-8c4c-4f0d-9d8a-162843c10333'
         assert instance.blocked == True
         assert instance.blocked_reason == 'Toll-free number was used to send spam messages'
 
