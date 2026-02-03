@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **text** | **str** | The text associated with the message. Must be 3270 characters or less | 
 **suggestions** | [**List[MultiChannelAction]**](MultiChannelAction.md) | An array of suggested actions for the recipient. | [optional] 
-**media** | [**RbmMessageContentFile**](RbmMessageContentFile.md) |  | 
+**media** | [**List[RbmMessageContentFile]**](RbmMessageContentFile.md) |  | 
 **orientation** | [**StandaloneCardOrientationEnum**](StandaloneCardOrientationEnum.md) |  | 
 **thumbnail_image_alignment** | [**ThumbnailAlignmentEnum**](ThumbnailAlignmentEnum.md) |  | 
 **card_content** | [**RbmCardContent**](RbmCardContent.md) |  | 

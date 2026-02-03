@@ -30,7 +30,7 @@ class RbmMessageMedia(BaseModel):
     """
     RbmMessageMedia
     """ # noqa: E501
-    media: RbmMessageContentFile
+    media: List[RbmMessageContentFile]
     suggestions: Optional[Annotated[List[MultiChannelAction], Field(max_length=11)]] = Field(default=None, description="An array of suggested actions for the recipient.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["media", "suggestions"]
@@ -76,9 +76,13 @@ class RbmMessageMedia(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of media
+        # override the default output from pydantic by calling `to_dict()` of each item in media (list)
+        _items = []
         if self.media:
-            _dict['media'] = self.media.to_dict()
+            for _item_media in self.media:
+                if _item_media:
+                    _items.append(_item_media.to_dict())
+            _dict['media'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in suggestions (list)
         _items = []
         if self.suggestions:
@@ -103,7 +107,7 @@ class RbmMessageMedia(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "media": RbmMessageContentFile.from_dict(obj["media"]) if obj.get("media") is not None else None,
+            "media": [RbmMessageContentFile.from_dict(_item) for _item in obj["media"]] if obj.get("media") is not None else None,
             "suggestions": [MultiChannelAction.from_dict(_item) for _item in obj["suggestions"]] if obj.get("suggestions") is not None else None
         })
         # store additional fields in additional_properties
