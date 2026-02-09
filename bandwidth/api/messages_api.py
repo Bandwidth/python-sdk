@@ -412,7 +412,7 @@ class MessagesApi:
     ) -> MessagesList:
         """List Messages
 
-        Returns a list of messages based on query parameters.
+        Returns a list of messages based on query parameters.  **Rate Limit:** This endpoint is rate limited to 3500 requests per 5 minutes per Source IP address. Exceeding the limit returns HTTP 429 with a `Retry-After` header. 
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
@@ -533,6 +533,7 @@ class MessagesApi:
             '401': "MessagingRequestError",
             '403': "MessagingRequestError",
             '404': "MessagingRequestError",
+            '405': "MessagingRequestError",
             '415': "MessagingRequestError",
             '429': "MessagingRequestError",
             '500': "MessagingRequestError",
@@ -594,7 +595,7 @@ class MessagesApi:
     ) -> ApiResponse[MessagesList]:
         """List Messages
 
-        Returns a list of messages based on query parameters.
+        Returns a list of messages based on query parameters.  **Rate Limit:** This endpoint is rate limited to 3500 requests per 5 minutes per Source IP address. Exceeding the limit returns HTTP 429 with a `Retry-After` header. 
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
@@ -715,6 +716,7 @@ class MessagesApi:
             '401': "MessagingRequestError",
             '403': "MessagingRequestError",
             '404': "MessagingRequestError",
+            '405': "MessagingRequestError",
             '415': "MessagingRequestError",
             '429': "MessagingRequestError",
             '500': "MessagingRequestError",
@@ -776,7 +778,7 @@ class MessagesApi:
     ) -> RESTResponseType:
         """List Messages
 
-        Returns a list of messages based on query parameters.
+        Returns a list of messages based on query parameters.  **Rate Limit:** This endpoint is rate limited to 3500 requests per 5 minutes per Source IP address. Exceeding the limit returns HTTP 429 with a `Retry-After` header. 
 
         :param account_id: Your Bandwidth Account ID. (required)
         :type account_id: str
@@ -897,6 +899,7 @@ class MessagesApi:
             '401': "MessagingRequestError",
             '403': "MessagingRequestError",
             '404': "MessagingRequestError",
+            '405': "MessagingRequestError",
             '415': "MessagingRequestError",
             '429': "MessagingRequestError",
             '500': "MessagingRequestError",
