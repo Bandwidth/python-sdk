@@ -8,7 +8,7 @@ Bandwidth's StartStream BXML verb
 from typing import List
 
 from ..nestable_verb import NestableVerb
-from ..verbs.stream_param import StreamParam
+from .stream_param import StreamParam
 
 
 class StartStream(NestableVerb):

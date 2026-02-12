@@ -5,16 +5,16 @@ Bandwidth's Connect BXML verb
 
 @copyright Bandwidth INC
 """
-from typing import Union
+from typing import List
 
 from ..nestable_verb import NestableVerb
-from ..verbs.endpoint import Endpoint
+from .endpoint import Endpoint
 
 
 class Connect(NestableVerb):
 
     def __init__(
-        self, destination: Union[Endpoint, None] = None,
+        self, destination: List[Endpoint] = [],
         event_callback_url: str = None
     ):
         """Initialize a <Connect> verb
@@ -26,13 +26,9 @@ class Connect(NestableVerb):
         self.destination = destination
         self.event_callback_url = event_callback_url
 
-        nested_verbs = []
-        if destination is not None:
-            nested_verbs.append(destination)
-
         super().__init__(
             tag="Connect",
-            nested_verbs=nested_verbs
+            nested_verbs=destination
         )
 
     @property

@@ -8,8 +8,8 @@ Bandwidth's Transfer BXML verb
 from typing import Union, List
 
 from ..nestable_verb import NestableVerb
-from ..verbs.phone_number import PhoneNumber
-from ..verbs.sip_uri import SipUri
+from .phone_number import PhoneNumber
+from .sip_uri import SipUri
 
 
 class Transfer(NestableVerb):
