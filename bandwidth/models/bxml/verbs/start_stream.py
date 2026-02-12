@@ -34,10 +34,9 @@ class StartStream(NestableVerb):
             stream_event_method (str, optional): The HTTP method to use for the request to streamEventUrl. GET or POST. Default value is POST.
             username (str, optional): The username to send in the HTTP request to streamEventUrl. If specified, the URLs must be TLS-encrypted (i.e., https).
             password (str, optional): The password to send in the HTTP request to streamEventUrl. If specified, the URLs must be TLS-encrypted (i.e., https).
-        
-        Nested Verbs:
-            StreamParam: (optional) You may specify up to 12 <StreamParam/> elements nested within a <StartStream> tag. These elements define optional user specified parameters that will be sent to the destination URL when the stream is first started.       
 
+        Nested Verbs:
+            StreamParam: (optional) You may specify up to 12 <StreamParam/> elements nested within a <StartStream> tag. These elements define optional user specified parameters that will be sent to the destination URL when the stream is first started.
         """
         self.destination = destination
         self.destination_username = destination_username

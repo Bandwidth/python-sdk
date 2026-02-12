@@ -20,8 +20,8 @@ class Connect(NestableVerb):
         """Initialize a <Connect> verb
 
         Args:
-            destination (Endpoint, optional): The endpoint destination to connect to. Defaults to None.
-            event_callback_url (str, optional): URL to send events to for this Connect verb. Defaults to None.
+            destination (list[Endpoint], optional): An Endpoint ID to connect the call to.
+            event_callback_url (str, optional): URL to send events to during the connection lifecycle. May be a relative URL. Defaults to None.
         """
         self.destination = destination
         self.event_callback_url = event_callback_url
