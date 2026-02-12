@@ -15,13 +15,13 @@ from ..nestable_verb import NestableVerb
 class SpeakSentence(NestableVerb):
 
     def __init__(
-        self, text: str, voice: str=None, 
+        self, text: str, voice: str=None,
         gender: str=None, locale: str=None
     ):
         """Initialize a <SpeakSentence> verb
 
         Args:
-            text (str): The text to speak. Cannot be blank. Can be a mixture of plain text and SSML tags. 
+            text (str): The text to speak. Cannot be blank. Can be a mixture of plain text and SSML tags.
                 You can find a list of supported SSML tags here: https://dev.bandwidth.com/docs/voice/bxml/speakSentence/#supported-ssml-tags
             voice (str, optional): Selects the voice of the speaker. Consult the voice column in the below table for valid values.
                 If the voice attribute is present, gender and locale are ignored. You can find a list of supported voices here: https://dev.bandwidth.com/docs/voice/bxml/speakSentence/#supported-voices

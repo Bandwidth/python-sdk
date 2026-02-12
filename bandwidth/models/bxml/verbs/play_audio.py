@@ -11,7 +11,7 @@ from ..verb import Verb
 class PlayAudio(Verb):
 
     def __init__(
-        self, audio_uri: str, 
+        self, audio_uri: str,
         username: str=None, password: str=None
     ):
         """Initialize a <PlayAudio> verb

@@ -8,10 +8,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **time** | **datetime** |  | 
 **type** | [**InboundCallbackTypeEnum**](InboundCallbackTypeEnum.md) |  | 
-**to** | **str** | The destination phone number the message was sent to.  For inbound callbacks, this is the Bandwidth number or alphanumeric identifier that received the message.  | 
+**to** | **str** | The destination phone number the message was sent to. For inbound callbacks, this is the Bandwidth number or alphanumeric identifier that received the message.  | 
 **description** | **str** | A detailed description of the event described by the callback. | 
 **message** | [**InboundCallbackMessage**](InboundCallbackMessage.md) |  | 
-**carrier_name** | **str** | The name of the Authorized Message Provider (AMP) that handled this message.  In the US, this is the carrier that the message was sent to. This field is present only when this account feature has been enabled. | [optional] 
+**carrier_name** | **str** | The name of the Authorized Message Provider (AMP) that handled this message. In the US, this is the carrier that the message was sent to. This field is present only when this account feature has been enabled. | [optional] 
 
 ## Example
 
