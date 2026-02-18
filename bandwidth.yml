@@ -7018,18 +7018,6 @@ components:
         - links
         - data
         - errors
-    cvToken:
-      type: string
-      description: >-
-        The token provided by Campaign Verify to validate your political use
-        case. Only required for 527 political organizations. If you are not a
-        527 political organization, this field should be omitted. Supplying an
-        empty string will likely result in rejection.
-      minLength: 0
-      maxLength: 500
-      nullable: true
-      example: >-
-        cv.user123|sess456|mno|tfree|read_write|X7yZ9aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVw
   responses:
     createMessageResponse:
       description: Accepted
