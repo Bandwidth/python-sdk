@@ -17,7 +17,7 @@ import unittest
 from datetime import datetime
 
 from bandwidth.models.create_endpoint_response import CreateEndpointResponse
-from bandwidth.models.create_endpoint_response_object import CreateEndpointResponseObject
+from bandwidth.models.create_endpoint_response_data import CreateEndpointResponseData
 from bandwidth.models.link import Link
 from bandwidth.models.error import Error
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
@@ -41,7 +41,7 @@ class TestCreateEndpointResponse(unittest.TestCase):
             links=[
                 Link(href='https://api.bandwidth.com/endpoint-123', rel='self')
             ],
-            data=CreateEndpointResponseObject(
+            data=CreateEndpointResponseData(
                 endpoint_id='endpoint-123',
                 type=EndpointTypeEnum.WEBRTC,
                 status=EndpointStatusEnum.CONNECTED,
@@ -60,7 +60,7 @@ class TestCreateEndpointResponse(unittest.TestCase):
         assert isinstance(instance.links, list)
         assert len(instance.links) == 1
         assert isinstance(instance.links[0], Link)
-        assert isinstance(instance.data, CreateEndpointResponseObject)
+        assert isinstance(instance.data, CreateEndpointResponseData)
         assert instance.data.endpoint_id == 'endpoint-123'
         assert instance.data.token == 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.token'
         assert isinstance(instance.errors, list)
