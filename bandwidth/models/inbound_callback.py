@@ -32,10 +32,10 @@ class InboundCallback(BaseModel):
     """ # noqa: E501
     time: datetime
     type: InboundCallbackTypeEnum
-    to: StrictStr = Field(description="The destination phone number the message was sent to.  For inbound callbacks, this is the Bandwidth number or alphanumeric identifier that received the message. ")
+    to: StrictStr = Field(description="The destination phone number the message was sent to. For inbound callbacks, this is the Bandwidth number or alphanumeric identifier that received the message. ")
     description: StrictStr = Field(description="A detailed description of the event described by the callback.")
     message: InboundCallbackMessage
-    carrier_name: Optional[StrictStr] = Field(default=None, description="The name of the Authorized Message Provider (AMP) that handled this message.  In the US, this is the carrier that the message was sent to. This field is present only when this account feature has been enabled.", alias="carrierName")
+    carrier_name: Optional[StrictStr] = Field(default=None, description="The name of the Authorized Message Provider (AMP) that handled this message. In the US, this is the carrier that the message was sent to. This field is present only when this account feature has been enabled.", alias="carrierName")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["time", "type", "to", "description", "message", "carrierName"]
 
