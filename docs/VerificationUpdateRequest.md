@@ -22,7 +22,7 @@ Name | Type | Description | Notes
 **business_entity_type** | [**BusinessEntityTypeEnum**](BusinessEntityTypeEnum.md) |  | [optional] 
 **help_message_response** | **str** | A message that gets sent to users requesting help. | [optional] 
 **age_gated_content** | **bool** | Indicates whether the content is age-gated. | [optional] 
-**cv_token** | **str** | The token provided by Campaign Verify to validate your political use case. Only required for 527 political organizations. If you are not a 527 political organization, this field should be omitted. If you pass an empty string, it will be passed along and potentially rejected. | [optional] 
+**cv_token** | **str** | The token provided by Campaign Verify to validate your political use case. Only required for 527 political organizations. If you are not a 527 political organization, this field should be omitted. Supplying an empty string will likely result in rejection. | [optional] 
 
 ## Example
 

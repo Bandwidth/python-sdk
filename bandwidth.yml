@@ -1485,7 +1485,7 @@ paths:
         $ref: '#/components/requestBodies/updateTollFreeVerificationRequestRequest'
       responses:
         '202':
-          description: Accepted
+          $ref: '#/components/responses/verifyPutResponse'
         '400':
           $ref: '#/components/responses/tfvPostBadRequestResponse'
         '401':
@@ -6125,7 +6125,7 @@ components:
         ageGatedContent:
           $ref: '#/components/schemas/ageGatedContent'
         cvToken:
-          $ref: '#/components/schemas/cvToken'
+          $ref: '#/components/schemas/cvTokenNullable'
     verificationUpdateRequest:
       type: object
       required:
@@ -6176,7 +6176,7 @@ components:
         ageGatedContent:
           $ref: '#/components/schemas/ageGatedContent'
         cvToken:
-          $ref: '#/components/schemas/cvToken'
+          $ref: '#/components/schemas/cvTokenNullable'
     tfvBasicAuthentication:
       type: object
       properties:
@@ -6629,7 +6629,7 @@ components:
         blockedReason:
           $ref: '#/components/schemas/blockedReason'
         cvToken:
-          $ref: '#/components/schemas/cvToken'
+          $ref: '#/components/schemas/cvTokenNullable'
     tfvSubmissionInfo:
       type: object
       properties:
@@ -6996,8 +6996,8 @@ components:
       description: >-
         The token provided by Campaign Verify to validate your political use
         case. Only required for 527 political organizations. If you are not a
-        527 political organization, this field should be omitted. If you pass an
-        empty string, it will be passed along and potentially rejected.
+        527 political organization, this field should be omitted. Supplying an
+        empty string will likely result in rejection.
       minLength: 0
       maxLength: 500
       nullable: true
@@ -7671,6 +7671,8 @@ components:
           example:
             description: Service Unavailable Error.
             type: Service Unavailable
+    verifyPutResponse:
+      description: Accepted
     listEndpointsResponse:
       description: OK
       content:
