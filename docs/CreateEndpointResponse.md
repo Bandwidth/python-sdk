@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **links** | [**List[Link]**](Link.md) |  | 
-**data** | [**CreateEndpointResponseObject**](CreateEndpointResponseObject.md) |  | 
+**data** | [**CreateEndpointResponseData**](CreateEndpointResponseData.md) |  | 
 **errors** | [**List[Error]**](Error.md) |  | 
 
 ## Example

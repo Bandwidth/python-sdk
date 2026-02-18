@@ -61,7 +61,7 @@ bandwidth/models/create_call.py
 bandwidth/models/create_call_response.py
 bandwidth/models/create_endpoint_request_base.py
 bandwidth/models/create_endpoint_response.py
-bandwidth/models/create_endpoint_response_object.py
+bandwidth/models/create_endpoint_response_data.py
 bandwidth/models/create_message_request_error.py
 bandwidth/models/create_multi_channel_message_response.py
 bandwidth/models/create_sync_lookup_response.py
@@ -260,7 +260,7 @@ docs/CreateCall.md
 docs/CreateCallResponse.md
 docs/CreateEndpointRequestBase.md
 docs/CreateEndpointResponse.md
-docs/CreateEndpointResponseObject.md
+docs/CreateEndpointResponseData.md
 docs/CreateMessageRequestError.md
 docs/CreateMultiChannelMessageResponse.md
 docs/CreateSyncLookupResponse.md

@@ -23,15 +23,14 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from bandwidth.models.device import Device
-from bandwidth.models.endpoint_event_type_enum import EndpointEventTypeEnum
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
-class EndpointEvent(BaseModel):
+class CreateEndpointResponseData(BaseModel):
     """
-    An event that occurred on an endpoint.
+    CreateEndpointResponseData
     """ # noqa: E501
     endpoint_id: StrictStr = Field(description="The unique ID of the endpoint.", alias="endpointId")
     type: EndpointTypeEnum
@@ -39,11 +38,10 @@ class EndpointEvent(BaseModel):
     creation_timestamp: datetime = Field(description="The time the endpoint was created. In ISO-8601 format.", alias="creationTimestamp")
     expiration_timestamp: datetime = Field(description="The time the endpoint token will expire. In ISO-8601 format. Tokens last 24 hours.", alias="expirationTimestamp")
     tag: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="A tag for the endpoint.")
-    event_time: datetime = Field(description="The time the event occurred. In ISO-8601 format.", alias="eventTime")
-    event_type: EndpointEventTypeEnum = Field(alias="eventType")
-    device: Optional[Device] = None
+    devices: Optional[List[Device]] = None
+    token: StrictStr = Field(description="The json web token specific to the endpoint. Used to authenticate the client with the media gateway.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["endpointId", "type", "status", "creationTimestamp", "expirationTimestamp", "tag", "eventTime", "eventType", "device"]
+    __properties: ClassVar[List[str]] = ["endpointId", "type", "status", "creationTimestamp", "expirationTimestamp", "tag", "devices", "token"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -63,7 +61,7 @@ class EndpointEvent(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of EndpointEvent from a JSON string"""
+        """Create an instance of CreateEndpointResponseData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,9 +84,13 @@ class EndpointEvent(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of device
-        if self.device:
-            _dict['device'] = self.device.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in devices (list)
+        _items = []
+        if self.devices:
+            for _item_devices in self.devices:
+                if _item_devices:
+                    _items.append(_item_devices.to_dict())
+            _dict['devices'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -98,7 +100,7 @@ class EndpointEvent(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of EndpointEvent from a dict"""
+        """Create an instance of CreateEndpointResponseData from a dict"""
         if obj is None:
             return None
 
@@ -112,9 +114,8 @@ class EndpointEvent(BaseModel):
             "creationTimestamp": obj.get("creationTimestamp"),
             "expirationTimestamp": obj.get("expirationTimestamp"),
             "tag": obj.get("tag"),
-            "eventTime": obj.get("eventTime"),
-            "eventType": obj.get("eventType"),
-            "device": Device.from_dict(obj["device"]) if obj.get("device") is not None else None
+            "devices": [Device.from_dict(_item) for _item in obj["devices"]] if obj.get("devices") is not None else None,
+            "token": obj.get("token")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

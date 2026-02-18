@@ -1699,7 +1699,7 @@ paths:
       description: Returns a list of endpoints associated with the specified account.
       operationId: listEndpoints
       parameters:
-        - $ref: '#/components/parameters/accountId2'
+        - $ref: '#/components/parameters/accountId'
         - $ref: '#/components/parameters/endpointType'
         - $ref: '#/components/parameters/endpointStatus'
         - $ref: '#/components/parameters/afterCursor'
@@ -1723,6 +1723,9 @@ paths:
           $ref: '#/components/responses/tooManyRequestsErrorResponse'
         '500':
           $ref: '#/components/responses/serviceUnavailableErrorResponse'
+      x-badges:
+        - name: Beta
+          color: '#076EA8'
     post:
       tags:
         - Endpoints
@@ -1730,7 +1733,7 @@ paths:
       description: Creates a new Endpoint for the specified account.
       operationId: createEndpoint
       parameters:
-        - $ref: '#/components/parameters/accountId2'
+        - $ref: '#/components/parameters/accountId'
       requestBody:
         $ref: '#/components/requestBodies/createEndpointRequest'
       responses:
@@ -1755,6 +1758,9 @@ paths:
       callbacks:
         endpointEventCallback:
           $ref: '#/components/callbacks/endpointEvent'
+      x-badges:
+        - name: Beta
+          color: '#076EA8'
     servers: &ref_5
       - url: https://api.bandwidth.com/v2
         description: Production
@@ -1766,7 +1772,7 @@ paths:
       description: Returns information about the specified endpoint.
       operationId: getEndpoint
       parameters:
-        - $ref: '#/components/parameters/accountId2'
+        - $ref: '#/components/parameters/accountId'
         - $ref: '#/components/parameters/endpointId'
       responses:
         '200':
@@ -1787,6 +1793,9 @@ paths:
           $ref: '#/components/responses/tooManyRequestsErrorResponse'
         '500':
           $ref: '#/components/responses/serviceUnavailableErrorResponse'
+      x-badges:
+        - name: Beta
+          color: '#076EA8'
     delete:
       tags:
         - Endpoints
@@ -1796,7 +1805,7 @@ paths:
         media, the media stream will be terminated.
       operationId: deleteEndpoint
       parameters:
-        - $ref: '#/components/parameters/accountId2'
+        - $ref: '#/components/parameters/accountId'
         - $ref: '#/components/parameters/endpointId'
       responses:
         '204':
@@ -1817,6 +1826,9 @@ paths:
           $ref: '#/components/responses/tooManyRequestsErrorResponse'
         '500':
           $ref: '#/components/responses/serviceUnavailableErrorResponse'
+      x-badges:
+        - name: Beta
+          color: '#076EA8'
     servers: *ref_5
   /accounts/{accountId}/endpoints/{endpointId}/bxml:
     put:
@@ -1826,7 +1838,7 @@ paths:
       description: Updates the BXML for the specified endpoint.
       operationId: updateEndpointBxml
       parameters:
-        - $ref: '#/components/parameters/accountId2'
+        - $ref: '#/components/parameters/accountId'
         - $ref: '#/components/parameters/endpointId'
       requestBody:
         $ref: '#/components/requestBodies/updateEndpointBxmlRequest'
@@ -1849,6 +1861,9 @@ paths:
           $ref: '#/components/responses/tooManyRequestsErrorResponse'
         '500':
           $ref: '#/components/responses/serviceUnavailableErrorResponse'
+      x-badges:
+        - name: Beta
+          color: '#076EA8'
     servers: *ref_5
 components:
   schemas:
@@ -6694,6 +6709,18 @@ components:
       nullable: true
       pattern: ^[ -~]{16,64}$
       type: string
+    cvTokenNullable:
+      type: string
+      description: >-
+        The token provided by Campaign Verify to validate your political use
+        case. Only required for 527 political organizations. If you are not a
+        527 political organization, this field should be omitted. Supplying an
+        empty string will likely result in rejection.
+      minLength: 0
+      maxLength: 500
+      nullable: true
+      example: >-
+        cv.user123|sess456|mno|tfree|read_write|X7yZ9aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVw
     endpointId:
       type: string
       description: The unique ID of the endpoint.
@@ -6860,7 +6887,7 @@ components:
         propertyName: type
         mapping:
           WEBRTC: '#/components/schemas/createWebRtcConnectionRequest'
-    createEndpointResponseObject:
+    createEndpointResponseData:
       allOf:
         - $ref: '#/components/schemas/endpoint'
         - type: object
@@ -6963,7 +6990,7 @@ components:
           items:
             $ref: '#/components/schemas/link'
         data:
-          $ref: '#/components/schemas/createEndpointResponseObject'
+          $ref: '#/components/schemas/createEndpointResponseData'
         errors:
           type: array
           items:
@@ -8271,14 +8298,6 @@ components:
         type: string
       description: Webhook subscription ID
       example: 7bt57JcsVYJrN9K1OcV1Nu
-    accountId2:
-      name: accountId
-      in: path
-      required: true
-      schema:
-        type: string
-        example: '5500123'
-      description: Your Bandwidth Account ID.
     endpointId:
       name: endpointId
       in: path

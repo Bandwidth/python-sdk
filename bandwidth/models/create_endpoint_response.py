@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from bandwidth.models.create_endpoint_response_object import CreateEndpointResponseObject
+from bandwidth.models.create_endpoint_response_data import CreateEndpointResponseData
 from bandwidth.models.error import Error
 from bandwidth.models.link import Link
 from typing import Optional, Set
@@ -31,7 +31,7 @@ class CreateEndpointResponse(BaseModel):
     CreateEndpointResponse
     """ # noqa: E501
     links: List[Link]
-    data: CreateEndpointResponseObject
+    data: CreateEndpointResponseData
     errors: List[Error]
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["links", "data", "errors"]
@@ -112,7 +112,7 @@ class CreateEndpointResponse(BaseModel):
 
         _obj = cls.model_validate({
             "links": [Link.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
-            "data": CreateEndpointResponseObject.from_dict(obj["data"]) if obj.get("data") is not None else None,
+            "data": CreateEndpointResponseData.from_dict(obj["data"]) if obj.get("data") is not None else None,
             "errors": [Error.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
         })
         # store additional fields in additional_properties

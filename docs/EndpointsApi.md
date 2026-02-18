@@ -57,7 +57,7 @@ configuration = bandwidth.Configuration(
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.EndpointsApi(api_client)
-    account_id = '5500123' # str | Your Bandwidth Account ID.
+    account_id = '9900000' # str | Your Bandwidth Account ID.
     body = bandwidth.CreateWebRtcConnectionRequest() # CreateWebRtcConnectionRequest | 
 
     try:
@@ -152,7 +152,7 @@ configuration = bandwidth.Configuration(
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.EndpointsApi(api_client)
-    account_id = '5500123' # str | Your Bandwidth Account ID.
+    account_id = '9900000' # str | Your Bandwidth Account ID.
     endpoint_id = 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | BRTC Endpoint ID.
 
     try:
@@ -246,7 +246,7 @@ configuration = bandwidth.Configuration(
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.EndpointsApi(api_client)
-    account_id = '5500123' # str | Your Bandwidth Account ID.
+    account_id = '9900000' # str | Your Bandwidth Account ID.
     endpoint_id = 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | BRTC Endpoint ID.
 
     try:
@@ -344,7 +344,7 @@ configuration = bandwidth.Configuration(
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.EndpointsApi(api_client)
-    account_id = '5500123' # str | Your Bandwidth Account ID.
+    account_id = '9900000' # str | Your Bandwidth Account ID.
     type = bandwidth.EndpointTypeEnum() # EndpointTypeEnum | The type of endpoint. (optional)
     status = bandwidth.EndpointStatusEnum() # EndpointStatusEnum | The status of the endpoint. (optional)
     after_cursor = 'TWF5IHRoZSBmb3JjZSBiZSB3aXRoIHlvdQ==' # str | The cursor to use for pagination. This is the value of the `next` link in the previous response. (optional)
@@ -445,7 +445,7 @@ configuration = bandwidth.Configuration(
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.EndpointsApi(api_client)
-    account_id = '5500123' # str | Your Bandwidth Account ID.
+    account_id = '9900000' # str | Your Bandwidth Account ID.
     endpoint_id = 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85' # str | BRTC Endpoint ID.
     body = 'body_example' # str | 
 

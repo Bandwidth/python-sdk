@@ -203,7 +203,7 @@ Class | Method | HTTP request | Description
  - [CreateCallResponse](docs/CreateCallResponse.md)
  - [CreateEndpointRequestBase](docs/CreateEndpointRequestBase.md)
  - [CreateEndpointResponse](docs/CreateEndpointResponse.md)
- - [CreateEndpointResponseObject](docs/CreateEndpointResponseObject.md)
+ - [CreateEndpointResponseData](docs/CreateEndpointResponseData.md)
  - [CreateMessageRequestError](docs/CreateMessageRequestError.md)
  - [CreateMultiChannelMessageResponse](docs/CreateMultiChannelMessageResponse.md)
  - [CreateSyncLookupResponse](docs/CreateSyncLookupResponse.md)

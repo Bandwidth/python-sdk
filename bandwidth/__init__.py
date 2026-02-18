@@ -81,7 +81,7 @@ __all__ = [
     "CreateCallResponse",
     "CreateEndpointRequestBase",
     "CreateEndpointResponse",
-    "CreateEndpointResponseObject",
+    "CreateEndpointResponseData",
     "CreateMessageRequestError",
     "CreateMultiChannelMessageResponse",
     "CreateSyncLookupResponse",
@@ -304,7 +304,7 @@ from bandwidth.models.create_call import CreateCall as CreateCall
 from bandwidth.models.create_call_response import CreateCallResponse as CreateCallResponse
 from bandwidth.models.create_endpoint_request_base import CreateEndpointRequestBase as CreateEndpointRequestBase
 from bandwidth.models.create_endpoint_response import CreateEndpointResponse as CreateEndpointResponse
-from bandwidth.models.create_endpoint_response_object import CreateEndpointResponseObject as CreateEndpointResponseObject
+from bandwidth.models.create_endpoint_response_data import CreateEndpointResponseData as CreateEndpointResponseData
 from bandwidth.models.create_message_request_error import CreateMessageRequestError as CreateMessageRequestError
 from bandwidth.models.create_multi_channel_message_response import CreateMultiChannelMessageResponse as CreateMultiChannelMessageResponse
 from bandwidth.models.create_sync_lookup_response import CreateSyncLookupResponse as CreateSyncLookupResponse
