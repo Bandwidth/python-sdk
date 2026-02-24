@@ -69,6 +69,7 @@ class TestVerificationRequest(unittest.TestCase):
                 business_dba = 'Bandwidth Inc.',
                 business_registration_number = '12-3456789',
                 business_registration_type = 'EIN',
+                business_registration_issuing_country = 'USA',
                 business_entity_type = 'SOLE_PROPRIETOR',
                 help_message_response = 'Please contact support for assistance.',
                 age_gated_content = False,
@@ -142,6 +143,7 @@ class TestVerificationRequest(unittest.TestCase):
         assert instance.business_dba == 'Bandwidth Inc.'
         assert instance.business_registration_number == '12-3456789'
         assert instance.business_registration_type == 'EIN'
+        assert instance.business_registration_issuing_country == 'USA'
         assert instance.business_entity_type == 'SOLE_PROPRIETOR'
         assert instance.help_message_response == 'Please contact support for assistance.'
         assert instance.age_gated_content == False

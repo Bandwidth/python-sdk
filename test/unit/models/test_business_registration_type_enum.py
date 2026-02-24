@@ -30,6 +30,22 @@ class TestBusinessRegistrationTypeEnum(unittest.TestCase):
         """Test BusinessRegistrationTypeEnum"""
         assert BusinessRegistrationTypeEnum('EIN') == 'EIN'
         assert BusinessRegistrationTypeEnum('CBN') == 'CBN'
+        assert BusinessRegistrationTypeEnum('NEQ') == 'NEQ'
+        assert BusinessRegistrationTypeEnum('PROVINCIAL_NUMBER') == 'PROVINCIAL_NUMBER'
+        assert BusinessRegistrationTypeEnum('CRN') == 'CRN'
+        assert BusinessRegistrationTypeEnum('VAT') == 'VAT'
+        assert BusinessRegistrationTypeEnum('ACN') == 'ACN'
+        assert BusinessRegistrationTypeEnum('ABN') == 'ABN'
+        assert BusinessRegistrationTypeEnum('BRN') == 'BRN'
+        assert BusinessRegistrationTypeEnum('SIREN') == 'SIREN'
+        assert BusinessRegistrationTypeEnum('SIRET') == 'SIRET'
+        assert BusinessRegistrationTypeEnum('NZBN') == 'NZBN'
+        assert BusinessRegistrationTypeEnum('UST_IDNR') == 'UST_IDNR'
+        assert BusinessRegistrationTypeEnum('CIF') == 'CIF'
+        assert BusinessRegistrationTypeEnum('NIF') == 'NIF'
+        assert BusinessRegistrationTypeEnum('CNPJ') == 'CNPJ'
+        assert BusinessRegistrationTypeEnum('UID') == 'UID'
+        assert BusinessRegistrationTypeEnum('OTHER') == 'OTHER'
 
 
 
