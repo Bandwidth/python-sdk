@@ -1,6 +1,6 @@
 # BusinessEntityTypeEnum
 
-The type of registered business. If no option is applicable, please provide \"SOLE_PROPRIETOR\" as a value. Optional until early 2026; required if `businessRegistrationNumber` is provided. Available starting October 1st, 2025.
+The type of registered business. If no option is applicable, please provide \"SOLE_PROPRIETOR\" as a value.
 
 ## Enum
 

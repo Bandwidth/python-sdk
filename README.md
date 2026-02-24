@@ -166,6 +166,7 @@ Class | Method | HTTP request | Description
  - [BridgeCompleteCallback](docs/BridgeCompleteCallback.md)
  - [BridgeTargetCompleteCallback](docs/BridgeTargetCompleteCallback.md)
  - [BusinessEntityTypeEnum](docs/BusinessEntityTypeEnum.md)
+ - [BusinessRegistrationIssuingCountryEnum](docs/BusinessRegistrationIssuingCountryEnum.md)
  - [BusinessRegistrationTypeEnum](docs/BusinessRegistrationTypeEnum.md)
  - [CallDirectionEnum](docs/CallDirectionEnum.md)
  - [CallRecordingMetadata](docs/CallRecordingMetadata.md)

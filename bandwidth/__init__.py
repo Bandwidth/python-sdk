@@ -48,6 +48,7 @@ __all__ = [
     "BridgeCompleteCallback",
     "BridgeTargetCompleteCallback",
     "BusinessEntityTypeEnum",
+    "BusinessRegistrationIssuingCountryEnum",
     "BusinessRegistrationTypeEnum",
     "CallDirectionEnum",
     "CallRecordingMetadata",
@@ -251,6 +252,7 @@ from bandwidth.models.blocked_webhook import BlockedWebhook as BlockedWebhook
 from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback as BridgeCompleteCallback
 from bandwidth.models.bridge_target_complete_callback import BridgeTargetCompleteCallback as BridgeTargetCompleteCallback
 from bandwidth.models.business_entity_type_enum import BusinessEntityTypeEnum as BusinessEntityTypeEnum
+from bandwidth.models.business_registration_issuing_country_enum import BusinessRegistrationIssuingCountryEnum as BusinessRegistrationIssuingCountryEnum
 from bandwidth.models.business_registration_type_enum import BusinessRegistrationTypeEnum as BusinessRegistrationTypeEnum
 from bandwidth.models.call_direction_enum import CallDirectionEnum as CallDirectionEnum
 from bandwidth.models.call_recording_metadata import CallRecordingMetadata as CallRecordingMetadata

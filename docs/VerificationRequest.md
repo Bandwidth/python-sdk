@@ -18,9 +18,10 @@ Name | Type | Description | Notes
 **privacy_policy_url** | **str** | The Toll-Free Verification request privacy policy URL. | [optional] 
 **terms_and_conditions_url** | **str** | The Toll-Free Verification request terms and conditions policy URL. | [optional] 
 **business_dba** | **str** | The company &#39;Doing Business As&#39;. | [optional] 
-**business_registration_number** | **str** | US Federal Tax ID Number (EIN) or Canada Business Number (CBN). Optional until early 2026. If a value is provided for this field, a value must be provided for &#x60;businessRegistrationType&#x60; and &#x60;businessEntityType&#x60;. Available starting October 1st, 2025. | [optional] 
+**business_registration_number** | **str** | Government-issued business identifying number. | [optional] 
 **business_registration_type** | [**BusinessRegistrationTypeEnum**](BusinessRegistrationTypeEnum.md) |  | [optional] 
-**business_entity_type** | [**BusinessEntityTypeEnum**](BusinessEntityTypeEnum.md) |  | [optional] 
+**business_registration_issuing_country** | [**BusinessRegistrationIssuingCountryEnum**](BusinessRegistrationIssuingCountryEnum.md) |  | [optional] 
+**business_entity_type** | [**BusinessEntityTypeEnum**](BusinessEntityTypeEnum.md) |  | 
 **help_message_response** | **str** | A message that gets sent to users requesting help. | [optional] 
 **age_gated_content** | **bool** | Indicates whether the content is age-gated. | [optional] 
 **cv_token** | **str** | The token provided by Campaign Verify to validate your political use case. Only required for 527 political organizations. If you are not a 527 political organization, this field should be omitted. Supplying an empty string will likely result in rejection. | [optional] 
