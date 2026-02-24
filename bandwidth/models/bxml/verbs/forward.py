@@ -11,8 +11,8 @@ from ..verb import Verb
 class Forward(Verb):
 
     def __init__(
-        self, to: str=None, _from: str=None, 
-        call_timeout: str=None, diversion_treatment: str=None, 
+        self, to: str=None, _from: str=None,
+        call_timeout: str=None, diversion_treatment: str=None,
         diversion_reason: str=None, uui: str=None
     ):
         """Initialize a <Forward> verb
@@ -40,10 +40,10 @@ class Forward(Verb):
                 out-of-service
                 away
 
-                This parameter is considered only when diversionTreatment is set to stack. Defaults is unknown. 
+                This parameter is considered only when diversionTreatment is set to stack. Defaults is unknown.
                 Defaults to None.
-            uui (str, optional): The value of the User-To-User header to send within the outbound INVITE when forwarding to a SIP URI. 
-                Must include the encoding parameter as specified in RFC 7433. Only base64 and jwt encoding are currently allowed. 
+            uui (str, optional): The value of the User-To-User header to send within the outbound INVITE when forwarding to a SIP URI.
+                Must include the encoding parameter as specified in RFC 7433. Only base64 and jwt encoding are currently allowed.
                 This value, including the encoding specifier, may not exceed 256 characters.
         """
         self.to = to
@@ -64,4 +64,4 @@ class Forward(Verb):
             "diversionTreatment": self.diversion_treatment,
             "diversionReason": self.diversion_reason,
             "uui": self.uui,
-        }        
+        }
