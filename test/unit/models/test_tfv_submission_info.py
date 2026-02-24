@@ -66,6 +66,7 @@ class TestTfvSubmissionInfo(unittest.TestCase):
                 business_dba = 'Bandwidth Inc.',
                 business_registration_number = '12-3456789',
                 business_registration_type = 'EIN',
+                business_registration_issuing_country = 'USA',
                 business_entity_type = 'SOLE_PROPRIETOR'
             )
         else:
@@ -107,6 +108,7 @@ class TestTfvSubmissionInfo(unittest.TestCase):
         assert instance.business_dba == 'Bandwidth Inc.'
         assert instance.business_registration_number == '12-3456789'
         assert instance.business_registration_type == 'EIN'
+        assert instance.business_registration_issuing_country == 'USA'
         assert instance.business_entity_type == 'SOLE_PROPRIETOR'
 
 if __name__ == '__main__':

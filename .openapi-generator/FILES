@@ -28,6 +28,7 @@ bandwidth/models/blocked_webhook.py
 bandwidth/models/bridge_complete_callback.py
 bandwidth/models/bridge_target_complete_callback.py
 bandwidth/models/business_entity_type_enum.py
+bandwidth/models/business_registration_issuing_country_enum.py
 bandwidth/models/business_registration_type_enum.py
 bandwidth/models/call_direction_enum.py
 bandwidth/models/call_recording_metadata.py
@@ -206,6 +207,7 @@ docs/BlockedWebhook.md
 docs/BridgeCompleteCallback.md
 docs/BridgeTargetCompleteCallback.md
 docs/BusinessEntityTypeEnum.md
+docs/BusinessRegistrationIssuingCountryEnum.md
 docs/BusinessRegistrationTypeEnum.md
 docs/CallDirectionEnum.md
 docs/CallRecordingMetadata.md
