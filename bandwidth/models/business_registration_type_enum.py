@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class BusinessRegistrationTypeEnum(str, Enum):
     """
-    The type of business registration number. Optional until early 2026; required if `businessRegistrationNumber` is provided. Available starting October 1st, 2025.
+    The type of business registration number.
     """
 
     """
@@ -29,6 +29,22 @@ class BusinessRegistrationTypeEnum(str, Enum):
     """
     EIN = 'EIN'
     CBN = 'CBN'
+    NEQ = 'NEQ'
+    PROVINCIAL_NUMBER = 'PROVINCIAL_NUMBER'
+    CRN = 'CRN'
+    VAT = 'VAT'
+    ACN = 'ACN'
+    ABN = 'ABN'
+    BRN = 'BRN'
+    SIREN = 'SIREN'
+    SIRET = 'SIRET'
+    NZBN = 'NZBN'
+    UST_IDNR = 'UST_IDNR'
+    CIF = 'CIF'
+    NIF = 'NIF'
+    CNPJ = 'CNPJ'
+    UID = 'UID'
+    OTHER = 'OTHER'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

@@ -23,6 +23,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from bandwidth.models.address import Address
 from bandwidth.models.business_entity_type_enum import BusinessEntityTypeEnum
+from bandwidth.models.business_registration_issuing_country_enum import BusinessRegistrationIssuingCountryEnum
 from bandwidth.models.business_registration_type_enum import BusinessRegistrationTypeEnum
 from bandwidth.models.contact import Contact
 from bandwidth.models.opt_in_workflow import OptInWorkflow
@@ -46,14 +47,15 @@ class VerificationRequest(BaseModel):
     privacy_policy_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request privacy policy URL.", alias="privacyPolicyUrl")
     terms_and_conditions_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request terms and conditions policy URL.", alias="termsAndConditionsUrl")
     business_dba: Optional[StrictStr] = Field(default=None, description="The company 'Doing Business As'.", alias="businessDba")
-    business_registration_number: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="US Federal Tax ID Number (EIN) or Canada Business Number (CBN). Optional until early 2026. If a value is provided for this field, a value must be provided for `businessRegistrationType` and `businessEntityType`. Available starting October 1st, 2025.", alias="businessRegistrationNumber")
+    business_registration_number: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="Government-issued business identifying number.", alias="businessRegistrationNumber")
     business_registration_type: Optional[BusinessRegistrationTypeEnum] = Field(default=None, alias="businessRegistrationType")
-    business_entity_type: Optional[BusinessEntityTypeEnum] = Field(default=None, alias="businessEntityType")
+    business_registration_issuing_country: Optional[BusinessRegistrationIssuingCountryEnum] = Field(default=None, alias="businessRegistrationIssuingCountry")
+    business_entity_type: BusinessEntityTypeEnum = Field(alias="businessEntityType")
     help_message_response: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="A message that gets sent to users requesting help.", alias="helpMessageResponse")
     age_gated_content: Optional[StrictBool] = Field(default=None, description="Indicates whether the content is age-gated.", alias="ageGatedContent")
     cv_token: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="The token provided by Campaign Verify to validate your political use case. Only required for 527 political organizations. If you are not a 527 political organization, this field should be omitted. Supplying an empty string will likely result in rejection.", alias="cvToken")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "phoneNumbers", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller", "privacyPolicyUrl", "termsAndConditionsUrl", "businessDba", "businessRegistrationNumber", "businessRegistrationType", "businessEntityType", "helpMessageResponse", "ageGatedContent", "cvToken"]
+    __properties: ClassVar[List[str]] = ["businessAddress", "businessContact", "messageVolume", "phoneNumbers", "useCase", "useCaseSummary", "productionMessageContent", "optInWorkflow", "additionalInformation", "isvReseller", "privacyPolicyUrl", "termsAndConditionsUrl", "businessDba", "businessRegistrationNumber", "businessRegistrationType", "businessRegistrationIssuingCountry", "businessEntityType", "helpMessageResponse", "ageGatedContent", "cvToken"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -130,11 +132,6 @@ class VerificationRequest(BaseModel):
         if self.business_registration_type is None and "business_registration_type" in self.model_fields_set:
             _dict['businessRegistrationType'] = None
 
-        # set to None if business_entity_type (nullable) is None
-        # and model_fields_set contains the field
-        if self.business_entity_type is None and "business_entity_type" in self.model_fields_set:
-            _dict['businessEntityType'] = None
-
         # set to None if help_message_response (nullable) is None
         # and model_fields_set contains the field
         if self.help_message_response is None and "help_message_response" in self.model_fields_set:
@@ -172,6 +169,7 @@ class VerificationRequest(BaseModel):
             "businessDba": obj.get("businessDba"),
             "businessRegistrationNumber": obj.get("businessRegistrationNumber"),
             "businessRegistrationType": obj.get("businessRegistrationType"),
+            "businessRegistrationIssuingCountry": obj.get("businessRegistrationIssuingCountry"),
             "businessEntityType": obj.get("businessEntityType"),
             "helpMessageResponse": obj.get("helpMessageResponse"),
             "ageGatedContent": obj.get("ageGatedContent"),
