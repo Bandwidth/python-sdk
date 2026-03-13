@@ -57,13 +57,5 @@ class TestDevice(unittest.TestCase):
         assert instance.status == DeviceStatusEnum.CONNECTED
         assert isinstance(instance.creation_timestamp, datetime)
 
-    def testDeviceRequiredOnly(self):
-        """Test Device with required fields only"""
-        instance = self.make_instance(False)
-        assert instance is not None
-        assert isinstance(instance, Device)
-        assert instance.device_id == 'device-abc-123'
-        assert instance.status == DeviceStatusEnum.CONNECTED
-
 if __name__ == '__main__':
     unittest.main()

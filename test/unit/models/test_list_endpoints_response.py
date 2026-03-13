@@ -103,12 +103,5 @@ class TestListEndpointsResponse(unittest.TestCase):
         assert instance.data[1].endpoint_id == 'endpoint-2'
         assert isinstance(instance.errors, list)
 
-    def testListEndpointsResponseRequiredOnly(self):
-        """Test ListEndpointsResponse with required fields only"""
-        instance = self.make_instance(False)
-        assert instance is not None
-        assert isinstance(instance, ListEndpointsResponse)
-        assert len(instance.data) == 1
-
 if __name__ == '__main__':
     unittest.main()

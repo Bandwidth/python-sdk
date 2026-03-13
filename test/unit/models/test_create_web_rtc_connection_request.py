@@ -15,12 +15,12 @@
 
 import unittest
 
-from bandwidth.models.create_endpoint_request_base import CreateEndpointRequestBase
+from bandwidth.models.create_web_rtc_connection_request import CreateWebRtcConnectionRequest
 from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 
-class TestCreateEndpointRequestBase(unittest.TestCase):
-    """CreateEndpointRequestBase unit test stubs"""
+class TestCreateWebRtcConnectionRequest(unittest.TestCase):
+    """CreateWebRtcConnectionRequest unit test stubs"""
 
     def setUp(self):
         pass
@@ -28,35 +28,42 @@ class TestCreateEndpointRequestBase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateEndpointRequestBase:
-        """Test CreateEndpointRequestBase
+    def make_instance(self, include_optional) -> CreateWebRtcConnectionRequest:
+        """Test CreateWebRtcConnectionRequest
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         if include_optional:
-            return CreateEndpointRequestBase(
+            return CreateWebRtcConnectionRequest(
                 type=EndpointTypeEnum.WEBRTC,
                 direction=EndpointDirectionEnum.BIDIRECTIONAL,
                 event_callback_url='https://example.com/callback',
                 event_fallback_url='https://example.com/fallback',
-                tag='test-request'
+                tag='test-webrtc',
+                connection_metadata={
+                    'key1': 'value1',
+                    'key2': 'value2'
+                }
             )
         else:
-            return CreateEndpointRequestBase(
+            return CreateWebRtcConnectionRequest(
                 type=EndpointTypeEnum.WEBRTC,
                 direction=EndpointDirectionEnum.BIDIRECTIONAL
             )
 
-    def testCreateEndpointRequestBase(self):
-        """Test CreateEndpointRequestBase"""
+    def testCreateWebRtcConnectionRequest(self):
+        """Test CreateWebRtcConnectionRequest"""
         instance = self.make_instance(True)
         assert instance is not None
-        assert isinstance(instance, CreateEndpointRequestBase)
+        assert isinstance(instance, CreateWebRtcConnectionRequest)
         assert instance.type == EndpointTypeEnum.WEBRTC
         assert instance.direction == EndpointDirectionEnum.BIDIRECTIONAL
         assert instance.event_callback_url == 'https://example.com/callback'
         assert instance.event_fallback_url == 'https://example.com/fallback'
-        assert instance.tag == 'test-request'
+        assert instance.tag == 'test-webrtc'
+        assert isinstance(instance.connection_metadata, dict)
+        assert instance.connection_metadata['key1'] == 'value1'
+        assert instance.connection_metadata['key2'] == 'value2'
 
 if __name__ == '__main__':
     unittest.main()

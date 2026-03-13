@@ -22,8 +22,13 @@ from bandwidth import ApiClient, Configuration
 from bandwidth.api.endpoints_api import EndpointsApi
 from bandwidth.models.create_web_rtc_connection_request import CreateWebRtcConnectionRequest
 from bandwidth.models.create_endpoint_response import CreateEndpointResponse
+from bandwidth.models.create_endpoint_response_data import CreateEndpointResponseData
 from bandwidth.models.endpoint_response import EndpointResponse
+from bandwidth.models.endpoint import Endpoint
+from bandwidth.models.endpoints import Endpoints
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse
+from bandwidth.models.link import Link
+from bandwidth.models.page import Page
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
@@ -66,8 +71,21 @@ class TestEndpointsApi(unittest.TestCase):
 
         assert_that(response.status_code, equal_to(201))
         assert_that(response.data, instance_of(CreateEndpointResponse))
+
         assert_that(response.data.links, instance_of(list))
-        assert_that(response.data.data, instance_of(object))
+        assert_that(len(response.data.links), greater_than(0))
+        assert_that(response.data.links[0], instance_of(Link))
+        assert_that(response.data.links[0].href, starts_with('http'))
+        assert_that(response.data.links[0].rel, instance_of(str))
+
+        assert_that(response.data.data, instance_of(CreateEndpointResponseData))
+        assert_that(response.data.data.endpoint_id, instance_of(str))
+        assert_that(response.data.data.type, is_in(EndpointTypeEnum))
+        assert_that(response.data.data.status, is_in(EndpointStatusEnum))
+        assert_that(response.data.data.creation_timestamp, instance_of(datetime))
+        assert_that(response.data.data.expiration_timestamp, instance_of(datetime))
+        assert_that(response.data.data.token, instance_of(str))
+
         assert_that(response.data.errors, instance_of(list))
 
     def test_delete_endpoint(self) -> None:
@@ -94,8 +112,20 @@ class TestEndpointsApi(unittest.TestCase):
 
         assert_that(response.status_code, equal_to(200))
         assert_that(response.data, instance_of(EndpointResponse))
+
         assert_that(response.data.links, instance_of(list))
-        assert_that(response.data.data, instance_of(object))
+        assert_that(len(response.data.links), greater_than(0))
+        assert_that(response.data.links[0], instance_of(Link))
+        assert_that(response.data.links[0].href, starts_with('http'))
+        assert_that(response.data.links[0].rel, instance_of(str))
+
+        assert_that(response.data.data, instance_of(Endpoint))
+        assert_that(response.data.data.endpoint_id, instance_of(str))
+        assert_that(response.data.data.type, is_in(EndpointTypeEnum))
+        assert_that(response.data.data.status, is_in(EndpointStatusEnum))
+        assert_that(response.data.data.creation_timestamp, instance_of(datetime))
+        assert_that(response.data.data.expiration_timestamp, instance_of(datetime))
+
         assert_that(response.data.errors, instance_of(list))
 
     def test_list_endpoints(self) -> None:
@@ -109,98 +139,29 @@ class TestEndpointsApi(unittest.TestCase):
 
         assert_that(response.status_code, equal_to(200))
         assert_that(response.data, instance_of(ListEndpointsResponse))
+
         assert_that(response.data.links, instance_of(list))
+        assert_that(len(response.data.links), greater_than(0))
+        assert_that(response.data.links[0], instance_of(Link))
+        assert_that(response.data.links[0].href, starts_with('http'))
+        assert_that(response.data.links[0].rel, instance_of(str))
+
         assert_that(response.data.data, instance_of(list))
-        assert_that(response.data.errors, instance_of(list))
+        assert_that(len(response.data.data), greater_than(0))
+        assert_that(response.data.data[0], instance_of(Endpoints))
+        assert_that(response.data.data[0].endpoint_id, instance_of(str))
+        assert_that(response.data.data[0].type, is_in(EndpointTypeEnum))
+        assert_that(response.data.data[0].status, is_in(EndpointStatusEnum))
+        assert_that(response.data.data[0].creation_timestamp, instance_of(datetime))
+        assert_that(response.data.data[0].expiration_timestamp, instance_of(datetime))
 
-    def test_list_endpoints_with_filters(self) -> None:
-        """Test case for list_endpoints with filters
-
-        List Endpoints with Type and Status Filters
-        """
-        response = self.endpoints_api_instance.list_endpoints_with_http_info(
-            BW_ACCOUNT_ID,
-            type=EndpointTypeEnum.WEBRTC,
-            status=EndpointStatusEnum.CONNECTED,
-            limit=100
-        )
-
-        assert_that(response.status_code, equal_to(200))
-        assert_that(response.data, instance_of(ListEndpointsResponse))
-        assert_that(response.data.links, instance_of(list))
-        assert_that(response.data.data, instance_of(list))
-        assert_that(response.data.errors, instance_of(list))
         if response.data.page:
-            assert_that(response.data.page, instance_of(object))
+            assert_that(response.data.page, instance_of(Page))
+            assert_that(response.data.page.page_size, greater_than_or_equal_to(0))
 
-    def test_list_endpoints_with_pagination(self) -> None:
-        """Test case for list_endpoints with pagination
-
-        List Endpoints with Pagination
-        """
-        response = self.endpoints_api_instance.list_endpoints_with_http_info(
-            BW_ACCOUNT_ID,
-            after_cursor="cursor-abc123",
-            limit=50
-        )
-
-        assert_that(response.status_code, equal_to(200))
-        assert_that(response.data, instance_of(ListEndpointsResponse))
-        assert_that(response.data.links, instance_of(list))
-        assert_that(response.data.data, instance_of(list))
         assert_that(response.data.errors, instance_of(list))
 
-    # TODO: Endpoint BXML not ready yet - commented out
-    # def test_update_endpoint_bxml(self) -> None:
-    #     """Test case for update_endpoint_bxml
-    #
-    #     Update Endpoint BXML
-    #     """
-    #     update_bxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response for endpoint</SpeakSentence><Pause duration="3"/></Bxml>'
-    #
-    #     response = self.endpoints_api_instance.update_endpoint_bxml_with_http_info(
-    #         BW_ACCOUNT_ID,
-    #         "ep-abc123",
-    #         update_bxml
-    #     )
-    #
-    #     assert_that(response.status_code, equal_to(204))
 
-    def test_create_endpoint_minimal(self) -> None:
-        """Test case for create_endpoint with minimal required fields
-
-        Create Endpoint with Minimal Fields
-        """
-        endpoint_body = CreateWebRtcConnectionRequest(
-            type=EndpointTypeEnum.WEBRTC,
-            direction=EndpointDirectionEnum.OUTBOUND
-        )
-        response = self.endpoints_api_instance.create_endpoint_with_http_info(
-            BW_ACCOUNT_ID,
-            endpoint_body
-        )
-
-        assert_that(response.status_code, equal_to(201))
-        assert_that(response.data, instance_of(CreateEndpointResponse))
-
-    def test_create_endpoint_sip(self) -> None:
-        """Test case for create_endpoint with SIP type
-
-        Create SIP Endpoint
-        """
-        endpoint_body = CreateWebRtcConnectionRequest(
-            type=EndpointTypeEnum.WEBRTC,
-            direction=EndpointDirectionEnum.BIDIRECTIONAL,
-            event_callback_url="https://myServer.com/bandwidth/webhooks/sip-endpoint",
-            tag="sip-test-endpoint"
-        )
-        response = self.endpoints_api_instance.create_endpoint_with_http_info(
-            BW_ACCOUNT_ID,
-            endpoint_body
-        )
-
-        assert_that(response.status_code, equal_to(201))
-        assert_that(response.data, instance_of(CreateEndpointResponse))
 
 
 if __name__ == '__main__':

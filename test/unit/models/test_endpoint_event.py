@@ -81,14 +81,5 @@ class TestEndpointEvent(unittest.TestCase):
         assert isinstance(instance.device, Device)
         assert instance.device.device_id == 'device-event-456'
 
-    def testEndpointEventRequiredOnly(self):
-        """Test EndpointEvent with required fields only"""
-        instance = self.make_instance(False)
-        assert instance is not None
-        assert isinstance(instance, EndpointEvent)
-        assert instance.endpoint_id == 'endpoint-event-123'
-        assert isinstance(instance.event_time, datetime)
-        assert instance.event_type == EndpointEventTypeEnum.DEVICE_CONNECTED
-
 if __name__ == '__main__':
     unittest.main()

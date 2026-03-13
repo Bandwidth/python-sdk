@@ -16,14 +16,14 @@
 import unittest
 from datetime import datetime
 
-from bandwidth.models.endpoint import Endpoint
+from bandwidth.models.create_endpoint_response_data import CreateEndpointResponseData
 from bandwidth.models.device import Device
+from bandwidth.models.device_status_enum import DeviceStatusEnum
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
-from bandwidth.models.device_status_enum import DeviceStatusEnum
 
-class TestEndpoint(unittest.TestCase):
-    """Endpoint unit test stubs"""
+class TestCreateEndpointResponseData(unittest.TestCase):
+    """CreateEndpointResponseData unit test stubs"""
 
     def setUp(self):
         pass
@@ -31,19 +31,19 @@ class TestEndpoint(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> Endpoint:
-        """Test Endpoint
+    def make_instance(self, include_optional) -> CreateEndpointResponseData:
+        """Test CreateEndpointResponseData
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         if include_optional:
-            return Endpoint(
-                endpoint_id='endpoint-123',
+            return CreateEndpointResponseData(
+                endpoint_id='e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 type=EndpointTypeEnum.WEBRTC,
                 status=EndpointStatusEnum.CONNECTED,
                 creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
                 expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
-                tag='test-endpoint',
+                tag='my-tag',
                 devices=[
                     Device(
                         device_id='device-456',
@@ -51,31 +51,35 @@ class TestEndpoint(unittest.TestCase):
                         status=DeviceStatusEnum.CONNECTED,
                         creation_timestamp=datetime(2026, 1, 15, 10, 0, 0)
                     )
-                ]
+                ],
+                token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.token'
             )
         else:
-            return Endpoint(
-                endpoint_id='endpoint-123',
+            return CreateEndpointResponseData(
+                endpoint_id='e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
                 type=EndpointTypeEnum.WEBRTC,
                 status=EndpointStatusEnum.CONNECTED,
                 creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0)
+                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
+                token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.token'
             )
 
-    def testEndpoint(self):
-        """Test Endpoint"""
+    def testCreateEndpointResponseData(self):
+        """Test CreateEndpointResponseData"""
         instance = self.make_instance(True)
         assert instance is not None
-        assert isinstance(instance, Endpoint)
-        assert instance.endpoint_id == 'endpoint-123'
+        assert isinstance(instance, CreateEndpointResponseData)
+        assert instance.endpoint_id == 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
         assert instance.type == EndpointTypeEnum.WEBRTC
         assert instance.status == EndpointStatusEnum.CONNECTED
         assert isinstance(instance.creation_timestamp, datetime)
         assert isinstance(instance.expiration_timestamp, datetime)
-        assert instance.tag == 'test-endpoint'
+        assert instance.tag == 'my-tag'
         assert isinstance(instance.devices, list)
         assert len(instance.devices) == 1
         assert isinstance(instance.devices[0], Device)
+        assert instance.devices[0].device_id == 'device-456'
+        assert instance.token == 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.token'
 
 if __name__ == '__main__':
     unittest.main()

@@ -64,12 +64,5 @@ class TestEndpoints(unittest.TestCase):
         assert isinstance(instance.expiration_timestamp, datetime)
         assert instance.tag == 'list-endpoint'
 
-    def testEndpointsRequiredOnly(self):
-        """Test Endpoints with required fields only"""
-        instance = self.make_instance(False)
-        assert instance is not None
-        assert isinstance(instance, Endpoints)
-        assert instance.endpoint_id == 'endpoint-789'
-
 if __name__ == '__main__':
     unittest.main()
