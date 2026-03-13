@@ -32,7 +32,7 @@ class Message(BaseModel):
     """ # noqa: E501
     id: Optional[StrictStr] = Field(default=None, description="The id of the message.")
     owner: Optional[StrictStr] = Field(default=None, description="The Bandwidth phone number associated with the message.")
-    application_id: Optional[StrictStr] = Field(default=None, description="The ID of the Application your from number or senderId is associated with in the Bandwidth Phone Number Dashboard.", alias="applicationId")
+    application_id: Optional[StrictStr] = Field(default=None, description="The ID of the Application your from number or senderId is associated with in the Bandwidth App.", alias="applicationId")
     time: Optional[datetime] = Field(default=None, description="The datetime stamp of the message in ISO 8601")
     segment_count: Optional[StrictInt] = Field(default=None, description="The number of segments the user's message is broken into before sending over carrier networks.", alias="segmentCount")
     direction: Optional[MessageDirectionEnum] = None

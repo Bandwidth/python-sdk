@@ -36,7 +36,7 @@ class InboundCallbackMessage(BaseModel):
     """ # noqa: E501
     id: StrictStr = Field(description="A unique identifier of the message.")
     owner: StrictStr = Field(description="The Bandwidth phone number or alphanumeric identifier associated with the message.")
-    application_id: StrictStr = Field(description="The ID of the Application your from number or senderId is associated with in the Bandwidth Phone Number Dashboard.", alias="applicationId")
+    application_id: StrictStr = Field(description="The ID of the Application your from number or senderId is associated with in the Bandwidth App.", alias="applicationId")
     time: datetime
     segment_count: StrictInt = Field(description="The number of segments the user's message is broken into before sending over carrier networks.", alias="segmentCount")
     direction: MessageDirectionEnum
