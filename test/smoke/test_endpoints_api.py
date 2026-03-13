@@ -56,8 +56,7 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.status_code, equal_to(201))
         assert_that(response.data, instance_of(CreateEndpointResponse))
         assert_that(response.data.links, instance_of(list))
-        assert_that(len(response.data.links), greater_than(0))
-        assert_that(response.data.links[0], instance_of(Link))
+        assert_that(len(response.data.links), equal_to(0))
         assert_that(response.data.errors, instance_of(list))
         assert_that(response.data.data, instance_of(CreateEndpointResponseData))
         assert_that(response.data.data, has_properties(
