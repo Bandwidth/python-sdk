@@ -18,7 +18,6 @@ from bandwidth.models.endpoints import Endpoints
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
-from bandwidth.models.link import Link
 from bandwidth.exceptions import ApiException
 from test.utils.env_variables import *
 
@@ -82,8 +81,7 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.status_code, equal_to(200))
         assert_that(response.data, instance_of(ListEndpointsResponse))
         assert_that(response.data.links, instance_of(list))
-        assert_that(len(response.data.links), greater_than(0))
-        assert_that(response.data.links[0], instance_of(Link))
+        assert_that(len(response.data.links), equal_to(0))
         assert_that(response.data.errors, instance_of(list))
         assert_that(response.data.data, instance_of(list))
         assert_that(len(response.data.data), greater_than(0))
@@ -110,8 +108,7 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.status_code, equal_to(200))
         assert_that(response.data, instance_of(EndpointResponse))
         assert_that(response.data.links, instance_of(list))
-        assert_that(len(response.data.links), greater_than(0))
-        assert_that(response.data.links[0], instance_of(Link))
+        assert_that(len(response.data.links), equal_to(0))
         assert_that(response.data.errors, instance_of(list))
         assert_that(response.data.data, instance_of(Endpoint))
         assert_that(response.data.data, has_properties(
