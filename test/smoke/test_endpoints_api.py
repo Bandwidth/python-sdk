@@ -18,7 +18,7 @@ from bandwidth.models.endpoints import Endpoints
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
-from bandwidth.exceptions import ApiException
+from bandwidth.exceptions import UnauthorizedException, ForbiddenException, NotFoundException
 from test.utils.env_variables import *
 
 
@@ -34,9 +34,20 @@ class TestEndpointsApi(unittest.TestCase):
         api_client = ApiClient(configuration)
         cls.endpoints_api_instance = EndpointsApi(api_client)
 
-        cls.unauthorized_api_instance = EndpointsApi(ApiClient())
+        unauthorized_configuration = Configuration(
+            username='bad_username',
+            password='bad_password'
+        )
+        cls.unauthorized_api_instance = EndpointsApi(ApiClient(unauthorized_configuration))
+
+        forbidden_configuration = Configuration(
+            username=FORBIDDEN_USERNAME,
+            password=FORBIDDEN_PASSWORD
+        )
+        cls.forbidden_api_instance = EndpointsApi(ApiClient(forbidden_configuration))
 
         cls.account_id = BW_ACCOUNT_ID
+        cls.test_endpoint_id = 'endpoint-id'
 
     def createEndpoint(self):
         create_request = CreateWebRtcConnectionRequest(
@@ -150,19 +161,86 @@ class TestEndpointsApi(unittest.TestCase):
         for name, step in self._steps():
             step()
 
+    def assertApiException(self, context, expected_status_code: int):
+        assert_that(context.exception, has_properties(
+            'status', expected_status_code,
+        ))
+
     def test_create_endpoint_unauthorized(self):
         create_request = CreateWebRtcConnectionRequest(
             type=EndpointTypeEnum.WEBRTC,
             direction=EndpointDirectionEnum.BIDIRECTIONAL
         )
 
-        with self.assertRaises(ApiException) as context:
+        with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.create_endpoint(
                 self.account_id,
                 create_request
             )
 
-        assert_that(context.exception.status, equal_to(401))
+        self.assertApiException(context, 401)
+
+    def test_create_endpoint_forbidden(self):
+        create_request = CreateWebRtcConnectionRequest(
+            type=EndpointTypeEnum.WEBRTC,
+            direction=EndpointDirectionEnum.BIDIRECTIONAL
+        )
+
+        with self.assertRaises(ForbiddenException) as context:
+            self.forbidden_api_instance.create_endpoint(
+                self.account_id,
+                create_request
+            )
+
+        self.assertApiException(context, 403)
+
+    def test_list_endpoints_unauthorized(self):
+        with self.assertRaises(UnauthorizedException) as context:
+            self.unauthorized_api_instance.list_endpoints(self.account_id)
+
+        self.assertApiException(context, 401)
+
+    def test_list_endpoints_forbidden(self):
+        with self.assertRaises(ForbiddenException) as context:
+            self.forbidden_api_instance.list_endpoints(self.account_id)
+
+        self.assertApiException(context, 403)
+
+    def test_get_endpoint_unauthorized(self):
+        with self.assertRaises(UnauthorizedException) as context:
+            self.unauthorized_api_instance.get_endpoint(self.account_id, self.test_endpoint_id)
+
+        self.assertApiException(context, 401)
+
+    def test_get_endpoint_forbidden(self):
+        with self.assertRaises(ForbiddenException) as context:
+            self.forbidden_api_instance.get_endpoint(self.account_id, self.test_endpoint_id)
+
+        self.assertApiException(context, 403)
+
+    def test_get_endpoint_not_found(self):
+        with self.assertRaises(NotFoundException) as context:
+            self.endpoints_api_instance.get_endpoint(self.account_id, self.test_endpoint_id)
+
+        self.assertApiException(context, 404)
+
+    def test_delete_endpoint_unauthorized(self):
+        with self.assertRaises(UnauthorizedException) as context:
+            self.unauthorized_api_instance.delete_endpoint(self.account_id, self.test_endpoint_id)
+
+        self.assertApiException(context, 401)
+
+    def test_delete_endpoint_forbidden(self):
+        with self.assertRaises(ForbiddenException) as context:
+            self.forbidden_api_instance.delete_endpoint(self.account_id, self.test_endpoint_id)
+
+        self.assertApiException(context, 403)
+
+    def test_delete_endpoint_not_found(self):
+        with self.assertRaises(NotFoundException) as context:
+            self.endpoints_api_instance.delete_endpoint(self.account_id, self.test_endpoint_id)
+
+        self.assertApiException(context, 404)
 
 
 if __name__ == '__main__':
