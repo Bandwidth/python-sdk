@@ -125,6 +125,18 @@ class TestEndpointsApi(unittest.TestCase):
             'devices', instance_of(list)
         ))
 
+    # Note: This endpoint is currently not working in the API, so this test is commented out for now. Once the API issue is resolved, this test should be uncommented and verified.
+    # def updateEndpointBxml(self):
+    #     bxml = '<?xml version="1.0" encoding="UTF-8"?><Bxml><StartStream name="test_stream"/></Bxml>'
+    #     response: ApiResponse = self.endpoints_api_instance.update_endpoint_bxml_with_http_info(
+    #         self.account_id,
+    #         self.endpoint_id,
+    #         bxml
+    #     )
+    #
+    #     assert_that(response.status_code, equal_to(204))
+    #     ...
+
     def deleteEndpoint(self):
         response: ApiResponse = self.endpoints_api_instance.delete_endpoint_with_http_info(
             self.account_id,
