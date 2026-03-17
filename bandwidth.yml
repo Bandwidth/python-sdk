@@ -5828,13 +5828,21 @@ components:
       type: string
     businessRegistrationNumber:
       type: string
-      description: Government-issued business identifying number.
+      description: >
+        Government-issued business identifying number.
+
+
+        **Note:** If this field is provided, it is strongly recommended to also
+        provide `businessRegistrationType` and
+        `businessRegistrationIssuingCountry`. Submissions missing these fields
+        have a high likelihood of rejection.
       nullable: true
       maxLength: 500
       example: 12-3456789
     businessRegistrationTypeEnum:
       type: string
-      description: The type of business registration number.
+      description: |
+        The type of business registration number.
       enum:
         - EIN
         - CBN
@@ -5855,11 +5863,20 @@ components:
         - UID
         - OTHER
       nullable: true
-    businessRegistrationIssuingCountryEnum:
+    businessRegistrationIssuingCountry:
       type: string
       description: >-
         The country issuing the business registration in ISO-3166-1 alpha-3
-        format.
+        format. Alpha-2 country codes are acceptable, but the application will
+        convert them to alpha-3 when received, so alpha-3 is encouraged.
+
+
+        **Note:** If this field is omitted but `businessRegistrationType` is
+        provided, the application will attempt to infer the country based on the
+        registration type. However, if the application cannot confidently infer
+        the country, the submission may be rejected. To ensure the highest
+        likelihood of acceptance, it is recommended to provide both
+        `businessRegistrationType` and `businessRegistrationIssuingCountry`.
 
 
         | Registration Type     | Supported Countries                |
@@ -5901,26 +5918,11 @@ components:
         | UID                  | CHE                                |
 
         | OTHER                | Must Provide Country Code          |
-      enum:
-        - USA
-        - CAN
-        - HKG
-        - GBR
-        - IRL
-        - BRA
-        - NLD
-        - AUS
-        - FRA
-        - NZL
-        - DEU
-        - ESP
-        - CHE
       nullable: false
     businessEntityTypeEnum:
       type: string
-      description: >-
-        The type of registered business. If no option is applicable, please
-        provide "SOLE_PROPRIETOR" as a value.
+      description: |
+        The type of registered business.
       enum:
         - SOLE_PROPRIETOR
         - PRIVATE_PROFIT
@@ -6028,7 +6030,7 @@ components:
         businessRegistrationType:
           $ref: '#/components/schemas/businessRegistrationTypeEnum'
         businessRegistrationIssuingCountry:
-          $ref: '#/components/schemas/businessRegistrationIssuingCountryEnum'
+          $ref: '#/components/schemas/businessRegistrationIssuingCountry'
         businessEntityType:
           $ref: '#/components/schemas/businessEntityTypeEnum'
         helpMessageResponse:
@@ -6083,7 +6085,7 @@ components:
         businessEntityType:
           $ref: '#/components/schemas/businessEntityTypeEnum'
         businessRegistrationIssuingCountry:
-          $ref: '#/components/schemas/businessRegistrationIssuingCountryEnum'
+          $ref: '#/components/schemas/businessRegistrationIssuingCountry'
         helpMessageResponse:
           $ref: '#/components/schemas/helpMessageResponse'
         ageGatedContent:
@@ -6576,10 +6578,14 @@ components:
           $ref: '#/components/schemas/businessDba'
         businessRegistrationNumber:
           $ref: '#/components/schemas/businessRegistrationNumber'
+          description: Government-issued business identifying number.
         businessRegistrationType:
           $ref: '#/components/schemas/businessRegistrationTypeEnum'
         businessRegistrationIssuingCountry:
-          $ref: '#/components/schemas/businessRegistrationIssuingCountryEnum'
+          $ref: '#/components/schemas/businessRegistrationIssuingCountry'
+          description: >-
+            The country issuing the business registration in ISO-3166-1 alpha-3
+            format.
         businessEntityType:
           $ref: '#/components/schemas/businessEntityTypeEnum'
     tfvStatusEnum:
