@@ -29,7 +29,7 @@ class MultiChannelChannelListObjectBase(BaseModel):
     MultiChannelChannelListObjectBase
     """ # noqa: E501
     var_from: StrictStr = Field(description="The sender ID of the message. This could be an alphanumeric sender ID.", alias="from")
-    application_id: StrictStr = Field(description="The ID of the Application your from number or senderId is associated with in the Bandwidth Phone Number Dashboard.", alias="applicationId")
+    application_id: StrictStr = Field(description="The ID of the Application your from number or senderId is associated with in the Bandwidth App.", alias="applicationId")
     channel: MultiChannelMessageChannelEnum
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["from", "applicationId", "channel"]
