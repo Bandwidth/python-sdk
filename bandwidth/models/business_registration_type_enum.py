@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class BusinessRegistrationTypeEnum(str, Enum):
     """
-    The type of business registration number.
+    The type of business registration number. 
     """
 
     """

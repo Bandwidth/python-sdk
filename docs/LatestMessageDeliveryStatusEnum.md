@@ -1,6 +1,6 @@
 # LatestMessageDeliveryStatusEnum
 
-[DNI-Only](#section/DNI-Only). The current delivery status of the phone number. - ACTIVE: A message was successfully sent to the number (delivery code 0). - DEACTIVATED: A message was not delivered to a number (delivery code 720) - UNKNOWN: Bandwidth cannot find an delivery status entry for the number.
+[DNI-Only](#section/DNI-Only). The current delivery status of the phone number. - ACTIVE: A message was successfully sent to the number (delivery code 0). - DEACTIVATED: A message was not delivered to a number (delivery code 720) - UNKNOWN: Bandwidth cannot find an delivery status entry for the number. - NOT_ENABLED: The phone number is not enabled for messaging, so there is no delivery status information.
 
 ## Enum
 
@@ -9,6 +9,8 @@
 * `DEACTIVATED` (value: `'DEACTIVATED'`)
 
 * `UNKNOWN` (value: `'UNKNOWN'`)
+
+* `NOT_ENABLED` (value: `'NOT_ENABLED'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

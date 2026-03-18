@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class LatestMessageDeliveryStatusEnum(str, Enum):
     """
-    [DNI-Only](#section/DNI-Only). The current delivery status of the phone number. - ACTIVE: A message was successfully sent to the number (delivery code 0). - DEACTIVATED: A message was not delivered to a number (delivery code 720) - UNKNOWN: Bandwidth cannot find an delivery status entry for the number.
+    [DNI-Only](#section/DNI-Only). The current delivery status of the phone number. - ACTIVE: A message was successfully sent to the number (delivery code 0). - DEACTIVATED: A message was not delivered to a number (delivery code 720) - UNKNOWN: Bandwidth cannot find an delivery status entry for the number. - NOT_ENABLED: The phone number is not enabled for messaging, so there is no delivery status information.
     """
 
     """
@@ -30,6 +30,7 @@ class LatestMessageDeliveryStatusEnum(str, Enum):
     ACTIVE = 'ACTIVE'
     DEACTIVATED = 'DEACTIVATED'
     UNKNOWN = 'UNKNOWN'
+    NOT_ENABLED = 'NOT_ENABLED'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

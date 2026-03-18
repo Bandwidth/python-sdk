@@ -1956,8 +1956,10 @@ components:
           type: string
         contentLength:
           type: integer
+          example: 1024
         mediaName:
           type: string
+          example: image.png
     segmentCount:
       type: integer
       description: >-
@@ -2744,6 +2746,7 @@ components:
       discriminator:
         propertyName: type
         mapping:
+          message-sending: '#/components/schemas/statusCallback'
           message-sent: '#/components/schemas/statusCallback'
           message-delivered: '#/components/schemas/statusCallback'
           message-failed: '#/components/schemas/statusCallback'
@@ -5510,10 +5513,14 @@ components:
 
         - UNKNOWN: Bandwidth cannot find an delivery status entry for the
         number.
+
+        - NOT_ENABLED: The phone number is not enabled for messaging, so there
+        is no delivery status information.
       enum:
         - ACTIVE
         - DEACTIVATED
         - UNKNOWN
+        - NOT_ENABLED
     lineTypeEnum:
       type: string
       enum:
@@ -5816,25 +5823,36 @@ components:
       type: string
     privacyPolicyUrl:
       description: The Toll-Free Verification request privacy policy URL.
+      maxLength: 500
       example: http://your-company.com/privacyPolicy
       type: string
     termsAndConditionsUrl:
       description: The Toll-Free Verification request terms and conditions policy URL.
+      maxLength: 500
       example: http://your-company.com/termsAndConditions
       type: string
     businessDba:
       description: The company 'Doing Business As'.
+      maxLength: 500
       example: Another Company Name Inc.
       type: string
     businessRegistrationNumber:
       type: string
-      description: Government-issued business identifying number.
+      description: >
+        Government-issued business identifying number.
+
+
+        **Note:** If this field is provided, it is strongly recommended to also
+        provide `businessRegistrationType` and
+        `businessRegistrationIssuingCountry`. Submissions missing these fields
+        have a high likelihood of rejection.
       nullable: true
       maxLength: 500
       example: 12-3456789
     businessRegistrationTypeEnum:
       type: string
-      description: The type of business registration number.
+      description: |
+        The type of business registration number.
       enum:
         - EIN
         - CBN
@@ -5854,12 +5872,22 @@ components:
         - CNPJ
         - UID
         - OTHER
+      example: EIN
       nullable: true
     businessRegistrationIssuingCountryEnum:
       type: string
       description: >-
         The country issuing the business registration in ISO-3166-1 alpha-3
-        format.
+        format. Alpha-2 country codes are acceptable, but the application will
+        convert them to alpha-3 when received, so alpha-3 is encouraged.
+
+
+        **Note:** If this field is omitted but `businessRegistrationType` is
+        provided, the application will attempt to infer the country based on the
+        registration type. However, if the application cannot confidently infer
+        the country, the submission may be rejected. To ensure the highest
+        likelihood of acceptance, it is recommended to provide both
+        `businessRegistrationType` and `businessRegistrationIssuingCountry`.
 
 
         | Registration Type     | Supported Countries                |
@@ -5915,18 +5943,23 @@ components:
         - DEU
         - ESP
         - CHE
+        - CYP
+        - IND
+        - CHN
+        - BGR
+      example: USA
       nullable: false
     businessEntityTypeEnum:
       type: string
-      description: >-
-        The type of registered business. If no option is applicable, please
-        provide "SOLE_PROPRIETOR" as a value.
+      description: |
+        The type of registered business.
       enum:
         - SOLE_PROPRIETOR
         - PRIVATE_PROFIT
         - PUBLIC_PROFIT
         - NON_PROFIT
         - GOVERNMENT
+      example: PRIVATE_PROFIT
       nullable: false
     helpMessageResponse:
       type: string
@@ -6576,10 +6609,14 @@ components:
           $ref: '#/components/schemas/businessDba'
         businessRegistrationNumber:
           $ref: '#/components/schemas/businessRegistrationNumber'
+          description: Government-issued business identifying number.
         businessRegistrationType:
           $ref: '#/components/schemas/businessRegistrationTypeEnum'
         businessRegistrationIssuingCountry:
           $ref: '#/components/schemas/businessRegistrationIssuingCountryEnum'
+          description: >-
+            The country issuing the business registration in ISO-3166-1 alpha-3
+            format.
         businessEntityType:
           $ref: '#/components/schemas/businessEntityTypeEnum'
     tfvStatusEnum:
@@ -8117,7 +8154,7 @@ components:
               latestMessageDeliveryStatusDate: '2025-05-18'
             - phoneNumber: '+10072904498'
               countryCodeA3: USA
-              lineType: FIXED
+              lineType: MOBILE
               voiceProvider: VERIZON
               latestMessageDeliveryStatus: DEACTIVATED
               initialMessageDeliveryStatusDate: '2025-09-05'
@@ -8131,6 +8168,14 @@ components:
               deactivationDate: '2025-09-29 01:23:00'
               deactivationEvent: DEACTIVATED
               latestMessageDeliveryStatus: UNKNOWN
+            - phoneNumber: '+10072904500'
+              lineType: FIXED
+              countryCodeA3: USA
+              voiceProvider: VERIZON
+              deactivationReporter: Verizon Wireless
+              deactivationDate: '2025-09-29 01:23:00'
+              deactivationEvent: DEACTIVATED
+              latestMessageDeliveryStatus: NOT_ENABLED
         errors: []
     badRequestExample:
       summary: Example Bad Request Error
