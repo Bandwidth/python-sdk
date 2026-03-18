@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **var_from** | **str** | The sender ID of the message. This could be an alphanumeric sender ID. | 
-**application_id** | **str** | The ID of the Application your from number or senderId is associated with in the Bandwidth Phone Number Dashboard. | 
+**application_id** | **str** | The ID of the Application your from number or senderId is associated with in the Bandwidth App. | 
 **channel** | [**MultiChannelMessageChannelEnum**](MultiChannelMessageChannelEnum.md) |  | 
 **content** | [**MmsMessageContent**](MmsMessageContent.md) |  | 
 **owner** | **str** | The Bandwidth senderId associated with the message. Identical to &#39;from&#39;. | 
