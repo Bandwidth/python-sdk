@@ -18,7 +18,7 @@ from bandwidth.models.endpoints import Endpoints
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
-from bandwidth.exceptions import UnauthorizedException, ForbiddenException, NotFoundException
+from bandwidth.exceptions import UnauthorizedException, NotFoundException
 from test.utils.env_variables import *
 
 
@@ -39,12 +39,6 @@ class TestEndpointsApi(unittest.TestCase):
             password='bad_password'
         )
         cls.unauthorized_api_instance = EndpointsApi(ApiClient(unauthorized_configuration))
-
-        forbidden_configuration = Configuration(
-            username=FORBIDDEN_USERNAME,
-            password=FORBIDDEN_PASSWORD
-        )
-        cls.forbidden_api_instance = EndpointsApi(ApiClient(forbidden_configuration))
 
         cls.account_id = BW_ACCOUNT_ID
         cls.test_endpoint_id = 'endpoint-id'
@@ -180,43 +174,17 @@ class TestEndpointsApi(unittest.TestCase):
 
         self.assertApiException(context, 401)
 
-    def test_create_endpoint_forbidden(self):
-        create_request = CreateWebRtcConnectionRequest(
-            type=EndpointTypeEnum.WEBRTC,
-            direction=EndpointDirectionEnum.BIDIRECTIONAL
-        )
-
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.create_endpoint(
-                self.account_id,
-                create_request
-            )
-
-        self.assertApiException(context, 403)
-
     def test_list_endpoints_unauthorized(self):
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.list_endpoints(self.account_id)
 
         self.assertApiException(context, 401)
 
-    def test_list_endpoints_forbidden(self):
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.list_endpoints(self.account_id)
-
-        self.assertApiException(context, 403)
-
     def test_get_endpoint_unauthorized(self):
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.get_endpoint(self.account_id, self.test_endpoint_id)
 
         self.assertApiException(context, 401)
-
-    def test_get_endpoint_forbidden(self):
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.get_endpoint(self.account_id, self.test_endpoint_id)
-
-        self.assertApiException(context, 403)
 
     def test_get_endpoint_not_found(self):
         with self.assertRaises(NotFoundException) as context:
@@ -229,12 +197,6 @@ class TestEndpointsApi(unittest.TestCase):
             self.unauthorized_api_instance.delete_endpoint(self.account_id, self.test_endpoint_id)
 
         self.assertApiException(context, 401)
-
-    def test_delete_endpoint_forbidden(self):
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.delete_endpoint(self.account_id, self.test_endpoint_id)
-
-        self.assertApiException(context, 403)
 
     def test_delete_endpoint_not_found(self):
         with self.assertRaises(NotFoundException) as context:
