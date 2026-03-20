@@ -31,6 +31,7 @@ class TestLatestMessageDeliveryStatusEnum(unittest.TestCase):
         assert LatestMessageDeliveryStatusEnum('ACTIVE') == 'ACTIVE'
         assert LatestMessageDeliveryStatusEnum('DEACTIVATED') == 'DEACTIVATED'
         assert LatestMessageDeliveryStatusEnum('UNKNOWN') == 'UNKNOWN'
+        assert LatestMessageDeliveryStatusEnum('NOT_ENABLED') == 'NOT_ENABLED'
 
 if __name__ == '__main__':
     unittest.main()
