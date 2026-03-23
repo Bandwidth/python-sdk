@@ -1,6 +1,6 @@
 # BusinessRegistrationTypeEnum
 
-The type of business registration number.
+The type of business registration number. 
 
 ## Enum
 
