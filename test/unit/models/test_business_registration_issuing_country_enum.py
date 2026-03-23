@@ -41,6 +41,10 @@ class TestBusinessRegistrationIssuingCountryEnum(unittest.TestCase):
         assert BusinessRegistrationIssuingCountryEnum('DEU') == 'DEU'
         assert BusinessRegistrationIssuingCountryEnum('ESP') == 'ESP'
         assert BusinessRegistrationIssuingCountryEnum('CHE') == 'CHE'
+        assert BusinessRegistrationIssuingCountryEnum('CYP') == 'CYP'
+        assert BusinessRegistrationIssuingCountryEnum('IND') == 'IND'
+        assert BusinessRegistrationIssuingCountryEnum('CHN') == 'CHN'
+        assert BusinessRegistrationIssuingCountryEnum('BGR') == 'BGR'
 
 
 if __name__ == '__main__':

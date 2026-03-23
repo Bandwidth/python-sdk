@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from bandwidth.models.address import Address
@@ -43,10 +43,10 @@ class TfvSubmissionInfo(BaseModel):
     opt_in_workflow: Optional[OptInWorkflow] = Field(default=None, alias="optInWorkflow")
     additional_information: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="Any additional information.", alias="additionalInformation")
     isv_reseller: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="ISV name.", alias="isvReseller")
-    privacy_policy_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request privacy policy URL.", alias="privacyPolicyUrl")
-    terms_and_conditions_url: Optional[StrictStr] = Field(default=None, description="The Toll-Free Verification request terms and conditions policy URL.", alias="termsAndConditionsUrl")
-    business_dba: Optional[StrictStr] = Field(default=None, description="The company 'Doing Business As'.", alias="businessDba")
-    business_registration_number: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="Government-issued business identifying number.", alias="businessRegistrationNumber")
+    privacy_policy_url: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The Toll-Free Verification request privacy policy URL.", alias="privacyPolicyUrl")
+    terms_and_conditions_url: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The Toll-Free Verification request terms and conditions policy URL.", alias="termsAndConditionsUrl")
+    business_dba: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The company 'Doing Business As'.", alias="businessDba")
+    business_registration_number: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="Government-issued business identifying number.  **Note:** If this field is provided, it is strongly recommended to also provide `businessRegistrationType` and `businessRegistrationIssuingCountry`. Submissions missing these fields have a high likelihood of rejection. ", alias="businessRegistrationNumber")
     business_registration_type: Optional[BusinessRegistrationTypeEnum] = Field(default=None, alias="businessRegistrationType")
     business_registration_issuing_country: Optional[BusinessRegistrationIssuingCountryEnum] = Field(default=None, alias="businessRegistrationIssuingCountry")
     business_entity_type: Optional[BusinessEntityTypeEnum] = Field(default=None, alias="businessEntityType")

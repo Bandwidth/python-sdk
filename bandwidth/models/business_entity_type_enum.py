@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class BusinessEntityTypeEnum(str, Enum):
     """
-    The type of registered business. If no option is applicable, please provide \"SOLE_PROPRIETOR\" as a value.
+    The type of registered business. 
     """
 
     """
