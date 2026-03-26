@@ -28,7 +28,6 @@ from bandwidth.models.endpoint import Endpoint
 from bandwidth.models.endpoints import Endpoints
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse
 from bandwidth.models.link import Link
-from bandwidth.models.page import Page
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
@@ -85,6 +84,8 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.data.data.creation_timestamp, instance_of(datetime))
         assert_that(response.data.data.expiration_timestamp, instance_of(datetime))
         assert_that(response.data.data.token, instance_of(str))
+        assert_that(response.data.data.tag, instance_of(str))
+        assert_that(response.data.data.devices, instance_of(list))
 
         assert_that(response.data.errors, instance_of(list))
 
@@ -125,6 +126,8 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.data.data.status, is_in(EndpointStatusEnum))
         assert_that(response.data.data.creation_timestamp, instance_of(datetime))
         assert_that(response.data.data.expiration_timestamp, instance_of(datetime))
+        assert_that(response.data.data.tag, instance_of(str))
+        assert_that(response.data.data.devices, instance_of(list))
 
         assert_that(response.data.errors, instance_of(list))
 
@@ -155,13 +158,7 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.data.data[0].creation_timestamp, instance_of(datetime))
         assert_that(response.data.data[0].expiration_timestamp, instance_of(datetime))
 
-        if response.data.page:
-            assert_that(response.data.page, instance_of(Page))
-            assert_that(response.data.page.page_size, greater_than_or_equal_to(0))
-
         assert_that(response.data.errors, instance_of(list))
-
-
 
 
 if __name__ == '__main__':
