@@ -100,6 +100,10 @@ class TestEndpointsApi(unittest.TestCase):
         assert isinstance(endpoint.creation_timestamp, datetime)
         assert isinstance(endpoint.expiration_timestamp, datetime)
 
+        tagged_endpoint = next((ep for ep in response.data.data if ep.endpoint_id == self.endpoint_id), None)
+        assert tagged_endpoint is not None
+        assert tagged_endpoint.tag == "python-sdk-test-endpoint"
+
     def getEndpoint(self):
         response: ApiResponse = self.endpoints_api_instance.get_endpoint_with_http_info(
             self.account_id,

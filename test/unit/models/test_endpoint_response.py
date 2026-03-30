@@ -61,6 +61,10 @@ class TestEndpointResponse(unittest.TestCase):
         assert isinstance(instance.links[0], Link)
         assert isinstance(instance.data, Endpoint)
         assert instance.data.endpoint_id == 'endpoint-999'
+        assert instance.data.type == EndpointTypeEnum.WEBRTC
+        assert instance.data.status == EndpointStatusEnum.DISCONNECTED
+        assert instance.data.creation_timestamp == datetime(2026, 1, 15, 10, 0, 0)
+        assert instance.data.expiration_timestamp == datetime(2026, 1, 16, 10, 0, 0)
         assert isinstance(instance.errors, list)
 
 if __name__ == '__main__':

@@ -94,13 +94,20 @@ class TestListEndpointsResponse(unittest.TestCase):
         assert isinstance(instance.links, list)
         assert len(instance.links) == 2
         assert isinstance(instance.page, Page)
-        assert instance.page.total_elements == 100
         assert instance.page.page_size == 10
+        assert instance.page.total_elements == 100
+        assert instance.page.total_pages == 10
+        assert instance.page.page_number == 1
         assert isinstance(instance.data, list)
         assert len(instance.data) == 2
         assert isinstance(instance.data[0], Endpoints)
         assert instance.data[0].endpoint_id == 'endpoint-1'
+        assert instance.data[0].type == EndpointTypeEnum.WEBRTC
+        assert instance.data[0].status == EndpointStatusEnum.CONNECTED
+        assert instance.data[0].tag == 'endpoint-1-tag'
         assert instance.data[1].endpoint_id == 'endpoint-2'
+        assert instance.data[1].type == EndpointTypeEnum.WEBRTC
+        assert instance.data[1].status == EndpointStatusEnum.DISCONNECTED
         assert isinstance(instance.errors, list)
 
 if __name__ == '__main__':

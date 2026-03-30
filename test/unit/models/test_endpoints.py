@@ -60,8 +60,8 @@ class TestEndpoints(unittest.TestCase):
         assert instance.endpoint_id == 'endpoint-789'
         assert instance.type == EndpointTypeEnum.WEBRTC
         assert instance.status == EndpointStatusEnum.DISCONNECTED
-        assert isinstance(instance.creation_timestamp, datetime)
-        assert isinstance(instance.expiration_timestamp, datetime)
+        assert instance.creation_timestamp == datetime(2026, 1, 15, 10, 0, 0)
+        assert instance.expiration_timestamp == datetime(2026, 1, 16, 10, 0, 0)
         assert instance.tag == 'list-endpoint'
 
 if __name__ == '__main__':

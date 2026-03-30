@@ -55,7 +55,7 @@ class TestDevice(unittest.TestCase):
         assert instance.device_id == 'device-abc-123'
         assert instance.device_name == 'My Test Device'
         assert instance.status == DeviceStatusEnum.CONNECTED
-        assert isinstance(instance.creation_timestamp, datetime)
+        assert instance.creation_timestamp == datetime(2026, 1, 15, 10, 0, 0)
 
 if __name__ == '__main__':
     unittest.main()

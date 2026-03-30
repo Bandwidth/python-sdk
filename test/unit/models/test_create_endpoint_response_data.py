@@ -72,8 +72,8 @@ class TestCreateEndpointResponseData(unittest.TestCase):
         assert instance.endpoint_id == 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
         assert instance.type == EndpointTypeEnum.WEBRTC
         assert instance.status == EndpointStatusEnum.CONNECTED
-        assert isinstance(instance.creation_timestamp, datetime)
-        assert isinstance(instance.expiration_timestamp, datetime)
+        assert instance.creation_timestamp == datetime(2026, 1, 15, 10, 0, 0)
+        assert instance.expiration_timestamp == datetime(2026, 1, 16, 10, 0, 0)
         assert instance.tag == 'my-tag'
         assert isinstance(instance.devices, list)
         assert len(instance.devices) == 1
