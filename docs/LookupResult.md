@@ -16,7 +16,8 @@ Name | Type | Description | Notes
 **deactivation_event** | [**DeactivationEventEnum**](DeactivationEventEnum.md) |  | [optional] 
 **latest_message_delivery_status** | [**LatestMessageDeliveryStatusEnum**](LatestMessageDeliveryStatusEnum.md) |  | [optional] 
 **initial_message_delivery_status_date** | **date** | [DNI-Only](#section/DNI-Only). The date the phone number entered the status described in &#x60;latestMessageDeliveryStatus&#x60;.  Think of this as the \&quot;start time\&quot; for that status. Value resets every time the &#x60;latestMessageDeliveryStatus&#x60; changes. | [optional] 
-**latest_message_delivery_status_date** | **date** | [DNI-Only](#section/DNI-Only). The date bandwidth last received delivery status information for this phone number.  Use this field to understand how up-to-date the &#x60;latestMessageDeliveryStatus&#x60; is. Value resets every time the &#x60;latestMessageDeliveryStatus&#x60; changes. | [optional] 
+**latest_message_delivery_status_date** | **date** | [DNI-Only](#section/DNI-Only). The date bandwidth last received delivery status information for this phone number. Use this field to understand how up-to-date the &#x60;latestMessageDeliveryStatus&#x60; is. Value resets every time the &#x60;latestMessageDeliveryStatus&#x60; changes. | [optional] 
+**rcs_enabled** | **bool** | [RCS-Only](#section/RCS-Only). Indicates whether the phone number is capable of receiving RCS messages. Value will be null if account has RCS, but no value was returned. Absent when account does not have RCS.  | [optional] 
 
 ## Example
 

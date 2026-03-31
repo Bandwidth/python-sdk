@@ -28,9 +28,9 @@ class LookupErrorSchema(BaseModel):
     """
     LookupErrorSchema
     """ # noqa: E501
-    code: Optional[StrictStr] = Field(default=None, description="Validation error code")
-    description: Optional[StrictStr] = Field(default=None, description="Description of validation error")
-    type: Optional[StrictStr] = Field(default=None, description="Type of validation error")
+    code: StrictStr = Field(description="Validation error code")
+    description: StrictStr = Field(description="Description of validation error")
+    type: StrictStr = Field(description="Type of validation error")
     meta: Optional[LookupErrorSchemaMeta] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["code", "description", "type", "meta"]

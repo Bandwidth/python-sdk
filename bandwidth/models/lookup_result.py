@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import date
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.deactivation_event_enum import DeactivationEventEnum
 from bandwidth.models.latest_message_delivery_status_enum import LatestMessageDeliveryStatusEnum
@@ -41,9 +41,10 @@ class LookupResult(BaseModel):
     deactivation_event: Optional[DeactivationEventEnum] = Field(default=None, alias="deactivationEvent")
     latest_message_delivery_status: Optional[LatestMessageDeliveryStatusEnum] = Field(default=None, alias="latestMessageDeliveryStatus")
     initial_message_delivery_status_date: Optional[date] = Field(default=None, description="[DNI-Only](#section/DNI-Only). The date the phone number entered the status described in `latestMessageDeliveryStatus`.  Think of this as the \"start time\" for that status. Value resets every time the `latestMessageDeliveryStatus` changes.", alias="initialMessageDeliveryStatusDate")
-    latest_message_delivery_status_date: Optional[date] = Field(default=None, description="[DNI-Only](#section/DNI-Only). The date bandwidth last received delivery status information for this phone number.  Use this field to understand how up-to-date the `latestMessageDeliveryStatus` is. Value resets every time the `latestMessageDeliveryStatus` changes.", alias="latestMessageDeliveryStatusDate")
+    latest_message_delivery_status_date: Optional[date] = Field(default=None, description="[DNI-Only](#section/DNI-Only). The date bandwidth last received delivery status information for this phone number. Use this field to understand how up-to-date the `latestMessageDeliveryStatus` is. Value resets every time the `latestMessageDeliveryStatus` changes.", alias="latestMessageDeliveryStatusDate")
+    rcs_enabled: Optional[StrictBool] = Field(default=None, description="[RCS-Only](#section/RCS-Only). Indicates whether the phone number is capable of receiving RCS messages. Value will be null if account has RCS, but no value was returned. Absent when account does not have RCS. ", alias="rcsEnabled")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["phoneNumber", "lineType", "messagingProvider", "voiceProvider", "countryCodeA3", "deactivationReporter", "deactivationDate", "deactivationEvent", "latestMessageDeliveryStatus", "initialMessageDeliveryStatusDate", "latestMessageDeliveryStatusDate"]
+    __properties: ClassVar[List[str]] = ["phoneNumber", "lineType", "messagingProvider", "voiceProvider", "countryCodeA3", "deactivationReporter", "deactivationDate", "deactivationEvent", "latestMessageDeliveryStatus", "initialMessageDeliveryStatusDate", "latestMessageDeliveryStatusDate", "rcsEnabled"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -113,7 +114,8 @@ class LookupResult(BaseModel):
             "deactivationEvent": obj.get("deactivationEvent"),
             "latestMessageDeliveryStatus": obj.get("latestMessageDeliveryStatus"),
             "initialMessageDeliveryStatusDate": obj.get("initialMessageDeliveryStatusDate"),
-            "latestMessageDeliveryStatusDate": obj.get("latestMessageDeliveryStatusDate")
+            "latestMessageDeliveryStatusDate": obj.get("latestMessageDeliveryStatusDate"),
+            "rcsEnabled": obj.get("rcsEnabled")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
