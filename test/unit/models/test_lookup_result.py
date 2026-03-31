@@ -44,7 +44,8 @@ class TestLookupResult(unittest.TestCase):
                 deactivation_event = 'DEACTIVATED', 
                 latest_message_delivery_status = 'ACTIVE', 
                 initial_message_delivery_status_date = '2025-06-20', 
-                latest_message_delivery_status_date = '2025-06-20', )
+                latest_message_delivery_status_date = '2025-06-20',
+                rcs_enabled = True, )
         else:
             return LookupResult(
         )
@@ -65,6 +66,7 @@ class TestLookupResult(unittest.TestCase):
         assert instance.latest_message_delivery_status == 'ACTIVE'
         assert isinstance(instance.initial_message_delivery_status_date, date)
         assert isinstance(instance.latest_message_delivery_status_date, date)
+        assert instance.rcs_enabled == True
 
 if __name__ == '__main__':
     unittest.main()
