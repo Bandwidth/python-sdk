@@ -31,42 +31,29 @@ class TestCreateEndpointResponseData(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateEndpointResponseData:
-        """Test CreateEndpointResponseData
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        if include_optional:
-            return CreateEndpointResponseData(
-                endpoint_id='e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
-                type=EndpointTypeEnum.WEBRTC,
-                status=EndpointStatusEnum.CONNECTED,
-                creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
-                tag='my-tag',
-                devices=[
-                    Device(
-                        device_id='device-456',
-                        device_name='Test Device',
-                        status=DeviceStatusEnum.CONNECTED,
-                        creation_timestamp=datetime(2026, 1, 15, 10, 0, 0)
-                    )
-                ],
-                token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.token'
-            )
-        else:
-            return CreateEndpointResponseData(
-                endpoint_id='e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
-                type=EndpointTypeEnum.WEBRTC,
-                status=EndpointStatusEnum.CONNECTED,
-                creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
-                token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.token'
-            )
+    def make_instance(self) -> CreateEndpointResponseData:
+        """Test CreateEndpointResponseData"""
+        return CreateEndpointResponseData(
+            endpoint_id='e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
+            type=EndpointTypeEnum.WEBRTC,
+            status=EndpointStatusEnum.CONNECTED,
+            creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
+            expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
+            tag='my-tag',
+            devices=[
+                Device(
+                    device_id='device-456',
+                    device_name='Test Device',
+                    status=DeviceStatusEnum.CONNECTED,
+                    creation_timestamp=datetime(2026, 1, 15, 10, 0, 0)
+                )
+            ],
+            token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.token'
+        )
 
     def testCreateEndpointResponseData(self):
         """Test CreateEndpointResponseData"""
-        instance = self.make_instance(True)
+        instance = self.make_instance()
         assert instance is not None
         assert isinstance(instance, CreateEndpointResponseData)
         assert instance.endpoint_id == 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'

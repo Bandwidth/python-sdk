@@ -32,11 +32,8 @@ class TestCreateEndpointResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateEndpointResponse:
-        """Test CreateEndpointResponse
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
+    def make_instance(self) -> CreateEndpointResponse:
+        """Test CreateEndpointResponse"""
         return CreateEndpointResponse(
             links=[
                 Link(href='https://api.bandwidth.com/endpoint-123', rel='self')
@@ -54,7 +51,7 @@ class TestCreateEndpointResponse(unittest.TestCase):
 
     def testCreateEndpointResponse(self):
         """Test CreateEndpointResponse"""
-        instance = self.make_instance(True)
+        instance = self.make_instance()
         assert instance is not None
         assert isinstance(instance, CreateEndpointResponse)
         assert isinstance(instance.links, list)

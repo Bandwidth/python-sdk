@@ -16,7 +16,6 @@
 import unittest
 from datetime import datetime
 
-from hamcrest import *
 from test.utils.env_variables import *
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.endpoints_api import EndpointsApi
@@ -68,26 +67,26 @@ class TestEndpointsApi(unittest.TestCase):
             endpoint_body
         )
 
-        assert_that(response.status_code, equal_to(201))
-        assert_that(response.data, instance_of(CreateEndpointResponse))
+        assert response.status_code == 201
+        assert isinstance(response.data, CreateEndpointResponse)
 
-        assert_that(response.data.links, instance_of(list))
-        assert_that(len(response.data.links), greater_than(0))
-        assert_that(response.data.links[0], instance_of(Link))
-        assert_that(response.data.links[0].href, starts_with('http'))
-        assert_that(response.data.links[0].rel, equal_to('endpoint'))
+        assert isinstance(response.data.links, list)
+        assert len(response.data.links) > 0
+        assert isinstance(response.data.links[0], Link)
+        assert response.data.links[0].href.startswith('http')
+        assert response.data.links[0].rel == 'endpoint'
 
-        assert_that(response.data.data, instance_of(CreateEndpointResponseData))
-        assert_that(response.data.data.endpoint_id, equal_to('e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'))
-        assert_that(response.data.data.type, equal_to(EndpointTypeEnum.WEBRTC))
-        assert_that(response.data.data.status, equal_to(EndpointStatusEnum.CONNECTED))
-        assert_that(response.data.data.creation_timestamp, instance_of(datetime))
-        assert_that(response.data.data.expiration_timestamp, instance_of(datetime))
-        assert_that(response.data.data.token, equal_to('xxxxx.yyyyy.zzzzz'))
-        assert_that(response.data.data.tag, equal_to('my-tag'))
-        assert_that(response.data.data.devices, instance_of(list))
+        assert isinstance(response.data.data, CreateEndpointResponseData)
+        assert response.data.data.endpoint_id == 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert response.data.data.type == EndpointTypeEnum.WEBRTC
+        assert response.data.data.status == EndpointStatusEnum.CONNECTED
+        assert isinstance(response.data.data.creation_timestamp, datetime)
+        assert isinstance(response.data.data.expiration_timestamp, datetime)
+        assert response.data.data.token == 'xxxxx.yyyyy.zzzzz'
+        assert response.data.data.tag == 'my-tag'
+        assert isinstance(response.data.data.devices, list)
 
-        assert_that(response.data.errors, equal_to([]))
+        assert response.data.errors == []
 
     def test_delete_endpoint(self) -> None:
         """Test case for delete_endpoint
@@ -99,7 +98,7 @@ class TestEndpointsApi(unittest.TestCase):
             "ep-abc123"
         )
 
-        assert_that(response.status_code, equal_to(204))
+        assert response.status_code == 204
 
     def test_get_endpoint(self) -> None:
         """Test case for get_endpoint
@@ -111,25 +110,25 @@ class TestEndpointsApi(unittest.TestCase):
             "ep-abc123"
         )
 
-        assert_that(response.status_code, equal_to(200))
-        assert_that(response.data, instance_of(EndpointResponse))
+        assert response.status_code == 200
+        assert isinstance(response.data, EndpointResponse)
 
-        assert_that(response.data.links, instance_of(list))
-        assert_that(len(response.data.links), greater_than(0))
-        assert_that(response.data.links[0], instance_of(Link))
-        assert_that(response.data.links[0].href, starts_with('http'))
-        assert_that(response.data.links[0].rel, equal_to('self'))
+        assert isinstance(response.data.links, list)
+        assert len(response.data.links) > 0
+        assert isinstance(response.data.links[0], Link)
+        assert response.data.links[0].href.startswith('http')
+        assert response.data.links[0].rel == 'self'
 
-        assert_that(response.data.data, instance_of(Endpoint))
-        assert_that(response.data.data.endpoint_id, equal_to('e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'))
-        assert_that(response.data.data.type, equal_to(EndpointTypeEnum.WEBRTC))
-        assert_that(response.data.data.status, equal_to(EndpointStatusEnum.CONNECTED))
-        assert_that(response.data.data.creation_timestamp, instance_of(datetime))
-        assert_that(response.data.data.expiration_timestamp, instance_of(datetime))
-        assert_that(response.data.data.tag, equal_to('my-tag'))
-        assert_that(response.data.data.devices, equal_to([]))
+        assert isinstance(response.data.data, Endpoint)
+        assert response.data.data.endpoint_id == 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert response.data.data.type == EndpointTypeEnum.WEBRTC
+        assert response.data.data.status == EndpointStatusEnum.CONNECTED
+        assert isinstance(response.data.data.creation_timestamp, datetime)
+        assert isinstance(response.data.data.expiration_timestamp, datetime)
+        assert response.data.data.tag == 'my-tag'
+        assert response.data.data.devices == []
 
-        assert_that(response.data.errors, equal_to([]))
+        assert response.data.errors == []
 
     def test_list_endpoints(self) -> None:
         """Test case for list_endpoints
@@ -140,33 +139,33 @@ class TestEndpointsApi(unittest.TestCase):
             BW_ACCOUNT_ID
         )
 
-        assert_that(response.status_code, equal_to(200))
-        assert_that(response.data, instance_of(ListEndpointsResponse))
+        assert response.status_code == 200
+        assert isinstance(response.data, ListEndpointsResponse)
 
-        assert_that(response.data.links, instance_of(list))
-        assert_that(len(response.data.links), greater_than(0))
-        assert_that(response.data.links[0], instance_of(Link))
-        assert_that(response.data.links[0].href, starts_with('http'))
-        assert_that(response.data.links[0].rel, equal_to('self'))
+        assert isinstance(response.data.links, list)
+        assert len(response.data.links) > 0
+        assert isinstance(response.data.links[0], Link)
+        assert response.data.links[0].href.startswith('http')
+        assert response.data.links[0].rel == 'self'
 
-        assert_that(response.data.page.page_size, equal_to(2))
-        assert_that(response.data.page.total_elements, equal_to(10))
-        assert_that(response.data.page.total_pages, equal_to(5))
-        assert_that(response.data.page.page_number, equal_to(0))
+        assert response.data.page.page_size == 2
+        assert response.data.page.total_elements == 10
+        assert response.data.page.total_pages == 5
+        assert response.data.page.page_number == 0
 
-        assert_that(response.data.data, instance_of(list))
-        assert_that(len(response.data.data), equal_to(2))
-        assert_that(response.data.data[0], instance_of(Endpoints))
-        assert_that(response.data.data[0].endpoint_id, equal_to('e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'))
-        assert_that(response.data.data[0].type, equal_to(EndpointTypeEnum.WEBRTC))
-        assert_that(response.data.data[0].status, equal_to(EndpointStatusEnum.CONNECTED))
-        assert_that(response.data.data[0].tag, equal_to('my-tag'))
-        assert_that(response.data.data[0].creation_timestamp, instance_of(datetime))
-        assert_that(response.data.data[0].expiration_timestamp, instance_of(datetime))
-        assert_that(response.data.data[1].endpoint_id, equal_to('e-2cb0-4a07-b215-b22865662d85-15ac29a2-1331029c'))
-        assert_that(response.data.data[1].tag, equal_to('my-tag'))
+        assert isinstance(response.data.data, list)
+        assert len(response.data.data) == 2
+        assert isinstance(response.data.data[0], Endpoints)
+        assert response.data.data[0].endpoint_id == 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert response.data.data[0].type == EndpointTypeEnum.WEBRTC
+        assert response.data.data[0].status == EndpointStatusEnum.CONNECTED
+        assert response.data.data[0].tag == 'my-tag'
+        assert isinstance(response.data.data[0].creation_timestamp, datetime)
+        assert isinstance(response.data.data[0].expiration_timestamp, datetime)
+        assert response.data.data[1].endpoint_id == 'e-2cb0-4a07-b215-b22865662d85-15ac29a2-1331029c'
+        assert response.data.data[1].tag == 'my-tag'
 
-        assert_that(response.data.errors, equal_to([]))
+        assert response.data.errors == []
 
 
 if __name__ == '__main__':

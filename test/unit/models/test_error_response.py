@@ -28,11 +28,8 @@ class TestErrorResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> ErrorResponse:
-        """Test ErrorResponse
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
+    def make_instance(self) -> ErrorResponse:
+        """Test ErrorResponse"""
         return ErrorResponse(
             links=[
                 Link(href='https://api.bandwidth.com/errors', rel='self')
@@ -48,7 +45,7 @@ class TestErrorResponse(unittest.TestCase):
 
     def testErrorResponse(self):
         """Test ErrorResponse"""
-        instance = self.make_instance(True)
+        instance = self.make_instance()
         assert instance is not None
         assert isinstance(instance, ErrorResponse)
         assert isinstance(instance.links, list)

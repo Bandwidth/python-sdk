@@ -28,28 +28,19 @@ class TestCreateEndpointRequestBase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateEndpointRequestBase:
-        """Test CreateEndpointRequestBase
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        if include_optional:
-            return CreateEndpointRequestBase(
-                type=EndpointTypeEnum.WEBRTC,
-                direction=EndpointDirectionEnum.BIDIRECTIONAL,
-                event_callback_url='https://example.com/callback',
-                event_fallback_url='https://example.com/fallback',
-                tag='test-request'
-            )
-        else:
-            return CreateEndpointRequestBase(
-                type=EndpointTypeEnum.WEBRTC,
-                direction=EndpointDirectionEnum.BIDIRECTIONAL
-            )
+    def make_instance(self) -> CreateEndpointRequestBase:
+        """Test CreateEndpointRequestBase"""
+        return CreateEndpointRequestBase(
+            type=EndpointTypeEnum.WEBRTC,
+            direction=EndpointDirectionEnum.BIDIRECTIONAL,
+            event_callback_url='https://example.com/callback',
+            event_fallback_url='https://example.com/fallback',
+            tag='test-request'
+        )
 
     def testCreateEndpointRequestBase(self):
         """Test CreateEndpointRequestBase"""
-        instance = self.make_instance(True)
+        instance = self.make_instance()
         assert instance is not None
         assert isinstance(instance, CreateEndpointRequestBase)
         assert instance.type == EndpointTypeEnum.WEBRTC

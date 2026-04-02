@@ -32,42 +32,28 @@ class TestEndpointEvent(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> EndpointEvent:
-        """Test EndpointEvent
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        if include_optional:
-            return EndpointEvent(
-                endpoint_id='endpoint-event-123',
-                type=EndpointTypeEnum.WEBRTC,
-                status=EndpointStatusEnum.CONNECTED,
-                creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
-                tag='event-endpoint',
-                event_time=datetime(2026, 1, 15, 11, 30, 0),
-                event_type=EndpointEventTypeEnum.DEVICE_CONNECTED,
-                device=Device(
-                    device_id='device-event-456',
-                    device_name='Event Device',
-                    status=DeviceStatusEnum.CONNECTED,
-                    creation_timestamp=datetime(2026, 1, 15, 11, 30, 0)
-                )
+    def make_instance(self) -> EndpointEvent:
+        """Test EndpointEvent"""
+        return EndpointEvent(
+            endpoint_id='endpoint-event-123',
+            type=EndpointTypeEnum.WEBRTC,
+            status=EndpointStatusEnum.CONNECTED,
+            creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
+            expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
+            tag='event-endpoint',
+            event_time=datetime(2026, 1, 15, 11, 30, 0),
+            event_type=EndpointEventTypeEnum.DEVICE_CONNECTED,
+            device=Device(
+                device_id='device-event-456',
+                device_name='Event Device',
+                status=DeviceStatusEnum.CONNECTED,
+                creation_timestamp=datetime(2026, 1, 15, 11, 30, 0)
             )
-        else:
-            return EndpointEvent(
-                endpoint_id='endpoint-event-123',
-                type=EndpointTypeEnum.WEBRTC,
-                status=EndpointStatusEnum.CONNECTED,
-                creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
-                event_time=datetime(2026, 1, 15, 11, 30, 0),
-                event_type=EndpointEventTypeEnum.DEVICE_CONNECTED
-            )
+        )
 
     def testEndpointEvent(self):
         """Test EndpointEvent"""
-        instance = self.make_instance(True)
+        instance = self.make_instance()
         assert instance is not None
         assert isinstance(instance, EndpointEvent)
         assert instance.endpoint_id == 'endpoint-event-123'

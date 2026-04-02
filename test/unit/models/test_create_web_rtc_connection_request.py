@@ -28,32 +28,23 @@ class TestCreateWebRtcConnectionRequest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> CreateWebRtcConnectionRequest:
-        """Test CreateWebRtcConnectionRequest
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        if include_optional:
-            return CreateWebRtcConnectionRequest(
-                type=EndpointTypeEnum.WEBRTC,
-                direction=EndpointDirectionEnum.BIDIRECTIONAL,
-                event_callback_url='https://example.com/callback',
-                event_fallback_url='https://example.com/fallback',
-                tag='test-webrtc',
-                connection_metadata={
-                    'key1': 'value1',
-                    'key2': 'value2'
-                }
-            )
-        else:
-            return CreateWebRtcConnectionRequest(
-                type=EndpointTypeEnum.WEBRTC,
-                direction=EndpointDirectionEnum.BIDIRECTIONAL
-            )
+    def make_instance(self) -> CreateWebRtcConnectionRequest:
+        """Test CreateWebRtcConnectionRequest"""
+        return CreateWebRtcConnectionRequest(
+            type=EndpointTypeEnum.WEBRTC,
+            direction=EndpointDirectionEnum.BIDIRECTIONAL,
+            event_callback_url='https://example.com/callback',
+            event_fallback_url='https://example.com/fallback',
+            tag='test-webrtc',
+            connection_metadata={
+                'key1': 'value1',
+                'key2': 'value2'
+            }
+        )
 
     def testCreateWebRtcConnectionRequest(self):
         """Test CreateWebRtcConnectionRequest"""
-        instance = self.make_instance(True)
+        instance = self.make_instance()
         assert instance is not None
         assert isinstance(instance, CreateWebRtcConnectionRequest)
         assert instance.type == EndpointTypeEnum.WEBRTC

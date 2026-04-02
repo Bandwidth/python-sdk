@@ -31,40 +31,28 @@ class TestEndpoint(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> Endpoint:
-        """Test Endpoint
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        if include_optional:
-            return Endpoint(
-                endpoint_id='endpoint-123',
-                type=EndpointTypeEnum.WEBRTC,
-                status=EndpointStatusEnum.CONNECTED,
-                creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
-                tag='test-endpoint',
-                devices=[
-                    Device(
-                        device_id='device-456',
-                        device_name='Test Device',
-                        status=DeviceStatusEnum.CONNECTED,
-                        creation_timestamp=datetime(2026, 1, 15, 10, 0, 0)
-                    )
-                ]
-            )
-        else:
-            return Endpoint(
-                endpoint_id='endpoint-123',
-                type=EndpointTypeEnum.WEBRTC,
-                status=EndpointStatusEnum.CONNECTED,
-                creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0)
-            )
+    def make_instance(self) -> Endpoint:
+        """Test Endpoint"""
+        return Endpoint(
+            endpoint_id='endpoint-123',
+            type=EndpointTypeEnum.WEBRTC,
+            status=EndpointStatusEnum.CONNECTED,
+            creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
+            expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
+            tag='test-endpoint',
+            devices=[
+                Device(
+                    device_id='device-456',
+                    device_name='Test Device',
+                    status=DeviceStatusEnum.CONNECTED,
+                    creation_timestamp=datetime(2026, 1, 15, 10, 0, 0)
+                )
+            ]
+        )
 
     def testEndpoint(self):
         """Test Endpoint"""
-        instance = self.make_instance(True)
+        instance = self.make_instance()
         assert instance is not None
         assert isinstance(instance, Endpoint)
         assert instance.endpoint_id == 'endpoint-123'

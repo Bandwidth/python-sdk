@@ -29,32 +29,20 @@ class TestEndpoints(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> Endpoints:
-        """Test Endpoints
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        if include_optional:
-            return Endpoints(
-                endpoint_id='endpoint-789',
-                type=EndpointTypeEnum.WEBRTC,
-                status=EndpointStatusEnum.DISCONNECTED,
-                creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
-                tag='list-endpoint'
-            )
-        else:
-            return Endpoints(
-                endpoint_id='endpoint-789',
-                type=EndpointTypeEnum.WEBRTC,
-                status=EndpointStatusEnum.DISCONNECTED,
-                creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0)
-            )
+    def make_instance(self) -> Endpoints:
+        """Test Endpoints"""
+        return Endpoints(
+            endpoint_id='endpoint-789',
+            type=EndpointTypeEnum.WEBRTC,
+            status=EndpointStatusEnum.DISCONNECTED,
+            creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
+            expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
+            tag='list-endpoint'
+        )
 
     def testEndpoints(self):
         """Test Endpoints"""
-        instance = self.make_instance(True)
+        instance = self.make_instance()
         assert instance is not None
         assert isinstance(instance, Endpoints)
         assert instance.endpoint_id == 'endpoint-789'

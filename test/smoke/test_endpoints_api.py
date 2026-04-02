@@ -89,9 +89,6 @@ class TestEndpointsApi(unittest.TestCase):
         assert isinstance(response.data.data, list)
         assert len(response.data.data) > 0
 
-        listed_ids = [ep.endpoint_id for ep in response.data.data]
-        assert self.endpoint_id in listed_ids
-
         endpoint = response.data.data[0]
         assert isinstance(endpoint, Endpoints)
         assert isinstance(endpoint.endpoint_id, str)

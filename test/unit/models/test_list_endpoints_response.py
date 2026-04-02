@@ -33,62 +33,42 @@ class TestListEndpointsResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> ListEndpointsResponse:
-        """Test ListEndpointsResponse
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        if include_optional:
-            return ListEndpointsResponse(
-                links=[
-                    Link(href='https://api.bandwidth.com/endpoints', rel='self'),
-                    Link(href='https://api.bandwidth.com/endpoints?page=2', rel='next')
-                ],
-                page=Page(
-                    page_size=10,
-                    total_elements=100,
-                    total_pages=10,
-                    page_number=1
+    def make_instance(self) -> ListEndpointsResponse:
+        """Test ListEndpointsResponse"""
+        return ListEndpointsResponse(
+            links=[
+                Link(href='https://api.bandwidth.com/endpoints', rel='self'),
+                Link(href='https://api.bandwidth.com/endpoints?page=2', rel='next')
+            ],
+            page=Page(
+                page_size=10,
+                total_elements=100,
+                total_pages=10,
+                page_number=1
+            ),
+            data=[
+                Endpoints(
+                    endpoint_id='endpoint-1',
+                    type=EndpointTypeEnum.WEBRTC,
+                    status=EndpointStatusEnum.CONNECTED,
+                    creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
+                    expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
+                    tag='endpoint-1-tag'
                 ),
-                data=[
-                    Endpoints(
-                        endpoint_id='endpoint-1',
-                        type=EndpointTypeEnum.WEBRTC,
-                        status=EndpointStatusEnum.CONNECTED,
-                        creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                        expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
-                        tag='endpoint-1-tag'
-                    ),
-                    Endpoints(
-                        endpoint_id='endpoint-2',
-                        type=EndpointTypeEnum.WEBRTC,
-                        status=EndpointStatusEnum.DISCONNECTED,
-                        creation_timestamp=datetime(2026, 1, 15, 9, 0, 0),
-                        expiration_timestamp=datetime(2026, 1, 16, 9, 0, 0)
-                    )
-                ],
-                errors=[]
-            )
-        else:
-            return ListEndpointsResponse(
-                links=[
-                    Link(href='https://api.bandwidth.com/endpoints', rel='self')
-                ],
-                data=[
-                    Endpoints(
-                        endpoint_id='endpoint-1',
-                        type=EndpointTypeEnum.WEBRTC,
-                        status=EndpointStatusEnum.CONNECTED,
-                        creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                        expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0)
-                    )
-                ],
-                errors=[]
-            )
+                Endpoints(
+                    endpoint_id='endpoint-2',
+                    type=EndpointTypeEnum.WEBRTC,
+                    status=EndpointStatusEnum.DISCONNECTED,
+                    creation_timestamp=datetime(2026, 1, 15, 9, 0, 0),
+                    expiration_timestamp=datetime(2026, 1, 16, 9, 0, 0)
+                )
+            ],
+            errors=[]
+        )
 
     def testListEndpointsResponse(self):
         """Test ListEndpointsResponse"""
-        instance = self.make_instance(True)
+        instance = self.make_instance()
         assert instance is not None
         assert isinstance(instance, ListEndpointsResponse)
         assert isinstance(instance.links, list)

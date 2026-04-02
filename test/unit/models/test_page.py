@@ -26,26 +26,18 @@ class TestPage(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> Page:
-        """Test Page
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        if include_optional:
-            return Page(
-                page_size=10,
-                total_elements=100,
-                total_pages=10,
-                page_number=1
-            )
-        else:
-            return Page(
-                page_size=10
-            )
+    def make_instance(self) -> Page:
+        """Test Page"""
+        return Page(
+            page_size=10,
+            total_elements=100,
+            total_pages=10,
+            page_number=1
+        )
 
     def testPage(self):
         """Test Page"""
-        instance = self.make_instance(True)
+        instance = self.make_instance()
         assert instance is not None
         assert isinstance(instance, Page)
         assert instance.page_size == 10
