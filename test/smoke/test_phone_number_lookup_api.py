@@ -74,7 +74,7 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
         assert_that(response.data.errors, instance_of(list))
 
         request_id = response.data.data.request_id
-        sleep(30)
+        sleep(60)
 
         response = self.api.get_async_bulk_lookup_with_http_info(BW_ACCOUNT_ID, request_id)
         assert_that(response, is_not(none()))
