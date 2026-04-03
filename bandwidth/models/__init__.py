@@ -94,6 +94,7 @@ from bandwidth.models.initiate_callback import InitiateCallback
 from bandwidth.models.latest_message_delivery_status_enum import LatestMessageDeliveryStatusEnum
 from bandwidth.models.line_type_enum import LineTypeEnum
 from bandwidth.models.link import Link
+from bandwidth.models.link_method_enum import LinkMethodEnum
 from bandwidth.models.link_schema import LinkSchema
 from bandwidth.models.links_object import LinksObject
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse

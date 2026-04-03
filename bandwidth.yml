@@ -2320,6 +2320,13 @@ components:
           type: string
         href:
           type: string
+        method:
+          type: string
+          enum:
+            - GET
+            - POST
+            - DELETE
+          description: The HTTP method to use when making the request.
     errorObject:
       type: object
       properties:
@@ -6672,6 +6679,13 @@ components:
     error:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          description: A unique identifier for the error.
+        type:
+          type: string
+          description: The type of error.
         code:
           type: integer
         description:
@@ -6680,6 +6694,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/telephoneNumber'
+        source:
+          type: object
+          properties:
+            parameter:
+              type: string
+              description: The URI parameter that caused the error.
+            field:
+              type: string
+              description: The request body field that caused the error.
+            header:
+              type: string
+              description: The header that caused the error.
+            reference:
+              type: string
+              description: A reference to the source of the error.
     telephoneNumber:
       type: object
       properties:
