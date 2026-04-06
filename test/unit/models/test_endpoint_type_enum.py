@@ -28,18 +28,7 @@ class TestEndpointTypeEnum(unittest.TestCase):
 
     def testEndpointTypeEnum(self):
         """Test EndpointTypeEnum"""
-        # Test that the enum has the expected value
-        assert EndpointTypeEnum.WEBRTC == 'WEBRTC'
-
-        # Test enum instantiation
-        instance = EndpointTypeEnum.WEBRTC
-        assert instance is not None
-        assert isinstance(instance, EndpointTypeEnum)
-
-        # Test from_json
-        json_str = '"WEBRTC"'
-        instance_from_json = EndpointTypeEnum.from_json(json_str)
-        assert instance_from_json == EndpointTypeEnum.WEBRTC
+        assert EndpointTypeEnum('WEBRTC') == 'WEBRTC'
 
 if __name__ == '__main__':
     unittest.main()

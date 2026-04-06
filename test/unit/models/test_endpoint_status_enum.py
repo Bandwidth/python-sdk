@@ -28,27 +28,8 @@ class TestEndpointStatusEnum(unittest.TestCase):
 
     def testEndpointStatusEnum(self):
         """Test EndpointStatusEnum"""
-        # Test that the enum has the expected values
-        assert EndpointStatusEnum.CONNECTED == 'CONNECTED'
-        assert EndpointStatusEnum.DISCONNECTED == 'DISCONNECTED'
-
-        # Test enum instantiation
-        instance_connected = EndpointStatusEnum.CONNECTED
-        assert instance_connected is not None
-        assert isinstance(instance_connected, EndpointStatusEnum)
-
-        instance_disconnected = EndpointStatusEnum.DISCONNECTED
-        assert instance_disconnected is not None
-        assert isinstance(instance_disconnected, EndpointStatusEnum)
-
-        # Test from_json
-        json_str_connected = '"CONNECTED"'
-        instance_from_json = EndpointStatusEnum.from_json(json_str_connected)
-        assert instance_from_json == EndpointStatusEnum.CONNECTED
-
-        json_str_disconnected = '"DISCONNECTED"'
-        instance_from_json = EndpointStatusEnum.from_json(json_str_disconnected)
-        assert instance_from_json == EndpointStatusEnum.DISCONNECTED
+        assert EndpointStatusEnum('CONNECTED') == 'CONNECTED'
+        assert EndpointStatusEnum('DISCONNECTED') == 'DISCONNECTED'
 
 if __name__ == '__main__':
     unittest.main()

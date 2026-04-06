@@ -27,6 +27,7 @@ from bandwidth.models.endpoint import Endpoint
 from bandwidth.models.endpoints import Endpoints
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse
 from bandwidth.models.link import Link
+from bandwidth.models.page import Page
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum

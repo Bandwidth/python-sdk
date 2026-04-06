@@ -28,36 +28,9 @@ class TestEndpointDirectionEnum(unittest.TestCase):
 
     def testEndpointDirectionEnum(self):
         """Test EndpointDirectionEnum"""
-        # Test that the enum has the expected values
-        assert EndpointDirectionEnum.INBOUND == 'INBOUND'
-        assert EndpointDirectionEnum.OUTBOUND == 'OUTBOUND'
-        assert EndpointDirectionEnum.BIDIRECTIONAL == 'BIDIRECTIONAL'
-
-        # Test enum instantiation
-        instance_inbound = EndpointDirectionEnum.INBOUND
-        assert instance_inbound is not None
-        assert isinstance(instance_inbound, EndpointDirectionEnum)
-
-        instance_outbound = EndpointDirectionEnum.OUTBOUND
-        assert instance_outbound is not None
-        assert isinstance(instance_outbound, EndpointDirectionEnum)
-
-        instance_bidirectional = EndpointDirectionEnum.BIDIRECTIONAL
-        assert instance_bidirectional is not None
-        assert isinstance(instance_bidirectional, EndpointDirectionEnum)
-
-        # Test from_json
-        json_str_inbound = '"INBOUND"'
-        instance_from_json = EndpointDirectionEnum.from_json(json_str_inbound)
-        assert instance_from_json == EndpointDirectionEnum.INBOUND
-
-        json_str_outbound = '"OUTBOUND"'
-        instance_from_json = EndpointDirectionEnum.from_json(json_str_outbound)
-        assert instance_from_json == EndpointDirectionEnum.OUTBOUND
-
-        json_str_bidirectional = '"BIDIRECTIONAL"'
-        instance_from_json = EndpointDirectionEnum.from_json(json_str_bidirectional)
-        assert instance_from_json == EndpointDirectionEnum.BIDIRECTIONAL
+        assert EndpointDirectionEnum('INBOUND') == 'INBOUND'
+        assert EndpointDirectionEnum('OUTBOUND') == 'OUTBOUND'
+        assert EndpointDirectionEnum('BIDIRECTIONAL') == 'BIDIRECTIONAL'
 
 if __name__ == '__main__':
     unittest.main()

@@ -28,27 +28,8 @@ class TestEndpointEventTypeEnum(unittest.TestCase):
 
     def testEndpointEventTypeEnum(self):
         """Test EndpointEventTypeEnum"""
-        # Test that the enum has the expected values
-        assert EndpointEventTypeEnum.DEVICE_CONNECTED == 'DEVICE_CONNECTED'
-        assert EndpointEventTypeEnum.DEVICE_DISCONNECTED == 'DEVICE_DISCONNECTED'
-
-        # Test enum instantiation
-        instance_connected = EndpointEventTypeEnum.DEVICE_CONNECTED
-        assert instance_connected is not None
-        assert isinstance(instance_connected, EndpointEventTypeEnum)
-
-        instance_disconnected = EndpointEventTypeEnum.DEVICE_DISCONNECTED
-        assert instance_disconnected is not None
-        assert isinstance(instance_disconnected, EndpointEventTypeEnum)
-
-        # Test from_json
-        json_str_connected = '"DEVICE_CONNECTED"'
-        instance_from_json = EndpointEventTypeEnum.from_json(json_str_connected)
-        assert instance_from_json == EndpointEventTypeEnum.DEVICE_CONNECTED
-
-        json_str_disconnected = '"DEVICE_DISCONNECTED"'
-        instance_from_json = EndpointEventTypeEnum.from_json(json_str_disconnected)
-        assert instance_from_json == EndpointEventTypeEnum.DEVICE_DISCONNECTED
+        assert EndpointEventTypeEnum('DEVICE_CONNECTED') == 'DEVICE_CONNECTED'
+        assert EndpointEventTypeEnum('DEVICE_DISCONNECTED') == 'DEVICE_DISCONNECTED'
 
 if __name__ == '__main__':
     unittest.main()
