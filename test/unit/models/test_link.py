@@ -26,22 +26,27 @@ class TestLink(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self) -> Link:
-        """Test Link"""
-        return Link(
-            rel = 'self',
-            href = 'https://api.bandwidth.com/v2/accounts/123/endpoints',
-            method = 'GET'
+    def make_instance(self, include_optional) -> Link:
+        """Test Link
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        if include_optional:
+            return Link(
+                rel = 'rel',
+                href = 'href'
+            )
+        else:
+            return Link(
         )
 
     def testLink(self):
         """Test Link"""
-        instance = self.make_instance()
+        instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, Link)
-        assert instance.rel == 'self'
-        assert instance.href == 'https://api.bandwidth.com/v2/accounts/123/endpoints'
-        assert instance.method == 'GET'
+        assert instance.rel == 'rel'
+        assert instance.href == 'href'
 
 if __name__ == '__main__':
     unittest.main()

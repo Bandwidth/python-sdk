@@ -18,9 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from bandwidth.models.link_method_enum import LinkMethodEnum
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,9 +29,8 @@ class Link(BaseModel):
     """ # noqa: E501
     rel: Optional[StrictStr] = None
     href: Optional[StrictStr] = None
-    method: Optional[LinkMethodEnum] = Field(default=None, description="The HTTP method to use when making the request.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["rel", "href", "method"]
+    __properties: ClassVar[List[str]] = ["rel", "href"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,8 +91,7 @@ class Link(BaseModel):
 
         _obj = cls.model_validate({
             "rel": obj.get("rel"),
-            "href": obj.get("href"),
-            "method": obj.get("method")
+            "href": obj.get("href")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -16,7 +16,6 @@
 import unittest
 
 from bandwidth.models.error import Error
-from bandwidth.models.error_source import ErrorSource
 from bandwidth.models.telephone_number import TelephoneNumber
 
 class TestError(unittest.TestCase):
@@ -28,36 +27,35 @@ class TestError(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self) -> Error:
-        """Test Error"""
-        return Error(
-            id = '59512d87-7a92-4040-8e4a-78fb772019b9',
-            type = 'resource.not_found',
-            code = 404,
-            description = 'The requested resource was not found.',
-            telephone_numbers = [
-                TelephoneNumber(
-                    telephone_number = '+15551234567', )
-                ],
-            source = ErrorSource(
-                parameter = 'accountId',
+    def make_instance(self, include_optional) -> Error:
+        """Test Error
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        if include_optional:
+            return Error(
+                code = 56,
+                description = '',
+                telephone_numbers = [
+                    TelephoneNumber(
+                        telephone_number = '', )
+                    ]
             )
+        else:
+            return Error(
         )
 
     def testError(self):
         """Test Error"""
-        instance = self.make_instance()
+        instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, Error)
-        assert instance.id == '59512d87-7a92-4040-8e4a-78fb772019b9'
-        assert instance.type == 'resource.not_found'
-        assert instance.code == 404
-        assert instance.description == 'The requested resource was not found.'
+        assert instance.code == 56
+        assert instance.description == ''
         assert isinstance(instance.telephone_numbers, list)
         assert len(instance.telephone_numbers) == 1
         assert isinstance(instance.telephone_numbers[0], TelephoneNumber)
-        assert instance.source is not None
-        assert instance.source.parameter == 'accountId'
+        assert instance.telephone_numbers[0].telephone_number == ''
 
 if __name__ == '__main__':
     unittest.main()

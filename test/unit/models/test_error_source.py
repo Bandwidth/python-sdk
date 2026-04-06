@@ -26,18 +26,25 @@ class TestErrorSource(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self) -> ErrorSource:
-        """Test ErrorSource"""
-        return ErrorSource(
-            parameter = 'parameter',
-            var_field = 'var_field',
-            header = 'header',
-            reference = 'reference'
+    def make_instance(self, include_optional) -> ErrorSource:
+        """Test ErrorSource
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        if include_optional:
+            return ErrorSource(
+                parameter = 'parameter',
+                var_field = 'var_field',
+                header = 'header',
+                reference = 'reference'
+            )
+        else:
+            return ErrorSource(
         )
 
     def testErrorSource(self):
         """Test ErrorSource"""
-        instance = self.make_instance()
+        instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, ErrorSource)
         assert instance.parameter == 'parameter'
