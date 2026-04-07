@@ -37,7 +37,6 @@ from bandwidth.models.verification_request import VerificationRequest
 from bandwidth.models.tfv_submission_wrapper import TfvSubmissionWrapper
 from bandwidth.models.tfv_submission_info import TfvSubmissionInfo
 from bandwidth.models.business_registration_type_enum import BusinessRegistrationTypeEnum
-from bandwidth.models.business_registration_issuing_country_enum import BusinessRegistrationIssuingCountryEnum
 from bandwidth.models.business_entity_type_enum import BusinessEntityTypeEnum
 
 
@@ -99,7 +98,7 @@ class TestTollFreeVerificationApi(unittest.TestCase):
             'businessDba': 'businessDba',
             'businessRegistrationNumber': 'businessRegistrationNumber',
             'businessRegistrationType': BusinessRegistrationTypeEnum.EIN,
-            'businessRegistrationIssuingCountry': BusinessRegistrationIssuingCountryEnum.USA,
+            'businessRegistrationIssuingCountry': 'USA',
             'businessEntityType': BusinessEntityTypeEnum.NON_PROFIT,
             'helpMessageResponse': 'helpMessageResponse',
             'ageGatedContent': True,
