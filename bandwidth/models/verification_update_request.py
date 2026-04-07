@@ -18,12 +18,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from bandwidth.models.address import Address
 from bandwidth.models.business_entity_type_enum import BusinessEntityTypeEnum
-from bandwidth.models.business_registration_issuing_country_enum import BusinessRegistrationIssuingCountryEnum
 from bandwidth.models.business_registration_type_enum import BusinessRegistrationTypeEnum
 from bandwidth.models.contact import Contact
 from bandwidth.models.opt_in_workflow import OptInWorkflow
@@ -46,10 +45,10 @@ class VerificationUpdateRequest(BaseModel):
     privacy_policy_url: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The Toll-Free Verification request privacy policy URL.", alias="privacyPolicyUrl")
     terms_and_conditions_url: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The Toll-Free Verification request terms and conditions policy URL.", alias="termsAndConditionsUrl")
     business_dba: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The company 'Doing Business As'.", alias="businessDba")
-    business_registration_number: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="Government-issued business identifying number.  **Note:** If this field is provided, it is strongly recommended to also provide `businessRegistrationType` and `businessRegistrationIssuingCountry`. Submissions missing these fields have a high likelihood of rejection. ", alias="businessRegistrationNumber")
+    business_registration_number: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="Government-issued business identifying number.  **Note: As of October 19th, 2026 this field will be required when `businessEntityType` is _not_ `SOLE_PROPRIETOR`. If this field is provided, `businessRegistrationType` and `businessRegistrationIssuingCountry` are also required.** ", alias="businessRegistrationNumber")
     business_registration_type: Optional[BusinessRegistrationTypeEnum] = Field(default=None, alias="businessRegistrationType")
     business_entity_type: Optional[BusinessEntityTypeEnum] = Field(default=None, alias="businessEntityType")
-    business_registration_issuing_country: Optional[BusinessRegistrationIssuingCountryEnum] = Field(default=None, alias="businessRegistrationIssuingCountry")
+    business_registration_issuing_country: Optional[StrictStr] = Field(default=None, description="The country issuing the business registration in ISO-3166-1 alpha-3 format. Alpha-2 format is accepted by the API, but alpha-3 is highly encouraged.  **Note: As of October 19th, 2026 this field will be required when `businessRegistrationNumber` is provided.**  | Registration Type     | Supported Countries                | |----------------------|------------------------------------| | EIN                  | USA                                | | CBN                  | CAN                                | | NEQ                  | CAN                                | | PROVINCIAL_NUMBER    | CAN                                | | CRN                  | GBR, HKG                           | | VAT                  | GBR, IRL, BRA, NLD                 | | ACN                  | AUS                                | | ABN                  | AUS                                | | BRN                  | HKG                                | | SIREN                | FRA                                | | SIRET                | FRA                                | | NZBN                 | NZL                                | | UST_IDNR             | DEU                                | | CIF                  | ESP                                | | NIF                  | ESP                                | | CNPJ                 | BRA                                | | UID                  | CHE                                | | OTHER                | Must Provide Country Code          |", alias="businessRegistrationIssuingCountry")
     help_message_response: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="A message that gets sent to users requesting help.", alias="helpMessageResponse")
     age_gated_content: Optional[StrictBool] = Field(default=None, description="Indicates whether the content is age-gated.", alias="ageGatedContent")
     cv_token: Optional[Annotated[str, Field(min_length=0, strict=True, max_length=500)]] = Field(default=None, description="The token provided by Campaign Verify to validate your political use case. Only required for 527 political organizations. If you are not a 527 political organization, this field should be omitted. Supplying an empty string will likely result in rejection.", alias="cvToken")
@@ -130,6 +129,11 @@ class VerificationUpdateRequest(BaseModel):
         # and model_fields_set contains the field
         if self.business_registration_type is None and "business_registration_type" in self.model_fields_set:
             _dict['businessRegistrationType'] = None
+
+        # set to None if business_registration_issuing_country (nullable) is None
+        # and model_fields_set contains the field
+        if self.business_registration_issuing_country is None and "business_registration_issuing_country" in self.model_fields_set:
+            _dict['businessRegistrationIssuingCountry'] = None
 
         # set to None if help_message_response (nullable) is None
         # and model_fields_set contains the field

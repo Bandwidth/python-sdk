@@ -95,8 +95,8 @@ paths:
         under this account, the previous file will be overwritten.
 
 
-        A list of supported media types can be found
-        [here](https://support.bandwidth.com/hc/en-us/articles/360014128994-What-MMS-file-types-are-supported-).
+        A list of supported media types can be found at [Bandwidth
+        Support](https://www.bandwidth.com/support/en/articles/12823220-what-mms-file-types-are-supported).
       operationId: uploadMedia
       tags:
         - Media
@@ -2255,8 +2255,8 @@ components:
 
             For MMS, the API limits file size to 3.5MB. Specific carriers and
             channels may have a smaller limit that could cause a large file to
-            fail, see
-            [here](https://support.bandwidth.com/hc/en-us/articles/360014235473-What-are-the-MMS-file-size-limits)
+            fail, see more at [Bandwidth
+            Support](https://www.bandwidth.com/support/en/articles/12823216-what-are-the-mms-file-size-limits)
             for more details.
           example: https://dev.bandwidth.com/images/bandwidth-logo.png
           maxLength: 1000
@@ -5887,17 +5887,21 @@ components:
         Government-issued business identifying number.
 
 
-        **Note:** If this field is provided, it is strongly recommended to also
-        provide `businessRegistrationType` and
-        `businessRegistrationIssuingCountry`. Submissions missing these fields
-        have a high likelihood of rejection.
+        **Note: As of October 19th, 2026 this field will be required when
+        `businessEntityType` is _not_ `SOLE_PROPRIETOR`. If this field is
+        provided, `businessRegistrationType` and
+        `businessRegistrationIssuingCountry` are also required.**
       nullable: true
       maxLength: 500
       example: 12-3456789
     businessRegistrationTypeEnum:
       type: string
-      description: |
+      description: >
         The type of business registration number.
+
+
+        **Note: As of October 19th, 2026 this field will be required when
+        `businessRegistrationNumber` is provided.**
       enum:
         - EIN
         - CBN
@@ -5919,20 +5923,16 @@ components:
         - OTHER
       example: EIN
       nullable: true
-    businessRegistrationIssuingCountryEnum:
+    businessRegistrationIssuingCountry:
       type: string
       description: >-
         The country issuing the business registration in ISO-3166-1 alpha-3
-        format. Alpha-2 country codes are acceptable, but the application will
-        convert them to alpha-3 when received, so alpha-3 is encouraged.
+        format. Alpha-2 format is accepted by the API, but alpha-3 is highly
+        encouraged.
 
 
-        **Note:** If this field is omitted but `businessRegistrationType` is
-        provided, the application will attempt to infer the country based on the
-        registration type. However, if the application cannot confidently infer
-        the country, the submission may be rejected. To ensure the highest
-        likelihood of acceptance, it is recommended to provide both
-        `businessRegistrationType` and `businessRegistrationIssuingCountry`.
+        **Note: As of October 19th, 2026 this field will be required when
+        `businessRegistrationNumber` is provided.**
 
 
         | Registration Type     | Supported Countries                |
@@ -5974,30 +5974,22 @@ components:
         | UID                  | CHE                                |
 
         | OTHER                | Must Provide Country Code          |
-      enum:
-        - USA
-        - CAN
-        - HKG
-        - GBR
-        - IRL
-        - BRA
-        - NLD
-        - AUS
-        - FRA
-        - NZL
-        - DEU
-        - ESP
-        - CHE
-        - CYP
-        - IND
-        - CHN
-        - BGR
       example: USA
-      nullable: false
+      nullable: true
     businessEntityTypeEnum:
       type: string
-      description: |
+      description: >
         The type of registered business.
+
+
+        **Note: As of October 19th, 2026 submissions using a value other than
+        `SOLE_PROPRIETOR` must provide a value for `businessRegistrationNumber`,
+        `businessRegistrationType`, and `businessRegistrationIssuingCountry`. 
+
+        Submissions using `SOLE_PROPRIETOR` must _omit_
+        `businessRegistrationNumber`, `businessRegistrationType`, and
+        `businessRegistrationIssuingCountry`. Failure to adhere to these
+        constraints will result in a 400 Bad Request rejection.**
       enum:
         - SOLE_PROPRIETOR
         - PRIVATE_PROFIT
@@ -6106,7 +6098,7 @@ components:
         businessRegistrationType:
           $ref: '#/components/schemas/businessRegistrationTypeEnum'
         businessRegistrationIssuingCountry:
-          $ref: '#/components/schemas/businessRegistrationIssuingCountryEnum'
+          $ref: '#/components/schemas/businessRegistrationIssuingCountry'
         businessEntityType:
           $ref: '#/components/schemas/businessEntityTypeEnum'
         helpMessageResponse:
@@ -6161,7 +6153,7 @@ components:
         businessEntityType:
           $ref: '#/components/schemas/businessEntityTypeEnum'
         businessRegistrationIssuingCountry:
-          $ref: '#/components/schemas/businessRegistrationIssuingCountryEnum'
+          $ref: '#/components/schemas/businessRegistrationIssuingCountry'
         helpMessageResponse:
           $ref: '#/components/schemas/helpMessageResponse'
         ageGatedContent:
@@ -6657,13 +6649,15 @@ components:
           description: Government-issued business identifying number.
         businessRegistrationType:
           $ref: '#/components/schemas/businessRegistrationTypeEnum'
+          description: The type of business registration number.
         businessRegistrationIssuingCountry:
-          $ref: '#/components/schemas/businessRegistrationIssuingCountryEnum'
+          $ref: '#/components/schemas/businessRegistrationIssuingCountry'
           description: >-
             The country issuing the business registration in ISO-3166-1 alpha-3
             format.
         businessEntityType:
           $ref: '#/components/schemas/businessEntityTypeEnum'
+          description: The type of registered business.
     tfvStatusEnum:
       type: string
       enum:
