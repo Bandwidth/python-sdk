@@ -4,6 +4,8 @@ Integration test for Bandwidth's WebRTC Endpoints API
 import unittest
 from datetime import datetime
 
+from hamcrest import assert_that, not_none, instance_of, equal_to, greater_than
+
 from bandwidth import ApiClient, ApiResponse, Configuration
 from bandwidth.api.endpoints_api import EndpointsApi
 from bandwidth.models.create_web_rtc_connection_request import CreateWebRtcConnectionRequest
@@ -55,21 +57,19 @@ class TestEndpointsApi(unittest.TestCase):
             create_request
         )
 
-        assert response.status_code == 201
-        assert isinstance(response.data, CreateEndpointResponse)
-        assert isinstance(response.data.links, list)
-        assert len(response.data.links) == 0
-        assert isinstance(response.data.errors, list)
-        assert len(response.data.errors) == 0
-        assert isinstance(response.data.data, CreateEndpointResponseData)
-        assert isinstance(response.data.data.endpoint_id, str)
-        assert response.data.data.type == EndpointTypeEnum.WEBRTC
-        assert isinstance(response.data.data.status, EndpointStatusEnum)
-        assert isinstance(response.data.data.token, str)
-        assert isinstance(response.data.data.creation_timestamp, datetime)
-        assert isinstance(response.data.data.expiration_timestamp, datetime)
-        assert response.data.data.tag == "python-sdk-test-endpoint"
-        assert isinstance(response.data.data.devices, list)
+        assert_that(response.status_code, equal_to(201))
+        assert_that(response.data, instance_of(CreateEndpointResponse))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.errors, instance_of(list))
+        assert_that(response.data.data, instance_of(CreateEndpointResponseData))
+        assert_that(response.data.data.endpoint_id, instance_of(str))
+        assert_that(response.data.data.type, equal_to(EndpointTypeEnum.WEBRTC))
+        assert_that(response.data.data.status, instance_of(EndpointStatusEnum))
+        assert_that(response.data.data.token, instance_of(str))
+        assert_that(response.data.data.creation_timestamp, instance_of(datetime))
+        assert_that(response.data.data.expiration_timestamp, instance_of(datetime))
+        assert_that(response.data.data.tag, equal_to("python-sdk-test-endpoint"))
+        assert_that(response.data.data.devices, instance_of(list))
 
         self.__class__.endpoint_id = response.data.data.endpoint_id
 
@@ -80,26 +80,24 @@ class TestEndpointsApi(unittest.TestCase):
             limit=10
         )
 
-        assert response.status_code == 200
-        assert isinstance(response.data, ListEndpointsResponse)
-        assert isinstance(response.data.links, list)
-        assert len(response.data.links) == 0
-        assert isinstance(response.data.errors, list)
-        assert len(response.data.errors) == 0
-        assert isinstance(response.data.data, list)
-        assert len(response.data.data) > 0
+        assert_that(response.status_code, equal_to(200))
+        assert_that(response.data, instance_of(ListEndpointsResponse))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.errors, instance_of(list))
+        assert_that(response.data.data, instance_of(list))
+        assert_that(len(response.data.data), greater_than(0))
 
         endpoint = response.data.data[0]
-        assert isinstance(endpoint, Endpoints)
-        assert isinstance(endpoint.endpoint_id, str)
-        assert isinstance(endpoint.type, EndpointTypeEnum)
-        assert isinstance(endpoint.status, EndpointStatusEnum)
-        assert isinstance(endpoint.creation_timestamp, datetime)
-        assert isinstance(endpoint.expiration_timestamp, datetime)
+        assert_that(endpoint, instance_of(Endpoints))
+        assert_that(endpoint.endpoint_id, instance_of(str))
+        assert_that(endpoint.type, instance_of(EndpointTypeEnum))
+        assert_that(endpoint.status, instance_of(EndpointStatusEnum))
+        assert_that(endpoint.creation_timestamp, instance_of(datetime))
+        assert_that(endpoint.expiration_timestamp, instance_of(datetime))
 
         tagged_endpoint = next((ep for ep in response.data.data if ep.endpoint_id == self.endpoint_id), None)
-        assert tagged_endpoint is not None
-        assert tagged_endpoint.tag == "python-sdk-test-endpoint"
+        assert_that(tagged_endpoint, not_none())
+        assert_that(tagged_endpoint.tag, equal_to("python-sdk-test-endpoint"))
 
     def getEndpoint(self):
         response: ApiResponse = self.endpoints_api_instance.get_endpoint_with_http_info(
@@ -107,20 +105,18 @@ class TestEndpointsApi(unittest.TestCase):
             self.endpoint_id
         )
 
-        assert response.status_code == 200
-        assert isinstance(response.data, EndpointResponse)
-        assert isinstance(response.data.links, list)
-        assert len(response.data.links) == 0
-        assert isinstance(response.data.errors, list)
-        assert len(response.data.errors) == 0
-        assert isinstance(response.data.data, Endpoint)
-        assert response.data.data.endpoint_id == self.endpoint_id
-        assert response.data.data.type == EndpointTypeEnum.WEBRTC
-        assert isinstance(response.data.data.status, EndpointStatusEnum)
-        assert isinstance(response.data.data.creation_timestamp, datetime)
-        assert isinstance(response.data.data.expiration_timestamp, datetime)
-        assert response.data.data.tag == "python-sdk-test-endpoint"
-        assert isinstance(response.data.data.devices, list)
+        assert_that(response.status_code, equal_to(200))
+        assert_that(response.data, instance_of(EndpointResponse))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.errors, instance_of(list))
+        assert_that(response.data.data, instance_of(Endpoint))
+        assert_that(response.data.data.endpoint_id, equal_to(self.endpoint_id))
+        assert_that(response.data.data.type, equal_to(EndpointTypeEnum.WEBRTC))
+        assert_that(response.data.data.status, instance_of(EndpointStatusEnum))
+        assert_that(response.data.data.creation_timestamp, instance_of(datetime))
+        assert_that(response.data.data.expiration_timestamp, instance_of(datetime))
+        assert_that(response.data.data.tag, equal_to("python-sdk-test-endpoint"))
+        assert_that(response.data.data.devices, instance_of(list))
 
     def deleteEndpoint(self):
         response: ApiResponse = self.endpoints_api_instance.delete_endpoint_with_http_info(
@@ -128,7 +124,7 @@ class TestEndpointsApi(unittest.TestCase):
             self.endpoint_id
         )
 
-        assert response.status_code == 204
+        assert_that(response.status_code, equal_to(204))
 
     def _steps(self):
         call_order = ['createEndpoint', 'listEndpoints', 'getEndpoint', 'deleteEndpoint']
@@ -140,7 +136,8 @@ class TestEndpointsApi(unittest.TestCase):
             step()
 
     def assertApiException(self, context, expected_status_code: int):
-        assert context.exception.status == expected_status_code
+        assert_that(context.exception.status, equal_to(expected_status_code))
+        assert_that(context.exception.body, not_none())
 
     def test_create_endpoint_unauthorized(self):
         create_request = CreateWebRtcConnectionRequest(
