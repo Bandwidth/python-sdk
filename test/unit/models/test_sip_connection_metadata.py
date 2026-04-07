@@ -27,21 +27,28 @@ class TestSipConnectionMetadata(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self) -> SipConnectionMetadata:
-        """Test SipConnectionMetadata"""
-        return SipConnectionMetadata(
-            ip_address='192.168.1.1',
-            port=5060,
-            credentials=SipCredentials(
-                username='sip_user',
-                password='sip_password'
-            ),
-            uui_header='test-uui-header'
+    def make_instance(self, include_optional) -> SipConnectionMetadata:
+        """Test SipConnectionMetadata
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        if include_optional:
+            return SipConnectionMetadata(
+                ip_address='192.168.1.1',
+                port=5060,
+                credentials=SipCredentials(
+                    username='sip_user',
+                    password='sip_password'
+                ),
+                uui_header='test-uui-header'
+            )
+        else:
+            return SipConnectionMetadata(
         )
 
     def testSipConnectionMetadata(self):
         """Test SipConnectionMetadata"""
-        instance = self.make_instance()
+        instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, SipConnectionMetadata)
         assert instance.ip_address == '192.168.1.1'

@@ -32,26 +32,33 @@ class TestCreateEndpointResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self) -> CreateEndpointResponse:
-        """Test CreateEndpointResponse"""
-        return CreateEndpointResponse(
-            links=[
-                Link(href='https://api.bandwidth.com/endpoint-123', rel='self')
-            ],
-            data=CreateEndpointResponseData(
-                endpoint_id='endpoint-123',
-                type=EndpointTypeEnum.WEBRTC,
-                status=EndpointStatusEnum.CONNECTED,
-                creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
-                expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
-                token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.token'
-            ),
-            errors=[]
+    def make_instance(self, include_optional) -> CreateEndpointResponse:
+        """Test CreateEndpointResponse
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        if include_optional:
+            return CreateEndpointResponse(
+                links=[
+                    Link(href='https://api.bandwidth.com/endpoint-123', rel='self')
+                ],
+                data=CreateEndpointResponseData(
+                    endpoint_id='endpoint-123',
+                    type=EndpointTypeEnum.WEBRTC,
+                    status=EndpointStatusEnum.CONNECTED,
+                    creation_timestamp=datetime(2026, 1, 15, 10, 0, 0),
+                    expiration_timestamp=datetime(2026, 1, 16, 10, 0, 0),
+                    token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.token'
+                ),
+                errors=[]
+            )
+        else:
+            return CreateEndpointResponse(
         )
 
     def testCreateEndpointResponse(self):
         """Test CreateEndpointResponse"""
-        instance = self.make_instance()
+        instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, CreateEndpointResponse)
         assert isinstance(instance.links, list)

@@ -28,18 +28,25 @@ class TestDevice(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self) -> Device:
-        """Test Device"""
-        return Device(
-            device_id='device-abc-123',
-            device_name='My Test Device',
-            status=DeviceStatusEnum.CONNECTED,
-            creation_timestamp=datetime(2026, 1, 15, 10, 0, 0)
+    def make_instance(self, include_optional) -> Device:
+        """Test Device
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        if include_optional:
+            return Device(
+                device_id='device-abc-123',
+                device_name='My Test Device',
+                status=DeviceStatusEnum.CONNECTED,
+                creation_timestamp=datetime(2026, 1, 15, 10, 0, 0)
+            )
+        else:
+            return Device(
         )
 
     def testDevice(self):
         """Test Device"""
-        instance = self.make_instance()
+        instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, Device)
         assert instance.device_id == 'device-abc-123'
