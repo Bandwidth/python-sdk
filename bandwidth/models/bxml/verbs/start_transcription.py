@@ -8,7 +8,7 @@ Bandwidth's Start Transcription BXML verb
 from typing import List
 
 from ..nestable_verb import NestableVerb
-from ..verbs.custom_param import CustomParam
+from .custom_param import CustomParam
 
 
 class StartTranscription(NestableVerb):

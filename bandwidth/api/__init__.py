@@ -3,6 +3,7 @@
 # import apis into api package
 from bandwidth.api.calls_api import CallsApi
 from bandwidth.api.conferences_api import ConferencesApi
+from bandwidth.api.endpoints_api import EndpointsApi
 from bandwidth.api.mfa_api import MFAApi
 from bandwidth.api.media_api import MediaApi
 from bandwidth.api.messages_api import MessagesApi

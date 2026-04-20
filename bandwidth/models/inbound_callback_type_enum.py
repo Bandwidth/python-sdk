@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class InboundCallbackTypeEnum(str, Enum):
     """
-    The possible inbound callback types originating from MO messages or multichannel message client responses: - `message-received` indicates an MO message from a Bandwidth user's client to a Bandwidth number. - `request-location-response` indicates a response to a location request sent by the Bandwidth user's client after receiving an RBM message.  - `suggestion-response` indicates a response to a suggestion sent by the Bandwidth user's client after receiving an RBM message.
+    The possible inbound callback types originating from MO messages or multichannel message client responses: - `message-received` indicates an MO message from a Bandwidth user's client to a Bandwidth number. - `request-location-response` indicates a response to a location request sent by the Bandwidth user's client after receiving an RBM message. - `suggestion-response` indicates a response to a suggestion sent by the Bandwidth user's client after receiving an RBM message.
     """
 
     """

@@ -37,7 +37,7 @@ class StatusCallback(BaseModel):
     description: StrictStr = Field(description="A detailed description of the event described by the callback.")
     message: StatusCallbackMessage
     error_code: Optional[StrictInt] = Field(default=None, description="Optional error code, applicable only when type is `message-failed`.", alias="errorCode")
-    carrier_name: Optional[StrictStr] = Field(default=None, description="The name of the Authorized Message Provider (AMP) that handled this message.  In the US, this is the carrier that the message was sent to. This field is present only when this account feature has been enabled.", alias="carrierName")
+    carrier_name: Optional[StrictStr] = Field(default=None, description="The name of the Authorized Message Provider (AMP) that handled this message. In the US, this is the carrier that the message was sent to. This field is present only when this account feature has been enabled.", alias="carrierName")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["time", "eventTime", "type", "to", "description", "message", "errorCode", "carrierName"]
 

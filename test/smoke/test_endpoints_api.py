@@ -1,0 +1,188 @@
+"""
+Integration test for Bandwidth's WebRTC Endpoints API
+"""
+import unittest
+from datetime import datetime
+
+from hamcrest import assert_that, not_none, instance_of, equal_to, greater_than
+
+from bandwidth import ApiClient, ApiResponse, Configuration
+from bandwidth.api.endpoints_api import EndpointsApi
+from bandwidth.models.create_web_rtc_connection_request import CreateWebRtcConnectionRequest
+from bandwidth.models.create_endpoint_response import CreateEndpointResponse
+from bandwidth.models.create_endpoint_response_data import CreateEndpointResponseData
+from bandwidth.models.endpoint import Endpoint
+from bandwidth.models.endpoint_response import EndpointResponse
+from bandwidth.models.list_endpoints_response import ListEndpointsResponse
+from bandwidth.models.endpoints import Endpoints
+from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
+from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
+from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
+from bandwidth.exceptions import UnauthorizedException, NotFoundException
+from test.utils.env_variables import *
+
+
+class TestEndpointsApi(unittest.TestCase):
+    """EndpointsApi integration test"""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        configuration = Configuration(
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
+        )
+        api_client = ApiClient(configuration)
+        cls.endpoints_api_instance = EndpointsApi(api_client)
+
+        unauthorized_configuration = Configuration(
+            username='bad_username',
+            password='bad_password'
+        )
+        cls.unauthorized_api_instance = EndpointsApi(ApiClient(unauthorized_configuration))
+
+        cls.account_id = BW_ACCOUNT_ID
+        cls.test_endpoint_id = 'endpoint-id'
+
+    def createEndpoint(self):
+        create_request = CreateWebRtcConnectionRequest(
+            type=EndpointTypeEnum.WEBRTC,
+            direction=EndpointDirectionEnum.BIDIRECTIONAL,
+            event_callback_url=BASE_CALLBACK_URL + "/endpoint/callback",
+            event_fallback_url=BASE_CALLBACK_URL + "/endpoint/fallback",
+            tag="python-sdk-test-endpoint"
+        )
+
+        response: ApiResponse = self.endpoints_api_instance.create_endpoint_with_http_info(
+            self.account_id,
+            create_request
+        )
+
+        assert_that(response.status_code, equal_to(201))
+        assert_that(response.data, instance_of(CreateEndpointResponse))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.errors, instance_of(list))
+        assert_that(response.data.data, instance_of(CreateEndpointResponseData))
+        assert_that(response.data.data.endpoint_id, instance_of(str))
+        assert_that(response.data.data.type, equal_to(EndpointTypeEnum.WEBRTC))
+        assert_that(response.data.data.status, instance_of(EndpointStatusEnum))
+        assert_that(response.data.data.token, instance_of(str))
+        assert_that(response.data.data.creation_timestamp, instance_of(datetime))
+        assert_that(response.data.data.expiration_timestamp, instance_of(datetime))
+        assert_that(response.data.data.tag, equal_to("python-sdk-test-endpoint"))
+        assert_that(response.data.data.devices, instance_of(list))
+
+        self.__class__.endpoint_id = response.data.data.endpoint_id
+
+    def listEndpoints(self):
+        response: ApiResponse = self.endpoints_api_instance.list_endpoints_with_http_info(
+            self.account_id,
+            type=EndpointTypeEnum.WEBRTC,
+            limit=10
+        )
+
+        assert_that(response.status_code, equal_to(200))
+        assert_that(response.data, instance_of(ListEndpointsResponse))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.errors, instance_of(list))
+        assert_that(response.data.data, instance_of(list))
+        assert_that(len(response.data.data), greater_than(0))
+
+        endpoint = response.data.data[0]
+        assert_that(endpoint, instance_of(Endpoints))
+        assert_that(endpoint.endpoint_id, instance_of(str))
+        assert_that(endpoint.type, instance_of(EndpointTypeEnum))
+        assert_that(endpoint.status, instance_of(EndpointStatusEnum))
+        assert_that(endpoint.creation_timestamp, instance_of(datetime))
+        assert_that(endpoint.expiration_timestamp, instance_of(datetime))
+
+        tagged_endpoint = next((ep for ep in response.data.data if ep.endpoint_id == self.endpoint_id), None)
+        assert_that(tagged_endpoint, not_none())
+        assert_that(tagged_endpoint.tag, equal_to("python-sdk-test-endpoint"))
+
+    def getEndpoint(self):
+        response: ApiResponse = self.endpoints_api_instance.get_endpoint_with_http_info(
+            self.account_id,
+            self.endpoint_id
+        )
+
+        assert_that(response.status_code, equal_to(200))
+        assert_that(response.data, instance_of(EndpointResponse))
+        assert_that(response.data.links, instance_of(list))
+        assert_that(response.data.errors, instance_of(list))
+        assert_that(response.data.data, instance_of(Endpoint))
+        assert_that(response.data.data.endpoint_id, equal_to(self.endpoint_id))
+        assert_that(response.data.data.type, equal_to(EndpointTypeEnum.WEBRTC))
+        assert_that(response.data.data.status, instance_of(EndpointStatusEnum))
+        assert_that(response.data.data.creation_timestamp, instance_of(datetime))
+        assert_that(response.data.data.expiration_timestamp, instance_of(datetime))
+        assert_that(response.data.data.tag, equal_to("python-sdk-test-endpoint"))
+        assert_that(response.data.data.devices, instance_of(list))
+
+    def deleteEndpoint(self):
+        response: ApiResponse = self.endpoints_api_instance.delete_endpoint_with_http_info(
+            self.account_id,
+            self.endpoint_id
+        )
+
+        assert_that(response.status_code, equal_to(204))
+
+    def _steps(self):
+        call_order = ['createEndpoint', 'listEndpoints', 'getEndpoint', 'deleteEndpoint']
+        for name in call_order:
+            yield name, getattr(self, name)
+
+    def test_steps(self):
+        for name, step in self._steps():
+            step()
+
+    def assertApiException(self, context, expected_status_code: int):
+        assert_that(context.exception.status, equal_to(expected_status_code))
+        assert_that(context.exception.body, not_none())
+
+    def test_create_endpoint_unauthorized(self):
+        create_request = CreateWebRtcConnectionRequest(
+            type=EndpointTypeEnum.WEBRTC,
+            direction=EndpointDirectionEnum.BIDIRECTIONAL
+        )
+
+        with self.assertRaises(UnauthorizedException) as context:
+            self.unauthorized_api_instance.create_endpoint(
+                self.account_id,
+                create_request
+            )
+
+        self.assertApiException(context, 401)
+
+    def test_list_endpoints_unauthorized(self):
+        with self.assertRaises(UnauthorizedException) as context:
+            self.unauthorized_api_instance.list_endpoints(self.account_id)
+
+        self.assertApiException(context, 401)
+
+    def test_get_endpoint_unauthorized(self):
+        with self.assertRaises(UnauthorizedException) as context:
+            self.unauthorized_api_instance.get_endpoint(self.account_id, self.test_endpoint_id)
+
+        self.assertApiException(context, 401)
+
+    def test_get_endpoint_not_found(self):
+        with self.assertRaises(NotFoundException) as context:
+            self.endpoints_api_instance.get_endpoint(self.account_id, self.test_endpoint_id)
+
+        self.assertApiException(context, 404)
+
+    def test_delete_endpoint_unauthorized(self):
+        with self.assertRaises(UnauthorizedException) as context:
+            self.unauthorized_api_instance.delete_endpoint(self.account_id, self.test_endpoint_id)
+
+        self.assertApiException(context, 401)
+
+    def test_delete_endpoint_not_found(self):
+        with self.assertRaises(NotFoundException) as context:
+            self.endpoints_api_instance.delete_endpoint(self.account_id, self.test_endpoint_id)
+
+        self.assertApiException(context, 404)
+
+
+if __name__ == '__main__':
+    unittest.main()

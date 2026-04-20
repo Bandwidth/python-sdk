@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class RbmOpenUrlEnum(str, Enum):
     """
-    Specifies how the URL should be opened on a mobile device. - `BROWSER` Opens the URL in the device's default browser. If application is not set or the device doesn’t support WebView, this option is used by default.  - `WEBVIEW` Opens the URL in an in-app WebView.
+    Specifies how the URL should be opened on a mobile device. - `BROWSER` Opens the URL in the device's default browser. If application is not set or the device doesn’t support WebView, this option is used by default. - `WEBVIEW` Opens the URL in an in-app WebView.
     """
 
     """
