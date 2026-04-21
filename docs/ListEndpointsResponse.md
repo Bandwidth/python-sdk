@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**List[Link]**](Link.md) |  | 
+**links** | [**List[Link1]**](Link1.md) |  | 
 **page** | [**Page**](Page.md) |  | [optional] 
 **data** | [**List[Endpoints]**](Endpoints.md) |  | 
-**errors** | [**List[Error]**](Error.md) |  | 
+**errors** | [**List[Error1]**](Error1.md) |  | 
 
 ## Example
 

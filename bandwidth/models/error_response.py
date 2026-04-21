@@ -20,8 +20,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from bandwidth.models.error import Error
-from bandwidth.models.link import Link
+from bandwidth.models.error1 import Error1
+from bandwidth.models.link1 import Link1
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,9 +29,9 @@ class ErrorResponse(BaseModel):
     """
     ErrorResponse
     """ # noqa: E501
-    links: List[Link]
+    links: List[Link1]
     data: Optional[Dict[str, Any]]
-    errors: List[Error]
+    errors: List[Error1]
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["links", "data", "errors"]
 
@@ -112,9 +112,9 @@ class ErrorResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "links": [Link.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
+            "links": [Link1.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
             "data": obj.get("data"),
-            "errors": [Error.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
+            "errors": [Error1.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -5,9 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**List[Link]**](Link.md) |  | 
+**links** | [**List[Link1]**](Link1.md) |  | 
 **data** | **object** |  | 
-**errors** | [**List[Error]**](Error.md) |  | 
+**errors** | [**List[Error1]**](Error1.md) |  | 
 
 ## Example
 

@@ -39,7 +39,7 @@ class UpdateCall(BaseModel):
     redirect_fallback_method: Optional[RedirectMethodEnum] = Field(default=RedirectMethodEnum.POST, alias="redirectFallbackMethod")
     fallback_username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.", alias="fallbackUsername")
     fallback_password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.", alias="fallbackPassword")
-    tag: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="A custom string that will be sent with this and all future callbacks unless overwritten by a future `tag` attribute or [`<Tag>`](/docs/voice/bxml/tag) verb, or cleared.  May be cleared by setting `tag=\"\"`.  Max length 256 characters.  Not allowed if `state` is `completed`.")
+    tag: Optional[Annotated[str, Field(strict=True, max_length=4096)]] = Field(default=None, description="A custom string that will be sent with this and all future callbacks unless overwritten by a future `tag` attribute or [`<Tag>`](/docs/voice/bxml/tag) verb, or cleared.  May be cleared by setting `tag=\"\"`.  Max length 4096 characters.  Not allowed if `state` is `completed`.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["state", "redirectUrl", "redirectMethod", "username", "password", "redirectFallbackUrl", "redirectFallbackMethod", "fallbackUsername", "fallbackPassword", "tag"]
 

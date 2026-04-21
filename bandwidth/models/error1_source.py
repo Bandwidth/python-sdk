@@ -18,23 +18,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
-from bandwidth.models.create_endpoint_response_data import CreateEndpointResponseData
-from bandwidth.models.error1 import Error1
-from bandwidth.models.link1 import Link1
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class CreateEndpointResponse(BaseModel):
+class Error1Source(BaseModel):
     """
-    CreateEndpointResponse
+    Error1Source
     """ # noqa: E501
-    links: List[Link1]
-    data: CreateEndpointResponseData
-    errors: List[Error1]
+    parameter: Optional[StrictStr] = Field(default=None, description="The URI parameter that caused the error.")
+    var_field: Optional[StrictStr] = Field(default=None, description="The request body field that caused the error.", alias="field")
+    header: Optional[StrictStr] = Field(default=None, description="The header that caused the error.")
+    reference: Optional[StrictStr] = Field(default=None, description="The resource ID or path to the resource (or non-existent resource) causing the error.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["links", "data", "errors"]
+    __properties: ClassVar[List[str]] = ["parameter", "field", "header", "reference"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +52,7 @@ class CreateEndpointResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of CreateEndpointResponse from a JSON string"""
+        """Create an instance of Error1Source from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,23 +75,6 @@ class CreateEndpointResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in links (list)
-        _items = []
-        if self.links:
-            for _item_links in self.links:
-                if _item_links:
-                    _items.append(_item_links.to_dict())
-            _dict['links'] = _items
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in errors (list)
-        _items = []
-        if self.errors:
-            for _item_errors in self.errors:
-                if _item_errors:
-                    _items.append(_item_errors.to_dict())
-            _dict['errors'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -103,7 +84,7 @@ class CreateEndpointResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of CreateEndpointResponse from a dict"""
+        """Create an instance of Error1Source from a dict"""
         if obj is None:
             return None
 
@@ -111,9 +92,10 @@ class CreateEndpointResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "links": [Link1.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
-            "data": CreateEndpointResponseData.from_dict(obj["data"]) if obj.get("data") is not None else None,
-            "errors": [Error1.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
+            "parameter": obj.get("parameter"),
+            "field": obj.get("field"),
+            "header": obj.get("header"),
+            "reference": obj.get("reference")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

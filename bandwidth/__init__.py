@@ -102,6 +102,8 @@ __all__ = [
     "EndpointTypeEnum",
     "Endpoints",
     "Error",
+    "Error1",
+    "Error1Source",
     "ErrorObject",
     "ErrorResponse",
     "ErrorSource",
@@ -119,6 +121,7 @@ __all__ = [
     "LatestMessageDeliveryStatusEnum",
     "LineTypeEnum",
     "Link",
+    "Link1",
     "LinkSchema",
     "LinksObject",
     "ListEndpointsResponse",
@@ -325,6 +328,8 @@ from bandwidth.models.endpoint_status_enum import EndpointStatusEnum as Endpoint
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum as EndpointTypeEnum
 from bandwidth.models.endpoints import Endpoints as Endpoints
 from bandwidth.models.error import Error as Error
+from bandwidth.models.error1 import Error1 as Error1
+from bandwidth.models.error1_source import Error1Source as Error1Source
 from bandwidth.models.error_object import ErrorObject as ErrorObject
 from bandwidth.models.error_response import ErrorResponse as ErrorResponse
 from bandwidth.models.error_source import ErrorSource as ErrorSource
@@ -342,6 +347,7 @@ from bandwidth.models.initiate_callback import InitiateCallback as InitiateCallb
 from bandwidth.models.latest_message_delivery_status_enum import LatestMessageDeliveryStatusEnum as LatestMessageDeliveryStatusEnum
 from bandwidth.models.line_type_enum import LineTypeEnum as LineTypeEnum
 from bandwidth.models.link import Link as Link
+from bandwidth.models.link1 import Link1 as Link1
 from bandwidth.models.link_schema import LinkSchema as LinkSchema
 from bandwidth.models.links_object import LinksObject as LinksObject
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse as ListEndpointsResponse

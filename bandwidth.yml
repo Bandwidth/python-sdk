@@ -2161,7 +2161,7 @@ components:
       type: string
       description: >-
         The name of the Authorized Message Provider (AMP) that handled this
-        message.
+        message. 
 
         In the US, this is the carrier that the message was sent to.
 
@@ -2248,7 +2248,7 @@ components:
           description: >-
             Either an alphanumeric sender ID or the sender's Bandwidth phone
             number in E.164 format, which must be hosted within Bandwidth and
-            linked to the account that is generating the message.
+            linked to the account that is generating the message. 
 
             Alphanumeric Sender IDs can contain up to 11 characters, upper-case
             letters A-Z, lower-case letters a-z, numbers 0-9, space, hyphen -,
@@ -2572,7 +2572,7 @@ components:
 
         - `BROWSER` Opens the URL in the device's default browser. If
         application is not set or the device doesn’t support WebView, this
-        option is used by default.
+        option is used by default. 
 
         - `WEBVIEW` Opens the URL in an in-app WebView.
       enum:
@@ -2585,7 +2585,7 @@ components:
         Defines the layout of the WebView on a mobile device. It must be defined
         when application is set to `WEBVIEW`
 
-        - `FULL` WebView takes the full screen.
+        - `FULL` WebView takes the full screen. 
 
         - `HALF` WebView takes half of the screen.
 
@@ -2987,7 +2987,7 @@ components:
         to:
           type: string
           description: >
-            The destination phone number the message was sent to.
+            The destination phone number the message was sent to. 
 
             For inbound callbacks, this is the Bandwidth number or alphanumeric
             identifier that received the message.
@@ -3038,7 +3038,7 @@ components:
         client to a Bandwidth number.
 
         - `request-location-response` indicates a response to a location request
-        sent by the Bandwidth user's client after receiving an RBM message.
+        sent by the Bandwidth user's client after receiving an RBM message. 
 
         - `suggestion-response` indicates a response to a suggestion sent by the
         Bandwidth user's client after receiving an RBM message.
@@ -3277,7 +3277,7 @@ components:
           nullable: true
           type: string
           description: >-
-            The caller display name to use when the call is created.
+            The caller display name to use when the call is created. 
 
             May not exceed 256 characters nor contain control characters such as
             new lines.
@@ -3455,8 +3455,8 @@ components:
             May be cleared by setting `tag=""`
 
 
-            Max length 256 characters.
-          maxLength: 256
+            Max length 4096 characters.
+          maxLength: 4096
           example: arbitrary text here
     createCallResponse:
       type: object
@@ -3833,11 +3833,11 @@ components:
             May be cleared by setting `tag=""`.
 
 
-            Max length 256 characters.
+            Max length 4096 characters.
 
 
             Not allowed if `state` is `completed`.
-          maxLength: 256
+          maxLength: 4096
           example: My Custom Tag
     updateCallRecording:
       type: object
@@ -4214,7 +4214,7 @@ components:
           format: double
           description: >-
             When an answering machine is detected, the amount of silence (in
-            seconds) before assuming the message has finished playing.
+            seconds) before assuming the message has finished playing. 
 
             If not provided it will default to the speechEndThreshold value.
           example: 5
@@ -5958,7 +5958,7 @@ components:
           format: date
           description: >-
             [DNI-Only](#section/DNI-Only). The date the phone number entered the
-            status described in `latestMessageDeliveryStatus`.
+            status described in `latestMessageDeliveryStatus`. 
 
             Think of this as the "start time" for that status.
 
@@ -7060,6 +7060,26 @@ components:
           required:
             - eventType
             - eventTime
+    link1:
+      type: object
+      properties:
+        href:
+          type: string
+          description: The full URL of the link.
+          example: >-
+            https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+        rel:
+          type: string
+          description: The relationship of the link to the current resource.
+          example: self
+        method:
+          type: string
+          enum:
+            - GET
+            - POST
+            - DELETE
+          description: The HTTP method to use when making the request.
+          example: GET
     page:
       type: object
       properties:
@@ -7085,13 +7105,57 @@ components:
           example: 0
       required:
         - pageSize
+    error1:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: A unique identifier for the error.
+          example: 59512d87-7a92-4040-8e4a-78fb772019b9
+        type:
+          type: string
+          description: The type of error.
+          example: resource.not_found
+        description:
+          type: string
+          description: A description of the error.
+          example: The requested resource was not found.
+        code:
+          type: string
+          description: A code that uniquely identifies the error.
+          example: '404'
+        source:
+          type: object
+          properties:
+            parameter:
+              type: string
+              description: The URI parameter that caused the error.
+              example: accountId
+            field:
+              type: string
+              description: The request body field that caused the error.
+              example: accountId
+            header:
+              type: string
+              description: The header that caused the error.
+              example: Authorization
+            reference:
+              type: string
+              description: >-
+                The resource ID or path to the resource (or non-existent
+                resource) causing the error.
+              example: e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+      required:
+        - type
+        - description
     listEndpointsResponse:
       type: object
       properties:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/link1'
         page:
           $ref: '#/components/schemas/page'
         data:
@@ -7101,7 +7165,7 @@ components:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error'
+            $ref: '#/components/schemas/error1'
       required:
         - links
         - data
@@ -7112,13 +7176,13 @@ components:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/link1'
         data:
           $ref: '#/components/schemas/endpoint'
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error'
+            $ref: '#/components/schemas/error1'
       required:
         - links
         - data
@@ -7129,13 +7193,13 @@ components:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/link1'
         data:
           $ref: '#/components/schemas/createEndpointResponseData'
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error'
+            $ref: '#/components/schemas/error1'
       required:
         - links
         - data
@@ -7146,7 +7210,7 @@ components:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/link1'
         data:
           type: object
           nullable: true
@@ -7154,7 +7218,7 @@ components:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error'
+            $ref: '#/components/schemas/error1'
       required:
         - links
         - data
@@ -7916,6 +7980,15 @@ components:
               $ref: '#/components/examples/unsupportedMediaTypeErrorExample'
     tooManyRequestsErrorResponse:
       description: Too Many Requests
+      headers:
+        Retry-After:
+          description: >-
+            The number of seconds the client should wait before making another
+            request.
+          required: true
+          schema:
+            type: integer
+            example: 900
       content:
         application/json:
           schema:
@@ -9137,10 +9210,10 @@ components:
         links: []
         data: null
         errors:
-          - id: 59512d87-7a92-4040-8e4a-78fb772019b9
-            type: too_many_requests
-            description: The client has sent too many requests in a given amount of time.
-            code: '429'
+          - type: too_many_endpoints
+            description: >-
+              Too many endpoints. Please delete an existing endpoint or wait 24
+              hours for an endpoint to be removed.
     serviceUnavailableErrorExample:
       summary: Service Unavailable Error Example
       value:
@@ -9556,12 +9629,12 @@ components:
             required: true
             description: >-
               <p>This Inbound Message Webhook is an envelope containing either a
-              received (MO) message to your
+              received (MO) message to your 
 
               message-enabled Bandwidth telephone number or a multichannel
-              client's response to a suggestion response
+              client's response to a suggestion response 
 
-              or location request.
+              or location request. 
 
               <p>The payload type will be one of <code>message-received</code>,
               <code>suggestion-response</code>, or

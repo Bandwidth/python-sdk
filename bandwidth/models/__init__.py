@@ -76,6 +76,8 @@ from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoints import Endpoints
 from bandwidth.models.error import Error
+from bandwidth.models.error1 import Error1
+from bandwidth.models.error1_source import Error1Source
 from bandwidth.models.error_object import ErrorObject
 from bandwidth.models.error_response import ErrorResponse
 from bandwidth.models.error_source import ErrorSource
@@ -93,6 +95,7 @@ from bandwidth.models.initiate_callback import InitiateCallback
 from bandwidth.models.latest_message_delivery_status_enum import LatestMessageDeliveryStatusEnum
 from bandwidth.models.line_type_enum import LineTypeEnum
 from bandwidth.models.link import Link
+from bandwidth.models.link1 import Link1
 from bandwidth.models.link_schema import LinkSchema
 from bandwidth.models.links_object import LinksObject
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse

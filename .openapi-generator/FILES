@@ -82,6 +82,8 @@ bandwidth/models/endpoint_status_enum.py
 bandwidth/models/endpoint_type_enum.py
 bandwidth/models/endpoints.py
 bandwidth/models/error.py
+bandwidth/models/error1.py
+bandwidth/models/error1_source.py
 bandwidth/models/error_object.py
 bandwidth/models/error_response.py
 bandwidth/models/error_source.py
@@ -99,6 +101,7 @@ bandwidth/models/initiate_callback.py
 bandwidth/models/latest_message_delivery_status_enum.py
 bandwidth/models/line_type_enum.py
 bandwidth/models/link.py
+bandwidth/models/link1.py
 bandwidth/models/link_schema.py
 bandwidth/models/links_object.py
 bandwidth/models/list_endpoints_response.py
@@ -282,6 +285,8 @@ docs/EndpointTypeEnum.md
 docs/Endpoints.md
 docs/EndpointsApi.md
 docs/Error.md
+docs/Error1.md
+docs/Error1Source.md
 docs/ErrorObject.md
 docs/ErrorResponse.md
 docs/ErrorSource.md
@@ -299,6 +304,7 @@ docs/InitiateCallback.md
 docs/LatestMessageDeliveryStatusEnum.md
 docs/LineTypeEnum.md
 docs/Link.md
+docs/Link1.md
 docs/LinkSchema.md
 docs/LinksObject.md
 docs/ListEndpointsResponse.md
