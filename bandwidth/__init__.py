@@ -48,6 +48,10 @@ __all__ = [
     "BlockedWebhook",
     "BridgeCompleteCallback",
     "BridgeTargetCompleteCallback",
+    "BrtcError",
+    "BrtcErrorResponse",
+    "BrtcErrorSource",
+    "BrtcLink",
     "BusinessEntityTypeEnum",
     "BusinessRegistrationTypeEnum",
     "CallDirectionEnum",
@@ -101,11 +105,7 @@ __all__ = [
     "EndpointStatusEnum",
     "EndpointTypeEnum",
     "Endpoints",
-    "Error",
-    "Error1",
-    "Error1Source",
     "ErrorObject",
-    "ErrorResponse",
     "ErrorSource",
     "FailureWebhook",
     "FieldError",
@@ -121,7 +121,6 @@ __all__ = [
     "LatestMessageDeliveryStatusEnum",
     "LineTypeEnum",
     "Link",
-    "Link1",
     "LinkSchema",
     "LinksObject",
     "ListEndpointsResponse",
@@ -235,6 +234,7 @@ __all__ = [
     "VoiceCodeResponse",
     "WebhookSubscription",
     "WebhookSubscriptionBasicAuthentication",
+    "WebhookSubscriptionError",
     "WebhookSubscriptionRequestSchema",
     "WebhookSubscriptionTypeEnum",
     "WebhookSubscriptionsListBody",
@@ -274,6 +274,10 @@ from bandwidth.models.async_lookup_request import AsyncLookupRequest as AsyncLoo
 from bandwidth.models.blocked_webhook import BlockedWebhook as BlockedWebhook
 from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback as BridgeCompleteCallback
 from bandwidth.models.bridge_target_complete_callback import BridgeTargetCompleteCallback as BridgeTargetCompleteCallback
+from bandwidth.models.brtc_error import BrtcError as BrtcError
+from bandwidth.models.brtc_error_response import BrtcErrorResponse as BrtcErrorResponse
+from bandwidth.models.brtc_error_source import BrtcErrorSource as BrtcErrorSource
+from bandwidth.models.brtc_link import BrtcLink as BrtcLink
 from bandwidth.models.business_entity_type_enum import BusinessEntityTypeEnum as BusinessEntityTypeEnum
 from bandwidth.models.business_registration_type_enum import BusinessRegistrationTypeEnum as BusinessRegistrationTypeEnum
 from bandwidth.models.call_direction_enum import CallDirectionEnum as CallDirectionEnum
@@ -327,11 +331,7 @@ from bandwidth.models.endpoint_response import EndpointResponse as EndpointRespo
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum as EndpointStatusEnum
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum as EndpointTypeEnum
 from bandwidth.models.endpoints import Endpoints as Endpoints
-from bandwidth.models.error import Error as Error
-from bandwidth.models.error1 import Error1 as Error1
-from bandwidth.models.error1_source import Error1Source as Error1Source
 from bandwidth.models.error_object import ErrorObject as ErrorObject
-from bandwidth.models.error_response import ErrorResponse as ErrorResponse
 from bandwidth.models.error_source import ErrorSource as ErrorSource
 from bandwidth.models.failure_webhook import FailureWebhook as FailureWebhook
 from bandwidth.models.field_error import FieldError as FieldError
@@ -347,7 +347,6 @@ from bandwidth.models.initiate_callback import InitiateCallback as InitiateCallb
 from bandwidth.models.latest_message_delivery_status_enum import LatestMessageDeliveryStatusEnum as LatestMessageDeliveryStatusEnum
 from bandwidth.models.line_type_enum import LineTypeEnum as LineTypeEnum
 from bandwidth.models.link import Link as Link
-from bandwidth.models.link1 import Link1 as Link1
 from bandwidth.models.link_schema import LinkSchema as LinkSchema
 from bandwidth.models.links_object import LinksObject as LinksObject
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse as ListEndpointsResponse
@@ -461,6 +460,7 @@ from bandwidth.models.voice_api_error import VoiceApiError as VoiceApiError
 from bandwidth.models.voice_code_response import VoiceCodeResponse as VoiceCodeResponse
 from bandwidth.models.webhook_subscription import WebhookSubscription as WebhookSubscription
 from bandwidth.models.webhook_subscription_basic_authentication import WebhookSubscriptionBasicAuthentication as WebhookSubscriptionBasicAuthentication
+from bandwidth.models.webhook_subscription_error import WebhookSubscriptionError as WebhookSubscriptionError
 from bandwidth.models.webhook_subscription_request_schema import WebhookSubscriptionRequestSchema as WebhookSubscriptionRequestSchema
 from bandwidth.models.webhook_subscription_type_enum import WebhookSubscriptionTypeEnum as WebhookSubscriptionTypeEnum
 from bandwidth.models.webhook_subscriptions_list_body import WebhookSubscriptionsListBody as WebhookSubscriptionsListBody

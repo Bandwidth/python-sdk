@@ -2161,7 +2161,7 @@ components:
       type: string
       description: >-
         The name of the Authorized Message Provider (AMP) that handled this
-        message. 
+        message.
 
         In the US, this is the carrier that the message was sent to.
 
@@ -2248,7 +2248,7 @@ components:
           description: >-
             Either an alphanumeric sender ID or the sender's Bandwidth phone
             number in E.164 format, which must be hosted within Bandwidth and
-            linked to the account that is generating the message. 
+            linked to the account that is generating the message.
 
             Alphanumeric Sender IDs can contain up to 11 characters, upper-case
             letters A-Z, lower-case letters a-z, numbers 0-9, space, hyphen -,
@@ -2571,8 +2571,8 @@ components:
         Specifies how the URL should be opened on a mobile device.
 
         - `BROWSER` Opens the URL in the device's default browser. If
-        application is not set or the device doesn’t support WebView, this
-        option is used by default. 
+        application is not set or the device doesn't support WebView, this
+        option is used by default.
 
         - `WEBVIEW` Opens the URL in an in-app WebView.
       enum:
@@ -2585,7 +2585,7 @@ components:
         Defines the layout of the WebView on a mobile device. It must be defined
         when application is set to `WEBVIEW`
 
-        - `FULL` WebView takes the full screen. 
+        - `FULL` WebView takes the full screen.
 
         - `HALF` WebView takes half of the screen.
 
@@ -2987,7 +2987,7 @@ components:
         to:
           type: string
           description: >
-            The destination phone number the message was sent to. 
+            The destination phone number the message was sent to.
 
             For inbound callbacks, this is the Bandwidth number or alphanumeric
             identifier that received the message.
@@ -3038,7 +3038,7 @@ components:
         client to a Bandwidth number.
 
         - `request-location-response` indicates a response to a location request
-        sent by the Bandwidth user's client after receiving an RBM message. 
+        sent by the Bandwidth user's client after receiving an RBM message.
 
         - `suggestion-response` indicates a response to a suggestion sent by the
         Bandwidth user's client after receiving an RBM message.
@@ -3277,7 +3277,7 @@ components:
           nullable: true
           type: string
           description: >-
-            The caller display name to use when the call is created. 
+            The caller display name to use when the call is created.
 
             May not exceed 256 characters nor contain control characters such as
             new lines.
@@ -4214,7 +4214,7 @@ components:
           format: double
           description: >-
             When an answering machine is detected, the amount of silence (in
-            seconds) before assuming the message has finished playing. 
+            seconds) before assuming the message has finished playing.
 
             If not provided it will default to the speechEndThreshold value.
           example: 5
@@ -5958,7 +5958,7 @@ components:
           format: date
           description: >-
             [DNI-Only](#section/DNI-Only). The date the phone number entered the
-            status described in `latestMessageDeliveryStatus`. 
+            status described in `latestMessageDeliveryStatus`.
 
             Think of this as the "start time" for that status.
 
@@ -6635,7 +6635,7 @@ components:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error'
+            $ref: '#/components/schemas/webhookSubscriptionError'
         data:
           items:
             $ref: '#/components/schemas/webhookSubscription'
@@ -6661,7 +6661,7 @@ components:
             If more results exist than specified by 'size', this link return the
             last page of result.
           type: string
-    error:
+    webhookSubscriptionError:
       type: object
       properties:
         code:
@@ -7060,7 +7060,7 @@ components:
           required:
             - eventType
             - eventTime
-    link1:
+    brtcLink:
       type: object
       properties:
         href:
@@ -7074,10 +7074,6 @@ components:
           example: self
         method:
           type: string
-          enum:
-            - GET
-            - POST
-            - DELETE
           description: The HTTP method to use when making the request.
           example: GET
     page:
@@ -7105,7 +7101,7 @@ components:
           example: 0
       required:
         - pageSize
-    error1:
+    brtcError:
       type: object
       properties:
         id:
@@ -7126,36 +7122,38 @@ components:
           description: A code that uniquely identifies the error.
           example: '404'
         source:
-          type: object
-          properties:
-            parameter:
-              type: string
-              description: The URI parameter that caused the error.
-              example: accountId
-            field:
-              type: string
-              description: The request body field that caused the error.
-              example: accountId
-            header:
-              type: string
-              description: The header that caused the error.
-              example: Authorization
-            reference:
-              type: string
-              description: >-
-                The resource ID or path to the resource (or non-existent
-                resource) causing the error.
-              example: e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+          $ref: '#/components/schemas/brtcErrorSource'
       required:
         - type
         - description
+    brtcErrorSource:
+      type: object
+      properties:
+        parameter:
+          type: string
+          description: The URI parameter that caused the error.
+          example: accountId
+        field:
+          type: string
+          description: The request body field that caused the error.
+          example: accountId
+        header:
+          type: string
+          description: The header that caused the error.
+          example: Authorization
+        reference:
+          type: string
+          description: >-
+            The resource ID or path to the resource (or non-existent resource)
+            causing the error.
+          example: e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
     listEndpointsResponse:
       type: object
       properties:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link1'
+            $ref: '#/components/schemas/brtcLink'
         page:
           $ref: '#/components/schemas/page'
         data:
@@ -7165,7 +7163,7 @@ components:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error1'
+            $ref: '#/components/schemas/brtcError'
       required:
         - links
         - data
@@ -7176,13 +7174,13 @@ components:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link1'
+            $ref: '#/components/schemas/brtcLink'
         data:
           $ref: '#/components/schemas/endpoint'
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error1'
+            $ref: '#/components/schemas/brtcError'
       required:
         - links
         - data
@@ -7193,24 +7191,24 @@ components:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link1'
+            $ref: '#/components/schemas/brtcLink'
         data:
           $ref: '#/components/schemas/createEndpointResponseData'
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error1'
+            $ref: '#/components/schemas/brtcError'
       required:
         - links
         - data
         - errors
-    errorResponse:
+    brtcErrorResponse:
       type: object
       properties:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link1'
+            $ref: '#/components/schemas/brtcLink'
         data:
           type: object
           nullable: true
@@ -7218,7 +7216,7 @@ components:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error1'
+            $ref: '#/components/schemas/brtcError'
       required:
         - links
         - data
@@ -7929,7 +7927,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             badRequestErrorExample:
               $ref: '#/components/examples/badRequestErrorExample'
@@ -7938,7 +7936,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             unauthorizedErrorExample:
               $ref: '#/components/examples/unauthorizedErrorExample'
@@ -7947,7 +7945,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             forbiddenErrorExample:
               $ref: '#/components/examples/forbiddenErrorExample'
@@ -7956,7 +7954,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             notFoundErrorExample:
               $ref: '#/components/examples/notFoundErrorExample'
@@ -7965,7 +7963,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             methodNotAllowedErrorExample:
               $ref: '#/components/examples/methodNotAllowedErrorExample'
@@ -7974,7 +7972,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             unsuppotedMediaTypeErrorExample:
               $ref: '#/components/examples/unsupportedMediaTypeErrorExample'
@@ -7992,7 +7990,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             tooManyRequestsErrorExample:
               $ref: '#/components/examples/tooManyRequestsErrorExample'
@@ -8001,7 +7999,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             serviceUnavailableErrorExample:
               $ref: '#/components/examples/serviceUnavailableErrorExample'
@@ -9629,12 +9627,12 @@ components:
             required: true
             description: >-
               <p>This Inbound Message Webhook is an envelope containing either a
-              received (MO) message to your 
+              received (MO) message to your
 
               message-enabled Bandwidth telephone number or a multichannel
-              client's response to a suggestion response 
+              client's response to a suggestion response
 
-              or location request. 
+              or location request.
 
               <p>The payload type will be one of <code>message-received</code>,
               <code>suggestion-response</code>, or

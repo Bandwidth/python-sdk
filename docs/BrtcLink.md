@@ -1,4 +1,4 @@
-# Link1
+# BrtcLink
 
 
 ## Properties
@@ -12,19 +12,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from bandwidth.models.link1 import Link1
+from bandwidth.models.brtc_link import BrtcLink
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of Link1 from a JSON string
-link1_instance = Link1.from_json(json)
+# create an instance of BrtcLink from a JSON string
+brtc_link_instance = BrtcLink.from_json(json)
 # print the JSON string representation of the object
-print(Link1.to_json())
+print(BrtcLink.to_json())
 
 # convert the object into a dict
-link1_dict = link1_instance.to_dict()
-# create an instance of Link1 from a dict
-link1_from_dict = Link1.from_dict(link1_dict)
+brtc_link_dict = brtc_link_instance.to_dict()
+# create an instance of BrtcLink from a dict
+brtc_link_from_dict = BrtcLink.from_dict(brtc_link_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

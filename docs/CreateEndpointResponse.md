@@ -5,9 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**List[Link1]**](Link1.md) |  | 
+**links** | [**List[BrtcLink]**](BrtcLink.md) |  | 
 **data** | [**CreateEndpointResponseData**](CreateEndpointResponseData.md) |  | 
-**errors** | [**List[Error1]**](Error1.md) |  | 
+**errors** | [**List[BrtcError]**](BrtcError.md) |  | 
 
 ## Example
 

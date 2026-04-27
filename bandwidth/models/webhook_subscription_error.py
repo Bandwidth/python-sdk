@@ -24,9 +24,9 @@ from bandwidth.models.telephone_number import TelephoneNumber
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Error(BaseModel):
+class WebhookSubscriptionError(BaseModel):
     """
-    Error
+    WebhookSubscriptionError
     """ # noqa: E501
     code: Optional[StrictInt] = None
     description: Optional[StrictStr] = None
@@ -52,7 +52,7 @@ class Error(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Error from a JSON string"""
+        """Create an instance of WebhookSubscriptionError from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -91,7 +91,7 @@ class Error(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Error from a dict"""
+        """Create an instance of WebhookSubscriptionError from a dict"""
         if obj is None:
             return None
 

@@ -20,9 +20,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
+from bandwidth.models.brtc_error import BrtcError
+from bandwidth.models.brtc_link import BrtcLink
 from bandwidth.models.create_endpoint_response_data import CreateEndpointResponseData
-from bandwidth.models.error1 import Error1
-from bandwidth.models.link1 import Link1
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,9 +30,9 @@ class CreateEndpointResponse(BaseModel):
     """
     CreateEndpointResponse
     """ # noqa: E501
-    links: List[Link1]
+    links: List[BrtcLink]
     data: CreateEndpointResponseData
-    errors: List[Error1]
+    errors: List[BrtcError]
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["links", "data", "errors"]
 
@@ -111,9 +111,9 @@ class CreateEndpointResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "links": [Link1.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
+            "links": [BrtcLink.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
             "data": CreateEndpointResponseData.from_dict(obj["data"]) if obj.get("data") is not None else None,
-            "errors": [Error1.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
+            "errors": [BrtcError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -1,4 +1,4 @@
-# Error1Source
+# BrtcErrorSource
 
 
 ## Properties
@@ -13,19 +13,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from bandwidth.models.error1_source import Error1Source
+from bandwidth.models.brtc_error_source import BrtcErrorSource
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of Error1Source from a JSON string
-error1_source_instance = Error1Source.from_json(json)
+# create an instance of BrtcErrorSource from a JSON string
+brtc_error_source_instance = BrtcErrorSource.from_json(json)
 # print the JSON string representation of the object
-print(Error1Source.to_json())
+print(BrtcErrorSource.to_json())
 
 # convert the object into a dict
-error1_source_dict = error1_source_instance.to_dict()
-# create an instance of Error1Source from a dict
-error1_source_from_dict = Error1Source.from_dict(error1_source_dict)
+brtc_error_source_dict = brtc_error_source_instance.to_dict()
+# create an instance of BrtcErrorSource from a dict
+brtc_error_source_from_dict = BrtcErrorSource.from_dict(brtc_error_source_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

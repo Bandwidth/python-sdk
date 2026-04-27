@@ -22,6 +22,10 @@ from bandwidth.models.async_lookup_request import AsyncLookupRequest
 from bandwidth.models.blocked_webhook import BlockedWebhook
 from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback
 from bandwidth.models.bridge_target_complete_callback import BridgeTargetCompleteCallback
+from bandwidth.models.brtc_error import BrtcError
+from bandwidth.models.brtc_error_response import BrtcErrorResponse
+from bandwidth.models.brtc_error_source import BrtcErrorSource
+from bandwidth.models.brtc_link import BrtcLink
 from bandwidth.models.business_entity_type_enum import BusinessEntityTypeEnum
 from bandwidth.models.business_registration_type_enum import BusinessRegistrationTypeEnum
 from bandwidth.models.call_direction_enum import CallDirectionEnum
@@ -75,11 +79,7 @@ from bandwidth.models.endpoint_response import EndpointResponse
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoints import Endpoints
-from bandwidth.models.error import Error
-from bandwidth.models.error1 import Error1
-from bandwidth.models.error1_source import Error1Source
 from bandwidth.models.error_object import ErrorObject
-from bandwidth.models.error_response import ErrorResponse
 from bandwidth.models.error_source import ErrorSource
 from bandwidth.models.failure_webhook import FailureWebhook
 from bandwidth.models.field_error import FieldError
@@ -95,7 +95,6 @@ from bandwidth.models.initiate_callback import InitiateCallback
 from bandwidth.models.latest_message_delivery_status_enum import LatestMessageDeliveryStatusEnum
 from bandwidth.models.line_type_enum import LineTypeEnum
 from bandwidth.models.link import Link
-from bandwidth.models.link1 import Link1
 from bandwidth.models.link_schema import LinkSchema
 from bandwidth.models.links_object import LinksObject
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse
@@ -209,6 +208,7 @@ from bandwidth.models.voice_api_error import VoiceApiError
 from bandwidth.models.voice_code_response import VoiceCodeResponse
 from bandwidth.models.webhook_subscription import WebhookSubscription
 from bandwidth.models.webhook_subscription_basic_authentication import WebhookSubscriptionBasicAuthentication
+from bandwidth.models.webhook_subscription_error import WebhookSubscriptionError
 from bandwidth.models.webhook_subscription_request_schema import WebhookSubscriptionRequestSchema
 from bandwidth.models.webhook_subscription_type_enum import WebhookSubscriptionTypeEnum
 from bandwidth.models.webhook_subscriptions_list_body import WebhookSubscriptionsListBody

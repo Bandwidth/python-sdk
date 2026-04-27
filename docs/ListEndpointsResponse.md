@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**List[Link1]**](Link1.md) |  | 
+**links** | [**List[BrtcLink]**](BrtcLink.md) |  | 
 **page** | [**Page**](Page.md) |  | [optional] 
 **data** | [**List[Endpoints]**](Endpoints.md) |  | 
-**errors** | [**List[Error1]**](Error1.md) |  | 
+**errors** | [**List[BrtcError]**](BrtcError.md) |  | 
 
 ## Example
 
