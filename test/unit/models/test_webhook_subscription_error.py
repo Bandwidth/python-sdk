@@ -16,6 +16,7 @@
 import unittest
 
 from bandwidth.models.webhook_subscription_error import WebhookSubscriptionError
+from bandwidth.models.telephone_number import TelephoneNumber
 
 class TestWebhookSubscriptionError(unittest.TestCase):
     """WebhookSubscriptionError unit test stubs"""
@@ -31,27 +32,28 @@ class TestWebhookSubscriptionError(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `WebhookSubscriptionError`
-        """
-        model = WebhookSubscriptionError()
         if include_optional:
             return WebhookSubscriptionError(
-                code = 56,
-                description = '',
-                telephone_numbers = [
-                    bandwidth.models.telephone_number.telephoneNumber(
-                        telephone_number = '', )
-                    ]
+                code=56,
+                description='description',
+                telephone_numbers=[
+                    TelephoneNumber(telephone_number='+19195551234')
+                ]
             )
         else:
-            return WebhookSubscriptionError(
-        )
-        """
+            return WebhookSubscriptionError()
 
     def testWebhookSubscriptionError(self):
         """Test WebhookSubscriptionError"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, WebhookSubscriptionError)
+        assert instance.code == 56
+        assert instance.description == 'description'
+        assert isinstance(instance.telephone_numbers, list)
+        assert len(instance.telephone_numbers) == 1
+        assert isinstance(instance.telephone_numbers[0], TelephoneNumber)
+        assert instance.telephone_numbers[0].telephone_number == '+19195551234'
 
 if __name__ == '__main__':
     unittest.main()

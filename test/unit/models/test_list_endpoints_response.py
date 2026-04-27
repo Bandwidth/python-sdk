@@ -18,8 +18,8 @@ from datetime import datetime
 
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse
 from bandwidth.models.endpoints import Endpoints
-from bandwidth.models.link import Link
-from bandwidth.models.error import Error
+from bandwidth.models.brtc_link import BrtcLink
+from bandwidth.models.brtc_error import BrtcError
 from bandwidth.models.page import Page
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
@@ -41,8 +41,8 @@ class TestListEndpointsResponse(unittest.TestCase):
         if include_optional:
             return ListEndpointsResponse(
                 links=[
-                    Link(href='https://api.bandwidth.com/endpoints', rel='self'),
-                    Link(href='https://api.bandwidth.com/endpoints?page=2', rel='next')
+                    BrtcLink(href='https://api.bandwidth.com/endpoints', rel='self'),
+                    BrtcLink(href='https://api.bandwidth.com/endpoints?page=2', rel='next')
                 ],
                 page=Page(
                     page_size=10,

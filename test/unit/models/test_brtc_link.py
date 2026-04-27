@@ -31,24 +31,23 @@ class TestBrtcLink(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `BrtcLink`
-        """
-        model = BrtcLink()
         if include_optional:
             return BrtcLink(
-                href = 'https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
-                rel = 'self',
-                method = 'GET'
+                href='https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
+                rel='self',
+                method='GET'
             )
         else:
-            return BrtcLink(
-        )
-        """
+            return BrtcLink()
 
     def testBrtcLink(self):
         """Test BrtcLink"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, BrtcLink)
+        assert instance.href == 'https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.rel == 'self'
+        assert instance.method == 'GET'
 
 if __name__ == '__main__':
     unittest.main()

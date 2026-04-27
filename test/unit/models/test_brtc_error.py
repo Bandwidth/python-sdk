@@ -14,8 +14,10 @@
 
 
 import unittest
+from uuid import UUID
 
 from bandwidth.models.brtc_error import BrtcError
+from bandwidth.models.brtc_error_source import BrtcErrorSource
 
 class TestBrtcError(unittest.TestCase):
     """BrtcError unit test stubs"""
@@ -31,32 +33,39 @@ class TestBrtcError(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `BrtcError`
-        """
-        model = BrtcError()
         if include_optional:
             return BrtcError(
-                id = '59512d87-7a92-4040-8e4a-78fb772019b9',
-                type = 'resource.not_found',
-                description = 'The requested resource was not found.',
-                code = '404',
-                source = bandwidth.models.brtc_error_source.brtcErrorSource(
-                    parameter = 'accountId', 
-                    field = 'accountId', 
-                    header = 'Authorization', 
-                    reference = 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', )
+                id='59512d87-7a92-4040-8e4a-78fb772019b9',
+                type='resource.not_found',
+                description='The requested resource was not found.',
+                code='404',
+                source=BrtcErrorSource(
+                    parameter='accountId',
+                    var_field='accountId',
+                    header='Authorization',
+                    reference='e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+                )
             )
         else:
             return BrtcError(
-                type = 'resource.not_found',
-                description = 'The requested resource was not found.',
-        )
-        """
+                type='resource.not_found',
+                description='The requested resource was not found.'
+            )
 
     def testBrtcError(self):
         """Test BrtcError"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, BrtcError)
+        assert isinstance(instance.id, UUID)
+        assert instance.type == 'resource.not_found'
+        assert instance.description == 'The requested resource was not found.'
+        assert instance.code == '404'
+        assert isinstance(instance.source, BrtcErrorSource)
+        assert instance.source.parameter == 'accountId'
+        assert instance.source.var_field == 'accountId'
+        assert instance.source.header == 'Authorization'
+        assert instance.source.reference == 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
 
 if __name__ == '__main__':
     unittest.main()

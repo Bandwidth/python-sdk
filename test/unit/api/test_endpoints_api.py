@@ -27,7 +27,7 @@ from bandwidth.models.endpoint_response import EndpointResponse
 from bandwidth.models.endpoint import Endpoint
 from bandwidth.models.endpoints import Endpoints
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse
-from bandwidth.models.link import Link
+from bandwidth.models.brtc_link import BrtcLink
 from bandwidth.models.page import Page
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
@@ -73,7 +73,7 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.data, instance_of(CreateEndpointResponse))
 
         assert_that(response.data.links, instance_of(list))
-        assert_that(response.data.links[0], instance_of(Link))
+        assert_that(response.data.links[0], instance_of(BrtcLink))
         assert_that(response.data.links[0].href, starts_with('http'))
         assert_that(response.data.links[0].rel, equal_to('endpoint'))
 
@@ -115,7 +115,7 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.data, instance_of(EndpointResponse))
 
         assert_that(response.data.links, instance_of(list))
-        assert_that(response.data.links[0], instance_of(Link))
+        assert_that(response.data.links[0], instance_of(BrtcLink))
         assert_that(response.data.links[0].href, starts_with('http'))
         assert_that(response.data.links[0].rel, equal_to('self'))
 
@@ -143,7 +143,7 @@ class TestEndpointsApi(unittest.TestCase):
         assert_that(response.data, instance_of(ListEndpointsResponse))
 
         assert_that(response.data.links, instance_of(list))
-        assert_that(response.data.links[0], instance_of(Link))
+        assert_that(response.data.links[0], instance_of(BrtcLink))
         assert_that(response.data.links[0].href, starts_with('http'))
         assert_that(response.data.links[0].rel, equal_to('self'))
 

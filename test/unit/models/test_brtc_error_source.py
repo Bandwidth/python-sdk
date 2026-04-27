@@ -17,6 +17,7 @@ import unittest
 
 from bandwidth.models.brtc_error_source import BrtcErrorSource
 
+
 class TestBrtcErrorSource(unittest.TestCase):
     """BrtcErrorSource unit test stubs"""
 
@@ -31,25 +32,25 @@ class TestBrtcErrorSource(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `BrtcErrorSource`
-        """
-        model = BrtcErrorSource()
         if include_optional:
             return BrtcErrorSource(
-                parameter = 'accountId',
-                var_field = 'accountId',
-                header = 'Authorization',
-                reference = 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+                parameter='accountId',
+                var_field='accountId',
+                header='Authorization',
+                reference='e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
             )
         else:
-            return BrtcErrorSource(
-        )
-        """
+            return BrtcErrorSource()
 
     def testBrtcErrorSource(self):
         """Test BrtcErrorSource"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, BrtcErrorSource)
+        assert instance.parameter == 'accountId'
+        assert instance.var_field == 'accountId'
+        assert instance.header == 'Authorization'
+        assert instance.reference == 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
 
 if __name__ == '__main__':
     unittest.main()

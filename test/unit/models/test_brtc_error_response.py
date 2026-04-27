@@ -16,6 +16,8 @@
 import unittest
 
 from bandwidth.models.brtc_error_response import BrtcErrorResponse
+from bandwidth.models.brtc_error import BrtcError
+from bandwidth.models.brtc_link import BrtcLink
 
 class TestBrtcErrorResponse(unittest.TestCase):
     """BrtcErrorResponse unit test stubs"""
@@ -31,59 +33,48 @@ class TestBrtcErrorResponse(unittest.TestCase):
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `BrtcErrorResponse`
-        """
-        model = BrtcErrorResponse()
         if include_optional:
             return BrtcErrorResponse(
-                links = [
-                    bandwidth.models.brtc_link.brtcLink(
-                        href = 'https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
-                        rel = 'self', 
-                        method = 'GET', )
-                    ],
-                data = None,
-                errors = [
-                    bandwidth.models.brtc_error.brtcError(
-                        id = '59512d87-7a92-4040-8e4a-78fb772019b9', 
-                        type = 'resource.not_found', 
-                        description = 'The requested resource was not found.', 
-                        code = '404', 
-                        source = bandwidth.models.brtc_error_source.brtcErrorSource(
-                            parameter = 'accountId', 
-                            field = 'accountId', 
-                            header = 'Authorization', 
-                            reference = 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', ), )
-                    ]
+                links=[
+                    BrtcLink(
+                        href='https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85',
+                        rel='self',
+                        method='GET'
+                    )
+                ],
+                data=None,
+                errors=[
+                    BrtcError(
+                        id='59512d87-7a92-4040-8e4a-78fb772019b9',
+                        type='resource.not_found',
+                        description='The requested resource was not found.',
+                        code='404'
+                    )
+                ]
             )
         else:
             return BrtcErrorResponse(
-                links = [
-                    bandwidth.models.brtc_link.brtcLink(
-                        href = 'https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', 
-                        rel = 'self', 
-                        method = 'GET', )
-                    ],
-                data = None,
-                errors = [
-                    bandwidth.models.brtc_error.brtcError(
-                        id = '59512d87-7a92-4040-8e4a-78fb772019b9', 
-                        type = 'resource.not_found', 
-                        description = 'The requested resource was not found.', 
-                        code = '404', 
-                        source = bandwidth.models.brtc_error_source.brtcErrorSource(
-                            parameter = 'accountId', 
-                            field = 'accountId', 
-                            header = 'Authorization', 
-                            reference = 'e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85', ), )
-                    ],
-        )
-        """
+                links=[],
+                data=None,
+                errors=[]
+            )
 
     def testBrtcErrorResponse(self):
         """Test BrtcErrorResponse"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        instance = self.make_instance(True)
+        assert instance is not None
+        assert isinstance(instance, BrtcErrorResponse)
+        assert isinstance(instance.links, list)
+        assert len(instance.links) == 1
+        assert isinstance(instance.links[0], BrtcLink)
+        assert instance.links[0].href == 'https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85'
+        assert instance.links[0].rel == 'self'
+        assert instance.data is None
+        assert isinstance(instance.errors, list)
+        assert len(instance.errors) == 1
+        assert isinstance(instance.errors[0], BrtcError)
+        assert instance.errors[0].type == 'resource.not_found'
+        assert instance.errors[0].description == 'The requested resource was not found.'
 
 if __name__ == '__main__':
     unittest.main()
