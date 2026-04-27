@@ -19,19 +19,18 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.brtc_error import BrtcError
 from bandwidth.models.brtc_link import BrtcLink
-from bandwidth.models.endpoint import Endpoint
 from typing import Optional, Set
 from typing_extensions import Self
 
-class EndpointResponse(BaseModel):
+class BrtcErrorResponse(BaseModel):
     """
-    EndpointResponse
+    BrtcErrorResponse
     """ # noqa: E501
     links: List[BrtcLink]
-    data: Endpoint
+    data: Optional[Dict[str, Any]]
     errors: List[BrtcError]
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["links", "data", "errors"]
@@ -54,7 +53,7 @@ class EndpointResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of EndpointResponse from a JSON string"""
+        """Create an instance of BrtcErrorResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -84,9 +83,6 @@ class EndpointResponse(BaseModel):
                 if _item_links:
                     _items.append(_item_links.to_dict())
             _dict['links'] = _items
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in errors (list)
         _items = []
         if self.errors:
@@ -99,11 +95,16 @@ class EndpointResponse(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if data (nullable) is None
+        # and model_fields_set contains the field
+        if self.data is None and "data" in self.model_fields_set:
+            _dict['data'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of EndpointResponse from a dict"""
+        """Create an instance of BrtcErrorResponse from a dict"""
         if obj is None:
             return None
 
@@ -112,7 +113,7 @@ class EndpointResponse(BaseModel):
 
         _obj = cls.model_validate({
             "links": [BrtcLink.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
-            "data": Endpoint.from_dict(obj["data"]) if obj.get("data") is not None else None,
+            "data": obj.get("data"),
             "errors": [BrtcError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
         })
         # store additional fields in additional_properties

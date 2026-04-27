@@ -7,7 +7,7 @@ A list of all webhook subscriptions registered for this account ID for this part
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **links** | [**LinksObject**](LinksObject.md) |  | [optional] 
-**errors** | [**List[Error]**](Error.md) |  | [optional] 
+**errors** | [**List[WebhookSubscriptionError]**](WebhookSubscriptionError.md) |  | [optional] 
 **data** | [**List[WebhookSubscription]**](WebhookSubscription.md) |  | 
 
 ## Example

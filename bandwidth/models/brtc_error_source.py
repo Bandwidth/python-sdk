@@ -18,22 +18,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from bandwidth.models.error import Error
-from bandwidth.models.link import Link
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ErrorResponse(BaseModel):
+class BrtcErrorSource(BaseModel):
     """
-    ErrorResponse
+    BrtcErrorSource
     """ # noqa: E501
-    links: List[Link]
-    data: Optional[Dict[str, Any]]
-    errors: List[Error]
+    parameter: Optional[StrictStr] = Field(default=None, description="The URI parameter that caused the error.")
+    var_field: Optional[StrictStr] = Field(default=None, description="The request body field that caused the error.", alias="field")
+    header: Optional[StrictStr] = Field(default=None, description="The header that caused the error.")
+    reference: Optional[StrictStr] = Field(default=None, description="The resource ID or path to the resource (or non-existent resource) causing the error.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["links", "data", "errors"]
+    __properties: ClassVar[List[str]] = ["parameter", "field", "header", "reference"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -53,7 +52,7 @@ class ErrorResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ErrorResponse from a JSON string"""
+        """Create an instance of BrtcErrorSource from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,35 +75,16 @@ class ErrorResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in links (list)
-        _items = []
-        if self.links:
-            for _item_links in self.links:
-                if _item_links:
-                    _items.append(_item_links.to_dict())
-            _dict['links'] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in errors (list)
-        _items = []
-        if self.errors:
-            for _item_errors in self.errors:
-                if _item_errors:
-                    _items.append(_item_errors.to_dict())
-            _dict['errors'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
-        # set to None if data (nullable) is None
-        # and model_fields_set contains the field
-        if self.data is None and "data" in self.model_fields_set:
-            _dict['data'] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ErrorResponse from a dict"""
+        """Create an instance of BrtcErrorSource from a dict"""
         if obj is None:
             return None
 
@@ -112,9 +92,10 @@ class ErrorResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "links": [Link.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
-            "data": obj.get("data"),
-            "errors": [Error.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
+            "parameter": obj.get("parameter"),
+            "field": obj.get("field"),
+            "header": obj.get("header"),
+            "reference": obj.get("reference")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

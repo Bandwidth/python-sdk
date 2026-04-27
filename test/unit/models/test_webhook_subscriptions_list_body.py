@@ -18,7 +18,7 @@ from datetime import datetime
 
 from bandwidth.models.webhook_subscriptions_list_body import WebhookSubscriptionsListBody
 from bandwidth.models.links_object import LinksObject
-from bandwidth.models.error import Error
+from bandwidth.models.webhook_subscription_error import WebhookSubscriptionError
 from bandwidth.models.telephone_number import TelephoneNumber
 from bandwidth.models.webhook_subscription import WebhookSubscription
 from bandwidth.models.webhook_subscription_basic_authentication import WebhookSubscriptionBasicAuthentication
@@ -45,9 +45,9 @@ class TestWebhookSubscriptionsListBody(unittest.TestCase):
                     previous = 'https://api.com/abc/previous', 
                     last = 'https://api.com/abc/last', ),
                 errors = [
-                    Error(
-                        code = 56, 
-                        description = 'description', 
+                    WebhookSubscriptionError(
+                        code = 56,
+                        description = 'description',
                         telephone_numbers = [
                             TelephoneNumber(
                                 telephone_number = '+19195551234', )
@@ -94,7 +94,7 @@ class TestWebhookSubscriptionsListBody(unittest.TestCase):
         assert instance.links.last == 'https://api.com/abc/last'
         assert isinstance(instance.errors, list)
         assert len(instance.errors) == 1
-        assert isinstance(instance.errors[0], Error)
+        assert isinstance(instance.errors[0], WebhookSubscriptionError)
         assert instance.errors[0].code == 56
         assert instance.errors[0].description == 'description'
         assert isinstance(instance.errors[0].telephone_numbers, list)

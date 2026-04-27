@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **redirect_fallback_method** | [**RedirectMethodEnum**](RedirectMethodEnum.md) |  | [optional] [default to RedirectMethodEnum.POST]
 **fallback_username** | **str** | Basic auth username. | [optional] 
 **fallback_password** | **str** | Basic auth password. | [optional] 
-**tag** | **str** | A custom string that will be sent with this and all future callbacks unless overwritten by a future &#x60;tag&#x60; attribute or [&#x60;&lt;Tag&gt;&#x60;](/docs/voice/bxml/tag) verb, or cleared.  May be cleared by setting &#x60;tag&#x3D;\&quot;\&quot;&#x60;.  Max length 256 characters.  Not allowed if &#x60;state&#x60; is &#x60;completed&#x60;. | [optional] 
+**tag** | **str** | A custom string that will be sent with this and all future callbacks unless overwritten by a future &#x60;tag&#x60; attribute or [&#x60;&lt;Tag&gt;&#x60;](/docs/voice/bxml/tag) verb, or cleared.  May be cleared by setting &#x60;tag&#x3D;\&quot;\&quot;&#x60;.  Max length 4096 characters.  Not allowed if &#x60;state&#x60; is &#x60;completed&#x60;. | [optional] 
 
 ## Example
 

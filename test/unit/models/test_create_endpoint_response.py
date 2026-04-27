@@ -18,8 +18,8 @@ from datetime import datetime
 
 from bandwidth.models.create_endpoint_response import CreateEndpointResponse
 from bandwidth.models.create_endpoint_response_data import CreateEndpointResponseData
-from bandwidth.models.link import Link
-from bandwidth.models.error import Error
+from bandwidth.models.brtc_link import BrtcLink
+from bandwidth.models.brtc_error import BrtcError
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 
@@ -40,7 +40,7 @@ class TestCreateEndpointResponse(unittest.TestCase):
         if include_optional:
             return CreateEndpointResponse(
                 links=[
-                    Link(href='https://api.bandwidth.com/endpoint-123', rel='self')
+                    BrtcLink(href='https://api.bandwidth.com/endpoint-123', rel='self')
                 ],
                 data=CreateEndpointResponseData(
                     endpoint_id='endpoint-123',
@@ -63,7 +63,7 @@ class TestCreateEndpointResponse(unittest.TestCase):
         assert isinstance(instance, CreateEndpointResponse)
         assert isinstance(instance.links, list)
         assert len(instance.links) == 1
-        assert isinstance(instance.links[0], Link)
+        assert isinstance(instance.links[0], BrtcLink)
         assert isinstance(instance.data, CreateEndpointResponseData)
         assert instance.data.endpoint_id == 'endpoint-123'
         assert instance.data.token == 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.token'

@@ -104,14 +104,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "CreateEndpointResponse",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -183,14 +183,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "CreateEndpointResponse",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -262,14 +262,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "CreateEndpointResponse",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -421,14 +421,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -500,14 +500,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -579,14 +579,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -725,14 +725,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EndpointResponse",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -804,14 +804,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EndpointResponse",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -883,14 +883,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "EndpointResponse",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1041,14 +1041,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListEndpointsResponse",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1132,14 +1132,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListEndpointsResponse",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1223,14 +1223,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ListEndpointsResponse",
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1390,14 +1390,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1473,14 +1473,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1556,14 +1556,14 @@ class EndpointsApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '204': None,
-            '400': "ErrorResponse",
-            '401': "ErrorResponse",
-            '403': "ErrorResponse",
-            '404': "ErrorResponse",
-            '405': "ErrorResponse",
-            '415': "ErrorResponse",
-            '429': "ErrorResponse",
-            '500': "ErrorResponse",
+            '400': "BrtcErrorResponse",
+            '401': "BrtcErrorResponse",
+            '403': "BrtcErrorResponse",
+            '404': "BrtcErrorResponse",
+            '405': "BrtcErrorResponse",
+            '415': "BrtcErrorResponse",
+            '429': "BrtcErrorResponse",
+            '500': "BrtcErrorResponse",
         }
         response_data = self.api_client.call_api(
             *_param,

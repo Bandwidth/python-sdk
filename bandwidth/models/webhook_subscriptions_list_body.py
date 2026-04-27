@@ -20,9 +20,9 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from bandwidth.models.error import Error
 from bandwidth.models.links_object import LinksObject
 from bandwidth.models.webhook_subscription import WebhookSubscription
+from bandwidth.models.webhook_subscription_error import WebhookSubscriptionError
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -31,7 +31,7 @@ class WebhookSubscriptionsListBody(BaseModel):
     A list of all webhook subscriptions registered for this account ID for this particular feature (unpaginated).
     """ # noqa: E501
     links: Optional[LinksObject] = None
-    errors: Optional[List[Error]] = None
+    errors: Optional[List[WebhookSubscriptionError]] = None
     data: List[WebhookSubscription]
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["links", "errors", "data"]
@@ -112,7 +112,7 @@ class WebhookSubscriptionsListBody(BaseModel):
 
         _obj = cls.model_validate({
             "links": LinksObject.from_dict(obj["links"]) if obj.get("links") is not None else None,
-            "errors": [Error.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None,
+            "errors": [WebhookSubscriptionError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None,
             "data": [WebhookSubscription.from_dict(_item) for _item in obj["data"]] if obj.get("data") is not None else None
         })
         # store additional fields in additional_properties

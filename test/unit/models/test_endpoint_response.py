@@ -18,8 +18,8 @@ from datetime import datetime
 
 from bandwidth.models.endpoint_response import EndpointResponse
 from bandwidth.models.endpoint import Endpoint
-from bandwidth.models.link import Link
-from bandwidth.models.error import Error
+from bandwidth.models.brtc_link import BrtcLink
+from bandwidth.models.brtc_error import BrtcError
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
 from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 
@@ -40,7 +40,7 @@ class TestEndpointResponse(unittest.TestCase):
         if include_optional:
             return EndpointResponse(
                 links=[
-                    Link(href='https://api.bandwidth.com/endpoint-999', rel='self')
+                    BrtcLink(href='https://api.bandwidth.com/endpoint-999', rel='self')
                 ],
                 data=Endpoint(
                     endpoint_id='endpoint-999',
@@ -62,7 +62,7 @@ class TestEndpointResponse(unittest.TestCase):
         assert isinstance(instance, EndpointResponse)
         assert isinstance(instance.links, list)
         assert len(instance.links) == 1
-        assert isinstance(instance.links[0], Link)
+        assert isinstance(instance.links[0], BrtcLink)
         assert isinstance(instance.data, Endpoint)
         assert instance.data.endpoint_id == 'endpoint-999'
         assert instance.data.type == EndpointTypeEnum.WEBRTC

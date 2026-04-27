@@ -2571,7 +2571,7 @@ components:
         Specifies how the URL should be opened on a mobile device.
 
         - `BROWSER` Opens the URL in the device's default browser. If
-        application is not set or the device doesn’t support WebView, this
+        application is not set or the device doesn't support WebView, this
         option is used by default.
 
         - `WEBVIEW` Opens the URL in an in-app WebView.
@@ -3455,8 +3455,8 @@ components:
             May be cleared by setting `tag=""`
 
 
-            Max length 256 characters.
-          maxLength: 256
+            Max length 4096 characters.
+          maxLength: 4096
           example: arbitrary text here
     createCallResponse:
       type: object
@@ -3833,11 +3833,11 @@ components:
             May be cleared by setting `tag=""`.
 
 
-            Max length 256 characters.
+            Max length 4096 characters.
 
 
             Not allowed if `state` is `completed`.
-          maxLength: 256
+          maxLength: 4096
           example: My Custom Tag
     updateCallRecording:
       type: object
@@ -6635,7 +6635,7 @@ components:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error'
+            $ref: '#/components/schemas/webhookSubscriptionError'
         data:
           items:
             $ref: '#/components/schemas/webhookSubscription'
@@ -6661,7 +6661,7 @@ components:
             If more results exist than specified by 'size', this link return the
             last page of result.
           type: string
-    error:
+    webhookSubscriptionError:
       type: object
       properties:
         code:
@@ -7060,6 +7060,22 @@ components:
           required:
             - eventType
             - eventTime
+    brtcLink:
+      type: object
+      properties:
+        href:
+          type: string
+          description: The full URL of the link.
+          example: >-
+            https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+        rel:
+          type: string
+          description: The relationship of the link to the current resource.
+          example: self
+        method:
+          type: string
+          description: The HTTP method to use when making the request.
+          example: GET
     page:
       type: object
       properties:
@@ -7085,13 +7101,59 @@ components:
           example: 0
       required:
         - pageSize
+    brtcError:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: A unique identifier for the error.
+          example: 59512d87-7a92-4040-8e4a-78fb772019b9
+        type:
+          type: string
+          description: The type of error.
+          example: resource.not_found
+        description:
+          type: string
+          description: A description of the error.
+          example: The requested resource was not found.
+        code:
+          type: string
+          description: A code that uniquely identifies the error.
+          example: '404'
+        source:
+          $ref: '#/components/schemas/brtcErrorSource'
+      required:
+        - type
+        - description
+    brtcErrorSource:
+      type: object
+      properties:
+        parameter:
+          type: string
+          description: The URI parameter that caused the error.
+          example: accountId
+        field:
+          type: string
+          description: The request body field that caused the error.
+          example: accountId
+        header:
+          type: string
+          description: The header that caused the error.
+          example: Authorization
+        reference:
+          type: string
+          description: >-
+            The resource ID or path to the resource (or non-existent resource)
+            causing the error.
+          example: e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
     listEndpointsResponse:
       type: object
       properties:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/brtcLink'
         page:
           $ref: '#/components/schemas/page'
         data:
@@ -7101,7 +7163,7 @@ components:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error'
+            $ref: '#/components/schemas/brtcError'
       required:
         - links
         - data
@@ -7112,13 +7174,13 @@ components:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/brtcLink'
         data:
           $ref: '#/components/schemas/endpoint'
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error'
+            $ref: '#/components/schemas/brtcError'
       required:
         - links
         - data
@@ -7129,24 +7191,24 @@ components:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/brtcLink'
         data:
           $ref: '#/components/schemas/createEndpointResponseData'
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error'
+            $ref: '#/components/schemas/brtcError'
       required:
         - links
         - data
         - errors
-    errorResponse:
+    brtcErrorResponse:
       type: object
       properties:
         links:
           type: array
           items:
-            $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/brtcLink'
         data:
           type: object
           nullable: true
@@ -7154,7 +7216,7 @@ components:
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/error'
+            $ref: '#/components/schemas/brtcError'
       required:
         - links
         - data
@@ -7865,7 +7927,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             badRequestErrorExample:
               $ref: '#/components/examples/badRequestErrorExample'
@@ -7874,7 +7936,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             unauthorizedErrorExample:
               $ref: '#/components/examples/unauthorizedErrorExample'
@@ -7883,7 +7945,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             forbiddenErrorExample:
               $ref: '#/components/examples/forbiddenErrorExample'
@@ -7892,7 +7954,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             notFoundErrorExample:
               $ref: '#/components/examples/notFoundErrorExample'
@@ -7901,7 +7963,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             methodNotAllowedErrorExample:
               $ref: '#/components/examples/methodNotAllowedErrorExample'
@@ -7910,16 +7972,25 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             unsuppotedMediaTypeErrorExample:
               $ref: '#/components/examples/unsupportedMediaTypeErrorExample'
     tooManyRequestsErrorResponse:
       description: Too Many Requests
+      headers:
+        Retry-After:
+          description: >-
+            The number of seconds the client should wait before making another
+            request.
+          required: true
+          schema:
+            type: integer
+            example: 900
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             tooManyRequestsErrorExample:
               $ref: '#/components/examples/tooManyRequestsErrorExample'
@@ -7928,7 +7999,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorResponse'
+            $ref: '#/components/schemas/brtcErrorResponse'
           examples:
             serviceUnavailableErrorExample:
               $ref: '#/components/examples/serviceUnavailableErrorExample'
@@ -9137,10 +9208,10 @@ components:
         links: []
         data: null
         errors:
-          - id: 59512d87-7a92-4040-8e4a-78fb772019b9
-            type: too_many_requests
-            description: The client has sent too many requests in a given amount of time.
-            code: '429'
+          - type: too_many_endpoints
+            description: >-
+              Too many endpoints. Please delete an existing endpoint or wait 24
+              hours for an endpoint to be removed.
     serviceUnavailableErrorExample:
       summary: Service Unavailable Error Example
       value:

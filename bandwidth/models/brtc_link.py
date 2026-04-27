@@ -18,23 +18,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
-from bandwidth.models.brtc_error import BrtcError
-from bandwidth.models.brtc_link import BrtcLink
-from bandwidth.models.endpoint import Endpoint
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class EndpointResponse(BaseModel):
+class BrtcLink(BaseModel):
     """
-    EndpointResponse
+    BrtcLink
     """ # noqa: E501
-    links: List[BrtcLink]
-    data: Endpoint
-    errors: List[BrtcError]
+    href: Optional[StrictStr] = Field(default=None, description="The full URL of the link.")
+    rel: Optional[StrictStr] = Field(default=None, description="The relationship of the link to the current resource.")
+    method: Optional[StrictStr] = Field(default=None, description="The HTTP method to use when making the request.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["links", "data", "errors"]
+    __properties: ClassVar[List[str]] = ["href", "rel", "method"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +51,7 @@ class EndpointResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of EndpointResponse from a JSON string"""
+        """Create an instance of BrtcLink from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -77,23 +74,6 @@ class EndpointResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in links (list)
-        _items = []
-        if self.links:
-            for _item_links in self.links:
-                if _item_links:
-                    _items.append(_item_links.to_dict())
-            _dict['links'] = _items
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict['data'] = self.data.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in errors (list)
-        _items = []
-        if self.errors:
-            for _item_errors in self.errors:
-                if _item_errors:
-                    _items.append(_item_errors.to_dict())
-            _dict['errors'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -103,7 +83,7 @@ class EndpointResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of EndpointResponse from a dict"""
+        """Create an instance of BrtcLink from a dict"""
         if obj is None:
             return None
 
@@ -111,9 +91,9 @@ class EndpointResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "links": [BrtcLink.from_dict(_item) for _item in obj["links"]] if obj.get("links") is not None else None,
-            "data": Endpoint.from_dict(obj["data"]) if obj.get("data") is not None else None,
-            "errors": [BrtcError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
+            "href": obj.get("href"),
+            "rel": obj.get("rel"),
+            "method": obj.get("method")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

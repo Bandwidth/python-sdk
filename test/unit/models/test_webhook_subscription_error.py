@@ -15,11 +15,11 @@
 
 import unittest
 
-from bandwidth.models.error import Error
+from bandwidth.models.webhook_subscription_error import WebhookSubscriptionError
 from bandwidth.models.telephone_number import TelephoneNumber
 
-class TestError(unittest.TestCase):
-    """Error unit test stubs"""
+class TestWebhookSubscriptionError(unittest.TestCase):
+    """WebhookSubscriptionError unit test stubs"""
 
     def setUp(self):
         pass
@@ -27,35 +27,33 @@ class TestError(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> Error:
-        """Test Error
+    def make_instance(self, include_optional) -> WebhookSubscriptionError:
+        """Test WebhookSubscriptionError
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
         if include_optional:
-            return Error(
-                code = 56,
-                description = '',
-                telephone_numbers = [
-                    TelephoneNumber(
-                        telephone_number = '', )
-                    ]
+            return WebhookSubscriptionError(
+                code=56,
+                description='description',
+                telephone_numbers=[
+                    TelephoneNumber(telephone_number='+19195551234')
+                ]
             )
         else:
-            return Error(
-        )
+            return WebhookSubscriptionError()
 
-    def testError(self):
-        """Test Error"""
+    def testWebhookSubscriptionError(self):
+        """Test WebhookSubscriptionError"""
         instance = self.make_instance(True)
         assert instance is not None
-        assert isinstance(instance, Error)
+        assert isinstance(instance, WebhookSubscriptionError)
         assert instance.code == 56
-        assert instance.description == ''
+        assert instance.description == 'description'
         assert isinstance(instance.telephone_numbers, list)
         assert len(instance.telephone_numbers) == 1
         assert isinstance(instance.telephone_numbers[0], TelephoneNumber)
-        assert instance.telephone_numbers[0].telephone_number == ''
+        assert instance.telephone_numbers[0].telephone_number == '+19195551234'
 
 if __name__ == '__main__':
     unittest.main()
