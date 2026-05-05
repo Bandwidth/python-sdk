@@ -1723,9 +1723,6 @@ paths:
           $ref: '#/components/responses/tooManyRequestsErrorResponse'
         '500':
           $ref: '#/components/responses/serviceUnavailableErrorResponse'
-      x-badges:
-        - name: Beta
-          color: '#076EA8'
     post:
       tags:
         - Endpoints
@@ -1758,9 +1755,6 @@ paths:
       callbacks:
         endpointEventCallback:
           $ref: '#/components/callbacks/endpointEvent'
-      x-badges:
-        - name: Beta
-          color: '#076EA8'
     servers: &ref_5
       - url: https://api.bandwidth.com/v2
         description: Production
@@ -1793,9 +1787,6 @@ paths:
           $ref: '#/components/responses/tooManyRequestsErrorResponse'
         '500':
           $ref: '#/components/responses/serviceUnavailableErrorResponse'
-      x-badges:
-        - name: Beta
-          color: '#076EA8'
     delete:
       tags:
         - Endpoints
@@ -1826,9 +1817,6 @@ paths:
           $ref: '#/components/responses/tooManyRequestsErrorResponse'
         '500':
           $ref: '#/components/responses/serviceUnavailableErrorResponse'
-      x-badges:
-        - name: Beta
-          color: '#076EA8'
     servers: *ref_5
   /accounts/{accountId}/endpoints/{endpointId}/bxml:
     put:
@@ -1861,9 +1849,6 @@ paths:
           $ref: '#/components/responses/tooManyRequestsErrorResponse'
         '500':
           $ref: '#/components/responses/serviceUnavailableErrorResponse'
-      x-badges:
-        - name: Beta
-          color: '#076EA8'
     servers: *ref_5
 components:
   schemas:
