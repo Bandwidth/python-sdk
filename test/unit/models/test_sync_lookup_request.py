@@ -35,7 +35,8 @@ class TestSyncLookupRequest(unittest.TestCase):
             return SyncLookupRequest(
                 phone_numbers = [
                     '+680728880015'
-                    ]
+                    ],
+                rcs_agent = 'TestAgent'
             )
         else:
             return SyncLookupRequest(
@@ -50,6 +51,7 @@ class TestSyncLookupRequest(unittest.TestCase):
         assert instance is not None
         assert isinstance(instance, SyncLookupRequest)
         assert instance.phone_numbers == ['+680728880015']
+        assert instance.rcs_agent == 'TestAgent'
 
 if __name__ == '__main__':
     unittest.main()
