@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,8 +29,19 @@ class SyncLookupRequest(BaseModel):
     SyncLookupRequest
     """ # noqa: E501
     phone_numbers: List[Annotated[str, Field(strict=True)]] = Field(description="Telephone numbers in E.164 format.", alias="phoneNumbers")
+    rcs_agent: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Override the default RCS sender/agent ID used when checking RCS capabilities. When provided, this value is used as the `sender` in the RCS capability-check request instead of the account default. Must be 1–40 characters and contain only letters, digits, underscores, or hyphens.", alias="rcsAgent")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["phoneNumbers"]
+    __properties: ClassVar[List[str]] = ["phoneNumbers", "rcsAgent"]
+
+    @field_validator('rcs_agent')
+    def rcs_agent_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^[A-Za-z0-9_-]{1,40}$", value):
+            raise ValueError(r"must validate the regular expression /^[A-Za-z0-9_-]{1,40}$/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,7 +101,8 @@ class SyncLookupRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "phoneNumbers": obj.get("phoneNumbers")
+            "phoneNumbers": obj.get("phoneNumbers"),
+            "rcsAgent": obj.get("rcsAgent")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
