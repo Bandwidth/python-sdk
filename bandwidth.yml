@@ -2436,6 +2436,7 @@ components:
         - media
     rbmCardContent:
       type: object
+      description: Must contain at least one of title, description, or media to be valid.
       properties:
         title:
           type: string
@@ -2478,7 +2479,6 @@ components:
           $ref: '#/components/schemas/multiChannelFullActions'
       required:
         - orientation
-        - thumbnailImageAlignment
         - cardContent
     standaloneCardOrientationEnum:
       type: string
@@ -2489,8 +2489,8 @@ components:
     thumbnailAlignmentEnum:
       type: string
       description: >-
-        The alignment of the thumbnail image in the card. Only applicable if the
-        card using horizontal orientation.
+        The alignment of the thumbnail image in the card. Required when
+        orientation is HORIZONTAL.
       enum:
         - LEFT
         - RIGHT
@@ -2505,6 +2505,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/rbmCardContent'
+          minItems: 2
           maxItems: 10
         suggestions:
           $ref: '#/components/schemas/multiChannelFullActions'
@@ -2568,7 +2569,11 @@ components:
       type: string
       description: >-
         Defines the layout of the WebView on a mobile device. It must be defined
-        when application is set to `WEBVIEW`
+
+        when application is set to `WEBVIEW` and must not be set when
+        application
+
+        is set to `BROWSER`.
 
         - `FULL` WebView takes the full screen.
 
@@ -2626,12 +2631,16 @@ components:
             latitude:
               type: string
               format: double
-              description: The latitude of the location.
+              description: >-
+                The latitude of the location. Must be in range [-90.000000,
+                90.000000].
               example: '37.7749'
             longitude:
               type: string
               format: double
-              description: The longitude of the location.
+              description: >-
+                The longitude of the location. Must be in range [-180.000000,
+                180.000000].
               example: '-122.4194'
             label:
               type: string
@@ -2655,12 +2664,16 @@ components:
             startTime:
               type: string
               format: date-time
-              description: The start time of the event.
+              description: >-
+                The start time of the event. Must be a valid RFC-3339 value,
+                e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00.
               example: 2022-09-14T18:20:16.000Z
             endTime:
               type: string
               format: date-time
-              description: The end time of the event.
+              description: >-
+                The end time of the event. Must be a valid RFC-3339 value, e.g.,
+                2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00.
               example: 2022-09-14T18:20:16.000Z
             description:
               type: string
@@ -2680,7 +2693,7 @@ components:
             url:
               type: string
               format: uri
-              description: The URL to open in browser.
+              description: The URL to open in browser. Must use http:// or https:// scheme.
               example: https://dev.bandwidth.com
               maxLength: 2048
             application:

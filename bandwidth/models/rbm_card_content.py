@@ -28,7 +28,7 @@ from typing_extensions import Self
 
 class RbmCardContent(BaseModel):
     """
-    RbmCardContent
+    Must contain at least one of title, description, or media to be valid.
     """ # noqa: E501
     title: Optional[Annotated[str, Field(strict=True, max_length=200)]] = Field(default=None, description="The title of the card. Must be 200 characters or less.")
     description: Optional[Annotated[str, Field(strict=True, max_length=2000)]] = Field(default=None, description="The description of the card. Must be 2000 characters or less.")
