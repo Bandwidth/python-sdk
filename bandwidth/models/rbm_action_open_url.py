@@ -34,7 +34,7 @@ class RbmActionOpenUrl(BaseModel):
     type: RbmActionTypeEnum
     text: Annotated[str, Field(strict=True, max_length=25)] = Field(description="Displayed text for user to click")
     postback_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
-    url: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="The URL to open in browser.")
+    url: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="The URL to open in browser. Must use http:// or https:// scheme.")
     application: Optional[RbmOpenUrlEnum] = None
     webview_view_mode: Optional[RbmWebViewEnum] = Field(default=None, alias="webviewViewMode")
     additional_properties: Dict[str, Any] = {}

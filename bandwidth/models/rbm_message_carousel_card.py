@@ -32,7 +32,7 @@ class RbmMessageCarouselCard(BaseModel):
     RbmMessageCarouselCard
     """ # noqa: E501
     card_width: CardWidthEnum = Field(alias="cardWidth")
-    card_contents: Annotated[List[RbmCardContent], Field(max_length=10)] = Field(alias="cardContents")
+    card_contents: Annotated[List[RbmCardContent], Field(min_length=2, max_length=10)] = Field(alias="cardContents")
     suggestions: Optional[Annotated[List[MultiChannelAction], Field(max_length=11)]] = Field(default=None, description="An array of suggested actions for the recipient.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["cardWidth", "cardContents", "suggestions"]
