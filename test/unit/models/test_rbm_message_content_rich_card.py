@@ -91,6 +91,24 @@ class TestRbmMessageContentRichCard(unittest.TestCase):
                             )
                         )
                     ],
+                ),
+                RbmCardContent(
+                    title = 'Bandwidth', 
+                    description = 'Bandwidth is a communications platform as a service (CPaaS) company.', 
+                    media = RbmCardContentMedia(
+                        file_url = 'https://dev.bandwidth.com/images/bandwidth-logo.png',
+                        thumbnail_url = 'https://dev.bandwidth.com/images/bandwidth-logo.png',
+                        height = 'SHORT'
+                    ), 
+                    suggestions = [
+                        MultiChannelAction(
+                            RbmActionBase(
+                                type = 'REPLY',
+                                text = 'Hello world',
+                                postback_data = '[B@32298473'
+                            )
+                        )
+                    ],
                 )
             ],
             suggestions = [
