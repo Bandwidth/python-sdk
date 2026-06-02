@@ -1,6 +1,6 @@
 # ThumbnailAlignmentEnum
 
-The alignment of the thumbnail image in the card. Only applicable if the card using horizontal orientation.
+The alignment of the thumbnail image in the card. Required when orientation is HORIZONTAL.
 
 ## Enum
 

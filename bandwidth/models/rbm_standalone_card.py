@@ -33,7 +33,7 @@ class RbmStandaloneCard(BaseModel):
     RbmStandaloneCard
     """ # noqa: E501
     orientation: StandaloneCardOrientationEnum
-    thumbnail_image_alignment: ThumbnailAlignmentEnum = Field(alias="thumbnailImageAlignment")
+    thumbnail_image_alignment: Optional[ThumbnailAlignmentEnum] = Field(default=None, alias="thumbnailImageAlignment")
     card_content: RbmCardContent = Field(alias="cardContent")
     suggestions: Optional[Annotated[List[MultiChannelAction], Field(max_length=11)]] = Field(default=None, description="An array of suggested actions for the recipient.")
     additional_properties: Dict[str, Any] = {}
