@@ -9,8 +9,8 @@ Name | Type | Description | Notes
 **text** | **str** | Displayed text for user to click | 
 **postback_data** | **bytearray** | Base64 payload the customer receives when the reply is clicked. | 
 **title** | **str** | The title of the event. | 
-**start_time** | **datetime** | The start time of the event. | 
-**end_time** | **datetime** | The end time of the event. | 
+**start_time** | **datetime** | The start time of the event. Must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. | 
+**end_time** | **datetime** | The end time of the event. Must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00. | 
 **description** | **str** | The description of the event. | [optional] 
 
 ## Example

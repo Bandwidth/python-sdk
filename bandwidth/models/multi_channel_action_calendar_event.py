@@ -34,8 +34,8 @@ class MultiChannelActionCalendarEvent(BaseModel):
     text: Annotated[str, Field(strict=True, max_length=25)] = Field(description="Displayed text for user to click")
     postback_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
     title: Annotated[str, Field(strict=True, max_length=100)] = Field(description="The title of the event.")
-    start_time: datetime = Field(description="The start time of the event.", alias="startTime")
-    end_time: datetime = Field(description="The end time of the event.", alias="endTime")
+    start_time: datetime = Field(description="The start time of the event. Must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00.", alias="startTime")
+    end_time: datetime = Field(description="The end time of the event. Must be a valid RFC-3339 value, e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00.", alias="endTime")
     description: Optional[Annotated[str, Field(strict=True, max_length=500)]] = Field(default=None, description="The description of the event.")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["type", "text", "postbackData", "title", "startTime", "endTime", "description"]

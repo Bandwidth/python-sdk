@@ -82,6 +82,7 @@ class TestPhoneNumberLookupApi(unittest.TestCase):
         """
         request = SyncLookupRequest(
             phone_numbers = [USER_NUMBER, BW_NUMBER],
+            rcs_agent = 'TestAgent'
         )
 
         response = self.api.create_sync_lookup_with_http_info(BW_ACCOUNT_ID, request)
