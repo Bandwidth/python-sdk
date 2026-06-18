@@ -100,6 +100,7 @@ from bandwidth.models.links_object import LinksObject
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse
 from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum
 from bandwidth.models.list_message_item import ListMessageItem
+from bandwidth.models.location_response import LocationResponse
 from bandwidth.models.lookup_error_response import LookupErrorResponse
 from bandwidth.models.lookup_error_schema import LookupErrorSchema
 from bandwidth.models.lookup_error_schema_meta import LookupErrorSchemaMeta
@@ -152,7 +153,6 @@ from bandwidth.models.rbm_action_type_enum import RbmActionTypeEnum
 from bandwidth.models.rbm_action_view_location import RbmActionViewLocation
 from bandwidth.models.rbm_card_content import RbmCardContent
 from bandwidth.models.rbm_card_content_media import RbmCardContentMedia
-from bandwidth.models.rbm_location_response import RbmLocationResponse
 from bandwidth.models.rbm_media_height_enum import RbmMediaHeightEnum
 from bandwidth.models.rbm_message_carousel_card import RbmMessageCarouselCard
 from bandwidth.models.rbm_message_content_file import RbmMessageContentFile
@@ -161,7 +161,6 @@ from bandwidth.models.rbm_message_content_text import RbmMessageContentText
 from bandwidth.models.rbm_message_media import RbmMessageMedia
 from bandwidth.models.rbm_open_url_enum import RbmOpenUrlEnum
 from bandwidth.models.rbm_standalone_card import RbmStandaloneCard
-from bandwidth.models.rbm_suggestion_response import RbmSuggestionResponse
 from bandwidth.models.rbm_web_view_enum import RbmWebViewEnum
 from bandwidth.models.recording_available_callback import RecordingAvailableCallback
 from bandwidth.models.recording_complete_callback import RecordingCompleteCallback
@@ -178,6 +177,7 @@ from bandwidth.models.status_callback import StatusCallback
 from bandwidth.models.status_callback_message import StatusCallbackMessage
 from bandwidth.models.status_callback_type_enum import StatusCallbackTypeEnum
 from bandwidth.models.stir_shaken import StirShaken
+from bandwidth.models.suggestion_response import SuggestionResponse
 from bandwidth.models.sync_lookup_request import SyncLookupRequest
 from bandwidth.models.telephone_number import TelephoneNumber
 from bandwidth.models.tfv_basic_authentication import TfvBasicAuthentication

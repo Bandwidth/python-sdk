@@ -21,12 +21,12 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from bandwidth.models.location_response import LocationResponse
 from bandwidth.models.message_direction_enum import MessageDirectionEnum
 from bandwidth.models.multi_channel_message_channel_enum import MultiChannelMessageChannelEnum
 from bandwidth.models.multi_channel_message_content import MultiChannelMessageContent
 from bandwidth.models.priority_enum import PriorityEnum
-from bandwidth.models.rbm_location_response import RbmLocationResponse
-from bandwidth.models.rbm_suggestion_response import RbmSuggestionResponse
+from bandwidth.models.suggestion_response import SuggestionResponse
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -48,8 +48,8 @@ class InboundCallbackMessage(BaseModel):
     priority: Optional[PriorityEnum] = None
     channel: Optional[MultiChannelMessageChannelEnum] = None
     content: Optional[MultiChannelMessageContent] = None
-    suggestion_response: Optional[RbmSuggestionResponse] = Field(default=None, alias="suggestionResponse")
-    location_response: Optional[RbmLocationResponse] = Field(default=None, alias="locationResponse")
+    suggestion_response: Optional[SuggestionResponse] = Field(default=None, alias="suggestionResponse")
+    location_response: Optional[LocationResponse] = Field(default=None, alias="locationResponse")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority", "channel", "content", "suggestionResponse", "locationResponse"]
 
@@ -134,8 +134,8 @@ class InboundCallbackMessage(BaseModel):
             "priority": obj.get("priority"),
             "channel": obj.get("channel"),
             "content": MultiChannelMessageContent.from_dict(obj["content"]) if obj.get("content") is not None else None,
-            "suggestionResponse": RbmSuggestionResponse.from_dict(obj["suggestionResponse"]) if obj.get("suggestionResponse") is not None else None,
-            "locationResponse": RbmLocationResponse.from_dict(obj["locationResponse"]) if obj.get("locationResponse") is not None else None
+            "suggestionResponse": SuggestionResponse.from_dict(obj["suggestionResponse"]) if obj.get("suggestionResponse") is not None else None,
+            "locationResponse": LocationResponse.from_dict(obj["locationResponse"]) if obj.get("locationResponse") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

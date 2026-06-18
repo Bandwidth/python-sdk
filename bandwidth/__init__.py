@@ -126,6 +126,7 @@ __all__ = [
     "ListEndpointsResponse",
     "ListMessageDirectionEnum",
     "ListMessageItem",
+    "LocationResponse",
     "LookupErrorResponse",
     "LookupErrorSchema",
     "LookupErrorSchemaMeta",
@@ -178,7 +179,6 @@ __all__ = [
     "RbmActionViewLocation",
     "RbmCardContent",
     "RbmCardContentMedia",
-    "RbmLocationResponse",
     "RbmMediaHeightEnum",
     "RbmMessageCarouselCard",
     "RbmMessageContentFile",
@@ -187,7 +187,6 @@ __all__ = [
     "RbmMessageMedia",
     "RbmOpenUrlEnum",
     "RbmStandaloneCard",
-    "RbmSuggestionResponse",
     "RbmWebViewEnum",
     "RecordingAvailableCallback",
     "RecordingCompleteCallback",
@@ -204,6 +203,7 @@ __all__ = [
     "StatusCallbackMessage",
     "StatusCallbackTypeEnum",
     "StirShaken",
+    "SuggestionResponse",
     "SyncLookupRequest",
     "TelephoneNumber",
     "TfvBasicAuthentication",
@@ -352,6 +352,7 @@ from bandwidth.models.links_object import LinksObject as LinksObject
 from bandwidth.models.list_endpoints_response import ListEndpointsResponse as ListEndpointsResponse
 from bandwidth.models.list_message_direction_enum import ListMessageDirectionEnum as ListMessageDirectionEnum
 from bandwidth.models.list_message_item import ListMessageItem as ListMessageItem
+from bandwidth.models.location_response import LocationResponse as LocationResponse
 from bandwidth.models.lookup_error_response import LookupErrorResponse as LookupErrorResponse
 from bandwidth.models.lookup_error_schema import LookupErrorSchema as LookupErrorSchema
 from bandwidth.models.lookup_error_schema_meta import LookupErrorSchemaMeta as LookupErrorSchemaMeta
@@ -404,7 +405,6 @@ from bandwidth.models.rbm_action_type_enum import RbmActionTypeEnum as RbmAction
 from bandwidth.models.rbm_action_view_location import RbmActionViewLocation as RbmActionViewLocation
 from bandwidth.models.rbm_card_content import RbmCardContent as RbmCardContent
 from bandwidth.models.rbm_card_content_media import RbmCardContentMedia as RbmCardContentMedia
-from bandwidth.models.rbm_location_response import RbmLocationResponse as RbmLocationResponse
 from bandwidth.models.rbm_media_height_enum import RbmMediaHeightEnum as RbmMediaHeightEnum
 from bandwidth.models.rbm_message_carousel_card import RbmMessageCarouselCard as RbmMessageCarouselCard
 from bandwidth.models.rbm_message_content_file import RbmMessageContentFile as RbmMessageContentFile
@@ -413,7 +413,6 @@ from bandwidth.models.rbm_message_content_text import RbmMessageContentText as R
 from bandwidth.models.rbm_message_media import RbmMessageMedia as RbmMessageMedia
 from bandwidth.models.rbm_open_url_enum import RbmOpenUrlEnum as RbmOpenUrlEnum
 from bandwidth.models.rbm_standalone_card import RbmStandaloneCard as RbmStandaloneCard
-from bandwidth.models.rbm_suggestion_response import RbmSuggestionResponse as RbmSuggestionResponse
 from bandwidth.models.rbm_web_view_enum import RbmWebViewEnum as RbmWebViewEnum
 from bandwidth.models.recording_available_callback import RecordingAvailableCallback as RecordingAvailableCallback
 from bandwidth.models.recording_complete_callback import RecordingCompleteCallback as RecordingCompleteCallback
@@ -430,6 +429,7 @@ from bandwidth.models.status_callback import StatusCallback as StatusCallback
 from bandwidth.models.status_callback_message import StatusCallbackMessage as StatusCallbackMessage
 from bandwidth.models.status_callback_type_enum import StatusCallbackTypeEnum as StatusCallbackTypeEnum
 from bandwidth.models.stir_shaken import StirShaken as StirShaken
+from bandwidth.models.suggestion_response import SuggestionResponse as SuggestionResponse
 from bandwidth.models.sync_lookup_request import SyncLookupRequest as SyncLookupRequest
 from bandwidth.models.telephone_number import TelephoneNumber as TelephoneNumber
 from bandwidth.models.tfv_basic_authentication import TfvBasicAuthentication as TfvBasicAuthentication

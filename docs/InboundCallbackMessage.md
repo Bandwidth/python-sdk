@@ -19,8 +19,8 @@ Name | Type | Description | Notes
 **priority** | [**PriorityEnum**](PriorityEnum.md) |  | [optional] 
 **channel** | [**MultiChannelMessageChannelEnum**](MultiChannelMessageChannelEnum.md) |  | [optional] 
 **content** | [**MultiChannelMessageContent**](MultiChannelMessageContent.md) |  | [optional] 
-**suggestion_response** | [**RbmSuggestionResponse**](RbmSuggestionResponse.md) |  | [optional] 
-**location_response** | [**RbmLocationResponse**](RbmLocationResponse.md) |  | [optional] 
+**suggestion_response** | [**SuggestionResponse**](SuggestionResponse.md) |  | [optional] 
+**location_response** | [**LocationResponse**](LocationResponse.md) |  | [optional] 
 
 ## Example
 
