@@ -12,6 +12,7 @@ from .phone_number import PhoneNumber
 from .play_audio import PlayAudio
 from .record import Record
 from .refer import Refer
+from .refer_sip_uri import ReferSipUri
 from .redirect import Redirect
 from .resume_recording import ResumeRecording
 from .ring import Ring
