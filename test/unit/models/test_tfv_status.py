@@ -17,6 +17,7 @@ import unittest
 from datetime import datetime
 
 from bandwidth.models.tfv_status import TfvStatus
+from bandwidth.models.additional_denial_reason import AdditionalDenialReason
 from bandwidth.models.tfv_submission_info import TfvSubmissionInfo
 from bandwidth.models.address import Address
 from bandwidth.models.contact import Contact
@@ -42,6 +43,14 @@ class TestTfvStatus(unittest.TestCase):
                 status = 'VERIFIED',
                 internal_ticket_number = 'acde070d-8c4c-4f0d-9d8a-162843c10333',
                 decline_reason_description = 'Invalid Information - Can\'t Validate URL - Website is not accessible / not available',
+                denial_status_code = 511,
+                additional_denial_reasons= [
+                    AdditionalDenialReason(
+                        status_code = 511,
+                        reason = "Invalid Information - Can't Validate URL - Website is not accessible / not available",
+                        resubmit_allowed = True
+                    )
+                ],
                 resubmit_allowed = True,
                 created_date_time = '2021-06-08T06:45:13Z',
                 modified_date_time = '2021-06-08T06:45:13Z',
@@ -95,6 +104,13 @@ class TestTfvStatus(unittest.TestCase):
         assert instance.status == 'VERIFIED'
         assert instance.internal_ticket_number == 'acde070d-8c4c-4f0d-9d8a-162843c10333'
         assert instance.decline_reason_description == 'Invalid Information - Can\'t Validate URL - Website is not accessible / not available'
+        assert instance.denial_status_code == 511
+        assert isinstance(instance.additional_denial_reasons, list)
+        assert len(instance.additional_denial_reasons) == 1
+        assert isinstance(instance.additional_denial_reasons[0], AdditionalDenialReason)
+        assert instance.additional_denial_reasons[0].status_code == 511
+        assert instance.additional_denial_reasons[0].reason == "Invalid Information - Can't Validate URL - Website is not accessible / not available"
+        assert instance.additional_denial_reasons[0].resubmit_allowed == True
         assert instance.resubmit_allowed == True
         assert isinstance(instance.created_date_time, datetime)
         assert isinstance(instance.modified_date_time, datetime)

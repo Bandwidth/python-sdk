@@ -6034,12 +6034,30 @@ components:
       description: Reason code for denial.
       type: integer
       example: 511
+    denialStatusCodeNullable:
+      description: Reason code for denial.
+      nullable: true
+      type: integer
+      example: 511
     resubmitAllowed:
       description: >-
         Whether a Toll-Free Verification request qualifies for resubmission via
         PUT.
       example: true
       type: boolean
+    additionalDenialReason:
+      type: object
+      properties:
+        statusCode:
+          $ref: '#/components/schemas/denialStatusCode'
+        reason:
+          $ref: '#/components/schemas/declineReasonDescription'
+        resubmitAllowed:
+          $ref: '#/components/schemas/resubmitAllowed'
+      required:
+        - statusCode
+        - reason
+        - resubmitAllowed
     blocked:
       description: >-
         Whether a Toll-Free Verification is blocked. This attribute will only be
@@ -6194,19 +6212,6 @@ components:
       type: boolean
       description: Indicates whether the content is age-gated.
       example: false
-    additionalDenialReason:
-      properties:
-        statusCode:
-          $ref: '#/components/schemas/denialStatusCode'
-        reason:
-          $ref: '#/components/schemas/declineReasonDescription'
-        resubmitAllowed:
-          $ref: '#/components/schemas/resubmitAllowed'
-      required:
-        - statusCode
-        - reason
-        - resubmitAllowed
-      type: object
     internalTicketNumber:
       type: string
       description: >-
@@ -6402,6 +6407,7 @@ components:
           description: >-
             An optional list of denial reasons in addition to
             declineReasonDescription when multiple reasons apply.
+          type: array
           items:
             $ref: '#/components/schemas/additionalDenialReason'
           example:
@@ -6411,7 +6417,6 @@ components:
             - statusCode: 513
               reason: Reason B
               resubmitAllowed: true
-          type: array
         declineReasonDescription:
           $ref: '#/components/schemas/declineReasonDescription'
         denialStatusCode:
@@ -6779,6 +6784,23 @@ components:
           $ref: '#/components/schemas/internalTicketNumber'
         declineReasonDescription:
           $ref: '#/components/schemas/declineReasonDescription'
+        denialStatusCode:
+          $ref: '#/components/schemas/denialStatusCodeNullable'
+        additionalDenialReasons:
+          description: >-
+            An optional list of denial reasons in addition to
+            declineReasonDescription when multiple reasons apply.
+          nullable: true
+          type: array
+          items:
+            $ref: '#/components/schemas/additionalDenialReason'
+          example:
+            - statusCode: 512
+              reason: Reason A
+              resubmitAllowed: true
+            - statusCode: 513
+              reason: Reason B
+              resubmitAllowed: true
         resubmitAllowed:
           $ref: '#/components/schemas/resubmitAllowed'
         createdDateTime:
