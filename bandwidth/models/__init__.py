@@ -191,6 +191,7 @@ from bandwidth.models.thumbnail_alignment_enum import ThumbnailAlignmentEnum
 from bandwidth.models.transcribe_recording import TranscribeRecording
 from bandwidth.models.transcription import Transcription
 from bandwidth.models.transcription_available_callback import TranscriptionAvailableCallback
+from bandwidth.models.refer_complete_callback import ReferCompleteCallback
 from bandwidth.models.transfer_answer_callback import TransferAnswerCallback
 from bandwidth.models.transfer_complete_callback import TransferCompleteCallback
 from bandwidth.models.transfer_disconnect_callback import TransferDisconnectCallback

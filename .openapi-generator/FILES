@@ -197,6 +197,7 @@ bandwidth/models/thumbnail_alignment_enum.py
 bandwidth/models/transcribe_recording.py
 bandwidth/models/transcription.py
 bandwidth/models/transcription_available_callback.py
+bandwidth/models/refer_complete_callback.py
 bandwidth/models/transfer_answer_callback.py
 bandwidth/models/transfer_complete_callback.py
 bandwidth/models/transfer_disconnect_callback.py
