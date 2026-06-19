@@ -30,8 +30,9 @@ class RbmSuggestionResponse(BaseModel):
     """ # noqa: E501
     text: Optional[StrictStr] = Field(default=None, description="The text associated with the suggestion response.")
     postback_data: Optional[Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]]] = Field(default=None, description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
+    paired_message_id: Optional[StrictStr] = Field(default=None, description="Corresponding parent message ID (MT).", alias="pairedMessageId")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["text", "postbackData"]
+    __properties: ClassVar[List[str]] = ["text", "postbackData", "pairedMessageId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -79,6 +80,11 @@ class RbmSuggestionResponse(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if paired_message_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.paired_message_id is None and "paired_message_id" in self.model_fields_set:
+            _dict['pairedMessageId'] = None
+
         return _dict
 
     @classmethod
@@ -92,7 +98,8 @@ class RbmSuggestionResponse(BaseModel):
 
         _obj = cls.model_validate({
             "text": obj.get("text"),
-            "postbackData": obj.get("postbackData")
+            "postbackData": obj.get("postbackData"),
+            "pairedMessageId": obj.get("pairedMessageId")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

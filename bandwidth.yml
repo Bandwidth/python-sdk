@@ -2889,6 +2889,11 @@ components:
           example: Yes, I would like to proceed
         postbackData:
           $ref: '#/components/schemas/rbmActionPostbackData'
+        pairedMessageId:
+          type: string
+          nullable: true
+          description: Corresponding parent message ID (MT).
+          example: 1752697342534u24xerqdukke523x
     rbmLocationResponse:
       type: object
       properties:
@@ -2925,7 +2930,7 @@ components:
           message-failed: '#/components/schemas/statusCallback'
           message-read: '#/components/schemas/statusCallback'
           message-received: '#/components/schemas/inboundCallback'
-          request-location-response: '#/components/schemas/inboundCallback'
+          requested-location-response: '#/components/schemas/inboundCallback'
           suggestion-response: '#/components/schemas/inboundCallback'
     statusCallback:
       type: object
@@ -3035,14 +3040,15 @@ components:
         - `message-received` indicates an MO message from a Bandwidth user's
         client to a Bandwidth number.
 
-        - `request-location-response` indicates a response to a location request
-        sent by the Bandwidth user's client after receiving an RBM message.
+        - `requested-location-response` indicates a response to a location
+        request sent by the Bandwidth user's client after receiving an RBM
+        message.
 
         - `suggestion-response` indicates a response to a suggestion sent by the
         Bandwidth user's client after receiving an RBM message.
       enum:
         - message-received
-        - request-location-response
+        - requested-location-response
         - suggestion-response
       example: message-received
     statusCallbackMessage:
@@ -9154,7 +9160,7 @@ components:
         tag: '{"myTag": "myTagValue"}'
     updateEndpointBxmlRequestExample:
       summary: Update Endpoint BXML Request Example
-      value: <Bxml><StartRecording /></Bxml>
+      value: <Response><StartRecording /></Response>
     endpointDisconnectedEventExample:
       summary: Endpoint Disconnected Event
       value:
@@ -9678,10 +9684,10 @@ components:
 
               <p>The payload type will be one of <code>message-received</code>,
               <code>suggestion-response</code>, or
-              <code>location-request-response</code>.
+              <code>requested-location-response</code>.
 
               <p>Note that <code>suggestion-response</code> and
-              <code>location-request-response</code> callback types are
+              <code>requested-location-response</code> callback types are
               pertinent only for RBM messages sent from the
               <code>/messages/multiChannel</code> endpoint.
 
