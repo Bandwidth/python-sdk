@@ -192,6 +192,7 @@ __all__ = [
     "RecordingAvailableCallback",
     "RecordingCompleteCallback",
     "RecordingStateEnum",
+    "RecordingTranscriptionClip",
     "RecordingTranscriptionMetadata",
     "RecordingTranscriptions",
     "RedirectCallback",
@@ -418,6 +419,7 @@ from bandwidth.models.rbm_web_view_enum import RbmWebViewEnum as RbmWebViewEnum
 from bandwidth.models.recording_available_callback import RecordingAvailableCallback as RecordingAvailableCallback
 from bandwidth.models.recording_complete_callback import RecordingCompleteCallback as RecordingCompleteCallback
 from bandwidth.models.recording_state_enum import RecordingStateEnum as RecordingStateEnum
+from bandwidth.models.recording_transcription_clip import RecordingTranscriptionClip as RecordingTranscriptionClip
 from bandwidth.models.recording_transcription_metadata import RecordingTranscriptionMetadata as RecordingTranscriptionMetadata
 from bandwidth.models.recording_transcriptions import RecordingTranscriptions as RecordingTranscriptions
 from bandwidth.models.redirect_callback import RedirectCallback as RedirectCallback

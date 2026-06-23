@@ -17,6 +17,7 @@ import unittest
 
 from bandwidth.models.recording_transcriptions import RecordingTranscriptions
 from bandwidth.models.transcription import Transcription
+from bandwidth.models.recording_transcription_clip import RecordingTranscriptionClip
 
 class TestRecordingTranscriptions(unittest.TestCase):
     """RecordingTranscriptions unit test stubs"""
@@ -38,7 +39,16 @@ class TestRecordingTranscriptions(unittest.TestCase):
                     Transcription(
                         text = 'Nice talking to you, friend!', 
                         confidence = 0.9, )
-                    ]
+                    ],
+                clips = [
+                    RecordingTranscriptionClip(
+                        speaker = 0,
+                        text = 'Hi there, thanks for calling!',
+                        confidence = 0.85,
+                        start_time_seconds = 2.3,
+                        end_time_seconds = 3.1
+                    )
+                ]
             )
         else:
             return RecordingTranscriptions(
@@ -53,6 +63,13 @@ class TestRecordingTranscriptions(unittest.TestCase):
         assert isinstance(instance.transcripts[0], Transcription)
         assert instance.transcripts[0].text == 'Nice talking to you, friend!'
         assert instance.transcripts[0].confidence == 0.9
+        assert len(instance.clips) == 1
+        assert isinstance(instance.clips[0], RecordingTranscriptionClip)
+        assert instance.clips[0].speaker == 0
+        assert instance.clips[0].text == 'Hi there, thanks for calling!'
+        assert instance.clips[0].confidence == 0.85
+        assert instance.clips[0].start_time_seconds == 2.3
+        assert instance.clips[0].end_time_seconds == 3.1
 
 if __name__ == '__main__':
     unittest.main()

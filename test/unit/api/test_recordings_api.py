@@ -203,6 +203,7 @@ class TestRecordingsApi(unittest.TestCase):
         assert_that(response.data, instance_of(RecordingTranscriptions))
         assert_that(response.data.transcripts, instance_of(list))
         assert_that(response.data.transcripts[0], instance_of(Transcription))
+        assert_that(response.data.transcripts[0].speaker, instance_of(int))
         assert_that(response.data.transcripts[0].text, instance_of(str))
         assert_that(response.data.transcripts[0].confidence, instance_of(float))
 

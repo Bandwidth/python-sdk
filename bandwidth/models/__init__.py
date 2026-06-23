@@ -166,6 +166,7 @@ from bandwidth.models.rbm_web_view_enum import RbmWebViewEnum
 from bandwidth.models.recording_available_callback import RecordingAvailableCallback
 from bandwidth.models.recording_complete_callback import RecordingCompleteCallback
 from bandwidth.models.recording_state_enum import RecordingStateEnum
+from bandwidth.models.recording_transcription_clip import RecordingTranscriptionClip
 from bandwidth.models.recording_transcription_metadata import RecordingTranscriptionMetadata
 from bandwidth.models.recording_transcriptions import RecordingTranscriptions
 from bandwidth.models.redirect_callback import RedirectCallback
