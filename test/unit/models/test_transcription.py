@@ -33,6 +33,7 @@ class TestTranscription(unittest.TestCase):
             optional params are included """
         if include_optional:
             return Transcription(
+                speaker = 0,
                 text = 'Nice talking to you, friend!',
                 confidence = 0.9
             )
@@ -45,6 +46,7 @@ class TestTranscription(unittest.TestCase):
         instance = self.make_instance(True)
         assert instance is not None
         assert isinstance(instance, Transcription)
+        assert instance.speaker == 0
         assert instance.text == 'Nice talking to you, friend!'
         assert instance.confidence == 0.9
 
