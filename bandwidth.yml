@@ -2962,7 +2962,7 @@ components:
         description:
           type: string
           description: A detailed description of the event described by the callback.
-          example: Message delivered to carrier.
+          example: Message delivered to handset.
         message:
           $ref: '#/components/schemas/statusCallbackMessage'
         errorCode:
@@ -3018,7 +3018,11 @@ components:
         - `message-sending` indicates that Bandwidth is sending the message to
         the upstream provider.
 
-        - `message-delivered` indicates that the message was successfully sent.
+        - `message-sent` indicates that the message has left the Bandwidth
+        network and is in transit to the provider.
+
+        - `message-delivered` indicates that the message was successfully
+        delivered to handset.
 
         - `message-failed` indicates that the message could not be sent to the
         intended recipient.
@@ -3027,6 +3031,7 @@ components:
         recipient.
       enum:
         - message-sending
+        - message-sent
         - message-delivered
         - message-failed
         - message-read
@@ -8712,12 +8717,33 @@ components:
           media:
             - https://dev.bandwidth.com/images/bandwidth-logo.png
           tag: your tag here
+    messageSentCallbackExample:
+      summary: An example of a message-sent callback body.
+      value:
+        time: '2024-06-25T18:42:36.979456Z'
+        type: message-sent
+        to: '+15554443333'
+        description: Message sent to carrier
+        message:
+          id: 1593110555875xo7watq5px6rbe5d
+          owner: '+15552221111'
+          applicationId: cfd4fb83-7531-4acc-b471-42d0bb76a65c
+          time: '2024-06-25T18:42:35.876906Z'
+          segmentCount: 1
+          direction: out
+          to:
+            - '+15554443333'
+          from: '+15552221111'
+          text: ''
+          media:
+            - https://dev.bandwidth.com/images/bandwidth-logo.png
+          tag: v2 lab
     smsMessageDeliveredCallbackExample:
       summary: An example of a sms message-delivered callback body.
       value:
         type: message-delivered
         time: '2024-09-14T18:20:11.160744Z'
-        description: Message delivered to carrier.
+        description: Message delivered to handset.
         to: '+12345678902'
         message:
           id: 14762070468292kw2fuqty55yp2b2
@@ -8735,7 +8761,7 @@ components:
       value:
         type: message-delivered
         time: '2024-09-14T18:20:24.160544Z'
-        description: Message delivered to carrier.
+        description: Message delivered to handset.
         to: '+12345678902'
         message:
           id: 14762070468292kw2fuqty55yp2b2
@@ -8755,7 +8781,7 @@ components:
       value:
         type: message-delivered
         time: '2024-09-14T18:20:17.160544Z'
-        description: Message delivered to carrier.
+        description: Message delivered to handset.
         to: '+12345678902'
         message:
           id: 14762070468292kw2fuqty55yp2b2
@@ -9787,7 +9813,7 @@ components:
               information regarding a message sent (MT)
 
               from your message-enabled Bandwidth telephone number.
-               <p>The payload type will be one of <code>message-sending</code>, <code>message-delivered</code>, <code>message-failed</code> or <code>message-read</code>.
+               <p>The payload type will be one of <code>message-sending</code>, <code>message-sent</code>, <code>message-delivered</code>, <code>message-failed</code> or <code>message-read</code>.
                <p>Note that <code>message-read</code> callbacks are pertinent only for RBM messages sent from the <code>/messages/multiChannel</code> endpoint.
               </p><p>Please visit <a
               href='/docs/messaging/webhooks/'>Webhooks</a></p>
@@ -9798,6 +9824,8 @@ components:
                 examples:
                   messageSendingCallback:
                     $ref: '#/components/examples/messageSendingCallbackExample'
+                  messageSentCallback:
+                    $ref: '#/components/examples/messageSentCallbackExample'
                   smsMessageDeliveredCallback:
                     $ref: '#/components/examples/smsMessageDeliveredCallbackExample'
                   mmsMessageDeliveredCallback:
