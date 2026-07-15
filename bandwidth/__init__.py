@@ -218,6 +218,7 @@ __all__ = [
     "TranscribeRecording",
     "Transcription",
     "TranscriptionAvailableCallback",
+    "ReferCompleteCallback",
     "TransferAnswerCallback",
     "TransferCompleteCallback",
     "TransferDisconnectCallback",
@@ -445,6 +446,7 @@ from bandwidth.models.thumbnail_alignment_enum import ThumbnailAlignmentEnum as 
 from bandwidth.models.transcribe_recording import TranscribeRecording as TranscribeRecording
 from bandwidth.models.transcription import Transcription as Transcription
 from bandwidth.models.transcription_available_callback import TranscriptionAvailableCallback as TranscriptionAvailableCallback
+from bandwidth.models.refer_complete_callback import ReferCompleteCallback as ReferCompleteCallback
 from bandwidth.models.transfer_answer_callback import TransferAnswerCallback as TransferAnswerCallback
 from bandwidth.models.transfer_complete_callback import TransferCompleteCallback as TransferCompleteCallback
 from bandwidth.models.transfer_disconnect_callback import TransferDisconnectCallback as TransferDisconnectCallback
