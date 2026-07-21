@@ -4568,6 +4568,8 @@ components:
           $ref: '#/components/schemas/tag1'
         machineDetectionResult:
           $ref: '#/components/schemas/machineDetectionResult'
+        sipCallId:
+          $ref: '#/components/schemas/sipCallId'
     bridgeCompleteCallback:
       type: object
       description: >-
@@ -4832,6 +4834,10 @@ components:
           $ref: '#/components/schemas/errorId'
         tag:
           $ref: '#/components/schemas/tag1'
+        sipCallId:
+          $ref: '#/components/schemas/sipCallId'
+        sipResponseCode:
+          $ref: '#/components/schemas/sipResponseCode'
     dtmfCallback:
       type: object
       description: >-
@@ -4948,6 +4954,10 @@ components:
           $ref: '#/components/schemas/stirShaken'
         uui:
           $ref: '#/components/schemas/uui'
+        sipCallId:
+          $ref: '#/components/schemas/sipCallId'
+        sipHeaders:
+          $ref: '#/components/schemas/sipHeaders'
     machineDetectionCompleteCallback:
       type: object
       description: >-
@@ -5595,6 +5605,36 @@ components:
         value, including the encoding specifier, may not exceed 256 characters.
       example: bXktdXVp
       maxLength: 256
+    sipCallId:
+      type: string
+      description: >-
+        (optional) The SIP Call-ID of the call's current SIP dialog with
+        Bandwidth's SBC. Used to correlate dialogs and trace calls. Present on
+        any call, inbound or outbound, once that dialog has been established;
+        may be absent very early in a call before the dialog exists.
+      example: c95ac8d6e1a31c52eb38f419893c151633ec68f8d@sbc.bandwidth.com
+    sipHeaders:
+      type: object
+      additionalProperties:
+        type: string
+      description: >-
+        (optional) Map of customer-supplied X-* headers from the original
+        INVITE. Keys are lowercase (SIP headers are case-insensitive). Present
+        only for inbound SIP URI calls with custom headers. Note - keys preserve
+        the original SIP header name in lowercase rather than Bandwidth's usual
+        camelCase JSON convention, since these are passthrough values from the
+        caller's SIP INVITE, not Bandwidth-defined fields. If the same header
+        name is sent more than once in the INVITE, only the last value is kept.
+      example:
+        x-custom-header: customer-value
+        x-session-id: sess-12345
+    sipResponseCode:
+      type: integer
+      description: >-
+        (optional) The SIP status code returned by Bandwidth's SBC when it
+        rejected an outbound call's INVITE (e.g. 486 for busy, 603 for decline).
+        Present only when an outbound call was rejected by the SBC.
+      example: 486
     codeRequest:
       type: object
       properties:
