@@ -45,8 +45,10 @@ class InitiateCallback(BaseModel):
     diversion: Optional[Diversion] = None
     stir_shaken: Optional[StirShaken] = Field(default=None, alias="stirShaken")
     uui: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="The value of the `User-To-User` header to send within the initial `INVITE`. Must include the encoding parameter as specified in RFC 7433. Only `base64`, `jwt` and `hex` encoding are currently allowed. This value, including the encoding specifier, may not exceed 256 characters.")
+    sip_call_id: Optional[StrictStr] = Field(default=None, description="(optional) The SIP Call-ID of the call's current SIP dialog with Bandwidth's SBC. Used to correlate dialogs and trace calls. Present on any call, inbound or outbound, once that dialog has been established; may be absent very early in a call before the dialog exists.", alias="sipCallId")
+    sip_headers: Optional[Dict[str, StrictStr]] = Field(default=None, description="(optional) Map of customer-supplied X-* headers from the original INVITE. Keys are lowercase (SIP headers are case-insensitive). Present only for inbound SIP URI calls with custom headers. Note - keys preserve the original SIP header name in lowercase rather than Bandwidth's usual camelCase JSON convention, since these are passthrough values from the caller's SIP INVITE, not Bandwidth-defined fields. If the same header name is sent more than once in the INVITE, only the last value is kept.", alias="sipHeaders")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["eventType", "eventTime", "accountId", "applicationId", "from", "to", "direction", "callId", "callUrl", "startTime", "diversion", "stirShaken", "uui"]
+    __properties: ClassVar[List[str]] = ["eventType", "eventTime", "accountId", "applicationId", "from", "to", "direction", "callId", "callUrl", "startTime", "diversion", "stirShaken", "uui", "sipCallId", "sipHeaders"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -124,7 +126,9 @@ class InitiateCallback(BaseModel):
             "startTime": obj.get("startTime"),
             "diversion": Diversion.from_dict(obj["diversion"]) if obj.get("diversion") is not None else None,
             "stirShaken": StirShaken.from_dict(obj["stirShaken"]) if obj.get("stirShaken") is not None else None,
-            "uui": obj.get("uui")
+            "uui": obj.get("uui"),
+            "sipCallId": obj.get("sipCallId"),
+            "sipHeaders": obj.get("sipHeaders")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
