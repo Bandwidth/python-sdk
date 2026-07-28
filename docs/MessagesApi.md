@@ -54,7 +54,7 @@ configuration = bandwidth.Configuration(
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.MessagesApi(api_client)
-    account_id = '9900000' # str | Your Bandwidth Account ID.
+    account_id = '9900000' # str | This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** 
     message_request = bandwidth.MessageRequest() # MessageRequest | 
 
     try:
@@ -73,7 +73,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID. | 
+ **account_id** | **str**| This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (&#x60;u-be8dvafwrs63rwpm7pfil4b&#x60;) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  | 
  **message_request** | [**MessageRequest**](MessageRequest.md)|  | 
 
 ### Return type
@@ -158,7 +158,7 @@ configuration = bandwidth.Configuration(
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.MessagesApi(api_client)
-    account_id = '9900000' # str | Your Bandwidth Account ID.
+    account_id = '9900000' # str | This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** 
     message_id = '9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6' # str | The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter. (optional)
     source_tn = '%2B15554443333' # str | The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). (optional)
     destination_tn = '%2B15554443333' # str | The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. '%2B1919'). (optional)
@@ -203,7 +203,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID. | 
+ **account_id** | **str**| This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (&#x60;u-be8dvafwrs63rwpm7pfil4b&#x60;) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  | 
  **message_id** | **str**| The ID of the message to search for. Special characters need to be encoded using URL encoding. Message IDs could come in different formats, e.g., 9e0df4ca-b18d-40d7-a59f-82fcdf5ae8e6 and 1589228074636lm4k2je7j7jklbn2 are valid message ID formats. Note that you must include at least one query parameter. | [optional] 
  **source_tn** | **str**| The phone number that sent the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. &#39;%2B1919&#39;). | [optional] 
  **destination_tn** | **str**| The phone number that received the message. Accepted values are: a single full phone number a comma separated list of full phone numbers (maximum of 10) or a single partial phone number (minimum of 5 characters e.g. &#39;%2B1919&#39;). | [optional] 
