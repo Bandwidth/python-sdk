@@ -2889,6 +2889,11 @@ components:
           example: Yes, I would like to proceed
         postbackData:
           $ref: '#/components/schemas/rbmActionPostbackData'
+        pairedMessageId:
+          type: string
+          nullable: true
+          description: Corresponding parent message ID (MT).
+          example: 1752697342534u24xerqdukke523x
     rbmLocationResponse:
       type: object
       properties:
@@ -2925,7 +2930,7 @@ components:
           message-failed: '#/components/schemas/statusCallback'
           message-read: '#/components/schemas/statusCallback'
           message-received: '#/components/schemas/inboundCallback'
-          request-location-response: '#/components/schemas/inboundCallback'
+          requested-location-response: '#/components/schemas/inboundCallback'
           suggestion-response: '#/components/schemas/inboundCallback'
     statusCallback:
       type: object
@@ -2957,7 +2962,7 @@ components:
         description:
           type: string
           description: A detailed description of the event described by the callback.
-          example: Message delivered to carrier.
+          example: Message delivered to handset.
         message:
           $ref: '#/components/schemas/statusCallbackMessage'
         errorCode:
@@ -3013,7 +3018,11 @@ components:
         - `message-sending` indicates that Bandwidth is sending the message to
         the upstream provider.
 
-        - `message-delivered` indicates that the message was successfully sent.
+        - `message-sent` indicates that the message has left the Bandwidth
+        network and is in transit to the provider.
+
+        - `message-delivered` indicates that the message was successfully
+        delivered to handset.
 
         - `message-failed` indicates that the message could not be sent to the
         intended recipient.
@@ -3022,6 +3031,7 @@ components:
         recipient.
       enum:
         - message-sending
+        - message-sent
         - message-delivered
         - message-failed
         - message-read
@@ -3035,14 +3045,15 @@ components:
         - `message-received` indicates an MO message from a Bandwidth user's
         client to a Bandwidth number.
 
-        - `request-location-response` indicates a response to a location request
-        sent by the Bandwidth user's client after receiving an RBM message.
+        - `requested-location-response` indicates a response to a location
+        request sent by the Bandwidth user's client after receiving an RBM
+        message.
 
         - `suggestion-response` indicates a response to a suggestion sent by the
         Bandwidth user's client after receiving an RBM message.
       enum:
         - message-received
-        - request-location-response
+        - requested-location-response
         - suggestion-response
       example: message-received
     statusCallbackMessage:
@@ -4348,6 +4359,72 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/transcription'
+        clips:
+          type: array
+          description: >-
+            A list of individual speech clips with speaker, timing, and
+            confidence information.
+          items:
+            $ref: '#/components/schemas/recordingTranscriptionClip'
+      example:
+        transcripts:
+          - speaker: 0
+            text: Hi, is Thursday at two still good for you? Perfect, talk soon.
+            confidence: 0.96
+          - speaker: 1
+            text: Yes, that works great. See you then! Sounds good, bye!
+            confidence: 0.97
+        clips:
+          - speaker: 0
+            text: Hi, is Thursday at two still good for you?
+            confidence: 0.97
+            startTimeSeconds: 0.4
+            endTimeSeconds: 3.1
+          - speaker: 1
+            text: Yes, that works great. See you then!
+            confidence: 0.95
+            startTimeSeconds: 3.8
+            endTimeSeconds: 6.2
+          - speaker: 0
+            text: Perfect, talk soon.
+            confidence: 0.94
+            startTimeSeconds: 6.9
+            endTimeSeconds: 8.1
+          - speaker: 1
+            text: Sounds good, bye!
+            confidence: 0.98
+            startTimeSeconds: 8.5
+            endTimeSeconds: 9.7
+    recordingTranscriptionClip:
+      type: object
+      properties:
+        speaker:
+          type: integer
+          description: Zero-based index identifying the speaker.
+          example: 0
+        text:
+          type: string
+          description: The transcribed text of this clip.
+          example: Hi there, thanks for calling!
+        confidence:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: >-
+            How confident the transcription engine was in transcribing this clip
+            (from `0.0` to `1.0`).
+          example: 0.85
+        startTimeSeconds:
+          type: number
+          format: double
+          description: The start time of this clip within the recording, in seconds.
+          example: 2.3
+        endTimeSeconds:
+          type: number
+          format: double
+          description: The end time of this clip within the recording, in seconds.
+          example: 3.1
     callTranscriptionMetadataList:
       type: array
       items:
@@ -4491,6 +4568,8 @@ components:
           $ref: '#/components/schemas/tag1'
         machineDetectionResult:
           $ref: '#/components/schemas/machineDetectionResult'
+        sipCallId:
+          $ref: '#/components/schemas/sipCallId'
     bridgeCompleteCallback:
       type: object
       description: >-
@@ -4755,6 +4834,10 @@ components:
           $ref: '#/components/schemas/errorId'
         tag:
           $ref: '#/components/schemas/tag1'
+        sipCallId:
+          $ref: '#/components/schemas/sipCallId'
+        sipResponseCode:
+          $ref: '#/components/schemas/sipResponseCode'
     dtmfCallback:
       type: object
       description: >-
@@ -4871,6 +4954,10 @@ components:
           $ref: '#/components/schemas/stirShaken'
         uui:
           $ref: '#/components/schemas/uui'
+        sipCallId:
+          $ref: '#/components/schemas/sipCallId'
+        sipHeaders:
+          $ref: '#/components/schemas/sipHeaders'
     machineDetectionCompleteCallback:
       type: object
       description: >-
@@ -5474,6 +5561,10 @@ components:
     transcription:
       type: object
       properties:
+        speaker:
+          type: integer
+          description: Zero-based index identifying the speaker.
+          example: 0
         text:
           type: string
           description: The transcribed text
@@ -5514,6 +5605,36 @@ components:
         value, including the encoding specifier, may not exceed 256 characters.
       example: bXktdXVp
       maxLength: 256
+    sipCallId:
+      type: string
+      description: >-
+        (optional) The SIP Call-ID of the call's current SIP dialog with
+        Bandwidth's SBC. Used to correlate dialogs and trace calls. Present on
+        any call, inbound or outbound, once that dialog has been established;
+        may be absent very early in a call before the dialog exists.
+      example: c95ac8d6e1a31c52eb38f419893c151633ec68f8d@sbc.bandwidth.com
+    sipHeaders:
+      type: object
+      additionalProperties:
+        type: string
+      description: >-
+        (optional) Map of customer-supplied X-* headers from the original
+        INVITE. Keys are lowercase (SIP headers are case-insensitive). Present
+        only for inbound SIP URI calls with custom headers. Note - keys preserve
+        the original SIP header name in lowercase rather than Bandwidth's usual
+        camelCase JSON convention, since these are passthrough values from the
+        caller's SIP INVITE, not Bandwidth-defined fields. If the same header
+        name is sent more than once in the INVITE, only the last value is kept.
+      example:
+        x-custom-header: customer-value
+        x-session-id: sess-12345
+    sipResponseCode:
+      type: integer
+      description: >-
+        (optional) The SIP status code returned by Bandwidth's SBC when it
+        rejected an outbound call's INVITE (e.g. 486 for busy, 603 for decline).
+        Present only when an outbound call was rejected by the SBC.
+      example: 486
     codeRequest:
       type: object
       properties:
@@ -8636,12 +8757,33 @@ components:
           media:
             - https://dev.bandwidth.com/images/bandwidth-logo.png
           tag: your tag here
+    messageSentCallbackExample:
+      summary: An example of a message-sent callback body.
+      value:
+        time: '2024-06-25T18:42:36.979456Z'
+        type: message-sent
+        to: '+15554443333'
+        description: Message sent to carrier
+        message:
+          id: 1593110555875xo7watq5px6rbe5d
+          owner: '+15552221111'
+          applicationId: cfd4fb83-7531-4acc-b471-42d0bb76a65c
+          time: '2024-06-25T18:42:35.876906Z'
+          segmentCount: 1
+          direction: out
+          to:
+            - '+15554443333'
+          from: '+15552221111'
+          text: ''
+          media:
+            - https://dev.bandwidth.com/images/bandwidth-logo.png
+          tag: v2 lab
     smsMessageDeliveredCallbackExample:
       summary: An example of a sms message-delivered callback body.
       value:
         type: message-delivered
         time: '2024-09-14T18:20:11.160744Z'
-        description: Message delivered to carrier.
+        description: Message delivered to handset.
         to: '+12345678902'
         message:
           id: 14762070468292kw2fuqty55yp2b2
@@ -8659,7 +8801,7 @@ components:
       value:
         type: message-delivered
         time: '2024-09-14T18:20:24.160544Z'
-        description: Message delivered to carrier.
+        description: Message delivered to handset.
         to: '+12345678902'
         message:
           id: 14762070468292kw2fuqty55yp2b2
@@ -8679,7 +8821,7 @@ components:
       value:
         type: message-delivered
         time: '2024-09-14T18:20:17.160544Z'
-        description: Message delivered to carrier.
+        description: Message delivered to handset.
         to: '+12345678902'
         message:
           id: 14762070468292kw2fuqty55yp2b2
@@ -9154,7 +9296,7 @@ components:
         tag: '{"myTag": "myTagValue"}'
     updateEndpointBxmlRequestExample:
       summary: Update Endpoint BXML Request Example
-      value: <Bxml><StartRecording /></Bxml>
+      value: <Response><StartRecording /></Response>
     endpointDisconnectedEventExample:
       summary: Endpoint Disconnected Event
       value:
@@ -9678,10 +9820,10 @@ components:
 
               <p>The payload type will be one of <code>message-received</code>,
               <code>suggestion-response</code>, or
-              <code>location-request-response</code>.
+              <code>requested-location-response</code>.
 
               <p>Note that <code>suggestion-response</code> and
-              <code>location-request-response</code> callback types are
+              <code>requested-location-response</code> callback types are
               pertinent only for RBM messages sent from the
               <code>/messages/multiChannel</code> endpoint.
 
@@ -9711,7 +9853,7 @@ components:
               information regarding a message sent (MT)
 
               from your message-enabled Bandwidth telephone number.
-               <p>The payload type will be one of <code>message-sending</code>, <code>message-delivered</code>, <code>message-failed</code> or <code>message-read</code>.
+               <p>The payload type will be one of <code>message-sending</code>, <code>message-sent</code>, <code>message-delivered</code>, <code>message-failed</code> or <code>message-read</code>.
                <p>Note that <code>message-read</code> callbacks are pertinent only for RBM messages sent from the <code>/messages/multiChannel</code> endpoint.
               </p><p>Please visit <a
               href='/docs/messaging/webhooks/'>Webhooks</a></p>
@@ -9722,6 +9864,8 @@ components:
                 examples:
                   messageSendingCallback:
                     $ref: '#/components/examples/messageSendingCallbackExample'
+                  messageSentCallback:
+                    $ref: '#/components/examples/messageSentCallbackExample'
                   smsMessageDeliveredCallback:
                     $ref: '#/components/examples/smsMessageDeliveredCallbackExample'
                   mmsMessageDeliveredCallback:

@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.call_direction_enum import CallDirectionEnum
 from typing import Optional, Set
@@ -46,8 +46,10 @@ class DisconnectCallback(BaseModel):
     error_message: Optional[StrictStr] = Field(default=None, description="Text explaining the reason that caused the call to fail in case of errors.", alias="errorMessage")
     error_id: Optional[StrictStr] = Field(default=None, description="Bandwidth's internal id that references the error event.", alias="errorId")
     tag: Optional[StrictStr] = Field(default=None, description="(optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.")
+    sip_call_id: Optional[StrictStr] = Field(default=None, description="(optional) The SIP Call-ID of the call's current SIP dialog with Bandwidth's SBC. Used to correlate dialogs and trace calls. Present on any call, inbound or outbound, once that dialog has been established; may be absent very early in a call before the dialog exists.", alias="sipCallId")
+    sip_response_code: Optional[StrictInt] = Field(default=None, description="(optional) The SIP status code returned by Bandwidth's SBC when it rejected an outbound call's INVITE (e.g. 486 for busy, 603 for decline). Present only when an outbound call was rejected by the SBC.", alias="sipResponseCode")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["eventType", "eventTime", "accountId", "applicationId", "from", "to", "callId", "direction", "callUrl", "enqueuedTime", "startTime", "answerTime", "endTime", "cause", "errorMessage", "errorId", "tag"]
+    __properties: ClassVar[List[str]] = ["eventType", "eventTime", "accountId", "applicationId", "from", "to", "callId", "direction", "callUrl", "enqueuedTime", "startTime", "answerTime", "endTime", "cause", "errorMessage", "errorId", "tag", "sipCallId", "sipResponseCode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -148,7 +150,9 @@ class DisconnectCallback(BaseModel):
             "cause": obj.get("cause"),
             "errorMessage": obj.get("errorMessage"),
             "errorId": obj.get("errorId"),
-            "tag": obj.get("tag")
+            "tag": obj.get("tag"),
+            "sipCallId": obj.get("sipCallId"),
+            "sipResponseCode": obj.get("sipResponseCode")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

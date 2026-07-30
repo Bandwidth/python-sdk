@@ -172,6 +172,7 @@ bandwidth/models/rbm_web_view_enum.py
 bandwidth/models/recording_available_callback.py
 bandwidth/models/recording_complete_callback.py
 bandwidth/models/recording_state_enum.py
+bandwidth/models/recording_transcription_clip.py
 bandwidth/models/recording_transcription_metadata.py
 bandwidth/models/recording_transcriptions.py
 bandwidth/models/redirect_callback.py
@@ -380,6 +381,7 @@ docs/RbmWebViewEnum.md
 docs/RecordingAvailableCallback.md
 docs/RecordingCompleteCallback.md
 docs/RecordingStateEnum.md
+docs/RecordingTranscriptionClip.md
 docs/RecordingTranscriptionMetadata.md
 docs/RecordingTranscriptions.md
 docs/RecordingsApi.md

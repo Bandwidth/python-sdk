@@ -6,6 +6,7 @@ metadata:
   description: python-sdk
   annotations:
     github.com/project-slug: Bandwidth/python-sdk
+    bandwidth.com/languages: Python
   organization: BW
   costCenter: UNKNOWN
   buildPlatform: GitHub Actions

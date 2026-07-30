@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **transcripts** | [**List[Transcription]**](Transcription.md) |  | [optional] 
+**clips** | [**List[RecordingTranscriptionClip]**](RecordingTranscriptionClip.md) | A list of individual speech clips with speaker, timing, and confidence information. | [optional] 
 
 ## Example
 

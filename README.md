@@ -314,6 +314,7 @@ Class | Method | HTTP request | Description
  - [RecordingAvailableCallback](docs/RecordingAvailableCallback.md)
  - [RecordingCompleteCallback](docs/RecordingCompleteCallback.md)
  - [RecordingStateEnum](docs/RecordingStateEnum.md)
+ - [RecordingTranscriptionClip](docs/RecordingTranscriptionClip.md)
  - [RecordingTranscriptionMetadata](docs/RecordingTranscriptionMetadata.md)
  - [RecordingTranscriptions](docs/RecordingTranscriptions.md)
  - [RedirectCallback](docs/RedirectCallback.md)
