@@ -18,6 +18,8 @@ class SipUri(Verb):
     ):
         """Initialize a <SipUri> verb
 
+        This SipUri is shared between the <Transfer> and <Refer> verbs.
+
         Args:
             uri (str): A SIP URI to transfer the call to (e.g. sip:user@server.com)
             uui (str, optional): he value of the User-To-User header to send within the initial INVITE. Must include the encoding parameter as specified in RFC 7433. Only base64 and jwt encoding are currently allowed. This value, including the encoding specifier, may not exceed 256 characters. Defaults to None.

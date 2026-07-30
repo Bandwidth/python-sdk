@@ -6,13 +6,13 @@ Bandwidth's Refer BXML verb
 @copyright Bandwidth INC
 """
 from ..nestable_verb import NestableVerb
-from .refer_sip_uri import ReferSipUri
+from .sip_uri import SipUri
 
 
 class Refer(NestableVerb):
 
     def __init__(
-        self, sip_uri: ReferSipUri,
+        self, sip_uri: SipUri,
         refer_complete_url: str=None, refer_complete_method: str=None,
         tag: str=None
     ):
@@ -24,13 +24,12 @@ class Refer(NestableVerb):
         redirects away from Bandwidth entirely. This is a SIP protocol
         property, not a Bandwidth design choice. As a result, BXML returned in
         response to the referComplete callback is only meaningful for failure
-        handling — there is no live call to act on after success.
+        handling - there is no live call to act on after success.
 
         Args:
-            sip_uri (ReferSipUri): The SIP URI to refer the call to. Required.
-                Exactly one <SipUri> child element is allowed. Use ReferSipUri,
-                not SipUri — the Transfer SipUri carries callbacks and auth
-                fields that are not valid in a REFER context.
+            sip_uri (SipUri): The SIP URI to refer the call to. Required.
+                Exactly one <SipUri> child element is allowed. This is the
+                same SipUri model used by <Transfer>.
             refer_complete_url (str, optional): URL to send the Refer Complete
                 event to when the REFER flow finishes (success or failure).
                 May be a relative URL. Defaults to None.
