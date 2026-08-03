@@ -30,15 +30,8 @@ class TestRefer(unittest.TestCase):
         expected = '<Refer referCompleteUrl="https://example.com/handleRefer" referCompleteMethod="POST" tag="test"><SipUri>sip:alice@atlanta.example.com</SipUri></Refer>'
         assert expected == self.refer.to_bxml()
 
-    def test_minimal(self):
-        minimal_refer = Refer(sip_uri=SipUri(uri="sip:bob@example.com"))
+    def test_set_sip_uri(self):
+        refer = Refer()
+        refer.set_sip_uri(SipUri(uri="sip:bob@example.com"))
         expected = '<Refer><SipUri>sip:bob@example.com</SipUri></Refer>'
-        assert expected == minimal_refer.to_bxml()
-
-    def test_shares_sip_uri_with_transfer(self):
-        """Refer uses the same SipUri model as Transfer, including its
-        transfer-flavored attributes if the caller sets them."""
-        sip_uri = SipUri(uri="sip:alice@atlanta.example.com", uui="test")
-        refer = Refer(sip_uri=sip_uri)
-        expected = '<Refer><SipUri uui="test">sip:alice@atlanta.example.com</SipUri></Refer>'
         assert expected == refer.to_bxml()

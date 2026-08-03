@@ -12,7 +12,7 @@ from .sip_uri import SipUri
 class Refer(NestableVerb):
 
     def __init__(
-        self, sip_uri: SipUri,
+        self, sip_uri: SipUri=None,
         refer_complete_url: str=None, refer_complete_method: str=None,
         tag: str=None
     ):
@@ -47,7 +47,7 @@ class Refer(NestableVerb):
         self.tag = tag
         super().__init__(
             tag="Refer",
-            nested_verbs=[self.sip_uri]
+            nested_verbs=[sip_uri] if sip_uri is not None else []
         )
 
     @property
@@ -57,3 +57,12 @@ class Refer(NestableVerb):
             "referCompleteMethod": self.refer_complete_method,
             "tag": self.tag
         }
+
+    def set_sip_uri(self, sip_uri: SipUri) -> None:
+        """Set the SIP URI destination for this <Refer> verb.
+
+        Args:
+            sip_uri (SipUri): The SIP URI to refer the call to.
+        """
+        self.sip_uri = sip_uri
+        self._nested_verbs = [sip_uri]
