@@ -18,21 +18,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List, Optional
-from bandwidth.models.recording_transcription_clip import RecordingTranscriptionClip
-from bandwidth.models.transcription import Transcription
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class RecordingTranscriptions(BaseModel):
+class RecordingTranscriptionClip(BaseModel):
     """
-    RecordingTranscriptions
+    RecordingTranscriptionClip
     """ # noqa: E501
-    transcripts: Optional[List[Transcription]] = None
-    clips: Optional[List[RecordingTranscriptionClip]] = Field(default=None, description="A list of individual speech clips with speaker, timing, and confidence information.")
+    speaker: Optional[StrictInt] = Field(default=None, description="Zero-based index identifying the speaker.")
+    text: Optional[StrictStr] = Field(default=None, description="The transcribed text of this clip.")
+    confidence: Optional[Union[Annotated[float, Field(le=1, strict=True, ge=0)], Annotated[int, Field(le=1, strict=True, ge=0)]]] = Field(default=None, description="How confident the transcription engine was in transcribing this clip (from `0.0` to `1.0`).")
+    start_time_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The start time of this clip within the recording, in seconds.", alias="startTimeSeconds")
+    end_time_seconds: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The end time of this clip within the recording, in seconds.", alias="endTimeSeconds")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["transcripts", "clips"]
+    __properties: ClassVar[List[str]] = ["speaker", "text", "confidence", "startTimeSeconds", "endTimeSeconds"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +54,7 @@ class RecordingTranscriptions(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of RecordingTranscriptions from a JSON string"""
+        """Create an instance of RecordingTranscriptionClip from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,20 +77,6 @@ class RecordingTranscriptions(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in transcripts (list)
-        _items = []
-        if self.transcripts:
-            for _item_transcripts in self.transcripts:
-                if _item_transcripts:
-                    _items.append(_item_transcripts.to_dict())
-            _dict['transcripts'] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in clips (list)
-        _items = []
-        if self.clips:
-            for _item_clips in self.clips:
-                if _item_clips:
-                    _items.append(_item_clips.to_dict())
-            _dict['clips'] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -98,7 +86,7 @@ class RecordingTranscriptions(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of RecordingTranscriptions from a dict"""
+        """Create an instance of RecordingTranscriptionClip from a dict"""
         if obj is None:
             return None
 
@@ -106,8 +94,11 @@ class RecordingTranscriptions(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "transcripts": [Transcription.from_dict(_item) for _item in obj["transcripts"]] if obj.get("transcripts") is not None else None,
-            "clips": [RecordingTranscriptionClip.from_dict(_item) for _item in obj["clips"]] if obj.get("clips") is not None else None
+            "speaker": obj.get("speaker"),
+            "text": obj.get("text"),
+            "confidence": obj.get("confidence"),
+            "startTimeSeconds": obj.get("startTimeSeconds"),
+            "endTimeSeconds": obj.get("endTimeSeconds")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

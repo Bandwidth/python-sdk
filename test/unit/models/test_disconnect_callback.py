@@ -50,7 +50,9 @@ class TestDisconnectCallback(unittest.TestCase):
                 cause = 'busy',
                 error_message = 'Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call',
                 error_id = '4642074b-7b58-478b-96e4-3a60955c6765',
-                tag = 'exampleTag'
+                tag = 'exampleTag',
+                sip_call_id = 'sipCallIdExample',
+                sip_response_code = 200
             )
         else:
             return DisconnectCallback(
@@ -78,6 +80,8 @@ class TestDisconnectCallback(unittest.TestCase):
         assert instance.error_message == 'Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call'
         assert instance.error_id == '4642074b-7b58-478b-96e4-3a60955c6765'
         assert instance.tag == 'exampleTag'
+        assert instance.sip_call_id == 'sipCallIdExample'
+        assert instance.sip_response_code == 200
 
 if __name__ == '__main__':
     unittest.main()

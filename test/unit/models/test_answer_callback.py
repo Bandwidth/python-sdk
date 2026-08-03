@@ -50,7 +50,8 @@ class TestAnswerCallback(unittest.TestCase):
                 tag = 'exampleTag',
                 machine_detection_result = MachineDetectionResult(
                     value = 'answering-machine', 
-                    duration = 'PT4.9891287S', )
+                    duration = 'PT4.9891287S', ),
+                sip_call_id = 'sipCallIdExample'
             )
         else:
             return AnswerCallback(
@@ -77,6 +78,7 @@ class TestAnswerCallback(unittest.TestCase):
         assert isinstance(instance.machine_detection_result, MachineDetectionResult)
         assert instance.machine_detection_result.value == 'answering-machine'
         assert instance.machine_detection_result.duration == 'PT4.9891287S'
+        assert instance.sip_call_id == 'sipCallIdExample'
 
 
 if __name__ == '__main__':

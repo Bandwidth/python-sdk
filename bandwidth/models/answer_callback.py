@@ -44,8 +44,9 @@ class AnswerCallback(BaseModel):
     answer_time: Optional[datetime] = Field(default=None, description="Time the call was answered, in ISO 8601 format.", alias="answerTime")
     tag: Optional[StrictStr] = Field(default=None, description="(optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.")
     machine_detection_result: Optional[MachineDetectionResult] = Field(default=None, alias="machineDetectionResult")
+    sip_call_id: Optional[StrictStr] = Field(default=None, description="(optional) The SIP Call-ID of the call's current SIP dialog with Bandwidth's SBC. Used to correlate dialogs and trace calls. Present on any call, inbound or outbound, once that dialog has been established; may be absent very early in a call before the dialog exists.", alias="sipCallId")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["eventType", "eventTime", "accountId", "applicationId", "from", "to", "direction", "callId", "callUrl", "enqueuedTime", "startTime", "answerTime", "tag", "machineDetectionResult"]
+    __properties: ClassVar[List[str]] = ["eventType", "eventTime", "accountId", "applicationId", "from", "to", "direction", "callId", "callUrl", "enqueuedTime", "startTime", "answerTime", "tag", "machineDetectionResult", "sipCallId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -141,7 +142,8 @@ class AnswerCallback(BaseModel):
             "startTime": obj.get("startTime"),
             "answerTime": obj.get("answerTime"),
             "tag": obj.get("tag"),
-            "machineDetectionResult": MachineDetectionResult.from_dict(obj["machineDetectionResult"]) if obj.get("machineDetectionResult") is not None else None
+            "machineDetectionResult": MachineDetectionResult.from_dict(obj["machineDetectionResult"]) if obj.get("machineDetectionResult") is not None else None,
+            "sipCallId": obj.get("sipCallId")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

@@ -58,7 +58,11 @@ class TestInitiateCallback(unittest.TestCase):
                     verstat = 'Tn-Verification-Passed', 
                     attestation_indicator = 'A', 
                     originating_id = '99759086-1335-11ed-9bcf-5f7d464e91af', ),
-                uui='bXktdXVp'
+                uui='bXktdXVp',
+                sip_call_id = 'sipCallIdExample',
+                sip_headers = {
+                    'X-Example-Header': 'ExampleValue'
+                }
             )
         else:
             return InitiateCallback(
@@ -92,6 +96,10 @@ class TestInitiateCallback(unittest.TestCase):
         assert instance.stir_shaken.attestation_indicator == 'A'
         assert instance.stir_shaken.originating_id == '99759086-1335-11ed-9bcf-5f7d464e91af'
         assert instance.uui == 'bXktdXVp'
+        assert instance.sip_call_id == 'sipCallIdExample'
+        assert instance.sip_headers == {
+            'X-Example-Header': 'ExampleValue'
+        }
 
 if __name__ == '__main__':
     unittest.main()

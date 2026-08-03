@@ -19,6 +19,8 @@ Name | Type | Description | Notes
 **diversion** | [**Diversion**](Diversion.md) |  | [optional] 
 **stir_shaken** | [**StirShaken**](StirShaken.md) |  | [optional] 
 **uui** | **str** | The value of the &#x60;User-To-User&#x60; header to send within the initial &#x60;INVITE&#x60;. Must include the encoding parameter as specified in RFC 7433. Only &#x60;base64&#x60;, &#x60;jwt&#x60; and &#x60;hex&#x60; encoding are currently allowed. This value, including the encoding specifier, may not exceed 256 characters. | [optional] 
+**sip_call_id** | **str** | (optional) The SIP Call-ID of the call&#39;s current SIP dialog with Bandwidth&#39;s SBC. Used to correlate dialogs and trace calls. Present on any call, inbound or outbound, once that dialog has been established; may be absent very early in a call before the dialog exists. | [optional] 
+**sip_headers** | **Dict[str, str]** | (optional) Map of customer-supplied X-* headers from the original INVITE. Keys are lowercase (SIP headers are case-insensitive). Present only for inbound SIP URI calls with custom headers. Note - keys preserve the original SIP header name in lowercase rather than Bandwidth&#39;s usual camelCase JSON convention, since these are passthrough values from the caller&#39;s SIP INVITE, not Bandwidth-defined fields. If the same header name is sent more than once in the INVITE, only the last value is kept. | [optional] 
 
 ## Example
 

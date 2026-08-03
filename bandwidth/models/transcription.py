@@ -27,10 +27,11 @@ class Transcription(BaseModel):
     """
     Transcription
     """ # noqa: E501
+    speaker: Optional[StrictInt] = Field(default=None, description="Zero-based index identifying the speaker.")
     text: Optional[StrictStr] = Field(default=None, description="The transcribed text")
     confidence: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="The confidence on the recognized content, ranging from `0.0` to `1.0` with `1.0` being the highest confidence.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["text", "confidence"]
+    __properties: ClassVar[List[str]] = ["speaker", "text", "confidence"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,6 +91,7 @@ class Transcription(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "speaker": obj.get("speaker"),
             "text": obj.get("text"),
             "confidence": obj.get("confidence")
         })

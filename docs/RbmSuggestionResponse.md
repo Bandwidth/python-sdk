@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **text** | **str** | The text associated with the suggestion response. | [optional] 
 **postback_data** | **bytearray** | Base64 payload the customer receives when the reply is clicked. | [optional] 
+**paired_message_id** | **str** | Corresponding parent message ID (MT). | [optional] 
 
 ## Example
 
