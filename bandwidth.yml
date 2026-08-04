@@ -317,7 +317,7 @@ paths:
         approximately in order, but exact ordering is not guaranteed.
       operationId: createCall
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
       requestBody:
         $ref: '#/components/requestBodies/createCallRequest'
       responses:
@@ -358,7 +358,7 @@ paths:
         days, you will get an empty array [] in response.
       operationId: listCalls
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/to'
         - $ref: '#/components/parameters/from'
         - $ref: '#/components/parameters/minStartTimeCalls'
@@ -404,7 +404,7 @@ paths:
         7 days, you will get an HTTP 404 response.
       operationId: getCallState
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
       responses:
         '200':
@@ -434,7 +434,7 @@ paths:
         BXML document.
       operationId: updateCall
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
       requestBody:
         $ref: '#/components/requestBodies/updateCallRequest'
@@ -468,7 +468,7 @@ paths:
       description: Interrupts and replaces an active call's BXML document.
       operationId: updateCallBxml
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
       requestBody:
         $ref: '#/components/requestBodies/updateCallBxmlRequest'
@@ -510,7 +510,7 @@ paths:
         of conference records.
       operationId: listConferences
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/name'
         - $ref: '#/components/parameters/minCreatedTime'
         - $ref: '#/components/parameters/maxCreatedTime'
@@ -544,7 +544,7 @@ paths:
       description: Returns information about the specified conference.
       operationId: getConference
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/conferenceId'
       responses:
         '200':
@@ -572,7 +572,7 @@ paths:
       description: Update the conference state.
       operationId: updateConference
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/conferenceId'
       requestBody:
         $ref: '#/components/requestBodies/updateConferenceRequest'
@@ -604,7 +604,7 @@ paths:
       description: Update the conference BXML document.
       operationId: updateConferenceBxml
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/conferenceId'
       requestBody:
         $ref: '#/components/requestBodies/updateConferenceBxmlRequest'
@@ -636,7 +636,7 @@ paths:
       description: Returns information about the specified conference member.
       operationId: getConferenceMember
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/conferenceId'
         - $ref: '#/components/parameters/memberId'
       responses:
@@ -665,7 +665,7 @@ paths:
       description: Updates settings for a particular conference member.
       operationId: updateConferenceMember
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/conferenceId'
         - $ref: '#/components/parameters/memberId'
       requestBody:
@@ -700,7 +700,7 @@ paths:
         took place during the specified conference.
       operationId: listConferenceRecordings
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/conferenceId'
       responses:
         '200':
@@ -730,7 +730,7 @@ paths:
       description: Returns metadata for the specified recording.
       operationId: getConferenceRecording
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/conferenceId'
         - $ref: '#/components/parameters/recordingId'
       responses:
@@ -761,7 +761,7 @@ paths:
       description: Downloads the specified recording file.
       operationId: downloadConferenceRecording
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/conferenceId'
         - $ref: '#/components/parameters/recordingId'
       responses:
@@ -801,7 +801,7 @@ paths:
         empty if no recordings match the specified criteria.
       operationId: listAccountCallRecordings
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/to'
         - $ref: '#/components/parameters/from'
         - $ref: '#/components/parameters/minStartTime'
@@ -834,7 +834,7 @@ paths:
       description: Pause or resume a recording on an active phone call.
       operationId: updateCallRecordingState
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
       requestBody:
         $ref: '#/components/requestBodies/updateCallRecordingRequest'
@@ -868,7 +868,7 @@ paths:
         that took place during the specified call.
       operationId: listCallRecordings
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
       responses:
         '200':
@@ -898,7 +898,7 @@ paths:
       description: Returns metadata for the specified recording.
       operationId: getCallRecording
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
         - $ref: '#/components/parameters/recordingId'
       responses:
@@ -935,7 +935,7 @@ paths:
         irreversible, can take an additional 24 to 48 hours.
       operationId: deleteRecording
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
         - $ref: '#/components/parameters/recordingId'
       responses:
@@ -966,7 +966,7 @@ paths:
       description: Downloads the specified recording.
       operationId: downloadCallRecording
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
         - $ref: '#/components/parameters/recordingId'
       responses:
@@ -995,7 +995,7 @@ paths:
       description: Deletes the specified recording's media.
       operationId: deleteRecordingMedia
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
         - $ref: '#/components/parameters/recordingId'
       responses:
@@ -1038,7 +1038,7 @@ paths:
         item.
       operationId: getRecordingTranscription
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
         - $ref: '#/components/parameters/recordingId'
       responses:
@@ -1073,7 +1073,7 @@ paths:
         less than 4 hours.
       operationId: transcribeCallRecording
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
         - $ref: '#/components/parameters/recordingId'
       requestBody:
@@ -1111,7 +1111,7 @@ paths:
         can take an additional 24 to 48 hours.
       operationId: deleteRecordingTranscription
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
         - $ref: '#/components/parameters/recordingId'
       responses:
@@ -1142,7 +1142,7 @@ paths:
       description: Returns details about the current state of the account.
       operationId: getStatistics
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
       responses:
         '200':
           $ref: '#/components/responses/getStatisticsResponse'
@@ -1173,7 +1173,7 @@ paths:
         [startTranscription](/docs/voice/bxml/startTranscription).
       operationId: listRealTimeTranscriptions
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
       responses:
         '200':
@@ -1205,7 +1205,7 @@ paths:
         [startTranscription](/docs/voice/bxml/startTranscription).
       operationId: getRealTimeTranscription
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
         - $ref: '#/components/parameters/transcriptionId'
       responses:
@@ -1242,7 +1242,7 @@ paths:
         can take an additional 24 to 48 hours.
       operationId: deleteRealTimeTranscription
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId1'
         - $ref: '#/components/parameters/callId'
         - $ref: '#/components/parameters/transcriptionId'
       responses:
@@ -1273,7 +1273,7 @@ paths:
       description: Send an MFA Code via a phone call.
       operationId: generateVoiceCode
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId2'
       requestBody:
         $ref: '#/components/requestBodies/codeRequest'
       responses:
@@ -1298,7 +1298,7 @@ paths:
       description: Send an MFA code via text message (SMS).
       operationId: generateMessagingCode
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId2'
       requestBody:
         $ref: '#/components/requestBodies/codeRequest'
       responses:
@@ -1321,7 +1321,7 @@ paths:
       description: Verify a previously sent MFA code.
       operationId: verifyCode
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId2'
       requestBody:
         $ref: '#/components/requestBodies/codeVerify'
       responses:
@@ -1348,7 +1348,7 @@ paths:
       tags:
         - Phone Number Lookup
       parameters:
-        - $ref: '#/components/parameters/accountId1'
+        - $ref: '#/components/parameters/accountId3'
       requestBody:
         $ref: '#/components/requestBodies/createSyncLookupRequest'
       responses:
@@ -1371,7 +1371,7 @@ paths:
       tags:
         - Phone Number Lookup
       parameters:
-        - $ref: '#/components/parameters/accountId1'
+        - $ref: '#/components/parameters/accountId3'
       requestBody:
         $ref: '#/components/requestBodies/createAsyncBulkLookupRequest'
       responses:
@@ -1391,7 +1391,7 @@ paths:
       tags:
         - Phone Number Lookup
       parameters:
-        - $ref: '#/components/parameters/accountId1'
+        - $ref: '#/components/parameters/accountId3'
         - $ref: '#/components/parameters/requestId'
       responses:
         '200':
@@ -1407,7 +1407,7 @@ paths:
       description: Submit a request for verification of a toll-free phone number.
       operationId: requestTollFreeVerification
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId4'
       requestBody:
         $ref: '#/components/requestBodies/requestTollFreeVerificationRequest'
       responses:
@@ -1446,7 +1446,7 @@ paths:
         available.
       operationId: getTollFreeVerificationStatus
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId4'
         - $ref: '#/components/parameters/tfPhoneNumberPathParam'
       responses:
         '200':
@@ -1479,7 +1479,7 @@ paths:
         true).
       operationId: updateTollFreeVerificationRequest
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId4'
         - $ref: '#/components/parameters/tfPhoneNumberPathParam'
       requestBody:
         $ref: '#/components/requestBodies/updateTollFreeVerificationRequestRequest'
@@ -1507,7 +1507,7 @@ paths:
       description: Delete a toll-free verification submission for a toll-free number.
       operationId: deleteVerificationRequest
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId4'
         - $ref: '#/components/parameters/tfPhoneNumberPathParam'
       responses:
         '204':
@@ -1546,7 +1546,7 @@ paths:
         object will be null).
       operationId: listWebhookSubscriptions
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId4'
       responses:
         '200':
           $ref: '#/components/responses/listWebhookSubscriptionsResponse'
@@ -1579,7 +1579,7 @@ paths:
         modify or delete the subscription at a later time.
       operationId: createWebhookSubscription
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId4'
       requestBody:
         $ref: '#/components/requestBodies/webhookSubscriptionRequest'
       responses:
@@ -1610,7 +1610,7 @@ paths:
       description: Delete a webhook subscription by ID.
       operationId: deleteWebhookSubscription
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId4'
         - $ref: '#/components/parameters/webhookSubscriptionIdPathParam'
       responses:
         '204':
@@ -1640,7 +1640,7 @@ paths:
         `basicAuthentication` can be updated).
       operationId: updateWebhookSubscription
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId4'
         - $ref: '#/components/parameters/webhookSubscriptionIdPathParam'
       requestBody:
         $ref: '#/components/requestBodies/webhookSubscriptionRequest'
@@ -1699,7 +1699,7 @@ paths:
       description: Returns a list of endpoints associated with the specified account.
       operationId: listEndpoints
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId5'
         - $ref: '#/components/parameters/endpointType'
         - $ref: '#/components/parameters/endpointStatus'
         - $ref: '#/components/parameters/afterCursor'
@@ -1730,7 +1730,7 @@ paths:
       description: Creates a new Endpoint for the specified account.
       operationId: createEndpoint
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId5'
       requestBody:
         $ref: '#/components/requestBodies/createEndpointRequest'
       responses:
@@ -1766,7 +1766,7 @@ paths:
       description: Returns information about the specified endpoint.
       operationId: getEndpoint
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId5'
         - $ref: '#/components/parameters/endpointId'
       responses:
         '200':
@@ -1796,7 +1796,7 @@ paths:
         media, the media stream will be terminated.
       operationId: deleteEndpoint
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId5'
         - $ref: '#/components/parameters/endpointId'
       responses:
         '204':
@@ -1826,7 +1826,7 @@ paths:
       description: Updates the BXML for the specified endpoint.
       operationId: updateEndpointBxml
       parameters:
-        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/accountId5'
         - $ref: '#/components/parameters/endpointId'
       requestBody:
         $ref: '#/components/requestBodies/updateEndpointBxmlRequest'
@@ -8164,7 +8164,13 @@ components:
       required: true
       schema:
         type: string
-      description: Your Bandwidth Account ID.
+      description: >
+        This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth
+        App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.
+
+
+        **When migrating to OAuth authentication, you must use the 7-digit
+        Account ID.**
       example: '9900000'
     mediaId:
       in: path
@@ -8456,6 +8462,14 @@ components:
       example: true
       schema:
         type: boolean
+    accountId1:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Your Bandwidth Account ID.
+      example: '9900000'
     callId:
       name: callId
       in: path
@@ -8623,7 +8637,15 @@ components:
         type: string
       description: Filter results to calls with specified call Disconnect Cause.
       example: hangup
-    accountId1:
+    accountId2:
+      in: path
+      name: accountId
+      required: true
+      schema:
+        type: string
+      description: Your Bandwidth Account ID.
+      example: '9900000'
+    accountId3:
       in: path
       name: accountId
       required: true
@@ -8640,6 +8662,14 @@ components:
         format: uuid
         description: The phone number lookup request ID from Bandwidth.
         example: 004223a0-8b17-41b1-bf81-20732adf5590
+    accountId4:
+      in: path
+      name: accountId
+      required: true
+      schema:
+        type: string
+      description: Your Bandwidth Account ID.
+      example: '9900000'
     tfPhoneNumberPathParam:
       in: path
       name: phoneNumber
@@ -8656,6 +8686,14 @@ components:
         type: string
       description: Webhook subscription ID
       example: 7bt57JcsVYJrN9K1OcV1Nu
+    accountId5:
+      in: path
+      name: accountId
+      required: true
+      schema:
+        type: string
+      description: Your Bandwidth Account ID.
+      example: '9900000'
     endpointId:
       name: endpointId
       in: path

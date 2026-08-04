@@ -43,7 +43,7 @@ class MultiChannelApi:
     @validate_call
     def create_multi_channel_message(
         self,
-        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
+        account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
         multi_channel_message_request: MultiChannelMessageRequest,
         _request_timeout: Union[
             None,
@@ -62,7 +62,7 @@ class MultiChannelApi:
 
         Endpoint for sending Multi-Channel messages.
 
-        :param account_id: Your Bandwidth Account ID. (required)
+        :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
         :param multi_channel_message_request: (required)
         :type multi_channel_message_request: MultiChannelMessageRequest
@@ -123,7 +123,7 @@ class MultiChannelApi:
     @validate_call
     def create_multi_channel_message_with_http_info(
         self,
-        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
+        account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
         multi_channel_message_request: MultiChannelMessageRequest,
         _request_timeout: Union[
             None,
@@ -142,7 +142,7 @@ class MultiChannelApi:
 
         Endpoint for sending Multi-Channel messages.
 
-        :param account_id: Your Bandwidth Account ID. (required)
+        :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
         :param multi_channel_message_request: (required)
         :type multi_channel_message_request: MultiChannelMessageRequest
@@ -203,7 +203,7 @@ class MultiChannelApi:
     @validate_call
     def create_multi_channel_message_without_preload_content(
         self,
-        account_id: Annotated[StrictStr, Field(description="Your Bandwidth Account ID.")],
+        account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
         multi_channel_message_request: MultiChannelMessageRequest,
         _request_timeout: Union[
             None,
@@ -222,7 +222,7 @@ class MultiChannelApi:
 
         Endpoint for sending Multi-Channel messages.
 
-        :param account_id: Your Bandwidth Account ID. (required)
+        :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
         :param multi_channel_message_request: (required)
         :type multi_channel_message_request: MultiChannelMessageRequest
