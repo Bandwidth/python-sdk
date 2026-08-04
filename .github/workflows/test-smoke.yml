@@ -23,7 +23,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PYTHON_VERSION: '3.12'
+  PYTHON_VERSION: "3.12"
   OPERATING_SYSTEM: ubuntu
   BW_USERNAME: ${{ secrets.BW_USERNAME }}
   BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
@@ -52,12 +52,12 @@ jobs:
       MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
-          python-version: '3.14'
+          python-version: "3.14"
 
       - name: Install Packages
         run: |
@@ -91,12 +91,12 @@ jobs:
       MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_UP_APPLICATION_ID }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
-          python-version: '3.14'
+          python-version: "3.14"
 
       - name: Install Packages
         run: |
