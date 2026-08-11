@@ -177,6 +177,8 @@ bandwidth/models/recording_transcription_metadata.py
 bandwidth/models/recording_transcriptions.py
 bandwidth/models/redirect_callback.py
 bandwidth/models/redirect_method_enum.py
+bandwidth/models/refer_call_status_enum.py
+bandwidth/models/refer_complete_callback.py
 bandwidth/models/sip_connection_metadata.py
 bandwidth/models/sip_credentials.py
 bandwidth/models/sms_message_content.py
@@ -387,6 +389,8 @@ docs/RecordingTranscriptions.md
 docs/RecordingsApi.md
 docs/RedirectCallback.md
 docs/RedirectMethodEnum.md
+docs/ReferCallStatusEnum.md
+docs/ReferCompleteCallback.md
 docs/SipConnectionMetadata.md
 docs/SipCredentials.md
 docs/SmsMessageContent.md

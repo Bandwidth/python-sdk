@@ -3184,6 +3184,13 @@ components:
         - outbound
       description: The direction of the call.
       example: inbound
+    referCallStatusEnum:
+      type: string
+      enum:
+        - success
+        - failure
+      description: The outcome of the REFER operation.
+      example: success
     fileFormatEnum:
       type: string
       enum:
@@ -5134,6 +5141,45 @@ components:
           $ref: '#/components/schemas/transferCallerId'
         transferTo:
           $ref: '#/components/schemas/transferTo'
+    referCompleteCallback:
+      type: object
+      description: >-
+        This event is sent to the referCompleteUrl of a call's <Refer> verb when
+        the SIP REFER flow completes. On success, the call has been torn down
+        and the BXML returned from this callback is ignored. On failure, the
+        call remains active and the BXML returned from this callback is executed
+        on the call.
+      properties:
+        eventType:
+          $ref: '#/components/schemas/eventType'
+        eventTime:
+          $ref: '#/components/schemas/eventTime'
+        accountId:
+          $ref: '#/components/schemas/accountId'
+        applicationId:
+          $ref: '#/components/schemas/applicationId1'
+        from:
+          $ref: '#/components/schemas/from'
+        to:
+          $ref: '#/components/schemas/to'
+        direction:
+          $ref: '#/components/schemas/callDirectionEnum'
+        callId:
+          $ref: '#/components/schemas/callId'
+        callUrl:
+          $ref: '#/components/schemas/callUrl'
+        startTime:
+          $ref: '#/components/schemas/startTime'
+        answerTime:
+          $ref: '#/components/schemas/answerTime'
+        tag:
+          $ref: '#/components/schemas/tag1'
+        referCallStatus:
+          $ref: '#/components/schemas/referCallStatusEnum'
+        referSipResponseCode:
+          $ref: '#/components/schemas/referSipResponseCode'
+        notifySipResponseCode:
+          $ref: '#/components/schemas/notifySipResponseCode'
     transcriptionAvailableCallback:
       type: object
       description: >-
@@ -5326,8 +5372,8 @@ components:
         conferenceRedirect, conferenceMemberJoin, conferenceMemberExit,
         conferenceCompleted, conferenceRecordingAvailable, disconnect, dtmf,
         gather, initiate, machineDetectionComplete, recordingComplete,
-        recordingAvailable, redirect, transcriptionAvailable, transferAnswer,
-        transferComplete, transferDisconnect.
+        recordingAvailable, redirect, referComplete, transcriptionAvailable,
+        transferAnswer, transferComplete, transferDisconnect.
       example: bridgeComplete
     eventTime:
       type: string
@@ -5479,6 +5525,21 @@ components:
         or it was previously cleared, this field will not be present.
       example: exampleTag
       nullable: true
+    referSipResponseCode:
+      type: integer
+      description: >-
+        (optional) The SIP response code returned for the REFER request itself
+        (e.g. 202, 405, 603). Present when a SIP response was received for the
+        REFER.
+      example: 202
+    notifySipResponseCode:
+      type: integer
+      description: >-
+        (optional) The final SIP response code reported via NOTIFY
+        (message/sipfrag body). Present only when the caller's endpoint sent a
+        final NOTIFY (e.g. 200, 404, 486, 503). Not present on NOTIFY timeout or
+        when the REFER was rejected before a subscription was established.
+      example: 200
     cause:
       type: string
       description: >-

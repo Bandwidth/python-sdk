@@ -1,6 +1,6 @@
-# AnswerCallback
+# ReferCompleteCallback
 
-The Answer event is sent to the answerUrl specified in the createCall request when an outbound call is answered.
+This event is sent to the referCompleteUrl of a call's <Refer> verb when the SIP REFER flow completes. On success, the call has been torn down and the BXML returned from this callback is ignored. On failure, the call remains active and the BXML returned from this callback is executed on the call.
 
 ## Properties
 
@@ -15,29 +15,29 @@ Name | Type | Description | Notes
 **direction** | [**CallDirectionEnum**](CallDirectionEnum.md) |  | [optional] 
 **call_id** | **str** | The call id associated with the event. | [optional] 
 **call_url** | **str** | The URL of the call associated with the event. | [optional] 
-**enqueued_time** | **datetime** | (optional) If call queueing is enabled and this is an outbound call, time the call was queued, in ISO 8601 format. | [optional] 
 **start_time** | **datetime** | Time the call was started, in ISO 8601 format. | [optional] 
 **answer_time** | **datetime** | Time the call was answered, in ISO 8601 format. | [optional] 
 **tag** | **str** | (optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present. | [optional] 
-**machine_detection_result** | [**MachineDetectionResult**](MachineDetectionResult.md) |  | [optional] 
-**sip_call_id** | **str** | (optional) The SIP Call-ID of the call&#39;s current SIP dialog with Bandwidth&#39;s SBC. Used to correlate dialogs and trace calls. Present on any call, inbound or outbound, once that dialog has been established; may be absent very early in a call before the dialog exists. | [optional] 
+**refer_call_status** | [**ReferCallStatusEnum**](ReferCallStatusEnum.md) |  | [optional] 
+**refer_sip_response_code** | **int** | (optional) The SIP response code returned for the REFER request itself (e.g. 202, 405, 603). Present when a SIP response was received for the REFER. | [optional] 
+**notify_sip_response_code** | **int** | (optional) The final SIP response code reported via NOTIFY (message/sipfrag body). Present only when the caller&#39;s endpoint sent a final NOTIFY (e.g. 200, 404, 486, 503). Not present on NOTIFY timeout or when the REFER was rejected before a subscription was established. | [optional] 
 
 ## Example
 
 ```python
-from bandwidth.models.answer_callback import AnswerCallback
+from bandwidth.models.refer_complete_callback import ReferCompleteCallback
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of AnswerCallback from a JSON string
-answer_callback_instance = AnswerCallback.from_json(json)
+# create an instance of ReferCompleteCallback from a JSON string
+refer_complete_callback_instance = ReferCompleteCallback.from_json(json)
 # print the JSON string representation of the object
-print(AnswerCallback.to_json())
+print(ReferCompleteCallback.to_json())
 
 # convert the object into a dict
-answer_callback_dict = answer_callback_instance.to_dict()
-# create an instance of AnswerCallback from a dict
-answer_callback_from_dict = AnswerCallback.from_dict(answer_callback_dict)
+refer_complete_callback_dict = refer_complete_callback_instance.to_dict()
+# create an instance of ReferCompleteCallback from a dict
+refer_complete_callback_from_dict = ReferCompleteCallback.from_dict(refer_complete_callback_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
