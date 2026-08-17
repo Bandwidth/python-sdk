@@ -197,6 +197,8 @@ __all__ = [
     "RecordingTranscriptions",
     "RedirectCallback",
     "RedirectMethodEnum",
+    "ReferCallStatusEnum",
+    "ReferCompleteCallback",
     "SipConnectionMetadata",
     "SipCredentials",
     "SmsMessageContent",
@@ -424,6 +426,8 @@ from bandwidth.models.recording_transcription_metadata import RecordingTranscrip
 from bandwidth.models.recording_transcriptions import RecordingTranscriptions as RecordingTranscriptions
 from bandwidth.models.redirect_callback import RedirectCallback as RedirectCallback
 from bandwidth.models.redirect_method_enum import RedirectMethodEnum as RedirectMethodEnum
+from bandwidth.models.refer_call_status_enum import ReferCallStatusEnum as ReferCallStatusEnum
+from bandwidth.models.refer_complete_callback import ReferCompleteCallback as ReferCompleteCallback
 from bandwidth.models.sip_connection_metadata import SipConnectionMetadata as SipConnectionMetadata
 from bandwidth.models.sip_credentials import SipCredentials as SipCredentials
 from bandwidth.models.sms_message_content import SmsMessageContent as SmsMessageContent

@@ -53,7 +53,7 @@ configuration = bandwidth.Configuration(
 with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.MultiChannelApi(api_client)
-    account_id = '9900000' # str | Your Bandwidth Account ID.
+    account_id = '9900000' # str | This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** 
     multi_channel_message_request = bandwidth.MultiChannelMessageRequest() # MultiChannelMessageRequest | 
 
     try:
@@ -72,7 +72,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **account_id** | **str**| Your Bandwidth Account ID. | 
+ **account_id** | **str**| This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (&#x60;u-be8dvafwrs63rwpm7pfil4b&#x60;) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  | 
  **multi_channel_message_request** | [**MultiChannelMessageRequest**](MultiChannelMessageRequest.md)|  | 
 
 ### Return type
