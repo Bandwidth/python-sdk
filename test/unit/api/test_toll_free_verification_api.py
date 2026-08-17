@@ -46,8 +46,7 @@ class TestTollFreeVerificationApi(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         configuration = Configuration(
-            client_id=BW_CLIENT_ID,
-            client_secret=BW_CLIENT_SECRET,
+            access_token='abcd1234',
             host='http://127.0.0.1:4010',
             ignore_operation_servers=True
         )

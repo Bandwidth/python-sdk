@@ -27,8 +27,7 @@ class TestMediaApi(unittest.TestCase):
 
     def setUp(self) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD,
+            access_token='abcd1234',
             host='http://127.0.0.1:4010',
             ignore_operation_servers=True
         )

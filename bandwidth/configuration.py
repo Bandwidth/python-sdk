@@ -152,6 +152,7 @@ class Configuration:
     :param username: Username for HTTP basic authentication.
     :param password: Password for HTTP basic authentication.
     :param access_token: Access token.
+    :param access_token_url: URL to get access token for OAuth2 authentication.
     :param client_id: Client ID for OAuth2 authentication.
     :param client_secret: Client Secret for OAuth2 authentication.
     :param server_index: Index to servers configuration.
@@ -201,6 +202,7 @@ conf = bandwidth.Configuration(
         username: Optional[str]=None,
         password: Optional[str]=None,
         access_token: Optional[str]=None,
+        access_token_url: Optional[str]=None,
         client_id: Optional[str]=None,
         client_secret: Optional[str]=None,
         server_index: Optional[int]=None,
@@ -257,6 +259,9 @@ conf = bandwidth.Configuration(
         """
         self.access_token = access_token
         """Access token
+        """
+        self.access_token_url = 'https://api.bandwidth.com/api/v1/oauth2/token' if access_token_url is None else access_token_url
+        """URL to get access token for OAuth2 authentication
         """
         self.client_id = client_id
         """Client ID for OAuth2 authentication
@@ -540,7 +545,7 @@ conf = bandwidth.Configuration(
             auth_header = f"Basic {_encoded_string}"
             resp = urllib3.request(
                 'POST',
-                'https://api.bandwidth.com/api/v1/oauth2/token',
+                self.access_token_url,
                 headers={
                     'Authorization': auth_header,
                     'Content-Type': 'application/x-www-form-urlencoded',
