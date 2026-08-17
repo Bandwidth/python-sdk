@@ -171,6 +171,8 @@ from bandwidth.models.recording_transcription_metadata import RecordingTranscrip
 from bandwidth.models.recording_transcriptions import RecordingTranscriptions
 from bandwidth.models.redirect_callback import RedirectCallback
 from bandwidth.models.redirect_method_enum import RedirectMethodEnum
+from bandwidth.models.refer_call_status_enum import ReferCallStatusEnum
+from bandwidth.models.refer_complete_callback import ReferCompleteCallback
 from bandwidth.models.sip_connection_metadata import SipConnectionMetadata
 from bandwidth.models.sip_credentials import SipCredentials
 from bandwidth.models.sms_message_content import SmsMessageContent
