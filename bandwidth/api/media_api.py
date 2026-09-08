@@ -44,7 +44,7 @@ class MediaApi:
     def delete_media(
         self,
         account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
-        media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
+        media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -64,7 +64,7 @@ class MediaApi:
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
-        :param media_id: Media ID to retrieve. (required)
+        :param media_id: The ID of the media file. (required)
         :type media_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -123,7 +123,7 @@ class MediaApi:
     def delete_media_with_http_info(
         self,
         account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
-        media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
+        media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -143,7 +143,7 @@ class MediaApi:
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
-        :param media_id: Media ID to retrieve. (required)
+        :param media_id: The ID of the media file. (required)
         :type media_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -202,7 +202,7 @@ class MediaApi:
     def delete_media_without_preload_content(
         self,
         account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
-        media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
+        media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -222,7 +222,7 @@ class MediaApi:
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
-        :param media_id: Media ID to retrieve. (required)
+        :param media_id: The ID of the media file. (required)
         :type media_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -348,7 +348,7 @@ class MediaApi:
     def get_media(
         self,
         account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
-        media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
+        media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -368,7 +368,7 @@ class MediaApi:
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
-        :param media_id: Media ID to retrieve. (required)
+        :param media_id: The ID of the media file. (required)
         :type media_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -427,7 +427,7 @@ class MediaApi:
     def get_media_with_http_info(
         self,
         account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
-        media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
+        media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -447,7 +447,7 @@ class MediaApi:
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
-        :param media_id: Media ID to retrieve. (required)
+        :param media_id: The ID of the media file. (required)
         :type media_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -506,7 +506,7 @@ class MediaApi:
     def get_media_without_preload_content(
         self,
         account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
-        media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
+        media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -526,7 +526,7 @@ class MediaApi:
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
-        :param media_id: Media ID to retrieve. (required)
+        :param media_id: The ID of the media file. (required)
         :type media_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -957,7 +957,7 @@ class MediaApi:
     def upload_media(
         self,
         account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
-        media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
+        media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         body: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
         cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
@@ -980,7 +980,7 @@ class MediaApi:
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
-        :param media_id: Media ID to retrieve. (required)
+        :param media_id: The ID of the media file. (required)
         :type media_id: str
         :param body: (required)
         :type body: bytearray
@@ -1048,7 +1048,7 @@ class MediaApi:
     def upload_media_with_http_info(
         self,
         account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
-        media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
+        media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         body: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
         cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
@@ -1071,7 +1071,7 @@ class MediaApi:
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
-        :param media_id: Media ID to retrieve. (required)
+        :param media_id: The ID of the media file. (required)
         :type media_id: str
         :param body: (required)
         :type body: bytearray
@@ -1139,7 +1139,7 @@ class MediaApi:
     def upload_media_without_preload_content(
         self,
         account_id: Annotated[StrictStr, Field(description="This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** ")],
-        media_id: Annotated[StrictStr, Field(description="Media ID to retrieve.")],
+        media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         body: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
         cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
@@ -1162,7 +1162,7 @@ class MediaApi:
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
-        :param media_id: Media ID to retrieve. (required)
+        :param media_id: The ID of the media file. (required)
         :type media_id: str
         :param body: (required)
         :type body: bytearray

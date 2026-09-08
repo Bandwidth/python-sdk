@@ -59,7 +59,7 @@ with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.MediaApi(api_client)
     account_id = '9900000' # str | This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** 
-    media_id = '14762070468292kw2fuqty55yp2b2/0/bw.png' # str | Media ID to retrieve.
+    media_id = 'bw.png' # str | The ID of the media file.
 
     try:
         # Delete Media
@@ -76,7 +76,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (&#x60;u-be8dvafwrs63rwpm7pfil4b&#x60;) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  | 
- **media_id** | **str**| Media ID to retrieve. | 
+ **media_id** | **str**| The ID of the media file. | 
 
 ### Return type
 
@@ -152,7 +152,7 @@ with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.MediaApi(api_client)
     account_id = '9900000' # str | This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** 
-    media_id = '14762070468292kw2fuqty55yp2b2/0/bw.png' # str | Media ID to retrieve.
+    media_id = 'bw.png' # str | The ID of the media file.
 
     try:
         # Get Media
@@ -171,7 +171,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (&#x60;u-be8dvafwrs63rwpm7pfil4b&#x60;) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  | 
- **media_id** | **str**| Media ID to retrieve. | 
+ **media_id** | **str**| The ID of the media file. | 
 
 ### Return type
 
@@ -347,7 +347,7 @@ with bandwidth.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = bandwidth.MediaApi(api_client)
     account_id = '9900000' # str | This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.** 
-    media_id = '14762070468292kw2fuqty55yp2b2/0/bw.png' # str | Media ID to retrieve.
+    media_id = 'bw.png' # str | The ID of the media file.
     body = None # bytearray | 
     content_type = 'audio/wav' # str | The media type of the entity-body. (optional)
     cache_control = 'no-cache' # str | General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. (optional)
@@ -367,7 +367,7 @@ with bandwidth.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **account_id** | **str**| This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (&#x60;u-be8dvafwrs63rwpm7pfil4b&#x60;) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  | 
- **media_id** | **str**| Media ID to retrieve. | 
+ **media_id** | **str**| The ID of the media file. | 
  **body** | **bytearray**|  | 
  **content_type** | **str**| The media type of the entity-body. | [optional] 
  **cache_control** | **str**| General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. | [optional] 
