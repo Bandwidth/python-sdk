@@ -31,7 +31,9 @@ class TestRecord(unittest.TestCase):
             terminating_digits="#",
             max_duration=10,
             silence_timeout="5",
-            file_format="wav"
+            file_format="wav",
+            detect_language=True,
+            recording_name="recording1"
         )
 
     def test_instance(self):
@@ -39,5 +41,5 @@ class TestRecord(unittest.TestCase):
         assert isinstance(self.record, Verb)
 
     def test_to_bxml(self):
-        expected = '<Record recordCompleteUrl="example.com/completeurl" recordCompleteMethod="POST" recordCompleteFallbackUrl="backupexample.com/completeurl" recordCompleteFallbackMethod="POST" recordingAvailableUrl="example.com/availableurl" recordingAvailableMethod="POST" transcribe="true" transcriptionAvailableUrl="example.com/transcriptionurl" transcriptionAvailableMethod="POST" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" terminatingDigits="#" maxDuration="10" silenceTimeout="5" fileFormat="wav" />'
+        expected = '<Record recordCompleteUrl="example.com/completeurl" recordCompleteMethod="POST" recordCompleteFallbackUrl="backupexample.com/completeurl" recordCompleteFallbackMethod="POST" recordingAvailableUrl="example.com/availableurl" recordingAvailableMethod="POST" transcribe="true" detectLanguage="true" transcriptionAvailableUrl="example.com/transcriptionurl" transcriptionAvailableMethod="POST" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" terminatingDigits="#" maxDuration="10" silenceTimeout="5" fileFormat="wav" recordingName="recording1" />'
         assert expected == self.record.to_bxml()

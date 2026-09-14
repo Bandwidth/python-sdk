@@ -22,6 +22,8 @@ class StartTranscription(NestableVerb):
             destination: str = None,
             stabilized: bool = None,
             custom_params: List[CustomParam] = None,
+            detect_language: bool = None,
+            preferred_languages: str = None,
     ):
         """
         Initialize a <StartTranscription> verb
@@ -32,8 +34,10 @@ class StartTranscription(NestableVerb):
         :param username: The username to send in the HTTP request to transcriptionEventUrl. If specified, the transcriptionEventUrl must be TLS-encrypted (i.e., https).
         :param password: The password to send in the HTTP request to transcriptionEventUrl. If specified, the transcriptionEventUrl must be TLS-encrypted (i.e., https).
         :param destination: A websocket URI to send the transcription to. A transcription of the specified tracks will be sent via websocket to this URL as a series of JSON messages. See below for more details on the websocket packet format.
-        :param stabilized: A websocket URI to send the transcription to. A transcription of the specified tracks will be sent via websocket to this URL as a series of JSON messages. See below for more details on the websocket packet format.
+        :param stabilized: A boolean value to indicate whether only stable transcription updates are sent, rather than interim results that may be revised. Requires destination to be set. Default is true.
         :param custom_params: These elements define optional user specified parameters that will be sent to the destination URL when the real-time transcription is first started.
+        :param detect_language: A boolean value to indicate that the transcription service should detect the dominant language spoken rather than assuming English. Default is false.
+        :param preferred_languages: A comma-separated list of language locales to transcribe in, for example en-US,es-US. Defaults to en-US. Requires detect_language to be false. Only one dialect per language is allowed.
         """
         self.name = name
         self.tracks = tracks
@@ -44,6 +48,8 @@ class StartTranscription(NestableVerb):
         self.destination = destination
         self.stabilized = stabilized
         self.custom_params = custom_params
+        self.detect_language = detect_language
+        self.preferred_languages = preferred_languages
 
         super().__init__(
             tag="StartTranscription",
@@ -61,4 +67,6 @@ class StartTranscription(NestableVerb):
             "password": self.password,
             "destination": self.destination,
             "stabilized": self.stabilized,
+            "detectLanguage": self.detect_language,
+            "preferredLanguages": self.preferred_languages,
         }

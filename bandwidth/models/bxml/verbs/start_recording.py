@@ -16,7 +16,8 @@ class StartRecording(Verb):
         transcribe: bool = None, transcription_available_url: str = None,
         transcription_available_method: str = None,  username: str=None,
         password: str=None, tag: str=None,
-        file_format: str = None, multi_channel: bool = None
+        file_format: str = None, multi_channel: bool = None,
+        detect_language: bool = None, recording_name: str = None
     ):
         """Initialize a <StartRecording> verb
 
@@ -31,6 +32,8 @@ class StartRecording(Verb):
             tag (str, optional): A custom string that will be sent with this and all future callbacks unless overwritten by a future tag attribute or <Tag> verb, or cleared. May be cleared by setting tag="". Max length 256 characters. Defaults to None.
             file_format (str, optional): The audio format that the recording will be saved as: mp3 or wav. Default value is wav. Defaults to None.            max_duration (str, optional): Maximum length of recording (in seconds). Max 10800 (3 hours). Default value is 60. Defaults to None.
             multi_channel (bool, optional): A boolean value indicating whether or not the recording file should separate each side of the call into its own audio channel. Default value is false.
+            detect_language (bool, optional): A boolean value to indicate that the transcription service should detect the dominant language spoken rather than assuming English. Ignored unless transcribe is true. Default is false. Defaults to None.
+            recording_name (str, optional): A name identifying this recording, returned in the Recording Available event. Defaults to None.
 
         """
         self.recording_available_url = recording_available_url
@@ -43,6 +46,8 @@ class StartRecording(Verb):
         self.tag = tag
         self.file_format = file_format
         self.multi_channel = multi_channel
+        self.detect_language = detect_language
+        self.recording_name = recording_name
         super().__init__(tag="StartRecording")
 
     @property
@@ -51,11 +56,13 @@ class StartRecording(Verb):
             "recordingAvailableUrl": self.recording_available_url,
             "recordingAvailableMethod": self.recording_available_method,
             "transcribe": self.transcribe,
+            "detectLanguage": self.detect_language,
             "transcriptionAvailableUrl": self.transcription_available_url,
             "transcriptionAvailableMethod": self.transcription_available_method,
             "username": self.username,
             "password": self.password,
             "tag": self.tag,
             "fileFormat": self.file_format,
-            "multiChannel": self.multi_channel
+            "multiChannel": self.multi_channel,
+            "recordingName": self.recording_name
         }

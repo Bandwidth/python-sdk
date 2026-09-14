@@ -21,7 +21,11 @@ class Gather(NestableVerb):
         fallback_username: str=None, fallback_password: str=None,
         tag: str=None, terminating_digits: str=None,
         max_digits: int=None, inter_digit_timeout: int=None,
-        first_digit_timeout: int=None, repeat_count: int=None
+        first_digit_timeout: int=None, repeat_count: int=None,
+        input: str=None, hints: str=None,
+        language: str=None, partial_result_callback: str=None,
+        partial_result_callback_method: str=None, profanity_filter: bool=None,
+        speech_model: str=None, speech_timeout: int=None
     ):
         """Initialize a <Gather> verb
 
@@ -43,6 +47,14 @@ class Gather(NestableVerb):
                 Default value is 5. Range: decimal values between 0 - 60.
             repeat_count (int, optional): The number of times the audio prompt should be played if no digits are pressed. For example, if this value is 3, the nested audio clip will be played a maximum of three times.
                 The delay between repetitions will be equal to first_digit_timeout. Default value is 1. repeat_count * number of verbs must not be greater than 20.
+            input (str, optional): The kind of input to collect: dtmf, speech, or dtmf_speech. Default value is dtmf.
+            hints (str, optional): Words or phrases that provide context to the speech recognition engine, improving accuracy for expected responses. Only used when input includes speech.
+            language (str, optional): The language code used for speech recognition, for example en-US. Only used when input includes speech.
+            partial_result_callback (str, optional): URL to send the Partial Result event to as speech is recognized. May be a relative URL. Only used when input includes speech.
+            partial_result_callback_method (str, optional): The HTTP method to use for the request to partial_result_callback. GET or POST. Default value is POST.
+            profanity_filter (bool, optional): A boolean value to indicate whether profane words are filtered out of the transcription. Default value is true. Only used when input includes speech.
+            speech_model (str, optional): The speech recognition model to use for transcribing the caller's speech. Only used when input includes speech.
+            speech_timeout (int, optional): Time (in seconds) to wait for speech input before terminating the Gather. Default value is 5. Only used when input includes speech.
 
         Nested Verbs:
             PlayAudio: (optional) Using the PlayAudio inside the Gather verb will play the media until a digit is received.
@@ -62,6 +74,14 @@ class Gather(NestableVerb):
         self.inter_digit_timeout = inter_digit_timeout
         self.first_digit_timeout = first_digit_timeout
         self.repeat_count = repeat_count
+        self.input = input
+        self.hints = hints
+        self.language = language
+        self.partial_result_callback = partial_result_callback
+        self.partial_result_callback_method = partial_result_callback_method
+        self.profanity_filter = profanity_filter
+        self.speech_model = speech_model
+        self.speech_timeout = speech_timeout
         self.audio_verbs = audio_verbs
         super().__init__(
             tag="Gather",
@@ -84,4 +104,12 @@ class Gather(NestableVerb):
             "interDigitTimeout": self.inter_digit_timeout,
             "firstDigitTimeout": self.first_digit_timeout,
             "repeatCount": self.repeat_count,
+            "input": self.input,
+            "hints": self.hints,
+            "language": self.language,
+            "partialResultCallback": self.partial_result_callback,
+            "partialResultCallbackMethod": self.partial_result_callback_method,
+            "profanityFilter": self.profanity_filter,
+            "speechModel": self.speech_model,
+            "speechTimeout": self.speech_timeout,
         }

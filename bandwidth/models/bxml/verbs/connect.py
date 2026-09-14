@@ -15,16 +15,19 @@ class Connect(NestableVerb):
 
     def __init__(
         self, destination: List[Endpoint] = [],
-        event_callback_url: str = None
+        event_callback_url: str = None,
+        event_fallback_url: str = None
     ):
         """Initialize a <Connect> verb
 
         Args:
             destination (list[Endpoint], optional): An Endpoint ID to connect the call to.
             event_callback_url (str, optional): URL to send events to during the connection lifecycle. May be a relative URL. Defaults to None.
+            event_fallback_url (str, optional): A fallback url which, if provided, will be used to retry the event callback delivery in case event_callback_url fails to respond. Defaults to None.
         """
         self.destination = destination
         self.event_callback_url = event_callback_url
+        self.event_fallback_url = event_fallback_url
 
         super().__init__(
             tag="Connect",
@@ -34,5 +37,6 @@ class Connect(NestableVerb):
     @property
     def _attributes(self):
         return {
-            "eventCallbackUrl": self.event_callback_url
+            "eventCallbackUrl": self.event_callback_url,
+            "eventFallbackUrl": self.event_fallback_url
         }

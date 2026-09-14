@@ -22,7 +22,8 @@ class Transfer(NestableVerb):
         transfer_complete_fallback_method: str=None, username: str=None,
         password: str=None, fallback_username: str=None,
         fallback_password: str=None, tag: str=None,
-        diversion_treatment: str=None, diversion_reason: str=None
+        diversion_treatment: str=None, diversion_reason: str=None,
+        privacy: bool=None
     ):
         """Initialize a <Transfer> verb
 
@@ -61,6 +62,7 @@ class Transfer(NestableVerb):
 
                 This parameter is considered only when diversionTreatment is set to stack. Defaults is unknown.
                 Defaults to None.
+            privacy (bool, optional): A boolean value to indicate whether the calling number should be hidden. Use transfer_caller_display_name to customize the displayed name. Default is false.
         """
         self.transfer_to = transfer_to
         self.transfer_caller_id = transfer_caller_id
@@ -77,6 +79,7 @@ class Transfer(NestableVerb):
         self.tag = tag
         self.diversion_treatment = diversion_treatment
         self.diversion_reason = diversion_reason
+        self.privacy = privacy
         super().__init__(
             tag="Transfer",
             nested_verbs=self.transfer_to
@@ -86,6 +89,7 @@ class Transfer(NestableVerb):
     def _attributes(self):
         return {
             "transferCallerId": self.transfer_caller_id,
+            "privacy": self.privacy,
             "transferCallerDisplayName": self.transfer_caller_display_name,
             "callTimeout": self.call_timeout,
             "transferCompleteUrl": self.transfer_complete_url,
