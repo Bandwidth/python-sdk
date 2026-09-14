@@ -72,8 +72,8 @@ class Record(Verb):
         return {
             "recordCompleteUrl": self.record_complete_url,
             "recordCompleteMethod": self.record_complete_method,
-            "recordCompleteFallback_url": self.record_complete_fallback_url,
-            "recordCompleteFallback_method": self.record_complete_fallback_method,
+            "recordCompleteFallbackUrl": self.record_complete_fallback_url,
+            "recordCompleteFallbackMethod": self.record_complete_fallback_method,
             "recordingAvailableUrl": self.recording_available_url,
             "recordingAvailableMethod": self.recording_available_method,
             "transcribe": self.transcribe,

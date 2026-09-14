@@ -73,7 +73,7 @@ class Bridge(Verb):
             "bridgeCompleteFallbackMethod": self.bridge_complete_fallback_method,
             "bridgeTargetCompleteUrl": self.bridge_target_complete_url,
             "bridgeTargetCompleteMethod": self.bridge_target_complete_method,
-            "bridgeTargetCompleteFallback_url": self.bridge_target_complete_fallback_url,
+            "bridgeTargetCompleteFallbackUrl": self.bridge_target_complete_fallback_url,
             "bridgeTargetCompleteFallbackMethod": self.bridge_target_complete_fallback_method,
             "username": self.username,
             "password": self.password,

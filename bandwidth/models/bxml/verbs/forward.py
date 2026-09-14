@@ -59,7 +59,7 @@ class Forward(Verb):
     def _attributes(self):
         return {
             "to": self.to,
-            "_from": self._from,
+            "from": self._from,
             "callTimeout": self.call_timeout,
             "diversionTreatment": self.diversion_treatment,
             "diversionReason": self.diversion_reason,
