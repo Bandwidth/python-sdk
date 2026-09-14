@@ -20,7 +20,7 @@ class TestRecord(unittest.TestCase):
             record_complete_fallback_method="POST",
             recording_available_url="example.com/availableurl",
             recording_available_method="POST",
-            transcribe="true",
+            transcribe=True,
             transcription_available_url="example.com/transcriptionurl",
             transcription_available_method="POST",
             username="user",

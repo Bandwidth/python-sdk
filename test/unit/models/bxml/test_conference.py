@@ -15,8 +15,8 @@ class TestConference(unittest.TestCase):
     def setUp(self):
         self.conference = Conference(
             name="conf1",
-            mute = "true",
-            hold = "false",
+            mute = True,
+            hold = False,
             call_ids_to_coach = "example-call-id",
             conference_event_url = "example.com/eventurl",
             conference_event_method = "POST",

@@ -17,7 +17,7 @@ class Record(Verb):
         record_complete_fallback_method: str=None,
         recording_available_url: str=None,
         recording_available_method: str=None,
-        transcribe: str=None, transcription_available_url: str=None,
+        transcribe: bool=None, transcription_available_url: str=None,
         transcription_available_method: str=None,  username: str=None,
         password: str=None, fallback_username: str=None,
         fallback_password: str=None, tag: str=None,
@@ -34,7 +34,7 @@ class Record(Verb):
             record_complete_fallback_method (str, optional): The HTTP method to use to deliver the Record Complete callback to recordCompleteFallbackUrl. GET or POST. Default value is POST. Defaults to None.
             recording_available_url (str, optional): URL to send the Recording Available event to once it has been processed. Does not accept BXML. May be a relative URL. Defaults to None.
             recording_available_method (str, optional): The HTTP method to use for the request to recordingAvailableUrl. GET or POST. Default value is POST. Defaults to None.
-            transcribe (str, optional): A boolean value to indicate that recording should be transcribed. Transcription can succeed only for recordings of length greater than 500 milliseconds and less than 4 hours. Default is false. Defaults to None.
+            transcribe (bool, optional): A boolean value to indicate that recording should be transcribed. Transcription can succeed only for recordings of length greater than 500 milliseconds and less than 4 hours. Default is false. Defaults to None.
             transcription_available_url (str, optional): URL to send the Transcription Available event to once it has been processed. Does not accept BXML. May be a relative URL. Defaults to None.
             transcription_available_method (str, optional): The HTTP method to use for the request to transcriptionAvailableUrl. GET or POST. Default value is POST. Defaults to None.
             username (str, optional): The username to send in the HTTP request to recordCompleteUrl, recordingAvailableUrl or transcriptionAvailableUrl. If specified, the URLs must be TLS-encrypted (i.e., https). Defaults to None.
