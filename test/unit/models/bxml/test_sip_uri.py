@@ -18,6 +18,14 @@ class TestSipUri(unittest.TestCase):
             uui="abc123",
             transfer_answer_url="https://example.com/webhooks/transfer_answer",
             transfer_answer_method="POST",
+            transfer_answer_fallback_url="https://fallback.example.com/webhooks/transfer_answer",
+            transfer_answer_fallback_method="GET",
+            transfer_disconnect_url="https://example.com/webhooks/transfer_disconnect",
+            transfer_disconnect_method="POST",
+            username="user",
+            password="pass",
+            fallback_username="fallbackUser",
+            fallback_password="fallbackPass",
             tag="test"
         )
 
@@ -26,5 +34,5 @@ class TestSipUri(unittest.TestCase):
         assert isinstance(self.sip_uri, Verb)
 
     def test_to_bxml(self):
-        expected = '<SipUri uui="abc123" transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="test">sip:1-999-123-4567@voip-provider.example.net</SipUri>'
+        expected = '<SipUri uui="abc123" transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" transferAnswerFallbackUrl="https://fallback.example.com/webhooks/transfer_answer" transferAnswerFallbackMethod="GET" transferDisconnectUrl="https://example.com/webhooks/transfer_disconnect" transferDisconnectMethod="POST" username="user" password="pass" fallbackUsername="fallbackUser" fallbackPassword="fallbackPass" tag="test">sip:1-999-123-4567@voip-provider.example.net</SipUri>'
         assert expected == self.sip_uri.to_bxml()

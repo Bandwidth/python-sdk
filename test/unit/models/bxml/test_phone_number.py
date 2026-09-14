@@ -18,6 +18,14 @@ class TestPhoneNumber(unittest.TestCase):
             uui="abc123",
             transfer_answer_url="https://example.com/webhooks/transfer_answer",
             transfer_answer_method="POST",
+            transfer_answer_fallback_url="https://fallback.example.com/webhooks/transfer_answer",
+            transfer_answer_fallback_method="GET",
+            transfer_disconnect_url="https://example.com/webhooks/transfer_disconnect",
+            transfer_disconnect_method="POST",
+            username="user",
+            password="pass",
+            fallback_username="fallbackUser",
+            fallback_password="fallbackPass",
             tag=""
         )
 
@@ -26,5 +34,5 @@ class TestPhoneNumber(unittest.TestCase):
         assert isinstance(self.phone_number, Verb)
 
     def test_to_bxml(self):
-        expected = '<PhoneNumber transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" tag="" uui="abc123">+19195551234</PhoneNumber>'
+        expected = '<PhoneNumber transferAnswerUrl="https://example.com/webhooks/transfer_answer" transferAnswerMethod="POST" transferAnswerFallbackUrl="https://fallback.example.com/webhooks/transfer_answer" transferAnswerFallbackMethod="GET" transferDisconnectUrl="https://example.com/webhooks/transfer_disconnect" transferDisconnectMethod="POST" username="user" password="pass" fallbackUsername="fallbackUser" fallbackPassword="fallbackPass" tag="" uui="abc123">+19195551234</PhoneNumber>'
         assert expected == self.phone_number.to_bxml()
