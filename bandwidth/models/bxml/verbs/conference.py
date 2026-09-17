@@ -11,8 +11,8 @@ from ..verb import Verb
 class Conference(Verb):
 
     def __init__(
-        self, name: str, mute: str=None,
-        hold: str=None, call_ids_to_coach: str=None,
+        self, name: str, mute: bool=None,
+        hold: bool=None, call_ids_to_coach: str=None,
         conference_event_url: str=None, conference_event_method: str=None,
         conference_event_fallback_url: str=None, conference_event_fallback_method: str=None,
         username: str=None, password: str=None,
@@ -23,8 +23,8 @@ class Conference(Verb):
 
         Args:
             name (str): The name of the conference. Can contain up to 100 characters of letters, numbers, and the symbols -, _, and .
-            mute (str, optional): A boolean value to indicate whether the member should be on mute in the conference. When muted, a member can hear others speak, but others cannot hear them speak. Defaults to false.
-            hold (str, optional): A boolean value to indicate whether the member should be on hold in the conference. When on hold, a member cannot hear others, and they cannot be heard. Defaults to false.
+            mute (bool, optional): A boolean value to indicate whether the member should be on mute in the conference. When muted, a member can hear others speak, but others cannot hear them speak. Defaults to false.
+            hold (bool, optional): A boolean value to indicate whether the member should be on hold in the conference. When on hold, a member cannot hear others, and they cannot be heard. Defaults to false.
             call_ids_to_coach (str, optional): A comma-separated list of call ids to coach. When a call joins a conference with this attribute set, it will coach the listed calls.
                 Those calls will be able to hear and be heard by the coach, but other calls in the conference will not hear the coach.
             conference_event_url (str, optional): URL to send Conference events to. The URL, method, username, and password are set by the BXML document that creates the conference,
@@ -41,14 +41,6 @@ class Conference(Verb):
                 Max length 256 characters. Defaults to None.
             callback_timeout (str, optional): This is the timeout (in seconds) to use when delivering webhooks for the conference.
                 If not set, it will inherit the webhook timeout from the call that creates the conference. Can be any numeric value (including decimals) between 1 and 25.
-
-        Nested Verbs:
-            PlayAudio: (optional)
-            SpeakSentence: (optional)
-            StartRecording: (optional)
-            StopRecording: (optional)
-            PauseRecording: (optional)
-            ResumeRecording: (optional)
         """
         self.name = name
         self.mute = mute
@@ -65,13 +57,13 @@ class Conference(Verb):
         self.tag = tag
         self.callback_timeout = callback_timeout
         super().__init__(
-            tag="Conference"
+            tag="Conference",
+            content=self.name,
         )
 
     @property
     def _attributes(self):
         return {
-            "name": self.name,
             "mute": self.mute,
             "hold": self.hold,
             "callIdsToCoach": self.call_ids_to_coach,

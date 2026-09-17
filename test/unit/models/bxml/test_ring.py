@@ -23,5 +23,5 @@ class TestRing(unittest.TestCase):
         assert isinstance(self.ring, Verb)
 
     def test_to_bxml(self):
-        expected = '<Ring duration="30" answerCall="True" />'
+        expected = '<Ring duration="30" answerCall="true" />'
         assert expected == self.ring.to_bxml()

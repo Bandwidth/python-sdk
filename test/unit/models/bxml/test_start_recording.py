@@ -23,7 +23,9 @@ class TestStartRecording(unittest.TestCase):
             password = "pass",
             tag = "tag",
             file_format = "wav",
-            multi_channel = True
+            multi_channel = True,
+            detect_language = True,
+            recording_name = "recording1"
         )
 
     def test_instance(self):
@@ -31,5 +33,5 @@ class TestStartRecording(unittest.TestCase):
         assert isinstance(self.start_recording, Verb)
 
     def test_to_bxml(self):
-        expected = '<StartRecording recordingAvailableUrl="example.com" recordingAvailableMethod="POST" transcribe="True" transcriptionAvailableUrl="transcription-example.com" transcriptionAvailableMethod="POST" username="user" password="pass" tag="tag" fileFormat="wav" multiChannel="True" />'
+        expected = '<StartRecording recordingAvailableUrl="example.com" recordingAvailableMethod="POST" transcribe="true" detectLanguage="true" transcriptionAvailableUrl="transcription-example.com" transcriptionAvailableMethod="POST" username="user" password="pass" tag="tag" fileFormat="wav" multiChannel="true" recordingName="recording1" />'
         assert expected == self.start_recording.to_bxml()

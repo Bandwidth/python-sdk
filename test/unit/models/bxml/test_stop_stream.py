@@ -20,5 +20,5 @@ class TestStopStream(unittest.TestCase):
         assert isinstance(self.stop_stream, Verb)
 
     def test_to_bxml(self):
-        expected = '<StopStream name="conf" wait="True" />'
+        expected = '<StopStream name="conf" wait="true" />'
         assert expected == self.stop_stream.to_bxml()

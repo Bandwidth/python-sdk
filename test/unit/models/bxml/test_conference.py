@@ -15,8 +15,8 @@ class TestConference(unittest.TestCase):
     def setUp(self):
         self.conference = Conference(
             name="conf1",
-            mute = "true",
-            hold = "false",
+            mute = True,
+            hold = False,
             call_ids_to_coach = "example-call-id",
             conference_event_url = "example.com/eventurl",
             conference_event_method = "POST",
@@ -35,5 +35,5 @@ class TestConference(unittest.TestCase):
         assert isinstance(self.conference, Verb)
 
     def test_to_bxml(self):
-        expected = '<Conference name="conf1" mute="true" hold="false" callIdsToCoach="example-call-id" conferenceEventUrl="example.com/eventurl" conferenceEventMethod="POST" conferenceEventFallbackUrl="backupexample.com/eventurl" conferenceEventFallbackMethod="POST" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" callbackTimeout="5" />'
+        expected = '<Conference mute="true" hold="false" callIdsToCoach="example-call-id" conferenceEventUrl="example.com/eventurl" conferenceEventMethod="POST" conferenceEventFallbackUrl="backupexample.com/eventurl" conferenceEventFallbackMethod="POST" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" callbackTimeout="5">conf1</Conference>'
         assert expected == self.conference.to_bxml()

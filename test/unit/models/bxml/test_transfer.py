@@ -26,7 +26,18 @@ class TestTransfer(unittest.TestCase):
             call_timeout = "15",
             transfer_caller_id = "+19195554321",
             transfer_caller_display_name="test",
-            tag = "test"
+            tag = "test",
+            privacy=True,
+            transfer_complete_url="https://example.com/transfer_complete",
+            transfer_complete_method="POST",
+            transfer_complete_fallback_url="https://fallback.example.com/transfer_complete",
+            transfer_complete_fallback_method="GET",
+            username="user",
+            password="pass",
+            fallback_username="fallbackUser",
+            fallback_password="fallbackPass",
+            diversion_treatment="propagate",
+            diversion_reason="away"
         )
 
     def test_instance(self):
@@ -35,10 +46,10 @@ class TestTransfer(unittest.TestCase):
         assert isinstance(self.transfer, Verb)
 
     def test_to_bxml(self):
-        expected = '<Transfer transferCallerId="+19195554321" transferCallerDisplayName="test" callTimeout="15" tag="test"><SipUri uui="test">sip@bw.com</SipUri></Transfer>'
+        expected = '<Transfer transferCallerId="+19195554321" privacy="true" transferCallerDisplayName="test" callTimeout="15" transferCompleteUrl="https://example.com/transfer_complete" transferCompleteMethod="POST" transferCompleteFallbackUrl="https://fallback.example.com/transfer_complete" transferCompleteFallbackMethod="GET" username="user" password="pass" fallbackUsername="fallbackUser" fallbackPassword="fallbackPass" tag="test" diversionTreatment="propagate" diversionReason="away"><SipUri uui="test">sip@bw.com</SipUri></Transfer>'
         assert expected == self.transfer.to_bxml()
 
     def test_add_verb(self):
-        expected = '<Transfer transferCallerId="+19195554321" transferCallerDisplayName="test" callTimeout="15" tag="test"><SipUri uui="test">sip@bw.com</SipUri><PhoneNumber tag="test">+19195551234</PhoneNumber></Transfer>'
+        expected = '<Transfer transferCallerId="+19195554321" privacy="true" transferCallerDisplayName="test" callTimeout="15" transferCompleteUrl="https://example.com/transfer_complete" transferCompleteMethod="POST" transferCompleteFallbackUrl="https://fallback.example.com/transfer_complete" transferCompleteFallbackMethod="GET" username="user" password="pass" fallbackUsername="fallbackUser" fallbackPassword="fallbackPass" tag="test" diversionTreatment="propagate" diversionReason="away"><SipUri uui="test">sip@bw.com</SipUri><PhoneNumber tag="test">+19195551234</PhoneNumber></Transfer>'
         self.transfer.add_transfer_recipient(self.phone_number)
         assert expected == self.transfer.to_bxml()

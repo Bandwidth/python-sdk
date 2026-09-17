@@ -19,6 +19,7 @@ class TestConnect(unittest.TestCase):
 
         self.connect = Connect(
             event_callback_url= "https://callback-test.com",
+            event_fallback_url= "https://fallback-test.com",
             destination=[self.endpoint]
         )
 
@@ -35,7 +36,7 @@ class TestConnect(unittest.TestCase):
         assert expected == connect.to_bxml()
 
     def test_to_bxml(self):
-        expected = '<Connect eventCallbackUrl="https://callback-test.com"><Endpoint>endpoint-id</Endpoint></Connect>'
+        expected = '<Connect eventCallbackUrl="https://callback-test.com" eventFallbackUrl="https://fallback-test.com"><Endpoint>endpoint-id</Endpoint></Connect>'
         assert expected == self.connect.to_bxml()
 
     def test_add_verb(self):

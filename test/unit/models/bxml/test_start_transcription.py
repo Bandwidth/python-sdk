@@ -31,7 +31,9 @@ class TestStartTranscription(unittest.TestCase):
             password="pass",
             destination="testurl.com",
             stabilized=True,
-            custom_params=[self.custom_param1]
+            custom_params=[self.custom_param1],
+            detect_language=True,
+            preferred_languages="en-US,es-US"
         )
 
     def test_instance(self):
@@ -40,10 +42,10 @@ class TestStartTranscription(unittest.TestCase):
         assert isinstance(self.start_transcription, Verb)
 
     def test_to_bxml(self):
-        expected = '<StartTranscription name="transcription1" tracks="both" transcriptionEventUrl="eventurl.com" transcriptionEventMethod="POST" username="user" password="pass" destination="testurl.com" stabilized="True"><CustomParam name="name1" value="value1" /></StartTranscription>'
+        expected = '<StartTranscription name="transcription1" tracks="both" transcriptionEventUrl="eventurl.com" transcriptionEventMethod="POST" username="user" password="pass" destination="testurl.com" stabilized="true" detectLanguage="true" preferredLanguages="en-US,es-US"><CustomParam name="name1" value="value1" /></StartTranscription>'
         assert expected == self.start_transcription.to_bxml()
 
     def test_add_verb(self):
-        expected = '<StartTranscription name="transcription1" tracks="both" transcriptionEventUrl="eventurl.com" transcriptionEventMethod="POST" username="user" password="pass" destination="testurl.com" stabilized="True"><CustomParam name="name1" value="value1" /><CustomParam name="name2" value="value2" /></StartTranscription>'
+        expected = '<StartTranscription name="transcription1" tracks="both" transcriptionEventUrl="eventurl.com" transcriptionEventMethod="POST" username="user" password="pass" destination="testurl.com" stabilized="true" detectLanguage="true" preferredLanguages="en-US,es-US"><CustomParam name="name1" value="value1" /><CustomParam name="name2" value="value2" /></StartTranscription>'
         self.start_transcription.add_verb(self.custom_param2)
         assert expected == self.start_transcription.to_bxml()

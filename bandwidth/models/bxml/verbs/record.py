@@ -17,12 +17,13 @@ class Record(Verb):
         record_complete_fallback_method: str=None,
         recording_available_url: str=None,
         recording_available_method: str=None,
-        transcribe: str=None, transcription_available_url: str=None,
+        transcribe: bool=None, transcription_available_url: str=None,
         transcription_available_method: str=None,  username: str=None,
         password: str=None, fallback_username: str=None,
         fallback_password: str=None, tag: str=None,
         terminating_digits: str=None, max_duration: int=60,
-        silence_timeout: str=None, file_format: str=None
+        silence_timeout: str=None, file_format: str=None,
+        detect_language: bool=None, recording_name: str=None
     ):
         """Initialize a <Record> verb
 
@@ -33,7 +34,7 @@ class Record(Verb):
             record_complete_fallback_method (str, optional): The HTTP method to use to deliver the Record Complete callback to recordCompleteFallbackUrl. GET or POST. Default value is POST. Defaults to None.
             recording_available_url (str, optional): URL to send the Recording Available event to once it has been processed. Does not accept BXML. May be a relative URL. Defaults to None.
             recording_available_method (str, optional): The HTTP method to use for the request to recordingAvailableUrl. GET or POST. Default value is POST. Defaults to None.
-            transcribe (str, optional): A boolean value to indicate that recording should be transcribed. Transcription can succeed only for recordings of length greater than 500 milliseconds and less than 4 hours. Default is false. Defaults to None.
+            transcribe (bool, optional): A boolean value to indicate that recording should be transcribed. Transcription can succeed only for recordings of length greater than 500 milliseconds and less than 4 hours. Default is false. Defaults to None.
             transcription_available_url (str, optional): URL to send the Transcription Available event to once it has been processed. Does not accept BXML. May be a relative URL. Defaults to None.
             transcription_available_method (str, optional): The HTTP method to use for the request to transcriptionAvailableUrl. GET or POST. Default value is POST. Defaults to None.
             username (str, optional): The username to send in the HTTP request to recordCompleteUrl, recordingAvailableUrl or transcriptionAvailableUrl. If specified, the URLs must be TLS-encrypted (i.e., https). Defaults to None.
@@ -45,6 +46,8 @@ class Record(Verb):
             max_duration (int, optional): Maximum length of recording (in seconds). Max 10800 (3 hours). Default value is 60. Defaults to None.
             silence_timeout (str, optional): Length of silence after which to end the recording (in seconds). Max is equivalent to the maximum maxDuration value. Default value is 0, which means no timeout. Defaults to None.
             file_format (str, optional): The audio format that the recording will be saved as: mp3 or wav. Default value is wav. Defaults to None.
+            detect_language (bool, optional): A boolean value to indicate that the transcription service should detect the dominant language spoken rather than assuming English. Ignored unless transcribe is true. Default is false. Defaults to None.
+            recording_name (str, optional): A name identifying this recording, returned in the Recording Available event. Defaults to None.
         """
         self.record_complete_url = record_complete_url
         self.record_complete_method = record_complete_method
@@ -64,6 +67,8 @@ class Record(Verb):
         self.max_duration = max_duration
         self.silence_timeout = silence_timeout
         self.file_format = file_format
+        self.detect_language = detect_language
+        self.recording_name = recording_name
 
         super().__init__(tag="Record", content=None)
 
@@ -72,11 +77,12 @@ class Record(Verb):
         return {
             "recordCompleteUrl": self.record_complete_url,
             "recordCompleteMethod": self.record_complete_method,
-            "recordCompleteFallback_url": self.record_complete_fallback_url,
-            "recordCompleteFallback_method": self.record_complete_fallback_method,
+            "recordCompleteFallbackUrl": self.record_complete_fallback_url,
+            "recordCompleteFallbackMethod": self.record_complete_fallback_method,
             "recordingAvailableUrl": self.recording_available_url,
             "recordingAvailableMethod": self.recording_available_method,
             "transcribe": self.transcribe,
+            "detectLanguage": self.detect_language,
             "transcriptionAvailableUrl": self.transcription_available_url,
             "transcriptionAvailableMethod": self.transcription_available_method,
             "username": self.username,
@@ -87,5 +93,6 @@ class Record(Verb):
             "terminatingDigits": self.terminating_digits,
             "maxDuration": self.max_duration,
             "silenceTimeout": self.silence_timeout,
-            "fileFormat": self.file_format
+            "fileFormat": self.file_format,
+            "recordingName": self.recording_name
         }
