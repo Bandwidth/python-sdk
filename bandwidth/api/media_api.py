@@ -960,7 +960,7 @@ class MediaApi:
         media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         body: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
-        cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
+        cache_control: Annotated[Optional[StrictStr], Field(description="Pass-through header stored with the media and returned when the media is retrieved by the user. Does not affect internal server caching behavior.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -976,7 +976,7 @@ class MediaApi:
     ) -> None:
         """Upload Media
 
-        Upload a file. You may add headers to the request in order to provide some control to your media file.  If a file is uploaded with the same name as a file that already exists under this account, the previous file will be overwritten.  A list of supported media types can be found at [Bandwidth Support](https://www.bandwidth.com/support/en/articles/12823220-what-mms-file-types-are-supported).
+        Upload a file.  Filename should always be unique. Reusing filenames may result in the wrong media being sent.  A list of supported media types can be found at [Bandwidth Support](https://www.bandwidth.com/support/en/articles/12823220-what-mms-file-types-are-supported).
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
@@ -986,7 +986,7 @@ class MediaApi:
         :type body: bytearray
         :param content_type: The media type of the entity-body.
         :type content_type: str
-        :param cache_control: General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
+        :param cache_control: Pass-through header stored with the media and returned when the media is retrieved by the user. Does not affect internal server caching behavior.
         :type cache_control: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1051,7 +1051,7 @@ class MediaApi:
         media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         body: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
-        cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
+        cache_control: Annotated[Optional[StrictStr], Field(description="Pass-through header stored with the media and returned when the media is retrieved by the user. Does not affect internal server caching behavior.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1067,7 +1067,7 @@ class MediaApi:
     ) -> ApiResponse[None]:
         """Upload Media
 
-        Upload a file. You may add headers to the request in order to provide some control to your media file.  If a file is uploaded with the same name as a file that already exists under this account, the previous file will be overwritten.  A list of supported media types can be found at [Bandwidth Support](https://www.bandwidth.com/support/en/articles/12823220-what-mms-file-types-are-supported).
+        Upload a file.  Filename should always be unique. Reusing filenames may result in the wrong media being sent.  A list of supported media types can be found at [Bandwidth Support](https://www.bandwidth.com/support/en/articles/12823220-what-mms-file-types-are-supported).
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
@@ -1077,7 +1077,7 @@ class MediaApi:
         :type body: bytearray
         :param content_type: The media type of the entity-body.
         :type content_type: str
-        :param cache_control: General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
+        :param cache_control: Pass-through header stored with the media and returned when the media is retrieved by the user. Does not affect internal server caching behavior.
         :type cache_control: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1142,7 +1142,7 @@ class MediaApi:
         media_id: Annotated[StrictStr, Field(description="The ID of the media file.")],
         body: Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]],
         content_type: Annotated[Optional[StrictStr], Field(description="The media type of the entity-body.")] = None,
-        cache_control: Annotated[Optional[StrictStr], Field(description="General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.")] = None,
+        cache_control: Annotated[Optional[StrictStr], Field(description="Pass-through header stored with the media and returned when the media is retrieved by the user. Does not affect internal server caching behavior.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1158,7 +1158,7 @@ class MediaApi:
     ) -> RESTResponseType:
         """Upload Media
 
-        Upload a file. You may add headers to the request in order to provide some control to your media file.  If a file is uploaded with the same name as a file that already exists under this account, the previous file will be overwritten.  A list of supported media types can be found at [Bandwidth Support](https://www.bandwidth.com/support/en/articles/12823220-what-mms-file-types-are-supported).
+        Upload a file.  Filename should always be unique. Reusing filenames may result in the wrong media being sent.  A list of supported media types can be found at [Bandwidth Support](https://www.bandwidth.com/support/en/articles/12823220-what-mms-file-types-are-supported).
 
         :param account_id: This is your 7-digit Bandwidth Account ID, as shown in the Bandwidth App. The older ID format (`u-be8dvafwrs63rwpm7pfil4b`) is deprecated.  **When migrating to OAuth authentication, you must use the 7-digit Account ID.**  (required)
         :type account_id: str
@@ -1168,7 +1168,7 @@ class MediaApi:
         :type body: bytearray
         :param content_type: The media type of the entity-body.
         :type content_type: str
-        :param cache_control: General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
+        :param cache_control: Pass-through header stored with the media and returned when the media is retrieved by the user. Does not affect internal server caching behavior.
         :type cache_control: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
