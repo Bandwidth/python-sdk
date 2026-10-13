@@ -61,6 +61,7 @@ class TestTfvSubmissionWrapper(unittest.TestCase):
                             'https://www.example.com/path/to/resource'
                         ],
                         confirmation_response = 'Thank you for opting in!', ),
+                    business_entity_type = 'SOLE_PROPRIETOR',
                     additional_information = 'Any additional information', 
                     isv_reseller = 'Test ISV', )
             )
@@ -99,6 +100,7 @@ class TestTfvSubmissionWrapper(unittest.TestCase):
         assert instance.submission.opt_in_workflow.confirmation_response == 'Thank you for opting in!'
         assert instance.submission.additional_information == 'Any additional information'
         assert instance.submission.isv_reseller == 'Test ISV'
+        assert instance.submission.business_entity_type == 'SOLE_PROPRIETOR'
 
 if __name__ == '__main__':
     unittest.main()

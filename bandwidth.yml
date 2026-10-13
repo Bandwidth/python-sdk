@@ -88,12 +88,11 @@ paths:
     put:
       summary: Upload Media
       description: >-
-        Upload a file. You may add headers to the request in order to provide
-        some control to your media file.
+        Upload a file.
 
 
-        If a file is uploaded with the same name as a file that already exists
-        under this account, the previous file will be overwritten.
+        Filename should always be unique. Reusing filenames may result in the
+        wrong media being sent.
 
 
         A list of supported media types can be found at [Bandwidth
@@ -1404,7 +1403,19 @@ paths:
       tags:
         - Toll-Free Verification
       summary: Request Toll-Free Verification
-      description: Submit a request for verification of a toll-free phone number.
+      description: >-
+        Submit a request for verification of a toll-free phone number.
+
+
+        **Upcoming change (effective January 2027):** If any phone number in the
+        request already has a verification in progress, the request will be
+        rejected with a `409 Conflict`.
+
+        This check is all-or-nothing: if a single phone number conflicts, the
+        entire request is rejected and **none** of the phone numbers in the
+        request are submitted.
+
+        Today, these requests are accepted with a `202`.
       operationId: requestTollFreeVerification
       parameters:
         - $ref: '#/components/parameters/accountId4'
@@ -1421,6 +1432,8 @@ paths:
           $ref: '#/components/responses/tfvForbiddenResponse'
         '405':
           $ref: '#/components/responses/tfvNotAllowedResponse'
+        '409':
+          $ref: '#/components/responses/tfvConflictResponse'
         '429':
           $ref: '#/components/responses/tfvTooManyRequestsResponse'
         '500':
@@ -1477,6 +1490,14 @@ paths:
         Submissions are only eligible for resubmission for 7 days within being
         processed and if resubmission is allowed (resubmitAllowed field is
         true).
+
+        Returns a `404` if no verification request exists for the phone number,
+        and a `400` if the existing request is not eligible for resubmission.
+
+
+        **Upcoming change (effective January 2027):** If a verification for the
+        phone number is in progress, the update will be rejected with a `409
+        Conflict`.
       operationId: updateTollFreeVerificationRequest
       parameters:
         - $ref: '#/components/parameters/accountId4'
@@ -1492,8 +1513,12 @@ paths:
           $ref: '#/components/responses/tfvUnauthorizedResponse'
         '403':
           $ref: '#/components/responses/tfvForbiddenResponse'
+        '404':
+          $ref: '#/components/responses/tfvNotFoundResponse'
         '405':
           $ref: '#/components/responses/tfvNotAllowedResponse'
+        '409':
+          $ref: '#/components/responses/tfvConflictResponse'
         '429':
           $ref: '#/components/responses/tfvTooManyRequestsResponse'
         '500':
@@ -1504,7 +1529,13 @@ paths:
         tfVerificationStatus:
           $ref: '#/components/callbacks/tfVerificationStatus'
     delete:
-      description: Delete a toll-free verification submission for a toll-free number.
+      description: >-
+        Delete a toll-free verification submission for a toll-free number.
+
+
+        **Upcoming change (effective January 2027):** If a verification for the
+        phone number is in progress, it will be cancelled and the submission
+        will then be deleted asynchronously.
       operationId: deleteVerificationRequest
       parameters:
         - $ref: '#/components/parameters/accountId4'
@@ -6273,10 +6304,9 @@ components:
         Government-issued business identifying number.
 
 
-        **Note: As of October 19th, 2026 this field will be required when
-        `businessEntityType` is _not_ `SOLE_PROPRIETOR`. If this field is
-        provided, `businessRegistrationType` and
-        `businessRegistrationIssuingCountry` are also required.**
+        **This field is required when `businessEntityType` is _not_
+        `SOLE_PROPRIETOR`. If this field is provided, `businessRegistrationType`
+        and `businessRegistrationIssuingCountry` are also required.**
       nullable: true
       maxLength: 500
       example: 12-3456789
@@ -6286,8 +6316,8 @@ components:
         The type of business registration number.
 
 
-        **Note: As of October 19th, 2026 this field will be required when
-        `businessRegistrationNumber` is provided.**
+        **This field is required when `businessRegistrationNumber` is
+        provided.**
       enum:
         - EIN
         - CBN
@@ -6317,8 +6347,8 @@ components:
         encouraged.
 
 
-        **Note: As of October 19th, 2026 this field will be required when
-        `businessRegistrationNumber` is provided.**
+        **This field is required when `businessRegistrationNumber` is
+        provided.**
 
 
         | Registration Type     | Supported Countries                |
@@ -6368,9 +6398,9 @@ components:
         The type of registered business.
 
 
-        **Note: As of October 19th, 2026 submissions using a value other than
-        `SOLE_PROPRIETOR` must provide a value for `businessRegistrationNumber`,
-        `businessRegistrationType`, and `businessRegistrationIssuingCountry`. 
+        **Submissions using a value other than `SOLE_PROPRIETOR` must provide a
+        value for `businessRegistrationNumber`, `businessRegistrationType`, and
+        `businessRegistrationIssuingCountry`.
 
         Submissions using `SOLE_PROPRIETOR` must _omit_
         `businessRegistrationNumber`, `businessRegistrationType`, and
@@ -6490,6 +6520,7 @@ components:
         - useCaseSummary
         - productionMessageContent
         - optInWorkflow
+        - businessEntityType
       properties:
         businessAddress:
           $ref: '#/components/schemas/address'
@@ -8072,6 +8103,17 @@ components:
           example:
             description: Cannot find the requested resource.
             type: Not Found
+    tfvConflictResponse:
+      description: >-
+        Conflict. A toll-free verification for the phone number is already in
+        progress.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/tfvError'
+          example:
+            description: 'TFV request already in progress for phone number: +18005551234'
+            type: conflict
     tfvNotAllowedResponse:
       description: Method Not Allowed
       content:
@@ -8256,8 +8298,8 @@ components:
       style: simple
       explode: false
       description: >-
-        General-header field is used to specify directives that MUST be obeyed
-        by all caching mechanisms along the request/response chain.
+        Pass-through header stored with the media and returned when the media is
+        retrieved by the user. Does not affect internal server caching behavior.
       example: no-cache
       schema:
         type: string

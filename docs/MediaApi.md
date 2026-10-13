@@ -303,9 +303,9 @@ Name | Type | Description  | Notes
 
 Upload Media
 
-Upload a file. You may add headers to the request in order to provide some control to your media file.
+Upload a file.
 
-If a file is uploaded with the same name as a file that already exists under this account, the previous file will be overwritten.
+Filename should always be unique. Reusing filenames may result in the wrong media being sent.
 
 A list of supported media types can be found at [Bandwidth Support](https://www.bandwidth.com/support/en/articles/12823220-what-mms-file-types-are-supported).
 
@@ -350,7 +350,7 @@ with bandwidth.ApiClient(configuration) as api_client:
     media_id = 'bw.png' # str | The ID of the media file.
     body = None # bytearray | 
     content_type = 'audio/wav' # str | The media type of the entity-body. (optional)
-    cache_control = 'no-cache' # str | General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. (optional)
+    cache_control = 'no-cache' # str | Pass-through header stored with the media and returned when the media is retrieved by the user. Does not affect internal server caching behavior. (optional)
 
     try:
         # Upload Media
@@ -370,7 +370,7 @@ Name | Type | Description  | Notes
  **media_id** | **str**| The ID of the media file. | 
  **body** | **bytearray**|  | 
  **content_type** | **str**| The media type of the entity-body. | [optional] 
- **cache_control** | **str**| General-header field is used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain. | [optional] 
+ **cache_control** | **str**| Pass-through header stored with the media and returned when the media is retrieved by the user. Does not affect internal server caching behavior. | [optional] 
 
 ### Return type
 
