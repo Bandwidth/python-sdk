@@ -6304,7 +6304,7 @@ components:
         Government-issued business identifying number.
 
 
-        **Note: As of October 19th, 2026 this field will be required when
+        **As of October 19th, 2026 this field is required when
         `businessEntityType` is _not_ `SOLE_PROPRIETOR`. If this field is
         provided, `businessRegistrationType` and
         `businessRegistrationIssuingCountry` are also required.**
@@ -6317,7 +6317,7 @@ components:
         The type of business registration number.
 
 
-        **Note: As of October 19th, 2026 this field will be required when
+        **As of October 19th, 2026 this field is required when
         `businessRegistrationNumber` is provided.**
       enum:
         - EIN
@@ -6348,7 +6348,7 @@ components:
         encouraged.
 
 
-        **Note: As of October 19th, 2026 this field will be required when
+        **As of October 19th, 2026 this field is required when
         `businessRegistrationNumber` is provided.**
 
 
@@ -6399,9 +6399,9 @@ components:
         The type of registered business.
 
 
-        **Note: As of October 19th, 2026 submissions using a value other than
+        **As of October 19th, 2026 submissions using a value other than
         `SOLE_PROPRIETOR` must provide a value for `businessRegistrationNumber`,
-        `businessRegistrationType`, and `businessRegistrationIssuingCountry`. 
+        `businessRegistrationType`, and `businessRegistrationIssuingCountry`.
 
         Submissions using `SOLE_PROPRIETOR` must _omit_
         `businessRegistrationNumber`, `businessRegistrationType`, and
@@ -6521,6 +6521,7 @@ components:
         - useCaseSummary
         - productionMessageContent
         - optInWorkflow
+        - businessEntityType
       properties:
         businessAddress:
           $ref: '#/components/schemas/address'
