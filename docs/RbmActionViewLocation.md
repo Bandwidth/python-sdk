@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | [**RbmActionTypeEnum**](RbmActionTypeEnum.md) |  | 
 **text** | **str** | Displayed text for user to click | 
-**postback_data** | **bytearray** | Base64 payload the customer receives when the reply is clicked. | 
+**postback_data** | **str** | Payload the customer receives when the reply is clicked. | 
 **latitude** | **float** | The latitude of the location. Must be in range [-90.000000, 90.000000]. | 
 **longitude** | **float** | The longitude of the location. Must be in range [-180.000000, 180.000000]. | 
 **label** | **str** | The label of the location. | [optional] 

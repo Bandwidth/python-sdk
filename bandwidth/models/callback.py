@@ -54,6 +54,7 @@ class Callback(BaseModel):
         'message-sending': 'StatusCallback',
         'message-sent': 'StatusCallback',
         'requested-location-response': 'InboundCallback',
+        'session-started': 'StatusCallback',
         'suggestion-response': 'InboundCallback'
     }
 

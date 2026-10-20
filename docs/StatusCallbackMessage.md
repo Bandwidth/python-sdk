@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **media** | **List[str]** | Optional media, not applicable for sms | [optional] 
 **priority** | [**PriorityEnum**](PriorityEnum.md) |  | [optional] 
 **channel** | [**MultiChannelMessageChannelEnum**](MultiChannelMessageChannelEnum.md) |  | [optional] 
+**session** | [**RbmSession**](RbmSession.md) |  | [optional] 
 
 ## Example
 

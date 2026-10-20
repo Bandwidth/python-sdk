@@ -26,6 +26,7 @@ from bandwidth.models.multi_channel_message_channel_enum import MultiChannelMess
 from bandwidth.models.multi_channel_message_content import MultiChannelMessageContent
 from bandwidth.models.priority_enum import PriorityEnum
 from bandwidth.models.rbm_location_response import RbmLocationResponse
+from bandwidth.models.rbm_session import RbmSession
 from bandwidth.models.rbm_suggestion_response import RbmSuggestionResponse
 from typing import Optional, Set
 from typing_extensions import Self
@@ -47,11 +48,12 @@ class InboundCallbackMessage(BaseModel):
     media: Optional[List[StrictStr]] = Field(default=None, description="Optional media, not applicable for sms")
     priority: Optional[PriorityEnum] = None
     channel: Optional[MultiChannelMessageChannelEnum] = None
+    session: Optional[RbmSession] = None
     content: Optional[MultiChannelMessageContent] = None
     suggestion_response: Optional[RbmSuggestionResponse] = Field(default=None, alias="suggestionResponse")
     location_response: Optional[RbmLocationResponse] = Field(default=None, alias="locationResponse")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority", "channel", "content", "suggestionResponse", "locationResponse"]
+    __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority", "channel", "session", "content", "suggestionResponse", "locationResponse"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -94,6 +96,9 @@ class InboundCallbackMessage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of session
+        if self.session:
+            _dict['session'] = self.session.to_dict()
         # override the default output from pydantic by calling `to_dict()` of content
         if self.content:
             _dict['content'] = self.content.to_dict()
@@ -133,6 +138,7 @@ class InboundCallbackMessage(BaseModel):
             "media": obj.get("media"),
             "priority": obj.get("priority"),
             "channel": obj.get("channel"),
+            "session": RbmSession.from_dict(obj["session"]) if obj.get("session") is not None else None,
             "content": MultiChannelMessageContent.from_dict(obj["content"]) if obj.get("content") is not None else None,
             "suggestionResponse": RbmSuggestionResponse.from_dict(obj["suggestionResponse"]) if obj.get("suggestionResponse") is not None else None,
             "locationResponse": RbmLocationResponse.from_dict(obj["locationResponse"]) if obj.get("locationResponse") is not None else None
