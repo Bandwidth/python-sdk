@@ -23,7 +23,7 @@ class Transfer(NestableVerb):
         password: str=None, fallback_username: str=None,
         fallback_password: str=None, tag: str=None,
         diversion_treatment: str=None, diversion_reason: str=None,
-        privacy: bool=None
+        privacy: bool=None, attestation_level: str=None, identity: str=None
     ):
         """Initialize a <Transfer> verb
 
@@ -63,6 +63,8 @@ class Transfer(NestableVerb):
                 This parameter is considered only when diversionTreatment is set to stack. Defaults is unknown.
                 Defaults to None.
             privacy (bool, optional): A boolean value to indicate whether the calling number should be hidden. Use transfer_caller_display_name to customize the displayed name. Default is false.
+            attestation_level (str, optional): The STIR/SHAKEN attestation level Bandwidth signs the transferred call at. Can be A, B, or C. US outbound only. Applies only to accounts using the Hosted Signing Service, otherwise ignored. If omitted, the account-level attestation policy applies. Cannot be combined with identity. Defaults to None.
+            identity (str, optional): A SIP Identity header value (PASSporT) signed by the customer, passed unmodified on the transferred call. Bandwidth does not sign the call or verify the signature. Max length 2000 characters. Cannot be combined with attestation_level. Defaults to None.
         """
         self.transfer_to = transfer_to
         self.transfer_caller_id = transfer_caller_id
@@ -80,6 +82,8 @@ class Transfer(NestableVerb):
         self.diversion_treatment = diversion_treatment
         self.diversion_reason = diversion_reason
         self.privacy = privacy
+        self.attestation_level = attestation_level
+        self.identity = identity
         super().__init__(
             tag="Transfer",
             nested_verbs=self.transfer_to
@@ -102,7 +106,9 @@ class Transfer(NestableVerb):
             "fallbackPassword": self.fallback_password,
             "tag": self.tag,
             "diversionTreatment": self.diversion_treatment,
-            "diversionReason": self.diversion_reason
+            "diversionReason": self.diversion_reason,
+            "attestationLevel": self.attestation_level,
+            "identity": self.identity
         }
 
     def add_transfer_recipient(self, recipient: Union[PhoneNumber, SipUri]):
