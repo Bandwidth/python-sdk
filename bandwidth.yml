@@ -2620,14 +2620,13 @@ components:
       type: string
       description: Displayed text for user to click
       maxLength: 25
-      example: Hello world
+      example: Track my order
     rbmActionPostbackData:
       title: Post Back Data
       type: string
-      format: byte
-      description: Base64 payload the customer receives when the reply is clicked.
+      description: Payload the customer receives when the reply is clicked.
       maxLength: 2048
-      example: SGVsbG8gd29ybGQ=
+      example: track-order-43654
     rbmActionBase:
       type: object
       properties:
@@ -2916,8 +2915,8 @@ components:
       properties:
         text:
           type: string
-          description: The text associated with the suggestion response.
-          example: Yes, I would like to proceed
+          description: The text of the suggestion the user tapped.
+          example: Track my order
         postbackData:
           $ref: '#/components/schemas/rbmActionPostbackData'
         pairedMessageId:
@@ -2938,6 +2937,70 @@ components:
           format: double
           description: The longitude of the client's location.
           example: '-122.4194'
+    rbmSession:
+      type: object
+      description: >-
+        RCS interactive session information for the message.
+
+        An interactive session is a 24-hour window covering all Rich and Rich
+        Media messages exchanged between an
+
+        RCS agent and a specific end user mobile number. It is triggered when at
+        least 4 messages are exchanged within
+
+        24 hours, at least 2 of them mobile-originated and at least 1
+        mobile-terminated.
+
+        Only present on `message-delivered`, `message-received` and
+        `session-started` callbacks for RBM messages of
+
+        US agents with the Conversational billing category. Omitted for all
+        other messages.
+      properties:
+        canInitiate:
+          type: boolean
+          description: >-
+            Whether the message can start an interactive session.
+
+            `false` if the message is already part of an active session, or if
+            the agent is not eligible for
+
+            interactive session billing.
+          example: false
+        id:
+          type: string
+          nullable: true
+          description: >-
+            The unique identifier of the interactive session the message is part
+            of. This is not a message ID.
+
+            Omitted if the message is not part of a session.
+          example: 0f5a3b9c-2d4e-4f6a-8b1c-7e9d0a2b3c4d
+        type:
+          type: string
+          nullable: true
+          description: |-
+            The type of the interactive session.
+            Only present on `session-started` callbacks.
+          example: INTERACTIVE_SESSION
+        startTime:
+          type: string
+          nullable: true
+          format: date-time
+          description: >-
+            The time the 24-hour session window opened. Only present on
+            `session-started` callbacks.
+          example: '2026-08-06T09:59:55Z'
+        endTime:
+          type: string
+          nullable: true
+          format: date-time
+          description: >-
+            The time the 24-hour session window closes. Only present on
+            `session-started` callbacks.
+          example: '2026-08-07T09:59:55Z'
+      required:
+        - canInitiate
     callback:
       description: >-
         Callbacks are divided into two types based on direction of the related
@@ -2960,6 +3023,7 @@ components:
           message-delivered: '#/components/schemas/statusCallback'
           message-failed: '#/components/schemas/statusCallback'
           message-read: '#/components/schemas/statusCallback'
+          session-started: '#/components/schemas/statusCallback'
           message-received: '#/components/schemas/inboundCallback'
           requested-location-response: '#/components/schemas/inboundCallback'
           suggestion-response: '#/components/schemas/inboundCallback'
@@ -3060,12 +3124,17 @@ components:
 
         - `message-read` indicates that the RBM message was read by the
         recipient.
+
+        - `session-started` indicates that a previously exchanged RBM message is
+        now part of an RCS interactive session and is no longer billed
+        individually.
       enum:
         - message-sending
         - message-sent
         - message-delivered
         - message-failed
         - message-read
+        - session-started
       example: message-delivered
     inboundCallbackTypeEnum:
       type: string
@@ -3143,6 +3212,8 @@ components:
           $ref: '#/components/schemas/priorityEnum'
         channel:
           $ref: '#/components/schemas/multiChannelMessageChannelEnum'
+        session:
+          $ref: '#/components/schemas/rbmSession'
       required:
         - id
         - owner
@@ -8878,6 +8949,31 @@ components:
           media:
             - >-
               https://messaging.bandwidth.com/api/v2/users/9900902/media/14762070468292kw2fuqty55yp2b2/0/bw.png
+    rbmMessageReceivedSessionCallbackExample:
+      summary: >-
+        An example of a rbm message-received callback body for a message that is
+        part of an RCS interactive session.
+      value:
+        time: '2026-08-06T10:00:05.502180Z'
+        type: message-received
+        to: BandwidthRBM
+        description: Incoming message received
+        message:
+          id: 1786010405502l2ntaoajuqjhqnxu
+          owner: BandwidthRBM
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          time: '2026-08-06T10:00:05.302180Z'
+          segmentCount: 1
+          direction: in
+          to:
+            - BandwidthRBM
+          from: '+12345678902'
+          channel: RBM
+          content:
+            text: Yes, please book it for tomorrow.
+          session:
+            canInitiate: false
+            id: 0f5a3b9c-2d4e-4f6a-8b1c-7e9d0a2b3c4d
     messageSendingCallbackExample:
       summary: An example of a message-sending callback body.
       value:
@@ -8977,6 +9073,79 @@ components:
           owner: '+12345678902'
           direction: out
           segmentCount: 1
+    rbmMessageDeliveredSessionCallbackExample:
+      summary: >-
+        An example of a rbm message-delivered callback body for a message that
+        is part of an RCS interactive session.
+      value:
+        type: message-delivered
+        time: '2026-08-06T10:01:11.160744Z'
+        description: Message delivered to handset.
+        to: '+12345678902'
+        message:
+          id: 1786010470868ty55yp2b2kw2fuq
+          time: '2026-08-06T10:01:10.868292Z'
+          to:
+            - '+12345678902'
+          from: BandwidthRBM
+          text: ''
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          owner: BandwidthRBM
+          direction: out
+          segmentCount: 1
+          channel: RBM
+          session:
+            canInitiate: false
+            id: 0f5a3b9c-2d4e-4f6a-8b1c-7e9d0a2b3c4d
+    rbmMessageDeliveredCanInitiateSessionCallbackExample:
+      summary: >-
+        An example of a rbm message-delivered callback body for a message that
+        is not yet part of an RCS interactive session.
+      value:
+        type: message-delivered
+        time: '2026-08-06T09:59:56.160744Z'
+        description: Message delivered to handset.
+        to: '+12345678902'
+        message:
+          id: 1786010395000kw2fuqty55yp2b2
+          time: '2026-08-06T09:59:55.000000Z'
+          to:
+            - '+12345678902'
+          from: BandwidthRBM
+          text: ''
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          owner: BandwidthRBM
+          direction: out
+          segmentCount: 1
+          channel: RBM
+          session:
+            canInitiate: true
+    sessionStartedCallbackExample:
+      summary: An example of a session-started callback body.
+      value:
+        type: session-started
+        time: '2026-08-06T10:00:00.123000Z'
+        description: Message is now part of an RCS interactive session.
+        to: '+12345678902'
+        message:
+          id: 1786010395000kw2fuqty55yp2b2
+          owner: BandwidthRBM
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          time: '2026-08-06T10:00:00.120000Z'
+          segmentCount: 1
+          direction: out
+          to:
+            - '+12345678902'
+          from: BandwidthRBM
+          text: ''
+          tag: ''
+          channel: RBM
+          session:
+            canInitiate: false
+            id: 0f5a3b9c-2d4e-4f6a-8b1c-7e9d0a2b3c4d
+            type: INTERACTIVE_SESSION
+            startTime: '2026-08-06T09:59:55Z'
+            endTime: '2026-08-07T09:59:55Z'
     messageFailedCallbackExample:
       summary: An example of a message-failed callback body.
       value:
@@ -9980,6 +10149,9 @@ components:
                     $ref: '#/components/examples/smsMessageReceivedCallbackExample'
                   mmsMessageReceivedCallback:
                     $ref: '#/components/examples/mmsMessageReceivedCallbackExample'
+                  rbmMessageReceivedSessionCallback:
+                    $ref: >-
+                      #/components/examples/rbmMessageReceivedSessionCallbackExample
           responses:
             '200':
               description: OK
@@ -9995,8 +10167,9 @@ components:
               information regarding a message sent (MT)
 
               from your message-enabled Bandwidth telephone number.
-               <p>The payload type will be one of <code>message-sending</code>, <code>message-sent</code>, <code>message-delivered</code>, <code>message-failed</code> or <code>message-read</code>.
-               <p>Note that <code>message-read</code> callbacks are pertinent only for RBM messages sent from the <code>/messages/multiChannel</code> endpoint.
+               <p>The payload type will be one of <code>message-sending</code>, <code>message-sent</code>, <code>message-delivered</code>, <code>message-failed</code>, <code>message-read</code> or <code>session-started</code>.
+               <p>Note that <code>message-read</code> and <code>session-started</code> callbacks are pertinent only for RBM messages sent from the <code>/messages/multiChannel</code> endpoint.
+               <p>Note that <code>session-started</code> callbacks are pertinent only for RBM messages of agents with the Conversational billing category.
               </p><p>Please visit <a
               href='/docs/messaging/webhooks/'>Webhooks</a></p>
             content:
@@ -10015,8 +10188,16 @@ components:
                   groupMmsMessageDeliveredCallback:
                     $ref: >-
                       #/components/examples/groupMmsMessageDeliveredCallbackExample
+                  rbmMessageDeliveredSessionCallback:
+                    $ref: >-
+                      #/components/examples/rbmMessageDeliveredSessionCallbackExample
+                  rbmMessageDeliveredCanInitiateSessionCallback:
+                    $ref: >-
+                      #/components/examples/rbmMessageDeliveredCanInitiateSessionCallbackExample
                   messageFailedCallback:
                     $ref: '#/components/examples/messageFailedCallbackExample'
+                  sessionStartedCallback:
+                    $ref: '#/components/examples/sessionStartedCallbackExample'
           responses:
             '200':
               description: OK

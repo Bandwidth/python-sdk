@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **media** | **List[str]** | Optional media, not applicable for sms | [optional] 
 **priority** | [**PriorityEnum**](PriorityEnum.md) |  | [optional] 
 **channel** | [**MultiChannelMessageChannelEnum**](MultiChannelMessageChannelEnum.md) |  | [optional] 
+**session** | [**RbmSession**](RbmSession.md) |  | [optional] 
 **content** | [**MultiChannelMessageContent**](MultiChannelMessageContent.md) |  | [optional] 
 **suggestion_response** | [**RbmSuggestionResponse**](RbmSuggestionResponse.md) |  | [optional] 
 **location_response** | [**RbmLocationResponse**](RbmLocationResponse.md) |  | [optional] 
