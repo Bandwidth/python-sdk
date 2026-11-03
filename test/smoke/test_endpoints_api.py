@@ -34,10 +34,7 @@ class TestEndpointsApi(unittest.TestCase):
         api_client = ApiClient(configuration)
         cls.endpoints_api_instance = EndpointsApi(api_client)
 
-        unauthorized_configuration = Configuration(
-            username='bad_username',
-            password='bad_password'
-        )
+        unauthorized_configuration = Configuration()
         cls.unauthorized_api_instance = EndpointsApi(ApiClient(unauthorized_configuration))
 
         cls.account_id = BW_ACCOUNT_ID

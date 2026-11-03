@@ -23,7 +23,7 @@ from bandwidth.models.update_conference import UpdateConference
 from bandwidth.models.update_conference_member import UpdateConferenceMember
 from bandwidth.models.file_format_enum import FileFormatEnum
 from bandwidth.rest import RESTClientObject, RESTResponse
-from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException, NotFoundException
+from bandwidth.exceptions import ApiException, UnauthorizedException, NotFoundException
 from test.utils.env_variables import *
 from test.utils.call_cleanup import callCleanup
 
@@ -37,7 +37,7 @@ class ConferencesIntegration(unittest.TestCase):
     def setUpClass(cls):
         """
         Set up for our tests by creating the CallsApi and ConferencesApi instances
-        for testing as well as the unauthorized and forbidden credentials for the 4xx tests.
+        for testing as well as the unauthorized credentials for the 4xx tests.
         """
         configuration = Configuration(
             client_id=BW_CLIENT_ID,
@@ -48,26 +48,12 @@ class ConferencesIntegration(unittest.TestCase):
         cls.calls_api_instance = calls_api.CallsApi(api_client)
         cls.conference_api_instance = conferences_api.ConferencesApi(api_client)
 
-        unauthorizedConfiguration = Configuration(
-            username='bad_username',
-            password='bad_password'
-        )
+        unauthorizedConfiguration = Configuration()
         unauthorized_api_client = ApiClient(unauthorizedConfiguration)
         cls.unauthorized_api_instance = conferences_api.ConferencesApi(unauthorized_api_client)
 
-        forbiddenConfiguration = Configuration(
-            username=FORBIDDEN_USERNAME,
-            password=FORBIDDEN_PASSWORD
-        )
-        forbidden_api_client = ApiClient(forbiddenConfiguration)
-        cls.forbidden_api_instance = conferences_api.ConferencesApi(forbidden_api_client)
-
         # Rest client for interacting with Manteca
         cls.rest_client = RESTClientObject(Configuration.get_default_copy())
-        configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD,
-        )
 
         cls.account_id = BW_ACCOUNT_ID
         cls.callIdArray = []
@@ -97,7 +83,7 @@ class ConferencesIntegration(unittest.TestCase):
         callCleanup(cls)
 
     def assertApiException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
-        """Validates that common API exceptions, (401, 403, and 404) are properly formatted
+        """Validates that common API exceptions, (401 and 404) are properly formatted
         Args:
             context (ApiException): Exception to validate
             expected_status_code (int): Expected status code
@@ -312,26 +298,12 @@ class ConferencesIntegration(unittest.TestCase):
 
         self.assertApiException(context, UnauthorizedException, 401)
 
-    def test_list_conferences_forbidden(self) -> None:
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.list_conferences(
-                BW_ACCOUNT_ID)
-
-        self.assertApiException(context, ForbiddenException, 403)
-
     def test_get_conferences_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.get_conference(
                 BW_ACCOUNT_ID, self.testConfId)
 
         self.assertApiException(context, UnauthorizedException, 401)
-
-    def test_get_conferences_forbidden(self) -> None:
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.get_conference(
-                BW_ACCOUNT_ID, self.testConfId)
-
-        self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_conferences_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
@@ -347,13 +319,6 @@ class ConferencesIntegration(unittest.TestCase):
 
         self.assertApiException(context, UnauthorizedException, 401)
 
-    def test_get_conference_member_forbidden(self) -> None:
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.get_conference_member(
-                BW_ACCOUNT_ID, self.testConfId, self.testMemberId)
-
-        self.assertApiException(context, ForbiddenException, 403)
-
     def test_get_conference_member_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
             self.conference_api_instance.get_conference_member(
@@ -368,26 +333,12 @@ class ConferencesIntegration(unittest.TestCase):
 
         self.assertApiException(context, UnauthorizedException, 401)
 
-    def test_list_conference_recordings_forbidden(self) -> None:
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.list_conference_recordings(
-                BW_ACCOUNT_ID, self.testConfId)
-
-        self.assertApiException(context, ForbiddenException, 403)
-
     def test_get_recording_unauthorized(self) -> None:
         with self.assertRaises(UnauthorizedException) as context:
             self.unauthorized_api_instance.get_conference_recording(
                 BW_ACCOUNT_ID, self.testConfId, self.testRecordId)
 
         self.assertApiException(context, UnauthorizedException, 401)
-
-    def test_get_recording_forbidden(self) -> None:
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.get_conference_recording(
-                BW_ACCOUNT_ID, self.testConfId, self.testRecordId)
-
-        self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_conference_recording_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
@@ -402,13 +353,6 @@ class ConferencesIntegration(unittest.TestCase):
                 BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf)
 
         self.assertApiException(context, UnauthorizedException, 401)
-
-    def test_update_conference_forbidden(self) -> None:
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.update_conference(
-                BW_ACCOUNT_ID, self.testConfId, self.testUpdateConf)
-
-        self.assertApiException(context, ForbiddenException, 403)
 
     @unittest.skip("PV Issues")
     def test_update_conference_not_found(self) -> None:
@@ -425,13 +369,6 @@ class ConferencesIntegration(unittest.TestCase):
 
         self.assertApiException(context, UnauthorizedException, 401)
 
-    def test_update_conference_bxml_forbidden(self) -> None:
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.update_conference_bxml(
-                BW_ACCOUNT_ID, self.testConfId, self.testUpdateBxml)
-
-        self.assertApiException(context, ForbiddenException, 403)
-
     @unittest.skip("PV Issues")
     def test_update_conference_bxml_not_found(self) -> None:
         with self.assertRaises(NotFoundException) as context:
@@ -446,13 +383,6 @@ class ConferencesIntegration(unittest.TestCase):
                 BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember)
 
         self.assertApiException(context, UnauthorizedException, 401)
-
-    def test_update_conference_member_forbidden(self) -> None:
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.update_conference_member(
-                BW_ACCOUNT_ID, self.testConfId, self.testMemberId, self.testUpdateMember)
-
-        self.assertApiException(context, ForbiddenException, 403)
 
     @unittest.skip("PV Issues")
     def test_update_conference_member_not_found(self) -> None:

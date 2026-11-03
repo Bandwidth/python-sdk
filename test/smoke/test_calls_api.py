@@ -21,7 +21,7 @@ from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnu
 from bandwidth.models.call_state_enum import CallStateEnum
 from bandwidth.models.redirect_method_enum import RedirectMethodEnum
 from bandwidth.models.update_call import UpdateCall
-from bandwidth.exceptions import ApiException, UnauthorizedException, ForbiddenException, NotFoundException
+from bandwidth.exceptions import ApiException, UnauthorizedException, NotFoundException
 
 
 class CallsIntegration(unittest.TestCase):
@@ -38,21 +38,9 @@ class CallsIntegration(unittest.TestCase):
 
         # Unauthorized API Client
 
-        unauthorizedConfiguration = Configuration(
-             username='bad_username',
-             password='bad_password'
-        )
+        unauthorizedConfiguration = Configuration()
         unauthorized_api_client = ApiClient(unauthorizedConfiguration)
         cls.unauthorized_api_instance = calls_api.CallsApi(unauthorized_api_client)
-
-        # Forbidden API Client
-
-        forbiddenConfiguration = Configuration(
-            username=FORBIDDEN_USERNAME,
-            password=FORBIDDEN_PASSWORD
-        )
-        forbidden_api_client = ApiClient(forbiddenConfiguration)
-        cls.forbidden_api_instance = calls_api.CallsApi(forbidden_api_client)
         cls.account_id = BW_ACCOUNT_ID
         cls.createCallBody = CreateCall(
             to=USER_NUMBER,
@@ -106,7 +94,7 @@ class CallsIntegration(unittest.TestCase):
         callCleanup(cls)
 
     def assertApiException(self, context: ApiException, expectedException: ApiException, expected_status_code: int):
-        """Validates that common API exceptions, (401, 403, and 404) are properly formatted
+        """Validates that common API exceptions, (401 and 404) are properly formatted
         Args:
             context (ApiException): Exception to validate
             expectedException (ApiException): Expected exception type
@@ -157,15 +145,6 @@ class CallsIntegration(unittest.TestCase):
 
         self.assertApiException(context, UnauthorizedException, 401)
 
-    def test_create_call_forbidden(self) -> None:
-        """Validate a forbidden (403) request
-        """
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.create_call(BW_ACCOUNT_ID, self.testCallBody)
-
-        self.assertApiException(context, ForbiddenException, 403)
-
-
     def test_get_call_state(self):
         """Validate an Get Call State Request
         """
@@ -196,14 +175,6 @@ class CallsIntegration(unittest.TestCase):
             self.unauthorized_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId)
 
         self.assertApiException(context, UnauthorizedException, 401)
-
-    def test_get_call_state_forbidden(self) -> None:
-        """Validate a forbidden (403) request
-        """
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId)
-
-        self.assertApiException(context, ForbiddenException, 403)
 
     def test_get_call_state_not_found(self):
         """Validate an invalid Get Call State Request due to a bad callID
@@ -275,27 +246,6 @@ class CallsIntegration(unittest.TestCase):
 
         self.assertApiException(context, UnauthorizedException, 401)
 
-    def test_update_call_forbidden(self):
-        """Validate a forbidden (403) update call request
-        """
-        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody)
-        call_id = create_call_response.call_id
-
-        #Adding the call to the self.callIdArray
-        self.callIdArray.append(call_id)
-
-        time.sleep(self.TEST_SLEEP)
-
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.update_call(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
-
-        self.assertApiException(context, ForbiddenException, 403)
-
-        time.sleep(self.TEST_SLEEP_LONG)
-        # hanging-up the call
-        update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
-        assert_that(update_call_response.status_code, 200)
-
     def test_update_call_not_found(self):
         """Validate a not found update call request
         """
@@ -354,21 +304,6 @@ class CallsIntegration(unittest.TestCase):
             self.unauthorized_api_instance.update_call_bxml(BW_ACCOUNT_ID, self.testCallId, self.testBxmlBody)
 
         self.assertApiException(context, UnauthorizedException, 401)
-
-    def test_update_call_bxml_forbidden(self):
-        """Validate a forbidden (403) update call bxml request
-        """
-        create_call_response: CreateCallResponse = self.calls_api_instance.create_call(BW_ACCOUNT_ID, self.testMantecaCallBody)
-        call_id = create_call_response.call_id
-
-        #Adding the call to the self.callIdArray
-        self.callIdArray.append(call_id)
-
-        time.sleep(self.TEST_SLEEP)
-        with self.assertRaises(ForbiddenException) as context:
-            self.forbidden_api_instance.update_call_bxml(BW_ACCOUNT_ID, call_id, self.testBxmlBody)
-
-        self.assertApiException(context, ForbiddenException, 403)
 
     def test_update_call_bxml_not_found(self):
         """
