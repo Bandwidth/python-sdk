@@ -148,8 +148,6 @@ class Configuration:
     :param api_key_prefix: Dict to store API prefix (e.g. Bearer).
       The dict key is the name of the security scheme in the OAS specification.
       The dict value is an API key prefix when generating the auth data.
-    :param username: Username for HTTP basic authentication.
-    :param password: Password for HTTP basic authentication.
     :param access_token: Access token.
     :param access_token_url: URL to get access token for OAuth2 authentication.
     :param client_id: Client ID for OAuth2 authentication.
@@ -182,8 +180,6 @@ class Configuration:
         host: Optional[str]=None,
         api_key: Optional[Dict[str, str]]=None,
         api_key_prefix: Optional[Dict[str, str]]=None,
-        username: Optional[str]=None,
-        password: Optional[str]=None,
         access_token: Optional[str]=None,
         access_token_url: Optional[str]=None,
         client_id: Optional[str]=None,
@@ -233,12 +229,6 @@ class Configuration:
         """
         self.refresh_api_key_hook = None
         """function hook to refresh API key if expired
-        """
-        self.username = username
-        """Username for HTTP basic authentication
-        """
-        self.password = password
-        """Password for HTTP basic authentication
         """
         self.access_token = access_token
         """Access token
@@ -498,21 +488,6 @@ class Configuration:
                 return key
 
         return None
-
-    def get_basic_auth_token(self) -> Optional[str]:
-        """Gets HTTP basic authentication header (string).
-
-        :return: The token for basic HTTP authentication.
-        """
-        username = ""
-        if self.username is not None:
-            username = self.username
-        password = ""
-        if self.password is not None:
-            password = self.password
-        return urllib3.util.make_headers(
-            basic_auth=username + ':' + password
-        ).get('authorization')
 
     def get_access_token(self) -> str:
         """Gets HTTP bearer authentication header (string).

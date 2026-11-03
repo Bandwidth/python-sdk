@@ -166,8 +166,10 @@ class Configuration:
     :param api_key_prefix: Dict to store API prefix (e.g. Bearer).
       The dict key is the name of the security scheme in the OAS specification.
       The dict value is an API key prefix when generating the auth data.
+{{#hasHttpBasicMethods}}
     :param username: Username for HTTP basic authentication.
     :param password: Password for HTTP basic authentication.
+{{/hasHttpBasicMethods}}
     :param access_token: Access token.
     :param access_token_url: URL to get access token for OAuth2 authentication.
     :param client_id: Client ID for OAuth2 authentication.
@@ -286,8 +288,10 @@ conf = {{{packageName}}}.Configuration(
         host: Optional[str]=None,
         api_key: Optional[Dict[str, str]]=None,
         api_key_prefix: Optional[Dict[str, str]]=None,
+{{#hasHttpBasicMethods}}
         username: Optional[str]=None,
         password: Optional[str]=None,
+{{/hasHttpBasicMethods}}
         access_token: Optional[str]=None,
         access_token_url: Optional[str]=None,
         client_id: Optional[str]=None,
@@ -341,12 +345,14 @@ conf = {{{packageName}}}.Configuration(
         self.refresh_api_key_hook = None
         """function hook to refresh API key if expired
         """
+{{#hasHttpBasicMethods}}
         self.username = username
         """Username for HTTP basic authentication
         """
         self.password = password
         """Password for HTTP basic authentication
         """
+{{/hasHttpBasicMethods}}
         self.access_token = access_token
         """Access token
         """
@@ -627,6 +633,7 @@ conf = {{{packageName}}}.Configuration(
 
         return None
 
+{{#hasHttpBasicMethods}}
     def get_basic_auth_token(self) -> Optional[str]:
         """Gets HTTP basic authentication header (string).
 
@@ -642,6 +649,7 @@ conf = {{{packageName}}}.Configuration(
             basic_auth=username + ':' + password
         ).get('authorization')
 
+{{/hasHttpBasicMethods}}
     def get_access_token(self) -> str:
         """Gets HTTP bearer authentication header (string).
 
