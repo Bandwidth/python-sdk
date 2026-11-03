@@ -166,6 +166,7 @@ bandwidth/models/rbm_message_content_rich_card.py
 bandwidth/models/rbm_message_content_text.py
 bandwidth/models/rbm_message_media.py
 bandwidth/models/rbm_open_url_enum.py
+bandwidth/models/rbm_session.py
 bandwidth/models/rbm_standalone_card.py
 bandwidth/models/rbm_suggestion_response.py
 bandwidth/models/rbm_web_view_enum.py
@@ -377,6 +378,7 @@ docs/RbmMessageContentRichCard.md
 docs/RbmMessageContentText.md
 docs/RbmMessageMedia.md
 docs/RbmOpenUrlEnum.md
+docs/RbmSession.md
 docs/RbmStandaloneCard.md
 docs/RbmSuggestionResponse.md
 docs/RbmWebViewEnum.md

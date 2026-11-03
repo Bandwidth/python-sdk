@@ -160,6 +160,7 @@ from bandwidth.models.rbm_message_content_rich_card import RbmMessageContentRich
 from bandwidth.models.rbm_message_content_text import RbmMessageContentText
 from bandwidth.models.rbm_message_media import RbmMessageMedia
 from bandwidth.models.rbm_open_url_enum import RbmOpenUrlEnum
+from bandwidth.models.rbm_session import RbmSession
 from bandwidth.models.rbm_standalone_card import RbmStandaloneCard
 from bandwidth.models.rbm_suggestion_response import RbmSuggestionResponse
 from bandwidth.models.rbm_web_view_enum import RbmWebViewEnum

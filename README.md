@@ -308,6 +308,7 @@ Class | Method | HTTP request | Description
  - [RbmMessageContentText](docs/RbmMessageContentText.md)
  - [RbmMessageMedia](docs/RbmMessageMedia.md)
  - [RbmOpenUrlEnum](docs/RbmOpenUrlEnum.md)
+ - [RbmSession](docs/RbmSession.md)
  - [RbmStandaloneCard](docs/RbmStandaloneCard.md)
  - [RbmSuggestionResponse](docs/RbmSuggestionResponse.md)
  - [RbmWebViewEnum](docs/RbmWebViewEnum.md)

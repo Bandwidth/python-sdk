@@ -41,7 +41,7 @@ class TestRbmMessageContentText(unittest.TestCase):
                         RbmActionBase(
                             type = 'REPLY',
                             text = 'Hello world',
-                            postback_data = '[B@32298473'
+                            postback_data = 'postbackData'
                         )
                     )
                 ]

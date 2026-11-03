@@ -42,18 +42,18 @@ class TestMultiChannelAction(unittest.TestCase):
         model_rbm_action_base = MultiChannelAction(RbmActionBase(
             type='REPLY',
             text='Hello world',
-            postback_data='[B@32298473'
+            postback_data='postbackData'
         ))
         model_rbm_action_dial = MultiChannelAction(RbmActionDial(
             type='DIAL_PHONE',
             text='Hello world',
-            postback_data='[B@32298473',
+            postback_data='postbackData',
             phone_number='1234567890'
         ))
         model_rbm_action_view_location = MultiChannelAction(RbmActionViewLocation(
             type='SHOW_LOCATION',
             text='Hello world',
-            postback_data='[B@32298473',
+            postback_data='postbackData',
             latitude='37.7749',
             longitude='-122.4194',
             label='San Francisco'
@@ -70,7 +70,7 @@ class TestMultiChannelAction(unittest.TestCase):
         model_rbm_action_open_url = MultiChannelAction(RbmActionOpenUrl(
             type='OPEN_URL',
             text='Hello world',
-            postback_data='[B@32298473',
+            postback_data='postbackData',
             url='https://www.example.com'
         ))
 

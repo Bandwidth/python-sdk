@@ -255,15 +255,13 @@ class TestMultiChannelApi(unittest.TestCase):
         assert_that(rbm_content.suggestions, instance_of(list))
         assert_that(len(rbm_content.suggestions), equal_to(1))
         assert_that(rbm_content.suggestions[0], instance_of(MultiChannelAction))
-
-        # skip below for now because python doesn't respect discriminator field properly
-        # action = rbm_content.suggestions[0]
-        # assert_that(action.actual_instance, instance_of(RbmActionDial))
-        # dial_action = action.actual_instance
-        # assert_that(dial_action.type, equal_to(RbmActionTypeEnum.DIAL_PHONE))
-        # assert_that(dial_action.text, equal_to("Call Us"))
-        # assert_that(dial_action.postback_data, equal_to('U0dWc2JHOGdkMjl5YkdRPQ=='))
-        # assert_that(dial_action.phone_number, equal_to(BW_NUMBER))
+        action = rbm_content.suggestions[0]
+        assert_that(action.actual_instance, instance_of(RbmActionDial))
+        dial_action = action.actual_instance
+        assert_that(dial_action.type, equal_to(RbmActionTypeEnum.DIAL_PHONE))
+        assert_that(dial_action.text, equal_to("Call Us"))
+        assert_that(dial_action.postback_data, equal_to('U0dWc2JHOGdkMjl5YkdRPQ=='))
+        assert_that(dial_action.phone_number, equal_to(BW_NUMBER))
 
     def test_create_multi_channel_rbm_media_message(self) -> None:
         """Test case for create_multi_channel_message
@@ -342,15 +340,13 @@ class TestMultiChannelApi(unittest.TestCase):
         assert_that(rbm_content.suggestions, instance_of(list))
         assert_that(len(rbm_content.suggestions), equal_to(1))
         assert_that(rbm_content.suggestions[0], instance_of(MultiChannelAction))
-
-        # skip below for now because python doesn't respect discriminator field properly
-        # action = rbm_content.suggestions[0]
-        # assert_that(action.actual_instance, instance_of(RbmActionDial))
-        # dial_action = action.actual_instance
-        # assert_that(dial_action.type, equal_to(RbmActionTypeEnum.DIAL_PHONE))
-        # assert_that(dial_action.text, equal_to("Call Us"))
-        # assert_that(dial_action.postback_data, equal_to('U0dWc2JHOGdkMjl5YkdRPQ=='))
-        # assert_that(dial_action.phone_number, equal_to(BW_NUMBER))
+        action = rbm_content.suggestions[0]
+        assert_that(action.actual_instance, instance_of(RbmActionDial))
+        dial_action = action.actual_instance
+        assert_that(dial_action.type, equal_to(RbmActionTypeEnum.DIAL_PHONE))
+        assert_that(dial_action.text, equal_to("Call Us"))
+        assert_that(dial_action.postback_data, equal_to('U0dWc2JHOGdkMjl5YkdRPQ=='))
+        assert_that(dial_action.phone_number, equal_to(BW_NUMBER))
 
     def test_create_multi_channel_rbm_rich_standalone_message(self) -> None:
         """Test case for create_multi_channel_message

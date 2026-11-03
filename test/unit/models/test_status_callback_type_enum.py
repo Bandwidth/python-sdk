@@ -33,6 +33,7 @@ class TestStatusCallbackTypeEnum(unittest.TestCase):
         assert StatusCallbackTypeEnum('message-delivered') == 'message-delivered'
         assert StatusCallbackTypeEnum('message-failed') == 'message-failed'
         assert StatusCallbackTypeEnum('message-read') == 'message-read'
+        assert StatusCallbackTypeEnum('session-started') == 'session-started'
 
 if __name__ == '__main__':
     unittest.main()
