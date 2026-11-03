@@ -20,7 +20,6 @@ Creates a new Endpoint for the specified account.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -40,12 +39,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -85,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -117,7 +110,6 @@ Deletes the specified endpoint. If the endpoint is actively streaming media, the
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -135,12 +127,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -178,7 +164,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -210,7 +196,6 @@ Returns information about the specified endpoint.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -229,12 +214,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -274,7 +253,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -306,7 +285,6 @@ Returns a list of endpoints associated with the specified account.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -327,12 +305,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -378,7 +350,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -410,7 +382,6 @@ Updates the BXML for the specified endpoint.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -428,12 +399,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -473,7 +438,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

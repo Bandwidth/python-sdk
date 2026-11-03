@@ -315,7 +315,6 @@ class PhoneNumberLookupApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -608,7 +607,6 @@ class PhoneNumberLookupApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -888,7 +886,6 @@ class PhoneNumberLookupApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 

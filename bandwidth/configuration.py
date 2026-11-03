@@ -116,7 +116,6 @@ HTTPSignatureAuthSetting = TypedDict(
 AuthSettings = TypedDict(
     "AuthSettings",
     {
-        "Basic": BasicAuthSetting,
         "OAuth2": OAuth2AuthSetting,
     },
     total=False,
@@ -174,22 +173,6 @@ class Configuration:
     :param key_file: the path to a client key file, for mTLS. 
 
     :Example:
-
-    HTTP Basic Authentication Example.
-    Given the following security scheme in the OpenAPI specification:
-      components:
-        securitySchemes:
-          http_basic_auth:
-            type: http
-            scheme: basic
-
-    Configure API client with HTTP basic authentication:
-
-conf = bandwidth.Configuration(
-    username='the-user',
-    password='the-password',
-)
-
     """
 
     _default: ClassVar[Optional[Self]] = None
@@ -563,13 +546,6 @@ conf = bandwidth.Configuration(
         :return: The Auth Settings information dict.
         """
         auth: AuthSettings = {}
-        if self.username is not None and self.password is not None:
-            auth['Basic'] = {
-                'type': 'basic',
-                'in': 'header',
-                'key': 'Authorization',
-                'value': self.get_basic_auth_token()
-            }
         if self.access_token is not None:
             auth['OAuth2'] = {
                 'type': 'oauth2',

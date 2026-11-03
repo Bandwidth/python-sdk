@@ -326,7 +326,6 @@ class MFAApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -631,7 +630,6 @@ class MFAApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -939,7 +937,6 @@ class MFAApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 

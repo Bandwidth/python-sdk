@@ -343,7 +343,6 @@ class ConferencesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -647,7 +646,6 @@ class ConferencesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -966,7 +964,6 @@ class ConferencesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -1285,7 +1282,6 @@ class ConferencesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -1589,7 +1585,6 @@ class ConferencesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -1963,7 +1958,6 @@ class ConferencesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -2295,7 +2289,6 @@ class ConferencesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -2627,7 +2620,6 @@ class ConferencesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -2974,7 +2966,6 @@ class ConferencesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 

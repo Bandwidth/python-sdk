@@ -26,7 +26,6 @@ The returned subscription object will contain an ID that can be used to modify o
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -46,12 +45,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -91,7 +84,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -125,7 +118,6 @@ Delete a toll-free verification submission for a toll-free number.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -143,12 +135,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -186,7 +172,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -218,7 +204,6 @@ Delete a webhook subscription by ID.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -236,12 +221,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -279,7 +258,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -312,7 +291,6 @@ Submission information will be appended to the response if it is available.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -331,12 +309,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -376,7 +348,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -408,7 +380,6 @@ Lists valid toll-free use cases.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -426,12 +397,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -465,7 +430,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -498,7 +463,6 @@ If `basicAuthentication` is defined, the `password` property of that object will
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -517,12 +481,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -560,7 +518,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -595,7 +553,6 @@ Today, these requests are accepted with a `202`.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -614,12 +571,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -657,7 +608,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -693,7 +644,6 @@ Returns a `404` if no verification request exists for the phone number, and a `4
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -712,12 +662,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -757,7 +701,7 @@ void (empty response body)
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -790,7 +734,6 @@ Update an existing webhook subscription (`callbackUrl` and `basicAuthentication`
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -810,12 +753,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -857,7 +794,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

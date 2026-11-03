@@ -338,7 +338,6 @@ class TranscriptionsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -657,7 +656,6 @@ class TranscriptionsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -961,7 +959,6 @@ class TranscriptionsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
