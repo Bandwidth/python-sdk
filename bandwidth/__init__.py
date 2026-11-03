@@ -186,6 +186,7 @@ __all__ = [
     "RbmMessageContentText",
     "RbmMessageMedia",
     "RbmOpenUrlEnum",
+    "RbmSession",
     "RbmStandaloneCard",
     "RbmSuggestionResponse",
     "RbmWebViewEnum",
@@ -415,6 +416,7 @@ from bandwidth.models.rbm_message_content_rich_card import RbmMessageContentRich
 from bandwidth.models.rbm_message_content_text import RbmMessageContentText as RbmMessageContentText
 from bandwidth.models.rbm_message_media import RbmMessageMedia as RbmMessageMedia
 from bandwidth.models.rbm_open_url_enum import RbmOpenUrlEnum as RbmOpenUrlEnum
+from bandwidth.models.rbm_session import RbmSession as RbmSession
 from bandwidth.models.rbm_standalone_card import RbmStandaloneCard as RbmStandaloneCard
 from bandwidth.models.rbm_suggestion_response import RbmSuggestionResponse as RbmSuggestionResponse
 from bandwidth.models.rbm_web_view_enum import RbmWebViewEnum as RbmWebViewEnum

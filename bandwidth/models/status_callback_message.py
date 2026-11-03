@@ -24,6 +24,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from bandwidth.models.message_direction_enum import MessageDirectionEnum
 from bandwidth.models.multi_channel_message_channel_enum import MultiChannelMessageChannelEnum
 from bandwidth.models.priority_enum import PriorityEnum
+from bandwidth.models.rbm_session import RbmSession
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -44,8 +45,9 @@ class StatusCallbackMessage(BaseModel):
     media: Optional[List[StrictStr]] = Field(default=None, description="Optional media, not applicable for sms")
     priority: Optional[PriorityEnum] = None
     channel: Optional[MultiChannelMessageChannelEnum] = None
+    session: Optional[RbmSession] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority", "channel"]
+    __properties: ClassVar[List[str]] = ["id", "owner", "applicationId", "time", "segmentCount", "direction", "to", "from", "text", "tag", "media", "priority", "channel", "session"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,6 +90,9 @@ class StatusCallbackMessage(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of session
+        if self.session:
+            _dict['session'] = self.session.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -117,7 +122,8 @@ class StatusCallbackMessage(BaseModel):
             "tag": obj.get("tag"),
             "media": obj.get("media"),
             "priority": obj.get("priority"),
-            "channel": obj.get("channel")
+            "channel": obj.get("channel"),
+            "session": RbmSession.from_dict(obj["session"]) if obj.get("session") is not None else None
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

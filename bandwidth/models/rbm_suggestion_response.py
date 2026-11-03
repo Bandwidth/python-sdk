@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,8 +28,8 @@ class RbmSuggestionResponse(BaseModel):
     """
     RbmSuggestionResponse
     """ # noqa: E501
-    text: Optional[StrictStr] = Field(default=None, description="The text associated with the suggestion response.")
-    postback_data: Optional[Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]]] = Field(default=None, description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
+    text: Optional[StrictStr] = Field(default=None, description="The text of the suggestion the user tapped.")
+    postback_data: Optional[Annotated[str, Field(strict=True, max_length=2048)]] = Field(default=None, description="Payload the customer receives when the reply is clicked.", alias="postbackData")
     paired_message_id: Optional[StrictStr] = Field(default=None, description="Corresponding parent message ID (MT).", alias="pairedMessageId")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["text", "postbackData", "pairedMessageId"]

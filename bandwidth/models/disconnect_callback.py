@@ -47,9 +47,11 @@ class DisconnectCallback(BaseModel):
     error_id: Optional[StrictStr] = Field(default=None, description="Bandwidth's internal id that references the error event.", alias="errorId")
     tag: Optional[StrictStr] = Field(default=None, description="(optional) The tag specified on call creation. If no tag was specified or it was previously cleared, this field will not be present.")
     sip_call_id: Optional[StrictStr] = Field(default=None, description="(optional) The SIP Call-ID of the call's current SIP dialog with Bandwidth's SBC. Used to correlate dialogs and trace calls. Present on any call, inbound or outbound, once that dialog has been established; may be absent very early in a call before the dialog exists.", alias="sipCallId")
-    sip_response_code: Optional[StrictInt] = Field(default=None, description="(optional) The SIP status code returned by Bandwidth's SBC when it rejected an outbound call's INVITE (e.g. 486 for busy, 603 for decline). Present only when an outbound call was rejected by the SBC.", alias="sipResponseCode")
+    sip_response_code: Optional[StrictInt] = Field(default=None, description="(optional) The SIP status code of the final response that rejected an outbound call's (or transferred leg's) INVITE (e.g. 486 for busy, 603 for decline). Present only when the call was rejected with a SIP response.", alias="sipResponseCode")
+    sip_status_line: Optional[StrictStr] = Field(default=None, description="(optional) The full SIP status line, exactly as received, of the final response that rejected an outbound call's INVITE. The reason phrase can help distinguish outcomes that share a status code, such as `603 Network Blocked` and `603 Decline`. Present only when an outbound call was rejected with a SIP response.", alias="sipStatusLine")
+    sip_headers: Optional[Dict[str, StrictStr]] = Field(default=None, description="(optional) Map of SIP headers, with lowercase keys (SIP headers are case-insensitive). On the Initiate callback, contains the customer-supplied X-* headers from the original INVITE; present only for inbound SIP URI calls with custom headers. On the Disconnect and Transfer Disconnect callbacks, contains a single `reason` key holding the raw, unmodified `Reason` header value from the final SIP response that rejected an outbound call (or transferred leg); present only when that response included a `Reason` header (for example, `v=analytics1` call-analytics block information from a terminating carrier). If the response carries more than one `Reason` header, all values are returned in the order received, separated by `, `. Note - on the Initiate callback, keys preserve the original SIP header name in lowercase rather than Bandwidth's usual camelCase JSON convention, since these are passthrough values from the caller's SIP INVITE, not Bandwidth-defined fields. If the same header name is sent more than once in the INVITE, only the last value is kept. The example shown is for the Initiate callback; on the Disconnect and Transfer Disconnect callbacks the only key is `reason`.", alias="sipHeaders")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["eventType", "eventTime", "accountId", "applicationId", "from", "to", "callId", "direction", "callUrl", "enqueuedTime", "startTime", "answerTime", "endTime", "cause", "errorMessage", "errorId", "tag", "sipCallId", "sipResponseCode"]
+    __properties: ClassVar[List[str]] = ["eventType", "eventTime", "accountId", "applicationId", "from", "to", "callId", "direction", "callUrl", "enqueuedTime", "startTime", "answerTime", "endTime", "cause", "errorMessage", "errorId", "tag", "sipCallId", "sipResponseCode", "sipStatusLine", "sipHeaders"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -152,7 +154,9 @@ class DisconnectCallback(BaseModel):
             "errorId": obj.get("errorId"),
             "tag": obj.get("tag"),
             "sipCallId": obj.get("sipCallId"),
-            "sipResponseCode": obj.get("sipResponseCode")
+            "sipResponseCode": obj.get("sipResponseCode"),
+            "sipStatusLine": obj.get("sipStatusLine"),
+            "sipHeaders": obj.get("sipHeaders")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():
