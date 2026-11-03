@@ -63,8 +63,8 @@ class Transfer(NestableVerb):
                 This parameter is considered only when diversionTreatment is set to stack. Defaults is unknown.
                 Defaults to None.
             privacy (bool, optional): A boolean value to indicate whether the calling number should be hidden. Use transfer_caller_display_name to customize the displayed name. Default is false.
-            attestation_level (str, optional): The STIR/SHAKEN attestation level Bandwidth signs the transferred call at. Can be A, B, or C. US outbound only. Applies only to accounts using the Hosted Signing Service, otherwise ignored. If omitted, the account-level attestation policy applies. Cannot be combined with identity. Defaults to None.
-            identity (str, optional): A SIP Identity header value (PASSporT) signed by the customer, passed unmodified on the transferred call. Bandwidth does not sign the call or verify the signature. Max length 2000 characters. Cannot be combined with attestation_level. Defaults to None.
+            attestation_level (str, optional): The STIR/SHAKEN attestation level to sign the transferred call with. Can be A, B, or C. Only applies to accounts using the Hosted Signing Service. Cannot be combined with identity. Defaults to None.
+            identity (str, optional): A SIP Identity header value (PASSporT) signed by you, sent unmodified on the transferred call. Max length 2000 characters. Cannot be combined with attestation_level. Defaults to None.
         """
         self.transfer_to = transfer_to
         self.transfer_caller_id = transfer_caller_id

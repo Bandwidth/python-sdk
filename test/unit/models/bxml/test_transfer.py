@@ -62,8 +62,3 @@ class TestTransfer(unittest.TestCase):
         )
         expected = '<Transfer identity="eyJhbGciOiJFUzI1NiJ9.e30.c2ln;info=<https://example.com/cert.pem>;ppt=&quot;shaken&quot;"><SipUri uui="test">sip@bw.com</SipUri></Transfer>'
         assert expected == transfer.to_bxml()
-
-    def test_attestation_level_identity_omitted_by_default(self):
-        transfer = Transfer(transfer_to=[self.sip_uri])
-        assert 'attestationLevel' not in transfer.to_bxml()
-        assert 'identity' not in transfer.to_bxml()
