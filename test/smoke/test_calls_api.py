@@ -8,13 +8,14 @@ import time
 import unittest
 import datetime
 
-from hamcrest import assert_that, has_properties, not_none, instance_of
+from hamcrest import assert_that, has_properties, not_none, instance_of, equal_to, has_length
 
 from bandwidth import ApiClient, ApiResponse, Configuration
 from bandwidth.api import calls_api
 from bandwidth.models.create_call import CreateCall
 from bandwidth.models.create_call_response import CreateCallResponse
 from bandwidth.models.call_direction_enum import CallDirectionEnum
+from bandwidth.models.call_state import CallState
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
 from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration
 from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnum
@@ -118,7 +119,7 @@ class CallsIntegration(unittest.TestCase):
         #Adding the call to the self.callIdArray
         self.callIdArray.append(create_call_response.data.call_id)
 
-        assert_that(create_call_response.status_code, 201)
+        assert_that(create_call_response.status_code, equal_to(201))
         assert_that(create_call_response.data, has_properties(
             'call_id', instance_of(str),
             'account_id', BW_ACCOUNT_ID,
@@ -135,7 +136,7 @@ class CallsIntegration(unittest.TestCase):
         with self.assertRaises(ApiException) as context:
             self.calls_api_instance.create_call_with_http_info(BW_ACCOUNT_ID, call_body)
 
-        assert_that(context.exception.status, 400)
+        assert_that(context.exception.status, equal_to(400))
 
     def test_create_call_unauthorized(self) -> None:
         """Validate an unauthorized (401) request
@@ -158,7 +159,7 @@ class CallsIntegration(unittest.TestCase):
 
         get_call_response: ApiResponse = self.calls_api_instance.get_call_state_with_http_info(BW_ACCOUNT_ID, call_id)
 
-        assert_that(get_call_response.status_code, 200)
+        assert_that(get_call_response.status_code, equal_to(200))
         assert_that(get_call_response.data, has_properties(
             "call_id", call_id,
             "state", instance_of(str),
@@ -183,6 +184,21 @@ class CallsIntegration(unittest.TestCase):
             self.calls_api_instance.get_call_state(BW_ACCOUNT_ID, self.testCallId)
 
         self.assertApiException(context, NotFoundException, 404)
+
+    def test_list_calls(self):
+        """Validate a List Calls Request
+        """
+        list_calls_response: ApiResponse = self.calls_api_instance.list_calls_with_http_info(
+            BW_ACCOUNT_ID,
+            to=USER_NUMBER,
+            var_from=BW_NUMBER
+        )
+
+        assert_that(list_calls_response.status_code, equal_to(200))
+        assert_that(list_calls_response.data, instance_of(list))
+        assert_that(list_calls_response.data[0], instance_of(CallState))
+        assert_that(list_calls_response.data[0].application_id, has_length(36))
+        assert_that(list_calls_response.data[0].account_id, equal_to(BW_ACCOUNT_ID))
 
     def test_update_call(self):
         """Validate an UpdateCall Request
@@ -209,12 +225,12 @@ class CallsIntegration(unittest.TestCase):
 
         time.sleep(self.TEST_SLEEP)
         update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, updateCallBody)
-        assert_that(update_call_response.status_code, 200)
+        assert_that(update_call_response.status_code, equal_to(200))
 
         time.sleep(self.TEST_SLEEP)
         # hanging-up the call
         update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
-        assert_that(update_call_response.status_code, 200)
+        assert_that(update_call_response.status_code, equal_to(200))
 
     def test_update_call_bad_request(self):
         """Validate a bad (400) update call request
@@ -231,12 +247,12 @@ class CallsIntegration(unittest.TestCase):
             badRequestBody = UpdateCall(states="badRequest")
             self.calls_api_instance.update_call(BW_ACCOUNT_ID, call_id, badRequestBody)
 
-        assert_that(context.exception.status, 400)
+        assert_that(context.exception.status, equal_to(400))
 
         # hanging-up the call
         time.sleep(self.TEST_SLEEP)
         update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
-        assert_that(update_call_response.status_code, 200)
+        assert_that(update_call_response.status_code, equal_to(200))
 
     def test_update_call_unauthorized(self):
         """Validate an unauthorized (401) update call request
@@ -265,12 +281,12 @@ class CallsIntegration(unittest.TestCase):
 
         time.sleep(self.TEST_SLEEP)
         update_call_bxml_response: ApiResponse = self.calls_api_instance.update_call_bxml_with_http_info(BW_ACCOUNT_ID, call_id, self.testBxmlBody)
-        assert_that(update_call_bxml_response.status_code, 204)
+        assert_that(update_call_bxml_response.status_code, equal_to(204))
 
         time.sleep(self.TEST_SLEEP)
         # hanging-up the call
         update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
-        assert_that(update_call_response.status_code, 200)
+        assert_that(update_call_response.status_code, equal_to(200))
 
     def test_update_call_bxml_bad_request(self):
         """Validate a bad (400) update call bxml request
@@ -288,12 +304,12 @@ class CallsIntegration(unittest.TestCase):
         with self.assertRaises(ApiException) as context:
             self.calls_api_instance.update_call_bxml_with_http_info(BW_ACCOUNT_ID, call_id, invalidBxmlBody)
 
-        assert_that(context.exception.status, 400)
+        assert_that(context.exception.status, equal_to(400))
 
         time.sleep(self.TEST_SLEEP)
         # hanging-up the call
         update_call_response: ApiResponse = self.calls_api_instance.update_call_with_http_info(BW_ACCOUNT_ID, call_id, self.updateStateCompleted)
-        assert_that(update_call_response.status_code, 200)
+        assert_that(update_call_response.status_code, equal_to(200))
 
 
     def test_update_call_bxml_unauthorized(self):

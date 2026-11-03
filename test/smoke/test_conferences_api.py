@@ -7,7 +7,7 @@ import time
 from typing import Dict,  Tuple
 import unittest
 
-from hamcrest import assert_that, has_properties, not_none, instance_of, greater_than
+from hamcrest import assert_that, has_properties, not_none, instance_of, greater_than, equal_to
 
 from bandwidth import ApiClient, ApiResponse, Configuration
 from bandwidth.api import calls_api
@@ -137,7 +137,7 @@ class ConferencesIntegration(unittest.TestCase):
         list_conferences_response = self.conference_api_instance.list_conferences_with_http_info(
             BW_ACCOUNT_ID, name=test_id)
 
-        assert_that(list_conferences_response.status_code, 200)
+        assert_that(list_conferences_response.status_code, equal_to(200))
 
         # TODO: This is not deterministic; our latest conference may not always be the one we just created due to parallelism.
         # This new solution should guarantee the right conference id is grabbed.
@@ -145,15 +145,15 @@ class ConferencesIntegration(unittest.TestCase):
 
         get_conference_response = self.conference_api_instance.get_conference_with_http_info(
             BW_ACCOUNT_ID, conference_id)
-        assert_that(get_conference_response.status_code, 200)
+        assert_that(get_conference_response.status_code, equal_to(200))
 
         self.callIdArray.append(create_call_response.call_id)
 
         return (test_id, create_call_response.call_id, conference_id)
 
     def validate_recording(self, recording: ConferenceRecordingMetadata) -> None:
-        assert_that(recording.status, 'complete')
-        assert_that(recording.file_format, FileFormatEnum('wav'))
+        assert_that(recording.status, equal_to('complete'))
+        assert_that(recording.file_format, equal_to(FileFormatEnum('wav')))
 
     def get_test_status(self, test_id: str) -> Dict:
         """
@@ -190,7 +190,7 @@ class ConferencesIntegration(unittest.TestCase):
         list_conferences_response = self.conference_api_instance.list_conferences_with_http_info(
             BW_ACCOUNT_ID)
 
-        assert_that(list_conferences_response.status_code, 200)
+        assert_that(list_conferences_response.status_code, equal_to(200))
         assert_that(list_conferences_response.data[0].name, instance_of(str))
         assert_that(list_conferences_response.data[0].id, instance_of(str))
 
@@ -199,34 +199,34 @@ class ConferencesIntegration(unittest.TestCase):
 
         get_conference_response = self.conference_api_instance.get_conference_with_http_info(
             BW_ACCOUNT_ID, conference_id)
-        assert_that(get_conference_response.status_code, 200)
-        assert_that(get_conference_response.data.id, conference_id)
+        assert_that(get_conference_response.status_code, equal_to(200))
+        assert_that(get_conference_response.data.id, equal_to(conference_id))
         assert_that(get_conference_response.data.name, instance_of(str))
         callId = (get_conference_response.data.active_members[0].call_id)
         self.callIdArray.append(callId)
 
         get_conference_member_response = self.conference_api_instance.get_conference_member_with_http_info(
             BW_ACCOUNT_ID, conference_id, callId)
-        assert_that(get_conference_member_response.status_code, 200)
-        assert_that(get_conference_member_response.data.conference_id, conference_id)
-        assert_that(get_conference_member_response.data.call_id, callId)
+        assert_that(get_conference_member_response.status_code, equal_to(200))
+        assert_that(get_conference_member_response.data.conference_id, equal_to(conference_id))
+        assert_that(get_conference_member_response.data.call_id, equal_to(callId))
 
         # time.sleep(self.TEST_SLEEP)
         update_conference_member_response = self.conference_api_instance.update_conference_member_with_http_info(
             BW_ACCOUNT_ID, conference_id, callId, self.testUpdateMember)
-        assert_that(update_conference_member_response.status_code, 204)
+        assert_that(update_conference_member_response.status_code, equal_to(204))
 
         # time.sleep(self.TEST_SLEEP)
         update_conference_response = self.conference_api_instance.update_conference_with_http_info(
             BW_ACCOUNT_ID, conference_id, self.testUpdateConf)
-        assert_that(update_conference_response.status_code, 204)
+        assert_that(update_conference_response.status_code, equal_to(204))
 
         updateBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><SpeakSentence locale="en_US" gender="female" voice="susan">This is a test bxml response</SpeakSentence></Bxml>'
 
         # time.sleep(self.TEST_SLEEP)
         update_conference_bxml_response = self.conference_api_instance.update_conference_bxml_with_http_info(
             BW_ACCOUNT_ID, conference_id, updateBxmlBody)
-        assert_that(update_conference_bxml_response.status_code, 204)
+        assert_that(update_conference_bxml_response.status_code, equal_to(204))
 
         update_call = UpdateCall(state=CallStateEnum('completed'))
         self.calls_api_instance.update_call(
@@ -246,15 +246,15 @@ class ConferencesIntegration(unittest.TestCase):
         answer_url = MANTECA_BASE_URL + "bxml/joinConferencePause"
         (test_id, call_id, conference_id) = self.create_conference(answer_url)
 
-        list_conferences_response = self.conference_api_instance.list_conferences(
+        list_conferences_response = self.conference_api_instance.list_conferences_with_http_info(
             BW_ACCOUNT_ID)
 
-        assert_that(list_conferences_response[1], 200)
+        assert_that(list_conferences_response.status_code, equal_to(200))
 
         updateBxmlBody = '<?xml version="1.0" encoding="UTF-8"?><Bxml><StartRecording/><SpeakSentence locale="en_US" gender="female" voice="susan">This should be a conference recording.</SpeakSentence><StopRecording/></Bxml>'
         update_conference_bxml_response = self.conference_api_instance.update_conference_bxml_with_http_info(
             BW_ACCOUNT_ID, conference_id, updateBxmlBody)
-        assert_that(update_conference_bxml_response.status_code, 204)
+        assert_that(update_conference_bxml_response.status_code, equal_to(204))
 
         # Poll Manteca to ensure our conference is recorded
         call_status = self.get_test_status(test_id)
@@ -269,7 +269,7 @@ class ConferencesIntegration(unittest.TestCase):
 
         list_conference_recordings_response: ApiResponse = self.conference_api_instance.list_conference_recordings_with_http_info(
             BW_ACCOUNT_ID, conference_id)
-        assert_that(list_conference_recordings_response.status_code, 200)
+        assert_that(list_conference_recordings_response.status_code, equal_to(200))
 
         conference_recordings = list_conference_recordings_response.data
         assert_that(len(conference_recordings), greater_than(0))
@@ -280,9 +280,9 @@ class ConferencesIntegration(unittest.TestCase):
 
         recording_response: ConferenceRecordingMetadata = self.conference_api_instance.get_conference_recording_with_http_info(
             BW_ACCOUNT_ID, conference_id, recording_id)
-        assert_that(recording_response.status_code, 200)
-        assert_that(recording_response.data.conference_id, conference_id)
-        assert_that(recording_response.data.recording_id, recording_id)
+        assert_that(recording_response.status_code, equal_to(200))
+        assert_that(recording_response.data.conference_id, equal_to(conference_id))
+        assert_that(recording_response.data.recording_id, equal_to(recording_id))
         assert_that(recording_response.data.name, instance_of(str))
 
         self.validate_recording(recording_response.data)
