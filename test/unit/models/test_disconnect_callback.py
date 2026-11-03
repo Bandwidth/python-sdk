@@ -52,7 +52,9 @@ class TestDisconnectCallback(unittest.TestCase):
                 error_id = '4642074b-7b58-478b-96e4-3a60955c6765',
                 tag = 'exampleTag',
                 sip_call_id = 'sipCallIdExample',
-                sip_response_code = 200
+                sip_response_code = 603,
+                sip_status_line = 'SIP/2.0 603 Network Blocked',
+                sip_headers = {'reason': 'v=analytics1'}
             )
         else:
             return DisconnectCallback(
@@ -81,7 +83,9 @@ class TestDisconnectCallback(unittest.TestCase):
         assert instance.error_id == '4642074b-7b58-478b-96e4-3a60955c6765'
         assert instance.tag == 'exampleTag'
         assert instance.sip_call_id == 'sipCallIdExample'
-        assert instance.sip_response_code == 200
+        assert instance.sip_response_code == 603
+        assert instance.sip_status_line == 'SIP/2.0 603 Network Blocked'
+        assert instance.sip_headers == {'reason': 'v=analytics1'}
 
 if __name__ == '__main__':
     unittest.main()
