@@ -116,7 +116,6 @@ HTTPSignatureAuthSetting = TypedDict(
 AuthSettings = TypedDict(
     "AuthSettings",
     {
-        "Basic": BasicAuthSetting,
         "OAuth2": OAuth2AuthSetting,
     },
     total=False,
@@ -149,8 +148,6 @@ class Configuration:
     :param api_key_prefix: Dict to store API prefix (e.g. Bearer).
       The dict key is the name of the security scheme in the OAS specification.
       The dict value is an API key prefix when generating the auth data.
-    :param username: Username for HTTP basic authentication.
-    :param password: Password for HTTP basic authentication.
     :param access_token: Access token.
     :param access_token_url: URL to get access token for OAuth2 authentication.
     :param client_id: Client ID for OAuth2 authentication.
@@ -174,22 +171,6 @@ class Configuration:
     :param key_file: the path to a client key file, for mTLS. 
 
     :Example:
-
-    HTTP Basic Authentication Example.
-    Given the following security scheme in the OpenAPI specification:
-      components:
-        securitySchemes:
-          http_basic_auth:
-            type: http
-            scheme: basic
-
-    Configure API client with HTTP basic authentication:
-
-conf = bandwidth.Configuration(
-    username='the-user',
-    password='the-password',
-)
-
     """
 
     _default: ClassVar[Optional[Self]] = None
@@ -199,8 +180,6 @@ conf = bandwidth.Configuration(
         host: Optional[str]=None,
         api_key: Optional[Dict[str, str]]=None,
         api_key_prefix: Optional[Dict[str, str]]=None,
-        username: Optional[str]=None,
-        password: Optional[str]=None,
         access_token: Optional[str]=None,
         access_token_url: Optional[str]=None,
         client_id: Optional[str]=None,
@@ -250,12 +229,6 @@ conf = bandwidth.Configuration(
         """
         self.refresh_api_key_hook = None
         """function hook to refresh API key if expired
-        """
-        self.username = username
-        """Username for HTTP basic authentication
-        """
-        self.password = password
-        """Password for HTTP basic authentication
         """
         self.access_token = access_token
         """Access token
@@ -516,21 +489,6 @@ conf = bandwidth.Configuration(
 
         return None
 
-    def get_basic_auth_token(self) -> Optional[str]:
-        """Gets HTTP basic authentication header (string).
-
-        :return: The token for basic HTTP authentication.
-        """
-        username = ""
-        if self.username is not None:
-            username = self.username
-        password = ""
-        if self.password is not None:
-            password = self.password
-        return urllib3.util.make_headers(
-            basic_auth=username + ':' + password
-        ).get('authorization')
-
     def get_access_token(self) -> str:
         """Gets HTTP bearer authentication header (string).
 
@@ -563,13 +521,6 @@ conf = bandwidth.Configuration(
         :return: The Auth Settings information dict.
         """
         auth: AuthSettings = {}
-        if self.username is not None and self.password is not None:
-            auth['Basic'] = {
-                'type': 'basic',
-                'in': 'header',
-                'key': 'Authorization',
-                'value': self.get_basic_auth_token()
-            }
         if self.access_token is not None:
             auth['OAuth2'] = {
                 'type': 'oauth2',

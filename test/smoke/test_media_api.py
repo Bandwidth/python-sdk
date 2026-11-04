@@ -24,8 +24,8 @@ class TestMedia(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
         cls.api_client = ApiClient(configuration)
         cls.api_instance = media_api.MediaApi(cls.api_client)

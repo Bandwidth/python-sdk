@@ -1,8 +1,6 @@
 import os
 
 try:
-    BW_USERNAME = os.environ['BW_USERNAME']
-    BW_PASSWORD = os.environ['BW_PASSWORD']
     BW_CLIENT_ID = os.environ['BW_CLIENT_ID']
     BW_CLIENT_SECRET = os.environ['BW_CLIENT_SECRET']
     BW_ACCOUNT_ID = os.environ['BW_ACCOUNT_ID']
@@ -14,8 +12,6 @@ try:
     ATT_NUMBER = os.environ['ATT_NUMBER']
     T_MOBILE_NUMBER = os.environ['T_MOBILE_NUMBER']
     USER_NUMBER = os.environ['USER_NUMBER']
-    FORBIDDEN_USERNAME = os.environ['BW_USERNAME_FORBIDDEN']
-    FORBIDDEN_PASSWORD = os.environ['BW_PASSWORD_FORBIDDEN']
     MANTECA_ACTIVE_NUMBER = os.environ['MANTECA_ACTIVE_NUMBER']
     MANTECA_IDLE_NUMBER = os.environ['MANTECA_IDLE_NUMBER']
     MANTECA_BASE_URL = os.environ['MANTECA_BASE_URL']

@@ -32,8 +32,6 @@ from test.utils.env_variables import *
 
 try:
     # BW Credentials
-    BW_USERNAME = BW_USERNAME
-    BW_PASSWORD = BW_PASSWORD
     BW_ACCOUNT_ID = BW_ACCOUNT_ID
 
     # Manteca Numbers

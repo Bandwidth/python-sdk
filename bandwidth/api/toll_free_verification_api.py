@@ -340,7 +340,6 @@ class TollFreeVerificationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -644,7 +643,6 @@ class TollFreeVerificationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -948,7 +946,6 @@ class TollFreeVerificationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -1252,7 +1249,6 @@ class TollFreeVerificationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -1526,7 +1522,6 @@ class TollFreeVerificationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -1812,7 +1807,6 @@ class TollFreeVerificationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -2129,7 +2123,6 @@ class TollFreeVerificationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -2464,7 +2457,6 @@ class TollFreeVerificationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 
@@ -2796,7 +2788,6 @@ class TollFreeVerificationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'Basic', 
             'OAuth2'
         ]
 

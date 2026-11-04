@@ -60,8 +60,8 @@ class TestMultiChannelApi(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD,
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET,
         )
         api_client = ApiClient(configuration)
         cls.multi_channel_api_instance = MultiChannelApi(api_client)

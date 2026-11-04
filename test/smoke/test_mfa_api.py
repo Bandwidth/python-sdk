@@ -15,7 +15,7 @@ from bandwidth.models.messaging_code_response import MessagingCodeResponse
 from bandwidth.models.verify_code_request import VerifyCodeRequest
 from bandwidth.models.verify_code_response import VerifyCodeResponse
 from bandwidth.models.voice_code_response import VoiceCodeResponse
-from bandwidth.exceptions import ApiException, BadRequestException, UnauthorizedException, ForbiddenException
+from bandwidth.exceptions import ApiException, BadRequestException, UnauthorizedException
 from test.utils.env_variables import *
 
 from hamcrest.core import *
@@ -28,8 +28,8 @@ class TestMultiFactorAuthentication(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         configuration = Configuration(
-            username=BW_USERNAME,
-            password=BW_PASSWORD
+            client_id=BW_CLIENT_ID,
+            client_secret=BW_CLIENT_SECRET
         )
         api_client = ApiClient(configuration)
         cls.api_instance = mfa_api.MFAApi(api_client)
@@ -60,7 +60,7 @@ class TestMultiFactorAuthentication(unittest.TestCase):
         )
 
     def assertAuthException(self, context: Exception, expected_exception: Exception, expected_status_code: int) -> None:
-        """Validates that an auth exception (401 or 403) is properly formatted
+        """Validates that an auth exception (401) is properly formatted
         Args:
             context (ApiException): Exception to validate
             expected_exception (ApiException): Expected exception type
@@ -147,24 +147,6 @@ class TestMultiFactorAuthentication(unittest.TestCase):
             )
 
         self.assertAuthException(context, UnauthorizedException, 401)
-
-    def testForbiddenRequest(self) -> None:
-        """Validate a forbidden (403) request
-        """
-        configuration = Configuration(
-            username=FORBIDDEN_USERNAME,
-            # password=FORBIDDEN_PASSWORD,
-            password='bad_password'
-        )
-        forbidden_api_client = ApiClient(configuration)
-        forbidden_api_instance = mfa_api.MFAApi(forbidden_api_client)
-
-        with self.assertRaises(ForbiddenException) as context:
-            forbidden_api_instance.generate_messaging_code(
-                self.account_id, self.messaging_code_request
-            )
-
-        self.assertAuthException(context, ForbiddenException, 403)
 
     def testRateLimit(self) -> None:
         """Validate that the API returns a 429 error, and that the 429 clears after 30 seconds

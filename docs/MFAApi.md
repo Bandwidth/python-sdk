@@ -18,7 +18,6 @@ Send an MFA code via text message (SMS).
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -38,12 +37,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -83,7 +76,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -111,7 +104,6 @@ Send an MFA Code via a phone call.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -131,12 +123,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -176,7 +162,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -204,7 +190,6 @@ Verify a previously sent MFA code.
 
 ### Example
 
-* Basic Authentication (Basic):
 * OAuth Authentication (OAuth2):
 
 ```python
@@ -224,12 +209,6 @@ configuration = bandwidth.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
 
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
@@ -269,7 +248,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Basic](../README.md#Basic), [OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

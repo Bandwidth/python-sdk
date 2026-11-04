@@ -67,12 +67,6 @@ configuration = bandwidth.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
-# Configure HTTP basic authorization: Basic
-configuration = bandwidth.Configuration(
-    username = os.environ["USERNAME"],
-    password = os.environ["PASSWORD"]
-)
-
 # Configure your client ID and secret for OAuth
 configuration = bandwidth.Configuration(
     client_id = os.environ["CLIENT_ID"],
@@ -371,11 +365,6 @@ Class | Method | HTTP request | Description
 
 
 Authentication schemes defined for the API:
-<a id="Basic"></a>
-### Basic
-
-- **Type**: HTTP basic authentication
-
 <a id="OAuth2"></a>
 ### OAuth2
 
