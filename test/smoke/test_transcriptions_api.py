@@ -10,7 +10,7 @@ from bandwidth.rest import RESTClientObject
 from bandwidth.api.transcriptions_api import TranscriptionsApi
 from bandwidth.api.calls_api import CallsApi
 from bandwidth.models import CreateCall, CreateCallResponse, CallTranscriptionMetadata, CallTranscriptionResponse, CallTranscription
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 
 
 class TestTranscriptionsApi(unittest.TestCase):

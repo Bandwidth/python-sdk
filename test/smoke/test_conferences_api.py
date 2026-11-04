@@ -24,8 +24,8 @@ from bandwidth.models.update_conference_member import UpdateConferenceMember
 from bandwidth.models.file_format_enum import FileFormatEnum
 from bandwidth.rest import RESTClientObject, RESTResponse
 from bandwidth.exceptions import ApiException, UnauthorizedException, NotFoundException
-from test.utils.env_variables import *
-from test.utils.call_cleanup import callCleanup
+from test.smoke.utils.env_variables import *
+from test.smoke.utils.call_cleanup import callCleanup
 
 
 class ConferencesIntegration(unittest.TestCase):

@@ -9,23 +9,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
-env:
-  BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
-  BW_CLIENT_ID: ${{ secrets.BW_CLIENT_ID }}
-  BW_CLIENT_SECRET: ${{ secrets.BW_CLIENT_SECRET }}
-  BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
-  BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
-  BW_NUMBER: ${{ secrets.BW_NUMBER }}
-  USER_NUMBER: ${{ secrets.USER_NUMBER }}
-  VZW_NUMBER: ${{ secrets.VZW_NUMBER }}
-  ATT_NUMBER: ${{ secrets.ATT_NUMBER }}
-  T_MOBILE_NUMBER: ${{ secrets.T_MOBILE_NUMBER }}
-  BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
-  MANTECA_ACTIVE_NUMBER: ${{ secrets.MANTECA_ACTIVE_NUMBER }}
-  MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_IDLE_NUMBER }}
-  MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
-  MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
-
 jobs:
   test:
     name: Test PR
@@ -35,9 +18,6 @@ jobs:
         os: [windows-2022, windows-2025, ubuntu-22.04, ubuntu-24.04]
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
       fail-fast: false
-    env:
-      PYTHON_VERSION: ${{ matrix.python-version }}
-      OPERATING_SYSTEM: ${{ matrix.os }}
 
     steps:
       - name: Checkout

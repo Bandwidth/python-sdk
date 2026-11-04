@@ -16,7 +16,7 @@
 import unittest
 
 from hamcrest import *
-from test.utils.env_variables import *
+from test.unit.constants import BW_ACCOUNT_ID
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.statistics_api import StatisticsApi
 from bandwidth.models.account_statistics import AccountStatistics

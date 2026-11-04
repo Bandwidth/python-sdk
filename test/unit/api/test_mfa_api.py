@@ -16,7 +16,7 @@
 import unittest
 
 from hamcrest import *
-from test.utils.env_variables import *
+from test.unit.constants import BW_ACCOUNT_ID, BW_NUMBER, USER_NUMBER, BW_VOICE_APPLICATION_ID, BW_MESSAGING_APPLICATION_ID
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.mfa_api import MFAApi
 from bandwidth.models.code_request import CodeRequest

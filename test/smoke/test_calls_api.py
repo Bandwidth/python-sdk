@@ -2,8 +2,8 @@
 Integration test for Bandwidth's Voice Calls API
 """
 from bandwidth import ApiResponse
-from test.utils.env_variables import *
-from test.utils.call_cleanup import callCleanup
+from test.smoke.utils.env_variables import *
+from test.smoke.utils.call_cleanup import callCleanup
 import time
 import unittest
 import datetime

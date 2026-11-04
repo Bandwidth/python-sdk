@@ -17,7 +17,7 @@ import unittest
 from datetime import datetime
 
 from hamcrest import *
-from test.utils.env_variables import *
+from test.unit.constants import BW_ACCOUNT_ID
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.toll_free_verification_api import TollFreeVerificationApi
 from bandwidth.models.webhook_subscription_request_schema import WebhookSubscriptionRequestSchema

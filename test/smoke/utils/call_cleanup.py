@@ -1,6 +1,6 @@
 import time
 from bandwidth.exceptions import NotFoundException
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 from bandwidth.models.call_state import CallState
 from bandwidth.models.call_state_enum import CallStateEnum
 from bandwidth.models.update_call import UpdateCall

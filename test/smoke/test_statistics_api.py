@@ -8,7 +8,7 @@ from hamcrest import *
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.statistics_api import StatisticsApi
 from bandwidth.models import AccountStatistics
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 
 
 class TestStatisticsApi(unittest.TestCase):
