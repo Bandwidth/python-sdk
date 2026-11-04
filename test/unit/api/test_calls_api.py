@@ -17,7 +17,7 @@ import unittest
 from datetime import datetime
 
 from hamcrest import *
-from test.utils.env_variables import *
+from test.unit.constants import BW_ACCOUNT_ID, BW_NUMBER, USER_NUMBER, BW_VOICE_APPLICATION_ID, BASE_CALLBACK_URL
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.calls_api import CallsApi
 from bandwidth.models.call_state import CallState

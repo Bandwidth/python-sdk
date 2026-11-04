@@ -19,7 +19,7 @@ from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
 from bandwidth.exceptions import UnauthorizedException, NotFoundException
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 
 
 class TestEndpointsApi(unittest.TestCase):

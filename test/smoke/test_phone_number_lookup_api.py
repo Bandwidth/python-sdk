@@ -33,7 +33,7 @@ from bandwidth.models.lookup_result import LookupResult
 from bandwidth.models.line_type_enum import LineTypeEnum
 from bandwidth.models.get_async_bulk_lookup_response import GetAsyncBulkLookupResponse
 
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 
 class TestPhoneNumberLookupApi(unittest.TestCase):
     """PhoneNumberLookupApi unit test stubs"""

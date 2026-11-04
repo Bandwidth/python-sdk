@@ -21,7 +21,7 @@ from bandwidth.models.messages_list import MessagesList
 from bandwidth.models.priority_enum import PriorityEnum
 from bandwidth.models.message import Message
 from bandwidth.exceptions import ApiException, UnauthorizedException
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 
 
 class TestMessagesApi(unittest.TestCase):

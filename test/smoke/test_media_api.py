@@ -14,7 +14,7 @@ from hamcrest import *
 from bandwidth.api import media_api
 from bandwidth.models.media import Media
 from bandwidth.exceptions import NotFoundException
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 
 
 class TestMedia(unittest.TestCase):

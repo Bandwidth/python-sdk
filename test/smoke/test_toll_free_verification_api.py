@@ -16,7 +16,7 @@
 import unittest
 
 from hamcrest import *
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.toll_free_verification_api import TollFreeVerificationApi
 

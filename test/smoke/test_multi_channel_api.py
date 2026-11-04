@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from hamcrest import *
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 from bandwidth import ApiClient, Configuration
 from bandwidth.api.multi_channel_api import MultiChannelApi
 from bandwidth.models.multi_channel_message_request import MultiChannelMessageRequest

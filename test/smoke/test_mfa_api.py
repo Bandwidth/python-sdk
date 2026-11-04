@@ -16,7 +16,7 @@ from bandwidth.models.verify_code_request import VerifyCodeRequest
 from bandwidth.models.verify_code_response import VerifyCodeResponse
 from bandwidth.models.voice_code_response import VoiceCodeResponse
 from bandwidth.exceptions import ApiException, BadRequestException, UnauthorizedException
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 
 from hamcrest.core import *
 from hamcrest.library import *
