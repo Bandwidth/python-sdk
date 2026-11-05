@@ -69,3 +69,11 @@ class TestGather(unittest.TestCase):
         expected = '<Gather gatherUrl="test.com" gatherMethod="POST" gatherFallbackUrl="fallback-test.com" gatherFallbackMethod="GET" username="user" password="pass" fallbackUsername="user" fallbackPassword="pass" tag="tag" terminatingDigits="2" maxDigits="5" interDigitTimeout="1" firstDigitTimeout="3" repeatCount="2" input="dtmf_speech" hints="yes,no" language="en-US" partialResultCallback="partial-test.com" partialResultCallbackMethod="POST" profanityFilter="true" speechModel="default" speechTimeout="4"><PlayAudio username="user" password="pass">https://audio.url/audio1.wav</PlayAudio><SpeakSentence>Hello. Your number is <say-as interpret-as="telephone">asdf</say-as>, lets play a game. What is 10 + 3. Press the pound key when finished.</SpeakSentence></Gather>'
         self.gather.add_verb(self.speak_sentence)
         assert expected == self.gather.to_bxml()
+
+    def test_ssml_unescaped_in_speak_sentence_but_not_in_gather_attributes(self):
+        expected = '<Gather gatherUrl="https://example.com/?a=&lt;b&gt;"><SpeakSentence>say <emphasis>this</emphasis></SpeakSentence></Gather>'
+        gather = Gather(
+            gather_url="https://example.com/?a=<b>",
+            audio_verbs=[SpeakSentence(text="say <emphasis>this</emphasis>")]
+        )
+        assert expected == gather.to_bxml()
