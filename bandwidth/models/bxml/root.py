@@ -5,17 +5,15 @@ Defines the base verb class for all BXML roots
 
 @copyright Bandwidth INC
 """
-import re
 from typing import List
 import xml.etree.ElementTree as ET
 
-from bandwidth.models.bxml.verb import Verb
+from bandwidth.models.bxml.verb import Verb, unescape_ssml
 
 
 class Root:
     """Base class for BXML roots
     """
-    ssml_regex = r"&lt;([a-zA-Z//].*?)&gt;"
 
     def __init__(self, tag: str, nested_verbs: List[Verb] = None):
         """Initialize instance of class
@@ -76,4 +74,4 @@ class Root:
             str: Serialized BXML string
         """
         xml_document = self._generate_xml()
-        return re.sub(self.ssml_regex, r"<\1>", ET.tostring(xml_document._root, encoding='UTF-8', method='xml', xml_declaration=True).decode("utf8"))
+        return unescape_ssml(ET.tostring(xml_document._root, encoding='UTF-8', method='xml', xml_declaration=True).decode("utf8"))

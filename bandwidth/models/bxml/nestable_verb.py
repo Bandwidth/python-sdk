@@ -16,7 +16,6 @@ from .verb import Verb
 class NestableVerb(Verb):
     """Base class for nestable BXML verbs
     """
-    ssml_regex = r"&lt;([a-zA-Z//].*?)&gt;"
 
     def __init__(self, tag: str, content: str = None, nested_verbs: list[Verb] = None):
         """Initialize the verb model
