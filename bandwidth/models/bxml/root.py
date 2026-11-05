@@ -8,7 +8,7 @@ Defines the base verb class for all BXML roots
 from typing import List
 import xml.etree.ElementTree as ET
 
-from bandwidth.models.bxml.verb import Verb, unescape_ssml
+from bandwidth.models.bxml.verb import Verb, _unescape_ssml
 
 
 class Root:
@@ -74,4 +74,4 @@ class Root:
             str: Serialized BXML string
         """
         xml_document = self._generate_xml()
-        return unescape_ssml(ET.tostring(xml_document._root, encoding='UTF-8', method='xml', xml_declaration=True).decode("utf8"))
+        return _unescape_ssml(ET.tostring(xml_document._root, encoding='UTF-8', method='xml', xml_declaration=True).decode("utf8"))

@@ -6,7 +6,6 @@ Defines the base nestable_verb class for all BXML verbs that can have nested ver
 @copyright Bandwidth INC
 """
 from __future__ import annotations
-import re
 from typing import Union
 import xml.etree.ElementTree as ET
 

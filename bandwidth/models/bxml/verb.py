@@ -14,7 +14,7 @@ _SPEAK_SENTENCE_REGEX = re.compile(r"(<SpeakSentence\b[^>]*(?<!/)>)(.*?)(</Speak
 _SSML_REGEX = re.compile(r"&lt;([a-zA-Z//].*?)&gt;")
 
 
-def unescape_ssml(bxml: str) -> str:
+def _unescape_ssml(bxml: str) -> str:
     """Restore SSML tags inside SpeakSentence text content only.
 
     Attribute values and all other elements keep their XML escaping.
@@ -107,4 +107,4 @@ class Verb:
             str: Serialized BXML string
         """
         xml_document = self._generate_xml()
-        return unescape_ssml(ET.tostring(xml_document._root).decode('utf8'))
+        return _unescape_ssml(ET.tostring(xml_document._root).decode('utf8'))
