@@ -9,29 +9,6 @@ jobs:
   deploy:
     name: Deploy SDK to PYPI
     runs-on: ubuntu-latest
-    env:
-      BW_ACCOUNT_ID: ${{ secrets.BW_ACCOUNT_ID }}
-      BW_USERNAME: ${{ secrets.BW_USERNAME }}
-      BW_PASSWORD: ${{ secrets.BW_PASSWORD }}
-      BW_CLIENT_ID: ${{ secrets.BW_CLIENT_ID }}
-      BW_CLIENT_SECRET: ${{ secrets.BW_CLIENT_SECRET }}
-      BW_USERNAME_FORBIDDEN: ${{ secrets.BW_USERNAME_FORBIDDEN }}
-      BW_PASSWORD_FORBIDDEN: ${{ secrets.BW_PASSWORD_FORBIDDEN }}
-      BW_VOICE_APPLICATION_ID: ${{ secrets.BW_VOICE_APPLICATION_ID }}
-      BW_MESSAGING_APPLICATION_ID: ${{ secrets.BW_MESSAGING_APPLICATION_ID }}
-      BW_NUMBER: ${{ secrets.BW_NUMBER }}
-      USER_NUMBER: ${{ secrets.USER_NUMBER }}
-      VZW_NUMBER: ${{ secrets.VZW_NUMBER }}
-      ATT_NUMBER: ${{ secrets.ATT_NUMBER }}
-      T_MOBILE_NUMBER: ${{ secrets.T_MOBILE_NUMBER }}
-      BASE_CALLBACK_URL: ${{ secrets.BASE_CALLBACK_URL }}
-      PYTHON_VERSION: ${{ matrix.python-version }}
-      OPERATING_SYSTEM: ubuntu-latest
-      MANTECA_ACTIVE_NUMBER: ${{ secrets.MANTECA_ACTIVE_NUMBER }}
-      MANTECA_IDLE_NUMBER: ${{ secrets.MANTECA_IDLE_NUMBER }}
-      MANTECA_BASE_URL: ${{ secrets.MANTECA_BASE_URL }}
-      MANTECA_APPLICATION_ID: ${{ secrets.MANTECA_APPLICATION_ID }}
-
     steps:
       - name: Set Release Version
         run: echo "RELEASE_VERSION=${TAG#v}" >> $GITHUB_ENV

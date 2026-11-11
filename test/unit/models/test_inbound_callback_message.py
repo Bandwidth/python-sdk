@@ -19,6 +19,7 @@ from datetime import datetime
 from bandwidth.models.inbound_callback_message import InboundCallbackMessage
 from bandwidth.models.multi_channel_message_content import MultiChannelMessageContent
 from bandwidth.models.rbm_location_response import RbmLocationResponse
+from bandwidth.models.rbm_session import RbmSession
 from bandwidth.models.rbm_suggestion_response import RbmSuggestionResponse
 from bandwidth.models.rbm_message_content_file import RbmMessageContentFile
 
@@ -51,6 +52,12 @@ class TestInboundCallbackMessage(unittest.TestCase):
                 media = ['https://dev.bandwidth.com/images/bandwidth-logo.png', 'https://dev.bandwidth.com/images/github_logo.png'],
                 priority = 'default',
                 channel = 'RBM',
+                session = RbmSession(
+                    can_initiate = False,
+                    id = '0f5a3b9c-2d4e-4f6a-8b1c-7e9d0a2b3c4d',
+                    type = 'INTERACTIVE_SESSION',
+                    start_time = '2026-08-06T09:59:55Z',
+                    end_time = '2026-08-07T09:59:55Z', ),
                 content = MultiChannelMessageContent(
                     text = '', 
                     media = RbmMessageContentFile(
@@ -58,7 +65,7 @@ class TestInboundCallbackMessage(unittest.TestCase):
                         thumbnail_url = 'https://dev.bandwidth.com/images/bandwidth-logo.png', ), ),
                 suggestion_response = RbmSuggestionResponse(
                     text = 'Yes, I would like to proceed', 
-                    postback_data = '[B@5d4a34ff', ),
+                    postback_data = 'postbackData', ),
                 location_response = RbmLocationResponse(
                     latitude = '37.7749', 
                     longitude = '-122.4194', )
@@ -92,6 +99,7 @@ class TestInboundCallbackMessage(unittest.TestCase):
         assert instance.tag == 'custom string'
         assert isinstance(instance.media, list)
         assert len(instance.media) > 0
+        assert isinstance(instance.session, RbmSession)
         assert isinstance(instance.content, MultiChannelMessageContent)
         assert isinstance(instance.suggestion_response, RbmSuggestionResponse)
         assert isinstance(instance.location_response, RbmLocationResponse)

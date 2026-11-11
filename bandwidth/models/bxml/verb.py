@@ -10,6 +10,19 @@ import re
 from typing import Union
 import xml.etree.ElementTree as ET
 
+_SPEAK_SENTENCE_REGEX = re.compile(r"(<SpeakSentence\b[^>]*(?<!/)>)(.*?)(</SpeakSentence>)", re.DOTALL)
+_SSML_REGEX = re.compile(r"&lt;([a-zA-Z//].*?)&gt;")
+
+
+def _unescape_ssml(bxml: str) -> str:
+    """Restore SSML tags inside SpeakSentence text content only.
+
+    Attribute values and all other elements keep their XML escaping.
+    """
+    return _SPEAK_SENTENCE_REGEX.sub(
+        lambda m: m.group(1) + _SSML_REGEX.sub(r"<\1>", m.group(2)) + m.group(3), bxml
+    )
+
 
 class Verb:
     """Base class for BXML verbs
@@ -93,8 +106,5 @@ class Verb:
         Returns:
             str: Serialized BXML string
         """
-        ssml_regex = r"&lt;([a-zA-Z//].*?)&gt;"
-
         xml_document = self._generate_xml()
-        # if the root name is speakSentence, replace content with the SSML regex
-        return re.sub(ssml_regex, r"<\1>", ET.tostring(xml_document._root).decode('utf8'))
+        return _unescape_ssml(ET.tostring(xml_document._root).decode('utf8'))

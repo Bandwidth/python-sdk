@@ -53,7 +53,10 @@ class TestTransferDisconnectCallback(unittest.TestCase):
                 transfer_to = '+15555555555',
                 cause = 'busy',
                 error_message = 'Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call',
-                error_id = '4642074b-7b58-478b-96e4-3a60955c6765'
+                error_id = '4642074b-7b58-478b-96e4-3a60955c6765',
+                sip_response_code = 603,
+                sip_status_line = 'SIP/2.0 603 Network Blocked',
+                sip_headers = {'reason': 'v=analytics1'}
             )
         else:
             return TransferDisconnectCallback(
@@ -83,6 +86,9 @@ class TestTransferDisconnectCallback(unittest.TestCase):
         assert instance.cause == 'busy'
         assert instance.error_message == 'Call c-2a913f94-6a486f3a-3cae-4034-bcc3-f0c9fa77ca2f is already bridged with another call'
         assert instance.error_id == '4642074b-7b58-478b-96e4-3a60955c6765'
+        assert instance.sip_response_code == 603
+        assert instance.sip_status_line == 'SIP/2.0 603 Network Blocked'
+        assert instance.sip_headers == {'reason': 'v=analytics1'}
 
 if __name__ == '__main__':
     unittest.main()

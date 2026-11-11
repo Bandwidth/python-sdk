@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | [**RbmActionTypeEnum**](RbmActionTypeEnum.md) |  | 
 **text** | **str** | Displayed text for user to click | 
-**postback_data** | **bytearray** | Base64 payload the customer receives when the reply is clicked. | 
+**postback_data** | **str** | Payload the customer receives when the reply is clicked. | 
 
 ## Example
 

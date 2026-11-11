@@ -8,7 +8,6 @@ info:
     email: letstalk@bandwidth.com
   version: 1.0.0
 security:
-  - Basic: []
   - OAuth2: []
 tags:
   - name: Messages
@@ -2015,7 +2014,7 @@ components:
           type: string
           format: date-time
           description: The ISO 8601 datetime of the message.
-          example: 2020-04-07T14:03:07.000Z
+          example: '2020-04-07T14:03:07.000Z'
         carrierName:
           type: string
           nullable: true
@@ -2031,6 +2030,7 @@ components:
         messageLength:
           type: integer
           description: The length of the message content.
+          nullable: true
           example: 18
         attachmentCount:
           type: integer
@@ -2094,13 +2094,11 @@ components:
         prevPage:
           type: string
           description: The link to the previous page for pagination.
-          example: >-
-            https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&nextPage=DLAPE902
+          example: https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&nextPage=DLAPE902
         nextPage:
           type: string
           description: The link to the next page for pagination.
-          example: >-
-            https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&prevPage=GL83PD3C
+          example: https://messaging.bandwidth.com/api/v2/users/accountId/messages?messageStatus=DLR_EXPIRED&prevPage=GL83PD3C
         prevPageToken:
           type: string
           description: The isolated pagination token for the previous page.
@@ -2201,7 +2199,7 @@ components:
           type: string
           format: date-time
           description: The datetime stamp of the message in ISO 8601
-          example: 2024-12-02T20:15:57.278Z
+          example: '2024-12-02T20:15:57.278201Z'
         segmentCount:
           $ref: '#/components/schemas/segmentCount'
         direction:
@@ -2620,14 +2618,13 @@ components:
       type: string
       description: Displayed text for user to click
       maxLength: 25
-      example: Hello world
+      example: Track my order
     rbmActionPostbackData:
       title: Post Back Data
       type: string
-      format: byte
-      description: Base64 payload the customer receives when the reply is clicked.
+      description: Payload the customer receives when the reply is clicked.
       maxLength: 2048
-      example: SGVsbG8gd29ybGQ=
+      example: track-order-43654
     rbmActionBase:
       type: object
       properties:
@@ -2698,14 +2695,14 @@ components:
               description: >-
                 The start time of the event. Must be a valid RFC-3339 value,
                 e.g., 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00.
-              example: 2022-09-14T18:20:16.000Z
+              example: '2022-09-14T18:20:16.000Z'
             endTime:
               type: string
               format: date-time
               description: >-
                 The end time of the event. Must be a valid RFC-3339 value, e.g.,
                 2021-03-14T01:59:26Z or 2021-03-13T20:59:26-05:00.
-              example: 2022-09-14T18:20:16.000Z
+              example: '2022-09-14T18:20:16.000Z'
             description:
               type: string
               description: The description of the event.
@@ -2877,7 +2874,7 @@ components:
           description: The time the message was received by the Bandwidth API.
           type: string
           format: date-time
-          example: 2025-01-01T18:20:16.000Z
+          example: '2025-01-01T18:20:16.000Z'
         direction:
           $ref: '#/components/schemas/messageDirectionEnum'
         to:
@@ -2916,8 +2913,8 @@ components:
       properties:
         text:
           type: string
-          description: The text associated with the suggestion response.
-          example: Yes, I would like to proceed
+          description: The text of the suggestion the user tapped.
+          example: Track my order
         postbackData:
           $ref: '#/components/schemas/rbmActionPostbackData'
         pairedMessageId:
@@ -2938,6 +2935,70 @@ components:
           format: double
           description: The longitude of the client's location.
           example: '-122.4194'
+    rbmSession:
+      type: object
+      description: >-
+        RCS interactive session information for the message.
+
+        An interactive session is a 24-hour window covering all Rich and Rich
+        Media messages exchanged between an
+
+        RCS agent and a specific end user mobile number. It is triggered when at
+        least 4 messages are exchanged within
+
+        24 hours, at least 2 of them mobile-originated and at least 1
+        mobile-terminated.
+
+        Only present on `message-delivered`, `message-received` and
+        `session-started` callbacks for RBM messages of
+
+        US agents with the Conversational billing category. Omitted for all
+        other messages.
+      properties:
+        canInitiate:
+          type: boolean
+          description: >-
+            Whether the message can start an interactive session.
+
+            `false` if the message is already part of an active session, or if
+            the agent is not eligible for
+
+            interactive session billing.
+          example: false
+        id:
+          type: string
+          nullable: true
+          description: >-
+            The unique identifier of the interactive session the message is part
+            of. This is not a message ID.
+
+            Omitted if the message is not part of a session.
+          example: 0f5a3b9c-2d4e-4f6a-8b1c-7e9d0a2b3c4d
+        type:
+          type: string
+          nullable: true
+          description: |-
+            The type of the interactive session.
+            Only present on `session-started` callbacks.
+          example: INTERACTIVE_SESSION
+        startTime:
+          type: string
+          nullable: true
+          format: date-time
+          description: >-
+            The time the 24-hour session window opened. Only present on
+            `session-started` callbacks.
+          example: '2026-08-06T09:59:55Z'
+        endTime:
+          type: string
+          nullable: true
+          format: date-time
+          description: >-
+            The time the 24-hour session window closes. Only present on
+            `session-started` callbacks.
+          example: '2026-08-07T09:59:55Z'
+      required:
+        - canInitiate
     callback:
       description: >-
         Callbacks are divided into two types based on direction of the related
@@ -2960,6 +3021,7 @@ components:
           message-delivered: '#/components/schemas/statusCallback'
           message-failed: '#/components/schemas/statusCallback'
           message-read: '#/components/schemas/statusCallback'
+          session-started: '#/components/schemas/statusCallback'
           message-received: '#/components/schemas/inboundCallback'
           requested-location-response: '#/components/schemas/inboundCallback'
           suggestion-response: '#/components/schemas/inboundCallback'
@@ -2972,14 +3034,14 @@ components:
         time:
           type: string
           format: date-time
-          example: 2024-12-02T20:15:57.278Z
+          example: '2024-12-02T20:15:57.278201Z'
         eventTime:
           type: string
           description: >-
             Represents the time at which the message was read, for
             `message-read` callbacks.
           format: date-time
-          example: 2024-12-02T20:15:58.278Z
+          example: '2024-12-02T20:15:58.278205Z'
         type:
           $ref: '#/components/schemas/statusCallbackTypeEnum'
         to:
@@ -3015,7 +3077,7 @@ components:
         time:
           type: string
           format: date-time
-          example: 2024-12-02T20:15:57.278Z
+          example: '2024-12-02T20:15:57.278201Z'
         type:
           $ref: '#/components/schemas/inboundCallbackTypeEnum'
         to:
@@ -3060,12 +3122,17 @@ components:
 
         - `message-read` indicates that the RBM message was read by the
         recipient.
+
+        - `session-started` indicates that a previously exchanged RBM message is
+        now part of an RCS interactive session and is no longer billed
+        individually.
       enum:
         - message-sending
         - message-sent
         - message-delivered
         - message-failed
         - message-read
+        - session-started
       example: message-delivered
     inboundCallbackTypeEnum:
       type: string
@@ -3106,7 +3173,7 @@ components:
         time:
           type: string
           format: date-time
-          example: 2024-12-02T20:15:57.666Z
+          example: '2024-12-02T20:15:57.666000Z'
         segmentCount:
           $ref: '#/components/schemas/segmentCount'
         direction:
@@ -3143,6 +3210,8 @@ components:
           $ref: '#/components/schemas/priorityEnum'
         channel:
           $ref: '#/components/schemas/multiChannelMessageChannelEnum'
+        session:
+          $ref: '#/components/schemas/rbmSession'
       required:
         - id
         - owner
@@ -3336,8 +3405,7 @@ components:
         uui:
           nullable: true
           type: string
-          example: >-
-            eyJhbGciOiJIUzI1NiJ9.WyJoaSJd.-znkjYyCkgz4djmHUPSXl9YrJ6Nix_XvmlwKGFh5ERM;encoding=jwt,aGVsbG8gd29ybGQ;encoding=base64
+          example: eyJhbGciOiJIUzI1NiJ9.WyJoaSJd.-znkjYyCkgz4djmHUPSXl9YrJ6Nix_XvmlwKGFh5ERM;encoding=jwt,aGVsbG8gd29ybGQ;encoding=base64
           description: >-
             A comma-separated list of 'User-To-User' headers to be sent
 
@@ -3547,8 +3615,7 @@ components:
         callUrl:
           type: string
           format: uri
-          example: >-
-            https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+          example: https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
           description: The URL to update this call's state.
         callTimeout:
           type: number
@@ -3719,8 +3786,7 @@ components:
             configured
 
             to forward this header.
-          example: >-
-            eyJhbGciOiJFUzI1NiIsInBwdCI6InNoYWtlbiIsInR5cCI6InBhc3Nwb3J0IiwieDV1IjoiaHR0cHM6Ly9idy1zaGFrZW4tY2VydC1wdWIuczMuYW1hem9uYXdzLmNvbS9iYW5kd2lkdGgtc2hha2VuLWNlcnRfMjAyMzA3MTYucGVtIn0.eyJhdHRlc3QiOiJBIiwiZGVzdCI6eyJ0biI6WyIxOTg0MjgyMDI4MCJdfSwiaWF0IjoxNjU2NTM0MzM2LCJvcmlnIjp7InRuIjoiMTkxOTQ0NDI2ODMifSwib3JpZ2lkIjoiNDk0NTlhOGEtNDJmNi0zNTFjLTkzNjEtYWRmNTdhOWUwOGNhIn0.56un9sRw_uH-sbJvnUsqdevlVxbOVjn8MVlGTlBMicjaZuRRwxfiNp-C9zYCMKTTCbc-QdYPN05F61XNVN4D3w;info=<https://bw-shaken-cert-pub.s3.amazonaws.com/bandwidth-shaken-cert_20230716.pem>;alg=ES256;ppt=shaken
+          example: eyJhbGciOiJFUzI1NiIsInBwdCI6InNoYWtlbiIsInR5cCI6InBhc3Nwb3J0IiwieDV1IjoiaHR0cHM6Ly9idy1zaGFrZW4tY2VydC1wdWIuczMuYW1hem9uYXdzLmNvbS9iYW5kd2lkdGgtc2hha2VuLWNlcnRfMjAyMzA3MTYucGVtIn0.eyJhdHRlc3QiOiJBIiwiZGVzdCI6eyJ0biI6WyIxOTg0MjgyMDI4MCJdfSwiaWF0IjoxNjU2NTM0MzM2LCJvcmlnIjp7InRuIjoiMTkxOTQ0NDI2ODMifSwib3JpZ2lkIjoiNDk0NTlhOGEtNDJmNi0zNTFjLTkzNjEtYWRmNTdhOWUwOGNhIn0.56un9sRw_uH-sbJvnUsqdevlVxbOVjn8MVlGTlBMicjaZuRRwxfiNp-C9zYCMKTTCbc-QdYPN05F61XNVN4D3w;info=<https://bw-shaken-cert-pub.s3.amazonaws.com/bandwidth-shaken-cert_20230716.pem>;alg=ES256;ppt=shaken
         enqueuedTime:
           nullable: true
           type: string
@@ -4037,8 +4103,7 @@ components:
             respond.  Not
 
             allowed if `state` is `completed`.
-          example: >-
-            https://myFallbackServer.example/bandwidth/webhooks/conferenceRedirect
+          example: https://myFallbackServer.example/bandwidth/webhooks/conferenceRedirect
         redirectFallbackMethod:
           $ref: '#/components/schemas/redirectMethodEnum'
         fallbackUsername:
@@ -4077,8 +4142,7 @@ components:
             Member](/apis/voice-apis/voice/#tag/Conferences/operation/updateConferenceMember)
 
             endpoint.
-          example: >-
-            https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/members/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+          example: https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/members/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
         mute:
           type: boolean
           description: >-
@@ -4315,8 +4379,7 @@ components:
 
             to respond
           maxLength: 2048
-          example: >-
-            https://myFallbackServer.example/bandwidth/webhooks/machineDetectionComplete
+          example: https://myFallbackServer.example/bandwidth/webhooks/machineDetectionComplete
         fallbackMethod:
           $ref: '#/components/schemas/callbackMethodEnum'
         fallbackUsername:
@@ -4470,8 +4533,7 @@ components:
       example:
         - transcriptionId: t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b
           transcriptionName: live_transcription
-          transcriptionUrl: >-
-            https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-fef240ff-5cfc9091-8069-4863-a8c0-a4dcbbf1f1a4/transcriptions/t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b
+          transcriptionUrl: https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-fef240ff-5cfc9091-8069-4863-a8c0-a4dcbbf1f1a4/transcriptions/t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b
     callTranscriptionMetadata:
       type: object
       properties:
@@ -4494,8 +4556,7 @@ components:
             [Get Call
             Transcription](/apis/voice-apis/voice/#tag/Transcriptions/operation/getRealTimeTranscription)
             endpoint.
-          example: >-
-            https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-fef240ff-5cfc9091-8069-4863-a8c0-a4dcbbf1f1a4/transcriptions/t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b
+          example: https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-fef240ff-5cfc9091-8069-4863-a8c0-a4dcbbf1f1a4/transcriptions/t-3f758f24-c7a2fc78-7c91-401a-8b2e-e542f9c40d6b
     callTranscriptionResponse:
       type: object
       properties:
@@ -4560,8 +4621,7 @@ components:
           type: string
           format: uri
           description: The URL of the [transcription](#operation/getCallTranscription)
-          example: >-
-            https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/recordings/r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/transcription
+          example: https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/recordings/r-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85/transcription
     voiceApiError:
       type: object
       properties:
@@ -4876,6 +4936,10 @@ components:
           $ref: '#/components/schemas/sipCallId'
         sipResponseCode:
           $ref: '#/components/schemas/sipResponseCode'
+        sipStatusLine:
+          $ref: '#/components/schemas/sipStatusLine'
+        sipHeaders:
+          $ref: '#/components/schemas/sipHeaders'
     dtmfCallback:
       type: object
       description: >-
@@ -5395,6 +5459,12 @@ components:
           $ref: '#/components/schemas/errorMessage'
         errorId:
           $ref: '#/components/schemas/errorId'
+        sipResponseCode:
+          $ref: '#/components/schemas/sipResponseCode'
+        sipStatusLine:
+          $ref: '#/components/schemas/sipStatusLine'
+        sipHeaders:
+          $ref: '#/components/schemas/sipHeaders'
     eventType:
       type: string
       description: >-
@@ -5526,8 +5596,7 @@ components:
       description: >-
         The URL that can be used to download the recording. Only present if the
         recording is finished and may be downloaded.
-      example: >-
-        https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/recordings/r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833/media
+      example: https://voice.bandwidth.com/api/v2/accounts/9900000/conferences/conf-fe23a767-a75a5b77-20c5-4cca-b581-cbbf0776eca9/recordings/r-fbe05094-9fd2afe9-bf5b-4c68-820a-41a01c1c5833/media
     callId:
       type: string
       description: The call id associated with the event.
@@ -5540,8 +5609,7 @@ components:
       type: string
       format: uri
       description: The URL of the call associated with the event.
-      example: >-
-        https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+      example: https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
     parentCallId:
       type: string
       description: >-
@@ -5710,23 +5778,44 @@ components:
       additionalProperties:
         type: string
       description: >-
-        (optional) Map of customer-supplied X-* headers from the original
-        INVITE. Keys are lowercase (SIP headers are case-insensitive). Present
-        only for inbound SIP URI calls with custom headers. Note - keys preserve
-        the original SIP header name in lowercase rather than Bandwidth's usual
-        camelCase JSON convention, since these are passthrough values from the
-        caller's SIP INVITE, not Bandwidth-defined fields. If the same header
-        name is sent more than once in the INVITE, only the last value is kept.
+        (optional) Map of SIP headers, with lowercase keys (SIP headers are
+        case-insensitive). On the Initiate callback, contains the
+        customer-supplied X-* headers from the original INVITE; present only for
+        inbound SIP URI calls with custom headers. On the Disconnect and
+        Transfer Disconnect callbacks, contains a single `reason` key holding
+        the raw, unmodified `Reason` header value from the final SIP response
+        that rejected an outbound call (or transferred leg); present only when
+        that response included a `Reason` header (for example, `v=analytics1`
+        call-analytics block information from a terminating carrier). If the
+        response carries more than one `Reason` header, all values are returned
+        in the order received, separated by `, `. Note - on the Initiate
+        callback, keys preserve the original SIP header name in lowercase rather
+        than Bandwidth's usual camelCase JSON convention, since these are
+        passthrough values from the caller's SIP INVITE, not Bandwidth-defined
+        fields. If the same header name is sent more than once in the INVITE,
+        only the last value is kept. The example shown is for the Initiate
+        callback; on the Disconnect and Transfer Disconnect callbacks the only
+        key is `reason`.
       example:
         x-custom-header: customer-value
         x-session-id: sess-12345
     sipResponseCode:
       type: integer
       description: >-
-        (optional) The SIP status code returned by Bandwidth's SBC when it
-        rejected an outbound call's INVITE (e.g. 486 for busy, 603 for decline).
-        Present only when an outbound call was rejected by the SBC.
+        (optional) The SIP status code of the final response that rejected an
+        outbound call's (or transferred leg's) INVITE (e.g. 486 for busy, 603
+        for decline). Present only when the call was rejected with a SIP
+        response.
       example: 486
+    sipStatusLine:
+      type: string
+      description: >-
+        (optional) The full SIP status line, exactly as received, of the final
+        response that rejected an outbound call's INVITE. The reason phrase can
+        help distinguish outcomes that share a status code, such as `603 Network
+        Blocked` and `603 Decline`. Present only when an outbound call was
+        rejected with a SIP response.
+      example: SIP/2.0 603 Network Blocked
     codeRequest:
       type: object
       properties:
@@ -6766,8 +6855,7 @@ components:
             maxLength: 500
             nullable: false
             example: https://www.example.com/path/to/resource
-            pattern: >-
-              ^$|(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,253}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)
+            pattern: ^$|(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,253}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)
         confirmationResponse:
           type: string
           minLength: 0
@@ -6814,8 +6902,7 @@ components:
       minLength: 0
       maxLength: 500
       nullable: false
-      pattern: >-
-        ^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$
+      pattern: ^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$
       example: foo@bar.com
     useCases:
       type: array
@@ -6967,8 +7054,7 @@ components:
       maxLength: 2000
       nullable: true
       example: https://www.example.com/path/to/resource
-      pattern: >-
-        ^$|(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,253}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)
+      pattern: ^$|(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,253}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)
     tfvError:
       description: A generic error object.
       properties:
@@ -7107,8 +7193,7 @@ components:
       minLength: 0
       maxLength: 500
       nullable: true
-      example: >-
-        cv.user123|sess456|mno|tfree|read_write|X7yZ9aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVw
+      example: cv.user123|sess456|mno|tfree|read_write|X7yZ9aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcDeFgHiJkLmNoPqRsTuVw
     endpointId:
       type: string
       description: The unique ID of the endpoint.
@@ -7313,8 +7398,7 @@ components:
         href:
           type: string
           description: The full URL of the link.
-          example: >-
-            https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+          example: https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
         rel:
           type: string
           description: The relationship of the link to the current resource.
@@ -8308,8 +8392,7 @@ components:
       in: header
       name: Continuation-Token
       description: Continuation token used to retrieve subsequent media.
-      example: >-
-        1XEi2tsFtLo1JbtLwETnM1ZJ+PqAa8w6ENvC5QKvwyrCDYII663Gy5M4s40owR1tjkuWUif6qbWvFtQJR5/ipqbUnfAqL254LKNlPy6tATCzioKSuHuOqgzloDkSwRtX0LtcL2otHS69hK343m+SjdL+vlj71tT39
+      example: 1XEi2tsFtLo1JbtLwETnM1ZJ+PqAa8w6ENvC5QKvwyrCDYII663Gy5M4s40owR1tjkuWUif6qbWvFtQJR5/ipqbUnfAqL254LKNlPy6tATCzioKSuHuOqgzloDkSwRtX0LtcL2otHS69hK343m+SjdL+vlj71tT39
       schema:
         type: string
     messageId:
@@ -8398,7 +8481,7 @@ components:
       description: >-
         The start of the date range to search in ISO 8601 format. Uses the
         message receive time. The date range to search in is currently 14 days.
-      example: 2022-09-14T18:20:16.000Z
+      example: '2022-09-14T18:20:16.000Z'
       schema:
         type: string
     toDateTime:
@@ -8408,7 +8491,7 @@ components:
       description: >-
         The end of the date range to search in ISO 8601 format. Uses the message
         receive time. The date range to search in is currently 14 days.
-      example: 2022-09-14T18:20:16.000Z
+      example: '2022-09-14T18:20:16.000Z'
       schema:
         type: string
     campaignId:
@@ -8876,8 +8959,32 @@ components:
           from: '+12345678901'
           text: Hey, check out the MMS!
           media:
-            - >-
-              https://messaging.bandwidth.com/api/v2/users/9900902/media/14762070468292kw2fuqty55yp2b2/0/bw.png
+            - https://messaging.bandwidth.com/api/v2/users/9900902/media/14762070468292kw2fuqty55yp2b2/0/bw.png
+    rbmMessageReceivedSessionCallbackExample:
+      summary: >-
+        An example of a rbm message-received callback body for a message that is
+        part of an RCS interactive session.
+      value:
+        time: '2026-08-06T10:00:05.502180Z'
+        type: message-received
+        to: BandwidthRBM
+        description: Incoming message received
+        message:
+          id: 1786010405502l2ntaoajuqjhqnxu
+          owner: BandwidthRBM
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          time: '2026-08-06T10:00:05.302180Z'
+          segmentCount: 1
+          direction: in
+          to:
+            - BandwidthRBM
+          from: '+12345678902'
+          channel: RBM
+          content:
+            text: Yes, please book it for tomorrow.
+          session:
+            canInitiate: false
+            id: 0f5a3b9c-2d4e-4f6a-8b1c-7e9d0a2b3c4d
     messageSendingCallbackExample:
       summary: An example of a message-sending callback body.
       value:
@@ -8977,6 +9084,79 @@ components:
           owner: '+12345678902'
           direction: out
           segmentCount: 1
+    rbmMessageDeliveredSessionCallbackExample:
+      summary: >-
+        An example of a rbm message-delivered callback body for a message that
+        is part of an RCS interactive session.
+      value:
+        type: message-delivered
+        time: '2026-08-06T10:01:11.160744Z'
+        description: Message delivered to handset.
+        to: '+12345678902'
+        message:
+          id: 1786010470868ty55yp2b2kw2fuq
+          time: '2026-08-06T10:01:10.868292Z'
+          to:
+            - '+12345678902'
+          from: BandwidthRBM
+          text: ''
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          owner: BandwidthRBM
+          direction: out
+          segmentCount: 1
+          channel: RBM
+          session:
+            canInitiate: false
+            id: 0f5a3b9c-2d4e-4f6a-8b1c-7e9d0a2b3c4d
+    rbmMessageDeliveredCanInitiateSessionCallbackExample:
+      summary: >-
+        An example of a rbm message-delivered callback body for a message that
+        is not yet part of an RCS interactive session.
+      value:
+        type: message-delivered
+        time: '2026-08-06T09:59:56.160744Z'
+        description: Message delivered to handset.
+        to: '+12345678902'
+        message:
+          id: 1786010395000kw2fuqty55yp2b2
+          time: '2026-08-06T09:59:55.000000Z'
+          to:
+            - '+12345678902'
+          from: BandwidthRBM
+          text: ''
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          owner: BandwidthRBM
+          direction: out
+          segmentCount: 1
+          channel: RBM
+          session:
+            canInitiate: true
+    sessionStartedCallbackExample:
+      summary: An example of a session-started callback body.
+      value:
+        type: session-started
+        time: '2026-08-06T10:00:00.123000Z'
+        description: Message is now part of an RCS interactive session.
+        to: '+12345678902'
+        message:
+          id: 1786010395000kw2fuqty55yp2b2
+          owner: BandwidthRBM
+          applicationId: 93de2206-9669-4e07-948d-329f4b722ee2
+          time: '2026-08-06T10:00:00.120000Z'
+          segmentCount: 1
+          direction: out
+          to:
+            - '+12345678902'
+          from: BandwidthRBM
+          text: ''
+          tag: ''
+          channel: RBM
+          session:
+            canInitiate: false
+            id: 0f5a3b9c-2d4e-4f6a-8b1c-7e9d0a2b3c4d
+            type: INTERACTIVE_SESSION
+            startTime: '2026-08-06T09:59:55Z'
+            endTime: '2026-08-07T09:59:55Z'
     messageFailedCallbackExample:
       summary: An example of a message-failed callback body.
       value:
@@ -9008,8 +9188,7 @@ components:
         to: '+19195551234'
         from: '+19195554312'
         enqueuedTime: '2022-06-16T13:15:07.160Z'
-        callUrl: >-
-          https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+        callUrl: https://voice.bandwidth.com/api/v2/accounts/9900000/calls/c-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
         callTimeout: 30
         callbackTimeout: 15
         tag: My custom tag value
@@ -9101,14 +9280,12 @@ components:
       summary: Numbers Lookup Accepted
       value:
         links:
-          - href: >-
-              /accounts/9912345/phoneNumberLookup/bulk/004223a0-8b17-41b1-bf81-20732adf5590
+          - href: /accounts/9912345/phoneNumberLookup/bulk/004223a0-8b17-41b1-bf81-20732adf5590
             rel: createdRequest
             method: GET
         data:
           requestId: 004223a0-8b17-41b1-bf81-20732adf5590
           status: IN_PROGRESS
-          results: []
         errors: []
     lookupInProgressExample:
       summary: Numbers Lookup In Progress
@@ -9281,7 +9458,8 @@ components:
         links: []
         data: {}
         errors:
-          - type: bad-request
+          - code: '1234'
+            type: bad-request
             description: >-
               Bad Request. Ensure that you have set the requestId as a URL path
               parameter.
@@ -9294,7 +9472,6 @@ components:
           - type: Unauthorized
             description: You are not authorized to access this resource.
             code: '1'
-        page: null
     forbiddenExample:
       summary: Forbidden Error
       value:
@@ -9304,14 +9481,14 @@ components:
           - type: Forbidden
             description: You do not have permission to access this resource.
             code: '2'
-        page: null
     unsupportedMediaTypeExample:
       summary: Unsupported Media Type Error
       value:
         links: []
         data: {}
         errors:
-          - type: invalid-content-type
+          - code: '1234'
+            type: invalid-content-type
             description: >-
               Invalid content-type. Ensure that your content-type header is set
               to application/json.
@@ -9321,7 +9498,8 @@ components:
         links: []
         data: {}
         errors:
-          - type: not-found
+          - code: '1234'
+            type: not-found
             description: >-
               RequestId not found. Ensure that the requestId used in the URL
               path is valid and maps to a previous request that was submitted.
@@ -9331,7 +9509,8 @@ components:
         links: []
         data: {}
         errors:
-          - type: rate-limiting
+          - code: '1234'
+            type: rate-limiting
             description: >-
               Rate limit exceeded. Wait for the time specified in the
               Retry-After header before sending another request.
@@ -9351,12 +9530,10 @@ components:
       summary: List Endpoints Paginated Response
       value:
         links:
-          - href: >-
-              https://api.bandwidth.com/v2/accounts/5500123/endpoints?type=SIP&status=CONNECTED&limit=2
+          - href: https://api.bandwidth.com/v2/accounts/5500123/endpoints?type=SIP&status=CONNECTED&limit=2
             rel: self
             method: GET
-          - href: >-
-              https://api.bandwidth.com/v2/accounts/5500123/endpoints?type=SIP&status=CONNECTED&limit=2&afterCursor=TWF5IHRoZSBmb3JjZSBiZSB3aXRoIHlvdQ==
+          - href: https://api.bandwidth.com/v2/accounts/5500123/endpoints?type=SIP&status=CONNECTED&limit=2&afterCursor=TWF5IHRoZSBmb3JjZSBiZSB3aXRoIHlvdQ==
             rel: next
             method: GET
         page:
@@ -9382,8 +9559,7 @@ components:
       summary: Create Endpoint Response
       value:
         links:
-          - href: >-
-              https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+          - href: https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
             rel: endpoint
             method: GET
         data:
@@ -9400,8 +9576,7 @@ components:
       summary: Get Endpoint Response
       value:
         links:
-          - href: >-
-              https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
+          - href: https://api.bandwidth.com/v2/accounts/5500123/endpoints/e-15ac29a2-1331029c-2cb0-4a07-b215-b22865662d85
             rel: self
             method: GET
         data:
@@ -9927,24 +10102,6 @@ components:
           examples:
             updateEndpointBxmlRequestExample:
               $ref: '#/components/examples/updateEndpointBxmlRequestExample'
-  securitySchemes:
-    Basic:
-      type: http
-      scheme: basic
-      description: >-
-        Basic authentication is a simple authentication scheme built into the
-        HTTP protocol. To use it, send your HTTP requests with an
-        `Authorization` header that contains the word `Basic` followed by a
-        space and a Base64-encoded string `username:password`.
-
-
-        - Example: `Authorization: Basic ZGVtbZpwQDU1dzByZA==`
-    OAuth2:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: https://api.bandwidth.com/api/v1/oauth2/token
-          scopes: {}
   callbacks:
     inboundCallback:
       '{inboundCallbackUrl}':
@@ -9980,6 +10137,8 @@ components:
                     $ref: '#/components/examples/smsMessageReceivedCallbackExample'
                   mmsMessageReceivedCallback:
                     $ref: '#/components/examples/mmsMessageReceivedCallbackExample'
+                  rbmMessageReceivedSessionCallback:
+                    $ref: '#/components/examples/rbmMessageReceivedSessionCallbackExample'
           responses:
             '200':
               description: OK
@@ -9995,8 +10154,9 @@ components:
               information regarding a message sent (MT)
 
               from your message-enabled Bandwidth telephone number.
-               <p>The payload type will be one of <code>message-sending</code>, <code>message-sent</code>, <code>message-delivered</code>, <code>message-failed</code> or <code>message-read</code>.
-               <p>Note that <code>message-read</code> callbacks are pertinent only for RBM messages sent from the <code>/messages/multiChannel</code> endpoint.
+               <p>The payload type will be one of <code>message-sending</code>, <code>message-sent</code>, <code>message-delivered</code>, <code>message-failed</code>, <code>message-read</code> or <code>session-started</code>.
+               <p>Note that <code>message-read</code> and <code>session-started</code> callbacks are pertinent only for RBM messages sent from the <code>/messages/multiChannel</code> endpoint.
+               <p>Note that <code>session-started</code> callbacks are pertinent only for RBM messages of agents with the Conversational billing category.
               </p><p>Please visit <a
               href='/docs/messaging/webhooks/'>Webhooks</a></p>
             content:
@@ -10013,10 +10173,15 @@ components:
                   mmsMessageDeliveredCallback:
                     $ref: '#/components/examples/mmsMessageDeliveredCallbackExample'
                   groupMmsMessageDeliveredCallback:
-                    $ref: >-
-                      #/components/examples/groupMmsMessageDeliveredCallbackExample
+                    $ref: '#/components/examples/groupMmsMessageDeliveredCallbackExample'
+                  rbmMessageDeliveredSessionCallback:
+                    $ref: '#/components/examples/rbmMessageDeliveredSessionCallbackExample'
+                  rbmMessageDeliveredCanInitiateSessionCallback:
+                    $ref: '#/components/examples/rbmMessageDeliveredCanInitiateSessionCallbackExample'
                   messageFailedCallback:
                     $ref: '#/components/examples/messageFailedCallbackExample'
+                  sessionStartedCallback:
+                    $ref: '#/components/examples/sessionStartedCallbackExample'
           responses:
             '200':
               description: OK
@@ -10076,3 +10241,14 @@ components:
           responses:
             '204':
               description: Event was successfully received.
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: >-
+        OAuth2 client credentials. For information on obtaining credentials, see
+        [Credentials
+        Management](https://dev.bandwidth.com/docs/account/credentials/management/).
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.bandwidth.com/api/v1/oauth2/token
+          scopes: {}

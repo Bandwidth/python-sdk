@@ -16,6 +16,7 @@
 import unittest
 from datetime import datetime
 
+from bandwidth.models.rbm_session import RbmSession
 from bandwidth.models.status_callback_message import StatusCallbackMessage
 
 class TestStatusCallbackMessage(unittest.TestCase):
@@ -46,7 +47,13 @@ class TestStatusCallbackMessage(unittest.TestCase):
                 tag = 'custom string',
                 media = ["https://dev.bandwidth.com/images/bandwidth-logo.png","https://dev.bandwidth.com/images/github_logo.png"],
                 priority = 'default',
-                channel = 'RBM'
+                channel = 'RBM',
+                session = RbmSession(
+                    can_initiate = False,
+                    id = '0f5a3b9c-2d4e-4f6a-8b1c-7e9d0a2b3c4d',
+                    type = 'INTERACTIVE_SESSION',
+                    start_time = '2026-08-06T09:59:55Z',
+                    end_time = '2026-08-07T09:59:55Z', )
             )
         else:
             return StatusCallbackMessage(
@@ -78,6 +85,7 @@ class TestStatusCallbackMessage(unittest.TestCase):
         assert instance.media == ["https://dev.bandwidth.com/images/bandwidth-logo.png", "https://dev.bandwidth.com/images/github_logo.png"]
         assert instance.priority == 'default'
         assert instance.channel == 'RBM'
+        assert isinstance(instance.session, RbmSession)
 
 if __name__ == '__main__':
     unittest.main()

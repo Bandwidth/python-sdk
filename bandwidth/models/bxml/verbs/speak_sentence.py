@@ -5,10 +5,6 @@ Bandwidth's SpeakSentence BXML verb
 
 @copyright Bandwidth INC
 """
-import re
-
-import xml.etree.ElementTree as ET
-
 from ..nestable_verb import NestableVerb
 
 
@@ -44,7 +40,3 @@ class SpeakSentence(NestableVerb):
             "gender": self.gender,
             "locale": self.locale,
         }
-
-    def to_bxml(self) -> str:
-        xml_document = self._generate_xml()
-        return re.sub(self.ssml_regex, r"<\1>", ET.tostring(xml_document._root).decode('utf8'))

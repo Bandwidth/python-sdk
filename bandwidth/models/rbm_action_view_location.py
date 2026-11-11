@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from bandwidth.models.rbm_action_type_enum import RbmActionTypeEnum
 from typing import Optional, Set
@@ -31,7 +31,7 @@ class RbmActionViewLocation(BaseModel):
     """ # noqa: E501
     type: RbmActionTypeEnum
     text: Annotated[str, Field(strict=True, max_length=25)] = Field(description="Displayed text for user to click")
-    postback_data: Union[Annotated[bytes, Field(strict=True, max_length=2048)], Annotated[str, Field(strict=True, max_length=2048)]] = Field(description="Base64 payload the customer receives when the reply is clicked.", alias="postbackData")
+    postback_data: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="Payload the customer receives when the reply is clicked.", alias="postbackData")
     latitude: StrictStr = Field(description="The latitude of the location. Must be in range [-90.000000, 90.000000].")
     longitude: StrictStr = Field(description="The longitude of the location. Must be in range [-180.000000, 180.000000].")
     label: Optional[Annotated[str, Field(strict=True, max_length=100)]] = Field(default=None, description="The label of the location.")

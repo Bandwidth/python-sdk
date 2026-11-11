@@ -113,6 +113,11 @@ class ListMessageItem(BaseModel):
         if self.message_size is None and "message_size" in self.model_fields_set:
             _dict['messageSize'] = None
 
+        # set to None if message_length (nullable) is None
+        # and model_fields_set contains the field
+        if self.message_length is None and "message_length" in self.model_fields_set:
+            _dict['messageLength'] = None
+
         # set to None if attachment_count (nullable) is None
         # and model_fields_set contains the field
         if self.attachment_count is None and "attachment_count" in self.model_fields_set:

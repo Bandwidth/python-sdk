@@ -26,14 +26,12 @@ from bandwidth.models.transcription import Transcription
 from bandwidth.models.update_call import UpdateCall
 from bandwidth.models.update_call_recording import UpdateCallRecording
 from bandwidth.rest import RESTClientObject, RESTResponse
-from test.utils.call_cleanup import callCleanup
-from test.utils.env_variables import *
+from test.smoke.utils.call_cleanup import callCleanup
+from test.smoke.utils.env_variables import *
 
 
 try:
     # BW Credentials
-    BW_USERNAME = BW_USERNAME
-    BW_PASSWORD = BW_PASSWORD
     BW_ACCOUNT_ID = BW_ACCOUNT_ID
 
     # Manteca Numbers

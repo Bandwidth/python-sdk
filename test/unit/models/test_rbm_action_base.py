@@ -35,13 +35,13 @@ class TestRbmActionBase(unittest.TestCase):
             return RbmActionBase(
                 type = 'REPLY',
                 text = 'Hello world',
-                postback_data = '[B@32298473'
+                postback_data = 'postbackData'
             )
         else:
             return RbmActionBase(
                 type = 'REPLY',
                 text = 'Hello world',
-                postback_data = '[B@32298473',
+                postback_data = 'postbackData',
         )
 
     def testRbmActionBase(self):
@@ -51,7 +51,7 @@ class TestRbmActionBase(unittest.TestCase):
         assert isinstance(instance, RbmActionBase)
         assert instance.type == 'REPLY'
         assert instance.text == 'Hello world'
-        assert instance.postback_data == '[B@32298473'
+        assert instance.postback_data == 'postbackData'
 
 if __name__ == '__main__':
     unittest.main()

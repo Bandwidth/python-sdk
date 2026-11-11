@@ -19,7 +19,7 @@ from bandwidth.models.endpoint_type_enum import EndpointTypeEnum
 from bandwidth.models.endpoint_direction_enum import EndpointDirectionEnum
 from bandwidth.models.endpoint_status_enum import EndpointStatusEnum
 from bandwidth.exceptions import UnauthorizedException, NotFoundException
-from test.utils.env_variables import *
+from test.smoke.utils.env_variables import *
 
 
 class TestEndpointsApi(unittest.TestCase):
@@ -34,10 +34,7 @@ class TestEndpointsApi(unittest.TestCase):
         api_client = ApiClient(configuration)
         cls.endpoints_api_instance = EndpointsApi(api_client)
 
-        unauthorized_configuration = Configuration(
-            username='bad_username',
-            password='bad_password'
-        )
+        unauthorized_configuration = Configuration()
         cls.unauthorized_api_instance = EndpointsApi(ApiClient(unauthorized_configuration))
 
         cls.account_id = BW_ACCOUNT_ID

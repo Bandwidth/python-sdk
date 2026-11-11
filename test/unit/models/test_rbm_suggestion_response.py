@@ -34,7 +34,7 @@ class TestRbmSuggestionResponse(unittest.TestCase):
         if include_optional:
             return RbmSuggestionResponse(
                 text = 'Yes, I would like to proceed',
-                postback_data = '[B@5d4a34ff',
+                postback_data = 'postbackData',
                 paired_message_id = '1234567890'
             )
         else:
@@ -47,7 +47,7 @@ class TestRbmSuggestionResponse(unittest.TestCase):
         assert instance is not None
         assert isinstance(instance, RbmSuggestionResponse)
         assert instance.text == 'Yes, I would like to proceed'
-        assert instance.postback_data == '[B@5d4a34ff'
+        assert instance.postback_data == 'postbackData'
         assert instance.paired_message_id == '1234567890'
 
 if __name__ == '__main__':
