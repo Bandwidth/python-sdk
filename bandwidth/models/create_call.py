@@ -18,9 +18,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
+from bandwidth.models.attestation_level_enum import AttestationLevelEnum
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
 from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration
 from typing import Optional, Set
@@ -35,6 +36,8 @@ class CreateCall(BaseModel):
     privacy: Optional[StrictBool] = Field(default=None, description="Hide the calling number. The `displayName` field can be used to customize the displayed name.")
     display_name: Optional[Annotated[str, Field(strict=True, max_length=256)]] = Field(default=None, description="The caller display name to use when the call is created. May not exceed 256 characters nor contain control characters such as new lines. If `privacy` is true, only the following values are valid: `Restricted`, `Anonymous`, `Private`, or `Unavailable`.", alias="displayName")
     uui: Optional[StrictStr] = Field(default=None, description="A comma-separated list of 'User-To-User' headers to be sent in the INVITE when calling a SIP URI. Each value must end with an 'encoding' parameter as described in <a href='https://tools.ietf.org/html/rfc7433'>RFC 7433</a>. Only 'jwt', 'base64' and 'hex' encodings are allowed. The entire value cannot exceed 350 characters, including parameters and separators.")
+    requested_attestation_level: Optional[AttestationLevelEnum] = Field(default=None, description="The STIR/SHAKEN attestation level (`A`, `B`, or `C`) you request Bandwidth sign this call with. Applies to outbound calls to US destinations only, and only to accounts that use the <a href='/docs/voice/stir-shaken/hosted-signing-service'>Hosted Signing Service</a>; it is ignored for all other accounts. If omitted, the attestation policy configured on your account is used.  Cannot be combined with `identity`. A request that includes both is rejected with a `400`, as is any value other than `A`, `B`, or `C`.", alias="requestedAttestationLevel")
+    identity: Optional[Annotated[str, Field(min_length=1, strict=True, max_length=2000)]] = Field(default=None, description="A complete SIP `Identity` header value that you signed yourself. It must be a valid STIR/SHAKEN PASSporT and may not exceed 2000 characters. Bandwidth sends it unmodified on the outbound call and does not sign the call. Bandwidth checks only the format and size of the value, not the signature. Applies to outbound calls to US destinations only.  Cannot be combined with `requestedAttestationLevel`. A request that includes both, or a value that is too long or not in the expected format, is rejected with a `400`.")
     application_id: StrictStr = Field(description="The id of the application associated with the `from` number.", alias="applicationId")
     answer_url: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="The full URL to send the <a href='/docs/voice/webhooks/answer'>Answer</a> event to when the called party answers. This endpoint should return the first <a href='/docs/voice/bxml'>BXML document</a> to be executed in the call.  Must use `https` if specifying `username` and `password`.", alias="answerUrl")
     answer_method: Optional[CallbackMethodEnum] = Field(default=CallbackMethodEnum.POST, alias="answerMethod")
@@ -52,7 +55,17 @@ class CreateCall(BaseModel):
     priority: Optional[Annotated[int, Field(le=5, strict=True, ge=1)]] = Field(default=5, description="The priority of this call over other calls from your account. For example, if during a call your application needs to place a new call and bridge it with the current call, you might want to create the call with priority 1 so that it will be the next call picked off your queue, ahead of other less time sensitive calls. A lower value means higher priority, so a priority 1 call takes precedence over a priority 2 call.")
     tag: Optional[Annotated[str, Field(strict=True, max_length=4096)]] = Field(default=None, description="A custom string that will be sent with all webhooks for this call unless overwritten by a future <a href='/docs/voice/bxml/tag'>`<Tag>`</a> verb or `tag` attribute on another verb, or cleared.  May be cleared by setting `tag=\"\"`  Max length 4096 characters.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["to", "from", "privacy", "displayName", "uui", "applicationId", "answerUrl", "answerMethod", "username", "password", "answerFallbackUrl", "answerFallbackMethod", "fallbackUsername", "fallbackPassword", "disconnectUrl", "disconnectMethod", "callTimeout", "callbackTimeout", "machineDetection", "priority", "tag"]
+    __properties: ClassVar[List[str]] = ["to", "from", "privacy", "displayName", "uui", "requestedAttestationLevel", "identity", "applicationId", "answerUrl", "answerMethod", "username", "password", "answerFallbackUrl", "answerFallbackMethod", "fallbackUsername", "fallbackPassword", "disconnectUrl", "disconnectMethod", "callTimeout", "callbackTimeout", "machineDetection", "priority", "tag"]
+
+    @field_validator('identity')
+    def identity_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^ *[A-Za-z0-9\-_.+\/=;:<>\"][A-Za-z0-9\-_.+\/=;:<>\" ]*$", value):
+            raise ValueError(r"must validate the regular expression /^ *[A-Za-z0-9\-_.+\/=;:<>\"][A-Za-z0-9\-_.+\/=;:<>\" ]*$/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -117,6 +130,16 @@ class CreateCall(BaseModel):
         # and model_fields_set contains the field
         if self.uui is None and "uui" in self.model_fields_set:
             _dict['uui'] = None
+
+        # set to None if requested_attestation_level (nullable) is None
+        # and model_fields_set contains the field
+        if self.requested_attestation_level is None and "requested_attestation_level" in self.model_fields_set:
+            _dict['requestedAttestationLevel'] = None
+
+        # set to None if identity (nullable) is None
+        # and model_fields_set contains the field
+        if self.identity is None and "identity" in self.model_fields_set:
+            _dict['identity'] = None
 
         # set to None if answer_method (nullable) is None
         # and model_fields_set contains the field
@@ -200,6 +223,8 @@ class CreateCall(BaseModel):
             "privacy": obj.get("privacy"),
             "displayName": obj.get("displayName"),
             "uui": obj.get("uui"),
+            "requestedAttestationLevel": obj.get("requestedAttestationLevel"),
+            "identity": obj.get("identity"),
             "applicationId": obj.get("applicationId"),
             "answerUrl": obj.get("answerUrl"),
             "answerMethod": obj.get("answerMethod") if obj.get("answerMethod") is not None else CallbackMethodEnum.POST,

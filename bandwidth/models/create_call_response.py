@@ -22,6 +22,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
+from bandwidth.models.attestation_level_enum import AttestationLevelEnum
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
 from typing import Optional, Set
 from typing_extensions import Self
@@ -51,8 +52,10 @@ class CreateCallResponse(BaseModel):
     fallback_username: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth username.", alias="fallbackUsername")
     fallback_password: Optional[Annotated[str, Field(strict=True, max_length=1024)]] = Field(default=None, description="Basic auth password.", alias="fallbackPassword")
     priority: Optional[StrictInt] = Field(default=None, description="The priority of this call over other calls from your account.")
+    requested_attestation_level: Optional[AttestationLevelEnum] = Field(default=None, description="The `requestedAttestationLevel` provided in the Create Call request, if any. This is the level you requested, which can differ from the level the call is ultimately signed with.", alias="requestedAttestationLevel")
+    identity: Optional[StrictStr] = Field(default=None, description="The `identity` value provided in the Create Call request, if any.")
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["applicationId", "accountId", "callId", "to", "from", "enqueuedTime", "callUrl", "callTimeout", "callbackTimeout", "tag", "answerMethod", "answerUrl", "answerFallbackMethod", "answerFallbackUrl", "disconnectMethod", "disconnectUrl", "username", "password", "fallbackUsername", "fallbackPassword", "priority"]
+    __properties: ClassVar[List[str]] = ["applicationId", "accountId", "callId", "to", "from", "enqueuedTime", "callUrl", "callTimeout", "callbackTimeout", "tag", "answerMethod", "answerUrl", "answerFallbackMethod", "answerFallbackUrl", "disconnectMethod", "disconnectUrl", "username", "password", "fallbackUsername", "fallbackPassword", "priority", "requestedAttestationLevel", "identity"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -160,6 +163,16 @@ class CreateCallResponse(BaseModel):
         if self.priority is None and "priority" in self.model_fields_set:
             _dict['priority'] = None
 
+        # set to None if requested_attestation_level (nullable) is None
+        # and model_fields_set contains the field
+        if self.requested_attestation_level is None and "requested_attestation_level" in self.model_fields_set:
+            _dict['requestedAttestationLevel'] = None
+
+        # set to None if identity (nullable) is None
+        # and model_fields_set contains the field
+        if self.identity is None and "identity" in self.model_fields_set:
+            _dict['identity'] = None
+
         return _dict
 
     @classmethod
@@ -192,7 +205,9 @@ class CreateCallResponse(BaseModel):
             "password": obj.get("password"),
             "fallbackUsername": obj.get("fallbackUsername"),
             "fallbackPassword": obj.get("fallbackPassword"),
-            "priority": obj.get("priority")
+            "priority": obj.get("priority"),
+            "requestedAttestationLevel": obj.get("requestedAttestationLevel"),
+            "identity": obj.get("identity")
         })
         # store additional fields in additional_properties
         for _key in obj.keys():

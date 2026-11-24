@@ -3241,6 +3241,16 @@ components:
         - direction
         - to
         - from
+    attestationLevelEnum:
+      type: string
+      enum:
+        - A
+        - B
+        - C
+      description: >-
+        The STIR/SHAKEN attestation level Bandwidth signs the call with: `A`
+        (full), `B` (partial), or `C` (gateway).
+      example: B
     callbackMethodEnum:
       type: string
       nullable: true
@@ -3419,6 +3429,52 @@ components:
             entire value
 
             cannot exceed 350 characters, including parameters and separators.
+        requestedAttestationLevel:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/attestationLevelEnum'
+          description: >-
+            The STIR/SHAKEN attestation level (`A`, `B`, or `C`) you request
+            Bandwidth sign this call with.
+
+            Applies to outbound calls to US destinations only, and only to
+            accounts that use the
+
+            <a href='/docs/voice/stir-shaken/hosted-signing-service'>Hosted
+            Signing Service</a>; it is ignored
+
+            for all other accounts. If omitted, the attestation policy
+            configured on your account is used.
+
+
+            Cannot be combined with `identity`. A request that includes both is
+            rejected with a `400`, as is
+
+            any value other than `A`, `B`, or `C`.
+        identity:
+          nullable: true
+          type: string
+          minLength: 1
+          maxLength: 2000
+          pattern: ^ *[A-Za-z0-9\-_.+/=;:<>"][A-Za-z0-9\-_.+/=;:<>" ]*$
+          description: >-
+            A complete SIP `Identity` header value that you signed yourself. It
+            must be a valid STIR/SHAKEN
+
+            PASSporT and may not exceed 2000 characters. Bandwidth sends it
+            unmodified on the outbound call and
+
+            does not sign the call. Bandwidth checks only the format and size of
+            the value, not the signature.
+
+            Applies to outbound calls to US destinations only.
+
+
+            Cannot be combined with `requestedAttestationLevel`. A request that
+            includes both, or a value that is too long
+
+            or not in the expected format, is rejected with a `400`.
+          example: eyJhbGciOiJFUzI1NiIsInBwdCI6InNoYWtlbiIsInR5cCI6InBhc3Nwb3J0IiwieDV1IjoiaHR0cHM6Ly9jZXJ0LmV4YW1wbGUvY2VydC5wZW0ifQ.eyJhdHRlc3QiOiJBIiwiZGVzdCI6eyJ0biI6WyIxOTE5NTU1MTIzNCJdfSwiaWF0IjoxNzAwMDAwMDAwLCJvcmlnIjp7InRuIjoiMTU1NTU1NTEyMTIifSwib3JpZ2lkIjoiMTIzNCJ9.c2lnbmF0dXJl;info=<https://cert.example/cert.pem>;alg=ES256;ppt="shaken"
         applicationId:
           type: string
           description: The id of the application associated with the `from` number.
@@ -3688,6 +3744,20 @@ components:
           type: integer
           example: 5
           description: The priority of this call over other calls from your account.
+        requestedAttestationLevel:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/attestationLevelEnum'
+          description: >-
+            The `requestedAttestationLevel` provided in the Create Call request,
+            if any. This is the level you requested,
+
+            which can differ from the level the call is ultimately signed with.
+        identity:
+          nullable: true
+          type: string
+          description: The `identity` value provided in the Create Call request, if any.
+          example: eyJhbGciOiJFUzI1NiIsInBwdCI6InNoYWtlbiIsInR5cCI6InBhc3Nwb3J0IiwieDV1IjoiaHR0cHM6Ly9jZXJ0LmV4YW1wbGUvY2VydC5wZW0ifQ.eyJhdHRlc3QiOiJBIiwiZGVzdCI6eyJ0biI6WyIxOTE5NTU1MTIzNCJdfSwiaWF0IjoxNzAwMDAwMDAwLCJvcmlnIjp7InRuIjoiMTU1NTU1NTEyMTIifSwib3JpZ2lkIjoiMTIzNCJ9.c2lnbmF0dXJl;info=<https://cert.example/cert.pem>;alg=ES256;ppt="shaken"
     callState:
       type: object
       properties:

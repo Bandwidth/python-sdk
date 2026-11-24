@@ -16,6 +16,7 @@
 import unittest
 from datetime import datetime
 
+from bandwidth.models.attestation_level_enum import AttestationLevelEnum
 from bandwidth.models.create_call_response import CreateCallResponse
 
 class TestCreateCallResponse(unittest.TestCase):
@@ -54,7 +55,9 @@ class TestCreateCallResponse(unittest.TestCase):
                 password = 'mySecretPassword1!',
                 fallback_username = 'mySecretUsername',
                 fallback_password = 'mySecretPassword1!',
-                priority = 5
+                priority = 5,
+                requested_attestation_level = 'B',
+                identity = 'eyJhbGciOiJFUzI1NiJ9.eyJhdHRlc3QiOiJBIn0.c2ln;info=<https://cert.example/cert.pem>;alg=ES256;ppt="shaken"'
             )
         else:
             return CreateCallResponse(
@@ -95,6 +98,8 @@ class TestCreateCallResponse(unittest.TestCase):
         assert instance.fallback_username == 'mySecretUsername'
         assert instance.fallback_password == 'mySecretPassword1!'
         assert instance.priority == 5
+        assert instance.requested_attestation_level == AttestationLevelEnum.B
+        assert instance.identity == 'eyJhbGciOiJFUzI1NiJ9.eyJhdHRlc3QiOiJBIn0.c2ln;info=<https://cert.example/cert.pem>;alg=ES256;ppt="shaken"'
 
 if __name__ == '__main__':
     unittest.main()

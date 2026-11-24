@@ -19,6 +19,7 @@ from bandwidth.models.additional_denial_reason import AdditionalDenialReason
 from bandwidth.models.address import Address
 from bandwidth.models.answer_callback import AnswerCallback
 from bandwidth.models.async_lookup_request import AsyncLookupRequest
+from bandwidth.models.attestation_level_enum import AttestationLevelEnum
 from bandwidth.models.blocked_webhook import BlockedWebhook
 from bandwidth.models.bridge_complete_callback import BridgeCompleteCallback
 from bandwidth.models.bridge_target_complete_callback import BridgeTargetCompleteCallback
