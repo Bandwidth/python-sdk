@@ -15,6 +15,9 @@
 
 import unittest
 
+from pydantic import ValidationError
+
+from bandwidth.models.attestation_level_enum import AttestationLevelEnum
 from bandwidth.models.create_call import CreateCall
 from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration
 
@@ -39,6 +42,8 @@ class TestCreateCall(unittest.TestCase):
                 privacy = False,
                 display_name = 'John Doe',
                 uui = 'eyJhbGciOiJIUzI1NiJ9.WyJoaSJd.-znkjYyCkgz4djmHUPSXl9YrJ6Nix_XvmlwKGFh5ERM;encoding=jwt,aGVsbG8gd29ybGQ;encoding=base64',
+                requested_attestation_level = 'B',
+                identity = 'eyJhbGciOiJFUzI1NiJ9.eyJhdHRlc3QiOiJBIn0.c2ln;info=<https://cert.example/cert.pem>;alg=ES256;ppt="shaken"',
                 application_id = '1234-qwer-5679-tyui',
                 answer_url = 'https://www.myCallbackServer.example/webhooks/answer',
                 answer_method = 'POST',
@@ -89,6 +94,8 @@ class TestCreateCall(unittest.TestCase):
         assert instance.privacy == False
         assert instance.display_name == 'John Doe'
         assert instance.uui == 'eyJhbGciOiJIUzI1NiJ9.WyJoaSJd.-znkjYyCkgz4djmHUPSXl9YrJ6Nix_XvmlwKGFh5ERM;encoding=jwt,aGVsbG8gd29ybGQ;encoding=base64'
+        assert instance.requested_attestation_level == AttestationLevelEnum.B
+        assert instance.identity == 'eyJhbGciOiJFUzI1NiJ9.eyJhdHRlc3QiOiJBIn0.c2ln;info=<https://cert.example/cert.pem>;alg=ES256;ppt="shaken"'
         assert instance.application_id == '1234-qwer-5679-tyui'
         assert instance.answer_url == 'https://www.myCallbackServer.example/webhooks/answer'
         assert instance.answer_method == 'POST'
@@ -118,6 +125,21 @@ class TestCreateCall(unittest.TestCase):
         assert instance.machine_detection.fallback_method == 'POST'
         assert instance.machine_detection.fallback_username == 'mySecretUsername'
         assert instance.machine_detection.fallback_password == 'mySecretPassword1!'
+
+    def testCreateCallIdentityValidation(self):
+        """Test CreateCall identity validation"""
+        required = dict(to='a', var_from='a', application_id='a', answer_url='a')
+        with self.assertRaises(ValidationError):
+            CreateCall(**required, identity='a' * 2001)
+        with self.assertRaises(ValidationError):
+            CreateCall(**required, identity='')
+        with self.assertRaises(ValidationError):
+            CreateCall(**required, identity='invalid!')
+
+    def testCreateCallRequestedAttestationLevelValidation(self):
+        """Test CreateCall requested_attestation_level validation"""
+        with self.assertRaises(ValidationError):
+            CreateCall(to='a', var_from='a', application_id='a', answer_url='a', requested_attestation_level='invalid')
 
 if __name__ == '__main__':
     unittest.main()

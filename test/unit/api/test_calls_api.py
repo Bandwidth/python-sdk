@@ -29,6 +29,7 @@ from bandwidth.models.create_call_response import CreateCallResponse
 from bandwidth.models.machine_detection_configuration import MachineDetectionConfiguration
 from bandwidth.models.machine_detection_mode_enum import MachineDetectionModeEnum
 from bandwidth.models.callback_method_enum import CallbackMethodEnum
+from bandwidth.models.attestation_level_enum import AttestationLevelEnum
 
 
 
@@ -85,6 +86,8 @@ class TestCallsApi(unittest.TestCase):
             ),
             priority=5,
             tag="tag_example",
+            requested_attestation_level=AttestationLevelEnum("B"),
+            identity='eyJhbGciOiJFUzI1NiJ9.eyJhdHRlc3QiOiJBIn0.c2ln;info=<https://cert.example/cert.pem>;alg=ES256;ppt="shaken"',
         )
         response = self.calls_api_instance.create_call_with_http_info(
             BW_ACCOUNT_ID,
