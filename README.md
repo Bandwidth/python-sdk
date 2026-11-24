@@ -161,6 +161,7 @@ Class | Method | HTTP request | Description
  - [Address](docs/Address.md)
  - [AnswerCallback](docs/AnswerCallback.md)
  - [AsyncLookupRequest](docs/AsyncLookupRequest.md)
+ - [AttestationLevelEnum](docs/AttestationLevelEnum.md)
  - [BlockedWebhook](docs/BlockedWebhook.md)
  - [BridgeCompleteCallback](docs/BridgeCompleteCallback.md)
  - [BridgeTargetCompleteCallback](docs/BridgeTargetCompleteCallback.md)

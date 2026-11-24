@@ -26,6 +26,8 @@ Name | Type | Description | Notes
 **fallback_username** | **str** | Basic auth username. | [optional] 
 **fallback_password** | **str** | Basic auth password. | [optional] 
 **priority** | **int** | The priority of this call over other calls from your account. | [optional] 
+**requested_attestation_level** | [**AttestationLevelEnum**](AttestationLevelEnum.md) | The &#x60;requestedAttestationLevel&#x60; provided in the Create Call request, if any. This is the level you requested, which can differ from the level the call is ultimately signed with. | [optional] 
+**identity** | **str** | The &#x60;identity&#x60; value provided in the Create Call request, if any. | [optional] 
 
 ## Example
 
